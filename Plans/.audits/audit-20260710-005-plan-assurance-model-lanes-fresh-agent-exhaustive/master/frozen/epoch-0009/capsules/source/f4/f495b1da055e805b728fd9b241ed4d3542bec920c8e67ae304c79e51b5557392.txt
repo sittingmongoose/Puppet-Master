@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4315-4326 >>>
+L00004315	- retry with next account
+L00004316	negative_constraints: []
+L00004317	compatibility_only_notes: []
+L00004318	stale_retired_dispositions: []
+L00004319	owner_boundary_notes:
+L00004320	- Rotating fetch is the native-auth HTTP failover shape for future in-process auth.
+L00004321	owner_hints:
+L00004322	- Plans/Multi-Account.md
+L00004323	preserved_contractrefs: []
+L00004324	split_recommendation_reason: Rotating fetch is split from token-store and current-account context.
+L00004325	```
+L00004326	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4327-4696 >>>
+L00004327	### MA-056 - Request-Scoped Current Account Context
+L00004328	
+L00004329	```yaml
+L00004330	plan_unit_id: MA-056
+L00004331	unit_type: requirement
+L00004332	status: accepted
+L00004333	owner_doc: Plans/Multi-Account.md
+L00004334	canonical_text: Native auth current-account state is request-scoped through an explicit context struct or thread-local in
+L00004335	  Rust, preserving the negative constraint that Rust does not use AsyncLocalStorage for this account context.
+L00004336	gui_related: false
+L00004337	gui_classification_reason: The unit defines native runtime context propagation rather than GUI presentation.
+L00004338	split_recommended: true
+L00004339	depends_on:
+L00004340	- MA-055
+L00004341	unblocks: []
+L00004342	acceptance_criteria:
+L00004343	- Covered source spans remain losslessly available for exact-text audit.
+L00004344	- Current account state is request-scoped.
+L00004345	- Explicit context struct or thread-local approaches remain allowed.
+L00004346	- no AsyncLocalStorage in Rust remains preserved.
+L00004347	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004348	validation_surfaces:
+L00004349	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004350	- python3 scripts/pm-plan-index.py validate
+L00004351	risk_class: native_auth_current_account_context
+L00004352	reasoning_tier: standard
+L00004353	context_scope: multi_account_standardization
+L00004354	implementation_surfaces:
+L00004355	- Plans/Multi-Account.md
+L00004356	node_compile_hint:
+L00004357	  mode: native_auth_current_account_context
+L00004358	  create_worknodes: false
+L00004359	source_lineage:
+L00004360	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0035
+L00004361	preserved_exact_tokens:
+L00004362	- Current account
+L00004363	- current account
+L00004364	- explicit context struct
+L00004365	- thread-local
+L00004366	- no AsyncLocalStorage in Rust
+L00004367	negative_constraints:
+L00004368	- Native auth current-account propagation does not use AsyncLocalStorage in Rust.
+L00004369	compatibility_only_notes: []
+L00004370	stale_retired_dispositions: []
+L00004371	owner_boundary_notes:
+L00004372	- Current account context is scoped per request, not a global account bucket.
+L00004373	owner_hints:
+L00004374	- Plans/Multi-Account.md
+L00004375	preserved_contractrefs: []
+L00004376	split_recommendation_reason: Current-account context closes the S0035 split.
+L00004377	```
+L00004378	
+L00004379	### MA-057 - Implementer Confirmation Guardrails
+L00004380	
+L00004381	```yaml
+L00004382	plan_unit_id: MA-057
+L00004383	unit_type: requirement
+L00004384	status: accepted
+L00004385	owner_doc: Plans/Multi-Account.md
+L00004386	canonical_text: The Multi-Account document has no remaining design-open questions for the Gemini auth/account model.
+L00004387	  Implementation confirmations are limited to provider adapter details, migration sequencing, and exact UI copy polish,
+L00004388	  and must not change locked defaults, precedence order, requested/effective field names, or the Gemini media account model.
+L00004389	gui_related: true
+L00004390	gui_classification_reason: The unit includes exact UI copy polish as an allowed implementer confirmation area.
+L00004391	split_recommended: false
+L00004392	depends_on:
+L00004393	- MA-056
+L00004394	unblocks: []
+L00004395	acceptance_criteria:
+L00004396	- Covered source spans remain losslessly available for exact-text audit.
+L00004397	- Gemini auth/account model has no design-open questions in this document.
+L00004398	- Allowed confirmations remain limited to provider adapter details, migration sequencing, and exact UI copy polish.
+L00004399	- Locked defaults, precedence order, requested/effective field names, and media account model remain unchanged by confirmations.
+L00004400	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004401	validation_surfaces:
+L00004402	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004403	- python3 scripts/pm-plan-index.py validate
+L00004404	risk_class: implementer_confirmation_guardrail
+L00004405	reasoning_tier: standard
+L00004406	context_scope: multi_account_standardization
+L00004407	implementation_surfaces:
+L00004408	- Plans/Multi-Account.md
+L00004409	node_compile_hint:
+L00004410	  mode: implementer_confirmation_guardrail
+L00004411	  create_worknodes: false
+L00004412	source_lineage:
+L00004413	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0036
+L00004414	preserved_exact_tokens:
+L00004415	- Gemini auth/account model
+L00004416	- provider adapter details
+L00004417	- migration sequencing
+L00004418	- exact UI copy polish
+L00004419	- MUST NOT change
+L00004420	- locked defaults
+L00004421	- precedence order
+L00004422	- requested/effective field names
+L00004423	- media follows the same Gemini auth/account model as normal provider usage
+L00004424	negative_constraints:
+L00004425	- Implementer confirmations MUST NOT change locked defaults, precedence order, requested/effective field names, or the Gemini media account model.
+L00004426	compatibility_only_notes: []
+L00004427	stale_retired_dispositions: []
+L00004428	owner_boundary_notes:
+L00004429	- Remaining implementation confirmations are bounded and cannot reopen product decisions.
+L00004430	owner_hints:
+L00004431	- Plans/Multi-Account.md
+L00004432	preserved_contractrefs:
+L00004433	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD'
+L00004434	split_recommendation_reason: The implementer guardrail span is narrow enough for one PlanUnit.
+L00004435	```
+L00004436	
+L00004437	### MA-058 - Operational Identity Class Inventory
+L00004438	
+L00004439	```yaml
+L00004440	plan_unit_id: MA-058
+L00004441	unit_type: requirement
+L00004442	status: accepted
+L00004443	owner_doc: Plans/Multi-Account.md
+L00004444	canonical_text: Multi-Account distinguishes provider accounts from operational identities needed by GitHub Actions and Docker
+L00004445	  Manager, including github_api account identity for GitHub Actions, registry account identity or namespace identity for
+L00004446	  Docker Manager, and Kubernetes context or cluster identity for the Docker Manager Kubernetes subview.
+L00004447	gui_related: false
+L00004448	gui_classification_reason: The unit defines backend/runtime identity classes rather than direct GUI presentation.
+L00004449	split_recommended: true
+L00004450	depends_on:
+L00004451	- MA-057
+L00004452	unblocks: []
+L00004453	acceptance_criteria:
+L00004454	- Covered source spans remain losslessly available for exact-text audit.
+L00004455	- Provider accounts remain distinct from operational identities.
+L00004456	- github_api identity remains tied to GitHub Actions.
+L00004457	- Registry account or namespace identity remains tied to Docker Manager.
+L00004458	- Kubernetes context or cluster identity remains tied to Docker Manager Kubernetes subview.
+L00004459	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004460	validation_surfaces:
+L00004461	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004462	- python3 scripts/pm-plan-index.py validate
+L00004463	risk_class: operational_identity_inventory
+L00004464	reasoning_tier: standard
+L00004465	context_scope: multi_account_standardization
+L00004466	implementation_surfaces:
+L00004467	- Plans/Multi-Account.md
+L00004468	node_compile_hint:
+L00004469	  mode: operational_identity_inventory
+L00004470	  create_worknodes: false
+L00004471	source_lineage:
+L00004472	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0037
+L00004473	preserved_exact_tokens:
+L00004474	- Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)
+L00004475	- github_api
+L00004476	- GitHub Actions surface
+L00004477	- registry account identity
+L00004478	- namespace identity
+L00004479	- Docker Manager
+L00004480	- Kubernetes context
+L00004481	- cluster identity
+L00004482	- Docker Manager Kubernetes subview
+L00004483	negative_constraints: []
+L00004484	compatibility_only_notes: []
+L00004485	stale_retired_dispositions: []
+L00004486	owner_boundary_notes:
+L00004487	- Operational identity classes are required by GitHub Actions and Docker Manager without replacing provider accounts.
+L00004488	owner_hints:
+L00004489	- Plans/Multi-Account.md
+L00004490	preserved_contractrefs:
+L00004491	- 'ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md'
+L00004492	split_recommendation_reason: Multi-Account-S0037 is split between identity inventory and visible boundary rules.
+L00004493	```
+L00004494	
+L00004495	### MA-059 - Operational Identity Boundary And Partial-Capability Visibility
+L00004496	
+L00004497	```yaml
+L00004498	plan_unit_id: MA-059
+L00004499	unit_type: requirement
+L00004500	status: accepted
+L00004501	owner_doc: Plans/Multi-Account.md
+L00004502	canonical_text: Operational identity state may be displayed alongside provider/account state, but it must not imply shared
+L00004503	  ownership or token source unless the owning auth contract says so. Requested versus effective state remains visible when
+L00004504	  an operational identity exists but capability is partial.
+L00004505	gui_related: true
+L00004506	gui_classification_reason: The unit explicitly covers displayed operational identity state and visible requested/effective state.
+L00004507	split_recommended: true
+L00004508	depends_on:
+L00004509	- MA-058
+L00004510	unblocks: []
+L00004511	acceptance_criteria:
+L00004512	- Covered source spans remain losslessly available for exact-text audit.
+L00004513	- Operational identity display does not imply shared provider account ownership or token source.
+L00004514	- Owning auth contracts remain authoritative for operational identity token ownership.
+L00004515	- Requested versus effective state remains visible when capability is partial.
+L00004516	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004517	validation_surfaces:
+L00004518	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004519	- python3 scripts/pm-plan-index.py validate
+L00004520	risk_class: operational_identity_visibility
+L00004521	reasoning_tier: standard
+L00004522	context_scope: multi_account_standardization
+L00004523	implementation_surfaces:
+L00004524	- Plans/Multi-Account.md
+L00004525	node_compile_hint:
+L00004526	  mode: operational_identity_visibility
+L00004527	  create_worknodes: false
+L00004528	source_lineage:
+L00004529	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0037
+L00004530	preserved_exact_tokens:
+L00004531	- operational identity state
+L00004532	- provider/account state
+L00004533	- ownership
+L00004534	- token source
+L00004535	- requested vs effective state
+L00004536	- capability is partial
+L00004537	negative_constraints:
+L00004538	- Operational identity state must not imply shared ownership or token source unless the owning auth contract says so.
+L00004539	compatibility_only_notes: []
+L00004540	stale_retired_dispositions: []
+L00004541	owner_boundary_notes:
+L00004542	- Requested/effective state remains visible for partial operational identity capability.
+L00004543	owner_hints:
+L00004544	- Plans/Multi-Account.md
+L00004545	preserved_contractrefs:
+L00004546	- 'ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md'
+L00004547	split_recommendation_reason: Visibility and token-source guardrails close the S0037 split.
+L00004548	```
+L00004549	
+L00004550	### MA-001 - Multi-Account Retired Source-Preserving Bridge
+L00004551	
+L00004552	```yaml
+L00004553	plan_unit_id: MA-001
+L00004554	unit_type: compatibility_disposition
+L00004555	status: accepted
+L00004556	owner_doc: Plans/Multi-Account.md
+L00004557	canonical_text: >-
+L00004558	  MA-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 102 because
+L00004559	  Multi-Account-S0001 through Multi-Account-S0041 are covered by MA-002 through MA-059 or explicit structural, retired,
+L00004560	  and migration-coverage dispositions. MA-001 no longer carries source_preserving_planunit compile mode and must not own
+L00004561	  product coverage.
+L00004562	gui_related: false
+L00004563	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is
+L00004564	  carried by fine-grained Multi-Account PlanUnits and coverage_map proof.
+L00004565	split_recommended: false
+L00004566	depends_on:
+L00004567	- MA-054
+L00004568	- MA-055
+L00004569	- MA-056
+L00004570	- MA-057
+L00004571	- MA-058
+L00004572	- MA-059
+L00004573	unblocks: []
+L00004574	acceptance_criteria:
+L00004575	- MA-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 102.
+L00004576	- Multi-Account-S0001 through Multi-Account-S0041 product coverage is owned by MA-002 through MA-059 or explicit structural, retired, and migration-coverage dispositions.
+L00004577	- MA-001 remains only to preserve migration lineage for the former source-preserving bridge.
+L00004578	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00004579	validation_surfaces:
+L00004580	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004581	- python3 scripts/pm-plan-index.py validate
+L00004582	risk_class: migration_lineage
+L00004583	reasoning_tier: standard
+L00004584	context_scope: residual_plan_standardization
+L00004585	implementation_surfaces:
+L00004586	- Plans/Multi-Account.md
+L00004587	node_compile_hint:
+L00004588	  mode: source_preserving_bridge_retired
+L00004589	  create_worknodes: false
+L00004590	source_lineage:
+L00004591	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0040
+L00004592	preserved_exact_tokens:
+L00004593	- MA-001
+L00004594	- Multi-Account Specification Source-Preserving PlanUnit
+L00004595	- source_preserving_planunit
+L00004596	- source_preserving_bridge_retired
+L00004597	- Owner / Consumer Map
+L00004598	- PlanUnits
+L00004599	- Migration Coverage
+L00004600	negative_constraints:
+L00004601	- MA-001 must not re-own Multi-Account-S0001 through Multi-Account-S0041 after Phase 2B batch 102.
+L00004602	- MA-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00004603	- Retired bridge lineage must not be treated as implementation-ready product coverage.
+L00004604	- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00004605	compatibility_only_notes:
+L00004606	- MA-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00004607	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00004608	stale_retired_dispositions:
+L00004609	- The former MA-001 residual source-preserving bridge is retired by Phase 2B batch 102.
+L00004610	owner_boundary_notes:
+L00004611	- MA-002 through MA-059 and explicit coverage dispositions own Multi-Account product coverage after bridge retirement.
+L00004612	- Multi-Account-S0040 is migration-lineage coverage only after bridge retirement.
+L00004613	owner_hints:
+L00004614	- Plans/Multi-Account.md
+L00004615	preserved_contractrefs:
+L00004616	- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+L00004617	split_recommendation_reason: The former source-preserving bridge has been atomized or structurally dispositioned and is now retired.
+L00004618	```
+L00004619	
+L00004620	### MA-060 - Goal Runtime Account Identity Consumer
+L00004621	
+L00004622	```yaml
+L00004623	plan_unit_id: MA-060
+L00004624	unit_type: requirement
+L00004625	status: accepted
+L00004626	owner_doc: Plans/Multi-Account.md
+L00004627	canonical_text: >-
+L00004628	  Multi-Account owns requested/effective account identity for Goal Runtime worker, planner, evaluator, verifier, and adjudicator provider use. Goal Runtime consumes account identity and role scope, but does not redefine account stickiness, failover, quota pressure, or provider-account policy.
+L00004629	gui_related: false
+L00004630	gui_classification_reason: Requested/effective account identity and role-scoped provider-account policy are backend account-resolution behavior; F3-393 owns visible Settings placement.
+L00004631	depends_on:
+L00004632	  - MA-009
+L00004633	  - MA-015
+L00004634	  - MA-056
+L00004635	  - MS-108
+L00004636	unblocks: []
+L00004637	acceptance_criteria:
+L00004638	  - Goal Runtime role execution can carry requested and effective account identity for worker, planner, evaluator, verifier, and adjudicator provider use.
+L00004639	  - Multi-Account keeps ownership of account stickiness, failover, quota pressure, and provider-account policy.
+L00004640	  - Goal Runtime consumes role-scoped account identity without redefining provider-account behavior.
+L00004641	validation_surfaces:
+L00004642	  - python3 scripts/pm-plan-index.py validate
+L00004643	  - future Goal Runtime account-identity resolver review
+L00004644	risk_class: goal_runtime_account_identity_drift
+L00004645	reasoning_tier: high
+L00004646	context_scope: goal_runtime_account_policy
+L00004647	implementation_surfaces:
+L00004648	  - Plans/Multi-Account.md
+L00004649	  - Plans/Models_System.md
+L00004650	  - Plans/Goal_Runtime_System.md
+L00004651	node_compile_hint:
+L00004652	  mode: goal_runtime_account_identity_consumer
+L00004653	  create_worknodes: false
+L00004654	source_lineage:
+L00004655	  - pldg-20260616-001-goal-runtime-system:atom-0075
+L00004656	  - pldg-20260616-001-goal-runtime-system:atom-0076
+L00004657	  - pldg-20260616-001-goal-runtime-system:atom-0104
+L00004658	  - pldg-20260616-001-goal-runtime-system:atom-0105
+L00004659	  - pldg-20260616-001-goal-runtime-system:dec-0018
+L00004660	  - pldg-20260616-001-goal-runtime-system:dec-0019
+L00004661	preserved_exact_tokens:
+L00004662	  - "requested/effective account identity"
+L00004663	  - "worker"
+L00004664	  - "planner"
+L00004665	  - "evaluator"
+L00004666	  - "verifier"
+L00004667	  - "adjudicator"
+L00004668	  - "account stickiness"
+L00004669	  - "failover"
+L00004670	  - "quota pressure"
+L00004671	negative_constraints:
+L00004672	  - Do not let Goal Runtime redefine account stickiness, failover, quota pressure, or provider-account policy.
+L00004673	  - Do not infer effective account identity from model role alone.
+L00004674	owner_hints:
+L00004675	  - Plans/Multi-Account.md
+L00004676	  - Plans/Models_System.md
+L00004677	  - Plans/Goal_Runtime_System.md
+L00004678	```
+L00004679	
+L00004680	## Migration Coverage
+L00004681	
+L00004682	Original hash: `c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75`.
+L00004683	
+L00004684	Run-scoped proof artifacts:
+L00004685	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00004686	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00004687	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00004688	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00004689	
+L00004690	Phase 2B batch `phase2b-100-multi-account-lines-1-400` atomized `Multi-Account-S0002` through `Multi-Account-S0018` into `MA-002` through `MA-017`, dispositioned `Multi-Account-S0001` as the structural title anchor, and left `Multi-Account-S0019` as the next residual source-preserving cursor because that span crossed the line-400 window. Phase 2B batch `phase2b-101-multi-account-lines-354-740` atomized `Multi-Account-S0019` through `Multi-Account-S0034` into `MA-018` through `MA-053` and left `Multi-Account-S0035` as the next residual source-preserving cursor because that span crossed the line-740 window. Phase 2B batch `phase2b-102-multi-account-lines-740-952` atomized `Multi-Account-S0035` through `Multi-Account-S0037` into `MA-054` through `MA-059`, dispositioned `Multi-Account-S0038`, `Multi-Account-S0039`, and `Multi-Account-S0041` as structural rows, and retired `MA-001` to `source_preserving_bridge_retired` migration-lineage compatibility for `Multi-Account-S0040`. `Plans/Multi-Account.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00004691	
+L00004692	
+L00004693	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00004694	
+L00004695	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00004696	
+
+<<< CONTEXT_AFTER canonical_document_lines=4697-4708 >>>
+L00004697	### MA-061 - Testing Capability Policy Inheritance Consumer
+L00004698	
+L00004699	```yaml
+L00004700	plan_unit_id: MA-061
+L00004701	unit_type: requirement
+L00004702	status: accepted
+L00004703	owner_doc: Plans/Multi-Account.md
+L00004704	canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
+L00004705	gui_related: true
+L00004706	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00004707	depends_on: []
+L00004708	unblocks: []

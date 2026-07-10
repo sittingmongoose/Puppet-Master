@@ -1,0 +1,140 @@
+<<< CONTEXT_BEFORE canonical_document_lines=16659-16670 >>>
+L00016659	- `governance_record.v1:{project_id}:corroboration:{corroboration_id}`
+L00016660	- `governance_record.v1:{project_id}:promotion:{promotion_id}`
+L00016661	- `governance_record.v1:{project_id}:graph_patch:{graph_patch_id}`
+L00016662	- `projection_trust_record.v1:{project_id}:{projection_id}`
+L00016663	
+L00016664	Storage rules:
+L00016665	- records are append-verified through seglog before redb projection updates
+L00016666	- redb projections may expose current summaries, but mutation authority requires either `projection_trust.status = current` or direct canonical revalidation
+L00016667	- `projection_freshness` and `projection_health` remain the storage-owned trust fields; `trust-state` is a compatibility alias for the combined `projection_trust` record
+L00016668	- graph-patch application history preserves `graph_generation_id`, `decision_ref`, and `state_transition_report_ref` so previous generations remain historical rather than erased
+L00016669	- promotion, corroboration, graph-patch, and projection-trust records can reference concern records, but they do not replace concern lifecycle ownership
+L00016670	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=16671-16795 >>>
+L00016671	### SP-233 - Governance Runtime Record Storage Binding
+L00016672	
+L00016673	```yaml
+L00016674	plan_unit_id: SP-233
+L00016675	unit_type: schema_contract
+L00016676	status: accepted
+L00016677	owner_doc: Plans/storage-plan.md
+L00016678	canonical_text: >-
+L00016679	  Storage binds governance runtime records from Contracts_V0 CV-315 to durable keys for corroboration, promotion,
+L00016680	  graph_patch, and projection_trust. Seglog remains the source of truth; redb projections expose current summaries.
+L00016681	  trust-state is a compatibility alias for projection_trust, and non-current trust states require direct canonical
+L00016682	  revalidation before mutation/export authority.
+L00016683	gui_related: false
+L00016684	gui_classification_reason: Defines backend storage keys and projection trust, not visual layout.
+L00016685	depends_on: [CV-315]
+L00016686	unblocks: [N-006, RGV-008]
+L00016687	acceptance_criteria:
+L00016688	  - Corroboration, promotion, graph_patch, and projection_trust have versioned storage keys.
+L00016689	  - Seglog is the source of truth and redb projections are derived.
+L00016690	  - Stale, degraded, or unavailable projection trust blocks mutation/export authority until direct canonical revalidation.
+L00016691	  - The storage binding creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, final manifests, or PNC-019 evidence.
+L00016692	validation_surfaces:
+L00016693	  - python3 scripts/pm-plan-index.py validate
+L00016694	  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+L00016695	risk_class: governance_runtime_storage_gap
+L00016696	reasoning_tier: high
+L00016697	context_scope: fable_newfeatures_governance_records
+L00016698	implementation_surfaces:
+L00016699	  - Plans/storage-plan.md
+L00016700	  - Plans/Contracts_V0.md
+L00016701	node_compile_hint:
+L00016702	  mode: governance_runtime_record_storage_binding
+L00016703	  create_worknodes: false
+L00016704	  create_nodeseeds: false
+L00016705	source_lineage:
+L00016706	  - fablereport.md:1179
+L00016707	  - Plans/.audits/fable-20260706/final_fable_action_state.jsonl
+L00016708	source_atom_ids: []
+L00016709	preserved_exact_tokens:
+L00016710	  - "corroboration"
+L00016711	  - "promotion"
+L00016712	  - "graph-patch"
+L00016713	  - "trust state"
+L00016714	negative_constraints:
+L00016715	  - Do not treat these storage keys as runtime lifecycle certification or clean-room proof.
+L00016716	  - Do not create implementation files, WorkNodes, NodeSeeds, queues, runtime launches, final manifests, or production build tasks.
+L00016717	owner_hints:
+L00016718	  - Plans/storage-plan.md
+L00016719	  - Plans/Contracts_V0.md
+L00016720	```
+L00016721	
+L00016722	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00016723	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00016724	
+L00016725	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00016726	
+L00016727	- `registry_line 119` (repaired; source line 550; `sfk-a1de91e6d5aa62a6816874f1`): kv.json/prompt-history.jsonl decision repaired: product path is migration to canonical seglog/redb families; atomic file write/locking is transitional debug/export mirror protection only. Source summary: - [HIGH] L2003: `kv.json`/`prompt-history.jsonl` "must either be migrated or protected by atomic write" unresolved either/or, no target key FIX: pick one path now.
+L00016728	
+L00016729	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+L00016730	
+L00016731	## Usage GUI Propagation Addendum - 2026-07-09
+L00016732	
+L00016733	This addendum binds Usage projection storage and alias handling for GUI consumers. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated storage registry rows, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00016734	
+L00016735	### SP-234 - Usage Projection Storage And Alias Contract
+L00016736	
+L00016737	```yaml
+L00016738	plan_unit_id: SP-234
+L00016739	unit_type: storage_contract
+L00016740	status: accepted
+L00016741	owner_doc: Plans/storage-plan.md
+L00016742	canonical_text: >-
+L00016743	  Storage owns the durable projection joins that let GUI surfaces recover UsageRecord identity and route/open state without recomputing accounting. Usage projection records and runtime-artifact projector families carry usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance. Compatibility aliases such as usage_id, input_tokens, output_tokens, cache_read_tokens, cache_creation_input_tokens, cost_usd, usage_source_kind, UnifiedUsageRecord, estimated_cost_microdollars, and final_cost_microdollars are migration/display inputs only and normalize to UF-085 fields before persistence, aggregation, or GUI projection. `usage_event_ref` remains a usage/storage join and normalizes through route_target.object_kind = usage_event for route/open; it does not become a separate route selector.
+L00016744	gui_related: false
+L00016745	gui_classification_reason: Storage projection fields support GUI consumers but are backend persistence contracts.
+L00016746	depends_on: [SP-230, SP-231, UF-087, CV-316, RAP-044]
+L00016747	unblocks: []
+L00016748	acceptance_criteria:
+L00016749	  - Usage projection records persist usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance when available.
+L00016750	  - Runtime artifact projector records can join cost_usage and tool_llm_trace artifacts to Usage, Ledger, Context Detail Pane, Run Graph, and Orchestrator without timestamp/run/thread/tier primary routing.
+L00016751	  - Compatibility aliases normalize to UF-085 fields before persistence or GUI projection and cannot become a competing UsageRecord schema.
+L00016752	  - Redaction records preserve raw_payload_ref, redaction_status, provider_payload_hash, omitted counts, and permission state while excluding credentials, account identifiers, and local paths.
+L00016753	validation_surfaces:
+L00016754	  - python3 scripts/pm-plan-index.py validate
+L00016755	  - python3 scripts/pm-plans-verify.py run-gates
+L00016756	  - future usage projection storage fixture suite
+L00016757	risk_class: usage_projection_storage_alias_drift
+L00016758	reasoning_tier: high
+L00016759	context_scope: usage_projection_storage
+L00016760	implementation_surfaces:
+L00016761	  - Plans/storage-plan.md
+L00016762	  - Plans/usage-feature.md
+L00016763	  - Plans/Contracts_V0.md
+L00016764	  - Plans/Runtime_Artifacts_Panel.md
+L00016765	node_compile_hint:
+L00016766	  mode: usage_projection_storage_alias_contract
+L00016767	  create_worknodes: false
+L00016768	  create_nodeseeds: false
+L00016769	source_lineage:
+L00016770	  - "Plans/storage-plan.md:53-109"
+L00016771	  - "Plans/storage-plan.md:651-690"
+L00016772	  - "Plans/storage-plan.md:1606-1800"
+L00016773	  - "Plans/usage-feature.md:514-522"
+L00016774	  - "Plans/usage-feature.md:5412-5605"
+L00016775	  - "Plans/Runtime_Artifacts_Panel.md:288-316"
+L00016776	preserved_exact_tokens:
+L00016777	  - usage_record_id
+L00016778	  - usage_event_ref
+L00016779	  - provider_attempt_ref
+L00016780	  - projection_freshness
+L00016781	  - projection_health
+L00016782	  - checkpoint cursor
+L00016783	  - usage_id
+L00016784	  - cost_usd
+L00016785	  - UnifiedUsageRecord
+L00016786	negative_constraints:
+L00016787	  - Do not hand-edit generated storage registry rows for this PlanUnit.
+L00016788	  - Do not keep compatibility aliases as canonical persisted authority fields.
+L00016789	  - Do not use usage_event_ref as a route selector that bypasses object_kind/object_id normalization.
+L00016790	  - Do not persist unredacted provider payloads, credentials, account identifiers, or local paths.
+L00016791	owner_hints:
+L00016792	  - Plans/storage-plan.md
+L00016793	  - Plans/usage-feature.md
+L00016794	  - Plans/Contracts_V0.md
+L00016795	```

@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE 21360-21371 >>>
+- Copilot
+- canonical coordination state + prompt injection
+negative_constraints: []
+compatibility_only_notes:
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 21372-21762 >>>
+### OSI-253 - Cross-Worktree Awareness
+
+```yaml
+plan_unit_id: OSI-253
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Agents running in separate worktrees read shared main-repo state, read the projected active-agent state, write their own
+  status through the same coordination path before starting work, and update active file/operation status during work.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend cross-worktree coordination behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-216
+- OSI-225
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Cross-worktree workers use the shared projected coordination path for status awareness.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: cross_worktree_awareness
+node_compile_hint:
+  mode: cross_worktree_awareness
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- separate worktrees
+- main repo
+- Write their own status
+- Update status as they work
+negative_constraints: []
+compatibility_only_notes:
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-254 - Coordination Prompt Injection Content
+
+```yaml
+plan_unit_id: OSI-254
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Coordination prompt injection includes active agents, files being modified, platform context, and task-specific conflict
+  guidance such as avoiding a file until the active worker finishes.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend prompt context assembly and conflict guidance rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-227
+- OSI-251
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Prompt examples are preserved as evidence and do not define hardcoded message text.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: coordination_prompt_injection_content
+node_compile_hint:
+  mode: coordination_prompt_injection_content
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- Active Agents
+- Files Being Modified
+- Your Task
+- Avoid editing
+negative_constraints: []
+compatibility_only_notes:
+- Prompt block is example evidence only.
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-255 - Cross-Platform Coordination Scenario Evidence
+
+```yaml
+plan_unit_id: OSI-255
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The Codex and Claude example demonstrates cross-platform coordination through registration, projected file-status updates,
+  periodic reads, conflict avoidance, and unregistering after completion.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend coordination scenario evidence rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-253
+- OSI-254
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- JSON examples are preserved as evidence and not as a final storage schema override.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: cross_platform_coordination_scenario_evidence
+node_compile_hint:
+  mode: cross_platform_coordination_scenario_evidence
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- rust-engineer-1.1.1
+- test-automator-1.1.2
+- active-agents.json
+- Codex
+- Claude Code
+negative_constraints: []
+compatibility_only_notes:
+- JSON scenario block is example evidence only.
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-256 - Platform Field In Active-Agent Projection
+
+```yaml
+plan_unit_id: OSI-256
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Active-agent coordination projection includes a platform field so agents can see which platform other agents are using,
+  alongside active agent ids, worktree paths, current operations, files being edited, and last update timestamps.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend projection fields rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-251
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Platform field behavior remains part of active-agent projection rather than GUI copy ownership.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_field_active_agent_projection
+node_compile_hint:
+  mode: platform_field_active_agent_projection
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- platform
+- active_agents
+- worktree_path
+- last_update
+- codex
+- claude
+negative_constraints: []
+compatibility_only_notes:
+- JSON block is example evidence only.
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-257 - ActiveAgent And Coordination State Data Model
+
+```yaml
+plan_unit_id: OSI-257
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  ActiveAgent, AgentCoordinationState, and AgentCoordinator are source-lineage data-model names for active-agent identity,
+  role/type, platform, node/lane/run identity, worktree path, files being edited, current operation, start time, and
+  last-update timestamp. Canonical implementations persist those fields through coordination EventRecords and redb
+  projections rather than a JSON state file.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend coordination data model fields rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-225
+- OSI-256
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Data-model examples remain aligned with canonical coordination and runtime identity ownership.
+- Canonical runtime state is represented by coordination records/projections; `AgentCoordinationState` is not a file-backed source-of-truth contract.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: activeagent_coordination_state_data_model
+node_compile_hint:
+  mode: activeagent_coordination_state_data_model
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- DRY:DATA:ActiveAgent
+- agent_type
+- run_id
+- files_being_edited
+- DRY:DATA:AgentCoordinator
+- AgentCoordinationState
+negative_constraints: []
+compatibility_only_notes:
+- Rust data model block is plan evidence and must reconcile with canonical storage/runtime owners before implementation.
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions:
+- File-backed `AgentCoordinationState` persistence is retired source-lineage unless registered as a debug/export mirror.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-258 - AgentCoordinator Construction And Registration API
+
+```yaml
+plan_unit_id: OSI-258
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  AgentCoordinator construction may preserve the `.puppet-master/state/active-agents.json` path only as a debug/export
+  mirror location, while canonical `register_agent` behavior appends `coordination.agent_registered`, projects by
+  agent_id, updates the agent revision/checkpoint, and requires the agent platform field to come from node_config.platform
+  rather than a hardcoded platform.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend coordinator construction and registration API behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-257
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Registration preserves platform sourcing through node_config.platform and does not hardcode platforms.
+- Registration enters canonical state only through the coordination append API; loading or saving `active-agents.json` is mirror export behavior.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: agentcoordinator_construction_registration_api
+node_compile_hint:
+  mode: agentcoordinator_construction_registration_api
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- "new(project_root: &Path)"
+- register_agent
+- Utc::now()
+- node_config.platform
+- NEVER hardcode platform
+- .puppet-master/state/active-agents.json
+negative_constraints:
+- Agent platform must not be hardcoded in registration.
+- "`active-agents.json` must not be used as the canonical registration store."
+compatibility_only_notes:
+- active-agents.json path remains a projection/debug-path token and must not override canonical storage ownership.
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+stale_retired_dispositions:
+- Register-by-load/save JSON behavior is retired source-lineage and may exist only as mirror export reconstruction.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md'
+```
+
+### OSI-259 - Partial Status Update API Opening
+
+```yaml
+plan_unit_id: OSI-259
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Batch 131 preserves only the opening signature and first legacy state-load token for update_agent_status, including
+  agent_id, files_being_edited, current_operation, and `let mut state = self.load_state().await?`; canonical status
+  updates append `coordination.agent_status_updated`, `coordination.agent_operation_updated`, and
+  `coordination.agent_file_ownership_updated` instead of loading a canonical file.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers a backend coordination API opening rather than GUI presentation.
+split_recommended: true
+depends_on:
+- OSI-258
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- This unit does not claim complete update_agent_status behavior before source line 3829 is atomized.
+- The preserved `load_state` token is source-lineage only and cannot drive canonical status mutation.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: partial_status_update_api_opening
+node_compile_hint:
+  mode: partial_status_update_api_opening
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- update_agent_status
+- files_being_edited
+- current_operation
+- "let mut state = self.load_state().await?"
+negative_constraints:
+- Do not treat this partial opening as complete update_agent_status behavior.
+- Do not implement canonical status updates through read-modify-write of `.puppet-master/state/*.json`.
+compatibility_only_notes:
+- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual from line 3829.
+stale_retired_dispositions:
+- "`let mut state = self.load_state().await?` is retained as exact-token lineage only."
+owner_boundary_notes:
+- Residual cursor remains inside orchestrator-subagent-integration-S0142 at source line 3829.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 21763-21774 >>>
+### OSI-260 - Complete Status Update Mutation
+
+```yaml
+plan_unit_id: OSI-260
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  update_agent_status completes mutation of the active agent projection by appending status, operation, and file-activity
+  events with CAS on agent revision/last-applied event id, then projecting files_being_edited, current_operation, and
+  last_update; it returns an error when the agent_id is absent from the authoritative projection.
+gui_related: false

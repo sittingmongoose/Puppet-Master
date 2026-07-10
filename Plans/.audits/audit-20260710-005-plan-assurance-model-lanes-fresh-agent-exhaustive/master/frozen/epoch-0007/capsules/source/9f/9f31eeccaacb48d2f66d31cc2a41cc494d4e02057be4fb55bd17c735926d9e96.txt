@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=30168-30179 >>>
+L00030168	- watchdog_recheck
+L00030169	negative_constraints:
+L00030170	- Newly ready nodes must not be deferred to a later sweep when eligible in the same wake cycle.
+L00030171	compatibility_only_notes: []
+L00030172	stale_retired_dispositions: []
+L00030173	owner_boundary_notes:
+L00030174	- Executor/runtime contracts own canonical wake events.
+L00030175	owner_hints:
+L00030176	- Plans/orchestrator-subagent-integration.md
+L00030177	preserved_contractrefs: []
+L00030178	```
+L00030179	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=30180-30545 >>>
+L00030180	### OSI-412 - Temporal Wait And Timeout Scheduler Semantics
+L00030181	
+L00030182	```yaml
+L00030183	plan_unit_id: OSI-412
+L00030184	unit_type: requirement
+L00030185	status: accepted
+L00030186	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030187	canonical_text: >-
+L00030188	  Orchestrator treats scheduled observations, wait timers, and governance waits as explicit scheduler inputs and must not
+L00030189	  infer skipped/failed, stall, pause, or blocked outcomes before the governing timestamp or timer expires.
+L00030190	gui_related: false
+L00030191	gui_classification_reason: This unit covers backend wait/timeout semantics, not GUI presentation.
+L00030192	split_recommended: false
+L00030193	depends_on:
+L00030194	- OSI-411
+L00030195	- OSI-017
+L00030196	unblocks: []
+L00030197	acceptance_criteria:
+L00030198	- Covered temporal observation and wait scheduling section remains losslessly available for exact-text audit.
+L00030199	- Orchestrator must not infer stale-observation failure before governing timestamp or timer expiry.
+L00030200	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030201	validation_surfaces:
+L00030202	- >-
+L00030203	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030204	- python3 scripts/pm-plan-index.py validate
+L00030205	reasoning_tier: standard
+L00030206	context_scope: orchestrator_subagent_standardization
+L00030207	implementation_surfaces:
+L00030208	- Plans/orchestrator-subagent-integration.md
+L00030209	risk_class: temporal_wait_timeout_scheduler_semantics
+L00030210	node_compile_hint:
+L00030211	  mode: temporal_wait_timeout_scheduler_semantics
+L00030212	  create_worknodes: false
+L00030213	source_lineage:
+L00030214	- >-
+L00030215	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0207
+L00030216	preserved_exact_tokens:
+L00030217	- scheduled_workflow_observation_gap
+L00030218	- skipped/failed
+L00030219	- environment_wait_timer
+L00030220	- approval_wait
+L00030221	- queue_wait
+L00030222	- deadlock/stall
+L00030223	- /stall
+L00030224	- timeout_class?
+L00030225	- wait_state_class?
+L00030226	- hard execution timeout
+L00030227	- inactivity timeout
+L00030228	- polling timeout
+L00030229	- reconnect timeout
+L00030230	- user-visible wait timer expiry
+L00030231	negative_constraints:
+L00030232	- Orchestrator/receipts MUST NOT assume skipped/failed merely because no fresh observation arrived.
+L00030233	- Known future-timestamp waits MUST NOT trigger deadlock/stall escalation before expiry.
+L00030234	compatibility_only_notes:
+L00030235	- Receipt timeout/wait fields preserve stale-observation recovery context.
+L00030236	stale_retired_dispositions:
+L00030237	- Stale observation alone is not failure evidence before timer expiry.
+L00030238	owner_boundary_notes:
+L00030239	- Runtime taxonomy owns timeout and wait-state classes.
+L00030240	owner_hints:
+L00030241	- Plans/orchestrator-subagent-integration.md
+L00030242	preserved_contractrefs: []
+L00030243	```
+L00030244	
+L00030245	### OSI-413 - Runtime Projection Fields Surfaced By Orchestrator
+L00030246	
+L00030247	```yaml
+L00030248	plan_unit_id: OSI-413
+L00030249	unit_type: requirement
+L00030250	status: accepted
+L00030251	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030252	canonical_text: Orchestrator runtime projections must be able to surface the listed attempt, retry, wake, scheduler, backoff,
+L00030253	  safe-point, remediation, and replan fields from owner runtime/storage contracts.
+L00030254	gui_related: false
+L00030255	gui_classification_reason: This unit covers backend runtime projection fields, not GUI presentation.
+L00030256	split_recommended: false
+L00030257	depends_on:
+L00030258	- OSI-017
+L00030259	- OSI-018
+L00030260	- OSI-019
+L00030261	- OSI-020
+L00030262	unblocks: []
+L00030263	acceptance_criteria:
+L00030264	- Covered runtime field list and ContractRefs remain losslessly available for exact-text audit.
+L00030265	- Orchestrator surfaces fields as a consumer and does not redefine storage/runtime contracts.
+L00030266	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030267	validation_surfaces:
+L00030268	- >-
+L00030269	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030270	- python3 scripts/pm-plan-index.py validate
+L00030271	reasoning_tier: standard
+L00030272	context_scope: orchestrator_subagent_standardization
+L00030273	implementation_surfaces:
+L00030274	- Plans/orchestrator-subagent-integration.md
+L00030275	risk_class: runtime_projection_fields_surfaced_by_orchestrator
+L00030276	node_compile_hint:
+L00030277	  mode: runtime_projection_fields_surfaced_by_orchestrator
+L00030278	  create_worknodes: false
+L00030279	source_lineage:
+L00030280	- >-
+L00030281	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0208
+L00030282	preserved_exact_tokens:
+L00030283	- attempt_count
+L00030284	- retry_count
+L00030285	- failure_class
+L00030286	- blocked_reason_code
+L00030287	- wake_reason
+L00030288	- scheduler_lane
+L00030289	- scheduler_score_breakdown
+L00030290	- ready_since_utc
+L00030291	- selected_at_utc
+L00030292	- backoff_until_utc
+L00030293	- safe_point_id
+L00030294	- remediation_root_id
+L00030295	- remediation_parent_attempt_id
+L00030296	- replan_generation
+L00030297	negative_constraints:
+L00030298	- Orchestrator must not redefine storage/runtime contracts for these fields.
+L00030299	compatibility_only_notes: []
+L00030300	stale_retired_dispositions: []
+L00030301	owner_boundary_notes:
+L00030302	- storage-plan, Run Graph View, and Orchestrator Page own referenced projection surfaces.
+L00030303	owner_hints:
+L00030304	- Plans/orchestrator-subagent-integration.md
+L00030305	preserved_contractrefs:
+L00030306	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md'
+L00030307	```
+L00030308	
+L00030309	### OSI-414 - Remediation Child Lineage Flow
+L00030310	
+L00030311	```yaml
+L00030312	plan_unit_id: OSI-414
+L00030313	unit_type: requirement
+L00030314	status: accepted
+L00030315	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030316	canonical_text: >-
+L00030317	  Remediation flow preserves structured finding classification, remediation child lineage, canonical context plus finding
+L00030318	  set, retry/safe-point behavior, remediation ceilings, and explicit recovery options.
+L00030319	gui_related: false
+L00030320	gui_classification_reason: This unit covers backend remediation lineage flow, not GUI presentation.
+L00030321	split_recommended: false
+L00030322	depends_on:
+L00030323	- OSI-166
+L00030324	- OSI-169
+L00030325	- OSI-172
+L00030326	- OSI-197
+L00030327	- OSI-231
+L00030328	unblocks: []
+L00030329	acceptance_criteria:
+L00030330	- Covered remediation flow and relevant acceptance bullet remain losslessly available for exact-text audit.
+L00030331	- Remediation evidence does not create executable remediation tasks.
+L00030332	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030333	validation_surfaces:
+L00030334	- >-
+L00030335	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030336	- python3 scripts/pm-plan-index.py validate
+L00030337	reasoning_tier: standard
+L00030338	context_scope: orchestrator_subagent_standardization
+L00030339	implementation_surfaces:
+L00030340	- Plans/orchestrator-subagent-integration.md
+L00030341	risk_class: remediation_child_lineage_flow
+L00030342	node_compile_hint:
+L00030343	  mode: remediation_child_lineage_flow
+L00030344	  create_worknodes: false
+L00030345	source_lineage:
+L00030346	- >-
+L00030347	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0209
+L00030348	- >-
+L00030349	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030350	preserved_exact_tokens:
+L00030351	- Canonical remediation flow
+L00030352	- remediation child
+L00030353	- same canonical context plus finding set
+L00030354	- retry ceiling
+L00030355	- remediation ceiling
+L00030356	- exact recovery options
+L00030357	negative_constraints:
+L00030358	- Remediation flow evidence does not create executable remediation tasks.
+L00030359	compatibility_only_notes: []
+L00030360	stale_retired_dispositions: []
+L00030361	owner_boundary_notes:
+L00030362	- Executor/runtime contracts own remediation execution and retry policy.
+L00030363	owner_hints:
+L00030364	- Plans/orchestrator-subagent-integration.md
+L00030365	preserved_contractrefs: []
+L00030366	```
+L00030367	
+L00030368	### OSI-415 - Retry Backoff Classifier Matrix
+L00030369	
+L00030370	```yaml
+L00030371	plan_unit_id: OSI-415
+L00030372	unit_type: requirement
+L00030373	status: accepted
+L00030374	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030375	canonical_text: >-
+L00030376	  Retry/backoff classifier behavior preserves executor classifier families, auto-retry/backoff/safe-point/remediation
+L00030377	  matrix entries, and the rule that blocked reasons must not be coerced into failure_class.
+L00030378	gui_related: false
+L00030379	gui_classification_reason: This unit covers backend retry/backoff classification, not GUI presentation.
+L00030380	split_recommended: false
+L00030381	depends_on:
+L00030382	- OSI-017
+L00030383	- OSI-413
+L00030384	- OSI-414
+L00030385	unblocks: []
+L00030386	acceptance_criteria:
+L00030387	- Covered retry/backoff matrix and relevant acceptance bullet remain losslessly available for exact-text audit.
+L00030388	- Orchestrator must preserve classifier family and must not coerce blocked reasons into failure_class.
+L00030389	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030390	validation_surfaces:
+L00030391	- >-
+L00030392	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030393	- python3 scripts/pm-plan-index.py validate
+L00030394	reasoning_tier: standard
+L00030395	context_scope: orchestrator_subagent_standardization
+L00030396	implementation_surfaces:
+L00030397	- Plans/orchestrator-subagent-integration.md
+L00030398	risk_class: retry_backoff_classifier_matrix
+L00030399	node_compile_hint:
+L00030400	  mode: retry_backoff_classifier_matrix
+L00030401	  create_worknodes: false
+L00030402	source_lineage:
+L00030403	- >-
+L00030404	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0210
+L00030405	- >-
+L00030406	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030407	preserved_exact_tokens:
+L00030408	- failure_class
+L00030409	- blocked_reason_code
+L00030410	- provider_transient
+L00030411	- structured_output_invalid
+L00030412	- verification_failed
+L00030413	- reviewer_findings
+L00030414	- permission_denied
+L00030415	- filesafe_blocked
+L00030416	- external_side_effect_blocked
+L00030417	- auth_expired
+L00030418	- graph_integrity
+L00030419	- replan_required
+L00030420	negative_constraints:
+L00030421	- Preserve classifier family; do not coerce blocked reasons into failure_class.
+L00030422	compatibility_only_notes: []
+L00030423	stale_retired_dispositions: []
+L00030424	owner_boundary_notes:
+L00030425	- Executor Protocol, Decision Policy, and Run Modes own classifier taxonomy.
+L00030426	owner_hints:
+L00030427	- Plans/orchestrator-subagent-integration.md
+L00030428	preserved_contractrefs:
+L00030429	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md'
+L00030430	```
+L00030431	
+L00030432	### OSI-416 - Decomposition Degradation Boundary
+L00030433	
+L00030434	```yaml
+L00030435	plan_unit_id: OSI-416
+L00030436	unit_type: requirement
+L00030437	status: accepted
+L00030438	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030439	canonical_text: >-
+L00030440	  Decomposition fallback may flatten only during draft planning before canonical graph lock; after graph lock, invalid graph
+L00030441	  structure is an integrity failure rather than a fallback case.
+L00030442	gui_related: false
+L00030443	gui_classification_reason: This unit covers backend decomposition/graph boundary behavior, not GUI presentation.
+L00030444	split_recommended: false
+L00030445	depends_on:
+L00030446	- OSI-018
+L00030447	unblocks: []
+L00030448	acceptance_criteria:
+L00030449	- Covered decomposition degradation and draft fallback sections remain losslessly available for exact-text audit.
+L00030450	- After graph lock, invalid graph structure is an integrity failure, not a fallback case.
+L00030451	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030452	validation_surfaces:
+L00030453	- >-
+L00030454	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030455	- python3 scripts/pm-plan-index.py validate
+L00030456	reasoning_tier: standard
+L00030457	context_scope: orchestrator_subagent_standardization
+L00030458	implementation_surfaces:
+L00030459	- Plans/orchestrator-subagent-integration.md
+L00030460	risk_class: decomposition_degradation_boundary
+L00030461	node_compile_hint:
+L00030462	  mode: decomposition_degradation_boundary
+L00030463	  create_worknodes: false
+L00030464	source_lineage:
+L00030465	- >-
+L00030466	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0211
+L00030467	- >-
+L00030468	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0219
+L00030469	preserved_exact_tokens:
+L00030470	- draft planning/decomposition before canonical graph lock
+L00030471	- canonical orchestrator execution after graph lock
+L00030472	- degraded flat draft plan
+L00030473	- invalid graph structure
+L00030474	- integrity failure
+L00030475	negative_constraints:
+L00030476	- After graph lock, invalid graph structure is an integrity failure, not a fallback case.
+L00030477	compatibility_only_notes:
+L00030478	- Draft fallback applies only before graph lock.
+L00030479	stale_retired_dispositions: []
+L00030480	owner_boundary_notes:
+L00030481	- Chain wizard, interview, progression gate, executor, and decision policy owners retain graph-lock semantics.
+L00030482	owner_hints:
+L00030483	- Plans/orchestrator-subagent-integration.md
+L00030484	preserved_contractrefs:
+L00030485	- 'ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md'
+L00030486	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/chain-wizard-flexibility.md'
+L00030487	- 'ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md'
+L00030488	```
+L00030489	
+L00030490	### OSI-417 - Event Driven GUI Projection Alignment
+L00030491	
+L00030492	```yaml
+L00030493	plan_unit_id: OSI-417
+L00030494	unit_type: requirement
+L00030495	status: accepted
+L00030496	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030497	canonical_text: >-
+L00030498	  Queue and remediation UI projections update from event/projection streams; steady-state polling is not authoritative,
+L00030499	  though debug/watchdog or non-authoritative background refresh polling may remain.
+L00030500	gui_related: true
+L00030501	gui_classification_reason: This unit covers queue/remediation UI projection behavior.
+L00030502	split_recommended: false
+L00030503	depends_on:
+L00030504	- OSI-409
+L00030505	- OSI-411
+L00030506	- OSI-414
+L00030507	unblocks: []
+L00030508	acceptance_criteria:
+L00030509	- Covered event-driven GUI alignment section and UI acceptance bullet remain losslessly available for exact-text audit.
+L00030510	- UI queue/remediation updates must come from event/projection streams rather than authoritative polling loops.
+L00030511	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030512	validation_surfaces:
+L00030513	- >-
+L00030514	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030515	- python3 scripts/pm-plan-index.py validate
+L00030516	reasoning_tier: standard
+L00030517	context_scope: orchestrator_subagent_standardization
+L00030518	implementation_surfaces:
+L00030519	- Plans/orchestrator-subagent-integration.md
+L00030520	risk_class: event_driven_gui_projection_alignment
+L00030521	node_compile_hint:
+L00030522	  mode: event_driven_gui_projection_alignment
+L00030523	  create_worknodes: false
+L00030524	source_lineage:
+L00030525	- >-
+L00030526	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0212
+L00030527	- >-
+L00030528	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030529	preserved_exact_tokens:
+L00030530	- event-driven projection updates
+L00030531	- Polling may remain only for debug/watchdog or non-authoritative background refresh
+L00030532	- Queue and remediation UI
+L00030533	- event/projection streams
+L00030534	negative_constraints:
+L00030535	- Queue and remediation UI must not depend on authoritative polling loops for correctness.
+L00030536	compatibility_only_notes:
+L00030537	- Debug/watchdog and non-authoritative background refresh polling remain compatibility use cases.
+L00030538	stale_retired_dispositions: []
+L00030539	owner_boundary_notes:
+L00030540	- Runtime/projection streams own canonical updates; UI consumes projections.
+L00030541	owner_hints:
+L00030542	- Plans/orchestrator-subagent-integration.md
+L00030543	preserved_contractrefs: []
+L00030544	```
+L00030545	
+
+<<< CONTEXT_AFTER canonical_document_lines=30546-30557 >>>
+L00030546	### OSI-418 - Runtime Scheduler Consumer Alignment And Required Fields
+L00030547	
+L00030548	```yaml
+L00030549	plan_unit_id: OSI-418
+L00030550	unit_type: requirement
+L00030551	status: accepted
+L00030552	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030553	canonical_text: >-
+L00030554	  Orchestrator consumes the runtime scheduler contract and must retain queue analysis, attempt identity, remediation lineage,
+L00030555	  blocked outcomes, and required per-runnable-unit fields including permission/model snapshot identifiers.
+L00030556	gui_related: false
+L00030557	gui_classification_reason: This unit covers backend scheduler consumer fields, not GUI presentation.

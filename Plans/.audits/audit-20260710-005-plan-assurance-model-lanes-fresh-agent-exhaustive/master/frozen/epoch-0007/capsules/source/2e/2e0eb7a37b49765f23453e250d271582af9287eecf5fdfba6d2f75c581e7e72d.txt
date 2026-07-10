@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE canonical_document_lines=25988-25999 >>>
+L00025988	negative_constraints:
+L00025989	- '`100` versus `20` thresholds are tuning evidence, not a product decision.'
+L00025990	compatibility_only_notes:
+L00025991	- Filter and summarization snippet is evidence only.
+L00025992	stale_retired_dispositions: []
+L00025993	owner_boundary_notes:
+L00025994	- Prompt/token budgeting remains owned by prompt pipeline and runtime owners.
+L00025995	owner_hints:
+L00025996	- Plans/orchestrator-subagent-integration.md
+L00025997	preserved_contractrefs: []
+L00025998	```
+L00025999	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=26000-26385 >>>
+L00026000	### OSI-337 - Conflict Resolution And File Locking Gap
+L00026001	
+L00026002	```yaml
+L00026003	plan_unit_id: OSI-337
+L00026004	unit_type: requirement
+L00026005	status: accepted
+L00026006	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026007	canonical_text: >-
+L00026008	  Preserve Gap #33 conflict detection, delay/alternative/escalate options, file-level locking, `30 minutes` expiry, and
+L00026009	  serialize/reassign mitigation evidence.
+L00026010	gui_related: false
+L00026011	gui_classification_reason: This unit covers backend conflict resolution and locking rather than GUI presentation.
+L00026012	split_recommended: false
+L00026013	depends_on:
+L00026014	- OSI-276
+L00026015	- OSI-322
+L00026016	- OSI-323
+L00026017	unblocks: []
+L00026018	acceptance_criteria:
+L00026019	- Covered conflict-resolution bullets remain losslessly available for exact-text audit.
+L00026020	- Stale lock release remains compatibility evidence until owner adjudication.
+L00026021	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026022	validation_surfaces:
+L00026023	- >-
+L00026024	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026025	- python3 scripts/pm-plan-index.py validate
+L00026026	reasoning_tier: standard
+L00026027	context_scope: orchestrator_subagent_standardization
+L00026028	implementation_surfaces:
+L00026029	- Plans/orchestrator-subagent-integration.md
+L00026030	risk_class: conflict_resolution_and_file_locking_gap
+L00026031	node_compile_hint:
+L00026032	  mode: conflict_resolution_and_file_locking_gap
+L00026033	  create_worknodes: false
+L00026034	source_lineage:
+L00026035	- >-
+L00026036	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026037	preserved_exact_tokens:
+L00026038	- 'Gap #33: Conflict resolution and file locking'
+L00026039	- Conflict detection
+L00026040	- File-level locking
+L00026041	- 30 minutes
+L00026042	- Orchestrator intervention
+L00026043	- serialize execution
+L00026044	negative_constraints:
+L00026045	- Stale lock release remains compatibility evidence until owner adjudication.
+L00026046	compatibility_only_notes:
+L00026047	- Conflict-resolution options are mitigation evidence, not executable work.
+L00026048	stale_retired_dispositions:
+L00026049	- File-lock expiry and stale lock release remain compatibility evidence.
+L00026050	owner_boundary_notes:
+L00026051	- Runtime/storage owners decide canonical conflict and locking behavior.
+L00026052	owner_hints:
+L00026053	- Plans/orchestrator-subagent-integration.md
+L00026054	preserved_contractrefs: []
+L00026055	```
+L00026056	
+L00026057	### OSI-338 - FileLock And Conflict Detection Example
+L00026058	
+L00026059	```yaml
+L00026060	plan_unit_id: OSI-338
+L00026061	unit_type: requirement
+L00026062	status: accepted
+L00026063	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026064	canonical_text: >-
+L00026065	  Preserve `FileLock`, `check_file_conflicts`, `files_to_edit`, `files_being_edited.contains(file)`, and `FileConflict` evidence.
+L00026066	gui_related: false
+L00026067	gui_classification_reason: This unit covers backend conflict-detection example code rather than GUI presentation.
+L00026068	split_recommended: false
+L00026069	depends_on:
+L00026070	- OSI-337
+L00026071	- OSI-257
+L00026072	unblocks: []
+L00026073	acceptance_criteria:
+L00026074	- Covered FileLock/conflict snippet remains losslessly available for exact-text audit.
+L00026075	- The example does not make `file_locks` canonical storage schema.
+L00026076	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026077	validation_surfaces:
+L00026078	- >-
+L00026079	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026080	- python3 scripts/pm-plan-index.py validate
+L00026081	reasoning_tier: standard
+L00026082	context_scope: orchestrator_subagent_standardization
+L00026083	implementation_surfaces:
+L00026084	- Plans/orchestrator-subagent-integration.md
+L00026085	risk_class: filelock_and_conflict_detection_example
+L00026086	node_compile_hint:
+L00026087	  mode: filelock_and_conflict_detection_example
+L00026088	  create_worknodes: false
+L00026089	source_lineage:
+L00026090	- >-
+L00026091	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026092	preserved_exact_tokens:
+L00026093	- FileLock
+L00026094	- check_file_conflicts
+L00026095	- files_to_edit
+L00026096	- files_being_edited.contains(file)
+L00026097	- FileConflict
+L00026098	- conflicting_platform
+L00026099	negative_constraints:
+L00026100	- '`file_locks` does not become canonical storage schema from this example.'
+L00026101	compatibility_only_notes:
+L00026102	- Rust snippet is evidence only.
+L00026103	stale_retired_dispositions: []
+L00026104	owner_boundary_notes:
+L00026105	- Storage owners retain canonical file-lock schema authority.
+L00026106	owner_hints:
+L00026107	- Plans/orchestrator-subagent-integration.md
+L00026108	preserved_contractrefs: []
+L00026109	```
+L00026110	
+L00026111	### OSI-339 - Acquire File Lock Compatibility Example
+L00026112	
+L00026113	```yaml
+L00026114	plan_unit_id: OSI-339
+L00026115	unit_type: requirement
+L00026116	status: accepted
+L00026117	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026118	canonical_text: >-
+L00026119	  Preserve the `acquire_file_lock` example that currently checks `files_being_edited`, pushes file paths, updates
+L00026120	  `last_update`, saves state, and returns `Ok(false)` when unavailable.
+L00026121	gui_related: false
+L00026122	gui_classification_reason: This unit covers backend file-lock compatibility example code rather than GUI presentation.
+L00026123	split_recommended: false
+L00026124	depends_on:
+L00026125	- OSI-338
+L00026126	unblocks: []
+L00026127	acceptance_criteria:
+L00026128	- Covered acquire-file-lock snippet remains losslessly available for exact-text audit.
+L00026129	- The example is not promoted to live lock semantics.
+L00026130	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026131	validation_surfaces:
+L00026132	- >-
+L00026133	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026134	- python3 scripts/pm-plan-index.py validate
+L00026135	reasoning_tier: standard
+L00026136	context_scope: orchestrator_subagent_standardization
+L00026137	implementation_surfaces:
+L00026138	- Plans/orchestrator-subagent-integration.md
+L00026139	risk_class: acquire_file_lock_compatibility_example
+L00026140	node_compile_hint:
+L00026141	  mode: acquire_file_lock_compatibility_example
+L00026142	  create_worknodes: false
+L00026143	source_lineage:
+L00026144	- >-
+L00026145	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026146	preserved_exact_tokens:
+L00026147	- acquire_file_lock
+L00026148	- This would require extending AgentCoordinationState with file_locks
+L00026149	- For now
+L00026150	- files_being_edited
+L00026151	- last_update
+L00026152	- Ok(false)
+L00026153	negative_constraints:
+L00026154	- This example is not live lock semantics.
+L00026155	compatibility_only_notes:
+L00026156	- Compatibility example only.
+L00026157	stale_retired_dispositions:
+L00026158	- Current files_being_edited lock fallback remains compatibility evidence.
+L00026159	owner_boundary_notes:
+L00026160	- Canonical file-lock behavior requires storage/runtime owner adjudication.
+L00026161	owner_hints:
+L00026162	- Plans/orchestrator-subagent-integration.md
+L00026163	preserved_contractrefs: []
+L00026164	```
+L00026165	
+L00026166	### OSI-340 - Path Normalization And Worktree Handling
+L00026167	
+L00026168	```yaml
+L00026169	plan_unit_id: OSI-340
+L00026170	unit_type: requirement
+L00026171	status: accepted
+L00026172	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026173	canonical_text: >-
+L00026174	  Preserve Gap #34 path normalization for relative/absolute paths, worktree-to-main-repo conversion, and canonical path
+L00026175	  comparison.
+L00026176	gui_related: false
+L00026177	gui_classification_reason: This unit covers path normalization and worktree handling rather than GUI presentation.
+L00026178	split_recommended: false
+L00026179	depends_on:
+L00026180	- OSI-253
+L00026181	- OSI-263
+L00026182	unblocks: []
+L00026183	acceptance_criteria:
+L00026184	- Covered path-normalization bullets remain losslessly available for exact-text audit.
+L00026185	- Worktree/storage owners retain canonical path identity.
+L00026186	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026187	validation_surfaces:
+L00026188	- >-
+L00026189	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026190	- python3 scripts/pm-plan-index.py validate
+L00026191	reasoning_tier: standard
+L00026192	context_scope: orchestrator_subagent_standardization
+L00026193	implementation_surfaces:
+L00026194	- Plans/orchestrator-subagent-integration.md
+L00026195	risk_class: path_normalization_and_worktree_handling
+L00026196	node_compile_hint:
+L00026197	  mode: path_normalization_and_worktree_handling
+L00026198	  create_worknodes: false
+L00026199	source_lineage:
+L00026200	- >-
+L00026201	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026202	preserved_exact_tokens:
+L00026203	- 'Gap #34: Path normalization and worktree handling'
+L00026204	- Path normalization
+L00026205	- Worktree path resolution
+L00026206	- .puppet-master/worktrees/A/src/api.rs → src/api.rs
+L00026207	- resolve symlinks
+L00026208	- normalize separators
+L00026209	negative_constraints: []
+L00026210	compatibility_only_notes:
+L00026211	- Path normalization example must align with canonical storage/worktree path identity.
+L00026212	stale_retired_dispositions: []
+L00026213	owner_boundary_notes:
+L00026214	- Worktree/storage owners retain canonical path identity.
+L00026215	owner_hints:
+L00026216	- Plans/orchestrator-subagent-integration.md
+L00026217	preserved_contractrefs: []
+L00026218	```
+L00026219	
+L00026220	### OSI-341 - Normalize Path Rust Example
+L00026221	
+L00026222	```yaml
+L00026223	plan_unit_id: OSI-341
+L00026224	unit_type: requirement
+L00026225	status: accepted
+L00026226	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026227	canonical_text: >-
+L00026228	  Preserve `normalize_path`, `strip_prefix(project_root)`, `.puppet-master/worktrees/`, component stripping, and fallback
+L00026229	  `path.to_path_buf()` evidence.
+L00026230	gui_related: false
+L00026231	gui_classification_reason: This unit covers backend path-normalization example code rather than GUI presentation.
+L00026232	split_recommended: false
+L00026233	depends_on:
+L00026234	- OSI-340
+L00026235	unblocks: []
+L00026236	acceptance_criteria:
+L00026237	- Covered normalize-path snippet remains losslessly available for exact-text audit.
+L00026238	- The snippet is not the final canonicalization algorithm.
+L00026239	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026240	validation_surfaces:
+L00026241	- >-
+L00026242	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026243	- python3 scripts/pm-plan-index.py validate
+L00026244	reasoning_tier: standard
+L00026245	context_scope: orchestrator_subagent_standardization
+L00026246	implementation_surfaces:
+L00026247	- Plans/orchestrator-subagent-integration.md
+L00026248	risk_class: normalize_path_rust_example
+L00026249	node_compile_hint:
+L00026250	  mode: normalize_path_rust_example
+L00026251	  create_worknodes: false
+L00026252	source_lineage:
+L00026253	- >-
+L00026254	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026255	preserved_exact_tokens:
+L00026256	- normalize_path
+L00026257	- strip_prefix(project_root)
+L00026258	- .puppet-master/worktrees/
+L00026259	- components().next()
+L00026260	- path.to_path_buf()
+L00026261	negative_constraints:
+L00026262	- Snippet is not the final canonicalization algorithm.
+L00026263	compatibility_only_notes:
+L00026264	- Rust snippet is evidence only.
+L00026265	stale_retired_dispositions: []
+L00026266	owner_boundary_notes:
+L00026267	- Canonical path normalization remains owned by storage/worktree contracts.
+L00026268	owner_hints:
+L00026269	- Plans/orchestrator-subagent-integration.md
+L00026270	preserved_contractrefs: []
+L00026271	```
+L00026272	
+L00026273	### OSI-342 - Coordination Event Ingestion Fallback
+L00026274	
+L00026275	```yaml
+L00026276	plan_unit_id: OSI-342
+L00026277	unit_type: requirement
+L00026278	status: accepted
+L00026279	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026280	canonical_text: >-
+L00026281	  Preserve Gap #35 fallback detection for parser errors, stream timeout, malformed events, baseline-first coordination, and
+L00026282	  event-ingestion enrichment.
+L00026283	gui_related: false
+L00026284	gui_classification_reason: This unit covers provider/event ingestion fallback rather than GUI presentation.
+L00026285	split_recommended: false
+L00026286	depends_on:
+L00026287	- OSI-271
+L00026288	- OSI-274
+L00026289	- OSI-270
+L00026290	unblocks: []
+L00026291	acceptance_criteria:
+L00026292	- Covered fallback bullets remain losslessly available for exact-text audit.
+L00026293	- Provider events remain enrichment and do not replace canonical coordination projection.
+L00026294	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026295	validation_surfaces:
+L00026296	- >-
+L00026297	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026298	- python3 scripts/pm-plan-index.py validate
+L00026299	reasoning_tier: standard
+L00026300	context_scope: orchestrator_subagent_standardization
+L00026301	implementation_surfaces:
+L00026302	- Plans/orchestrator-subagent-integration.md
+L00026303	risk_class: coordination_event_ingestion_fallback
+L00026304	node_compile_hint:
+L00026305	  mode: coordination_event_ingestion_fallback
+L00026306	  create_worknodes: false
+L00026307	source_lineage:
+L00026308	- >-
+L00026309	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026310	preserved_exact_tokens:
+L00026311	- 'Gap #35: Coordination-event ingestion fallback'
+L00026312	- parser error
+L00026313	- stream timeout
+L00026314	- malformed event
+L00026315	- baseline coordination projection updates
+L00026316	- enrichment layer only
+L00026317	- do not block execution
+L00026318	negative_constraints:
+L00026319	- Provider events do not replace canonical coordination projection.
+L00026320	compatibility_only_notes:
+L00026321	- Event ingestion is an enrichment layer only.
+L00026322	stale_retired_dispositions: []
+L00026323	owner_boundary_notes:
+L00026324	- Baseline coordination projection remains primary; provider event adapters enrich it.
+L00026325	owner_hints:
+L00026326	- Plans/orchestrator-subagent-integration.md
+L00026327	preserved_contractrefs: []
+L00026328	```
+L00026329	
+L00026330	### OSI-343 - Coordination Metrics And Logging Visibility
+L00026331	
+L00026332	```yaml
+L00026333	plan_unit_id: OSI-343
+L00026334	unit_type: requirement
+L00026335	status: accepted
+L00026336	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026337	canonical_text: >-
+L00026338	  Preserve Gap #36 metrics and logging visibility for agent registration, conflicts, stale-agent pruning, file-lock acquisition,
+L00026339	  and coordination state changes.
+L00026340	gui_related: false
+L00026341	gui_classification_reason: This unit covers metrics/logging visibility rather than GUI presentation.
+L00026342	split_recommended: false
+L00026343	depends_on:
+L00026344	- OSI-337
+L00026345	- OSI-342
+L00026346	unblocks: []
+L00026347	acceptance_criteria:
+L00026348	- Covered metrics/logging bullets remain losslessly available for exact-text audit.
+L00026349	- Stale-agent pruning metrics remain projection evidence only.
+L00026350	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026351	validation_surfaces:
+L00026352	- >-
+L00026353	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026354	- python3 scripts/pm-plan-index.py validate
+L00026355	reasoning_tier: standard
+L00026356	context_scope: orchestrator_subagent_standardization
+L00026357	implementation_surfaces:
+L00026358	- Plans/orchestrator-subagent-integration.md
+L00026359	risk_class: coordination_metrics_and_logging_visibility
+L00026360	node_compile_hint:
+L00026361	  mode: coordination_metrics_and_logging_visibility
+L00026362	  create_worknodes: false
+L00026363	source_lineage:
+L00026364	- >-
+L00026365	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026366	preserved_exact_tokens:
+L00026367	- 'Gap #36: Coordination metrics and monitoring'
+L00026368	- agent registered
+L00026369	- conflicts detected
+L00026370	- stale agents pruned
+L00026371	- file locks acquired
+L00026372	- coordination context injected
+L00026373	negative_constraints:
+L00026374	- '`stale agents pruned` is projection metric evidence only.'
+L00026375	compatibility_only_notes:
+L00026376	- Metrics/logging list is source evidence pending analytics owner acceptance.
+L00026377	stale_retired_dispositions:
+L00026378	- Stale-agent pruning metrics remain compatibility evidence.
+L00026379	owner_boundary_notes:
+L00026380	- Usage/analytics owners consume event taxonomy if promoted.
+L00026381	owner_hints:
+L00026382	- Plans/orchestrator-subagent-integration.md
+L00026383	preserved_contractrefs: []
+L00026384	```
+L00026385	
+
+<<< CONTEXT_AFTER canonical_document_lines=26386-26397 >>>
+L00026386	### OSI-344 - Coordination GUI Monitoring Consumer
+L00026387	
+L00026388	```yaml
+L00026389	plan_unit_id: OSI-344
+L00026390	unit_type: requirement
+L00026391	status: accepted
+L00026392	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026393	canonical_text: GUI may show coordination state, active agents, file locks, and conflicts as a consumer projection.
+L00026394	gui_related: true
+L00026395	gui_classification_reason: This unit covers a user-visible GUI monitoring projection.
+L00026396	split_recommended: false
+L00026397	depends_on:

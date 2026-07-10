@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE 6300-6311 >>>
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+
+<<< AUTHORITATIVE_CORE 6312-6708 >>>
+### MS-088 - Runtime Surface Effective Choice Display
+
+```yaml
+plan_unit_id: MS-088
+unit_type: gui_contract
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Run surfaces display effective runtime choices and skipped controls, including Persona name, selection reason,
+  effective platform/model/variant/effort, and provider-support status examples.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.
+split_recommended: false
+depends_on:
+- MS-074
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_surface_effective_choice_display
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: runtime_surface_effective_choice_display
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0061
+preserved_exact_tokens:
+- Persona name
+- selection reason
+- effective platform
+- effective model
+- effective variant/effort
+- skipped controls
+- 'Persona: Rust Engineer (Auto: Rust repo + code task)'
+- 'Model: Codex GPT-5.3 (Persona preferred)'
+- 'Platform: Codex (Available)'
+- 'Skipped controls: temperature unsupported by provider'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-089 - OpenCode Role Baseline And Persona Canonicalization
+
+```yaml
+plan_unit_id: MS-089
+unit_type: implementation_reference
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: OpenCode role object runtime shape is implementation-reference evidence; Puppet Master uses Persona as the
+  canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: opencode_role_baseline_persona_canonicalization
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: opencode_role_baseline_persona_canonicalization
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0062
+preserved_exact_tokens:
+- OpenCode
+- role object
+- prompt
+- model
+- variant
+- temperature
+- topP
+- permission
+- options
+- Persona as the canonical stored contract
+- provider capability disclosure
+negative_constraints: []
+compatibility_only_notes:
+- OpenCode demonstrates integrated runtime shape conceptually but is not PM canonical storage.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-090 - Effective Runtime Acceptance Criteria
+
+```yaml
+plan_unit_id: MS-090
+unit_type: acceptance_criteria
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Acceptance criteria require effective runtime state to distinguish requested, effective, and skipped Persona
+  controls, preserve requested_runtime and runtime outcomes, expose unsupported controls in editor/runtime UI, and show effective
+  Persona/model/platform in history/event views.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.
+split_recommended: false
+depends_on:
+- MS-074
+- MS-086
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: effective_runtime_acceptance_criteria
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: effective_runtime_acceptance_criteria
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0063
+preserved_exact_tokens:
+- requested vs effective vs skipped Persona controls
+- requested_runtime
+- substituted
+- clamped
+- blocked
+- retried_on_fallback
+- editor UI
+- runtime UI
+- Provider capability matrix
+- Chat/Interview/Builder/Orchestrator history/event views
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-091 - Provider Failure Class Versus Model Fallback
+
+```yaml
+plan_unit_id: MS-091
+unit_type: runtime_policy
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Model/provider selection fallback remains separate from runtime retry classification; unavailable Persona-preferred
+  models fall through selection, while provider execution failures map to runtime taxonomy such as provider_transient.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- MS-041
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_failure_class_versus_model_fallback
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: provider_failure_class_versus_model_fallback
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0064
+preserved_exact_tokens:
+- Provider Failure-Class Alignment Addendum
+- provider_transient
+- unavailable Persona-preferred models
+- normal selection chain
+- shared runtime taxonomy
+- provider-level retry defaults
+negative_constraints:
+- Provider-level retry defaults must not silently override the shared runtime retry/backoff matrix.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-092 - Runtime Retry Fallback Ownership Split And Attempt Snapshots
+
+```yaml
+plan_unit_id: MS-092
+unit_type: runtime_policy
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: 'Model fallback and runtime retry are separate: selection decides requested/effective provider/model before
+  execution, runtime policy decides retry/remediation/block/escalation after classified outcome, and each attempt retains
+  requested/effective identifiers.'
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- MS-091
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_retry_fallback_ownership_attempt_snapshots
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: runtime_retry_fallback_ownership_attempt_snapshots
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0065
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0066
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0067
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0068
+preserved_exact_tokens:
+- Runtime Retry / Fallback Ownership Addendum
+- Ownership split
+- Required attempt snapshots
+- Fallback rule
+- retried
+- remediated
+- blocked
+- escalated
+- requested and effective model/provider identifiers
+negative_constraints:
+- Providers and adapters may not invent model-local retry loops that bypass runtime policy.
+- Model fallback may change the effective model only through the shared model-selection contract.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-093 - Requested Effective Model Retry Canonical Alignment
+
+```yaml
+plan_unit_id: MS-093
+unit_type: runtime_policy
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Requested/effective model resolution stays separate from runtime retry policy; retries, remediation, and prerequisite-resumed
+  work are new attempts with new attempt snapshots and no hidden model-local retry loops.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- MS-092
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: requested_effective_model_retry_canonical_alignment
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: requested_effective_model_retry_canonical_alignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0069
+preserved_exact_tokens:
+- Requested/Effective Model and Retry Ownership Canonical Alignment
+- new attempts
+- new attempt snapshots
+- prerequisite-resumed work
+negative_constraints:
+- Providers/adapters must not hide model-local retry loops inside an already-running attempt.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Requested/effective model resolution remains separate from runtime retry policy.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-094 - Attempt Snapshot Identity Stability Across Retries
+
+```yaml
+plan_unit_id: MS-094
+unit_type: runtime_policy
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Attempt start persists stable requested/effective model snapshot identifiers, and retries/resumes cannot silently
+  change model identity unless canonical runtime policy creates a new attempt with new snapshot IDs.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- MS-093
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: attempt_snapshot_identity_stability_retries
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: attempt_snapshot_identity_stability_retries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0070
+preserved_exact_tokens:
+- attempt start
+- stable requested/effective model snapshot identifiers
+- retries and resumes
+- new attempt
+- new snapshot IDs
+- blocked reason
+- retry classification semantics
+negative_constraints:
+- Model fallback behavior MUST NOT rewrite blocked reason or retry classification semantics.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+
+<<< CONTEXT_AFTER 6709-6720 >>>
+### MS-095 - UI Artifact Snapshot ID Consumption
+
+```yaml
+plan_unit_id: MS-095
+unit_type: gui_consumer_rule
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring model identity
+  from provider names alone.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.

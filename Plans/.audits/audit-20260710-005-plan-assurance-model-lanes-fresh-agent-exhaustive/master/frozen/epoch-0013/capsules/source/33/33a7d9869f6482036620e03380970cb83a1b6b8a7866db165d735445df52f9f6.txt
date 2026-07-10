@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1525-1536 >>>
+L00001525	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001526	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001527	      },
+L00001528	      "production_wiring_contract": {
+L00001529	        "command_id": "cmd.search.open_result",
+L00001530	        "handler_target": "handlers::search::open_result",
+L00001531	        "state_selector": "state.cmd_search_open_result.enabled",
+L00001532	        "disabled_reason_selector": "state.cmd_search_open_result.disabled_reason",
+L00001533	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001534	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001535	      }
+L00001536	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1537-1916 >>>
+L00001537	    {
+L00001538	      "inventory_id": "pmconcept.l9099.0048",
+L00001539	      "line": 9099,
+L00001540	      "tag": "div",
+L00001541	      "html_id": null,
+L00001542	      "name": null,
+L00001543	      "role": null,
+L00001544	      "class": "search-result-item",
+L00001545	      "ui_location": "panel-search",
+L00001546	      "label": "28 fn load_ App_config()",
+L00001547	      "attrs": {
+L00001548	        "onclick": "toast('cmd.search.open_result \u2192 src/config.rs:28')",
+L00001549	        "onmouseenter": "this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'",
+L00001550	        "onmouseleave": "this.style.borderLeftColor='transparent'; this.style.background=''"
+L00001551	      },
+L00001552	      "inline_handlers": {
+L00001553	        "onclick": "toast('cmd.search.open_result \u2192 src/config.rs:28')",
+L00001554	        "onmouseenter": "this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'",
+L00001555	        "onmouseleave": "this.style.borderLeftColor='transparent'; this.style.background=''"
+L00001556	      },
+L00001557	      "command_tokens": [
+L00001558	        "cmd.search.open_result"
+L00001559	      ],
+L00001560	      "local_or_demo_markers": [],
+L00001561	      "accessibility_gaps": [],
+L00001562	      "disposition": "production_wiring_required",
+L00001563	      "canonical_command_id": "cmd.search.open_result",
+L00001564	      "wiring_matrix_key": "catalog.search_open_result",
+L00001565	      "notes": [],
+L00001566	      "pmconcept_fixture_accessibility_gaps": [
+L00001567	        "custom_click_target_missing_role",
+L00001568	        "click_handler_without_keyboard_parity"
+L00001569	      ],
+L00001570	      "production_accessibility_contract": {
+L00001571	        "accessible_name": "28 fn load_ App_config()",
+L00001572	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001573	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001574	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001575	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001576	      },
+L00001577	      "production_wiring_contract": {
+L00001578	        "command_id": "cmd.search.open_result",
+L00001579	        "handler_target": "handlers::search::open_result",
+L00001580	        "state_selector": "state.cmd_search_open_result.enabled",
+L00001581	        "disabled_reason_selector": "state.cmd_search_open_result.disabled_reason",
+L00001582	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001583	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001584	      }
+L00001585	    },
+L00001586	    {
+L00001587	      "inventory_id": "pmconcept.l9104.0049",
+L00001588	      "line": 9104,
+L00001589	      "tag": "div",
+L00001590	      "html_id": null,
+L00001591	      "name": null,
+L00001592	      "role": null,
+L00001593	      "class": null,
+L00001594	      "ui_location": "panel-search",
+L00001595	      "label": "tests/integration.rs (2)",
+L00001596	      "attrs": {
+L00001597	        "onclick": "toast('cmd.search.show \u2192 focus results for tests/integration.rs')"
+L00001598	      },
+L00001599	      "inline_handlers": {
+L00001600	        "onclick": "toast('cmd.search.show \u2192 focus results for tests/integration.rs')"
+L00001601	      },
+L00001602	      "command_tokens": [
+L00001603	        "cmd.search.show"
+L00001604	      ],
+L00001605	      "local_or_demo_markers": [],
+L00001606	      "accessibility_gaps": [],
+L00001607	      "disposition": "production_wiring_required",
+L00001608	      "canonical_command_id": "cmd.search.show",
+L00001609	      "wiring_matrix_key": "catalog.search_show",
+L00001610	      "notes": [],
+L00001611	      "pmconcept_fixture_accessibility_gaps": [
+L00001612	        "custom_click_target_missing_role",
+L00001613	        "missing_accessible_name_candidate",
+L00001614	        "click_handler_without_keyboard_parity"
+L00001615	      ],
+L00001616	      "production_accessibility_contract": {
+L00001617	        "accessible_name": "tests/integration.rs (2)",
+L00001618	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001619	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001620	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001621	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001622	      },
+L00001623	      "production_wiring_contract": {
+L00001624	        "command_id": "cmd.search.show",
+L00001625	        "handler_target": "handlers::search::show",
+L00001626	        "state_selector": "state.cmd_search_show.enabled",
+L00001627	        "disabled_reason_selector": "state.cmd_search_show.disabled_reason",
+L00001628	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001629	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001630	      }
+L00001631	    },
+L00001632	    {
+L00001633	      "inventory_id": "pmconcept.l9105.0050",
+L00001634	      "line": 9105,
+L00001635	      "tag": "div",
+L00001636	      "html_id": null,
+L00001637	      "name": null,
+L00001638	      "role": null,
+L00001639	      "class": "search-result-item",
+L00001640	      "ui_location": "panel-search",
+L00001641	      "label": "7 let test_ App = setup();",
+L00001642	      "attrs": {
+L00001643	        "onclick": "toast('cmd.search.open_result \u2192 tests/integration.rs:7')",
+L00001644	        "onmouseenter": "this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'",
+L00001645	        "onmouseleave": "this.style.borderLeftColor='transparent'; this.style.background=''"
+L00001646	      },
+L00001647	      "inline_handlers": {
+L00001648	        "onclick": "toast('cmd.search.open_result \u2192 tests/integration.rs:7')",
+L00001649	        "onmouseenter": "this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'",
+L00001650	        "onmouseleave": "this.style.borderLeftColor='transparent'; this.style.background=''"
+L00001651	      },
+L00001652	      "command_tokens": [
+L00001653	        "cmd.search.open_result"
+L00001654	      ],
+L00001655	      "local_or_demo_markers": [],
+L00001656	      "accessibility_gaps": [],
+L00001657	      "disposition": "production_wiring_required",
+L00001658	      "canonical_command_id": "cmd.search.open_result",
+L00001659	      "wiring_matrix_key": "catalog.search_open_result",
+L00001660	      "notes": [],
+L00001661	      "pmconcept_fixture_accessibility_gaps": [
+L00001662	        "custom_click_target_missing_role",
+L00001663	        "click_handler_without_keyboard_parity"
+L00001664	      ],
+L00001665	      "production_accessibility_contract": {
+L00001666	        "accessible_name": "7 let test_ App = setup();",
+L00001667	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001668	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001669	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001670	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001671	      },
+L00001672	      "production_wiring_contract": {
+L00001673	        "command_id": "cmd.search.open_result",
+L00001674	        "handler_target": "handlers::search::open_result",
+L00001675	        "state_selector": "state.cmd_search_open_result.enabled",
+L00001676	        "disabled_reason_selector": "state.cmd_search_open_result.disabled_reason",
+L00001677	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001678	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001679	      }
+L00001680	    },
+L00001681	    {
+L00001682	      "inventory_id": "pmconcept.l9108.0051",
+L00001683	      "line": 9108,
+L00001684	      "tag": "div",
+L00001685	      "html_id": null,
+L00001686	      "name": null,
+L00001687	      "role": null,
+L00001688	      "class": "search-result-item",
+L00001689	      "ui_location": "panel-search",
+L00001690	      "label": "45 assert!( App::valid());",
+L00001691	      "attrs": {
+L00001692	        "onclick": "toast('cmd.search.open_result \u2192 tests/integration.rs:45')",
+L00001693	        "onmouseenter": "this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'",
+L00001694	        "onmouseleave": "this.style.borderLeftColor='transparent'; this.style.background=''"
+L00001695	      },
+L00001696	      "inline_handlers": {
+L00001697	        "onclick": "toast('cmd.search.open_result \u2192 tests/integration.rs:45')",
+L00001698	        "onmouseenter": "this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'",
+L00001699	        "onmouseleave": "this.style.borderLeftColor='transparent'; this.style.background=''"
+L00001700	      },
+L00001701	      "command_tokens": [
+L00001702	        "cmd.search.open_result"
+L00001703	      ],
+L00001704	      "local_or_demo_markers": [],
+L00001705	      "accessibility_gaps": [],
+L00001706	      "disposition": "production_wiring_required",
+L00001707	      "canonical_command_id": "cmd.search.open_result",
+L00001708	      "wiring_matrix_key": "catalog.search_open_result",
+L00001709	      "notes": [],
+L00001710	      "pmconcept_fixture_accessibility_gaps": [
+L00001711	        "custom_click_target_missing_role",
+L00001712	        "click_handler_without_keyboard_parity"
+L00001713	      ],
+L00001714	      "production_accessibility_contract": {
+L00001715	        "accessible_name": "45 assert!( App::valid());",
+L00001716	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001717	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001718	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001719	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001720	      },
+L00001721	      "production_wiring_contract": {
+L00001722	        "command_id": "cmd.search.open_result",
+L00001723	        "handler_target": "handlers::search::open_result",
+L00001724	        "state_selector": "state.cmd_search_open_result.enabled",
+L00001725	        "disabled_reason_selector": "state.cmd_search_open_result.disabled_reason",
+L00001726	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001727	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001728	      }
+L00001729	    },
+L00001730	    {
+L00001731	      "inventory_id": "pmconcept.l9117.0052",
+L00001732	      "line": 9117,
+L00001733	      "tag": "button",
+L00001734	      "html_id": null,
+L00001735	      "name": null,
+L00001736	      "role": null,
+L00001737	      "class": "wizard-btn",
+L00001738	      "ui_location": "panel-search",
+L00001739	      "label": "Replace",
+L00001740	      "attrs": {
+L00001741	        "onclick": "toast('cmd.search.replace_selected \u2192 replacing current match...')"
+L00001742	      },
+L00001743	      "inline_handlers": {
+L00001744	        "onclick": "toast('cmd.search.replace_selected \u2192 replacing current match...')"
+L00001745	      },
+L00001746	      "command_tokens": [
+L00001747	        "cmd.search.replace_selected"
+L00001748	      ],
+L00001749	      "local_or_demo_markers": [],
+L00001750	      "accessibility_gaps": [],
+L00001751	      "disposition": "production_wiring_required",
+L00001752	      "canonical_command_id": "cmd.search.replace_selected",
+L00001753	      "wiring_matrix_key": "catalog.search_replace_selected",
+L00001754	      "notes": [],
+L00001755	      "production_accessibility_contract": {
+L00001756	        "accessible_name": "Replace",
+L00001757	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001758	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001759	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001760	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001761	      },
+L00001762	      "production_wiring_contract": {
+L00001763	        "command_id": "cmd.search.replace_selected",
+L00001764	        "handler_target": "handlers::search::replace_selected",
+L00001765	        "state_selector": "state.cmd_search_replace_selected.enabled",
+L00001766	        "disabled_reason_selector": "state.cmd_search_replace_selected.disabled_reason",
+L00001767	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001768	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001769	      }
+L00001770	    },
+L00001771	    {
+L00001772	      "inventory_id": "pmconcept.l9118.0053",
+L00001773	      "line": 9118,
+L00001774	      "tag": "button",
+L00001775	      "html_id": null,
+L00001776	      "name": null,
+L00001777	      "role": null,
+L00001778	      "class": "wizard-btn primary",
+L00001779	      "ui_location": "panel-search",
+L00001780	      "label": "Replace All",
+L00001781	      "attrs": {
+L00001782	        "onclick": "toast('cmd.search.replace_all \u2192 Replaced 7 across 3 files')"
+L00001783	      },
+L00001784	      "inline_handlers": {
+L00001785	        "onclick": "toast('cmd.search.replace_all \u2192 Replaced 7 across 3 files')"
+L00001786	      },
+L00001787	      "command_tokens": [
+L00001788	        "cmd.search.replace_all"
+L00001789	      ],
+L00001790	      "local_or_demo_markers": [],
+L00001791	      "accessibility_gaps": [],
+L00001792	      "disposition": "production_wiring_required",
+L00001793	      "canonical_command_id": "cmd.search.replace_all",
+L00001794	      "wiring_matrix_key": "catalog.search_replace_all",
+L00001795	      "notes": [],
+L00001796	      "production_accessibility_contract": {
+L00001797	        "accessible_name": "Replace All",
+L00001798	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001799	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001800	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001801	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001802	      },
+L00001803	      "production_wiring_contract": {
+L00001804	        "command_id": "cmd.search.replace_all",
+L00001805	        "handler_target": "handlers::search::replace_all",
+L00001806	        "state_selector": "state.cmd_search_replace_all.enabled",
+L00001807	        "disabled_reason_selector": "state.cmd_search_replace_all.disabled_reason",
+L00001808	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001809	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001810	      }
+L00001811	    },
+L00001812	    {
+L00001813	      "inventory_id": "pmconcept.l9121.0054",
+L00001814	      "line": 9121,
+L00001815	      "tag": "button",
+L00001816	      "html_id": null,
+L00001817	      "name": null,
+L00001818	      "role": null,
+L00001819	      "class": "wizard-btn",
+L00001820	      "ui_location": "panel-search",
+L00001821	      "label": "\u25b2 Prev",
+L00001822	      "attrs": {
+L00001823	        "onclick": "toast('cmd.search.previous_result')"
+L00001824	      },
+L00001825	      "inline_handlers": {
+L00001826	        "onclick": "toast('cmd.search.previous_result')"
+L00001827	      },
+L00001828	      "command_tokens": [
+L00001829	        "cmd.search.previous_result"
+L00001830	      ],
+L00001831	      "local_or_demo_markers": [],
+L00001832	      "accessibility_gaps": [],
+L00001833	      "disposition": "production_wiring_required",
+L00001834	      "canonical_command_id": "cmd.search.previous_result",
+L00001835	      "wiring_matrix_key": "catalog.search_previous_result",
+L00001836	      "notes": [],
+L00001837	      "production_accessibility_contract": {
+L00001838	        "accessible_name": "\u25b2 Prev",
+L00001839	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001840	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001841	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001842	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001843	      },
+L00001844	      "production_wiring_contract": {
+L00001845	        "command_id": "cmd.search.previous_result",
+L00001846	        "handler_target": "handlers::search::previous_result",
+L00001847	        "state_selector": "state.cmd_search_previous_result.enabled",
+L00001848	        "disabled_reason_selector": "state.cmd_search_previous_result.disabled_reason",
+L00001849	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001850	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001851	      }
+L00001852	    },
+L00001853	    {
+L00001854	      "inventory_id": "pmconcept.l9122.0055",
+L00001855	      "line": 9122,
+L00001856	      "tag": "button",
+L00001857	      "html_id": null,
+L00001858	      "name": null,
+L00001859	      "role": null,
+L00001860	      "class": "wizard-btn",
+L00001861	      "ui_location": "panel-search",
+L00001862	      "label": "\u25bc Next",
+L00001863	      "attrs": {
+L00001864	        "onclick": "toast('cmd.search.next_result')"
+L00001865	      },
+L00001866	      "inline_handlers": {
+L00001867	        "onclick": "toast('cmd.search.next_result')"
+L00001868	      },
+L00001869	      "command_tokens": [
+L00001870	        "cmd.search.next_result"
+L00001871	      ],
+L00001872	      "local_or_demo_markers": [],
+L00001873	      "accessibility_gaps": [],
+L00001874	      "disposition": "production_wiring_required",
+L00001875	      "canonical_command_id": "cmd.search.next_result",
+L00001876	      "wiring_matrix_key": "catalog.search_next_result",
+L00001877	      "notes": [],
+L00001878	      "production_accessibility_contract": {
+L00001879	        "accessible_name": "\u25bc Next",
+L00001880	        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+L00001881	        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+L00001882	        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+L00001883	        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+L00001884	      },
+L00001885	      "production_wiring_contract": {
+L00001886	        "command_id": "cmd.search.next_result",
+L00001887	        "handler_target": "handlers::search::next_result",
+L00001888	        "state_selector": "state.cmd_search_next_result.enabled",
+L00001889	        "disabled_reason_selector": "state.cmd_search_next_result.disabled_reason",
+L00001890	        "receipt_or_event_effect": "route/projection receipt or explicit no-persist UI effect",
+L00001891	        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+L00001892	      }
+L00001893	    },
+L00001894	    {
+L00001895	      "inventory_id": "pmconcept.l9134.0056",
+L00001896	      "line": 9134,
+L00001897	      "tag": "button",
+L00001898	      "html_id": null,
+L00001899	      "name": null,
+L00001900	      "role": null,
+L00001901	      "class": "wizard-btn primary",
+L00001902	      "ui_location": "panel-run",
+L00001903	      "label": "\u25b6 Start Debugging (F5)",
+L00001904	      "attrs": {},
+L00001905	      "inline_handlers": {},
+L00001906	      "command_tokens": [],
+L00001907	      "local_or_demo_markers": [],
+L00001908	      "accessibility_gaps": [],
+L00001909	      "disposition": "concept_only_owner_adjudicated",
+L00001910	      "canonical_command_id": null,
+L00001911	      "wiring_matrix_key": null,
+L00001912	      "notes": [
+L00001913	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00001914	      ],
+L00001915	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00001916	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=1917-1928 >>>
+L00001917	    {
+L00001918	      "inventory_id": "pmconcept.l9139.0057",
+L00001919	      "line": 9139,
+L00001920	      "tag": "summary",
+L00001921	      "html_id": null,
+L00001922	      "name": null,
+L00001923	      "role": null,
+L00001924	      "class": null,
+L00001925	      "ui_location": "panel-run",
+L00001926	      "label": "VARIABLES",
+L00001927	      "attrs": {},
+L00001928	      "inline_handlers": {},

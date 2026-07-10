@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE canonical_document_lines=10931-10942 >>>
+L00010931	- "verification_gate"
+L00010932	- "interview"
+L00010933	- "ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE"
+L00010934	negative_constraints:
+L00010935	- "FileSafe operation tagging must not require a new ExecutionRequest metadata field."
+L00010936	compatibility_only_notes: []
+L00010937	stale_retired_dispositions: []
+L00010938	owner_boundary_notes: []
+L00010939	owner_hints:
+L00010940	- "Plans/FileSafe.md"
+L00010941	```
+L00010942	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10943-11291 >>>
+L00010943	### F2-146 - Plan Metadata Access Gap Closure
+L00010944	
+L00010945	```yaml
+L00010946	plan_unit_id: F2-146
+L00010947	unit_type: requirement
+L00010948	status: accepted
+L00010949	owner_doc: Plans/FileSafe.md
+L00010950	canonical_text: >-
+L00010951	  BaseRunner must receive current-plan allowed-file metadata for write-scope enforcement,
+L00010952	  preserving the legacy source wording that metadata may travel via ExecutionRequest or context
+L00010953	  files while standardizing on canonical request context and env/request wiring.
+L00010954	gui_related: false
+L00010955	gui_classification_reason: >-
+L00010956	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00010957	  presentation.
+L00010958	split_recommended: false
+L00010959	depends_on: []
+L00010960	unblocks: []
+L00010961	acceptance_criteria:
+L00010962	- "The covered source span remains losslessly available for exact-text audit."
+L00010963	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010964	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010965	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010966	validation_surfaces:
+L00010967	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010968	- "python3 scripts/pm-plan-index.py validate"
+L00010969	risk_class: filesafe_drift
+L00010970	reasoning_tier: standard
+L00010971	context_scope: filesafe_standardization
+L00010972	implementation_surfaces:
+L00010973	- "Plans/FileSafe.md"
+L00010974	node_compile_hint:
+L00010975	  mode: plan_metadata_access_gap_closure
+L00010976	  create_worknodes: false
+L00010977	source_lineage:
+L00010978	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0078"
+L00010979	preserved_exact_tokens:
+L00010980	- "Write scope needs current plan's allowed files list"
+L00010981	- "BaseRunner"
+L00010982	- "ExecutionRequest"
+L00010983	- "context files"
+L00010984	negative_constraints: []
+L00010985	compatibility_only_notes:
+L00010986	- "The source phrase “via ExecutionRequest or context files” is preserved as lineage and reconciled with the canonical request-context/env-var model."
+L00010987	stale_retired_dispositions: []
+L00010988	owner_boundary_notes: []
+L00010989	owner_hints:
+L00010990	- "Plans/FileSafe.md"
+L00010991	```
+L00010992	
+L00010993	### F2-147 - Config Wiring Gap Closure
+L00010994	
+L00010995	```yaml
+L00010996	plan_unit_id: F2-147
+L00010997	unit_type: requirement
+L00010998	status: accepted
+L00010999	owner_doc: Plans/FileSafe.md
+L00011000	canonical_text: >-
+L00011001	  FileSafe GUI settings must be wired into orchestrator runtime configuration using Option B,
+L00011002	  building run config from GUI at orchestrator start so GUI choices apply at runtime.
+L00011003	gui_related: true
+L00011004	gui_classification_reason: >-
+L00011005	  This unit governs user-visible FileSafe UI or projection behavior.
+L00011006	split_recommended: false
+L00011007	depends_on: []
+L00011008	unblocks: []
+L00011009	acceptance_criteria:
+L00011010	- "The covered source span remains losslessly available for exact-text audit."
+L00011011	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00011012	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011013	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011014	validation_surfaces:
+L00011015	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011016	- "python3 scripts/pm-plan-index.py validate"
+L00011017	risk_class: filesafe_drift
+L00011018	reasoning_tier: standard
+L00011019	context_scope: filesafe_standardization
+L00011020	implementation_surfaces:
+L00011021	- "Plans/FileSafe.md"
+L00011022	node_compile_hint:
+L00011023	  mode: config_wiring_gap_closure
+L00011024	  create_worknodes: false
+L00011025	source_lineage:
+L00011026	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0079"
+L00011027	preserved_exact_tokens:
+L00011028	- "FileSafe config in GUI"
+L00011029	- "orchestrator config"
+L00011030	- "Option B config wiring"
+L00011031	- "build run config from GUI at orchestrator start"
+L00011032	- "Plans/WorktreeGitImprovement.md §5.2"
+L00011033	negative_constraints:
+L00011034	- "FileSafe settings from GUI must not be ignored at runtime."
+L00011035	compatibility_only_notes: []
+L00011036	stale_retired_dispositions: []
+L00011037	owner_boundary_notes: []
+L00011038	owner_hints:
+L00011039	- "Plans/FileSafe.md"
+L00011040	```
+L00011041	
+L00011042	### F2-148 - Worktree Path Resolution Resolved Contract
+L00011043	
+L00011044	```yaml
+L00011045	plan_unit_id: F2-148
+L00011046	unit_type: requirement
+L00011047	status: accepted
+L00011048	owner_doc: Plans/FileSafe.md
+L00011049	canonical_text: >-
+L00011050	  Write-scope path checks normalize candidates relative to working_directory, resolve realpath
+L00011051	  before scope checks, deny on canonicalization failure, and compare against the real worktree
+L00011052	  root instead of a symlink alias.
+L00011053	gui_related: false
+L00011054	gui_classification_reason: >-
+L00011055	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00011056	  presentation.
+L00011057	split_recommended: false
+L00011058	depends_on: []
+L00011059	unblocks: []
+L00011060	acceptance_criteria:
+L00011061	- "The covered source span remains losslessly available for exact-text audit."
+L00011062	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00011063	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011064	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011065	validation_surfaces:
+L00011066	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011067	- "python3 scripts/pm-plan-index.py validate"
+L00011068	risk_class: filesafe_drift
+L00011069	reasoning_tier: standard
+L00011070	context_scope: filesafe_standardization
+L00011071	implementation_surfaces:
+L00011072	- "Plans/FileSafe.md"
+L00011073	node_compile_hint:
+L00011074	  mode: worktree_path_resolution_resolved_contract
+L00011075	  create_worknodes: false
+L00011076	source_lineage:
+L00011077	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0080"
+L00011078	preserved_exact_tokens:
+L00011079	- "working_directory"
+L00011080	- "realpath()"
+L00011081	- "deny access"
+L00011082	- "real worktree root"
+L00011083	- "symlink alias"
+L00011084	negative_constraints:
+L00011085	- "Canonicalization failure must deny access rather than permit an unresolved path."
+L00011086	compatibility_only_notes: []
+L00011087	stale_retired_dispositions: []
+L00011088	owner_boundary_notes:
+L00011089	- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md"
+L00011090	owner_hints:
+L00011091	- "Plans/FileSafe.md"
+L00011092	```
+L00011093	
+L00011094	### F2-149 - Interview Operation Detection Gap Closure
+L00011095	
+L00011096	```yaml
+L00011097	plan_unit_id: F2-149
+L00011098	unit_type: requirement
+L00011099	status: accepted
+L00011100	owner_doc: Plans/FileSafe.md
+L00011101	canonical_text: >-
+L00011102	  Interview operations must be explicitly tagged in ExecutionRequest so any security-filter
+L00011103	  relaxation for research operations is detectable, configured, and scoped.
+L00011104	gui_related: false
+L00011105	gui_classification_reason: >-
+L00011106	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00011107	  presentation.
+L00011108	split_recommended: false
+L00011109	depends_on: []
+L00011110	unblocks: []
+L00011111	acceptance_criteria:
+L00011112	- "The covered source span remains losslessly available for exact-text audit."
+L00011113	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00011114	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011115	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011116	validation_surfaces:
+L00011117	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011118	- "python3 scripts/pm-plan-index.py validate"
+L00011119	risk_class: filesafe_drift
+L00011120	reasoning_tier: standard
+L00011121	context_scope: filesafe_standardization
+L00011122	implementation_surfaces:
+L00011123	- "Plans/FileSafe.md"
+L00011124	node_compile_hint:
+L00011125	  mode: interview_operation_detection_gap_closure
+L00011126	  create_worknodes: false
+L00011127	source_lineage:
+L00011128	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0081"
+L00011129	preserved_exact_tokens:
+L00011130	- "interview operations"
+L00011131	- "ExecutionRequest"
+L00011132	- "relaxed security filter"
+L00011133	- "research operations"
+L00011134	- "check tag in guards"
+L00011135	negative_constraints: []
+L00011136	compatibility_only_notes: []
+L00011137	stale_retired_dispositions: []
+L00011138	owner_boundary_notes: []
+L00011139	owner_hints:
+L00011140	- "Plans/FileSafe.md"
+L00011141	```
+L00011142	
+L00011143	### F2-150 - FileSafe Event Correlation Gap Closure
+L00011144	
+L00011145	```yaml
+L00011146	plan_unit_id: F2-150
+L00011147	unit_type: requirement
+L00011148	status: accepted
+L00011149	owner_doc: Plans/FileSafe.md
+L00011150	canonical_text: >-
+L00011151	  FileSafe events must correlate with execution context by integrating with the existing event
+L00011152	  logging system or by adding FileSafe events to gate reports rather than staying isolated.
+L00011153	gui_related: false
+L00011154	gui_classification_reason: >-
+L00011155	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00011156	  presentation.
+L00011157	split_recommended: false
+L00011158	depends_on: []
+L00011159	unblocks: []
+L00011160	acceptance_criteria:
+L00011161	- "The covered source span remains losslessly available for exact-text audit."
+L00011162	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00011163	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011164	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011165	validation_surfaces:
+L00011166	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011167	- "python3 scripts/pm-plan-index.py validate"
+L00011168	risk_class: filesafe_drift
+L00011169	reasoning_tier: standard
+L00011170	context_scope: filesafe_standardization
+L00011171	implementation_surfaces:
+L00011172	- "Plans/FileSafe.md"
+L00011173	node_compile_hint:
+L00011174	  mode: filesafe_event_correlation_gap_closure
+L00011175	  create_worknodes: false
+L00011176	source_lineage:
+L00011177	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0082"
+L00011178	preserved_exact_tokens:
+L00011179	- "FileSafe events logged separately"
+L00011180	- "execution context"
+L00011181	- "existing event logging system"
+L00011182	- "gate reports"
+L00011183	- "FileSafe violations"
+L00011184	negative_constraints: []
+L00011185	compatibility_only_notes: []
+L00011186	stale_retired_dispositions: []
+L00011187	owner_boundary_notes: []
+L00011188	owner_hints:
+L00011189	- "Plans/FileSafe.md"
+L00011190	```
+L00011191	
+L00011192	### F2-151 - Documentation False Positive Mitigation
+L00011193	
+L00011194	```yaml
+L00011195	plan_unit_id: F2-151
+L00011196	unit_type: requirement
+L00011197	status: accepted
+L00011198	owner_doc: Plans/FileSafe.md
+L00011199	canonical_text: >-
+L00011200	  FileSafe prompt/content checks must mitigate false positives from documentation and comments by
+L00011201	  checking prompt context, distinguishing code blocks from markdown, allowing explicit override,
+L00011202	  and logging blocks for refinement.
+L00011203	gui_related: false
+L00011204	gui_classification_reason: >-
+L00011205	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00011206	  presentation.
+L00011207	split_recommended: false
+L00011208	depends_on: []
+L00011209	unblocks: []
+L00011210	acceptance_criteria:
+L00011211	- "The covered source span remains losslessly available for exact-text audit."
+L00011212	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00011213	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011214	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011215	validation_surfaces:
+L00011216	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011217	- "python3 scripts/pm-plan-index.py validate"
+L00011218	risk_class: filesafe_drift
+L00011219	reasoning_tier: standard
+L00011220	context_scope: filesafe_standardization
+L00011221	implementation_surfaces:
+L00011222	- "Plans/FileSafe.md"
+L00011223	node_compile_hint:
+L00011224	  mode: documentation_false_positive_mitigation
+L00011225	  create_worknodes: false
+L00011226	source_lineage:
+L00011227	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0084"
+L00011228	preserved_exact_tokens:
+L00011229	- "destructive commands in documentation or comments"
+L00011230	- "code block vs markdown"
+L00011231	- "environment variable"
+L00011232	- "Log all blocks"
+L00011233	- "pattern refinement"
+L00011234	negative_constraints: []
+L00011235	compatibility_only_notes: []
+L00011236	stale_retired_dispositions: []
+L00011237	owner_boundary_notes: []
+L00011238	owner_hints:
+L00011239	- "Plans/FileSafe.md"
+L00011240	```
+L00011241	
+L00011242	### F2-152 - Guard Pattern Matching Performance Mitigation
+L00011243	
+L00011244	```yaml
+L00011245	plan_unit_id: F2-152
+L00011246	unit_type: requirement
+L00011247	status: accepted
+L00011248	owner_doc: Plans/FileSafe.md
+L00011249	canonical_text: >-
+L00011250	  Pattern matching on commands must avoid unnecessary latency by compiling regex patterns once,
+L00011251	  using Rust regex, benchmarking hot paths, and considering async guard checks when needed.
+L00011252	gui_related: false
+L00011253	gui_classification_reason: >-
+L00011254	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00011255	  presentation.
+L00011256	split_recommended: false
+L00011257	depends_on: []
+L00011258	unblocks: []
+L00011259	acceptance_criteria:
+L00011260	- "The covered source span remains losslessly available for exact-text audit."
+L00011261	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00011262	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011263	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011264	validation_surfaces:
+L00011265	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011266	- "python3 scripts/pm-plan-index.py validate"
+L00011267	risk_class: filesafe_drift
+L00011268	reasoning_tier: standard
+L00011269	context_scope: filesafe_standardization
+L00011270	implementation_surfaces:
+L00011271	- "Plans/FileSafe.md"
+L00011272	node_compile_hint:
+L00011273	  mode: guard_pattern_matching_performance_mitigation
+L00011274	  create_worknodes: false
+L00011275	source_lineage:
+L00011276	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0085"
+L00011277	preserved_exact_tokens:
+L00011278	- "Compile regex patterns once"
+L00011279	- "Rust's `regex` crate"
+L00011280	- "Benchmark"
+L00011281	- "hot paths"
+L00011282	- "async guard checks"
+L00011283	- "latency"
+L00011284	negative_constraints: []
+L00011285	compatibility_only_notes: []
+L00011286	stale_retired_dispositions: []
+L00011287	owner_boundary_notes: []
+L00011288	owner_hints:
+L00011289	- "Plans/FileSafe.md"
+L00011290	```
+L00011291	
+
+<<< CONTEXT_AFTER canonical_document_lines=11292-11303 >>>
+L00011292	### F2-153 - Plan File List Completeness Mitigation
+L00011293	
+L00011294	```yaml
+L00011295	plan_unit_id: F2-153
+L00011296	unit_type: requirement
+L00011297	status: accepted
+L00011298	owner_doc: Plans/FileSafe.md
+L00011299	canonical_text: >-
+L00011300	  Write-scope enforcement must account for incomplete plan file lists through bounded wildcard or
+L00011301	  directory permissions, clear error messages with scoped override instructions, and advisory-mode
+L00011302	  reporting that never permits writes when the authoritative allowlist is missing or empty.
+L00011303	gui_related: false

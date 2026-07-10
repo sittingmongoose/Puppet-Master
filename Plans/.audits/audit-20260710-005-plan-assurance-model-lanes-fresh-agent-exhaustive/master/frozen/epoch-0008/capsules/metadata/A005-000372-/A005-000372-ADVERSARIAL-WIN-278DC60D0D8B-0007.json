@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-000372-ADVERSARIAL-WIN-278DC60D0D8B-0007",
+  "attempt_id": "attempt-0008",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      2247,
+      2258
+    ],
+    [
+      2630,
+      2641
+    ]
+  ],
+  "core_range": [
+    2259,
+    2629
+  ],
+  "core_sha256": "9e806de80832578c84c376b0480067e0f6a6030c64a7f2d23fe610f4c24e0ec1",
+  "document_path": "Plans/Plugins_System.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/96/965d588b80d82f3f1829d650a0070fd67ac6756d201ac82cbc946ccba97ece00.txt",
+  "source_excerpt_sha256": "965d588b80d82f3f1829d650a0070fd67ac6756d201ac82cbc946ccba97ece00",
+  "source_sha256": "0f9df5bcaca21ff016c4ac11d0f72ec384aa253bc22ef6e87def358355af6cc7",
+  "window_id": "WIN-278DC60D0D8B-0007"
+}

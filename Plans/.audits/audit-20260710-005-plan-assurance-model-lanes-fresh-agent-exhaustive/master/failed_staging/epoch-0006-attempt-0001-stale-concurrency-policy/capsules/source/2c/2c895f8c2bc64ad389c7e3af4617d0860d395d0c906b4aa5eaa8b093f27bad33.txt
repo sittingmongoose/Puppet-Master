@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1905-1916 >>>
+L00001905	      "inline_handlers": {},
+L00001906	      "command_tokens": [],
+L00001907	      "local_or_demo_markers": [],
+L00001908	      "accessibility_gaps": [],
+L00001909	      "disposition": "concept_only_owner_adjudicated",
+L00001910	      "canonical_command_id": null,
+L00001911	      "wiring_matrix_key": null,
+L00001912	      "notes": [
+L00001913	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00001914	      ],
+L00001915	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00001916	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1917-2292 >>>
+L00001917	    {
+L00001918	      "inventory_id": "pmconcept.l9139.0057",
+L00001919	      "line": 9139,
+L00001920	      "tag": "summary",
+L00001921	      "html_id": null,
+L00001922	      "name": null,
+L00001923	      "role": null,
+L00001924	      "class": null,
+L00001925	      "ui_location": "panel-run",
+L00001926	      "label": "VARIABLES",
+L00001927	      "attrs": {},
+L00001928	      "inline_handlers": {},
+L00001929	      "command_tokens": [],
+L00001930	      "local_or_demo_markers": [],
+L00001931	      "accessibility_gaps": [],
+L00001932	      "disposition": "concept_only_owner_adjudicated",
+L00001933	      "canonical_command_id": null,
+L00001934	      "wiring_matrix_key": null,
+L00001935	      "notes": [
+L00001936	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00001937	      ],
+L00001938	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00001939	    },
+L00001940	    {
+L00001941	      "inventory_id": "pmconcept.l9148.0058",
+L00001942	      "line": 9148,
+L00001943	      "tag": "summary",
+L00001944	      "html_id": null,
+L00001945	      "name": null,
+L00001946	      "role": null,
+L00001947	      "class": null,
+L00001948	      "ui_location": "panel-run",
+L00001949	      "label": "CALL STACK",
+L00001950	      "attrs": {},
+L00001951	      "inline_handlers": {},
+L00001952	      "command_tokens": [],
+L00001953	      "local_or_demo_markers": [],
+L00001954	      "accessibility_gaps": [],
+L00001955	      "disposition": "concept_only_owner_adjudicated",
+L00001956	      "canonical_command_id": null,
+L00001957	      "wiring_matrix_key": null,
+L00001958	      "notes": [
+L00001959	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00001960	      ],
+L00001961	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00001962	    },
+L00001963	    {
+L00001964	      "inventory_id": "pmconcept.l9176.0059",
+L00001965	      "line": 9176,
+L00001966	      "tag": "button",
+L00001967	      "html_id": null,
+L00001968	      "name": null,
+L00001969	      "role": null,
+L00001970	      "class": "sc-wt-filter-btn active",
+L00001971	      "ui_location": "panel-source",
+L00001972	      "label": "All",
+L00001973	      "attrs": {
+L00001974	        "onclick": "filterWorktrees(this,'all')"
+L00001975	      },
+L00001976	      "inline_handlers": {
+L00001977	        "onclick": "filterWorktrees(this,'all')"
+L00001978	      },
+L00001979	      "command_tokens": [],
+L00001980	      "local_or_demo_markers": [],
+L00001981	      "accessibility_gaps": [],
+L00001982	      "disposition": "concept_only_owner_adjudicated",
+L00001983	      "canonical_command_id": null,
+L00001984	      "wiring_matrix_key": null,
+L00001985	      "notes": [
+L00001986	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00001987	      ],
+L00001988	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00001989	    },
+L00001990	    {
+L00001991	      "inventory_id": "pmconcept.l9177.0060",
+L00001992	      "line": 9177,
+L00001993	      "tag": "button",
+L00001994	      "html_id": null,
+L00001995	      "name": null,
+L00001996	      "role": null,
+L00001997	      "class": "sc-wt-filter-btn",
+L00001998	      "ui_location": "panel-source",
+L00001999	      "label": "Clean",
+L00002000	      "attrs": {
+L00002001	        "onclick": "filterWorktrees(this,'clean')"
+L00002002	      },
+L00002003	      "inline_handlers": {
+L00002004	        "onclick": "filterWorktrees(this,'clean')"
+L00002005	      },
+L00002006	      "command_tokens": [],
+L00002007	      "local_or_demo_markers": [],
+L00002008	      "accessibility_gaps": [],
+L00002009	      "disposition": "concept_only_owner_adjudicated",
+L00002010	      "canonical_command_id": null,
+L00002011	      "wiring_matrix_key": null,
+L00002012	      "notes": [
+L00002013	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002014	      ],
+L00002015	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002016	    },
+L00002017	    {
+L00002018	      "inventory_id": "pmconcept.l9178.0061",
+L00002019	      "line": 9178,
+L00002020	      "tag": "button",
+L00002021	      "html_id": null,
+L00002022	      "name": null,
+L00002023	      "role": null,
+L00002024	      "class": "sc-wt-filter-btn",
+L00002025	      "ui_location": "panel-source",
+L00002026	      "label": "Dirty",
+L00002027	      "attrs": {
+L00002028	        "onclick": "filterWorktrees(this,'dirty')"
+L00002029	      },
+L00002030	      "inline_handlers": {
+L00002031	        "onclick": "filterWorktrees(this,'dirty')"
+L00002032	      },
+L00002033	      "command_tokens": [],
+L00002034	      "local_or_demo_markers": [],
+L00002035	      "accessibility_gaps": [],
+L00002036	      "disposition": "concept_only_owner_adjudicated",
+L00002037	      "canonical_command_id": null,
+L00002038	      "wiring_matrix_key": null,
+L00002039	      "notes": [
+L00002040	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002041	      ],
+L00002042	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002043	    },
+L00002044	    {
+L00002045	      "inventory_id": "pmconcept.l9179.0062",
+L00002046	      "line": 9179,
+L00002047	      "tag": "button",
+L00002048	      "html_id": null,
+L00002049	      "name": null,
+L00002050	      "role": null,
+L00002051	      "class": "sc-wt-filter-btn",
+L00002052	      "ui_location": "panel-source",
+L00002053	      "label": "Conflict",
+L00002054	      "attrs": {
+L00002055	        "onclick": "filterWorktrees(this,'conflict')"
+L00002056	      },
+L00002057	      "inline_handlers": {
+L00002058	        "onclick": "filterWorktrees(this,'conflict')"
+L00002059	      },
+L00002060	      "command_tokens": [],
+L00002061	      "local_or_demo_markers": [],
+L00002062	      "accessibility_gaps": [],
+L00002063	      "disposition": "concept_only_owner_adjudicated",
+L00002064	      "canonical_command_id": null,
+L00002065	      "wiring_matrix_key": null,
+L00002066	      "notes": [
+L00002067	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002068	      ],
+L00002069	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002070	    },
+L00002071	    {
+L00002072	      "inventory_id": "pmconcept.l9181.0063",
+L00002073	      "line": 9181,
+L00002074	      "tag": "div",
+L00002075	      "html_id": null,
+L00002076	      "name": null,
+L00002077	      "role": null,
+L00002078	      "class": "sc-wt-row",
+L00002079	      "ui_location": "panel-source",
+L00002080	      "label": "clean feat/dashboard-v2 thread0 Base: main \u00b7 +42 -8 \u00b7 3 files \u00b7 Last commit: 4m ago Diff Merge Remove",
+L00002081	      "attrs": {
+L00002082	        "onclick": "this.classList.toggle('expanded')"
+L00002083	      },
+L00002084	      "inline_handlers": {
+L00002085	        "onclick": "this.classList.toggle('expanded')"
+L00002086	      },
+L00002087	      "command_tokens": [],
+L00002088	      "local_or_demo_markers": [],
+L00002089	      "accessibility_gaps": [
+L00002090	        "custom_click_target_missing_role",
+L00002091	        "click_handler_without_keyboard_parity"
+L00002092	      ],
+L00002093	      "disposition": "concept_only_owner_adjudicated",
+L00002094	      "canonical_command_id": null,
+L00002095	      "wiring_matrix_key": null,
+L00002096	      "notes": [
+L00002097	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002098	      ],
+L00002099	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002100	    },
+L00002101	    {
+L00002102	      "inventory_id": "pmconcept.l9190.0064",
+L00002103	      "line": 9190,
+L00002104	      "tag": "button",
+L00002105	      "html_id": null,
+L00002106	      "name": null,
+L00002107	      "role": null,
+L00002108	      "class": "wizard-btn",
+L00002109	      "ui_location": "panel-source",
+L00002110	      "label": "Diff",
+L00002111	      "attrs": {
+L00002112	        "onclick": "event.stopPropagation(); toast('Opening diff for feat/dashboard-v2')"
+L00002113	      },
+L00002114	      "inline_handlers": {
+L00002115	        "onclick": "event.stopPropagation(); toast('Opening diff for feat/dashboard-v2')"
+L00002116	      },
+L00002117	      "command_tokens": [],
+L00002118	      "local_or_demo_markers": [],
+L00002119	      "accessibility_gaps": [],
+L00002120	      "disposition": "concept_only_owner_adjudicated",
+L00002121	      "canonical_command_id": null,
+L00002122	      "wiring_matrix_key": null,
+L00002123	      "notes": [
+L00002124	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002125	      ],
+L00002126	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002127	    },
+L00002128	    {
+L00002129	      "inventory_id": "pmconcept.l9191.0065",
+L00002130	      "line": 9191,
+L00002131	      "tag": "button",
+L00002132	      "html_id": null,
+L00002133	      "name": null,
+L00002134	      "role": null,
+L00002135	      "class": "wizard-btn",
+L00002136	      "ui_location": "panel-source",
+L00002137	      "label": "Merge",
+L00002138	      "attrs": {
+L00002139	        "onclick": "event.stopPropagation(); showMergeModal()"
+L00002140	      },
+L00002141	      "inline_handlers": {
+L00002142	        "onclick": "event.stopPropagation(); showMergeModal()"
+L00002143	      },
+L00002144	      "command_tokens": [],
+L00002145	      "local_or_demo_markers": [],
+L00002146	      "accessibility_gaps": [],
+L00002147	      "disposition": "concept_only_owner_adjudicated",
+L00002148	      "canonical_command_id": null,
+L00002149	      "wiring_matrix_key": null,
+L00002150	      "notes": [
+L00002151	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002152	      ],
+L00002153	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002154	    },
+L00002155	    {
+L00002156	      "inventory_id": "pmconcept.l9192.0066",
+L00002157	      "line": 9192,
+L00002158	      "tag": "button",
+L00002159	      "html_id": null,
+L00002160	      "name": null,
+L00002161	      "role": null,
+L00002162	      "class": "wizard-btn",
+L00002163	      "ui_location": "panel-source",
+L00002164	      "label": "Remove",
+L00002165	      "attrs": {
+L00002166	        "onclick": "event.stopPropagation(); toast('Removing worktree feat/dashboard-v2...')"
+L00002167	      },
+L00002168	      "inline_handlers": {
+L00002169	        "onclick": "event.stopPropagation(); toast('Removing worktree feat/dashboard-v2...')"
+L00002170	      },
+L00002171	      "command_tokens": [],
+L00002172	      "local_or_demo_markers": [],
+L00002173	      "accessibility_gaps": [],
+L00002174	      "disposition": "concept_only_owner_adjudicated",
+L00002175	      "canonical_command_id": null,
+L00002176	      "wiring_matrix_key": null,
+L00002177	      "notes": [
+L00002178	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002179	      ],
+L00002180	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002181	    },
+L00002182	    {
+L00002183	      "inventory_id": "pmconcept.l9196.0067",
+L00002184	      "line": 9196,
+L00002185	      "tag": "div",
+L00002186	      "html_id": null,
+L00002187	      "name": null,
+L00002188	      "role": null,
+L00002189	      "class": "sc-wt-row",
+L00002190	      "ui_location": "panel-source",
+L00002191	      "label": "2 dirty feat/schema-update thread2 Base: main \u00b7 +80 -16 \u00b7 5 files \u00b7 Last commit: 8m ago Diff Stash Merge",
+L00002192	      "attrs": {
+L00002193	        "onclick": "this.classList.toggle('expanded')"
+L00002194	      },
+L00002195	      "inline_handlers": {
+L00002196	        "onclick": "this.classList.toggle('expanded')"
+L00002197	      },
+L00002198	      "command_tokens": [],
+L00002199	      "local_or_demo_markers": [],
+L00002200	      "accessibility_gaps": [
+L00002201	        "custom_click_target_missing_role",
+L00002202	        "click_handler_without_keyboard_parity"
+L00002203	      ],
+L00002204	      "disposition": "concept_only_owner_adjudicated",
+L00002205	      "canonical_command_id": null,
+L00002206	      "wiring_matrix_key": null,
+L00002207	      "notes": [
+L00002208	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002209	      ],
+L00002210	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002211	    },
+L00002212	    {
+L00002213	      "inventory_id": "pmconcept.l9205.0068",
+L00002214	      "line": 9205,
+L00002215	      "tag": "button",
+L00002216	      "html_id": null,
+L00002217	      "name": null,
+L00002218	      "role": null,
+L00002219	      "class": "wizard-btn",
+L00002220	      "ui_location": "panel-source",
+L00002221	      "label": "Diff",
+L00002222	      "attrs": {
+L00002223	        "onclick": "event.stopPropagation(); toast('Opening diff for feat/schema-update')"
+L00002224	      },
+L00002225	      "inline_handlers": {
+L00002226	        "onclick": "event.stopPropagation(); toast('Opening diff for feat/schema-update')"
+L00002227	      },
+L00002228	      "command_tokens": [],
+L00002229	      "local_or_demo_markers": [],
+L00002230	      "accessibility_gaps": [],
+L00002231	      "disposition": "concept_only_owner_adjudicated",
+L00002232	      "canonical_command_id": null,
+L00002233	      "wiring_matrix_key": null,
+L00002234	      "notes": [
+L00002235	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002236	      ],
+L00002237	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002238	    },
+L00002239	    {
+L00002240	      "inventory_id": "pmconcept.l9206.0069",
+L00002241	      "line": 9206,
+L00002242	      "tag": "button",
+L00002243	      "html_id": null,
+L00002244	      "name": null,
+L00002245	      "role": null,
+L00002246	      "class": "wizard-btn",
+L00002247	      "ui_location": "panel-source",
+L00002248	      "label": "Stash",
+L00002249	      "attrs": {
+L00002250	        "onclick": "event.stopPropagation(); toast('Stashing changes...')"
+L00002251	      },
+L00002252	      "inline_handlers": {
+L00002253	        "onclick": "event.stopPropagation(); toast('Stashing changes...')"
+L00002254	      },
+L00002255	      "command_tokens": [],
+L00002256	      "local_or_demo_markers": [],
+L00002257	      "accessibility_gaps": [],
+L00002258	      "disposition": "concept_only_owner_adjudicated",
+L00002259	      "canonical_command_id": null,
+L00002260	      "wiring_matrix_key": null,
+L00002261	      "notes": [
+L00002262	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002263	      ],
+L00002264	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002265	    },
+L00002266	    {
+L00002267	      "inventory_id": "pmconcept.l9207.0070",
+L00002268	      "line": 9207,
+L00002269	      "tag": "button",
+L00002270	      "html_id": null,
+L00002271	      "name": null,
+L00002272	      "role": null,
+L00002273	      "class": "wizard-btn",
+L00002274	      "ui_location": "panel-source",
+L00002275	      "label": "Merge",
+L00002276	      "attrs": {
+L00002277	        "onclick": "event.stopPropagation(); showMergeModal()"
+L00002278	      },
+L00002279	      "inline_handlers": {
+L00002280	        "onclick": "event.stopPropagation(); showMergeModal()"
+L00002281	      },
+L00002282	      "command_tokens": [],
+L00002283	      "local_or_demo_markers": [],
+L00002284	      "accessibility_gaps": [],
+L00002285	      "disposition": "concept_only_owner_adjudicated",
+L00002286	      "canonical_command_id": null,
+L00002287	      "wiring_matrix_key": null,
+L00002288	      "notes": [
+L00002289	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00002290	      ],
+L00002291	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00002292	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=2293-2304 >>>
+L00002293	    {
+L00002294	      "inventory_id": "pmconcept.l9211.0071",
+L00002295	      "line": 9211,
+L00002296	      "tag": "div",
+L00002297	      "html_id": null,
+L00002298	      "name": null,
+L00002299	      "role": null,
+L00002300	      "class": "sc-wt-row",
+L00002301	      "ui_location": "panel-source",
+L00002302	      "label": "clean feat/oauth2-pkce thread-subagents Base: main \u00b7 +122 -11 \u00b7 4 files \u00b7 Last commit: 1m ago",
+L00002303	      "attrs": {
+L00002304	        "onclick": "this.classList.toggle('expanded')"

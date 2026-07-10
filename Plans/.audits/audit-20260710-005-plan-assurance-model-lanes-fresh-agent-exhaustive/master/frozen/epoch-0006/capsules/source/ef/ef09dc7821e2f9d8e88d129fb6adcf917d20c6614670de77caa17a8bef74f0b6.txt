@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1596-1607 >>>
+L00001596	- remote terminal
+L00001597	- /run-debug
+L00001598	negative_constraints:
+L00001599	- Remote terminal and /run-debug execution must not be promised merely because a remote-backed file can be edited.
+L00001600	compatibility_only_notes: []
+L00001601	stale_retired_dispositions: []
+L00001602	owner_boundary_notes: []
+L00001603	owner_hints:
+L00001604	- Plans/FileManager.md
+L00001605	split_recommendation_reason: Split from broader editing/save source span for recovery-specific user-visible behavior.
+L00001606	```
+L00001607	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1608-1983 >>>
+L00001608	### F-021 - Remote Offline Cached File Wording
+L00001609	
+L00001610	```yaml
+L00001611	plan_unit_id: F-021
+L00001612	unit_type: requirement
+L00001613	status: accepted
+L00001614	owner_doc: Plans/FileManager.md
+L00001615	canonical_text: >-
+L00001616	  File Manager/editor owns cached-file-only offline editing: live UI uses Work offline (cached files only), legacy Work offline (cached) is compatibility shorthand only, no cached snapshot disables or shows no-cached-files state, and remote degraded states disclose host, pending write, read-only, search, git, shell, LSP, and file write availability.
+L00001617	gui_related: true
+L00001618	gui_classification_reason: This unit defines visible offline/cached-file labels and remote degraded states.
+L00001619	split_recommended: false
+L00001620	depends_on: []
+L00001621	unblocks: []
+L00001622	acceptance_criteria:
+L00001623	- The covered source span remains losslessly available for exact-text audit.
+L00001624	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001625	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001626	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001627	validation_surfaces:
+L00001628	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001629	- python3 scripts/pm-plan-index.py validate
+L00001630	risk_class: file_manager_drift
+L00001631	reasoning_tier: standard
+L00001632	context_scope: file_manager_standardization
+L00001633	implementation_surfaces:
+L00001634	- Plans/FileManager.md
+L00001635	node_compile_hint:
+L00001636	  mode: remote_offline_cached_file_wording
+L00001637	  create_worknodes: false
+L00001638	source_lineage:
+L00001639	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0021
+L00001640	preserved_exact_tokens:
+L00001641	- Work offline (cached files only)
+L00001642	- Work offline (cached)
+L00001643	- legacy shorthand
+L00001644	- no-cached-files state
+L00001645	- Remote host reconnecting
+L00001646	- Remote host unavailable
+L00001647	- Pending remote write
+L00001648	- Remote file is read-only
+L00001649	- remote `/offline`
+L00001650	negative_constraints:
+L00001651	- Live UI copy must not alternate between Work offline (cached files only) and legacy shorthand.
+L00001652	- When disconnected, remote file listings, searches/diffs, git, shell, LSP, and file writes must not pretend to be live.
+L00001653	compatibility_only_notes:
+L00001654	- Work offline (cached) may appear only in migration aliases, telemetry lineage, or compatibility notes.
+L00001655	stale_retired_dispositions: []
+L00001656	owner_boundary_notes: []
+L00001657	owner_hints:
+L00001658	- Plans/FileManager.md
+L00001659	```
+L00001660	
+L00001661	### F-022 - Display Navigation Line Range And Highlighting
+L00001662	
+L00001663	```yaml
+L00001664	plan_unit_id: F-022
+L00001665	unit_type: requirement
+L00001666	status: accepted
+L00001667	owner_doc: Plans/FileManager.md
+L00001668	canonical_text: >-
+L00001669	  Editor display and navigation show line numbers, open and scroll to requested line/range data, highlight read-only ranges, clamp beyond-EOF requests, support go-to-line, and use basic syntax highlighting with LSP semantic highlighting augmentation or fallback.
+L00001670	gui_related: true
+L00001671	gui_classification_reason: This unit defines visible editor display, line navigation, highlighting, and syntax behavior.
+L00001672	split_recommended: false
+L00001673	depends_on: []
+L00001674	unblocks: []
+L00001675	acceptance_criteria:
+L00001676	- The covered source span remains losslessly available for exact-text audit.
+L00001677	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001678	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001679	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001680	validation_surfaces:
+L00001681	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001682	- python3 scripts/pm-plan-index.py validate
+L00001683	risk_class: file_manager_drift
+L00001684	reasoning_tier: standard
+L00001685	context_scope: file_manager_standardization
+L00001686	implementation_surfaces:
+L00001687	- Plans/FileManager.md
+L00001688	node_compile_hint:
+L00001689	  mode: display_navigation_line_range_highlighting
+L00001690	  create_worknodes: false
+L00001691	source_lineage:
+L00001692	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0022
+L00001693	preserved_exact_tokens:
+L00001694	- Line numbers
+L00001695	- Go to line / range
+L00001696	- 12
+L00001697	- 12-45
+L00001698	- L12-L45
+L00001699	- 1-based, inclusive
+L00001700	- highlights the range
+L00001701	- AutoDecision: default 5 s
+L00001702	- Clamped to line N
+L00001703	- .rs
+L00001704	- .py
+L00001705	- .md
+L00001706	- .json
+L00001707	- .toml
+L00001708	- .html
+L00001709	- .css
+L00001710	- .js
+L00001711	- semantic highlighting
+L00001712	negative_constraints:
+L00001713	- Unknown extension or plain text has no highlighting beyond fallback behavior.
+L00001714	compatibility_only_notes: []
+L00001715	stale_retired_dispositions: []
+L00001716	owner_boundary_notes: []
+L00001717	owner_hints:
+L00001718	- Plans/FileManager.md
+L00001719	```
+L00001720	
+L00001721	### F-023 - Split Panes And Editor Groups
+L00001722	
+L00001723	```yaml
+L00001724	plan_unit_id: F-023
+L00001725	unit_type: requirement
+L00001726	status: accepted
+L00001727	owner_doc: Plans/FileManager.md
+L00001728	canonical_text: >-
+L00001729	  Split editor panes are MVP scope with multiple editor groups, one tab list and active tab per group, one shared buffer per file path, focused group open targeting by default, optional Open in other group/new group actions, and per-view cursor and scroll state.
+L00001730	gui_related: true
+L00001731	gui_classification_reason: This unit defines visible split-pane editor group behavior.
+L00001732	split_recommended: false
+L00001733	depends_on: []
+L00001734	unblocks: []
+L00001735	acceptance_criteria:
+L00001736	- The covered source span remains losslessly available for exact-text audit.
+L00001737	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001738	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001739	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001740	validation_surfaces:
+L00001741	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001742	- python3 scripts/pm-plan-index.py validate
+L00001743	risk_class: file_manager_drift
+L00001744	reasoning_tier: standard
+L00001745	context_scope: file_manager_standardization
+L00001746	implementation_surfaces:
+L00001747	- Plans/FileManager.md
+L00001748	node_compile_hint:
+L00001749	  mode: split_panes_and_editor_groups
+L00001750	  create_worknodes: false
+L00001751	source_lineage:
+L00001752	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0023
+L00001753	preserved_exact_tokens:
+L00001754	- Split editor panes
+L00001755	- multiple editor groups
+L00001756	- Tab bar model (MVP)
+L00001757	- one buffer per file path
+L00001758	- active (focused) editor group
+L00001759	- Open in other group
+L00001760	- Open in new group
+L00001761	- Cursor/scroll position is per-view
+L00001762	negative_constraints: []
+L00001763	compatibility_only_notes: []
+L00001764	stale_retired_dispositions: []
+L00001765	owner_boundary_notes: []
+L00001766	owner_hints:
+L00001767	- Plans/FileManager.md
+L00001768	```
+L00001769	
+L00001770	### F-024 - Embedded Document Pane Shared Buffer And Write Lock
+L00001771	
+L00001772	```yaml
+L00001773	plan_unit_id: F-024
+L00001774	unit_type: requirement
+L00001775	status: accepted
+L00001776	owner_doc: Plans/FileManager.md
+L00001777	canonical_text: >-
+L00001778	  Embedded document pane shares the same file buffer, dirty state, save authority, restore pipeline, and history model as File Editor; when DocumentPane status is writing…, File Editor and document pane are write-locked/read-only for user edits with a visible lock banner while streaming updates still apply.
+L00001779	gui_related: true
+L00001780	gui_classification_reason: This unit governs visible embedded document pane editing, read-only, and lock states.
+L00001781	split_recommended: true
+L00001782	depends_on: []
+L00001783	unblocks: []
+L00001784	acceptance_criteria:
+L00001785	- The covered source span remains losslessly available for exact-text audit.
+L00001786	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001787	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001788	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001789	validation_surfaces:
+L00001790	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001791	- python3 scripts/pm-plan-index.py validate
+L00001792	risk_class: file_manager_drift
+L00001793	reasoning_tier: standard
+L00001794	context_scope: file_manager_standardization
+L00001795	implementation_surfaces:
+L00001796	- Plans/FileManager.md
+L00001797	node_compile_hint:
+L00001798	  mode: embedded_document_pane_shared_buffer_write_lock
+L00001799	  create_worknodes: false
+L00001800	source_lineage:
+L00001801	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0024
+L00001802	preserved_exact_tokens:
+L00001803	- Embedded document pane
+L00001804	- same file buffer
+L00001805	- one dirty state
+L00001806	- same restore pipeline
+L00001807	- writing…
+L00001808	- read-only
+L00001809	- Locked: agent is writing this document
+L00001810	- Streaming updates
+L00001811	- shared-buffer invariant
+L00001812	negative_constraints:
+L00001813	- The lock is an interaction rule only; it does not create a separate buffer or history branch.
+L00001814	compatibility_only_notes: []
+L00001815	stale_retired_dispositions: []
+L00001816	owner_boundary_notes: []
+L00001817	owner_hints:
+L00001818	- Plans/FileManager.md
+L00001819	split_recommendation_reason: Combines shared-buffer backend invariant with visible write-lock/banner behavior.
+L00001820	```
+L00001821	
+L00001822	### F-025 - Embedded Annotation Chat Handoff Boundary
+L00001823	
+L00001824	```yaml
+L00001825	plan_unit_id: F-025
+L00001826	unit_type: requirement
+L00001827	status: accepted
+L00001828	owner_doc: Plans/FileManager.md
+L00001829	canonical_text: >-
+L00001830	  Embedded document annotations and chat handoff share document identity and buffer state while keeping annotation and composer-prep state adjacent to, not part of, file buffers: annotations anchor to canonical source text, send selection to chat does not mutate the buffer, and stale rendered selections fail explicitly.
+L00001831	gui_related: false
+L00001832	gui_classification_reason: This unit defines annotation and chat handoff state boundaries rather than GUI presentation.
+L00001833	split_recommended: false
+L00001834	depends_on: []
+L00001835	unblocks: []
+L00001836	acceptance_criteria:
+L00001837	- The covered source span remains losslessly available for exact-text audit.
+L00001838	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001839	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001840	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001841	validation_surfaces:
+L00001842	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001843	- python3 scripts/pm-plan-index.py validate
+L00001844	risk_class: file_manager_drift
+L00001845	reasoning_tier: standard
+L00001846	context_scope: file_manager_standardization
+L00001847	implementation_surfaces:
+L00001848	- Plans/FileManager.md
+L00001849	node_compile_hint:
+L00001850	  mode: embedded_annotation_chat_handoff_boundary
+L00001851	  create_worknodes: false
+L00001852	source_lineage:
+L00001853	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0025
+L00001854	preserved_exact_tokens:
+L00001855	- Embedded Document Pane
+L00001856	- annotations
+L00001857	- chat handoff
+L00001858	- canonical source text
+L00001859	- rendered DOM state
+L00001860	- second buffer
+L00001861	- second dirty flag
+L00001862	- separate undo/history branch
+L00001863	- Send selection to chat
+L00001864	- thread-scoped composer-prep state
+L00001865	- stale rendered state
+L00001866	negative_constraints:
+L00001867	- Creating or resolving annotations must not create a second buffer, second dirty flag, or separate undo/history branch.
+L00001868	- Stale rendered-state annotation creation must fail explicitly rather than silently rebase.
+L00001869	compatibility_only_notes: []
+L00001870	stale_retired_dispositions: []
+L00001871	owner_boundary_notes: []
+L00001872	owner_hints:
+L00001873	- Plans/FileManager.md
+L00001874	```
+L00001875	
+L00001876	### F-026 - Data Model Dirty State And Changed On Disk Prompt
+L00001877	
+L00001878	```yaml
+L00001879	plan_unit_id: F-026
+L00001880	unit_type: requirement
+L00001881	status: accepted
+L00001882	owner_doc: Plans/FileManager.md
+L00001883	canonical_text: >-
+L00001884	  Editor data model uses one buffer per file path and no duplicate tabs per group; dirty state reflects in-memory versus last-saved content, revert prompts before discarding dirty data, and file-changed-on-disk checks on save or focus show one combined prompt for dirty plus changed-on-disk cases.
+L00001885	gui_related: true
+L00001886	gui_classification_reason: This unit defines visible buffer dirty state and file-changed prompts.
+L00001887	split_recommended: true
+L00001888	depends_on: []
+L00001889	unblocks: []
+L00001890	acceptance_criteria:
+L00001891	- The covered source span remains losslessly available for exact-text audit.
+L00001892	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001893	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001894	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001895	validation_surfaces:
+L00001896	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001897	- python3 scripts/pm-plan-index.py validate
+L00001898	risk_class: file_manager_drift
+L00001899	reasoning_tier: standard
+L00001900	context_scope: file_manager_standardization
+L00001901	implementation_surfaces:
+L00001902	- Plans/FileManager.md
+L00001903	node_compile_hint:
+L00001904	  mode: data_model_dirty_state_changed_on_disk_prompt
+L00001905	  create_worknodes: false
+L00001906	source_lineage:
+L00001907	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0026
+L00001908	preserved_exact_tokens:
+L00001909	- One buffer per file path
+L00001910	- one tab per path per group
+L00001911	- Dirty state
+L00001912	- Revert (reload from disk)
+L00001913	- Discard unsaved changes and reload?
+L00001914	- File changed on disk
+L00001915	- Reload / Overwrite / Cancel
+L00001916	- Do not check on every keystroke
+L00001917	- File changed on disk. You have unsaved changes. Reload (discard yours) / Overwrite disk / Cancel
+L00001918	negative_constraints:
+L00001919	- Do not show two separate dialogs in sequence for dirty plus file-changed-on-disk.
+L00001920	- Do not check for file-changed-on-disk on every keystroke.
+L00001921	compatibility_only_notes: []
+L00001922	stale_retired_dispositions: []
+L00001923	owner_boundary_notes: []
+L00001924	owner_hints:
+L00001925	- Plans/FileManager.md
+L00001926	split_recommendation_reason: Span combines buffer data model and visible prompt behavior.
+L00001927	```
+L00001928	
+L00001929	### F-027 - Text Encoding File Type And Read Only Reasons
+L00001930	
+L00001931	```yaml
+L00001932	plan_unit_id: F-027
+L00001933	unit_type: requirement
+L00001934	status: accepted
+L00001935	owner_doc: Plans/FileManager.md
+L00001936	canonical_text: >-
+L00001937	  Editor text behavior includes per-buffer undo/redo, selection and clipboard, optional word wrap, monospace font, UTF-8 editable text, line-ending preservation, explicit Save only, binary/read-only file handling, and user-visible read-only reasons.
+L00001938	gui_related: true
+L00001939	gui_classification_reason: This unit covers visible text behavior, decode errors, binary/read-only states, and editor settings.
+L00001940	split_recommended: false
+L00001941	depends_on: []
+L00001942	unblocks: []
+L00001943	acceptance_criteria:
+L00001944	- The covered source span remains losslessly available for exact-text audit.
+L00001945	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00001946	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001947	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001948	validation_surfaces:
+L00001949	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001950	- python3 scripts/pm-plan-index.py validate
+L00001951	risk_class: file_manager_drift
+L00001952	reasoning_tier: standard
+L00001953	context_scope: file_manager_standardization
+L00001954	implementation_surfaces:
+L00001955	- Plans/FileManager.md
+L00001956	node_compile_hint:
+L00001957	  mode: text_encoding_file_type_read_only_reasons
+L00001958	  create_worknodes: false
+L00001959	source_lineage:
+L00001960	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0027
+L00001961	preserved_exact_tokens:
+L00001962	- Undo/redo
+L00001963	- Ctrl+Z
+L00001964	- Ctrl+Shift+Z
+L00001965	- Ctrl+Y
+L00001966	- Copy, Cut, Paste
+L00001967	- UTF-8
+L00001968	- Cannot decode as UTF-8
+L00001969	- Only on explicit Save
+L00001970	- Binary file -- cannot edit.
+L00001971	- Read-only on disk
+L00001972	- File too large
+L00001973	- read-only reason in UI
+L00001974	negative_constraints:
+L00001975	- No auto-save in MVP.
+L00001976	- Hex view is out of scope for MVP.
+L00001977	compatibility_only_notes: []
+L00001978	stale_retired_dispositions: []
+L00001979	owner_boundary_notes: []
+L00001980	owner_hints:
+L00001981	- Plans/FileManager.md
+L00001982	```
+L00001983	
+
+<<< CONTEXT_AFTER canonical_document_lines=1984-1995 >>>
+L00001984	### F-028 - Large File Strategy And Limits
+L00001985	
+L00001986	```yaml
+L00001987	plan_unit_id: F-028
+L00001988	unit_type: requirement
+L00001989	status: accepted
+L00001990	owner_doc: Plans/FileManager.md
+L00001991	canonical_text: >-
+L00001992	  Large-file MVP uses truncated read-only view plus Load full file above the line threshold, enforces a 10 000-line default and 5 MB hard cap, offers read-only/system-editor alternatives above cap, and persists configurable editor thresholds.
+L00001993	gui_related: true
+L00001994	gui_classification_reason: This unit defines visible large-file affordances and settings.
+L00001995	split_recommended: false

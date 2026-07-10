@@ -1,0 +1,1077 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000997-EXACT-WIN-7414C6C901F8-0001",
+  "attempt_id": "attempt-0002",
+  "task_thread_id": "019f4d38-6df7-7bb0-ba33-f241bfbc8806",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "ddf91f64c0ef892b33be6334da9812931dd04641db21071e435197e58716d101",
+    "core_range": [
+      1,
+      294
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "EXACT-001",
+      "item_type": "capability",
+      "title": "Desktop MVP includes editor, server, chat, and enhancement surfaces",
+      "statement": "LSP is an MVP desktop capability spanning client integration, server management, Chat diagnostics and symbol/file flows, code-block intelligence, and named editor/chat enhancements.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.desktop_mvp",
+        "lsp.chat"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 7,
+          "line_end": 7,
+          "exact_quote": "**Status:** Plan -- **LSP is MVP**",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 8,
+          "line_end": 8,
+          "exact_quote": "**Scope:** LSP (Language Server Protocol) is **in scope for the desktop MVP**. Desktop client integration, server management, **full LSP integration in the Chat Window** (diagnostics in context, @ file/symbol with LSP, code blocks with hover/Go to definition), and **additional enhancements** (Find references, Rename symbol, Format document, optional LSP diagnostics gate, Chat \"Fix all\"/\"Rename\"/\"Where is this used?\", etc.) -- see §9.1.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-002",
+      "item_type": "gui_truth",
+      "title": "Authored UI copy and server payloads have different copy rules",
+      "statement": "Authored LSP help and tooltip text must provide the Final GUI Spec dual variants, while external server hover and diagnostic payloads are exempt.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.gui.copy"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 12,
+          "line_end": 12,
+          "exact_quote": "**ELI5/Expert copy alignment:** Authored tooltip/help text in this plan (for example setting hints and UI explanatory copy) must follow the dual-variant contract in `Plans/FinalGUISpec.md` §7.4.0. LSP server-returned hover/diagnostic payloads are dynamic external content and are outside authored dual-copy enforcement.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-003",
+      "item_type": "behavior",
+      "title": "Requests are cancellation-aware, version-aware, and fallback-driven",
+      "statement": "Navigation and edit/version changes cancel or time out live work; unavailable servers trigger regex, grep/index, or heuristic fallbacks; mutations stay FileSafe/preview aware; chat uses the same intelligence model.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.request_broker",
+        "lsp.fallback",
+        "lsp.filesafe"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 39,
+          "line_end": 39,
+          "exact_quote": "MVP LSP scope is `/cancellation-aware`, version-aware, and fallback-driven: live requests cancel or time out on navigation, edit, and version changes; fallback uses regex, `/grep/index`, and heuristic outline paths when a server is unavailable; formatting-adjacent actions such as format, rename, code actions, and apply-edit stay FileSafe/preview aware; chat code blocks and `@` symbol flows consume the same model.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-004",
+      "item_type": "failure_recovery",
+      "title": "Interactive request failures discard stale results and degrade per feature",
+      "statement": "Hover, completion, navigation, signature help, and general request handling specify timeout, stale-result, no-result, and no-server outcomes, with stale work abandoned.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.hover",
+        "lsp.completion",
+        "lsp.navigation",
+        "lsp.signature_help"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 48,
+          "line_end": 48,
+          "exact_quote": "| **Hover** | (URI, position), optional timeout | Tooltip (markdown or plain) | Tooltip at cursor | Timeout → show \"Timed out\", discard; stale (version changed) → discard; no server → no tooltip | `lsp.hoverTimeoutMs` | No hover; syntax-only if any |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 50,
+          "line_end": 50,
+          "exact_quote": "| **Navigation** (go-to-def, outline, breadcrumbs) | (URI, position) or document; server capability | Jump to location or symbol list | Correct location/list | Timeout → show \"Timed out\", discard; no result → show \"No definition\"; no server → heuristic/outline | `lsp.workspaceSymbolTimeoutMs` (for workspace/symbol) | Heuristic symbol search, regex outline (FileManager §10.1-§10.2) |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 56,
+          "line_end": 56,
+          "exact_quote": "| **Request timeout/cancellation** | Per-request timeout; cancel on navigate/edit | -- | Stale work abandoned | Timeout → treat as failure for that request (show \"Timed out\" or discard) | `lsp.*TimeoutMs` (§14.4) | N/A (client-side) |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-005",
+      "item_type": "state_transition",
+      "title": "Disable and unavailable states suppress spawning and downstream context",
+      "statement": "A disabled server is not spawned and behaves as no server for its language; when no server exists, diagnostics are omitted from Assistant/Interview context.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.disable",
+        "lsp.assistant_diagnostics"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "| **Per-server enable/disable** | Config: disabled flag | Server not spawned when disabled | LSP off for that server | -- | `lsp.<id>.disabled`, `lsp: false` | Same as \"no server\" for that language |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 59,
+          "line_end": 59,
+          "exact_quote": "| **Diagnostics for LLM/Assistant** | Current diagnostics for relevant files | Text/summary in Assistant/Interview context | Agent sees errors/warnings | No server → omit diagnostics from context | -- | Omit from context; optional hint to install |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-006",
+      "item_type": "contract",
+      "title": "PM is a capability-negotiated LSP client and lifecycle owner",
+      "statement": "PM does not invent mainstream analyzers; it launches or connects to language servers locally or through host-aware remote placement and uses only capabilities advertised by both peers.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.client_boundary",
+        "lsp.capability_negotiation",
+        "lsp.remote"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 77,
+          "line_end": 77,
+          "exact_quote": "- **Product boundary:** For MVP, PM is the LSP client and lifecycle owner, not a `language-analysis` engine and not a custom `language-server` for mainstream languages. Default servers such as rust-analyzer, pyright, gopls, clangd, and slint-lsp run as local stdio RPC processes by default; pylsp-style alternatives remain custom/manual unless cataloged. Remote workspaces use the same model with `/SSH` placement, host-aware path mapping, and `/worktree-aware` server-root resolution instead of a remote web service or hidden local mirror. Semantic `/symbols` and diagnostics come from negotiated server capabilities, not from PM inventing analyzer logic.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 85,
+          "line_end": 85,
+          "exact_quote": "Capabilities are negotiated at **initialize**: client and server declare what they support; we only use features both sides advertise.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-007",
+      "item_type": "capability",
+      "title": "Registry activation and custom-server inputs are specified",
+      "statement": "Extension and requirement matching activates servers, while configuration exposes disable, command, extension, environment, initialization, global-disable, and download-disable inputs; custom servers provide command and extension lists.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.registry",
+        "lsp.config",
+        "lsp.custom_server"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 99,
+          "line_end": 102,
+          "exact_quote": "- **Built-in servers:** 30+ languages; see **§3.2** for the full table (server id, extensions, requirements). Each server is enabled when a file's extension matches and the requirement is met.\n- **How it works:** When OpenCode opens a file, it (1) starts the appropriate LSP server if not already running, (2) checks the file extension against all enabled LSP servers. Servers are automatically enabled when an extension is detected and requirements are met.\n- **Config:** `lsp` section in opencode config. Schema: `https://opencode.ai/config.json`. Per-server properties: `disabled` (boolean), `command` (string[]), `extensions` (string[]), `env` (object), `initialization` (object). Set `lsp: false` to disable all; set `OPENCODE_DISABLE_LSP_DOWNLOAD=true` to disable automatic LSP server downloads.\n- **Custom servers:** Add entries with `command` (e.g. `[\"custom-lsp-server\", \"--stdio\"]`) and `extensions`.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-008",
+      "item_type": "capability",
+      "title": "The registry targets the OpenCode server set plus Slint",
+      "statement": "The authoritative core directs the implementation to include every server row in its built-in table and add slint-lsp, keyed by server id, extensions, and requirements.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.builtin_catalog"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 107,
+          "line_end": 107,
+          "exact_quote": "We support the same set of built-in LSP servers as [OpenCode](https://opencode.ai/docs/lsp/) **plus slint-lsp** for Slint UI (`.slint`). When implementing the server registry, include all of the following so that Puppet Master can provide diagnostics and code intelligence for every listed language. Each row defines server id, file extensions, and requirements (command or dependency).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-009",
+      "item_type": "state_transition",
+      "title": "Host-aware root resolution determines supervised session reuse",
+      "statement": "Root discovery derives host and candidate roots, applies overrides, computes root_identity, and attaches or reuses a session keyed by host, server, and root; remote projects cannot attach to a hidden local mirror.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.root_resolution",
+        "lsp.session_reuse"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 154,
+          "line_end": 158,
+          "exact_quote": "Rules:\n- session reuse key is `(host_id, server_id, root_identity)`\n- `root_identity` is resolved from the effective project/worktree/remote root selected for the current document and server rules\n- project language detection and preset suggestion are advisory only; actual attachment resolves from file path, effective host context, server rules, and user overrides\n- remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 162,
+          "line_end": 166,
+          "exact_quote": "Root-selection steps:\n1. determine the effective host context for the file\n2. resolve candidate roots from file path and server heuristics\n3. apply explicit per-project or per-server overrides\n4. compute `root_identity` and attach/reuse the matching session if one exists",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-010",
+      "item_type": "contract",
+      "title": "Server overlap resolution is deterministic and capability-aware",
+      "statement": "Candidate selection partitions primary and supplementary entries, selects one primary by specificity, contextual satisfaction, priority, and stable id, then attaches only compatible supplements; incompatible supplementary attachment is denied.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.server_selection",
+        "lsp.overlap"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 212,
+          "line_end": 215,
+          "exact_quote": "- Selection metadata uses the closed `selection_mode` vocabulary `standalone_primary`, `contextual_primary`, `supplementary_diagnostics`, and `standalone_diagnostics`. User-facing copy may hyphenate the primary modes as `standalone-primary` and `contextual-primary`, and may describe `standalone_diagnostics` as `/diagnostics-only`, but persisted registry values use the underscore spellings.\n- `capability_profile` declares whether a server provides `/full` `full_language` support, `diagnostics_actions`, diagnostics-only support, or other partial capability families. `may_attach_without_primary` states whether a supplementary diagnostics server may attach when no full primary exists.\n- `supplementary_for_families` lists the primary families a supplementary server may attach beside; supplementary attach is denied if the active primary family is absent from that list.\n- The generalized selection algorithm gathers enabled and available catalog entries whose selectors match the file, platform, and context; resolves root/context for each candidate; partitions candidates into full primary candidates and supplementary/diagnostics candidates; chooses one effective primary by filetype/framework specificity, satisfied `contextual_primary`, `primary_priority`, then stable `server_id`; then attaches only compatible supplementary servers.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-011",
+      "item_type": "consumer",
+      "title": "Diagnostics remain source-preserving and merge only for presentation",
+      "statement": "Diagnostics are stored per server/session-root/URI identity and merged only into Problems, editor markers, and Assistant/Interview context; diagnostics-only attachments cannot imply completion, navigation, hover, or semantic capabilities.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.diagnostics_store",
+        "lsp.problems",
+        "lsp.assistant_context"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 218,
+          "line_end": 218,
+          "exact_quote": "- Diagnostics integration is source-preserving; `diagnostics-integration` is the merge/presentation contract, not a storage-flattening rule. Store diagnostics per `(server_id, session/root, uri)` or its normalized `(session, uri)` equivalent; merge only in presentation surfaces such as Problems, editor markers, and Assistant/Interview context. A diagnostics-first sidecar may expose `/actions/status` for its own diagnostics, but a `supplementary_diagnostics` or `standalone_diagnostics` attachment must not imply full `/completion/navigation`, hover, or semantic capability. `/cap/truncation` belongs to the presentation merge/reporting layer and must not erase per-server source identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-012",
+      "item_type": "authority",
+      "title": "Named components own placement, lifecycle, documents, and GUI access",
+      "statement": "LspHost owns placement and path mapping, LspSession owns lifecycle/restart, DocumentStore owns authoritative versions and stale checks, and the GUI accesses language intelligence through a facade with process I/O off the UI thread.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.architecture",
+        "lsp.ui_handoff"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 219,
+          "line_end": 220,
+          "exact_quote": "- `LspHost`, `LspSession`, and `DocumentStore` are first-class implementation concepts: the host owns local/remote placement and `/backoff/eviction`, the session owns lifecycle and restart behavior, and the document store owns URI normalization, pending-sync state, stale-result checks, and authoritative text versions.\n- PM owns a client-pattern LSP orchestration layer rather than analyzer implementations. The live architecture names `LspHost`, `LspSupervisor`, `LspSession`, `LspSessionRegistry`, `LspRegistry`, `WorkspaceResolver`, `DocumentStore`, `DocumentSyncEngine`, `LspRequestBroker`, `CapabilityRegistry`, `DiagnosticsStore`, `LanguageIntelligenceFacade`, and `LspTraceService`; `/VS` or other upstream client examples are inputs only, while the GUI calls the `/intelligence` facade rather than JSON-RPC plumbing. `LspHost` also owns `/SSH` placement and `/path-mapping`, with all LSP/process I/O off the UI thread and delivered through an event-loop-safe handoff.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-013",
+      "item_type": "state_transition",
+      "title": "Protocol lifecycle, crash recovery, diagnostics replacement, and mutation routing are strict",
+      "statement": "Normal traffic is bounded by initialize/initialized and shutdown/exit; dynamic registration is disabled until unregister is supported; crash restart replays open documents; diagnostics replace per server and URI; edits always use FileSafe.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.lifecycle",
+        "lsp.crash_recovery",
+        "lsp.workspace_edit"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 221,
+          "line_end": 221,
+          "exact_quote": "- Protocol guardrails are conservative by default: initialize -> initialized -> normal traffic -> shutdown -> exit is the strict lifecycle, dynamic registration stays disabled until PM can handle `/unregister`, and over-advertising unsupported snippets, resolve support, progress, `/code-action/workspace`, or workspaceFolders behavior is forbidden. Restart after `/crash` replays open documents, diagnostics are replacement-per-server plus URI rather than append-only, and rename, `/format/code-action`, and workspace edits always route through FileSafe.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-014",
+      "item_type": "capability",
+      "title": "ESLint is a first-class JS/TS diagnostics and quick-fix integration",
+      "statement": "The registry must include ESLint, discover roots from package or flat-config files, avoid legacy eslintrc, and propagate ESLint diagnostics to Problems and Assistant context.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.eslint"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 233,
+          "line_end": 237,
+          "exact_quote": "**ESLint** is the primary lint and diagnostics LSP for **ECMAScript/JavaScript** (and commonly used with TypeScript, Vue, etc.) when users build programs with Puppet Master. We explicitly support and reinforce ESLint so that JS/TS projects get first-class linting and quick fixes in the editor and in Assistant/Interview context.\n\n- **Upstream:** [eslint/eslint](https://github.com/eslint/eslint). **ESLint v10** (v10.0.0 / v10.0.1) is the current major line; it uses **flat config only** (`.eslintrc` removed). Config file: `eslint.config.js` or `eslint.config.mjs` / `eslint.config.ts`; lookup starts from the file's directory (monorepo-friendly). Node.js: ^20.19.0, ^22.13.0, or >=24.\n- **LSP:** OpenCode's built-in **eslint** server uses the project's `eslint` dependency and runs the VS Code ESLint server (or equivalent) over stdio. Extensions: `.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, `.cts`, `.vue`. Requirement: `eslint` dependency in project.\n- **For our implementation:** When adding LSP, include **eslint** in the server registry for JS/TS projects. Root discovery: nearest directory containing `package.json` (or `eslint.config.js` / `eslint.config.mjs` / `eslint.config.ts` for v10). Prefer ESLint v10 flat config when present (`eslint.config.*`); do not rely on legacy `.eslintrc*`. Diagnostics from ESLint feed the Problems panel and LLM/Assistant context (§1, §5).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-015",
+      "item_type": "capability",
+      "title": "slint-lsp is a built-in Slint 1.17.1-aligned server",
+      "statement": "Opening a .slint file starts a no-argument stdio slint-lsp for the selected root and provides diagnostics, hover, completion, and definition; Settings exposes toggle and env/initialization configuration, while live preview is separately wired if supported.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.slint"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 244,
+          "line_end": 249,
+          "exact_quote": "- **Crate:** [slint-lsp](https://crates.io/crates/slint-lsp) (align with the Slint 1.17.1 toolchain target). LSP implementation for [Slint](https://slint.dev). Binary: `slint-lsp` (or `slint-lsp.exe` on Windows). Communicates via **stdio** (stdin/stdout); no special command-line arguments -- editors spawn the binary and use LSP over stdio.\n- **Features:** Diagnostics, code completion, goto definition, **live-preview**. Code formatting is part of the LSP (see [Slint tooling docs](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp)).\n- **Install:** `cargo install slint-lsp`, or use pre-built binaries from [Slint GitHub releases](https://github.com/slint-ui/slint/releases). Requirement: `slint-lsp` command available on PATH.\n- **Extensions:** `.slint` (Slint UI markup).\n- **Root discovery:** For `.slint` files, root can be the file's directory or nearest project root (e.g. directory containing `Cargo.toml` if Slint is used in a Rust project). Many .slint files work with workspace root or file directory.\n- **For our implementation:** Include **slint-lsp** in the server registry with id `slint-lsp`, extensions `[\".slint\"]`, and spawn `slint-lsp` (no args). When the user opens a `.slint` file in the File Editor, the LSP client starts slint-lsp for that root and provides diagnostics, hover, completion, and goto definition in the editor; live-preview can be wired separately if the LSP supports it. Settings > LSP: slint-lsp appears in the built-in list and can be toggled or configured (env, initialization) like other servers.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-016",
+      "item_type": "state_transition",
+      "title": "Opening a matching file lazily spawns one process per host/server/root identity",
+      "statement": "File-open matching determines enabled servers and starts a missing stdio process for the host/root identity, then completes initialize with optional initializationOptions; the registry can disable or override command, environment, and initialization values.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.lazy_spawn",
+        "lsp.process_identity"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 254,
+          "line_end": 257,
+          "exact_quote": "- **Server model:** One LSP server **process** per **`(host_id, server_id, root_identity)`**. Root discovery still begins from the file context and server heuristics (e.g. \"nearest directory containing Cargo.toml\" for Rust), but the supervised session key is host-aware.\n- **Info shape:** `id`, `extensions[]`, `root(file, host_context) -> root identity`, `spawn(session_key) -> Handle | undefined`. **Handle:** `process` (child process) + optional `initialization` (options sent in LSP `initialize`).\n- **Root discovery:** **NearestRoot(includePatterns, excludePatterns)** -- walk up from the file's directory until a target file is found. Exclude patterns avoid wrong server (e.g. Deno vs Node). Some servers use a fixed root (e.g. instance directory).\n- **Lifecycle:** On file open, extension is matched to enabled servers; if a server is needed and not yet running for that host/root identity, it is **spawned** (stdio). Initialize handshake and optional `initializationOptions` complete the setup.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 261,
+          "line_end": 264,
+          "exact_quote": "- Registry of servers by (id, extensions, root-finder, spawn).\n- Lazy spawn per `(host_id, server_id, root_identity)`; one process per effective host/root identity.\n- Config to disable, override command, set env and initialization options (align with OpenCode's `lsp` schema).\n- Optional auto-install (we can defer or limit; e.g. rust-analyzer from PATH, pyright/gopls optional install).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-017",
+      "item_type": "contract",
+      "title": "Editor document state is authoritative and gates all intelligence requests",
+      "statement": "Every listed LSP request operates on the shared authoritative open-document state, sync barriers prevent stale UI results, and rename/format/code-action edits use the common FileSafe-backed mutation path.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.document_store",
+        "lsp.sync_barrier"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 285,
+          "line_end": 292,
+          "exact_quote": "The editor integrates with LSP through a shared authoritative document store and a host-aware session supervisor.\n\nRules:\n- the shared document store is the sole authority for open-document text\n- LSP document sync, hover, definition, references, completion, signature help, diagnostics, code actions, rename, and format all operate against that authoritative document state\n- feature requests are gated behind sync barriers so stale document versions do not leak into the UI\n- workspace edits from rename/format/code action flow through the same FileSafe-backed mutation path as other file edits\n- LSP never becomes the owner of Search, diff/review, or chat restore semantics",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-018",
+      "item_type": "explicit_non_gap",
+      "title": "LSP ownership explicitly excludes Search, review, and chat restoration",
+      "statement": "The authoritative window supplies an explicit negative ownership boundary preventing LSP from taking over Search, diff/review, or chat restore semantics.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp.non_ownership"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 292,
+          "line_end": 292,
+          "exact_quote": "- LSP never becomes the owner of Search, diff/review, or chat restore semantics",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-001",
+      "item_type": "gap",
+      "title": "The document simultaneously claims no open questions and names open decisions",
+      "statement": "The core gives incompatible implementation-readiness signals: deterministic defaults and no open questions at the top, but an implementation guide that still points to open decisions.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "internal_contradiction",
+      "impact": "Implementers cannot know whether unresolved decisions remain authoritative work or whether defaults must already exist elsewhere.",
+      "builder_discretion": "A builder would have to decide whether to treat the referenced open decisions as resolved, deferred, or binding blockers.",
+      "feature_keys": [
+        "lsp.plan_readiness"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4,
+          "line_end": 4,
+          "exact_quote": "> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 16,
+          "line_end": 16,
+          "exact_quote": "**For implementation guide:** The **Appendix: Implementation plan checklist** is the single ordered checklist for implementers (Prerequisites, Phase 1-4). §§13-16 and §12 provide GUI requirements, technical implementation detail, phased build order, and open decisions.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-002",
+      "item_type": "gap",
+      "title": "Diagnostics timeout behavior is a nondeterministic choice",
+      "statement": "On diagnostics timeout the plan permits either retaining last-known diagnostics or showing an empty state without selecting a condition or priority for the two outcomes.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "behavior_underspecified",
+      "impact": "Different implementations can display stale errors or erase them for the same timeout, changing editor, Problems, and Assistant truth.",
+      "builder_discretion": "Choose whether timeout preserves or clears diagnostics and define how stale state is identified to users and downstream consumers.",
+      "feature_keys": [
+        "lsp.diagnostics.timeout"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 47,
+          "line_end": 47,
+          "exact_quote": "| **Diagnostics** | Buffer URI, open/change/close; server sends `publishDiagnostics` | Underlines, gutter markers, Problems panel rows | Errors/warnings shown; click opens file at line | Timeout: show last known or empty; server crash → clear diagnostics, offer \"Restart\"; no server → no diagnostics | `lsp.<id>.disabled`, `lsp: false` | No diagnostics; optional install hint |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-003",
+      "item_type": "gap",
+      "title": "didSave is both planned and optional",
+      "statement": "The phased summary includes didSave in Phase 1 document sync, while the protocol reference says didSave is optional; the authoritative core does not resolve whether MVP must send it.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "internal_contradiction",
+      "impact": "Servers whose diagnostics or indexing depend on save notifications may behave differently across conforming implementations.",
+      "builder_discretion": "Decide whether didSave is mandatory, capability-dependent, configuration-dependent, or omitted.",
+      "feature_keys": [
+        "lsp.document_sync.did_save"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 14,
+          "line_end": 14,
+          "exact_quote": "**Implementation plan summary (top-level guide for agents):** (1) **Prerequisites:** Rust LSP client crate (lsp-types + stdio client), config schema (OpenCode-aligned). (2) **Phase 1 -- Core LSP:** Server registry (§3.2 + slint-lsp), document sync (didOpen/didChange/didClose/didSave, debounce), diagnostics → editor + Problems panel (FinalGUISpec §7.20), hover, completion, status bar (§8.1). (3) **Phase 2 -- Editor:** Go to definition, code actions, code lens, signature help, inlay hints, semantic highlighting; then Find references (References panel, Shift+F12), Rename symbol (F2), Format document/selection (Shift+Alt+F); breadcrumbs/Go to symbol (documentSymbol); timeouts, per-server enable/disable, Settings > LSP (§7.4.2). (4) **Phase 3 -- Chat LSP (§5.1):** Diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code-block hover and click-to-definition; Problems link from Chat (§7.16). (5) **Phase 4 -- Optional (§9.1):** LSP diagnostics gate and LSP snapshot in evidence (optional; feature-list §4); subagent selection from LSP; Chat \"Fix all\"/Rename/\"Where is this used?\"/Format; promote lsp tool (Tools.md). **Single checklist:** Appendix: Implementation plan checklist (this document).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 78,
+          "line_end": 78,
+          "exact_quote": "- **Document sync:** Client sends `textDocument/didOpen`, `textDocument/didChange`, `textDocument/didClose` (and optionally didSave). Server uses this to keep its view of the file in sync.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-004",
+      "item_type": "gap",
+      "title": "The server-state GUI surface remains selectable",
+      "statement": "The plan allows either status-bar text or another indicator and supplies examples, but does not select the authoritative surface, density, or error-detail interaction.",
+      "severity": "low",
+      "confidence": "high",
+      "gap_kind": "gui_underspecified",
+      "impact": "Builders can produce materially different visibility and interaction for initialization, ready, error, and none states.",
+      "builder_discretion": "Choose status bar, indicator, or both, along with truncation and access to full error details.",
+      "feature_keys": [
+        "lsp.gui.status"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 34,
+          "line_end": 34,
+          "exact_quote": "- **LSP status in UI:** Status bar or indicator (e.g. \"Rust (rust-analyzer)\", \"Initializing...\", \"Ready\", \"Error: ...\").",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 57,
+          "line_end": 57,
+          "exact_quote": "| **LSP status in UI** | Server state (Initializing/Ready/Error/None) | Status bar text or indicator | e.g. \"Rust (rust-analyzer): Ready\" | No server: show nothing (omit) | -- | Show nothing (omit) |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-005",
+      "item_type": "gap",
+      "title": "Executable custom commands and environment overrides lack an authority boundary",
+      "statement": "The plan accepts arbitrary custom server commands, command overrides, environment values, and automatic process spawning, but the authoritative core gives no trust-source, validation, user-approval, sandbox, or secret-filtering contract for those executable inputs.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "security_authority_underspecified",
+      "impact": "Project or user configuration can become a local or remote code-execution and credential-propagation boundary with inconsistent consent and containment.",
+      "builder_discretion": "Define configuration trust levels, executable-path validation, approval policy, environment allow/deny behavior, remote execution rules, and secret redaction.",
+      "feature_keys": [
+        "lsp.custom_server.security",
+        "lsp.process_spawn"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 101,
+          "line_end": 102,
+          "exact_quote": "- **Config:** `lsp` section in opencode config. Schema: `https://opencode.ai/config.json`. Per-server properties: `disabled` (boolean), `command` (string[]), `extensions` (string[]), `env` (object), `initialization` (object). Set `lsp: false` to disable all; set `OPENCODE_DISABLE_LSP_DOWNLOAD=true` to disable automatic LSP server downloads.\n- **Custom servers:** Add entries with `command` (e.g. `[\"custom-lsp-server\", \"--stdio\"]`) and `extensions`.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 263,
+          "line_end": 263,
+          "exact_quote": "- Config to disable, override command, set env and initialization options (align with OpenCode's `lsp` schema).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-006",
+      "item_type": "gap",
+      "title": "Catalog support, shipping posture, and auto-install policy are unresolved",
+      "statement": "The plan requires the full OpenCode table plus Slint, names a different broad/default first-class set, says shipping posture is a separate decision, and later permits auto-install to be deferred or limited.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scope_and_operations_underspecified",
+      "impact": "The required registry, packaged/downloaded binaries, default availability, licensing review, and offline behavior cannot be derived deterministically.",
+      "builder_discretion": "Choose the actual support catalog, per-server shipping state, auto-install defaults, legal/toolchain gates, and failure behavior.",
+      "feature_keys": [
+        "lsp.catalog",
+        "lsp.auto_install"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 107,
+          "line_end": 107,
+          "exact_quote": "We support the same set of built-in LSP servers as [OpenCode](https://opencode.ai/docs/lsp/) **plus slint-lsp** for Slint UI (`.slint`). When implementing the server registry, include all of the following so that Puppet Master can provide diagnostics and code intelligence for every listed language. Each row defines server id, file extensions, and requirements (command or dependency).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 148,
+          "line_end": 148,
+          "exact_quote": "Broad catalog support includes common config/docs/container families such as GraphQL, Dockerfile / Docker config, TOML, YAML, and Markdown. The catalog must not under-call broad support: `/discovery/config` tracks server discovery/config support, while `/bundles/manages` records which entries PM actually bundles, auto-installs, downloads, or manages by default. The PM-managed/default first-class set is the out-of-box subset with mature cross-platform value: rust-analyzer; TypeScript/JavaScript through `typescript-language-server` when that server is selected; deno lsp for Deno roots; pyright; gopls; clangd; VS Code-equivalent JSON/HTML/CSS servers; YAML through yaml-language-server; Markdown through Marksman; Bash through bash-language-server; Dockerfile language server; TOML through Taplo; and slint-lsp. Broad support in the catalog does not mean every server is bundled or auto-download enabled: `/auto-install`, `/install`, `/download`, and auto-download behavior are governed per server by `/legal`, `/docs/container`, `/binary/toolchain`, toolchain-bound, and manual-provisioning constraints. Support target, shipping posture, and out-of-box default management are separate product decisions.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 264,
+          "line_end": 264,
+          "exact_quote": "- Optional auto-install (we can defer or limit; e.g. rust-analyzer from PATH, pyright/gopls optional install).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-007",
+      "item_type": "gap",
+      "title": "Slint root selection has multiple unranked outcomes",
+      "statement": "For .slint files the root may be the file directory, nearest project root, workspace root, or file directory, with no deterministic priority tied to the canonical root_identity algorithm.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "root_resolution_underspecified",
+      "impact": "The same file can attach to different server processes and receive different diagnostics, imports, and live-preview behavior.",
+      "builder_discretion": "Select and rank Slint root candidates and define when a Cargo workspace root outranks a file-local root.",
+      "feature_keys": [
+        "lsp.slint.root"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 248,
+          "line_end": 248,
+          "exact_quote": "- **Root discovery:** For `.slint` files, root can be the file's directory or nearest project root (e.g. directory containing `Cargo.toml` if Slint is used in a Rust project). Many .slint files work with workspace root or file directory.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-008",
+      "item_type": "gap",
+      "title": "Code-lens command execution lacks mutation and permission semantics",
+      "statement": "A code lens can invoke an operation such as running a test, but the core does not state how commands are classified, authorized, routed, cancelled, or surfaced when they mutate files or execute tools.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_underspecified",
+      "impact": "Server-originated commands can cross from read-only editor intelligence into process execution or mutation without a deterministic safety path.",
+      "builder_discretion": "Define command allowlisting, permission prompts, tool routing, mutation classification, cancellation, and result/error presentation.",
+      "feature_keys": [
+        "lsp.code_lens.command"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 54,
+          "line_end": 54,
+          "exact_quote": "| **Code lens** | Document open/change | Inline links above symbols | Click invokes (e.g. run test) | Timeout → hide lens; no server → no code lens | -- | No code lens |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-009",
+      "item_type": "gap",
+      "title": "Assistant diagnostics and telemetry propagation lack privacy controls",
+      "statement": "The plan feeds diagnostics for relevant files and may attach a session telemetry snapshot to Assistant context, but the core does not define relevance selection, minimization, redaction, consent, retention, or local/remote model boundaries.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "security_privacy_underspecified",
+      "impact": "Source paths, diagnostic text, project contents, process details, or telemetry may be propagated beyond the intended scope inconsistently.",
+      "builder_discretion": "Define file relevance, payload limits, secret and path redaction, user disclosure/consent, retention, and model-provider transmission rules.",
+      "feature_keys": [
+        "lsp.assistant_context.privacy",
+        "lsp.telemetry"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 59,
+          "line_end": 59,
+          "exact_quote": "| **Diagnostics for LLM/Assistant** | Current diagnostics for relevant files | Text/summary in Assistant/Interview context | Agent sees errors/warnings | No server → omit diagnostics from context | -- | Omit from context; optional hint to install |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 68,
+          "line_end": 68,
+          "exact_quote": "For Debug Mode, LSP diagnostics may be part of the structured context when the user points PM at a debug target, e.g. a local app, dev server, website, or other runnable surface. The Assistant-facing flow supports a Cursor-like loop from hypothesis to target evidence to workspace fix, and may attach a session `/telemetry` snapshot when it helps the chat agent reason about PM's own run.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-010",
+      "item_type": "gap",
+      "title": "Backoff, eviction, and resource ceilings are named but not quantified",
+      "statement": "The host owns backoff and eviction and the design rejects unbounded behavior, but the core gives no retry schedule, crash-loop threshold, idle or memory/process eviction rule, workspace cap, or overload behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_operations_underspecified",
+      "impact": "Large multi-root workspaces or crash loops can consume unbounded processes/resources or produce incompatible recovery behavior.",
+      "builder_discretion": "Choose retry timing, jitter, maximum attempts, process/session caps, eviction ordering, idle thresholds, and user-visible degraded states.",
+      "feature_keys": [
+        "lsp.backoff",
+        "lsp.eviction",
+        "lsp.scale"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 219,
+          "line_end": 219,
+          "exact_quote": "- `LspHost`, `LspSession`, and `DocumentStore` are first-class implementation concepts: the host owns local/remote placement and `/backoff/eviction`, the session owns lifecycle and restart behavior, and the document store owns URI normalization, pending-sync state, stale-result checks, and authoritative text versions.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 222,
+          "line_end": 222,
+          "exact_quote": "- OpenCode-style registry findings are retained as implementation input without copying weak behavior. PM keeps built-in and custom server definitions, local stdio transport, lazy spawn, per-server root discovery, and diagnostics into Assistant context, while avoiding `/full-buffer-or-disk-resync`, uncontrolled auto-downloads, server-specific fragility, session/process duplication, weak status visibility, and unbounded `/backoff/eviction`. `LspSession` reuse is keyed by `(server_id, discovered_root)` only as a compatibility reading; the canonical supervised key remains host-aware and root-aware. DocumentStore remains editor-authoritative, tracks buffer-version and position-mapping state, and uses per-discovered-root compatibility only as input to the canonical root_identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-011",
+      "item_type": "gap",
+      "title": "The GUI-side Rust client foundation remains unresolved",
+      "statement": "One architecture line names a baseline stack and limits async-lsp to a wire helper, while the client-side section directs builders to select or evaluate a different set of client crates without choosing one or reconciling them with the supervisor model.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "implementation_contract_underspecified",
+      "impact": "Lifecycle, cancellation, transport, dependency, and compatibility behavior depend on a foundation the plan does not select.",
+      "builder_discretion": "Choose the client crate and determine whether it can remain a wire helper or becomes the client implementation beneath the PM-owned supervisor/session architecture.",
+      "feature_keys": [
+        "lsp.rust_client_stack"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 223,
+          "line_end": 223,
+          "exact_quote": "- Native `/client-architecture` is PM-owned. There is no Microsoft-blessed Rust equivalent of `vscode-languageclient` to wrap the desktop-client; official/community inventory is input, not a design owner. The baseline Rust stack is `lsp-types`, `tokio`, `serde_json`, `tokio-util`, `tokio-util::sync::CancellationToken`, `CancellationToken`, and `tracing`, with `async-lsp` permitted only as an internal `/wire` helper if it fits PM's supervisor/session model. `tower-lsp` and `lsp-server` are server-oriented and rejected as GUI-side client foundations.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 273,
+          "line_end": 279,
+          "exact_quote": "- **Client implementation:** One of:\n  - [lsp-client](https://docs.rs/lsp-client/) -- async, uses jsonrpsee + lsp-types.\n  - [async_lsp_client](https://docs.rs/async_lsp_client/) -- async, lifecycle (initialize, shutdown, exit), document sync, hover, completion, goto definition.\n  - [lsp-client-rs](https://github.com/sudarshan-reddy/lsp-client-rs) -- TCP/Unix socket + async; used with gopls in examples.\n- **Server implementation (optional):** If we ever implement our own LSP server (e.g. for a custom language), [tower-lsp](https://docs.rs/tower-lsp/) / [tower-lsp-server](https://lib.rs/crates/tower-lsp-server) (community fork, active).\n\nRecommendation: use **lsp-types** plus one async LSP **client** crate that supports stdio (spawn process, stdin/stdout). Evaluate `lsp-client` and `async_lsp_client` for lifecycle, document sync, and the few methods we need (diagnostics, hover, completion, goto definition).",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-012",
+      "item_type": "gap",
+      "title": "Several success cells are not objective acceptance oracles",
+      "statement": "Navigation succeeds at a 'correct' location/list and semantic highlighting succeeds when colors are 'more accurate', but the core supplies no fixtures, comparison rules, tolerances, or executable pass/fail oracle for those claims.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "acceptance_oracle_underspecified",
+      "impact": "Two implementations can disagree about correctness or improved accuracy while both claiming conformance.",
+      "builder_discretion": "Define protocol fixtures and expected locations/tokens, stale-version cases, fallback assertions, and GUI result assertions.",
+      "feature_keys": [
+        "lsp.acceptance.navigation",
+        "lsp.acceptance.semantic_tokens"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 50,
+          "line_end": 50,
+          "exact_quote": "| **Navigation** (go-to-def, outline, breadcrumbs) | (URI, position) or document; server capability | Jump to location or symbol list | Correct location/list | Timeout → show \"Timed out\", discard; no result → show \"No definition\"; no server → heuristic/outline | `lsp.workspaceSymbolTimeoutMs` (for workspace/symbol) | Heuristic symbol search, regex outline (FileManager §10.1-§10.2) |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 52,
+          "line_end": 52,
+          "exact_quote": "| **Semantic highlighting** | Document sync; server supports semanticTokens | Token types for coloring | More accurate colors | Not supported → fall back to syntax-only; no server → syntax-only | -- | Syntax-only highlighting |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "UNKNOWN-001",
+      "item_type": "unknown",
+      "title": "Mixed internal-tool LSP actions are explicitly under-owned",
+      "statement": "The plan itself says mixed LSP actions remain under-owned until UI-session reads and mutation-capable apply-edit paths are separated, leaving their final authority and routing unknown.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "explicit_unknown_ownership",
+      "impact": "Plan-mode and Interview tool actions cannot be implemented deterministically across read and mutation paths.",
+      "builder_discretion": "Do not infer ownership; a later contract must separate read-only UI-session access from mutation-capable apply-edit execution.",
+      "feature_keys": [
+        "lsp.internal_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 224,
+          "line_end": 224,
+          "exact_quote": "- Internal-tool LSP boundaries are explicit: `LSPSupport.md` owns LSP `/tooling` behavior for plan-mode and `/interview` context, but `internal-tool` event records use `run_id`, `tool.invoked`, and `mutation_capable: bool`; mixed `lsp` actions remain under-owned until UI-session reads and mutation_capable apply-edit paths are separated.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "gap_found",
+      "summary": "Core request, fallback, activation, and lifecycle behavior is detailed, but diagnostics timeout and didSave behavior are not deterministic.",
+      "evidence_item_ids": [
+        "EXACT-003",
+        "EXACT-004",
+        "EXACT-005",
+        "EXACT-013",
+        "GAP-002",
+        "GAP-003"
+      ]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "gap_found",
+      "summary": "The feature, server, ESLint, and Slint capabilities are broad and explicit, but the actual shipped/managed catalog is unresolved.",
+      "evidence_item_ids": [
+        "EXACT-001",
+        "EXACT-008",
+        "EXACT-014",
+        "EXACT-015",
+        "GAP-006"
+      ]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "URI/position/range/document inputs and tooltip/list/edit/context outputs are specified, but command outputs and telemetry/diagnostics context selection are incomplete.",
+      "evidence_item_ids": [
+        "EXACT-004",
+        "EXACT-005",
+        "EXACT-007",
+        "GAP-008",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Capability negotiation, selection, document authority, FileSafe routing, and non-ownership boundaries are strong, while the client foundation and internal-tool split are incomplete.",
+      "evidence_item_ids": [
+        "EXACT-006",
+        "EXACT-010",
+        "EXACT-017",
+        "EXACT-018",
+        "GAP-011",
+        "UNKNOWN-001"
+      ]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Initialize, ready/error/disabled, lazy spawn, restart, shutdown, stale discard, and session reuse transitions are present, but save notification and retry/eviction transitions remain underspecified.",
+      "evidence_item_ids": [
+        "EXACT-005",
+        "EXACT-009",
+        "EXACT-013",
+        "EXACT-016",
+        "GAP-003",
+        "GAP-010"
+      ]
+    },
+    {
+      "dimension": "authority",
+      "status": "gap_found",
+      "summary": "Document, host, session, facade, and FileSafe authority are assigned, but executable commands, code-lens actions, and mixed internal-tool actions lack closed authority paths.",
+      "evidence_item_ids": [
+        "EXACT-012",
+        "EXACT-013",
+        "EXACT-017",
+        "GAP-005",
+        "GAP-008",
+        "UNKNOWN-001"
+      ]
+    },
+    {
+      "dimension": "ownership",
+      "status": "gap_found",
+      "summary": "The architecture names owners for placement, lifecycle, document state, diagnostics, and GUI intelligence and excludes Search/review/chat restore, but internal-tool ownership remains explicitly incomplete.",
+      "evidence_item_ids": [
+        "EXACT-012",
+        "EXACT-018",
+        "UNKNOWN-001"
+      ]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Editor decorations, tooltips, completion/navigation UI, Problems, Settings/status, Chat, and Assistant/Interview consumers are identified with source-preserving diagnostics presentation.",
+      "evidence_item_ids": [
+        "EXACT-001",
+        "EXACT-002",
+        "EXACT-004",
+        "EXACT-011",
+        "EXACT-014",
+        "EXACT-015"
+      ]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "gap_found",
+      "summary": "Most GUI surfaces and states are named and copy ownership is explicit, but the authoritative server-status surface and interaction are not selected.",
+      "evidence_item_ids": [
+        "EXACT-002",
+        "EXACT-004",
+        "EXACT-005",
+        "EXACT-011",
+        "GAP-004"
+      ]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Timeout, stale, no-result, no-server, crash restart, diagnostics replacement, and apply failure behavior exist, but diagnostics timeout choice and crash-loop policy remain open.",
+      "evidence_item_ids": [
+        "EXACT-004",
+        "EXACT-013",
+        "GAP-002",
+        "GAP-010"
+      ]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "FileSafe protects workspace edits and one license-key location is named, but executable server configuration and Assistant/telemetry propagation lack trust, consent, filtering, and containment rules.",
+      "evidence_item_ids": [
+        "EXACT-013",
+        "EXACT-017",
+        "GAP-005",
+        "GAP-008",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Document versions, diagnostics, code actions, and edits have explicit downstream paths, but Assistant context and telemetry propagation scope is not bounded.",
+      "evidence_item_ids": [
+        "EXACT-003",
+        "EXACT-011",
+        "EXACT-013",
+        "EXACT-017",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Lazy spawn, lifecycle, restart, disable, root resolution, and configuration are described, but installation posture and backoff/eviction operations are not deterministic.",
+      "evidence_item_ids": [
+        "EXACT-005",
+        "EXACT-009",
+        "EXACT-013",
+        "EXACT-016",
+        "GAP-006",
+        "GAP-010"
+      ]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "I/O is kept off the UI thread and processes are keyed for reuse, but no concrete process, retry, eviction, memory, or overload limits are supplied.",
+      "evidence_item_ids": [
+        "EXACT-009",
+        "EXACT-012",
+        "EXACT-016",
+        "GAP-010"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Host-aware reuse supersedes a compatibility key, persisted selection vocabulary is fixed, and Slint/ESLint versions are named, but catalog shipping and Rust client migration/foundation choices remain unresolved.",
+      "evidence_item_ids": [
+        "EXACT-010",
+        "EXACT-014",
+        "EXACT-015",
+        "GAP-006",
+        "GAP-011"
+      ]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The feature table gives observable success and failure outcomes, but several success terms are subjective and lack fixtures or executable expected results.",
+      "evidence_item_ids": [
+        "EXACT-004",
+        "EXACT-005",
+        "GAP-012"
+      ]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains for diagnostics timeout, save sync, status UI, command security, catalog/install policy, Slint roots, code-lens authority, privacy, resource policy, and client crate selection.",
+      "evidence_item_ids": [
+        "GAP-002",
+        "GAP-003",
+        "GAP-004",
+        "GAP-005",
+        "GAP-006",
+        "GAP-007",
+        "GAP-008",
+        "GAP-009",
+        "GAP-010",
+        "GAP-011"
+      ]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The no-open-questions claim conflicts with named open decisions, and mixed internal-tool actions are explicitly under-owned.",
+      "evidence_item_ids": [
+        "GAP-001",
+        "UNKNOWN-001"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

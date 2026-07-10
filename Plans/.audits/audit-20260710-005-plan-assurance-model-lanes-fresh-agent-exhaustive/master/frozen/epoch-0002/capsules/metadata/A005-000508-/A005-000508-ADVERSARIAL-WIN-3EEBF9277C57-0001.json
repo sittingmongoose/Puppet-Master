@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-000508-ADVERSARIAL-WIN-3EEBF9277C57-0001",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      70,
+      81
+    ]
+  ],
+  "core_range": [
+    1,
+    69
+  ],
+  "core_sha256": "708df072698a067b62f60f7ee456a5190260bb0c52ab21f2f9cbdc13cefacce6",
+  "document_path": "Plans/00-plans-index.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/9f/9f2918e9b99fa5bc10339aff40f6c4407616c2932ae11a0808bfe66d397715ba.txt",
+  "source_excerpt_sha256": "9f2918e9b99fa5bc10339aff40f6c4407616c2932ae11a0808bfe66d397715ba",
+  "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e",
+  "window_id": "WIN-3EEBF9277C57-0001"
+}

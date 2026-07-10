@@ -1,0 +1,371 @@
+<<< CONTEXT_BEFORE canonical_document_lines=605-616 >>>
+L00000605	### RAP-019 - Identity-Native Open And Preview
+L00000606	
+L00000607	```yaml
+L00000608	{plan_unit_id: "RAP-019", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Runtime artifact opens resolve by identity first: OpenFile remains a workspace-file realization, generated/object-backed subjects use OpenSubject, OpenArtifact, generated://artifact_id, or owner-surface routes, long lists use metadata-first demand-loaded previews and independent paging, and project-summary freshness disclosures must not imply source artifact, receipt, or runtime event staleness unless the owner record says so.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: true, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "UCC-001", "SP-001"], unblocks: [], acceptance_criteria: ["RAP-019 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "preview_identity_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_preview_gui", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "identity_native_open_preview", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0025"], preserved_exact_tokens: ["OpenFile", "OpenSubject", "OpenArtifact", "generated://<artifact_id>", "metadata-first", "pre-rendered", "record-backed", "project-summary /freshness"], negative_constraints: ["Project-summary freshness must not imply the source artifact, receipt, or runtime event is stale unless the owner record says so."], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/FileManager.md", "Plans/UI_Command_Catalog.md"]}
+L00000609	```
+L00000610	
+L00000611	### RAP-020 - Index Projection And Owner Triangle
+L00000612	
+L00000613	```yaml
+L00000614	{plan_unit_id: "RAP-020", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "The artifact index is a rebuildable projection for lookup, filter/navigation, and panel recovery rather than canonical artifact truth; missing or corrupt index rows degrade to record-backed views, generated/transient artifacts carry strongest available open-by-identity anchors, runtime and project artifact families remain distinct, usage pivots normalize object_kind/object_id/usage_event_ref, and payload/storage/contracts owner boundaries stay fixed.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: true, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "CV-215", "UF-001"], unblocks: [], acceptance_criteria: ["RAP-020 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "artifact_index_projection_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_index", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "index_projection_owner_triangle", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0025"], preserved_exact_tokens: ["record-backed", "artifact_id", "attempt_id", "thread_id", "object_kind = usage_event", "object_id", "usage_event_ref", "History versus Ledger", "payload-owner triangle"], negative_constraints: ["A project-artifact projection cannot masquerade as runtime attempt identity and a runtime-artifact receipt cannot replace project output ownership."], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/storage-plan.md", "Plans/Contracts_V0.md", "Plans/usage-feature.md"]}
+L00000615	```
+L00000616	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=617-958 >>>
+L00000617	### RAP-021 - Browser Evidence Session Ownership
+L00000618	
+L00000619	```yaml
+L00000620	{plan_unit_id: "RAP-021", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Browser recordings and adjacent browser evidence preserve canonical browser session distinction, source session class, project/workspace/browser-session identity, browser-runtime lineage, agent-control provenance, visibility/watchability/degradation metadata, and open/focus routing back to the owning browser session rather than an artifact-owned browser shell.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SMPFS-001", "SP-001", "UCC-001", "ACD-008", "CV-215"], unblocks: [], acceptance_criteria: ["RAP-021 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "browser_artifact_identity_drift", reasoning_tier: "standard", context_scope: "browser_runtime_artifacts", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "browser_evidence_session_ownership", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0026"], preserved_exact_tokens: ["workspace_preview", "detached_preview", "automation_session", "auth_session", "browser_session_id", "session_class", "profile_scope", "workspace_tab_id?", "capture_scope?", "runtime_artifact.browser_recording", "Plans/newfeatures.md §15.18", "/stale"], negative_constraints: ["Browser evidence does not revive stale browser source anchors as owners."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md", "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md", "ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"], compatibility_only_notes: [], stale_retired_dispositions: ["Plans/newfeatures.md §15.18 and /stale belong only in cleanup/cross-reference evidence."], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/Section15_MVP_Promoted_Features_Spec.md", "Plans/storage-plan.md", "Plans/UI_Command_Catalog.md", "Plans/assistant-chat-design.md", "Plans/Contracts_V0.md"]}
+L00000621	```
+L00000622	
+L00000623	### RAP-022 - MVP Differentiators
+L00000624	
+L00000625	```yaml
+L00000626	{plan_unit_id: "RAP-022", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "All runtime artifact differentiators identified in research are MVP scope and required, not optional or deferred nice-to-haves, with triggers, cardinality, error handling, sanitization, and UI edge cases specified per type as needed.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001"], unblocks: [], acceptance_criteria: ["RAP-022 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "mvp_scope_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_mvp", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "mvp_differentiators", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0027"], preserved_exact_tokens: ["All differentiators MVP", "MVP", "no optional differentiators", "parity-plus"], negative_constraints: ["Runtime artifact differentiators are not deferred nice-to-haves."], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md"]}
+L00000627	```
+L00000628	
+L00000629	### RAP-023 - Reference Anchors
+L00000630	
+L00000631	```yaml
+L00000632	{plan_unit_id: "RAP-023", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "The Runtime Artifacts references section preserves consumer routing to Contracts, storage, usage, Project Output Artifacts, and FileManager owner docs as source lineage and cross-owner routing, not new standalone behavior.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CV-215", "SP-001", "UF-001"], unblocks: [], acceptance_criteria: ["RAP-023 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "reference_owner_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_references", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "reference_anchors", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0028"], preserved_exact_tokens: ["Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/Project_Output_Artifacts.md", "Plans/FileManager.md"], negative_constraints: [], preserved_contractrefs: [], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/Project_Output_Artifacts.md", "Plans/FileManager.md"]}
+L00000633	```
+L00000634	
+L00000635	### RAP-024 - Receipt Linkage And Bridge Viewer
+L00000636	
+L00000637	```yaml
+L00000638	{plan_unit_id: "RAP-024", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Receipt-like artifacts preserve canonical runtime identity and bridge fields: operation_receipt_record is a derived projector/receipt-surface record, receipt/run/attempt/action fields are identity anchors, legacy tier_id is display/grouping compatibility only, bridge fields remain joins, open/focus routes through canonical receipt and usage identity, and frozen effective_* runtime snapshot and source_confidence fields must not be renamed by live Agent-Config or Health values. The legacy usage-source-confidence spelling is compatibility/source-lineage vocabulary only.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "UF-001", "UCC-001", "CV-215"], unblocks: [], acceptance_criteria: ["RAP-024 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "receipt_bridge_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_receipts", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "receipt_linkage_bridge_viewer", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0029", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0030", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0031"], preserved_exact_tokens: ["operation_receipt_record", "receipt_id", "run_id", "attempt_id", "action_family", "action_name", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "workflow_run_id", "usage-source-confidence", "source_confidence", "effective_*"], negative_constraints: ["Bridge fields remain joins rather than replacement primary keys.", "Legacy tier_id is not a receipt key, approval correlation key, or usage join.", "Agent-Config and Health must not rename or rewrite frozen schema carried by the usage/runtime record.", "Do not treat usage-source-confidence as the active runtime artifact schema field name."], preserved_contractrefs: [], compatibility_only_notes: ["tier_id may appear only as derived display/grouping compatibility metadata.", "usage-source-confidence is preserved only as compatibility/source-lineage vocabulary; active provider artifact and usage records use source_confidence."], stale_retired_dispositions: ["usage-source-confidence spelling retired in favor of source_confidence"], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/UI_Command_Catalog.md"]}
+L00000639	```
+L00000640	
+L00000641	### RAP-001 - Runtime Artifacts Panel Retired Source-Preserving Bridge
+L00000642	
+L00000643	```yaml
+L00000644	{plan_unit_id: "RAP-001", unit_type: "compatibility_disposition", status: "retired", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "RAP-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 167. Runtime_Artifacts_Panel-S0001 through Runtime_Artifacts_Panel-S0031 are covered by fine-grained PlanUnits RAP-002 through RAP-024 or explicit split coverage, while Runtime_Artifacts_Panel-S0032, S0033, and S0035 are generated structural/audit dispositions and Runtime_Artifacts_Panel-S0034 is retired bridge lineage. RAP-001 must not re-own or override implementation-facing PlanUnits and must not use source_preserving_planunit compile mode.", gui_related: false, gui_classification_reason: "The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map.", split_recommended: false, depends_on: ["RAP-002", "RAP-003", "RAP-004", "RAP-005", "RAP-006", "RAP-007", "RAP-008", "RAP-009", "RAP-010", "RAP-011", "RAP-012", "RAP-013", "RAP-014", "RAP-015", "RAP-016", "RAP-017", "RAP-018", "RAP-019", "RAP-020", "RAP-021", "RAP-022", "RAP-023", "RAP-024"], unblocks: [], acceptance_criteria: ["Runtime_Artifacts_Panel-S0001 through Runtime_Artifacts_Panel-S0031 remain mapped to fine-grained PlanUnits RAP-002 through RAP-024 or explicit split coverage rather than RAP-001.", "Runtime_Artifacts_Panel-S0032, S0033, and S0035 are structurally dispositioned as generated metadata.", "Runtime_Artifacts_Panel-S0034 is explicitly dispositioned as retired generated bridge lineage.", "RAP-001 no longer uses node_compile_hint.mode=source_preserving_planunit.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "residual_bridge_overreach", reasoning_tier: "standard", context_scope: "runtime_artifacts_retired_bridge", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "retired_source_preserving_bridge", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0032", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0033", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0034", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0035"], preserved_exact_tokens: ["Owner / Consumer Map", "PlanUnits", "Migration Coverage", "RAP-001", "Runtime Artifacts Panel — SSOT", "source_preserving_planunit", "retired_source_preserving_bridge", "source_preserving_bridge_retired", "Runtime_Artifacts_Panel-S0032", "Runtime_Artifacts_Panel-S0035", "tier_id", "usage_event_ref", "effective_*", "usage-source-confidence"], negative_constraints: ["RAP-001 must not provide product implementation coverage for Runtime_Artifacts_Panel-S0001 through Runtime_Artifacts_Panel-S0031.", "RAP-001 must not override RAP-002 through RAP-024 or structural dispositions.", "RAP-001 must not use source_preserving_planunit compile mode after Phase 2B batch 167."], preserved_contractrefs: ["ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md", "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md'", "ContractRef: Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) — distinct from this document, Plans/storage-plan.md#Required redb keys'", "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/assistant-chat-design.md'", "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'"], compatibility_only_notes: ["The retired bridge remains only as migration-lineage compatibility metadata; historical ContractRefs, negative constraints, compatibility notes, stale/retired evidence, GUI-related bridge markers, tier_id compatibility, usage_event_ref, effective_* fields, and usage-source-confidence markers remain preserved in span_map and coverage_map."], stale_retired_dispositions: ["source_preserving_bridge_retired"], owner_hints: ["Plans/Runtime_Artifacts_Panel.md"]}
+L00000645	```
+L00000646	
+L00000647	## Migration Coverage
+L00000648	
+L00000649	Original hash: `b3e07aeee00362056ec43b4d5a7fefc895678e6e419f5f40d61ba937820a1bb1`.
+L00000650	
+L00000651	Run-scoped proof artifacts:
+L00000652	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00000653	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00000654	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00000655	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00000656	
+L00000657	Phase 2B batch 166 atomized `Runtime_Artifacts_Panel-S0001` through `Runtime_Artifacts_Panel-S0031` into fine-grained PlanUnits `RAP-002` through `RAP-024`. Phase 2B batch 167 structurally dispositioned generated tail spans `Runtime_Artifacts_Panel-S0032`, `Runtime_Artifacts_Panel-S0033`, and `Runtime_Artifacts_Panel-S0035`, and retired `Runtime_Artifacts_Panel-S0034` as the `RAP-001` bridge lineage. `RAP-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00000658	
+L00000659	## Ledger Compile Addendum - pldg-20260614-001
+L00000660	
+L00000661	### RAP-025 - Structural Parent Section Recovery Compile Addendum
+L00000662	
+L00000663	```yaml
+L00000664	plan_unit_id: RAP-025
+L00000665	unit_type: requirement
+L00000666	status: accepted
+L00000667	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000668	canonical_text: >-
+L00000669	  Runtime_Artifacts_Panel missing Section 2 and Section 5 parent headings are structural defects. Recovery is heading and anchor repair only:
+L00000670	  parent sections should point to existing artifact event, projector, schema, browser recording, differentiator, storage, and contract PlanUnits
+L00000671	  without creating new runtime artifact behavior.
+L00000672	gui_related: true
+L00000673	gui_classification_reason: Runtime Artifacts Panel is a user-visible panel, and missing section anchors affect visual/navigation documentation.
+L00000674	depends_on: [RAP-002, RAP-003]
+L00000675	unblocks: []
+L00000676	acceptance_criteria:
+L00000677	  - Section 2 and Section 5 anchors are restored or explicitly aliased without changing runtime artifact semantics.
+L00000678	  - Artifact envelope routing remains owned by Contracts and storage where applicable.
+L00000679	validation_surfaces:
+L00000680	  - python3 scripts/pm-plan-index.py validate
+L00000681	  - manual heading/anchor review
+L00000682	risk_class: structural_anchor_loss
+L00000683	reasoning_tier: low
+L00000684	context_scope: runtime_artifacts_doc_structure
+L00000685	implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md]
+L00000686	node_compile_hint: {mode: structural_heading_recovery, create_worknodes: false}
+L00000687	source_lineage:
+L00000688	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+L00000689	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0035
+L00000690	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0036
+L00000691	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0037
+L00000692	preserved_exact_tokens: ["Runtime_Artifacts_Panel missing §2 and §5", "artifact envelope routing", "Browser recordings"]
+L00000693	negative_constraints:
+L00000694	  - Do not add new artifact kinds as part of heading recovery.
+L00000695	owner_hints: [Plans/Runtime_Artifacts_Panel.md]
+L00000696	```
+L00000697	
+L00000698	## Ledger Compile Addendum - pldg-20260614-002
+L00000699	
+L00000700	### RAP-026 - Artifacts Index Identity And Open Resolution
+L00000701	
+L00000702	```yaml
+L00000703	plan_unit_id: RAP-026
+L00000704	unit_type: requirement
+L00000705	status: accepted
+L00000706	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000707	canonical_text: >-
+L00000708	  The storage-owned row key family is `artifacts_index.v1:{project_id}:{artifact_id}`; the older
+L00000709	  `artifacts_index:v1:{project_id}` shorthand names only the project-level contract, not row identity.
+L00000710	  The index is a versioned rebuildable identity contract, not a vague lookup cache. Each row is keyed by
+L00000711	  `artifact_id` and must carry artifact_id, artifact_kind, artifact_identity_ref, project_id, run_id,
+L00000712	  package/seam/lane/worktree/account identity, producer/runtime refs, attempt_id, node_id,
+L00000713	  provider_attempt_ref when available, output owner, storage URI/path, provenance/evidence refs,
+L00000714	  lifecycle status, integrity/version data, trust state, open target, display/open handlers,
+L00000715	  preview capability, permissions/visibility boundary, permission/degraded state, and
+L00000716	  tombstone/rebuild metadata. Open-by-artifact-identity resolves through this index and then dispatches
+L00000717	  to FileManager, owner-surface routes, or generated/object-backed previews without replacing project
+L00000718	  output ownership.
+L00000719	gui_related: true
+L00000720	gui_classification_reason: Runtime artifact panel open actions, previews, degraded state, and permissions are user-visible panel behavior.
+L00000721	depends_on: [RAP-019, RAP-020, CV-281]
+L00000722	unblocks: []
+L00000723	acceptance_criteria:
+L00000724	  - The live storage key family is `artifacts_index.v1:{project_id}:{artifact_id}` and preserves `artifact_id` as row identity.
+L00000725	  - The artifacts index has a versioned row contract with project/run/package/seam/lane/worktree/account identity, runtime, owner, storage, provenance, lifecycle, integrity/version, permissions, open, preview, and rebuild fields.
+L00000726	  - Open-by-artifact-identity resolves through the index before dispatching to FileManager or owner-surface routes.
+L00000727	  - Missing or stale index rows degrade to record-backed views rather than becoming canonical artifact truth.
+L00000728	validation_surfaces:
+L00000729	  - python3 scripts/pm-plan-index.py validate
+L00000730	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+L00000731	risk_class: artifact_identity_index_drift
+L00000732	reasoning_tier: high
+L00000733	context_scope: runtime_artifacts_index_open_by_identity
+L00000734	implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/FileManager.md, Plans/storage-plan.md]
+L00000735	node_compile_hint: {mode: artifacts_index_identity_contract, create_worknodes: false}
+L00000736	source_lineage:
+L00000737	  - pldg-20260614-002-part-3-fable-cleanup:atom-0040
+L00000738	  - pldg-20260614-002-part-3-fable-cleanup:atom-0051
+L00000739	  - pldg-20260614-002-part-3-fable-cleanup:atom-0097
+L00000740	  - pldg-20260614-002-part-3-fable-cleanup:atom-0098
+L00000741	preserved_exact_tokens: ["artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_index:v1:{project_id}", "artifact_id", "project/run/package/seam/lane/worktree/account identity", "artifact kind", "storage URI/path", "producer/runtime_identity", "provenance/evidence refs", "lifecycle status", "integrity/version data", "permissions/visibility boundary", "display/open handlers", "open-by-artifact-identity", "artifact_identity_ref", "FileManager", "FileManager open-by-artifact-identity resolution semantics", "sole canonical index contract"]
+L00000742	compatibility_only_notes:
+L00000743	  - "`artifacts_index:v1:{project_id}` is retained as source-lineage shorthand for the project-level index contract; storage owns the canonical row key family `artifacts_index.v1:{project_id}:{artifact_id}`."
+L00000744	negative_constraints:
+L00000745	  - Do not make the rebuildable artifacts index the sole source of artifact truth.
+L00000746	  - Do not let FileManager open project/runtime artifacts without artifact identity resolution.
+L00000747	  - Do not drop `artifact_id` row identity or replace the storage-owned dot/colon key family with a project-only shorthand.
+L00000748	owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/FileManager.md]
+L00000749	```
+L00000750	
+L00000751	## Ledger Compile Addendum - pldg-20260616-002
+L00000752	
+L00000753	### RAP-027 - Goal Runtime Receipt And Verification Evidence Projection
+L00000754	
+L00000755	```yaml
+L00000756	plan_unit_id: RAP-027
+L00000757	unit_type: requirement
+L00000758	status: accepted
+L00000759	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000760	canonical_text: >-
+L00000761	  Runtime Artifacts projects Goal Runtime receipt and verification evidence without becoming the receipt owner. It must expose WorkNodeReceipt, GoalCompletionReceipt, VerificationReceipt, validator evidence, adjudication records, repair cycles, restart records, model-switch evidence, skipped validator reasons, unresolved risks, certification status, and evidence taxonomy across acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence through artifact identity and open-by-artifact routing, with degraded views when underlying storage or contract records are stale.
+L00000762	gui_related: true
+L00000763	gui_classification_reason: Runtime Artifacts receipt, evidence, restart, and model-switch projection is a user-visible panel behavior.
+L00000764	depends_on:
+L00000765	  - RAP-024
+L00000766	  - RAP-026
+L00000767	  - CV-288
+L00000768	  - SP-215
+L00000769	  - GRS-027
+L00000770	unblocks: []
+L00000771	acceptance_criteria:
+L00000772	  - Runtime Artifacts can show WorkNodeReceipt and GoalCompletionReceipt references.
+L00000773	  - Runtime Artifacts can show VerificationReceipt references, skipped validator reasons, unresolved risks, and certification status.
+L00000774	  - Validator evidence, adjudication records, repair cycles, restart records, and model-switch evidence are visible through artifact identity.
+L00000775	  - Evidence projection distinguishes acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence.
+L00000776	  - Stale or missing owner records degrade the view rather than becoming artifact truth.
+L00000777	  - Runtime Artifacts does not replace Contracts_V0 or storage-plan receipt authority.
+L00000778	validation_surfaces:
+L00000779	  - python3 scripts/pm-plan-index.py validate
+L00000780	  - future Runtime Artifacts receipt projection review
+L00000781	risk_class: receipt_projection_authority_drift
+L00000782	reasoning_tier: high
+L00000783	context_scope: goal_runtime_artifacts
+L00000784	implementation_surfaces:
+L00000785	  - Plans/Runtime_Artifacts_Panel.md
+L00000786	  - Plans/Contracts_V0.md
+L00000787	  - Plans/storage-plan.md
+L00000788	  - Plans/Goal_Runtime_System.md
+L00000789	node_compile_hint:
+L00000790	  mode: goal_runtime_receipt_artifact_projection
+L00000791	  create_worknodes: false
+L00000792	source_lineage:
+L00000793	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0021
+L00000794	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0051
+L00000795	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0052
+L00000796	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0060
+L00000797	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0062
+L00000798	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0071
+L00000799	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0091
+L00000800	preserved_exact_tokens:
+L00000801	  - "WorkNodeReceipt"
+L00000802	  - "GoalCompletionReceipt"
+L00000803	  - "VerificationReceipt"
+L00000804	  - "validator evidence"
+L00000805	  - "adjudication records"
+L00000806	  - "repair cycles"
+L00000807	  - "skipped validator reasons"
+L00000808	  - "unresolved risks"
+L00000809	  - "certification status"
+L00000810	  - "acceptance criteria"
+L00000811	  - "live evidence"
+L00000812	  - "tests"
+L00000813	  - "diffs"
+L00000814	  - "validator outputs"
+L00000815	  - "canonical evidence"
+L00000816	  - "source evidence"
+L00000817	  - "process evidence"
+L00000818	  - "governance evidence"
+L00000819	  - "Runtime Artifacts"
+L00000820	  - "restart"
+L00000821	  - "model switch"
+L00000822	negative_constraints:
+L00000823	  - Do not let Runtime Artifacts replace receipt authority.
+L00000824	  - Do not hide stale owner records behind apparently final evidence.
+L00000825	owner_hints:
+L00000826	  - Plans/Runtime_Artifacts_Panel.md
+L00000827	  - Plans/Contracts_V0.md
+L00000828	  - Plans/storage-plan.md
+L00000829	  - Plans/Goal_Runtime_System.md
+L00000830	```
+L00000831	
+L00000832	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00000833	
+L00000834	### RAP-029 - Plans-To-Code Receipt And Test Evidence Projection
+L00000835	
+L00000836	```yaml
+L00000837	plan_unit_id: RAP-029
+L00000838	unit_type: requirement
+L00000839	status: accepted
+L00000840	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000841	canonical_text: >-
+L00000842	  Runtime Artifacts projects plans-to-code receipts and automated-test evidence without becoming their owner. It displays PlanCompile receipts, ExecutorIntakeReport, source-control receipts, safe-point receipts, WorkNode change receipts, test run receipts, visual evidence, model resolution receipts, Auditor verification receipts, repair attempt receipts, merge/promotion receipts, WorkNode completion receipts, and GoalCompletionReceipt. Evidence projection distinguishes source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, browser/device screenshots/logs, validator outputs, unresolved risks, skipped validator reasons, and final certification status, with degraded views when owner records are stale or missing.
+L00000843	  Runtime Artifacts distinguishes canonical evidence from source/process/governance/test/source-control evidence and can project browser/GUI/device sessions while keeping Playwright optional as test-tool context rather than receipt authority. It may display 100% automated completion claims, no human intervention assertions, all WorkNodes terminal status, and all automated tests passed evidence only as projections from owner receipts. Source-control projections include repo/worktree/branch/baseline/head/safe-point/changed-files/conflicts/rollback context only as owner-receipt fields.
+L00000844	gui_related: true
+L00000845	gui_classification_reason: Runtime Artifacts receipt, screenshot, visual evidence, skipped validator, and certification projections are user-visible panel behavior.
+L00000846	depends_on: [RAP-027, POA-047, POA-048, ATS-004, EP-103, GRS-030]
+L00000847	unblocks: [OP-024, F3-397]
+L00000848	acceptance_criteria:
+L00000849	  - Runtime Artifacts can project source-control, test, model, Auditor, repair, promotion, WorkNode, and completion receipts.
+L00000850	  - Browser/device screenshots, logs, visual evidence, validator outputs, unresolved risks, skipped validators, and final certification are visible through artifact identity.
+L00000851	  - Stale or missing owner records degrade the view instead of becoming final evidence.
+L00000852	validation_surfaces:
+L00000853	  - python3 scripts/pm-plans-verify.py run-gates
+L00000854	  - future Runtime Artifacts plans-to-code receipt projection review
+L00000855	risk_class: receipt_projection_authority_drift
+L00000856	reasoning_tier: high
+L00000857	context_scope: plans_to_code_runtime_artifacts
+L00000858	implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/Automated_Testing_System.md, Plans/Contracts_V0.md]
+L00000859	node_compile_hint: {mode: plans_to_code_receipt_projection, create_worknodes: false}
+L00000860	source_lineage:
+L00000861	  - pldg-20260617-001-plans-to-code-handoff:atom-0029
+L00000862	  - pldg-20260617-001-plans-to-code-handoff:atom-0031
+L00000863	  - pldg-20260617-001-plans-to-code-handoff:atom-0039
+L00000864	  - pldg-20260617-001-plans-to-code-handoff:atom-0040
+L00000865	  - pldg-20260617-001-plans-to-code-handoff:atom-0043
+L00000866	  - pldg-20260617-001-plans-to-code-handoff:atom-0055
+L00000867	preserved_exact_tokens:
+L00000868	  - "test_run_receipt"
+L00000869	  - "source-control receipt"
+L00000870	  - "changed-files"
+L00000871	  - "conflicts"
+L00000872	  - "rollback"
+L00000873	  - "model resolution receipt"
+L00000874	  - "GoalCompletionReceipt"
+L00000875	  - "visual evidence"
+L00000876	  - "browser/GUI/device sessions"
+L00000877	  - "screenshots"
+L00000878	  - "canonical evidence"
+L00000879	  - "process evidence"
+L00000880	  - "governance evidence"
+L00000881	  - "test evidence"
+L00000882	  - "100% automated"
+L00000883	  - "no human intervention"
+L00000884	  - "all WorkNodes terminal"
+L00000885	  - "all automated tests passed"
+L00000886	negative_constraints:
+L00000887	  - Do not let Runtime Artifacts replace receipt authority.
+L00000888	  - Do not hide stale owner records behind apparently final evidence.
+L00000889	owner_hints:
+L00000890	  - Plans/Runtime_Artifacts_Panel.md
+L00000891	  - Plans/Project_Output_Artifacts.md
+L00000892	  - Plans/Contracts_V0.md
+L00000893	```
+L00000894	
+L00000895	ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Contracts_V0.md
+L00000896	
+L00000897	
+L00000898	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00000899	
+L00000900	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00000901	
+L00000902	### RAP-030 - Visible Testing And Compile Evidence Projection
+L00000903	
+L00000904	```yaml
+L00000905	plan_unit_id: RAP-030
+L00000906	unit_type: requirement
+L00000907	status: accepted
+L00000908	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000909	canonical_text: 'When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. Visible testing, screenshots, video, logs, console, network traces, and artifacts apply secret and sensitive-data redaction before display or persistence.'
+L00000910	gui_related: true
+L00000911	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000912	depends_on: []
+L00000913	unblocks: []
+L00000914	acceptance_criteria:
+L00000915	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000916	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000917	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000918	validation_surfaces:
+L00000919	- python3 scripts/pm-plan-index.py validate
+L00000920	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000921	risk_class: owner_drift
+L00000922	reasoning_tier: standard
+L00000923	context_scope: ledger_to_plans_compile
+L00000924	implementation_surfaces:
+L00000925	- Plans/Runtime_Artifacts_Panel.md
+L00000926	- Plans/Automated_Testing_System.md
+L00000927	- Plans/Orchestrator_Page.md
+L00000928	- Plans/Permissions_System.md
+L00000929	node_compile_hint:
+L00000930	  mode: canonical_planunit_from_bootstrap_ledger
+L00000931	  create_worknodes: false
+L00000932	  create_nodeseeds: false
+L00000933	source_lineage:
+L00000934	- pldg-20260618-001-prd-planning-wizard:atom-0096
+L00000935	- pldg-20260618-001-prd-planning-wizard:atom-0097
+L00000936	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00000937	source_atom_ids:
+L00000938	- atom-0096
+L00000939	- atom-0097
+L00000940	decision_refs:
+L00000941	- dec-0019
+L00000942	correction_refs: []
+L00000943	preserved_exact_tokens:
+L00000944	- Open
+L00000945	- Watch
+L00000946	- interaction timeline
+L00000947	- redaction
+L00000948	negative_constraints:
+L00000949	- Do not expose credentials, tokens, personal data, or protected project content through visible testing.
+L00000950	owner_hints:
+L00000951	- Plans/Automated_Testing_System.md
+L00000952	- Plans/Orchestrator_Page.md
+L00000953	- Plans/Runtime_Artifacts_Panel.md
+L00000954	- Plans/Permissions_System.md
+L00000955	```
+L00000956	
+L00000957	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00000958	
+
+<<< CONTEXT_AFTER canonical_document_lines=959-970 >>>
+L00000959	### RAP-031 - Discovery Receipt Browsing, Redaction, And Retention Projection
+L00000960	
+L00000961	```yaml
+L00000962	plan_unit_id: RAP-031
+L00000963	unit_type: requirement
+L00000964	status: accepted
+L00000965	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000966	canonical_text: >-
+L00000967	  Runtime Artifacts may browse persisted discovery receipts, fallback summaries, selected opaque ids, redacted candidate counts, freshness/fallback/policy state, remote/SSH identity, permission snapshot, host trust state, elapsed/budget fields, and exact-verification links when receipt persistence is promoted. Runtime Artifacts consumes the DiscoveryService receipt envelope but does not own DiscoveryService behavior. Assistant Chat visibility settings never delete or hide durable audit receipts; frecency/history reset stops future ranking use for the selected identity without deleting durable redacted discovery receipts by default unless a separate retention/export/delete owner action applies.
+L00000968	gui_related: true
+L00000969	gui_classification_reason: This is user-visible receipt browsing, redaction, and artifact projection.
+L00000970	depends_on: [CV-291, SP-217, F2-191, PS-118, ACD-422]

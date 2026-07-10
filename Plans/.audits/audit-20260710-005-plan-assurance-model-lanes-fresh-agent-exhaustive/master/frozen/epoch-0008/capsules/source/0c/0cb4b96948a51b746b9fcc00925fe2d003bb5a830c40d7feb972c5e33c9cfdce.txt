@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5679-5690 >>>
+L00005679	- "last access"
+L00005680	- "run completion"
+L00005681	- "MUST NOT infer the anchor from file mtime alone"
+L00005682	negative_constraints:
+L00005683	- "Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both retention_anchor_kind and retention_anchor_at_utc; implementations MUST NOT infer the anchor from file mtime alone."
+L00005684	preserved_contractrefs: []
+L00005685	compatibility_only_notes: []
+L00005686	stale_retired_dispositions: []
+L00005687	owner_hints:
+L00005688	- "Plans/storage-plan.md"
+L00005689	```
+L00005690	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5691-6063 >>>
+L00005691	### SP-058 - Freshness Policy Fields And Post-Expiry Modes
+L00005692	
+L00005693	```yaml
+L00005694	plan_unit_id: SP-058
+L00005695	unit_type: requirement
+L00005696	status: accepted
+L00005697	owner_doc: Plans/storage-plan.md
+L00005698	canonical_text: "Storage records freshness policy separately from retention; watch, follow-mode, log tail, explorer snapshot, stale cache, and remote runtime projection families declare stale_window_policy, stale_window_expires_at_utc, and post-expiry posture actionable, refresh-first, or read-only."
+L00005699	gui_related: false
+L00005700	gui_classification_reason: "This unit preserves backend stale-window policy fields rather than visual presentation."
+L00005701	split_recommended: false
+L00005702	depends_on:
+L00005703	- "PDS-003"
+L00005704	- "PDS-004"
+L00005705	- "PDS-005"
+L00005706	- "PNC-001"
+L00005707	unblocks: []
+L00005708	acceptance_criteria:
+L00005709	- "SP-058 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00005710	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00005711	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00005712	validation_surfaces:
+L00005713	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005714	- "python3 scripts/pm-plan-index.py validate"
+L00005715	risk_class: storage_plan_drift
+L00005716	reasoning_tier: standard
+L00005717	context_scope: storage_plan
+L00005718	implementation_surfaces:
+L00005719	- "Plans/storage-plan.md"
+L00005720	node_compile_hint:
+L00005721	  mode: freshness_policy_fields_post_expiry_modes
+L00005722	  create_worknodes: false
+L00005723	source_lineage:
+L00005724	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00005725	preserved_exact_tokens:
+L00005726	- "stale_window_policy"
+L00005727	- "stale_window_expires_at_utc"
+L00005728	- "actionable"
+L00005729	- "refresh-first"
+L00005730	- "read-only"
+L00005731	- "/watch"
+L00005732	- "follow-mode"
+L00005733	- "log tails"
+L00005734	- "explorer snapshots"
+L00005735	- "stale caches"
+L00005736	- "remote runtime projections"
+L00005737	negative_constraints: []
+L00005738	preserved_contractrefs: []
+L00005739	compatibility_only_notes: []
+L00005740	stale_retired_dispositions: []
+L00005741	owner_hints:
+L00005742	- "Plans/storage-plan.md"
+L00005743	```
+L00005744	
+L00005745	### SP-059 - Actions Readiness Refresh-First Gate
+L00005746	
+L00005747	```yaml
+L00005748	plan_unit_id: SP-059
+L00005749	unit_type: requirement
+L00005750	status: accepted
+L00005751	owner_doc: Plans/storage-plan.md
+L00005752	canonical_text: "Actions readiness snapshots may remain visible when stale, but workflow generation, apply, rerun, cancel, pin/unpin, and Actions Settings mutation require refresh-first; default expiry is 5m or immediate on workflow/settings/secret/environment input change."
+L00005753	gui_related: true
+L00005754	gui_classification_reason: "This unit preserves user-visible Actions readiness and stale action gating."
+L00005755	split_recommended: false
+L00005756	depends_on:
+L00005757	- "PDS-003"
+L00005758	- "PDS-004"
+L00005759	- "PDS-005"
+L00005760	- "PNC-001"
+L00005761	unblocks: []
+L00005762	acceptance_criteria:
+L00005763	- "SP-059 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00005764	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00005765	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00005766	validation_surfaces:
+L00005767	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005768	- "python3 scripts/pm-plan-index.py validate"
+L00005769	risk_class: storage_plan_drift
+L00005770	reasoning_tier: standard
+L00005771	context_scope: storage_plan
+L00005772	implementation_surfaces:
+L00005773	- "Plans/storage-plan.md"
+L00005774	node_compile_hint:
+L00005775	  mode: actions_readiness_refresh_first_gate
+L00005776	  create_worknodes: false
+L00005777	source_lineage:
+L00005778	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00005779	preserved_exact_tokens:
+L00005780	- "Actions readiness snapshot"
+L00005781	- "workflow generation"
+L00005782	- "apply"
+L00005783	- "rerun"
+L00005784	- "cancel"
+L00005785	- "pin/unpin"
+L00005786	- "Actions Settings mutation"
+L00005787	- "refresh-first"
+L00005788	- "5m"
+L00005789	- "last_observation_at_utc + 5m"
+L00005790	- "workflow/settings/secret/environment input change"
+L00005791	negative_constraints: []
+L00005792	preserved_contractrefs: []
+L00005793	compatibility_only_notes: []
+L00005794	stale_retired_dispositions: []
+L00005795	owner_hints:
+L00005796	- "Plans/storage-plan.md"
+L00005797	```
+L00005798	
+L00005799	### SP-060 - Workflow Run Freshness Gate
+L00005800	
+L00005801	```yaml
+L00005802	plan_unit_id: SP-060
+L00005803	unit_type: requirement
+L00005804	status: accepted
+L00005805	owner_doc: Plans/storage-plan.md
+L00005806	canonical_text: "Workflow run list/detail stale rows remain historical evidence, but live log follow, run mutation, rerun/cancel/pin, and dispatch require refresh-first; defaults are 60s for run lists and 15s for active run/detail/log-follow."
+L00005807	gui_related: true
+L00005808	gui_classification_reason: "This unit preserves user-visible workflow run freshness and log-follow gating."
+L00005809	split_recommended: false
+L00005810	depends_on:
+L00005811	- "PDS-003"
+L00005812	- "PDS-004"
+L00005813	- "PDS-005"
+L00005814	- "PNC-001"
+L00005815	unblocks: []
+L00005816	acceptance_criteria:
+L00005817	- "SP-060 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00005818	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00005819	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00005820	validation_surfaces:
+L00005821	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005822	- "python3 scripts/pm-plan-index.py validate"
+L00005823	risk_class: storage_plan_drift
+L00005824	reasoning_tier: standard
+L00005825	context_scope: storage_plan
+L00005826	implementation_surfaces:
+L00005827	- "Plans/storage-plan.md"
+L00005828	node_compile_hint:
+L00005829	  mode: workflow_run_freshness_gate
+L00005830	  create_worknodes: false
+L00005831	source_lineage:
+L00005832	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00005833	preserved_exact_tokens:
+L00005834	- "Workflow run list/detail"
+L00005835	- "stale rows"
+L00005836	- "historical evidence"
+L00005837	- "live log follow"
+L00005838	- "run mutation"
+L00005839	- "rerun/cancel/pin"
+L00005840	- "dispatch"
+L00005841	- "refresh-first"
+L00005842	- "60s"
+L00005843	- "15s"
+L00005844	- "last_observation_at_utc + threshold"
+L00005845	negative_constraints: []
+L00005846	preserved_contractrefs: []
+L00005847	compatibility_only_notes: []
+L00005848	stale_retired_dispositions: []
+L00005849	owner_hints:
+L00005850	- "Plans/storage-plan.md"
+L00005851	```
+L00005852	
+L00005853	### SP-061 - Docker Runtime Stale Snapshot Gate
+L00005854	
+L00005855	```yaml
+L00005856	plan_unit_id: SP-061
+L00005857	unit_type: requirement
+L00005858	status: accepted
+L00005859	owner_doc: Plans/storage-plan.md
+L00005860	canonical_text: "Docker container/image/compose snapshots are read-only when stale; lifecycle actions require refresh-first, with defaults of 15s for containers/compose health and 60s for image/registry inventory."
+L00005861	gui_related: true
+L00005862	gui_classification_reason: "This unit preserves user-visible Docker runtime stale-state and lifecycle action gating."
+L00005863	split_recommended: false
+L00005864	depends_on:
+L00005865	- "PDS-003"
+L00005866	- "PDS-004"
+L00005867	- "PDS-005"
+L00005868	- "PNC-001"
+L00005869	unblocks: []
+L00005870	acceptance_criteria:
+L00005871	- "SP-061 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00005872	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00005873	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00005874	validation_surfaces:
+L00005875	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005876	- "python3 scripts/pm-plan-index.py validate"
+L00005877	risk_class: storage_plan_drift
+L00005878	reasoning_tier: standard
+L00005879	context_scope: storage_plan
+L00005880	implementation_surfaces:
+L00005881	- "Plans/storage-plan.md"
+L00005882	node_compile_hint:
+L00005883	  mode: docker_runtime_stale_snapshot_gate
+L00005884	  create_worknodes: false
+L00005885	source_lineage:
+L00005886	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00005887	preserved_exact_tokens:
+L00005888	- "Docker runtime snapshot"
+L00005889	- "container/image/compose state"
+L00005890	- "read-only until refresh"
+L00005891	- "lifecycle actions"
+L00005892	- "refresh-first"
+L00005893	- "15s"
+L00005894	- "60s"
+L00005895	- "image/registry inventory"
+L00005896	- "cached inventory keeps freshness markers"
+L00005897	negative_constraints: []
+L00005898	preserved_contractrefs: []
+L00005899	compatibility_only_notes: []
+L00005900	stale_retired_dispositions: []
+L00005901	owner_hints:
+L00005902	- "Plans/storage-plan.md"
+L00005903	```
+L00005904	
+L00005905	### SP-062 - Kubernetes Workload Watch Stale Gate
+L00005906	
+L00005907	```yaml
+L00005908	plan_unit_id: SP-062
+L00005909	unit_type: requirement
+L00005910	status: accepted
+L00005911	owner_doc: Plans/storage-plan.md
+L00005912	canonical_text: "Kubernetes workload/watch state remains inspectable but read-only when stale; workload mutation, exec, port-forward, and rollout recovery require refresh-first, expiring at last_observation_at_utc + 15s or watch disconnect."
+L00005913	gui_related: true
+L00005914	gui_classification_reason: "This unit preserves user-visible Kubernetes stale-state and mutation gating."
+L00005915	split_recommended: false
+L00005916	depends_on:
+L00005917	- "PDS-003"
+L00005918	- "PDS-004"
+L00005919	- "PDS-005"
+L00005920	- "PNC-001"
+L00005921	unblocks: []
+L00005922	acceptance_criteria:
+L00005923	- "SP-062 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00005924	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00005925	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00005926	validation_surfaces:
+L00005927	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005928	- "python3 scripts/pm-plan-index.py validate"
+L00005929	risk_class: storage_plan_drift
+L00005930	reasoning_tier: standard
+L00005931	context_scope: storage_plan
+L00005932	implementation_surfaces:
+L00005933	- "Plans/storage-plan.md"
+L00005934	node_compile_hint:
+L00005935	  mode: kubernetes_workload_watch_stale_gate
+L00005936	  create_worknodes: false
+L00005937	source_lineage:
+L00005938	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00005939	preserved_exact_tokens:
+L00005940	- "Kubernetes workload/watch state"
+L00005941	- "rollout"
+L00005942	- "log"
+L00005943	- "exec"
+L00005944	- "port-forward"
+L00005945	- "workload mutation"
+L00005946	- "rollout recovery"
+L00005947	- "refresh-first"
+L00005948	- "last_observation_at_utc + 15s"
+L00005949	- "watch disconnect"
+L00005950	- "stale state remains inspectable"
+L00005951	negative_constraints: []
+L00005952	preserved_contractrefs: []
+L00005953	compatibility_only_notes: []
+L00005954	stale_retired_dispositions: []
+L00005955	owner_hints:
+L00005956	- "Plans/storage-plan.md"
+L00005957	```
+L00005958	
+L00005959	### SP-063 - Orchestrator Lineage Revalidation Freshness
+L00005960	
+L00005961	```yaml
+L00005962	plan_unit_id: SP-063
+L00005963	unit_type: requirement
+L00005964	status: accepted
+L00005965	owner_doc: Plans/storage-plan.md
+L00005966	canonical_text: "Orchestrator receipt/lineage stale views remain inspectable, but run-blocking recovery and CTA execution require canonical revalidation; active run stitching defaults to 30s, while completed historical receipts use retention policy instead of live freshness."
+L00005967	gui_related: true
+L00005968	gui_classification_reason: "This unit preserves user-visible Orchestrator receipt/lineage inspection and CTA revalidation gating."
+L00005969	split_recommended: false
+L00005970	depends_on:
+L00005971	- "PDS-003"
+L00005972	- "PDS-004"
+L00005973	- "PDS-005"
+L00005974	- "PNC-001"
+L00005975	unblocks: []
+L00005976	acceptance_criteria:
+L00005977	- "SP-063 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00005978	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00005979	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00005980	validation_surfaces:
+L00005981	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005982	- "python3 scripts/pm-plan-index.py validate"
+L00005983	risk_class: storage_plan_drift
+L00005984	reasoning_tier: standard
+L00005985	context_scope: storage_plan
+L00005986	implementation_surfaces:
+L00005987	- "Plans/storage-plan.md"
+L00005988	node_compile_hint:
+L00005989	  mode: orchestrator_lineage_revalidation_freshness
+L00005990	  create_worknodes: false
+L00005991	source_lineage:
+L00005992	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00005993	preserved_exact_tokens:
+L00005994	- "Orchestrator lineage/receipt stitching"
+L00005995	- "stale receipt/lineage views"
+L00005996	- "run-blocking recovery"
+L00005997	- "CTA actions"
+L00005998	- "canonical revalidation"
+L00005999	- "30s"
+L00006000	- "last_observation_at_utc + 30s"
+L00006001	- "completed historical receipts"
+L00006002	- "retention policy"
+L00006003	- "live freshness"
+L00006004	negative_constraints: []
+L00006005	preserved_contractrefs: []
+L00006006	compatibility_only_notes: []
+L00006007	stale_retired_dispositions: []
+L00006008	owner_hints:
+L00006009	- "Plans/storage-plan.md"
+L00006010	```
+L00006011	
+L00006012	### SP-064 - Stale Threshold Policy Versioning
+L00006013	
+L00006014	```yaml
+L00006015	plan_unit_id: SP-064
+L00006016	unit_type: requirement
+L00006017	status: accepted
+L00006018	owner_doc: Plans/storage-plan.md
+L00006019	canonical_text: "Default stale-window thresholds are explicit and may be tightened by a surface owner, but must not be silently lengthened without a persisted policy version."
+L00006020	gui_related: false
+L00006021	gui_classification_reason: "This unit preserves backend stale threshold policy-versioning requirements."
+L00006022	split_recommended: false
+L00006023	depends_on:
+L00006024	- "PDS-003"
+L00006025	- "PDS-004"
+L00006026	- "PDS-005"
+L00006027	- "PNC-001"
+L00006028	unblocks: []
+L00006029	acceptance_criteria:
+L00006030	- "SP-064 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00006031	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00006032	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00006033	validation_surfaces:
+L00006034	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00006035	- "python3 scripts/pm-plan-index.py validate"
+L00006036	risk_class: storage_plan_drift
+L00006037	reasoning_tier: standard
+L00006038	context_scope: storage_plan
+L00006039	implementation_surfaces:
+L00006040	- "Plans/storage-plan.md"
+L00006041	node_compile_hint:
+L00006042	  mode: stale_threshold_policy_versioning
+L00006043	  create_worknodes: false
+L00006044	source_lineage:
+L00006045	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00006046	preserved_exact_tokens:
+L00006047	- "Default stale-window thresholds"
+L00006048	- "surface owner"
+L00006049	- "may be tightened"
+L00006050	- "may not be silently lengthened"
+L00006051	- "persisted policy version"
+L00006052	- "Default stale threshold"
+L00006053	- "Expiry computation"
+L00006054	- "Post-expiry posture"
+L00006055	negative_constraints:
+L00006056	- "Default stale-window thresholds are explicit and may be tightened by a surface owner, but may not be silently lengthened without a persisted policy version."
+L00006057	preserved_contractrefs: []
+L00006058	compatibility_only_notes: []
+L00006059	stale_retired_dispositions: []
+L00006060	owner_hints:
+L00006061	- "Plans/storage-plan.md"
+L00006062	```
+L00006063	
+
+<<< CONTEXT_AFTER canonical_document_lines=6064-6075 >>>
+L00006064	### SP-065 - Watchable Stream When-Hidden Policy
+L00006065	
+L00006066	```yaml
+L00006067	plan_unit_id: SP-065
+L00006068	unit_type: requirement
+L00006069	status: accepted
+L00006070	owner_doc: Plans/storage-plan.md
+L00006071	canonical_text: "Watchable streams declare when-hidden behavior for polling pause, return-to-visibility refresh, and relative timer elapsed/reset semantics so consumers do not infer continuity from the last rendered frame."
+L00006072	gui_related: true
+L00006073	gui_classification_reason: "This unit preserves user-visible watchable stream visibility and refresh behavior."
+L00006074	split_recommended: false
+L00006075	depends_on:

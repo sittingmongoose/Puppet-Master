@@ -1,0 +1,305 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1207-1218 >>>
+L00001207	
+L00001208	Action surfaces classify every affordance by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility. Bulk affordances default to navigation and triage rather than live execution mutation.
+L00001209	
+L00001210	Side inspectors stay summary/action-light; `/action-light` affordances belong there, while `/high-consequence` actions and dense records route to the owning full-record surface before mutation.
+L00001211	
+L00001212	#### Cross-surface state presentation and disabled controls
+L00001213	
+L00001214	SCM, GitHub Actions, Docker/Kubernetes, Orchestrator, and other /runtime-backed surfaces share one user-facing status vocabulary: `Running`, `Ready`, `Blocked`, `Needs Attention`, `Degraded`, `Stale`, `Detached`, and `Not Configured`. Icon, text, and badge presentation may vary by density, but `/text/badge` meaning must stay consistent and derive from canonical reason codes rather than panel-local copy.
+L00001215	
+L00001216	Every disabled mutation affordance uses the shared `disabled-control` explanation model. Disabled controls expose a short inline reason, a hover/focus tooltip with the exact blocking condition, and the primary recovery CTA when one exists. Controls remain keyboard-focusable when that focus is needed for `/accessibility`, explanation, or recovery discovery.
+L00001217	
+L00001218	Deep links from `Operation receipts`, Orchestrator blocked views, and owner-route attention items must preserve visible context. A destination surface either applies a visible context filter chip or opens an isolated focus mode; inherited `/search`, filter, or `/focus` state must be clearable in one action.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1219-1494 >>>
+L00001219	
+L00001220	Shell `/navigation` and `deep-link` handling in `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` must consume the shared route contract before reviving any stale `Tiers` or widgetized Orchestrator surface assumption.
+L00001221	
+L00001222	`Explain this state` is a GUI-level affordance on status pills, disabled buttons, blocked banners, and receipt rows across SCM, GitHub Actions, Docker/Kubernetes, and Orchestrator. It can auto-open on the first block when the user enables that behavior, and it offers ELI5 plus expert detail without inventing panel-local explanations. The explanation derives from canonical reason codes, validation fields, `allowed_action_ids[]`, requested/effective state, `/blocked/diverged/degraded` chains, and the `/event/storage` or `/events/storage` receipt projection; if a field is missing, the GUI says what data is unavailable instead of filling the gap with generic copy. `/tradeoffs`: one-click reasoning is valuable only when it stays tied to the same evidence that disables or permits the action.
+L00001223	
+L00001224	Destructive, `/targeted`, and remote-mutating surfaces show a compact target/context banner before rendering mutation CTAs. The banner includes the effective target identity, fallback source, and whether the context came from selected worktree, receipt context, workspace branch, Docker context, Kubernetes namespace/environment, or `/runtime/context`. Empty-state taxonomy is canonical: `Not relevant`, `Not configured`, `Unavailable`, `No data yet`, and `No results for current filter` are distinct states, not interchangeable copy. Hide-when-unused surfaces remain rediscoverable through Settings, commands, and receipt or CTA deep links.
+L00001225	
+L00001226	Accessibility for dense custom surfaces is non-color dependent. Source Control, GitHub Actions, Docker Manager, Kubernetes, Orchestrator, receipt views, and any `/table` fallback must preserve `/screen-reader` labels, keyboard traversal, non-color state indicators, and text equivalents for graph badges, status badges, blocked reasons, and filter results.
+L00001227	
+L00001228	Blocked-state integration uses one shared contract rather than surface-specific recovery wording. Orchestrator remains the hub for blocked episodes, while destination panels render the same reason code, owner route, recovery CTA, and allowed actions in local context. If a destination panel cannot host the requested recovery action, it links back to the owner route with the original receipt/filter context preserved; it must not create a competing remediation path.
+L00001229	
+L00001230	Dashboard CtAs, blocked cards, modal `/toast` approvals, graph-local dialogs, and inline chat actions all resolve through the same owner-routed action family; resolution-thread ownership belongs to the canonical attention/blocked route, not the surface that happened to display the prompt.
+L00001231	
+L00001232	UI, runtime, and chat-thread resolution share the same blocked/recovery action family, so `/recovery` affordances point to canonical actions instead of surface-specific commands.
+L00001233	
+L00001234	Governance and policy outcomes are blocked outcomes, not generic failures. The GUI distinguishes namespace disallowed by product policy, admission or policy denied by OPA, `/Gatekeeper/Kyverno/Pod` Security or `/image` policy, quota or `/limit` policy denial, and `remote_mismatch`, with separate remediation pivots and CTAs. Multi-object Kubernetes apply, `compose-to-cluster`, and multi-step publish chains show partial `/receipts`: accepted resources, the later denied resource, any downstream deployment blocked by that denial, and the exact policy-blocked object and `/stage`. While a run is waiting on approval, `/review/ruleset`, or external governance change, resume revalidates before mutation; receipts retain original and current `/policy` or `/remote` outcomes, including active, deleted, archived, `renamed_redirected`, and transferred targets.
+L00001235	
+L00001236	ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md
+L00001237	
+L00001238	#### Progress catalog source and default drills
+L00001239	
+L00001240	
+L00001241	Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. The promoted 13-widget Progress catalog and default drill targets are:
+L00001242	1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`
+L00001243	2. `progress.current-task` → Node inspector for the active execution unit
+L00001244	3. `progress.lane-health` → Lane row filtered to the selected lane/worktree
+L00001245	4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes
+L00001246	5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`
+L00001247	6. `progress.approval-queue` → Concern inspector showing pending approvals
+L00001248	7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode
+L00001249	8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts
+L00001250	9. `progress.worktree-state` → Source Control worktree row with lane/package/run refs
+L00001251	10. `progress.account-pressure` → Historical `account_pressure_episode` list
+L00001252	11. `progress.account-switches` → Historical `account_switch_event` list
+L00001253	12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder
+L00001254	13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list
+L00001255	
+L00001256	#### Progress labels and taxonomy
+L00001257	
+L00001258	
+L00001259	- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`
+L00001260	- Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`
+L00001261	- Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`
+L00001262	- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`
+L00001263	- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet
+L00001264	
+L00001265	### 7.2 Dashboard
+L00001266	
+L00001267	Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.
+L00001268	
+L00001269	Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, GitHub Actions, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.
+L00001270	
+L00001271	### 7.3 Shared route and open behavior
+L00001272	
+L00001273	All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the `/serialization` transport form of that payload, not a hidden canonical route contract or second routing model.
+L00001274	
+L00001275	Widget actions route through the same command and `/deep-link` payload model as search, inspectors, and palette actions, not through widget-local action ids.
+L00001276	
+L00001277	`Plans/assistant-chat-design.md` / `assistant-chat-design.md` message `jump-to-message`, search, and persistence behavior consume the same object-first route model; chat may store `resume_url` for recovery portability, but it must not fall back to path-first opening.
+L00001278	
+L00001279	`cmd.nav` and `cmd.nav.*` wrappers route through the same route payload and `/wiring/gate` stack, so catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics.
+L00001280	
+L00001281	UI container state such as `tab_id`, panel focus, and inspector section is view context around the target, while `target_kind` is destination class only and never shell state or object taxonomy.
+L00001282	
+L00001283	Usage pivots route `usage_event` and runtime-object detail through object-first `/object` and `/search/jump` primitives; legacy `tier_id` may remain filter context but cannot replace node, `/attempt/block`, and `/correlation` lineage.
+L00001284	
+L00001285	`switch-aware` usage/history views prefer `usage_event_ref` plus `attempt_id` as pivots; switch state may annotate a view, but it cannot restore `tier_id` as the cross-surface runtime identity.
+L00001286	
+L00001287	Graph and evidence schemas add work-package `/seam/promotion/account/lane` identity and align `/coverage/evidence` linkage so `/evidence` and exact-record views can route by normalized record shape.
+L00001288	
+L00001289	Route payload passthroughs include `correlation_id` as a matrix-verifiable field when owner contracts require it, rather than relying on prose-only correlation.
+L00001290	
+L00001291	Route destination classes include `bottom_panel` for terminal, problems, output, ports, browser, and debug; `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
+L00001292	
+L00001293	Usage-event identity stays primary for Usage `/Ledger` navigation, while node `/attempt` identity stays primary for runtime and graph inspectors.
+L00001294	
+L00001295	`human-in-the-loop` / `human-in-the-loop.md` carries direct canon-supersession for HITL behavior; FinalGUISpec consumes that owner state rather than treating it as additive refinement.
+L00001296	
+L00001297	The Evidence pane owns verdicts `/receipts/findings/reports`; the Artifacts pane owns screenshots `/recordings/diffs/reports/generated` docs `/etc`, and evidence/artifacts remain bidirectionally linked with usage-linked receipts where relevant.
+L00001298	
+L00001299	Canonical-record cleanup treats `tier_runtime_record`, tier-keyed `usage_record`, tier-adjacent `evidence_record`, `thread_blocked_notice`, and `wizard_runtime_state` `resume_url` fields as compatibility records; they cannot reassert tier identity over object routes.
+L00001300	
+L00001301	`Crosswalk.md` must expose route-target / identity-native open behavior as a primitive alongside command and document-pane primitives; FinalGUISpec consumes that primitive through `route_target`, `OpenSubject`, and `OpenFile` rather than creating a parallel navigation vocabulary.
+L00001302	
+L00001303	Route envelopes, not ad hoc UI glue, hold the minimum openable routing fields for cross-surface pivots before the destination opens file, subject, inspector, or runtime views.
+L00001304	
+L00001305	`FileManager` keeps `OpenFile { path... }` for workspace-file opens, while runtime-identity opens use `OpenSubject` or `route_target` over canonical object identity before landing in file, subject, or inspector views.
+L00001306	
+L00001307	`tab_id` is allowed for top-level tab restoration and `/focus` refinement only; it does not replace destination class, subject identity, or object identity.
+L00001308	
+L00001309	`subject_id` is for openable `/renderable` content subjects only; it must not become a second generic object taxonomy beside `object_kind` / `object_id`.
+L00001310	
+L00001311	Interview and other `/document-production` runs may carry runtime identity plus blocked `/remediation` state, but they are not Orchestrator package `/node` execution records and must not collapse into the package/node object model.
+L00001312	
+L00001313	
+L00001314	All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the serialized transport form of that payload, not a second routing model.
+L00001315	
+L00001316	- Concern search results route as object-first results with focused-run and target-tab context by using `object_kind: concern`, `object_id: concern_id`, `focused_run_id`, and `target_tab`.
+L00001317	- Concern drill-down preserves the selected `concern_id` plus related object context when pivoting into inspectors, recovery links, or historical views.
+L00001318	- `route_target` stays small: it is either `subject_id`-based identity or `object_kind` / `object_id` identity.
+L00001319	- `subject_id` families are limited to `doc:` and `artifact:`.
+L00001320	- `inspector_target` is secondary metadata, not primary identity.
+L00001321	- Destination/context overrides are allowed only when needed to restore the target surface.
+L00001322	
+L00001323	### 7.4 Settings and inspectors
+L00001324	
+L00001325	#### 7.4.2 Indexing settings subsection
+L00001326	
+L00001327	The Indexing settings subsection exposes the project search index as an admin surface: enable/disable index, large file threshold, generated-file and custom exclusion patterns, follow-symlinks toggle default OFF, shallow/partial (`/partial`) remote cache toggles, local and remote disk usage, manual cache eviction with confirmation, and `Rebuild Index`. Local projects hide remote-only cache controls while keeping toggle, threshold, exclusion, symlink, disk-usage, and rebuild controls visible.
+L00001328	
+L00001329	#### 7.4.4 Settings (Unified) panel specification
+L00001330	
+L00001331	Settings provider and web rows must preserve row-level health/error disclosure, last-failure messaging, availability plus support-tier visibility in Settings, and availability plus support-tier visibility in /web help/autocomplete. The row contract includes provider identity, support tier, readiness state, last failure, and contextual help without moving provider routing ownership out of `Plans/Tools.md`.
+L00001332	
+L00001333	Settings Tab Registry:
+L00001334	
+L00001335	The unified Settings surface exposes a stable tab registry so run-touched settings content has a visible landing zone without copying detailed owner-doc behavior into this GUI file. The registry is a placement and owner-routing contract: hidden or unsupported tabs remain searchable and command-addressable, but they show unavailable or unsupported state instead of disappearing silently.
+L00001336	
+L00001337	| Tab | Final GUI responsibility | Owner detail |
+L00001338	|---|---|---|
+L00001339	| General | App-wide theme, appearance, onboarding, and ordinary preference rows | FinalGUISpec plus storage settings keys |
+L00001340	| Models / Providers | Model, provider, account, runtime, Default Crew, and Goal Mode worker/verifier-adjudicator selector entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |
+L00001341	| Tiers (retired alias) | Compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces | Orchestrator, Run Graph, Worktree, and node/package/lane owner docs |
+L00001342	| Branching | Git/worktree policy, branch defaults, merge/push posture, and recovery entrypoints | WorktreeGitImprovement and GitHub integration docs |
+L00001343	| Verification | Validation pass settings, report visibility, and gate/run quality preferences | chain-wizard, Project Output Artifacts, and Progression Gates docs |
+L00001344	| Memory | Assistant memory, retrieval, context, and rehydration preferences | assistant-memory, Prompt Pipeline, and assistant-chat docs |
+L00001345	| Budgets | Token, spend, quota, pressure, and execution-budget controls | usage, Models, Run Modes, and Contracts docs |
+L00001346	| Advanced | Rare or hazardous controls, debug/instrumentation toggles, and platform diagnostics | FileSafe, Tools, Runtime Artifacts, and Doctor/Health owners |
+L00001347	| Terminal | Durable terminal appearance, shell startup, transcript, interaction, and diagnostics preferences | Terminal Settings Ownership in this document plus terminal/runtime owner docs |
+L00001348	| Permissions | Permission rules, approval scopes, presets, and web-operation keys | Permissions_System |
+L00001349	| LSP | Language-server enablement, host/root attachment, diagnostics, and restart controls | LSPSupport plus FileManager consumers |
+L00001350	| Interview | Interview, builder, and requirements workflow preferences | interview, chain-wizard, and Project Output Artifacts docs |
+L00001351	| Media | Media-generation provider and capability settings | Media_Generation_and_Capabilities |
+L00001352	| Auth | Provider, server, GitHub, and account authentication entrypoints | Multi-Account and provider/auth owner docs |
+L00001353	| Health | Doctor checks, readiness, stale/degraded states, and remediation links | owner docs for the failing subsystem plus Runtime Artifacts |
+L00001354	| Rules | Instruction, rule, and policy-pack visibility without replacing owner storage | agent rules, Prompt Pipeline, Skills, and Plugins docs |
+L00001355	| Shortcuts | Keyboard shortcut discovery, remapping, conflicts, and command bindings | UI_Command_Catalog |
+L00001356	| Skills | Skill registry visibility, readiness, source, and persona references | Skills_System and Agent Config |
+L00001357	| Plugins | Plugin registry visibility, readiness, source, and capability disclosure | Plugins_System and MCP/Tools owners |
+L00001358	
+L00001359	This table is the canonical 19-tab Settings registry. Older `24 tabs across 5 groups` risk rows and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` migration list are stale migration/source-lineage notes only.
+L00001360	
+L00001361	Settings is the tooltip-heavy `/help` surface for explaining what a setting does and what wins when multiple settings apply; it links to owner docs rather than duplicating runtime policy.
+L00001362	
+L00001363	Settings scopes are not limited to global and `/project` toggles; policy-bearing controls may be package, `/seam/lane/run/account-aware`, or account/actor scoped when the owner contract exposes that scope, and the UI must show the effective scope before applying or inheriting a setting.
+L00001364	
+L00001365	Settings rows that still arrive from older run artifacts under `Tiers`, `tiers.slint`, or `TierTree` migrate to this registry as aliases only; new UI copy uses node/package/lane/seam or Branching terminology. Detailed behavior remains in the owner docs named above, while FinalGUISpec owns discoverability, grouping, disabled-state copy, and cross-surface routing.
+L00001366	
+L00001367	`Plans/storage-plan.md` / `/storage-plan.md` and `Plans/usage-feature.md` / `/usage-feature.md` remain the consumer docs for storage and usage record truth; FinalGUISpec only exposes `/detail/history/ledger/runtime` inspector entrypoints and must route them to those owner contracts.
+L00001368	
+L00001369	Usage, `/history/ledger`, and run-snapshot views attribute cost and consumption to `effective_account_id` while preserving requested-side fields as queryable and `/auditable` context wherever the run snapshot is shown.
+L00001370	
+L00001371	`storage-plan` / `storage-plan.md` supports disposable projections, slice fetches, redb-backed projection pages, and seglog-derived views; FinalGUISpec consumes those storage-plan capabilities instead of restating projection storage.
+L00001372	
+L00001373	`storage-plan` / `storage-plan.md` owns key registration, projector `/rebuild` semantics, and current vs historical projection rules.
+L00001374	
+L00001375	`storage-plan` / `storage-plan.md` owns receipt row shape and the minimum cross-surface receipt contract; FinalGUISpec may expose receipt summaries only by routing to that storage-plan owner truth.
+L00001376	
+L00001377	`Plans/usage-feature.md` / `/usage-feature.md` may surface usage-local and tier-local legacy identity only as migration vocabulary; GUI routes normalize usage pivots through the shared route/object model before exposing history, ledger, or runtime inspectors.
+L00001378	
+L00001379	Settings show origin badges and precedence disclosure for resolver inputs, while runtime/history surfaces display requested/effective deltas and `support-state` only when those fields affect interpretation or recovery.
+L00001380	
+L00001381	Runtime-related Settings, inspectors, and history surfaces share one override-display grammar: show the source snapshot, requested value, effective value, switch or clamp reason, and recovery path in the same order before applying surface-specific labels.
+L00001382	
+L00001383	Operational-identity payloads use the bounded `operational-identity` shape `{ kind, requested_ref?, effective_ref?, selection_reason?, partial_capability? }`; provider-, registry-, Kubernetes-, and future surface-specific identities may extend the `kind` vocabulary without adding hidden credential ownership.
+L00001384	
+L00001385	#### 7.4.7 Agent-Config panel specification
+L00001386	
+L00001387	Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, protected_core, catalog_installed, manual_import, project_local, global_local, pm_enhanced, disabled, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.
+L00001388	
+L00001389	The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.
+L00001390	
+L00001391	Agent Config `/data` records include a durable `provider_entry` row with `provider_entry_id`, `runtime_platform_id`, `model_provider_id`, provider family, account/profile identity, and `auth_surface` auth-state metadata. Richer provider fields extend the visible `/provider` row without renaming the existing `auth_surface` or account/provider auth-state terms.
+L00001392	
+L00001393	Provider/profile diagnostics expose local setup state without making Settings the owner: Linux per-provider storage resolves under `$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/` or `~/.local/share/puppet-master/providers/<provider_entry_id>/`, bootstrap checks can name `gemini-credentials.json` and `google_accounts.json`, and Cursor trust/cache rows can name `~/.cache/cursor-compile-cache` as profile `/account-local` evidence. Account-local and provider-profile-local rows may drift independently from shared workspace targets, so the GUI shows independent drift state rather than duplicating shared targets per account.
+L00001394	
+L00001395	Agent-Config setup copy separates setup success from operational evidence. Cursor/headless `/workspace` trust rows may expose `--trust` and `/bootstrap` prompt state, and any material trust change sends the account/profile back through `Validating...` or a visible `Revalidate` action before it returns to `Ready`. `provider-home` paths, scheduler mechanics, and overlay configuration internals stay hidden unless a concrete `/debug` or audit use case requires persisted evidence. `provider-specific` remains or `/quota` probes belong in Usage and expanded account/runtime inspectors, not in setup success copy.
+L00001396	
+L00001397	Selection and failover explanations use a stable reason-code family: `manual_pin`, `provider_default`, `preferred_account_retained`, `highest_priority_eligible`, `lowest_pressure_eligible`, `auth_surface_match`, and `server_profile_default`.
+L00001398	
+L00001399	Requested/effective persona and `/model/variant/runtime` controls show project-owned multi-account policy, effective account selection, and provider-gap disclosure together: provider capability rows distinguish `honored`, `skipped`, and `clamped` states while preserving the `/effective` runtime value.
+L00001400	
+L00001401	Default Crew default-config is an Agent-Config feature-surface. The panel exposes enable/disable, ordered crew members, per-member default-model and provider/runtime (`/provider`) selectors, and the first-run crew confirmation UX. Before launch, that confirmation resolves each member's model -> provider/runtime mapping and reconfirms it whenever mappings or `/defaults/restrictions` materially change; if Copilot is selected for any member, the visible confirmation normalizes the whole crew to Copilot and explains the crew-level provider constraint.
+L00001402	
+L00001403	#### 7.4.8A Docker Manager Panel Spec
+L00001404	
+L00001405	Docker Manager is the `docker_manager` side-panel surface for containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes. FinalGUISpec owns only shell placement, surface label, disabled-state copy, deep-subview discoverability, Settings entrypoints, and cross-surface routing for this panel; `Plans/Containers_Registry_and_Unraid.md` owns Docker runtime, auth, registry, publish, Unraid, Podman, Kubernetes, receipt, and detection behavior.
+L00001406	
+L00001407	`Plans/Containers_Registry_and_Unraid.md` / `/Containers_Registry_and_Unraid.md` disagreement between `needs_review` and `/failure` payload semantics must be shown as an automation-first operator-flow mismatch until the container owner resolves it; FinalGUISpec mirrors only disabled-state and routing copy.
+L00001408	
+L00001409	Legacy `DOCKER MANAGE`, `Docker Manage`, `docker_manage_surface_state`, and separate Unraid panel references are migration aliases. They open Docker Manager, optionally focused to `Publish / Unraid`, and must not create a second activity-bar slot or remain embedded under Persona Editor.
+L00001410	
+L00001411	
+L00001412	The settings model separates `requested_account_id` from `requested_account_policy`. It adds `requested_account_binding` with `none`, `preferred`, and `required` semantics, and every inspector renders the same identity grammar: Requested account / Requested binding / Effective account / Switch reason.
+L00001413	
+L00001414	Shared runtime identity carries `execution_role` together with requested and effective operational identity. That packet propagates into effective-resolution records, attempt records, usage surfaces, and inspector payloads so the operator can compare requested vs effective runtime identity without reconstructing it from logs.
+L00001415	
+L00001416	The settings resolver uses three axes:
+L00001417	- `source`: app defaults, project policy, worker policy, and recovery-policy inputs
+L00001418	- `request`: requested account, requested binding, requested account policy, requested execution role, and requested operational identity
+L00001419	- `execution`: effective account, effective binding outcome, effective operational identity, `execution_role`, and `switch_reason`
+L00001420	
+L00001421	Resolver display grammar is deterministic: show worker-policy display first, then source snapshot, then request snapshot, then execution outcome. Resolver inputs are the three axes above plus current projection trust. The deterministic resolver matrix is: `required` must bind or block; `preferred` binds when available and otherwise falls back with an explicit `switch_reason`; `none` keeps the request visible but lets policy choose execution. The emit shape is `settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }`.
+L00001422	
+L00001423	Panel-specific persistence and visibility controls live in Settings only when they are durable app or project preferences. Settings groups them by owning surface rather than by implementation store: Source Control / Branching, GitHub Actions, Docker Manager / Kubernetes, Terminal, File Manager, Models / Providers, plus General, Shortcuts, Advanced, and Health for cross-cutting controls. Active runtime object selection, live run actions, and transient inspector focus remain in the owning panel.
+L00001424	
+L00001425	Agent-Config is the visible provider/model/account/instruction management surface for the now-locked `/provider` model. Settings and `/inspector` language must name Agent-Config, persistent Effective Runtime inspectors, provider entries, account/profile rows, instruction projections, and skill/MCP status rather than generic provider settings.
+L00001426	
+L00001427	#### 7.4.1 Terminal Settings Ownership
+L00001428	
+L00001429	Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.
+L00001430	
+L00001431	Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings.
+L00001432	
+L00001433	Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage: `/theming`, `/remote/session` disclosure, and any future browser or remote terminal transport controls must reference the terminal SSOT rather than creating a new settings owner.
+L00001434	
+L00001435	Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, Interaction, and Diagnostics. Interaction covers `/copy/paste`, copy-on-select, `/kill/quit` prompts, sticky-header command-block visibility, `/explanations`, performance-safe search, `/readability` signals, and `/tunable` `/quadrant` layout behavior.
+L00001436	
+L00001437	Shortcut discovery is in-product and `/remappable`: it prioritizes true terminal operations over layout-management and other app-level actions, distinguishes terminal-owned shortcuts from `/TUI-owned` keys, and keeps search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, font zoom, clear/reset, `/shortcuts/behaviors`, and copy/paste visible.
+L00001438	
+L00001439	<a id="SKILLS-TAB"></a>
+L00001440	
+L00001441	#### 7.4.2 Agent Config Skills tab
+L00001442	
+L00001443	Agent Config surfaces a Skills tab that mirrors the Skills owner contract. Skill rows show source/readiness and contextual badges, including `referenced_by_persona`, `auto_invokable`, `requires_missing_capability`, and `catalog_update_available`, without turning Settings into the skill-management owner.
+L00001444	
+L00001445	### 7.5 Project and attention surfaces
+L00001446	
+L00001447	`project_summary` is the reusable summary object for Orchestrator-facing project surfaces. It contains `activity_state`, `attention_state`, `health_state`, `owner`, and projection-trust disclosure so the operator can see whether a summary is record-backed, current, or degraded. Canonical blocked episodes take precedence over weaker derived warnings when summary rollups disagree.
+L00001448	
+L00001449	`projects:v1` list metadata such as path, detected languages, last-opened timestamp, health status, and overrides is not enough for the Orchestrator `/concern/projection-trust` model; project summaries add explicit activity, attention, health, owner, and trust rollups.
+L00001450	
+L00001451	Dashboard remains the `/urgency/entry` surface, Orchestrator owns operational depth, and Projects is the multi-project `/management` surface; project cards stay summary-first while exposing compact orchestrator `/attention/usage` pressure and one primary blocked owner `/reason`.
+L00001452	
+L00001453	`project_attention_item` is the reusable attention-row object. Each row carries a primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text. The same row contract is consumable in Orchestrator, Dashboard, and notification surfaces without re-minting attention identities.
+L00001454	
+L00001455	Project-summary cards derived from stale or `/degraded` projections downgrade confidence without manufacturing a blocked state, and historical-only projects still keep a current `project_summary` row with neutral `historical_only` or `idle` activity rather than a warning color/state.
+L00001456	
+L00001457	`project_summary` rows carry `project_id`, `activity_state` (`idle | active | background_active | historical_only`), `attention_state` (`none | advisory | attention_required | blocked`), `health_state` (`healthy | degraded | blocked`), optional `primary_owner_kind`, optional `primary_reason_code`, optional `primary_object_ref`, `active_run_count`, `blocked_run_count`, `attention_object_count`, `projection_trust_state`, `last_activity_at_utc`, and `historical_run_count`.
+L00001458	
+L00001459	Project cards, `/title-bar` badges, and `/attention` surfaces share one status vocabulary with explicit precedence and rollup rules so background activity, blocked items, and unsaved shell state do not compete as unrelated badges.
+L00001460	
+L00001461	Project status appears through the same precedence rules on title-bar badges, project cards, command-palette summaries, and attention-center rows.
+L00001462	
+L00001463	Project surfaces preserve the distinction between registry identity, shell restore state, operational summary, and actionable attention objects.
+L00001464	
+L00001465	`project_attention_item` rows carry `attention_item_id`, `project_id`, `severity` (`advisory | attention_required | blocked`), `owner_kind`, `reason_code`, `source_kind`, `source_object_ref`, `primary_route_payload`, optional `secondary_route_payload`, `projection_trust_state`, `created_at_utc`, `updated_at_utc`, `dismissibility_kind` (`none | quiet_only | dismissible`), and `active`; `quiet_only` never hides a canonical blocked condition.
+L00001466	
+L00001467	GUI-facing redb projections use the `project_summary` and `project_attention_item` record families as the key pattern for per-project operational summary and per-project active attention items; `attention-item` archival/resolution behavior changes `active`, `dismissibility_kind`, and `/resolution` metadata instead of becoming ad hoc card state.
+L00001468	
+L00001469	Project-attention routing is shared by attention-center rows, project cards, command palette actions, and search results, and every entry restores precise scope and target instead of inventing a surface-local "open the right place" rule.
+L00001470	
+L00001471	Projects `/attention-center` docs and command `/deep-link` docs consume `project_attention_item.primary_route_payload` and keep future surface-specific copy subordinate to the shared project-attention routing contract.
+L00001472	
+L00001473	Projection-derived attention items that are not canonical-runtime-backed show reduced trust explicitly and avoid overconfident imperative copy until the row revalidates against canonical runtime records.
+L00001474	
+L00001475	Reusable summary cards split by density: `Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, and `Recent Major Events` can appear across Orchestrator, Dashboard, and Projects, while operational `/dense` summaries stay primarily Orchestrator-facing.
+L00001476	
+L00001477	### Concern, escalation, notification, and help surfaces
+L00001478	
+L00001479	Concern and trust-state escalation share one conversational `/tooling` surface contract so chat, inspectors, and commands present the same status, route, and escalation semantics.
+L00001480	
+L00001481	Cross-surface escalation uses one cadence model for banners, `/cards/toasts/badges`, and notification copy so severity, quieting, recurrence, and owner-route timing do not diverge by surface.
+L00001482	
+L00001483	
+L00001484	Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.
+L00001485	
+L00001486	Concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.
+L00001487	
+L00001488	These surfaces share one escalation ladder across Orchestrator, Dashboard, thread badges, and notifications. `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence even when advisory warnings are quieted.
+L00001489	
+L00001490	`degraded-trust` is a projection-trust condition, not a separate local warning family. It routes through the shared concern and escalation ladder so provider/runtime/UI surfaces show the same trust degradation, concern escalation, blocked owner, and recovery route instead of inventing per-panel aliases.
+L00001491	
+L00001492	This section consumes Glossary coverage for rewrite-critical objects, states, and trust terms, including Concern, blocked episode, focused run, projection trust, escalation ladder, blocked owner, and `resolution_kind`. Help is layered as inline help, context help, and canonical help-entry pages while keeping canonical term names stable.
+L00001493	
+L00001494	Notifications route by severity, execution impact, blocked owner, persistence, and projection trust. Quiet windows are allowed for advisory warnings only; canonical blocked episodes are never suppressed by quiet windows.
+
+<<< CONTEXT_AFTER canonical_document_lines=1495-1506 >>>
+L00001495	
+L00001496	Dedicated help entries use a stable template: canonical term, trigger conditions, operator meaning, related concepts, primary routes, and recovery guidance. Related-concept links always point to canonical term names rather than local aliases.
+L00001497	
+L00001498	Project-facing help and notifications use project `activity_state`, project `attention_state`, the blocked-owner taxonomy, the shared escalation ladder, and resurfacing/aging rules. Dismissal requires dismissal rationale, resolution requires resolution rationale, and `accepted_risk` is treated as a resolution path rather than a dismissal.
+L00001499	
+L00001500	The blocked-owner taxonomy is explicitly eight kinds: `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`. The five-level escalation ladder is `info`, `watch`, `attention_required`, `blocked`, and `escalated`, with mapping across Orchestrator banners, Dashboard summaries, thread badges, and notifications.
+L00001501	
+L00001502	### Recommended minimum concern record shape
+L00001503	
+L00001504	Compatibility labels such as system-notification, project-card, primary-reason, pressure-summary, and help-system normalize to this concern/escalation/help surface model: project cards expose blocked-owner and primary reason detail, pressure summaries use the account/usage pressure card vocabulary, system notifications are narrowed by the shared escalation ladder, and help-system entries stay anchored to canonical term pages.
+L00001505	
+L00001506	- `concern_id`, `project_id`, `run_ref`, `scope_ref`, `source_event_ref`

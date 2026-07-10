@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6422-6433 >>>
+L00006422	source_lineage:
+L00006423	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006424	preserved_exact_tokens:
+L00006425	  - "`stop_reason_code`"
+L00006426	  - "`attention_required_reason_code`"
+L00006427	  - "`budget_kind`"
+L00006428	negative_constraints:
+L00006429	  - "Lifecycle reason recovery must not depend on parsing prose."
+L00006430	owner_hints:
+L00006431	  - Plans/Contracts_V0.md
+L00006432	```
+L00006433	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6434-6784 >>>
+L00006434	### CV-075 - Task Lifecycle Durability Over Projections
+L00006435	
+L00006436	```yaml
+L00006437	plan_unit_id: CV-075
+L00006438	unit_type: requirement
+L00006439	status: accepted
+L00006440	owner_doc: Plans/Contracts_V0.md
+L00006441	canonical_text: >-
+L00006442	  Task lifecycle events persist in thread history and storage through the
+L00006443	  canonical event stream; task cards and thread projections may render
+L00006444	  subagent/task progress, HITL, plan/TODO transitions, and completion or blocked
+L00006445	  outcomes, but those projections do not replace durable event records.
+L00006446	gui_related: true
+L00006447	gui_classification_reason: This unit governs user-visible task cards and thread projections against durable event records.
+L00006448	split_recommended: true
+L00006449	depends_on: [CV-026, CV-044]
+L00006450	unblocks: [CV-077]
+L00006451	acceptance_criteria:
+L00006452	  - Task lifecycle events persist in thread history and storage through the canonical event stream.
+L00006453	  - Task cards and thread projections may render task progress, HITL, plan/TODO transitions, and outcomes.
+L00006454	  - Task cards and thread projections do not replace durable event records.
+L00006455	validation_surfaces:
+L00006456	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006457	  - python3 scripts/pm-plan-index.py validate
+L00006458	risk_class: task_projection_persistence_confusion
+L00006459	reasoning_tier: high
+L00006460	context_scope: task_lifecycle_event_durability
+L00006461	implementation_surfaces:
+L00006462	  - Plans/Contracts_V0.md
+L00006463	  - Plans/storage-plan.md
+L00006464	  - Plans/assistant-chat-design.md
+L00006465	  - Plans/FinalGUISpec.md
+L00006466	node_compile_hint:
+L00006467	  mode: task_lifecycle_durability_contract
+L00006468	  create_worknodes: false
+L00006469	source_lineage:
+L00006470	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006471	preserved_exact_tokens:
+L00006472	  - "thread history"
+L00006473	  - "canonical event stream"
+L00006474	  - "task cards"
+L00006475	  - "thread projections"
+L00006476	  - "plan/TODO transitions"
+L00006477	negative_constraints:
+L00006478	  - "Task cards and thread projections do not replace durable event records."
+L00006479	owner_hints:
+L00006480	  - Plans/Contracts_V0.md
+L00006481	```
+L00006482	
+L00006483	### CV-076 - Seglog Event Family Coverage
+L00006484	
+L00006485	```yaml
+L00006486	plan_unit_id: CV-076
+L00006487	unit_type: requirement
+L00006488	status: accepted
+L00006489	owner_doc: Plans/Contracts_V0.md
+L00006490	canonical_text: >-
+L00006491	  The Seglog contract continues to cover 10 event families: tools, usage, HITL,
+L00006492	  plan/todo, subagent, rollback, persona, background, runtime lifecycle, and
+L00006493	  recovery/blocked-state events.
+L00006494	gui_related: false
+L00006495	gui_classification_reason: This unit defines persisted event family coverage.
+L00006496	split_recommended: true
+L00006497	depends_on: [CV-026, CV-044]
+L00006498	unblocks: [CV-078]
+L00006499	acceptance_criteria:
+L00006500	  - Seglog coverage remains 10 event families.
+L00006501	  - tools, usage, HITL, plan/todo, subagent, rollback, persona, background, runtime lifecycle, and recovery/blocked-state are preserved.
+L00006502	  - Event family coverage stays visible to storage and event-stream consumers.
+L00006503	validation_surfaces:
+L00006504	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006505	  - python3 scripts/pm-plan-index.py validate
+L00006506	risk_class: seglog_family_coverage_loss
+L00006507	reasoning_tier: standard
+L00006508	context_scope: seglog_event_family_coverage
+L00006509	implementation_surfaces:
+L00006510	  - Plans/Contracts_V0.md
+L00006511	  - Plans/storage-plan.md
+L00006512	node_compile_hint:
+L00006513	  mode: seglog_event_family_contract
+L00006514	  create_worknodes: false
+L00006515	source_lineage:
+L00006516	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006517	preserved_exact_tokens:
+L00006518	  - "10 event families"
+L00006519	  - "tools"
+L00006520	  - "usage"
+L00006521	  - "HITL"
+L00006522	  - "plan/todo"
+L00006523	  - "subagent"
+L00006524	  - "rollback"
+L00006525	  - "persona"
+L00006526	  - "background"
+L00006527	  - "runtime lifecycle"
+L00006528	  - "recovery/blocked-state events"
+L00006529	owner_hints:
+L00006530	  - Plans/Contracts_V0.md
+L00006531	```
+L00006532	
+L00006533	### CV-077 - Bundle Annotation And Selection Handoff
+L00006534	
+L00006535	```yaml
+L00006536	plan_unit_id: CV-077
+L00006537	unit_type: requirement
+L00006538	status: accepted
+L00006539	owner_doc: Plans/Contracts_V0.md
+L00006540	canonical_text: >-
+L00006541	  Document annotation events reuse the existing bundle-note event family for
+L00006542	  durable annotation lifecycle and audit transitions, while
+L00006543	  bundle.selection_sent_to_chat is a separate event that prepares visible chat
+L00006544	  context with requested/effective target, provenance, and bounded selection
+L00006545	  excerpt without mutating durable annotation state by itself.
+L00006546	gui_related: true
+L00006547	gui_classification_reason: This unit affects visible chat handoff and annotation-state projections.
+L00006548	split_recommended: true
+L00006549	depends_on: [CV-075]
+L00006550	unblocks: [CV-082]
+L00006551	acceptance_criteria:
+L00006552	  - Document annotation events reuse the bundle-note event family for durable annotation lifecycle and audit transitions.
+L00006553	  - bundle.selection_sent_to_chat remains a separate event from durable annotation state changes.
+L00006554	  - Selection handoff payloads include requested chat target, effective resolved target, document provenance, and bounded selection excerpt.
+L00006555	  - Selection handoff prepares visible chat context but does not mutate durable annotation state by itself.
+L00006556	validation_surfaces:
+L00006557	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006558	  - python3 scripts/pm-plan-index.py validate
+L00006559	risk_class: bundle_selection_annotation_state_confusion
+L00006560	reasoning_tier: high
+L00006561	context_scope: bundle_annotation_selection_handoff
+L00006562	implementation_surfaces:
+L00006563	  - Plans/Contracts_V0.md
+L00006564	  - Plans/storage-plan.md
+L00006565	  - Plans/assistant-chat-design.md
+L00006566	node_compile_hint:
+L00006567	  mode: bundle_selection_handoff_contract
+L00006568	  create_worknodes: false
+L00006569	source_lineage:
+L00006570	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+L00006571	preserved_exact_tokens:
+L00006572	  - "`bundle-note`"
+L00006573	  - "`bundle.selection_sent_to_chat`"
+L00006574	  - "requested chat target"
+L00006575	  - "effective resolved target"
+L00006576	  - "document provenance"
+L00006577	  - "bounded selection excerpt"
+L00006578	negative_constraints:
+L00006579	  - "bundle.selection_sent_to_chat must not mutate durable annotation state by itself."
+L00006580	owner_hints:
+L00006581	  - Plans/Contracts_V0.md
+L00006582	```
+L00006583	
+L00006584	### CV-078 - Runtime Event Catalog Boundary
+L00006585	
+L00006586	```yaml
+L00006587	plan_unit_id: CV-078
+L00006588	unit_type: requirement
+L00006589	status: accepted
+L00006590	owner_doc: Plans/Contracts_V0.md
+L00006591	canonical_text: >-
+L00006592	  Contracts registers persisted event names, producer/consumer boundaries, and
+L00006593	  cross-contract payload minima, while storage-plan owns concrete persisted
+L00006594	  payload schemas, segment/projector mechanics, retention, and janitor cleanup.
+L00006595	gui_related: false
+L00006596	gui_classification_reason: This unit defines persisted event catalog ownership boundaries.
+L00006597	split_recommended: true
+L00006598	depends_on: [CV-026, CV-044, CV-076]
+L00006599	unblocks: [CV-079, CV-080, CV-081, CV-082, CV-083]
+L00006600	acceptance_criteria:
+L00006601	  - Contracts_V0 registers persisted event names, producer/consumer boundaries, and cross-contract payload minima.
+L00006602	  - storage-plan owns concrete persisted payload schemas, segment/projector mechanics, retention, and janitor cleanup.
+L00006603	  - Event family payload detail remains with the producer docs named by the runtime event catalog.
+L00006604	validation_surfaces:
+L00006605	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006606	  - python3 scripts/pm-plan-index.py validate
+L00006607	risk_class: event_catalog_payload_owner_drift
+L00006608	reasoning_tier: high
+L00006609	context_scope: runtime_event_catalog_boundary
+L00006610	implementation_surfaces:
+L00006611	  - Plans/Contracts_V0.md
+L00006612	  - Plans/storage-plan.md
+L00006613	node_compile_hint:
+L00006614	  mode: runtime_event_catalog_boundary_contract
+L00006615	  create_worknodes: false
+L00006616	source_lineage:
+L00006617	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006618	preserved_exact_tokens:
+L00006619	  - "persisted event names"
+L00006620	  - "producer/consumer boundaries"
+L00006621	  - "cross-contract payload minima"
+L00006622	  - "segment/projector mechanics"
+L00006623	  - "retention"
+L00006624	  - "janitor cleanup"
+L00006625	negative_constraints:
+L00006626	  - "Contracts_V0 must not re-own concrete persisted event-type payload schemas that storage-plan owns."
+L00006627	owner_hints:
+L00006628	  - Plans/Contracts_V0.md
+L00006629	```
+L00006630	
+L00006631	### CV-079 - Core Execution Tool Worktree Event Minima
+L00006632	
+L00006633	```yaml
+L00006634	plan_unit_id: CV-079
+L00006635	unit_type: requirement
+L00006636	status: accepted
+L00006637	owner_doc: Plans/Contracts_V0.md
+L00006638	canonical_text: >-
+L00006639	  Core runtime event minima preserve seglog.event_appended, run.started,
+L00006640	  run.completed, node.started, node.completed, tool.execution_started,
+L00006641	  tool.execution_completed, worktree.created, and worktree.deleted identity,
+L00006642	  outcome, evidence/artifact, and cleanup fields.
+L00006643	gui_related: false
+L00006644	gui_classification_reason: This unit defines persisted runtime event payload minima.
+L00006645	split_recommended: true
+L00006646	depends_on: [CV-078]
+L00006647	unblocks: []
+L00006648	acceptance_criteria:
+L00006649	  - seglog.event_appended preserves seq, appended event type, event_ref, segment_ref, writer_id?, and ts minima.
+L00006650	  - run.*, node.*, and tool.execution_* events preserve the listed runtime identity, attempt, outcome, evidence/artifact, usage/result, and timing minima.
+L00006651	  - worktree.created and worktree.deleted preserve worktree identity, branch/path, cleanup reason, grace period, lock and safe-point fields.
+L00006652	validation_surfaces:
+L00006653	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006654	  - python3 scripts/pm-plan-index.py validate
+L00006655	risk_class: core_runtime_event_minima_loss
+L00006656	reasoning_tier: high
+L00006657	context_scope: core_execution_tool_worktree_event_minima
+L00006658	implementation_surfaces:
+L00006659	  - Plans/Contracts_V0.md
+L00006660	  - Plans/storage-plan.md
+L00006661	  - Plans/Executor_Protocol.md
+L00006662	node_compile_hint:
+L00006663	  mode: runtime_event_minima_contract
+L00006664	  create_worknodes: false
+L00006665	source_lineage:
+L00006666	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006667	preserved_exact_tokens:
+L00006668	  - "`seglog.event_appended`"
+L00006669	  - "`run.started`"
+L00006670	  - "`run.completed`"
+L00006671	  - "`node.started`"
+L00006672	  - "`node.completed`"
+L00006673	  - "`tool.execution_started`"
+L00006674	  - "`tool.execution_completed`"
+L00006675	  - "`worktree.created`"
+L00006676	  - "`worktree.deleted`"
+L00006677	owner_hints:
+L00006678	  - Plans/Contracts_V0.md
+L00006679	```
+L00006680	
+L00006681	### CV-080 - Gate Event Score Ownership
+L00006682	
+L00006683	```yaml
+L00006684	plan_unit_id: CV-080
+L00006685	unit_type: requirement
+L00006686	status: accepted
+L00006687	owner_doc: Plans/Contracts_V0.md
+L00006688	canonical_text: >-
+L00006689	  Gate event payload minima preserve gate identity, runtime identity, score?,
+L00006690	  score_threshold?, failure_reason_code, and evidence refs; when score fields
+L00006691	  are exposed, they reference Executor_Protocol dispatch score tuples while
+L00006692	  Progression_Gates remains semantic owner for gate evaluation rules.
+L00006693	gui_related: false
+L00006694	gui_classification_reason: This unit defines gate event payload and owner boundaries.
+L00006695	split_recommended: true
+L00006696	depends_on: [CV-060, CV-078]
+L00006697	unblocks: []
+L00006698	acceptance_criteria:
+L00006699	  - gate.evaluation_started, gate.passed, and gate.failed preserve gate/runtime/attempt/score/evidence minima.
+L00006700	  - score? and score_threshold? reference the Executor_Protocol dispatch score tuple.
+L00006701	  - Progression_Gates remains the semantic owner for gate evaluation rules.
+L00006702	validation_surfaces:
+L00006703	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006704	  - python3 scripts/pm-plan-index.py validate
+L00006705	risk_class: gate_event_score_owner_drift
+L00006706	reasoning_tier: high
+L00006707	context_scope: gate_event_score_ownership
+L00006708	implementation_surfaces:
+L00006709	  - Plans/Contracts_V0.md
+L00006710	  - Plans/Executor_Protocol.md
+L00006711	  - Plans/Progression_Gates.md
+L00006712	node_compile_hint:
+L00006713	  mode: gate_event_score_contract
+L00006714	  create_worknodes: false
+L00006715	source_lineage:
+L00006716	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006717	preserved_exact_tokens:
+L00006718	  - "`gate.evaluation_started`"
+L00006719	  - "`gate.passed`"
+L00006720	  - "`gate.failed`"
+L00006721	  - "`score?`"
+L00006722	  - "`score_threshold?`"
+L00006723	  - "`failure_reason_code`"
+L00006724	negative_constraints:
+L00006725	  - "Contracts_V0 gate event payloads must not re-own Progression_Gates evaluation semantics."
+L00006726	owner_hints:
+L00006727	  - Plans/Contracts_V0.md
+L00006728	```
+L00006729	
+L00006730	### CV-081 - LSP Platform Memory Lifecycle Events
+L00006731	
+L00006732	```yaml
+L00006733	plan_unit_id: CV-081
+L00006734	unit_type: requirement
+L00006735	status: accepted
+L00006736	owner_doc: Plans/Contracts_V0.md
+L00006737	canonical_text: >-
+L00006738	  Runtime event catalog minima preserve lsp.server.lifecycle_changed,
+L00006739	  platform.capability_evaluated, and memory.gist_state_changed; legacy
+L00006740	  lsp.server_started and lsp.server_crashed normalize to
+L00006741	  lsp.server.lifecycle_changed with state and state_reason? rather than forking
+L00006742	  a second LSP lifecycle family.
+L00006743	gui_related: false
+L00006744	gui_classification_reason: This unit defines non-visual lifecycle event normalization.
+L00006745	split_recommended: true
+L00006746	depends_on: [CV-078]
+L00006747	unblocks: []
+L00006748	acceptance_criteria:
+L00006749	  - lsp.server.lifecycle_changed preserves platform/root/session/state payload minima.
+L00006750	  - platform.capability_evaluated and memory.gist_state_changed preserve capability and verification-state minima.
+L00006751	  - Legacy lsp.server_started and lsp.server_crashed normalize to lsp.server.lifecycle_changed.
+L00006752	validation_surfaces:
+L00006753	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006754	  - python3 scripts/pm-plan-index.py validate
+L00006755	risk_class: lifecycle_event_alias_forking
+L00006756	reasoning_tier: high
+L00006757	context_scope: lsp_platform_memory_lifecycle_events
+L00006758	implementation_surfaces:
+L00006759	  - Plans/Contracts_V0.md
+L00006760	  - Plans/storage-plan.md
+L00006761	  - Plans/LSPSupport.md
+L00006762	  - Plans/newtools.md
+L00006763	  - Plans/orchestrator-subagent-integration.md
+L00006764	  - Plans/assistant-memory-subsystem.md
+L00006765	node_compile_hint:
+L00006766	  mode: lifecycle_event_normalization_contract
+L00006767	  create_worknodes: false
+L00006768	source_lineage:
+L00006769	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0032
+L00006770	preserved_exact_tokens:
+L00006771	  - "`lsp.server.lifecycle_changed`"
+L00006772	  - "`platform.capability_evaluated`"
+L00006773	  - "`memory.gist_state_changed`"
+L00006774	  - "`lsp.server_started`"
+L00006775	  - "`lsp.server_crashed`"
+L00006776	  - "`state_reason?`"
+L00006777	compatibility_only_notes:
+L00006778	  - "Legacy lsp.server_started and lsp.server_crashed normalize to lsp.server.lifecycle_changed."
+L00006779	negative_constraints:
+L00006780	  - "Producers must not fork a second LSP lifecycle family when the normalized event can carry the transition."
+L00006781	owner_hints:
+L00006782	  - Plans/Contracts_V0.md
+L00006783	```
+L00006784	
+
+<<< CONTEXT_AFTER canonical_document_lines=6785-6796 >>>
+L00006785	### CV-082 - Bundle Revision And Approval Event Minima
+L00006786	
+L00006787	```yaml
+L00006788	plan_unit_id: CV-082
+L00006789	unit_type: requirement
+L00006790	status: accepted
+L00006791	owner_doc: Plans/Contracts_V0.md
+L00006792	canonical_text: >-
+L00006793	  Runtime event catalog minima preserve bundle annotation, selection, revision,
+L00006794	  and approval requested/granted/denied/timeout events, including bundle/doc and
+L00006795	  annotation/revision identity, requested/effective capability or chat target,
+L00006796	  approval_scope_key, ordered allowed_action_ids[], approver_identity, rationale

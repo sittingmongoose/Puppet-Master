@@ -1,0 +1,31 @@
+{
+  "all_selected_fresh": true,
+  "all_selected_unique": true,
+  "attempt_id": "attempt-0010",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "binding_count": 1,
+  "bindings": [
+    {
+      "agent_path": "/root/a005_blind_wave_0003_c_retry_cohort_dispatcher_attempt_0010/a005_001029_exact_7414c6c901f8_0017_attempt_0010_terminal",
+      "assignment_id": "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+      "dispatch_receipt_sha256": "0418f63c4aeb0a6bf22a8c0583de69f635bef9d05a593dce0c74ce5e72888787",
+      "native_child_thread_id": "019f4e0c-e9f2-7540-90b5-312b8f96e7a7"
+    }
+  ],
+  "checkpoint_id": "partial-0001",
+  "cohort_dispatcher_thread_id": "019f4e0c-2f82-7381-8208-70fd6732e27b",
+  "cohort_dispatcher_turn_id": "019f4e0c-303f-7c81-a65d-c66bc21ada7f",
+  "coverage_credit": 0,
+  "lane_thread_id": "019f4d26-0708-7c12-aa17-a4b124fab923",
+  "lane_turn_id": "019f4e0b-a8ff-7da2-a43b-b6391353f877",
+  "pending_assignment_ids": [
+    "A005-001030-ADVERSARIAL-WIN-7414C6C901F8-0017",
+    "A005-001031-EXACT-WIN-7414C6C901F8-0018",
+    "A005-001032-ADVERSARIAL-WIN-7414C6C901F8-0018",
+    "A005-001033-EXACT-WIN-7414C6C901F8-0019",
+    "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+    "A005-001035-EXACT-WIN-749F06E4B796-0001",
+    "A005-001036-ADVERSARIAL-WIN-749F06E4B796-0001"
+  ],
+  "wave_id": "blind-wave-0003-c-retry"
+}

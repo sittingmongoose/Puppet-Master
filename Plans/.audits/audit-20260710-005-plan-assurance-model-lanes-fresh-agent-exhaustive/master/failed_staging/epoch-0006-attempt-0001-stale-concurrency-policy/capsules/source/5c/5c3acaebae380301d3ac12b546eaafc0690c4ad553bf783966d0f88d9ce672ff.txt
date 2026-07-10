@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE canonical_document_lines=290-301 >>>
+L00000290	- `Plans/Architecture_Invariants.md`
+L00000291	- `Plans/Contracts_V0.md`
+L00000292	- `Plans/Spec_Lock.json`
+L00000293	
+L00000294	## Owner / Consumer Map
+L00000295	
+L00000296	`Plans/Glossary.md` remains the owner doc for short canonical terminology, runtime/routing vocabulary, help-entry vocabulary, projection trust vocabulary, recovery/copy boundaries, evidence vocabulary, secret terminology, and primitive glossary definitions. Richer examples or workflow-specific copy may live in consumer docs, but consumers must preserve the canonical terms and negative constraints defined here.
+L00000297	
+L00000298	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000299	
+L00000300	## PlanUnits
+L00000301	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=302-663 >>>
+L00000302	### G-002 - Canonical Owner-Section Requirement
+L00000303	
+L00000304	```yaml
+L00000305	plan_unit_id: G-002
+L00000306	unit_type: requirement
+L00000307	status: accepted
+L00000308	owner_doc: Plans/Glossary.md
+L00000309	canonical_text: Glossary owner-section requirements preserve the product, runtime, storage, UI, and governance details required for this owner document in canonical live specification form.
+L00000310	gui_related: true
+L00000311	gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+L00000312	split_recommended: false
+L00000313	depends_on: []
+L00000314	unblocks: []
+L00000315	acceptance_criteria:
+L00000316	- The covered source span remains losslessly available for exact-text audit.
+L00000317	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000318	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000319	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000320	validation_surfaces:
+L00000321	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000322	- python3 scripts/pm-plan-index.py validate
+L00000323	risk_class: glossary_drift
+L00000324	reasoning_tier: standard
+L00000325	context_scope: glossary_standardization
+L00000326	implementation_surfaces:
+L00000327	- Plans/Glossary.md
+L00000328	node_compile_hint:
+L00000329	  mode: canonical_owner_section_requirement
+L00000330	  create_worknodes: false
+L00000331	source_lineage:
+L00000332	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0002
+L00000333	preserved_exact_tokens:
+L00000334	- Canonical owner-section requirements
+L00000335	- product, runtime, storage, UI, and governance details
+L00000336	- owner document
+L00000337	negative_constraints: []
+L00000338	compatibility_only_notes: []
+L00000339	stale_retired_dispositions: []
+L00000340	owner_boundary_notes:
+L00000341	- Plans/Glossary.md owns short canonical terminology and vocabulary for downstream plan documents.
+L00000342	owner_hints:
+L00000343	- Plans/Glossary.md
+L00000344	```
+L00000345	
+L00000346	### G-003 - Glossary Authority Scope And Platform Naming
+L00000347	
+L00000348	```yaml
+L00000349	plan_unit_id: G-003
+L00000350	unit_type: requirement
+L00000351	status: accepted
+L00000352	owner_doc: Plans/Glossary.md
+L00000353	canonical_text: Glossary.md defines canonical terms to prevent drift and synonym creep, requires Puppet Master as the only correct platform name, allows legacy naming only as the unquoted older-name reference, and preserves help-entry/template governance setup.
+L00000354	gui_related: false
+L00000355	gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+L00000356	split_recommended: false
+L00000357	depends_on: []
+L00000358	unblocks: []
+L00000359	acceptance_criteria:
+L00000360	- The covered source span remains losslessly available for exact-text audit.
+L00000361	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000362	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000363	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000364	validation_surfaces:
+L00000365	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000366	- python3 scripts/pm-plan-index.py validate
+L00000367	risk_class: glossary_drift
+L00000368	reasoning_tier: standard
+L00000369	context_scope: glossary_standardization
+L00000370	implementation_surfaces:
+L00000371	- Plans/Glossary.md
+L00000372	node_compile_hint:
+L00000373	  mode: glossary_authority_scope_platform_naming
+L00000374	  create_worknodes: false
+L00000375	source_lineage:
+L00000376	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0004
+L00000377	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0005
+L00000378	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0006
+L00000379	preserved_exact_tokens:
+L00000380	- PUPPET MASTER -- CANONICAL TERMINOLOGY
+L00000381	- Puppet Master
+L00000382	- legacy naming
+L00000383	- prevent drift and synonym creep
+L00000384	- Primitive:Glossary
+L00000385	- Invariant:INV-010
+L00000386	negative_constraints:
+L00000387	- Older platform naming may be referred to only as legacy naming and must not be quoted.
+L00000388	compatibility_only_notes: []
+L00000389	stale_retired_dispositions: []
+L00000390	owner_boundary_notes: []
+L00000391	owner_hints:
+L00000392	- Plans/Glossary.md
+L00000393	preserved_contractrefs:
+L00000394	- 'ContractRef: Primitive:Glossary'
+L00000395	- 'ContractRef: Invariant:INV-010'
+L00000396	```
+L00000397	
+L00000398	### G-004 - Orchestrator Rewrite Terms
+L00000399	
+L00000400	```yaml
+L00000401	plan_unit_id: G-004
+L00000402	unit_type: requirement
+L00000403	status: accepted
+L00000404	owner_doc: Plans/Glossary.md
+L00000405	canonical_text: Orchestrator rewrite terminology defines execution unit context, concern records, trust/degraded states, inline/context/canonical help layers, and owner_node_id lineage with tier-rooted owner fields retained only as source-lineage aliases.
+L00000406	gui_related: false
+L00000407	gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+L00000408	split_recommended: false
+L00000409	depends_on: []
+L00000410	unblocks: []
+L00000411	acceptance_criteria:
+L00000412	- The covered source span remains losslessly available for exact-text audit.
+L00000413	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000414	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000415	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000416	validation_surfaces:
+L00000417	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000418	- python3 scripts/pm-plan-index.py validate
+L00000419	risk_class: glossary_drift
+L00000420	reasoning_tier: standard
+L00000421	context_scope: glossary_standardization
+L00000422	implementation_surfaces:
+L00000423	- Plans/Glossary.md
+L00000424	node_compile_hint:
+L00000425	  mode: orchestrator_rewrite_terms
+L00000426	  create_worknodes: false
+L00000427	source_lineage:
+L00000428	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0008
+L00000429	preserved_exact_tokens:
+L00000430	- Execution Unit Context
+L00000431	- Concern Record
+L00000432	- Trust State
+L00000433	- Degraded State
+L00000434	- Inline Help
+L00000435	- Context Help
+L00000436	- Canonical Help Entry
+L00000437	- owner_node_id
+L00000438	negative_constraints:
+L00000439	- Older tier-rooted ownership field names are migration/source-lineage aliases only.
+L00000440	compatibility_only_notes: []
+L00000441	stale_retired_dispositions: []
+L00000442	owner_boundary_notes: []
+L00000443	owner_hints:
+L00000444	- Plans/Glossary.md
+L00000445	preserved_contractrefs:
+L00000446	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md'
+L00000447	```
+L00000448	
+L00000449	### G-005 - Runtime Help-entry Routing And Gap Governance
+L00000450	
+L00000451	```yaml
+L00000452	plan_unit_id: G-005
+L00000453	unit_type: requirement
+L00000454	status: accepted
+L00000455	owner_doc: Plans/Glossary.md
+L00000456	canonical_text: Runtime and routing help entries use help-entry records with canonical fields and route gap governance through live owner docs, aliases, exact gap items, and broken-anchor cleanup evidence rather than durable two-column glossary tables.
+L00000457	gui_related: true
+L00000458	gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+L00000459	split_recommended: true
+L00000460	depends_on: []
+L00000461	unblocks: []
+L00000462	acceptance_criteria:
+L00000463	- The covered source span remains losslessly available for exact-text audit.
+L00000464	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000465	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000466	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000467	validation_surfaces:
+L00000468	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000469	- python3 scripts/pm-plan-index.py validate
+L00000470	risk_class: glossary_drift
+L00000471	reasoning_tier: standard
+L00000472	context_scope: glossary_standardization
+L00000473	implementation_surfaces:
+L00000474	- Plans/Glossary.md
+L00000475	node_compile_hint:
+L00000476	  mode: runtime_help_entry_routing_gap_governance
+L00000477	  create_worknodes: false
+L00000478	source_lineage:
+L00000479	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0009
+L00000480	preserved_exact_tokens:
+L00000481	- help-entry
+L00000482	- canonical_name
+L00000483	- short_definition
+L00000484	- why_it_matters
+L00000485	- what_it_is_not
+L00000486	- common_related_states
+L00000487	- related_concepts
+L00000488	- surface_examples
+L00000489	- gap-001
+L00000490	- gap-008
+L00000491	- broken-anchor cleanup
+L00000492	negative_constraints:
+L00000493	- Avoid two-column Term | Definition tables for durable glossary ownership.
+L00000494	compatibility_only_notes: []
+L00000495	stale_retired_dispositions: []
+L00000496	owner_boundary_notes: []
+L00000497	owner_hints:
+L00000498	- Plans/Glossary.md
+L00000499	split_recommendation_reason: Glossary-S0009 contains many runtime/routing term families split across G-005 through G-008.
+L00000500	```
+L00000501	
+L00000502	### G-006 - Requested Effective Identity Persona And Provider Vocabulary
+L00000503	
+L00000504	```yaml
+L00000505	plan_unit_id: G-006
+L00000506	unit_type: requirement
+L00000507	status: accepted
+L00000508	owner_doc: Plans/Glossary.md
+L00000509	canonical_text: Runtime vocabulary uses requested/effective identity, protected core Persona, provider-layer, provider_unavailable, and raw-finding terms without creating duplicate runtime nouns, conflating provider-layer with runtime identity, or treating Document Writer as a protected Persona.
+L00000510	gui_related: true
+L00000511	gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+L00000512	split_recommended: true
+L00000513	depends_on: []
+L00000514	unblocks: []
+L00000515	acceptance_criteria:
+L00000516	- The covered source span remains losslessly available for exact-text audit.
+L00000517	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000518	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000519	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000520	validation_surfaces:
+L00000521	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000522	- python3 scripts/pm-plan-index.py validate
+L00000523	risk_class: glossary_drift
+L00000524	reasoning_tier: standard
+L00000525	context_scope: glossary_standardization
+L00000526	implementation_surfaces:
+L00000527	- Plans/Glossary.md
+L00000528	node_compile_hint:
+L00000529	  mode: requested_effective_identity_persona_provider_vocabulary
+L00000530	  create_worknodes: false
+L00000531	source_lineage:
+L00000532	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0009
+L00000533	preserved_exact_tokens:
+L00000534	- requested_persona
+L00000535	- effective_persona
+L00000536	- Protected core Persona
+L00000537	- assistant
+L00000538	- general-purpose
+L00000539	- overseer
+L00000540	- provider-layer
+L00000541	- provider_unavailable
+L00000542	- raw-finding
+L00000543	- effective_model
+L00000544	- Document Writer
+L00000545	negative_constraints:
+L00000546	- Do not create duplicate top-level nouns such as chat_model; use owner-owned fields such as effective_model.
+L00000547	- Provider-layer terms must not be conflated with runtime identity terms.
+L00000548	- Document Writer is legacy/source-lineage wording, not a protected core Persona unless a later owner decision reopens it.
+L00000549	compatibility_only_notes: []
+L00000550	stale_retired_dispositions: []
+L00000551	owner_boundary_notes: []
+L00000552	owner_hints:
+L00000553	- Plans/Glossary.md
+L00000554	```
+L00000555	
+L00000556	### G-007 - Route Artifact Decomposition And Account-attempt Boundaries
+L00000557	
+L00000558	```yaml
+L00000559	plan_unit_id: G-007
+L00000560	unit_type: requirement
+L00000561	status: accepted
+L00000562	owner_doc: Plans/Glossary.md
+L00000563	canonical_text: Route, artifact, decomposition, storage, runtime artifact help, Orchestrator page help, final GUI route copy, assistant chat controls, and account-attempt terms preserve canonical identity, usage, ledger, receipt, retry/resume, and route_target boundaries.
+L00000564	gui_related: true
+L00000565	gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+L00000566	split_recommended: true
+L00000567	depends_on: []
+L00000568	unblocks: []
+L00000569	acceptance_criteria:
+L00000570	- The covered source span remains losslessly available for exact-text audit.
+L00000571	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000572	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000573	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000574	validation_surfaces:
+L00000575	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000576	- python3 scripts/pm-plan-index.py validate
+L00000577	risk_class: glossary_drift
+L00000578	reasoning_tier: standard
+L00000579	context_scope: glossary_standardization
+L00000580	implementation_surfaces:
+L00000581	- Plans/Glossary.md
+L00000582	node_compile_hint:
+L00000583	  mode: route_artifact_decomposition_account_attempt_boundaries
+L00000584	  create_worknodes: false
+L00000585	source_lineage:
+L00000586	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0009
+L00000587	preserved_exact_tokens:
+L00000588	- decomposition_context
+L00000589	- usage_event_ref
+L00000590	- /Ledger
+L00000591	- cost_usage
+L00000592	- route_target
+L00000593	- resume_url
+L00000594	- /retry
+L00000595	- /account/attempt
+L00000596	- task_id
+L00000597	- attempt_id
+L00000598	negative_constraints:
+L00000599	- decomposition_context must not override canonical node, package, seam, lane, worktree, or attempt identity.
+L00000600	- resume_url is not a stronger ad hoc primitive than route_target.
+L00000601	- Assistant chat surfaces must not invent thread-local resume paths.
+L00000602	compatibility_only_notes: []
+L00000603	stale_retired_dispositions: []
+L00000604	owner_boundary_notes: []
+L00000605	owner_hints:
+L00000606	- Plans/Glossary.md
+L00000607	```
+L00000608	
+L00000609	### G-008 - Tier Compatibility Widget Hostability And Projection-era Migration
+L00000610	
+L00000611	```yaml
+L00000612	plan_unit_id: G-008
+L00000613	unit_type: requirement
+L00000614	status: accepted
+L00000615	owner_doc: Plans/Glossary.md
+L00000616	canonical_text: Tier-shaped, widget-hostability, projection-era event, route payload, evidence wrapper alias, Crosswalk drift, blocked sequence, attempt attribution, Projects registry, and assistant-chat compatibility terms are migration/source-lineage vocabulary that must not revive stale tier-era, widget-era, standalone, page:string, or six-tab models that omit Plan Compile.
+L00000617	gui_related: true
+L00000618	gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+L00000619	split_recommended: true
+L00000620	depends_on: []
+L00000621	unblocks: []
+L00000622	acceptance_criteria:
+L00000623	- The covered source span remains losslessly available for exact-text audit.
+L00000624	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00000625	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000626	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000627	validation_surfaces:
+L00000628	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000629	- python3 scripts/pm-plan-index.py validate
+L00000630	risk_class: glossary_drift
+L00000631	reasoning_tier: standard
+L00000632	context_scope: glossary_standardization
+L00000633	implementation_surfaces:
+L00000634	- Plans/Glossary.md
+L00000635	node_compile_hint:
+L00000636	  mode: tier_compatibility_widget_hostability_projection_migration
+L00000637	  create_worknodes: false
+L00000638	source_lineage:
+L00000639	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0009
+L00000640	preserved_exact_tokens:
+L00000641	- Tier-shaped compatibility
+L00000642	- widget-hostability
+L00000643	- widget-layout
+L00000644	- TierChanged
+L00000645	- IterationStart
+L00000646	- TierTree
+L00000647	- route payload vocabulary
+L00000648	- /wrapper/alias
+L00000649	- Crosswalk Orchestrator primitive drift
+L00000650	- Blocked sequence runtime identity
+L00000651	- Attempt attribution migration
+L00000652	- projects:v1
+L00000653	negative_constraints:
+L00000654	- Do not revive stale tier-era execution terms, widget-era non-Progress Orchestrator assumptions, standalone-surface page models, non-canonical persona fields, or tier_type as a core node UI field.
+L00000655	- widget-hostability and widget-layout are compatibility-only vocabulary for non-Progress Orchestrator surfaces.
+L00000656	- Crosswalk Orchestrator primitive text must not keep stale six-tab or Tiers wording that conflicts with the seven-tab rewrite model.
+L00000657	compatibility_only_notes: []
+L00000658	stale_retired_dispositions: []
+L00000659	owner_boundary_notes: []
+L00000660	owner_hints:
+L00000661	- Plans/Glossary.md
+L00000662	```
+L00000663	
+
+<<< CONTEXT_AFTER canonical_document_lines=664-675 >>>
+L00000664	### G-009 - Shell And Workspace Surface Vocabulary
+L00000665	
+L00000666	```yaml
+L00000667	plan_unit_id: G-009
+L00000668	unit_type: requirement
+L00000669	status: accepted
+L00000670	owner_doc: Plans/Glossary.md
+L00000671	canonical_text: Shell and workspace terms define Source Control as Git-first repo/worktree state, GitHub Actions as hosted workflow/admin/runtime state, and Docker Manager as container/runtime operations attention state.
+L00000672	gui_related: false
+L00000673	gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+L00000674	split_recommended: false
+L00000675	depends_on: []

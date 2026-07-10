@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE 10014-10025 >>>
+  - "failed_to_start"
+  - "restore_action_needed"
+  - "failed_command_since_focus"
+  - "unseen_completion"
+  - "unseen_output"
+  - "TUI mouse-capture"
+negative_constraints:
+  - "TUI mouse-capture guidance is contextual, not a permanent warning banner."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 10026-10415 >>>
+### ACD-140 - Transcript Alternate Screen Reset Actions
+
+```yaml
+plan_unit_id: ACD-140
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Persisted transcript is review continuity, not emulator-state resurrection;
+  `/TUI` and alternate-screen markers, clear scrollback, `/reset`,
+  `/reinitialize`, clear/reset/replace/close action separation, partial export
+  history, metadata-only command blocks, and per-project retention settings
+  remain distinct.
+gui_related: true
+gui_classification_reason: Transcript, alternate-screen, reset, and history actions are visible terminal review controls.
+depends_on: [ACD-135]
+unblocks: []
+acceptance_criteria:
+  - Persisted transcript is not treated as emulator-state resurrection.
+  - Clear, reset, replace, and close remain separate actions.
+  - Metadata-only command blocks do not fabricate output text.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: transcript_reset
+reasoning_tier: high
+context_scope: terminal_workspace
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: transcript_altscreen_reset_actions
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+preserved_exact_tokens:
+  - "/TUI"
+  - "/reset"
+  - "/reinitialize"
+  - "Clear"
+  - "reset"
+  - "replace"
+  - "close"
+negative_constraints:
+  - "Persisted transcript is review continuity, not emulator-state resurrection."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-141 - Terminal Labels Accessibility
+
+```yaml
+plan_unit_id: ACD-141
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Terminal labels and accessibility preserve pane headers, runtime status
+  chips, context badges, subtitles, `/tooltips`, sticky headers, derived
+  suggestions, `/metadata`, user labels, default Terminal/Terminal 2 labels,
+  accessibility-name, descriptions, user-rename behavior, and reset-to-auto.
+gui_related: true
+gui_classification_reason: Terminal labels, badges, names, and accessibility descriptions are visible or assistive UI.
+depends_on: [ACD-135]
+unblocks: []
+acceptance_criteria:
+  - User labels always win over derived context.
+  - Runtime status and context badges continue updating after rename.
+  - Accessibility-name identifies the same object as the visible primary label.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: terminal_accessibility
+reasoning_tier: standard
+context_scope: terminal_workspace
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: terminal_labels_accessibility
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+preserved_exact_tokens:
+  - "/tooltips"
+  - "/metadata"
+  - "Terminal 2"
+  - "accessibility-name"
+  - "reset-to-auto"
+negative_constraints:
+  - "Derived context must not overwrite a user-facing label after rename."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-142 - Terminal Diagnostics Recovery
+
+```yaml
+plan_unit_id: ACD-142
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Terminal diagnostics use structured events and typed failure reasons; the
+  user-facing pane UI avoids noisy internals and offers retry, restart pane,
+  rerun command, reveal logs, or switch renderer mode while support exports and
+  diagnostics surfaces share structured source state.
+gui_related: true
+gui_classification_reason: Diagnostic banners, actions, and drill-down details are visible terminal UI.
+depends_on: [ACD-135]
+unblocks: []
+acceptance_criteria:
+  - Diagnostics use structured events and typed reasons.
+  - User-facing recovery actions are available when applicable.
+  - Support exports and diagnostics surfaces share structured source state.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: terminal_diagnostics
+reasoning_tier: standard
+context_scope: terminal_workspace
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: terminal_diagnostics_recovery
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+preserved_exact_tokens:
+  - "failed_to_start_session"
+  - "attach_failed"
+  - "reconnect_failed"
+  - "shell_integration_unavailable"
+  - "shell_integration_degraded"
+  - "transcript_persist_failed"
+  - "renderer_fallback_activated"
+  - "IME /input_pipeline_error"
+  - "unsupported_platform_capability"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-143 - Command Card Transcript Adjacent Summary
+
+```yaml
+plan_unit_id: ACD-143
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Command cards are transcript-adjacent summaries rather than a second shell
+  implementation; they surface summary, status, and a primary reveal action
+  without pretending to own the full shell lifecycle, and shell-integration
+  confidence governs whether cwd, duration, exit code, and command labels may
+  appear.
+gui_related: true
+gui_classification_reason: Command cards and reveal actions are visible chat UI.
+depends_on: [ACD-126, ACD-137]
+unblocks: [ACD-144, ACD-146]
+acceptance_criteria:
+  - Command cards remain transcript-adjacent summaries.
+  - Cards do not own full shell lifecycle.
+  - Shell-integration confidence gates metadata display.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_card_boundary
+reasoning_tier: high
+context_scope: command_cards
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/storage-plan.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: command_card_transcript_adjacent_summary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0067
+preserved_exact_tokens:
+  - "transcript-adjacent summaries"
+  - "rich"
+  - "basic"
+  - "opaque"
+  - "cwd"
+  - "duration"
+  - "exit code"
+negative_constraints:
+  - "Command cards are not a second shell implementation."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-144 - Command Card Opaque Degradation
+
+```yaml
+plan_unit_id: ACD-144
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  When shell integration is `opaque`, the card degrades to lower-confidence
+  activity disclosure and transcript continuity remains canonical even when
+  command-card metadata is degraded.
+gui_related: true
+gui_classification_reason: Degraded command-card disclosure is visible in chat activity UI.
+depends_on: [ACD-137, ACD-143]
+unblocks: []
+acceptance_criteria:
+  - Opaque shell integration shows lower-confidence activity disclosure.
+  - Transcript continuity remains canonical under degraded metadata.
+  - Exact command text or boundaries are not fabricated.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: shell_integration_degradation
+reasoning_tier: high
+context_scope: command_cards
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: command_card_opaque_degradation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0067
+preserved_exact_tokens:
+  - "opaque"
+  - "lower-confidence activity disclosure"
+  - "transcript continuity remains canonical"
+negative_constraints:
+  - "MUST NOT fabricate exact command text or exact command boundaries"
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-145 - Terminal Reveal Focus Origin
+
+```yaml
+plan_unit_id: ACD-145
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  `Open in Terminal` and `Show Terminal` focus or reveal the existing
+  pane/tab/session or historical shell receipt; explicit `New Terminal`,
+  restart, and `/rerun/new` remain separate user-visible actions.
+gui_related: true
+gui_classification_reason: Terminal reveal, focus, recovery, restart, and new-terminal actions are visible UI.
+depends_on: [ACD-128, ACD-138, ACD-143]
+unblocks: []
+acceptance_criteria:
+  - Visible terminal sessions are focused rather than duplicated.
+  - Hidden sessions reveal existing panes or tabs before creating anything new.
+  - Historical state opens a historical shell receipt with recovery actions.
+  - New Terminal, restart, and rerun/new remain explicit separate choices.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: terminal_reveal
+reasoning_tier: high
+context_scope: command_cards
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: terminal_reveal_focus_origin
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0068
+preserved_exact_tokens:
+  - "Open in Terminal"
+  - "Show Terminal"
+  - "/exited"
+  - "/review-only"
+  - "/rerun/new"
+  - "New Terminal"
+negative_constraints:
+  - "Reveal-origin must not silently replace the true origin with a fresh shell unless the user chooses restart, /rerun/new, or explicit New Terminal."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-146 - Command Card Status Linked Surfaces
+
+```yaml
+plan_unit_id: ACD-146
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Command-card status badges may reflect `starting`, `running`, `exited`,
+  `failed`, `terminated`, `disconnected`, `restoring`, and
+  `attention_required`; compact previews stay compact, and Output, Problems,
+  Debug Console, and Ports route through the owning terminal or dev-session
+  identity rather than chat-local state.
+gui_related: true
+gui_classification_reason: Status badges, compact previews, and linked surface navigation are visible UI.
+depends_on: [ACD-134, ACD-143]
+unblocks: []
+acceptance_criteria:
+  - Command-card status badge vocabulary is preserved.
+  - Large terminal transcripts do not expand chat previews.
+  - Output, Problems, Debug Console, and Ports links preserve owner identity.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: linked_surface_routing
+reasoning_tier: standard
+context_scope: command_cards
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FileManager.md
+node_compile_hint:
+  mode: command_card_status_linked_surfaces
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0069
+preserved_exact_tokens:
+  - "starting"
+  - "running"
+  - "exited"
+  - "failed"
+  - "terminated"
+  - "disconnected"
+  - "restoring"
+  - "attention_required"
+negative_constraints:
+  - "Linked surfaces must not route through chat-local state."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-147 - Shared Runtime Identity Owner Boundary
+
+```yaml
+plan_unit_id: ACD-147
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat may display requested/effective runtime identity, but it
+  consumes the owner-doc shared runtime model and canonical shared fields
+  rather than inventing assistant-local runtime fields.
+gui_related: true
+gui_classification_reason: Requested/effective runtime identity appears in compact chat and message runtime display.
+depends_on: [ACD-094]
+unblocks: [ACD-148, ACD-149, ACD-173]
+acceptance_criteria:
+  - Chat displays runtime identity as a consumer of owner-doc shared runtime fields.
+  - Historical views use frozen requested/effective runtime state from execution.
+  - Assistant-local replacement runtime fields are prohibited.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_drift
+reasoning_tier: high
+context_scope: runtime_identity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Multi-Account.md
+node_compile_hint:
+  mode: shared_runtime_identity_owner_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0070
+preserved_exact_tokens:
+  - "requested/effective runtime identity"
+  - "active_model"
+  - "actual_model"
+  - "assistant_runtime_state"
+negative_constraints:
+  - "assistant/chat MUST NOT introduce local replacement fields such as active_model, actual_model, or assistant_runtime_state"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 10416-10427 >>>
+### ACD-148 - Message Runtime Popover Closed Fields
+
+```yaml
+plan_unit_id: ACD-148
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The message-level `info-popover` consumes the closed field list `Mode`,
+  `Provider`, `Model`, `Effort`, `Persona`, `Worker`, `Tokens`, and `Context`;
+  it is not a second schema and stays aligned with context-detail `Messages`
+  row expansion and shared Contracts field labels.

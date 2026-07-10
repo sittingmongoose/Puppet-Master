@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE 5273-5284 >>>
+- "external services"
+- "Prompt injection"
+- "Privilege escalation"
+- "Data exfiltration"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 5285-5664 >>>
+### PS-075 - Capability Gates And Sandbox Boundaries
+
+```yaml
+plan_unit_id: PS-075
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission allow is necessary but insufficient: tools must be capability-registered, unregistered tools remain non-runnable, file tools stay scoped to roots unless policy broadens access, and web tools honor domain allowlists and web-operation scope keys."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-017
+- PS-028
+- PS-035
+unblocks: []
+acceptance_criteria:
+- "PS-075 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: capability_sandbox_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0060
+preserved_exact_tokens:
+- "Capability gates and sandbox boundaries"
+- "capability-registered"
+- "permission-allowed"
+- "unregistered tools"
+- "non-runnable"
+- "bash"
+- "project root"
+- "working roots"
+- "domain allowlists"
+- "web-operation scope keys"
+negative_constraints:
+- "Unregistered tools remain non-runnable even if a rule says allow."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Tools.md"
+- "Plans/FileSafe.md"
+```
+
+### PS-076 - Permission Audit Trail Records
+
+```yaml
+plan_unit_id: PS-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Every operationally meaningful permission grant, deny, or prompt writes a seglog audit record with at least tool_pattern, decision, scope, and requesting_context."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-043
+- PS-055
+unblocks: []
+acceptance_criteria:
+- "PS-076 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_audit_trail
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0061
+preserved_exact_tokens:
+- "Audit trail"
+- "seglog"
+- "tool_pattern"
+- "decision"
+- "scope"
+- "requesting_context"
+- "durable-rule creation"
+- "inherited narrowing"
+- "denied/externalized execution attempts"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/storage-plan.md"
+```
+
+### PS-077 - OpenCode Reference Boundary
+
+```yaml
+plan_unit_id: PS-077
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "External OpenCode behavior is reference-only and may inform terminology, but it does not override PM-native terminology, approval ladder, preset matrix, or batch permission behavior owned by Permissions."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-002
+- PS-019
+- PS-040
+unblocks: []
+acceptance_criteria:
+- "PS-077 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: opencode_reference_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0062
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0063
+preserved_exact_tokens:
+- "OpenCode baseline and Puppet Master deltas"
+- "External OpenCode behavior"
+- "reference-only"
+- "PM-native terminology"
+- "approval ladder"
+- "preset matrix"
+- "batch permission behavior"
+negative_constraints:
+- "External design evidence does not override Puppet Master permission canon."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"
+compatibility_only_notes:
+- "External OpenCode examples are terminology and lineage reference only."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Run_Modes.md"
+- "Plans/Tools.md"
+```
+
+### PS-078 - Puppet Master Permission Deltas
+
+```yaml
+plan_unit_id: PS-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Puppet Master permission deltas preserve deny, once, for session, and always actions, keep read-only and plan web operations at ask, and make batch web For Session grants domain-scoped for all unique domains in scope."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-019
+- PS-031
+- PS-047
+unblocks: []
+acceptance_criteria:
+- "PS-078 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: pm_permission_deltas
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0064
+preserved_exact_tokens:
+- "Puppet Master deltas"
+- "deny | once | for session | always"
+- "read-only"
+- "plan web operations"
+- "ask"
+- "batch web approvals"
+- "all unique domains"
+- "For Session"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-079 - Deny Scope Acceptance Alignment
+
+```yaml
+plan_unit_id: PS-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "AC-PM07 binds deny response cascade to the current blocked episode and only to other pending asks with exactly matching approval_scope_key."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-005
+- PS-006
+- PS-042
+unblocks: []
+acceptance_criteria:
+- "PS-079 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: deny_scope_acceptance_alignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0065
+preserved_exact_tokens:
+- "AC-PM07"
+- "deny"
+- "current blocked episode"
+- "pending asks"
+- "approval_scope_key"
+negative_constraints:
+- "Deny cannot reject nonmatching pending asks."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-080 - Deterministic Resolution Acceptance Group
+
+```yaml
+plan_unit_id: PS-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Acceptance criteria AC-PM01, AC-PM02, AC-PM03, AC-PM10, AC-PM13, and AC-PM14 cover deterministic resolution, precedence layer ordering, last-match wins, mode override behavior, scope specificity, and context narrowing."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-020
+- PS-021
+- PS-024
+- PS-047
+- PS-050
+unblocks: []
+acceptance_criteria:
+- "PS-080 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: deterministic_resolution_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0066
+preserved_exact_tokens:
+- "Acceptance criteria"
+- "ACCEPTANCE"
+- "AC-PM01"
+- "AC-PM02"
+- "AC-PM03"
+- "AC-PM10"
+- "AC-PM13"
+- "AC-PM14"
+- "deterministic"
+- "Persona override"
+- "last-match-wins"
+- "yolo"
+- "ask/plan"
+- "lane"
+- "seam"
+- "package"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Progression_Gates.md"
+```
+
+### PS-081 - Guard Defaults And Web Key Acceptance Group
+
+```yaml
+plan_unit_id: PS-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Acceptance criteria AC-PM04, AC-PM05, AC-PM08, and AC-PM12 cover doom_loop, external_directory, .env deny defaults, and derived web-operation permission keys."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-028
+- PS-034
+- PS-035
+- PS-047
+unblocks: []
+acceptance_criteria:
+- "PS-081 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: guard_default_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0066
+preserved_exact_tokens:
+- "AC-PM04"
+- "AC-PM05"
+- "AC-PM08"
+- "AC-PM12"
+- "doom_loop"
+- "external_directory"
+- ".env"
+- ".env.*"
+- ".env.example"
+- "webextract:{domain}"
+- "webresearch:{query_category}"
+- "webcrawl:{domain}"
+- "webmap:{domain}"
+- "registrable-domain"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Progression_Gates.md"
+```
+
+
+<<< CONTEXT_AFTER 5665-5676 >>>
+### PS-082 - Approval Persistence And GUI Acceptance Group
+
+```yaml
+plan_unit_id: PS-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Acceptance criteria AC-PM06, AC-PM09, and AC-PM11 cover always approval scope, Permissions tab display/edit/persist behavior, durable approval record persistence, restart survival, and revocation."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:

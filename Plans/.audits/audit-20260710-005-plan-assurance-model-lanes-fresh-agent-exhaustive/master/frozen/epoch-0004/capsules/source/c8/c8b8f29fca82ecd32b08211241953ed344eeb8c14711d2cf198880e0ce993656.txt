@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE 4176-4187 >>>
+- "concern_record"
+- "concern_projection"
+- "blocked_episode linkage"
+negative_constraints:
+- "Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 4188-4558 >>>
+### SP-032 - Required redb Key Baseline
+
+```yaml
+plan_unit_id: SP-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "The baseline redb key families include run, node, lane, execution_unit, and receipt records with stable entity key patterns."
+gui_related: false
+gui_classification_reason: "This unit preserves backend redb key-pattern requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-032 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: required_redb_key_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0050"
+preserved_exact_tokens:
+- "run:<run_id>"
+- "node:<node_id>"
+- "lane:<lane_id>"
+- "execution_unit:<execution_unit_id>"
+- "receipt:<receipt_id>"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-033 - Historical Semantic Consistency
+
+```yaml
+plan_unit_id: SP-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Storage defines shared historical vocabulary while keeping family-local workflow states distinct across concern, receipt, artifact, worktree, and usage families."
+gui_related: false
+gui_classification_reason: "This unit preserves backend historical vocabulary and lifecycle separation requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-033 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: historical_semantic_consistency
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0051"
+preserved_exact_tokens:
+- "historical"
+- "stale_historical"
+- "superseded"
+- "revoked"
+- "reopened"
+- "archived"
+- "removed"
+- "remediation.resolved"
+- "family-local workflow states"
+- "concern"
+- "receipt"
+- "artifact"
+- "worktree"
+- "usage"
+negative_constraints:
+- "Historical terms stay shared across concern, receipt, artifact, worktree, and usage families without collapsing family-local workflow states."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-034 - Cross-Surface Receipt Baseline
+
+```yaml
+plan_unit_id: SP-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Receipt records bind execution results to canonical run, node, and lane identity for dashboard, CLI, and API query surfaces."
+gui_related: false
+gui_classification_reason: "This unit preserves backend receipt baseline and cross-surface query requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-034 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: cross_surface_receipt_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0052"
+preserved_exact_tokens:
+- "Receipt records"
+- "canonical run"
+- "node"
+- "lane identity"
+- "execution_unit_id"
+- "result_summary"
+- "artifacts"
+- "evidence_ref"
+- "Dashboard"
+- "CLI"
+- "API"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-035 - Projection Rehydration Baseline
+
+```yaml
+plan_unit_id: SP-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Projections are derived from canonical records and events, freshness is tracked per projection type, and startup rehydration restores projections from seglog and redb canonical records."
+gui_related: false
+gui_classification_reason: "This unit preserves backend projection freshness and startup rehydration requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-035 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: projection_rehydration_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0053"
+preserved_exact_tokens:
+- "Projections"
+- "canonical records and events"
+- "Projection freshness"
+- "per projection type"
+- "stale projections"
+- "startup"
+- "seglog"
+- "redb canonical records"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-036 - Account Pressure Attribution Baseline
+
+```yaml
+plan_unit_id: SP-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Account pressure metrics are stored per account at node/lane boundaries, history records are immutable and linked to canonical identity, and runtime attribution tracks actor/role execution."
+gui_related: false
+gui_classification_reason: "This unit preserves backend account pressure, history, and attribution requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-036 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: account_pressure_attribution_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0054"
+preserved_exact_tokens:
+- "Account pressure metrics"
+- "per account"
+- "node/lane boundaries"
+- "History records"
+- "account-level"
+- "execution-level"
+- "immutable"
+- "canonical run/node identity"
+- "Runtime attribution"
+- "actor/role"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-037 - Artifact Index And Route Linkage Baseline
+
+```yaml
+plan_unit_id: SP-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Artifacts are indexed by artifact ID, export manifests bind artifact collections to deliverables, and route/open linkage records active route args and open contracts during execution."
+gui_related: false
+gui_classification_reason: "This unit preserves backend artifact index, export manifest, and route/open linkage requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-037 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: artifact_index_route_linkage_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0055"
+preserved_exact_tokens:
+- "artifact ID"
+- "run"
+- "node"
+- "receipt records"
+- "Export manifests"
+- "project deliverables"
+- "Route/open linkage"
+- "route args"
+- "open contracts"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-038 - Worktree Lane Cleanup Baseline
+
+```yaml
+plan_unit_id: SP-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Worktree lifecycle storage tracks allocation, usage, reclamation, Source Control to Orchestrator handshakes, and cleanup lineage for stale worktree audit."
+gui_related: false
+gui_classification_reason: "This unit preserves backend worktree/lane lifecycle and cleanup storage requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "W-001"
+unblocks: []
+acceptance_criteria:
+- "SP-038 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: worktree_lane_cleanup_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0056"
+preserved_exact_tokens:
+- "Worktree lifecycle records"
+- "allocation"
+- "usage"
+- "reclamation events"
+- "Handshake records"
+- "Source Control → Orchestrator"
+- "cleanup lineage"
+- "stale worktrees"
+- "removed"
+- "audited"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/WorktreeGitImprovement.md"
+```
+
+
+<<< CONTEXT_AFTER 4559-4570 >>>
+### SP-039 - Naming And Migration Baseline
+
+```yaml
+plan_unit_id: SP-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Schema keys follow entity_type:entity_id:sub_key patterns, migrations are versioned and idempotent, old versions remain supported for at least one major release, and deprecation is explicit in migration notes."
+gui_related: false
+gui_classification_reason: "This unit preserves backend naming and schema migration requirements."
+split_recommended: false
+depends_on:

@@ -1,0 +1,671 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001005-EXACT-WIN-7414C6C901F8-0005",
+  "attempt_id": "attempt-0007",
+  "task_thread_id": "/root/a005_001005_exact_win_0005_attempt_0007_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "6b658f5c3687b9e4e0542cb801bab9c14d825242102c3e1d6fd58cda3b98420c",
+    "core_range": [1302, 1692]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "I001",
+      "item_type": "authority",
+      "title": "Puppet Master owns the LSP client boundary",
+      "statement": "Puppet Master is authoritative for mainstream-language LSP client lifecycle, with local servers using stdio by default and remote workspaces using SSH placement, host-aware mappings, and worktree-aware root resolution; it is explicitly not the language-analysis engine or a custom language server.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1308,
+          "line_end": 1309,
+          "exact_quote": "owner_doc: Plans/LSPSupport.md\ncanonical_text: Puppet Master is the LSP client and lifecycle owner for mainstream language servers, not a language-analysis engine or custom language server; default servers run as local stdio RPC processes by default, while remote workspaces use SSH placement, host-aware path mapping, and worktree-aware root resolution.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1347,
+          "line_end": 1353,
+          "exact_quote": "negative_constraints:\n- PM must not act as a custom language-analysis engine for mainstream languages.\n- Remote workspaces must not use a hidden local mirror as the LSP authority.\ncompatibility_only_notes: []\nstale_retired_dispositions: []\nowner_boundary_notes:\n- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-006"]
+    },
+    {
+      "item_id": "I002",
+      "item_type": "explicit_non_gap",
+      "title": "OpenCode is reference input, not product authority",
+      "statement": "The authority boundary is explicit: OpenCode material may inform built-in servers, configuration, diagnostics context, custom servers, download controls, and licensing notes, while Puppet Master retains its own architecture and owns its LSP behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1366,
+          "line_end": 1368,
+          "exact_quote": "canonical_text: OpenCode LSP documentation and behavior are retained as reference input for built-in servers, diagnostics into LLM context, config schema, custom servers, automatic download controls, and license placement notes without making OpenCode the product owner.\ngui_related: false\ngui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1401,
+          "line_end": 1405,
+          "exact_quote": "compatibility_only_notes:\n- OpenCode findings are reference input; Puppet Master retains its own supervised host-aware client architecture.\nstale_retired_dispositions: []\nowner_boundary_notes:\n- OpenCode docs are external reference input; Plans/LSPSupport.md owns Puppet Master LSP behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-007"]
+    },
+    {
+      "item_id": "I003",
+      "item_type": "contract",
+      "title": "Catalog support is distinct from shipping posture",
+      "statement": "The catalog may broadly discover and configure the OpenCode-style server set plus slint-lsp, but broad support must not be interpreted as universal bundling, automatic download, or default management; legal, toolchain, download, and manual-provisioning constraints remain distinct.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1418,
+          "line_end": 1420,
+          "exact_quote": "canonical_text: The LSP server catalog supports the OpenCode-style built-in set plus slint-lsp while separating broad discovery/config support from the out-of-box default-managed or bundled set and from legal, toolchain, download, and manual-provisioning constraints.\ngui_related: false\ngui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1459,
+          "line_end": 1460,
+          "exact_quote": "negative_constraints:\n- Broad catalog support does not mean every server is bundled, auto-downloaded, or managed by default.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-008"]
+    },
+    {
+      "item_id": "I004",
+      "item_type": "behavior",
+      "title": "Root discovery is host-aware and language-marker-first",
+      "statement": "An LSP session is resolved by host, server, and root identity using file context, heuristics, overrides, and remote roots, with nearest-.git fallback only after language-specific markers fail; remote projects cannot silently attach to a hidden local mirror.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1477,
+          "line_end": 1479,
+          "exact_quote": "canonical_text: LSP root discovery resolves sessions by host, server, and root identity from file context, server heuristics, explicit overrides, and remote host roots, with fallback to the nearest .git directory only after language-specific markers fail.\ngui_related: false\ngui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1502,
+          "line_end": 1513,
+          "exact_quote": "- Root discovery\n- session reuse key\n- (host_id, server_id, root_identity)\n- remote host roots\n- MUST NOT silently attach against a hidden local mirror\n- package.json\n- Cargo.toml\n- go.mod\n- pyproject.toml\n- nearest `.git`\nnegative_constraints:\n- Remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-009"]
+    },
+    {
+      "item_id": "I005",
+      "item_type": "gui_truth",
+      "title": "Effective overlapping-server state is user-visible",
+      "statement": "Overlapping servers use explicit selection metadata, capability-family ownership, and compatible supplementary families, and the resulting effective state must appear in Settings > LSP and status surfaces; degraded or unavailable attachment cannot be represented as healthy.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1532,
+          "line_end": 1534,
+          "exact_quote": "canonical_text: Overlapping LSP servers are resolved through explicit selection metadata, capability-family ownership, compatible supplementary families, and user-visible effective state in Settings > LSP and status surfaces.\ngui_related: true\ngui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1564,
+          "line_end": 1567,
+          "exact_quote": "- Settings > LSP\n- status surfaces\nnegative_constraints:\n- Remote or degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-010"]
+    },
+    {
+      "item_id": "I006",
+      "item_type": "contract",
+      "title": "Effective ServerSpec selection input contract",
+      "statement": "Effective selection is required to record selectors, file and context conditions, command, environment, initialization options, root discovery, platform restrictions, version and position encoding, provisioning hints, lifecycle state, and a closed selection_mode vocabulary before primary and supplementary attachments are chosen; persisted mode names use underscore spellings.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1585,
+          "line_end": 1588,
+          "exact_quote": "canonical_text: Effective ServerSpec selection records selectors, file/context conditions, command/env/init options, root discovery, platform restrictions, version and position-encoding metadata, provisioning hints, lifecycle state, and the closed selection_mode vocabulary before choosing primary and supplementary attachments.\ngui_related: false\ngui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.\nsplit_recommended: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1614,
+          "line_end": 1626,
+          "exact_quote": "- selection_mode\n- standalone_primary\n- contextual_primary\n- supplementary_diagnostics\n- standalone_diagnostics\n- primary_priority\n- server_id\n- /specificity\n- ts-js\n- deno.json\n- deno.jsonc\nnegative_constraints:\n- Persisted registry values use underscore spellings rather than ad hoc short names or hyphenated storage values.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-011"]
+    },
+    {
+      "item_id": "I007",
+      "item_type": "contract",
+      "title": "Diagnostics retain source identity and merge only for presentation",
+      "statement": "Diagnostics storage remains partitioned by server, session or root, and URI, while Problems, editor markers, and Assistant or Interview context may present a merged view; a diagnostics-only attachment must not imply completion, navigation, hover, or other semantic capabilities.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1645,
+          "line_end": 1648,
+          "exact_quote": "canonical_text: Diagnostics integration preserves per-server source identity in storage and merges only for presentation surfaces such as Problems, editor markers, and Assistant/Interview context; diagnostics-only sidecars do not imply full completion, navigation, hover, or semantic capability.\ngui_related: true\ngui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.\nsplit_recommended: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1671,
+          "line_end": 1681,
+          "exact_quote": "- per `(server_id, session/root, uri)`\n- Problems\n- editor markers\n- Assistant/Interview context\n- supplementary_diagnostics\n- standalone_diagnostics\n- /cap/truncation\n- per-server source identity\nnegative_constraints:\n- Diagnostics integration is not a storage-flattening rule and must not erase per-server source identity.\n- Diagnostics-only attachments must not imply full completion, navigation, hover, or semantic capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-012"]
+    },
+    {
+      "item_id": "I008",
+      "item_type": "gap",
+      "title": "Lifecycle ownership lacks a lifecycle state machine",
+      "statement": "The window assigns LSP lifecycle ownership and distinguishes local and remote placement, but it does not define startup, initialize, ready, degraded, reconnect, restart, shutdown, crash, or terminal transitions, transition triggers, retry limits, or recovery behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "exact_quote": "canonical_text: Puppet Master is the LSP client and lifecycle owner for mainstream language servers, not a language-analysis engine or custom language server; default servers run as local stdio RPC processes by default, while remote workspaces use SSH placement, host-aware path mapping, and worktree-aware root resolution.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1313,
+          "line_end": 1314,
+          "exact_quote": "depends_on: []\nunblocks: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_state_transition_and_recovery_contract",
+      "impact": "Independent builders can implement incompatible supervisor behavior, readiness reporting, restart policy, and remote failure handling.",
+      "builder_discretion": "The complete lifecycle vocabulary, transition graph, retry/backoff policy, process termination semantics, and recovery UX remain discretionary.",
+      "feature_keys": ["LSPS-006", "LSPS-011"]
+    },
+    {
+      "item_id": "I009",
+      "item_type": "gap",
+      "title": "Server catalog and shipping matrix is referenced but not specified",
+      "statement": "The unit requires an OpenCode-style built-in set plus slint-lsp and preserves a token for a full table, but this authoritative window contains neither the entries nor per-server discovery, provisioning, bundle, download, legal, toolchain, platform, and default-management values.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1418,
+          "line_end": 1418,
+          "exact_quote": "canonical_text: The LSP server catalog supports the OpenCode-style built-in set plus slint-lsp while separating broad discovery/config support from the out-of-box default-managed or bundled set and from legal, toolchain, download, and manual-provisioning constraints.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1443,
+          "line_end": 1458,
+          "exact_quote": "- Built-in LSP servers (full table)\n- slint-lsp\n- Broad catalog support\n- GraphQL\n- Dockerfile / Docker config\n- TOML\n- YAML\n- Markdown\n- /discovery/config\n- /bundles/manages\n- /auto-install\n- /install\n- /download\n- /legal\n- support target\n- shipping posture",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_catalog_payload",
+      "impact": "The supported languages and the install, bundle, and legal behavior for each server cannot be implemented or tested from this unit.",
+      "builder_discretion": "Catalog membership and all server-specific shipping posture values remain open.",
+      "feature_keys": ["LSPS-008"]
+    },
+    {
+      "item_id": "I010",
+      "item_type": "gap",
+      "title": "Root-discovery precedence and ambiguity rules are incomplete",
+      "statement": "The unit establishes that language markers precede nearest-.git fallback, but does not order explicit overrides, file context, server heuristics, multiple matching language markers, nested worktrees, symlinks, or remote roots, nor define behavior when roots conflict or disappear.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1477,
+          "line_end": 1477,
+          "exact_quote": "canonical_text: LSP root discovery resolves sessions by host, server, and root identity from file context, server heuristics, explicit overrides, and remote host roots, with fallback to the nearest .git directory only after language-specific markers fail.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1502,
+          "line_end": 1513,
+          "exact_quote": "- Root discovery\n- session reuse key\n- (host_id, server_id, root_identity)\n- remote host roots\n- MUST NOT silently attach against a hidden local mirror\n- package.json\n- Cargo.toml\n- go.mod\n- pyproject.toml\n- nearest `.git`\nnegative_constraints:\n- Remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_deterministic_precedence",
+      "impact": "The same file can resolve to different roots and reuse keys across implementations, risking incorrect server reuse and workspace isolation.",
+      "builder_discretion": "All precedence and tie-breaking beyond the marker-before-.git rule, plus invalidation and root-loss handling, remain discretionary.",
+      "feature_keys": ["LSPS-009"]
+    },
+    {
+      "item_id": "I011",
+      "item_type": "gap",
+      "title": "Effective ServerSpec selection lacks an executable decision algorithm",
+      "statement": "The unit names selection inputs, priorities, specificity, primary modes, and supplementary modes but does not define filtering order, score comparison, deterministic tie-breaks, capability-family conflict resolution, multi-primary behavior, or what happens when no candidate qualifies.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1585,
+          "line_end": 1588,
+          "exact_quote": "canonical_text: Effective ServerSpec selection records selectors, file/context conditions, command/env/init options, root discovery, platform restrictions, version and position-encoding metadata, provisioning hints, lifecycle state, and the closed selection_mode vocabulary before choosing primary and supplementary attachments.\ngui_related: false\ngui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.\nsplit_recommended: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1614,
+          "line_end": 1624,
+          "exact_quote": "- selection_mode\n- standalone_primary\n- contextual_primary\n- supplementary_diagnostics\n- standalone_diagnostics\n- primary_priority\n- server_id\n- /specificity\n- ts-js\n- deno.json\n- deno.jsonc",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_selection_algorithm",
+      "impact": "Primary and supplementary attachments can diverge across builders and conflict states cannot be validated deterministically.",
+      "builder_discretion": "Candidate filtering, priority comparison, specificity calculation, tie-breaking, and zero-match behavior are open.",
+      "feature_keys": ["LSPS-010", "LSPS-011"]
+    },
+    {
+      "item_id": "I012",
+      "item_type": "gap",
+      "title": "Lifecycle-state vocabulary and capability derivation are absent",
+      "statement": "Effective ServerSpec is required to record lifecycle state and LSPS-010 prohibits fabricated healthy capability state, but the allowed lifecycle states, degraded-attachment states, capability derivation rules, and transitions that update user-visible effective state are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1566,
+          "line_end": 1567,
+          "exact_quote": "negative_constraints:\n- Remote or degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1585,
+          "line_end": 1585,
+          "exact_quote": "canonical_text: Effective ServerSpec selection records selectors, file/context conditions, command/env/init options, root discovery, platform restrictions, version and position-encoding metadata, provisioning hints, lifecycle state, and the closed selection_mode vocabulary before choosing primary and supplementary attachments.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_state_vocabulary_and_capability_rules",
+      "impact": "Runtime health, degradation, capabilities, and the GUI state can disagree even while each implementation follows the prose.",
+      "builder_discretion": "Lifecycle enums, partial-attach semantics, capability projection, and state-to-GUI mapping are open.",
+      "feature_keys": ["LSPS-010", "LSPS-011"]
+    },
+    {
+      "item_id": "I013",
+      "item_type": "gap",
+      "title": "Diagnostics merge, update, removal, and truncation semantics are incomplete",
+      "statement": "The unit fixes the storage identity and presentation-only merge boundary, but does not define merge ordering, duplicate treatment, stale-diagnostic replacement, empty publish behavior, server disconnect cleanup, per-source visibility, or the meaning and value of the preserved /cap/truncation token.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1645,
+          "line_end": 1645,
+          "exact_quote": "canonical_text: Diagnostics integration preserves per-server source identity in storage and merges only for presentation surfaces such as Problems, editor markers, and Assistant/Interview context; diagnostics-only sidecars do not imply full completion, navigation, hover, or semantic capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1671,
+          "line_end": 1681,
+          "exact_quote": "- per `(server_id, session/root, uri)`\n- Problems\n- editor markers\n- Assistant/Interview context\n- supplementary_diagnostics\n- standalone_diagnostics\n- /cap/truncation\n- per-server source identity\nnegative_constraints:\n- Diagnostics integration is not a storage-flattening rule and must not erase per-server source identity.\n- Diagnostics-only attachments must not imply full completion, navigation, hover, or semantic capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_diagnostics_merge_and_lifecycle_contract",
+      "impact": "Problems, editor, and assistant consumers can display inconsistent, stale, or differently truncated diagnostic sets.",
+      "builder_discretion": "Ordering, deduplication, clearing, source labels, truncation cap and policy, and disconnect cleanup remain open.",
+      "feature_keys": ["LSPS-012"]
+    },
+    {
+      "item_id": "I014",
+      "item_type": "gap",
+      "title": "Acceptance criteria and validators do not test product behavior",
+      "statement": "The repeated acceptance criteria prove source preservation, addressability, traceability, and absence of work-node outputs, while the named validators check migration and indexing; there are no executable or scenario oracles for placement, root selection, conflict resolution, ServerSpec selection, lifecycle, diagnostics isolation, merged presentation, or degraded-state truth.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1315,
+          "line_end": 1322,
+          "exact_quote": "acceptance_criteria:\n- The covered source span remains losslessly available for exact-text audit.\n- This behavior is addressable through LSPS-006 instead of broad L-001 source-preserving coverage.\n- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.\n- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.\nvalidation_surfaces:\n- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\n- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1651,
+          "line_end": 1658,
+          "exact_quote": "acceptance_criteria:\n- The covered source span remains losslessly available for exact-text audit.\n- This behavior is addressable through LSPS-012 instead of broad L-001 source-preserving coverage.\n- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.\n- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.\nvalidation_surfaces:\n- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\n- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_behavioral_acceptance_oracles",
+      "impact": "Governance validation can pass without demonstrating any LSP runtime or GUI behavior in this window.",
+      "builder_discretion": "Behavioral fixtures, expected outcomes, failure scenarios, conformance tests, and quantitative thresholds remain undefined.",
+      "feature_keys": ["LSPS-006", "LSPS-007", "LSPS-008", "LSPS-009", "LSPS-010", "LSPS-011", "LSPS-012"]
+    },
+    {
+      "item_id": "I015",
+      "item_type": "gap",
+      "title": "Automatic downloads and executable server configuration lack trust controls",
+      "statement": "The window includes automatic-download controls, custom servers, command and environment fields, provisioning hints, and legal constraints, but specifies no source allowlist, artifact integrity or signature verification, version pinning, executable approval, environment-secret filtering, rollback, or compromised-download recovery.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1366,
+          "line_end": 1366,
+          "exact_quote": "canonical_text: OpenCode LSP documentation and behavior are retained as reference input for built-in servers, diagnostics into LLM context, config schema, custom servers, automatic download controls, and license placement notes without making OpenCode the product owner.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1418,
+          "line_end": 1418,
+          "exact_quote": "canonical_text: The LSP server catalog supports the OpenCode-style built-in set plus slint-lsp while separating broad discovery/config support from the out-of-box default-managed or bundled set and from legal, toolchain, download, and manual-provisioning constraints.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1585,
+          "line_end": 1585,
+          "exact_quote": "canonical_text: Effective ServerSpec selection records selectors, file/context conditions, command/env/init options, root discovery, platform restrictions, version and position-encoding metadata, provisioning hints, lifecycle state, and the closed selection_mode vocabulary before choosing primary and supplementary attachments.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_supply_chain_and_execution_security_contract",
+      "impact": "Server provisioning and launch can execute untrusted artifacts or leak sensitive environment values without a normative control surface.",
+      "builder_discretion": "Trust roots, integrity checks, permission prompts, secret handling, version policy, and recovery are entirely open.",
+      "feature_keys": ["LSPS-007", "LSPS-008", "LSPS-011"]
+    },
+    {
+      "item_id": "I016",
+      "item_type": "gap",
+      "title": "Diagnostics-to-LLM privacy boundary is not defined",
+      "statement": "The window authorizes diagnostics as LLM and Assistant or Interview context but provides no consent, workspace policy, redaction, data classification, remote-provider boundary, retention, truncation-by-sensitivity, or user visibility contract.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1366,
+          "line_end": 1366,
+          "exact_quote": "canonical_text: OpenCode LSP documentation and behavior are retained as reference input for built-in servers, diagnostics into LLM context, config schema, custom servers, automatic download controls, and license placement notes without making OpenCode the product owner.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1645,
+          "line_end": 1645,
+          "exact_quote": "canonical_text: Diagnostics integration preserves per-server source identity in storage and merges only for presentation surfaces such as Problems, editor markers, and Assistant/Interview context; diagnostics-only sidecars do not imply full completion, navigation, hover, or semantic capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_privacy_and_data_flow_contract",
+      "impact": "Potentially sensitive paths, source excerpts, messages, or tool output embedded in diagnostics can be sent or retained without a defined user or workspace authority.",
+      "builder_discretion": "Consent, filtering, redaction, provider routing, retention, disclosure, and audit behavior remain open.",
+      "feature_keys": ["LSPS-007", "LSPS-012"]
+    },
+    {
+      "item_id": "I017",
+      "item_type": "gap",
+      "title": "Scale and performance behavior is unspecified",
+      "statement": "The only preserved scale-related diagnostic token is /cap/truncation; the window defines no server-count, workspace-count, file-count, diagnostic-count, payload-size, queue, latency, memory, CPU, cancellation, backpressure, or truncation targets.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1671,
+          "line_end": 1678,
+          "exact_quote": "- per `(server_id, session/root, uri)`\n- Problems\n- editor markers\n- Assistant/Interview context\n- supplementary_diagnostics\n- standalone_diagnostics\n- /cap/truncation\n- per-server source identity",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_scale_and_performance_contract",
+      "impact": "Implementations cannot be evaluated for overload behavior or consistent diagnostic truncation and may exhaust resources in large workspaces.",
+      "builder_discretion": "All capacities, budgets, scheduling, cancellation, and overload degradation policies remain open.",
+      "feature_keys": ["LSPS-012"]
+    },
+    {
+      "item_id": "I018",
+      "item_type": "gap",
+      "title": "Persisted selection_mode migration is not specified",
+      "statement": "Persisted registry values are required to use underscore spellings, but no behavior is defined for existing short or hyphenated values, unknown future values, downgrade compatibility, validation errors, or migration receipts.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1614,
+          "line_end": 1627,
+          "exact_quote": "- selection_mode\n- standalone_primary\n- contextual_primary\n- supplementary_diagnostics\n- standalone_diagnostics\n- primary_priority\n- server_id\n- /specificity\n- ts-js\n- deno.json\n- deno.jsonc\nnegative_constraints:\n- Persisted registry values use underscore spellings rather than ad hoc short names or hyphenated storage values.\ncompatibility_only_notes: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_persistence_migration_contract",
+      "impact": "Older registry data may be rejected, silently reinterpreted, or persist incompatible values across versions.",
+      "builder_discretion": "Legacy aliases, migration timing, unknown-value policy, downgrade behavior, and recovery remain open.",
+      "feature_keys": ["LSPS-011"]
+    },
+    {
+      "item_id": "I019",
+      "item_type": "gap",
+      "title": "Change propagation and operational observability are not defined",
+      "statement": "The window names Settings and status consumers, session reuse keys, registry selection, and three diagnostic presentation consumers, but does not specify invalidation and propagation when configuration, roots, server availability, capabilities, or diagnostics change, nor the logging, metrics, traces, operator controls, and correlation identities needed to diagnose those changes.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1502,
+          "line_end": 1505,
+          "exact_quote": "- Root discovery\n- session reuse key\n- (host_id, server_id, root_identity)\n- remote host roots",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1532,
+          "line_end": 1532,
+          "exact_quote": "canonical_text: Overlapping LSP servers are resolved through explicit selection metadata, capability-family ownership, compatible supplementary families, and user-visible effective state in Settings > LSP and status surfaces.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 1645,
+          "line_end": 1645,
+          "exact_quote": "canonical_text: Diagnostics integration preserves per-server source identity in storage and merges only for presentation surfaces such as Problems, editor markers, and Assistant/Interview context; diagnostics-only sidecars do not imply full completion, navigation, hover, or semantic capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "gap_kind": "missing_propagation_and_operations_contract",
+      "impact": "Consumers can remain stale after state changes, and failures across host, root, server, session, and URI boundaries may not be diagnosable.",
+      "builder_discretion": "Event topology, invalidation triggers, ordering, eventual-versus-immediate consistency, telemetry, trace correlation, log redaction, and operator controls remain open.",
+      "feature_keys": ["LSPS-009", "LSPS-010", "LSPS-011", "LSPS-012"]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "The window specifies the client boundary, local and remote placement posture, marker-before-.git root fallback, selection intent, and diagnostics storage/presentation boundary.",
+      "evidence_item_ids": ["I001", "I004", "I005", "I007"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Client ownership, catalog support, primary and supplementary attachment modes, and diagnostics-only capability limits are explicit.",
+      "evidence_item_ids": ["I001", "I003", "I006", "I007"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "addressed",
+      "summary": "ServerSpec inputs and the per-server diagnostic storage key and presentation consumers are identified, although detailed algorithms are gaps assessed separately.",
+      "evidence_item_ids": ["I006", "I007", "I011", "I013"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Several boundaries are explicit, but catalog payload, deterministic root and selection rules, diagnostics semantics, and security contracts are not executable from the window.",
+      "evidence_item_ids": ["I003", "I006", "I007", "I009", "I010", "I011", "I013", "I015", "I016"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Lifecycle state is named but no lifecycle vocabulary, transition graph, capability projection, diagnostic lifecycle, or invalidation transition contract is supplied.",
+      "evidence_item_ids": ["I008", "I012", "I013", "I019"]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Puppet Master is explicitly the LSP client and lifecycle owner; OpenCode is explicitly only reference input, and remote LSP authority cannot be a hidden local mirror.",
+      "evidence_item_ids": ["I001", "I002", "I004"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Plans/LSPSupport.md owns the LSP-specific client and protocol constraints while referenced owner documents retain their SSOT boundaries.",
+      "evidence_item_ids": ["I001", "I002"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Settings > LSP, status surfaces, Problems, editor markers, and Assistant or Interview context are named consumers.",
+      "evidence_item_ids": ["I005", "I007"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "The GUI must expose effective overlapping-server state and must not show unavailable or degraded attachments as healthy; diagnostic presentation surfaces are identified.",
+      "evidence_item_ids": ["I005", "I007", "I012"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Unhealthy-state fabrication is prohibited, but lifecycle failure states, retries, restart and reconnect behavior, root loss, selection failure, diagnostic cleanup, and provisioning recovery are absent.",
+      "evidence_item_ids": ["I008", "I010", "I011", "I012", "I013", "I015"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Automatic downloads, custom executable configuration, environment fields, and diagnostics-to-LLM data flows lack normative trust, secret-handling, consent, redaction, routing, and retention controls.",
+      "evidence_item_ids": ["I015", "I016"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "The window does not define how root, registry, server, capability, or diagnostic changes invalidate sessions and propagate to GUI and assistant consumers.",
+      "evidence_item_ids": ["I019"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Lifecycle supervision and cross-boundary observability lack retry, restart, logging, metric, trace, correlation, and operator-control contracts.",
+      "evidence_item_ids": ["I008", "I019"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "A truncation token is preserved, but all capacities, performance targets, scheduling, cancellation, and overload behavior are unspecified.",
+      "evidence_item_ids": ["I017"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "OpenCode reference compatibility and underscore storage spelling are stated, but legacy-value migration, unknown-value handling, downgrade behavior, and receipts are absent.",
+      "evidence_item_ids": ["I002", "I018"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The listed criteria and validators establish plan provenance and indexing rather than observable product behavior or failure handling.",
+      "evidence_item_ids": ["I014"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential choices remain open for catalog membership, root and server selection, lifecycle and recovery, diagnostics merging, trust and privacy, capacities, migration, and propagation.",
+      "evidence_item_ids": ["I008", "I009", "I010", "I011", "I012", "I013", "I015", "I016", "I017", "I018", "I019"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The authoritative core leaves unresolved the full catalog matrix, deterministic precedence and tie-breaking, state vocabularies, diagnostic lifecycle, quantitative limits, and security or privacy policy.",
+      "evidence_item_ids": ["I009", "I010", "I011", "I012", "I013", "I015", "I016", "I017"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

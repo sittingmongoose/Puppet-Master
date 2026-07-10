@@ -1,0 +1,52 @@
+{
+  "assignment_id": "A005-000651-EXACT-WIN-4D165ACE14E8-0001",
+  "attempt_id": "attempt-0001",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      344,
+      355
+    ]
+  ],
+  "core_range": [
+    1,
+    343
+  ],
+  "core_sha256": "455f9bd567df176f83fc902a2a87a87adf61ed6fcc9c0c07e59e62aff7ae2ba1",
+  "document_path": "Plans/Release_Supply_Chain.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/ce/ce2bc2b8d1d06ac56f836770a45c5f6c33d6977a111a6ee11b4df81b327f2f9e.txt",
+  "source_excerpt_sha256": "ce2bc2b8d1d06ac56f836770a45c5f6c33d6977a111a6ee11b4df81b327f2f9e",
+  "source_sha256": "d4387d59a9c25be43d49f17370e4d8e639314635cda08dca193bc8ca21f2facf",
+  "window_id": "WIN-4D165ACE14E8-0001"
+}

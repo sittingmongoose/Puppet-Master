@@ -1,0 +1,404 @@
+<<< CONTEXT_BEFORE 3389-3400 >>>
+  - "watch buffers"
+  - "explorer snapshots"
+  - "stale caches"
+stale_retired_dispositions:
+  - "Stale cache retention anchor language is preserved as storage-owner boundary evidence, not a Contracts-owned persistence schema."
+negative_constraints:
+  - "Contracts_V0 must not become the owner of storage-plan persistence mechanics."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3401-3775 >>>
+### CV-011 - RuntimeIdentity Owner ContractRefs
+
+```yaml
+plan_unit_id: CV-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Requested/effective account and execution identity resolves through the
+  shared RuntimeIdentity primitive, with Plans/Executor_Protocol.md and
+  Plans/Permissions_System.md as referenced companion and consumer contracts.
+gui_related: false
+gui_classification_reason: This unit defines owner ContractRefs for runtime identity rather than visible UI behavior.
+split_recommended: false
+depends_on: [CV-003, CV-006]
+unblocks: [CV-012, CV-013, CV-014, CV-015, CV-016, CV-017, CV-018, CV-019, CV-020, CV-021, CV-022]
+acceptance_criteria:
+  - Requested/effective account and execution identity resolves through RuntimeIdentity.
+  - Executor Protocol and Permissions System remain referenced companion/consumer contracts.
+  - The RuntimeIdentity ContractRef stays attached to the requested/effective account and execution identity owner section.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_owner_drift
+reasoning_tier: high
+context_scope: runtime_identity_owner_contractrefs
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: runtime_identity_owner_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0025
+preserved_exact_tokens:
+  - "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, Primitive:RuntimeIdentity"
+  - "`RuntimeIdentity`"
+negative_constraints:
+  - "Requested/effective account and execution identity must not be split away from RuntimeIdentity owner references."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Permissions_System.md
+```
+
+### CV-012 - Persona Runtime Field Names And Alias Retirement
+
+```yaml
+plan_unit_id: CV-012
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Shared runtime identity preserves requested_persona and effective_persona as
+  persisted canonical fields; requested_persona_id and effective_persona_id are
+  retired canonical names and may survive only as migration/source-lineage
+  aliases.
+gui_related: false
+gui_classification_reason: This unit is a runtime identity field-name and migration-alias disposition.
+split_recommended: false
+depends_on: [CV-011]
+unblocks: [CV-015]
+acceptance_criteria:
+  - requested_persona and effective_persona remain canonical persisted runtime identity fields.
+  - requested_persona_id and effective_persona_id are retired from canonical contracts.
+  - Retired _id variants may survive only as migration/source-lineage aliases.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persona_field_name_drift
+reasoning_tier: high
+context_scope: persona_runtime_field_names
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "`requested_persona`"
+  - "`effective_persona`"
+  - "`requested_persona_id`"
+  - "`effective_persona_id`"
+  - "`_id` variants"
+  - "migration/source-lineage aliases"
+stale_retired_dispositions:
+  - "`requested_persona_id` and `effective_persona_id` are retired canonical names."
+negative_constraints:
+  - "`_id` variants must not be revived as canonical runtime identity fields."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-013 - Requested Account Anchor Policy Binding Split
+
+```yaml
+plan_unit_id: CV-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Runtime identity carries requested_account_id as the explicit requested
+  account anchor, models it separately from requested_account_policy, and uses
+  requested_account_binding with none | preferred | required semantics.
+gui_related: false
+gui_classification_reason: This unit defines runtime identity field semantics rather than visual presentation.
+split_recommended: false
+depends_on: [CV-011]
+unblocks: [CV-014, CV-015, CV-017, CV-019, CV-020]
+acceptance_criteria:
+  - requested_account_id is the explicit requested account anchor.
+  - requested_account_policy remains separate from requested_account_id.
+  - requested_account_binding preserves none | preferred | required semantics.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: requested_account_identity_drift
+reasoning_tier: high
+context_scope: requested_account_binding_split
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: runtime_identity_field_split
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "`requested_account_id`"
+  - "`requested_account_policy`"
+  - "`requested_account_binding`"
+  - "`none | preferred | required`"
+  - "ContractRef: Primitive:RuntimeIdentity"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md"
+negative_constraints:
+  - "`requested_account_policy` MUST NOT replace the concrete requested account field."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-014 - Effective Account And Provider Metadata Boundary
+
+```yaml
+plan_unit_id: CV-014
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Runtime identity discloses effective_account_id and effective_provider_identity
+  without rewriting the requested selection; provider_account_id is retired as
+  canonical/live vocabulary and remains only subordinate provider-native
+  metadata inside bridged-provider envelopes.
+gui_related: false
+gui_classification_reason: This unit defines runtime identity and provider metadata boundaries.
+split_recommended: false
+depends_on: [CV-013]
+unblocks: [CV-015, CV-017, CV-019, CV-020]
+acceptance_criteria:
+  - effective_account_id and effective_provider_identity disclose resolved identity without rewriting the requested selection.
+  - provider_account_id is retired as canonical/live identity vocabulary.
+  - provider_account_id may survive only as subordinate provider-native metadata inside bridged-provider envelopes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_identity_collapse
+reasoning_tier: high
+context_scope: effective_account_provider_metadata_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "`effective_account_id`"
+  - "`effective_provider_identity`"
+  - "`provider_account_id`"
+  - "bridged-provider"
+stale_retired_dispositions:
+  - "`provider_account_id` is retired as canonical/live identity vocabulary."
+negative_constraints:
+  - "`provider_account_id` must not be canonical/live identity vocabulary."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-015 - Requested Effective Identity Projection Display
+
+```yaml
+plan_unit_id: CV-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Runtime, effective-resolution, permission, attempt, usage, and inspector
+  surfaces project Requested account, Requested binding, Effective account, and
+  Switch reason from the same shared runtime identity snapshot, including grouped
+  /model/effort/persona/account disclosure where a UI surface needs one label.
+gui_related: true
+gui_classification_reason: Requested/effective labels and grouped disclosure are user-visible projection and inspector copy.
+split_recommended: false
+depends_on: [CV-012, CV-013, CV-014, CV-016]
+unblocks: []
+acceptance_criteria:
+  - Runtime, effective-resolution, permission, attempt, usage, and inspector surfaces use the same shared runtime identity snapshot.
+  - Requested account, Requested binding, Effective account, and Switch reason labels remain visible where projected.
+  - UI surfaces may use grouped /model/effort/persona/account disclosure without losing the underlying requested/effective identity fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: identity_projection_display_drift
+reasoning_tier: high
+context_scope: requested_effective_identity_projection
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: runtime_identity_projection
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "Requested account"
+  - "Requested binding"
+  - "Effective account"
+  - "Switch reason"
+  - "`/model/effort/persona/account`"
+  - "effective-resolution"
+  - "attempt"
+  - "usage"
+  - "inspector"
+negative_constraints:
+  - "Grouped UI disclosure must not collapse the underlying requested/effective identity snapshot."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-016 - Execution Role Operational Identity Attribution
+
+```yaml
+plan_unit_id: CV-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Shared runtime identity carries execution_role / actor-role with
+  requested/effective operational identity so audit, approval, attribution,
+  attempt, usage, and inspector joins keep the intent-versus-effective split
+  through the shared runtime/governance record envelope.
+gui_related: false
+gui_classification_reason: This unit defines attribution and runtime/governance envelope identity rather than UI layout.
+split_recommended: false
+depends_on: [CV-006, CV-011]
+unblocks: [CV-015]
+acceptance_criteria:
+  - Shared runtime identity carries execution_role / actor-role.
+  - Requested/effective operational identity remains visible to audit, approval, attribution, attempt, usage, and inspector joins.
+  - Actor envelope behavior follows the shared runtime/governance record envelope and is not run-centric.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: operational_identity_attribution_drift
+reasoning_tier: high
+context_scope: operational_identity_attribution
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: operational_identity_attribution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "`execution_role`"
+  - "`actor-role`"
+  - "operational identity"
+  - "intent-versus-effective split"
+negative_constraints:
+  - "The actor envelope is not `run-centric`."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-017 - Gemini Account Resolution Invariants
+
+```yaml
+plan_unit_id: CV-017
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Gemini account resolution uses the same requested-vs-effective identity
+  contract and supports multiple API-key accounts and multiple OAuth accounts
+  simultaneously; OAuth-backed Gemini entries may require project-context and
+  /project quota resolution beyond token presence.
+gui_related: false
+gui_classification_reason: This unit defines provider/account resolution semantics rather than visible presentation.
+split_recommended: false
+depends_on: [CV-013, CV-014]
+unblocks: [CV-018]
+acceptance_criteria:
+  - Gemini uses the shared requested-vs-effective identity contract.
+  - Gemini can support multiple API-key accounts and multiple OAuth accounts simultaneously.
+  - OAuth-backed Gemini entries may require project-context and /project quota resolution beyond token presence.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: gemini_account_resolution_drift
+reasoning_tier: high
+context_scope: gemini_account_resolution
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: provider_account_resolution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "Gemini"
+  - "API-key accounts"
+  - "OAuth accounts"
+  - "`project-context`"
+  - "`/project`"
+  - "quota resolution"
+negative_constraints:
+  - "Token presence alone must not be treated as sufficient when project-context or /project quota resolution is required."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-018 - Gemini Display And Provider Grouping Constraint
+
+```yaml
+plan_unit_id: CV-018
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Gemini /model/auth display shorthand preserves account selection, switch
+  reason, concrete auth mode, and vs-effective differences; provider grouping
+  may expose one Gemini family surface or /provider card but must not mint fake
+  API-key/OAuth pseudo-providers.
+gui_related: true
+gui_classification_reason: /model/auth shorthand, /provider card grouping, and displayed account differences are user-visible provider UI behavior.
+split_recommended: false
+depends_on: [CV-015, CV-017]
+unblocks: []
+acceptance_criteria:
+  - /model/auth display preserves account selection, switch reason, concrete auth mode, and vs-effective differences.
+  - Provider grouping may expose one Gemini family surface or /provider card.
+  - Provider grouping does not mint fake API-key/OAuth pseudo-providers.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: gemini_provider_grouping_drift
+reasoning_tier: high
+context_scope: gemini_display_provider_grouping
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: provider_display_grouping
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0026
+preserved_exact_tokens:
+  - "`/model/auth`"
+  - "`vs-effective`"
+  - "`/provider`"
+  - "`pseudo-providers`"
+negative_constraints:
+  - "Gemini provider grouping must not mint fake API-key/OAuth `pseudo-providers`."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 3776-3787 >>>
+### CV-019 - Account Pressure Reset Horizon Fields
+
+```yaml
+plan_unit_id: CV-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Usage/account pressure that blocks execution carries monthly_plan_or_billing_cycle
+  and provider cooldown_until facts in the runtime identity/pressure envelope
+  rather than hiding reset horizons in prose.
+gui_related: false

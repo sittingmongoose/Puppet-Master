@@ -1,0 +1,376 @@
+<<< CONTEXT_BEFORE 4726-4737 >>>
+- Plans/assistant-memory-subsystem.md
+- Plans/Goal_Runtime_System.md
+preserved_exact_tokens:
+- extrepo-20260703-0048
+- P1-LOCAL-LLM-CONTEXT-CAPS
+- P1
+- Apply context caps to utility/memory/subagent models
+negative_constraints: []
+proposal_or_recommendation: Local utility/memory/subagent contexts enforce model caps and bounded summaries; no hidden full-history stuffing.
+compile_disposition: create_new_planunit
+```
+
+
+<<< AUTHORITATIVE_CORE 4738-5098 >>>
+### PP-068 - P1-PROMPT-CACHE-STABILITY-LINTER
+
+```yaml
+plan_unit_id: PP-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-PROMPT-CACHE-STABILITY-LINTER (P1) is compiled as canonical Puppet Master intent for Prompt/cache/token efficiency hygiene: Add PromptCacheStabilityLinter: stable_prefix_hash, volatile_context_hashes, tool/schema ordering hash, skill catalog slice hash, file-list volatility, date/time/cwd injection warnings, provider cache marker support, and cache hit expectation. The preserved PM gap/delta is: PM should add a linter/diagnostic that explains why cache hit rate is low, not only record usage. The observed external-repo signal remains source-lineage evidence: OpenCode reports system-environment prompt cache invalidation and provider cache-marker gaps; Pi changelog includes prompt caching and cached-token accounting; Codex skills use progressive disclosure; Cline fixes prompt-cache detection and compaction routing.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Two identical tasks show stable prefix preserved.
+- Moving cwd/date/git status to late volatile block improves cache expectation.
+- Dynamic tool result not placed before stable instructions.
+- GUI explains cache miss source.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Two identical tasks show stable prefix preserved.
+- Moving cwd/date/git status to late volatile block improves cache expectation.
+- Dynamic tool result not placed before stable instructions.
+- GUI explains cache miss source.
+risk_class: p1_context_cache_hardening
+reasoning_tier: standard
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/Models_System.md
+- Plans/usage-feature.md
+- Plans/Tools.md
+node_compile_hint:
+  mode: p1_prompt_cache_stability_linter
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0071
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0071
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0067/P1-PROMPT-CACHE-STABILITY-LINTER@line=67
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0067/P1-PROMPT-CACHE-STABILITY-LINTER
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:13
+source_atom_ids:
+- atom-0071
+external_atom_id: extrepo-20260703-0067
+source_row_id: P1-PROMPT-CACHE-STABILITY-LINTER
+priority: P1
+finding_family: Prompt/cache/token efficiency hygiene
+source_repos:
+- OpenCode
+- Cline
+- Pi
+- Codex
+target_docs:
+- Plans/Models_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/usage-feature.md
+- Plans/Tools.md
+owner_hints:
+- Plans/Models_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/usage-feature.md
+- Plans/Tools.md
+preserved_exact_tokens:
+- extrepo-20260703-0067
+- P1-PROMPT-CACHE-STABILITY-LINTER
+- P1
+- Prompt/cache/token efficiency hygiene
+- OpenCode
+- Cline
+- Pi
+- Codex
+negative_constraints: []
+observed_signal: OpenCode reports system-environment prompt cache invalidation and provider cache-marker gaps; Pi changelog includes prompt caching and cached-token accounting; Codex skills use progressive disclosure; Cline fixes prompt-cache detection and compaction routing.
+pm_current_coverage: Previous pass recommended ContextEpoch/PromptCachePolicy; PM has provider cache metadata boundaries and compaction metadata.
+pm_gap_or_delta: PM should add a linter/diagnostic that explains why cache hit rate is low, not only record usage.
+proposal_or_recommendation: 'Add PromptCacheStabilityLinter: stable_prefix_hash, volatile_context_hashes, tool/schema ordering hash, skill catalog slice hash, file-list volatility, date/time/cwd injection warnings, provider cache marker support, and cache hit expectation.'
+compile_disposition: create_new_planunit
+```
+
+### PP-069 - P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+
+```yaml
+plan_unit_id: PP-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1) is compiled as canonical Puppet Master intent for AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling: Imported external-repo finding extrepo-20260703-0080 / P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1). The preserved PM gap/delta is: ContextEpoch covered instruction hashes, but the source-integrity side should explicitly track missing/invalid/duplicate/stale instruction sources, encodings, and loaded-scope precedence. The observed external-repo signal remains source-lineage evidence: Codex changelog includes reliable AGENTS loading, invalid UTF-8 warnings, plugin skill path handling, and root marketplace layout fixes. | Cline/OpenCode expose custom rules/skills/prompts/provider configs that can drift across session/resume/import paths.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- InstructionSetEpoch includes source path, encoding status, parse status, precedence, hash, loaded scope, and denial reason.
+- Invalid UTF-8 or unreadable instruction files generate user-visible warnings and do not silently drop rules.
+- Resume/fork/import preserves or intentionally re-resolves instruction scope with a receipt.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- InstructionSetEpoch includes source path, encoding status, parse status, precedence, hash, loaded scope, and denial reason.
+- Invalid UTF-8 or unreadable instruction files generate user-visible warnings and do not silently drop rules.
+- Resume/fork/import preserves or intentionally re-resolves instruction scope with a receipt.
+risk_class: p1_agent_control_subagents_hardening
+reasoning_tier: standard
+context_scope: agent_control_subagents
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: p1_instruction_source_integrity_epoch
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0084
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0084
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0080/P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH@line=80
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0080/P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:7
+source_atom_ids:
+- atom-0084
+external_atom_id: extrepo-20260703-0080
+source_row_id: P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+priority: P1
+finding_family: AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling
+target_docs:
+- Plans/Prompt_Pipeline.md
+- Plans/Skills_System.md
+- Goal_Runtime_System.md
+- Models_System.md
+- Contracts_V0.md
+owner_hints:
+- Plans/Prompt_Pipeline.md
+- Plans/Skills_System.md
+- Goal_Runtime_System.md
+- Models_System.md
+- Contracts_V0.md
+preserved_exact_tokens:
+- extrepo-20260703-0080
+- P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
+- P1
+- AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling
+negative_constraints: []
+observed_signal: Codex changelog includes reliable AGENTS loading, invalid UTF-8 warnings, plugin skill path handling, and root marketplace layout fixes. | Cline/OpenCode expose custom rules/skills/prompts/provider configs that can drift across session/resume/import paths.
+pm_gap_or_delta: ContextEpoch covered instruction hashes, but the source-integrity side should explicitly track missing/invalid/duplicate/stale instruction sources, encodings, and loaded-scope precedence.
+relationship_to_prior_reports: Refines ContextEpoch with instruction integrity semantics.
+compile_disposition: create_new_planunit
+```
+
+### PP-070 - P0-CONTEXT-OBJECT-BUDGET
+
+```yaml
+plan_unit_id: PP-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P0-CONTEXT-OBJECT-BUDGET (P0) is compiled as canonical Puppet Master intent for Context object/media budget and dedupe: Imported external-repo finding extrepo-20260703-0093 / P0-CONTEXT-OBJECT-BUDGET (P0). The preserved PM gap/delta is: ContextEpoch should budget media/object artifacts separately from text tokens and dedupe repeated objects. The observed external-repo signal remains source-lineage evidence: Compaction checkpoints re-embed screenshots until multi-GB state/RSS runaway.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Identical screenshots are referenced by hash across checkpoints
+- Object budget warnings trigger before runaway RSS
+- Replay uses artifact refs instead of repeated by-value embedding
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Identical screenshots are referenced by hash across checkpoints
+- Object budget warnings trigger before runaway RSS
+- Replay uses artifact refs instead of repeated by-value embedding
+risk_class: p0_context_cache_hardening
+reasoning_tier: high
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: p0_context_object_budget
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0097
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0097
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0093/P0-CONTEXT-OBJECT-BUDGET@line=93
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0093/P0-CONTEXT-OBJECT-BUDGET
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:6
+source_atom_ids:
+- atom-0097
+external_atom_id: extrepo-20260703-0093
+source_row_id: P0-CONTEXT-OBJECT-BUDGET
+priority: P0
+finding_family: Context object/media budget and dedupe
+source_repos:
+- OpenAI Codex
+preserved_exact_tokens:
+- extrepo-20260703-0093
+- P0-CONTEXT-OBJECT-BUDGET
+- P0
+- Context object/media budget and dedupe
+- OpenAI Codex
+negative_constraints: []
+observed_signal: Compaction checkpoints re-embed screenshots until multi-GB state/RSS runaway.
+pm_gap_or_delta: ContextEpoch should budget media/object artifacts separately from text tokens and dedupe repeated objects.
+compile_disposition: create_new_planunit
+```
+
+### PP-071 - P1-INSTRUCTION-IMPORT-GRAPH
+
+```yaml
+plan_unit_id: PP-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-INSTRUCTION-IMPORT-GRAPH (P1) is compiled as canonical Puppet Master intent for Instruction import graph integrity: Imported external-repo finding extrepo-20260703-0095 / P1-INSTRUCTION-IMPORT-GRAPH (P1). The preserved PM gap/delta is: Instruction imports need hashes, cycle checks, scope, trust source, staleness, and inclusion in ContextEpoch. The observed external-repo signal remains source-lineage evidence: AGENTS @path import feature request; Codex instructions/skills make imported instructions a live context source.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Import cycles block or cap safely
+- Changed imported file changes instruction epoch
+- External/untrusted import cannot gain broader scope silently
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Import cycles block or cap safely
+- Changed imported file changes instruction epoch
+- External/untrusted import cannot gain broader scope silently
+risk_class: p1_instruction_integrity_hardening
+reasoning_tier: standard
+context_scope: instruction_integrity
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: p1_instruction_import_graph
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0099
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0099
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0095/P1-INSTRUCTION-IMPORT-GRAPH@line=95
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0095/P1-INSTRUCTION-IMPORT-GRAPH
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:8
+source_atom_ids:
+- atom-0099
+external_atom_id: extrepo-20260703-0095
+source_row_id: P1-INSTRUCTION-IMPORT-GRAPH
+priority: P1
+finding_family: Instruction import graph integrity
+source_repos:
+- Pi
+- OpenAI Codex
+preserved_exact_tokens:
+- extrepo-20260703-0095
+- P1-INSTRUCTION-IMPORT-GRAPH
+- P1
+- Instruction import graph integrity
+- Pi
+- OpenAI Codex
+negative_constraints: []
+observed_signal: AGENTS @path import feature request; Codex instructions/skills make imported instructions a live context source.
+pm_gap_or_delta: Instruction imports need hashes, cycle checks, scope, trust source, staleness, and inclusion in ContextEpoch.
+compile_disposition: create_new_planunit
+```
+
+### PP-072 - context_epoch
+
+```yaml
+plan_unit_id: PP-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  context_epoch (P0) is compiled as canonical Puppet Master intent for context_epoch: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes The preserved PM gap/delta is: No first-class ContextEpoch object found in repo scan The observed external-repo signal remains source-lineage evidence: OpenCode v2 session/context epochs, compaction as active representation replacement
+gui_related: true
+gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Plan index validate
+- context epoch replay fixtures
+- model-switch compaction tests
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Plan index validate
+- context epoch replay fixtures
+- model-switch compaction tests
+risk_class: p0_context_cache_hardening
+reasoning_tier: high
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: context_epoch
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0104
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0104
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0100/context_epoch@line=100
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0100/context_epoch
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:2
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+source_atom_ids:
+- atom-0104
+external_atom_id: extrepo-20260703-0100
+source_row_id: context_epoch
+priority: P0
+finding_family: context_epoch
+target_docs:
+- Plans/Prompt_Pipeline.md
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/usage-feature.md
+owner_hints:
+- Plans/Prompt_Pipeline.md
+- Plans/storage-plan.md
+- Plans/assistant-chat-design.md
+- Plans/usage-feature.md
+preserved_exact_tokens:
+- extrepo-20260703-0100
+- context_epoch
+- P0
+negative_constraints: []
+observed_signal: OpenCode v2 session/context epochs, compaction as active representation replacement
+pm_current_coverage: Compaction rules, context usage UI, low-context warnings, reasoning replay
+pm_gap_or_delta: No first-class ContextEpoch object found in repo scan
+proposal_or_recommendation: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes
+compile_disposition: create_new_planunit
+```

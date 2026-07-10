@@ -8,6 +8,9 @@
     /* (W3 prune: #pm6-proj-token-standin-w2prune removed — part 02 defines
        all TOKENS.md contract vars; every usage carries an inline fallback.) */
 
+    /* ---- page gutters (base rule in frozen part 08 keeps overflow/padding-bottom) ---- */
+    .page-projects { padding-left: var(--2xl); padding-right: var(--2xl); }
+
     /* ---- grid + entrance ---- */
     .page-projects .projects-grid-bento {
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -268,13 +271,13 @@
     [data-theme^="retro"] .pm6-proj-empty,
     [data-theme^="retro"] .pm6-proj-empty button { border-radius: 0; }
     [data-theme^="retro"] .pm6-proj-glyph { color: var(--accent-lime); background: transparent; }
+    /* project sheet = overlay reading plate (both variants) */
     [data-theme^="glass"] .pm6-proj-sheet {
-      background: rgba(var(--glass-tint-rgb, 16, 20, 34), calc(var(--glass-alpha, 0.55) + 0.25));
+      background: var(--pm6-glass-plate);
       box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255, 255, 255, 0.35)),
                   inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, 0.08)),
-                  0 12px 36px rgba(0, 0, 0, 0.38);
+                  var(--pm6-glass-drop);
     }
-    [data-theme="glass-light"] .pm6-proj-sheet { background: var(--surface-elevated); }
     [data-theme^="glass"] .pm6-proj-glyph { border-color: var(--glass-hairline, rgba(255, 255, 255, 0.08)); }
 
     /* ---- reduced motion ---- */

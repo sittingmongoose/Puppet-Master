@@ -1,0 +1,771 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000045-EXACT-WIN-18D335791D83-0002",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_c_parallel_dispatcher_epoch_0013/leaf_0045_exact_attempt_0013",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Orchestrator_Page.md",
+    "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
+    "core_sha256": "1fbfd6c05dda1e4cdf26094f4a899e1632f00cdaa7df99e388252d009ce189a7",
+    "core_range": [311, 697]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-45-I001",
+      "item_type": "contract",
+      "title": "SCM lineage is mandatory and non-fabricating",
+      "statement": "Every mutation-capable attempt must resolve to repo, worktree, branch, and head identity; blocked SCM episodes expose concrete worktree, file, safe-point, and recovery information, and missing lineage is explicitly presented rather than invented.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 316,
+          "line_end": 316,
+          "exact_quote": "- SCM lineage acceptance is explicit for Orchestrator surfaces: every mutation-capable attempt resolves to `repo/worktree/branch/head`; every `dirty_worktree` or `worktree_conflict` blocked episode shows the exact worktree, affected files summary, safe-point relation, and recovery target; and every run with SCM side effects shows at least partial receipts instead of opaque generic history rows.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 317,
+          "line_end": 317,
+          "exact_quote": "- Cross-surface deep links from Orchestrator to Source Control, GitHub Actions, Docker Manager, or Kubernetes owner panels must reopen with stable context after restart. When lineage is incomplete, Orchestrator labels the view as partial lineage; it must never silently omit missing hops or invent repo, worktree, branch, head, receipt, or recovery targets.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["scm_lineage", "cross_surface_routes"]
+    },
+    {
+      "item_id": "A005-45-I002",
+      "item_type": "gap",
+      "title": "Restart-stable route payload and partial-lineage contract are not closed",
+      "statement": "The source requires identity-preserving route payloads and restart-stable deep links, but does not define a payload schema, persistence owner, missing-hop representation, expiry/version behavior, or an executable restart oracle in this core.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 314,
+          "line_end": 314,
+          "exact_quote": "- run detail can open review mode scoped to that run's commit range or worktree, preserving run, lane, package, and worktree identity in the route payload.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 317,
+          "line_end": 317,
+          "exact_quote": "- Cross-surface deep links from Orchestrator to Source Control, GitHub Actions, Docker Manager, or Kubernetes owner panels must reopen with stable context after restart. When lineage is incomplete, Orchestrator labels the view as partial lineage; it must never silently omit missing hops or invent repo, worktree, branch, head, receipt, or recovery targets.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "contract_under_specification",
+      "impact": "Independent builders can serialize different route identities and disagree on when a lineage view is partial or invalid after restart.",
+      "builder_discretion": "Route encoding, persistence, versioning, missing-hop model, and restart recovery remain discretionary.",
+      "feature_keys": ["review_route", "partial_lineage", "restart_persistence"]
+    },
+    {
+      "item_id": "A005-45-I003",
+      "item_type": "capability",
+      "title": "Conflict Assistant is a scoped Source Control handoff",
+      "statement": "Blocked worktree cards expose affected files and invoke a named command that routes to the Source Control Changes conflict group.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 315,
+          "line_end": 315,
+          "exact_quote": "- blocked worktree cards should include affected file list and an `Open Conflict Assistant` action that routes to the `Source Control > Changes` conflict group through `cmd.source_control.open_conflict`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["conflict_assistant"]
+    },
+    {
+      "item_id": "A005-45-I004",
+      "item_type": "gap",
+      "title": "Promotion-class gates are named but not differentiated",
+      "statement": "Three promotion classes are enumerated, but the source gives only a common list of evidence categories and does not specify the gate predicate, required evidence set, failure outcome, or receipt shape for each class.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 323,
+          "line_end": 323,
+          "exact_quote": "- Promotion classes are `lane_to_package`, `package_to_seam_available`, and `seam_complete`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 324,
+          "line_end": 324,
+          "exact_quote": "- Each promotion class carries exact gate and evidence expectations: promotion gate verdict, lineage refs, required verification evidence, and promotion receipt refs.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "missing_per_variant_contract",
+      "impact": "Promotion eligibility and evidence sufficiency can diverge across implementations.",
+      "builder_discretion": "Builders must invent class-specific gates, evidence cardinality, receipt schema, and rejection/retry behavior.",
+      "feature_keys": ["promotion_gates"]
+    },
+    {
+      "item_id": "A005-45-I005",
+      "item_type": "state_transition",
+      "title": "Concern lifecycle transitions and revalidation guards are explicit",
+      "statement": "Concern state is durable across active, acknowledged, resolved, and dismissed, with evidence/rationale requirements and a reopen path when new evidence invalidates terminal presentation states.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 354,
+          "line_end": 354,
+          "exact_quote": "- Lifecycle states are exactly `active`, `acknowledged`, `resolved`, and `dismissed`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 360,
+          "line_end": 360,
+          "exact_quote": "- The concern lifecycle transition matrix is owner prose here: `active -> acknowledged` records operator awareness without changing truth, `active | acknowledged -> resolved` requires evidence that the underlying issue changed, `active | acknowledged -> dismissed` requires a rationale that the concern presentation is intentionally hidden or rejected as actionable framing, and `resolved | dismissed -> active` is the reopen path when new evidence invalidates the prior resolution or dismissal. Resolved and dismissed guard rules require current projection data or direct record revalidation before mutation, and every transition persists through `concern_record` plus `concern_projection` linkage rather than a page-local status flag.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["concern_lifecycle"]
+    },
+    {
+      "item_id": "A005-45-I006",
+      "item_type": "contract",
+      "title": "Concern source, durable record, and consumer projection are separate",
+      "statement": "Raw sightings, durable concern state, and rendered consumer projections are distinct layers; transitions persist through record/projection linkage and are not page-local state.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 372,
+          "line_end": 372,
+          "exact_quote": "- `concern_source_event_ref`, `concern_record`, and `concern_projection` are separate structural layers.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 373,
+          "line_end": 373,
+          "exact_quote": "- Source events describe raw sightings, records describe durable state, and projections describe rendered consumer views.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["concern_record", "concern_projection"]
+    },
+    {
+      "item_id": "A005-45-I007",
+      "item_type": "gap",
+      "title": "Minimum concern shape conflicts with the stated owner contract",
+      "statement": "The owner contract requires governance metadata and separate owner, creator, and resolver concepts, and names `concern_source_event_ref`; the recommended required-field list instead names `source_event_ref` and omits owner, creator, resolver, resolution_kind, and governance metadata. Required serialization is therefore not deterministic.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 350,
+          "line_end": 350,
+          "exact_quote": "- The owner contract defines `concern_id`, `project_id`, run refs, scope refs, evidence/source refs, lineage refs, severity, category, status, and governance metadata.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 367,
+          "line_end": 367,
+          "exact_quote": "- `owner_kind` / `owner_ref` are separate from `created_by_kind` / `created_by_ref`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 368,
+          "line_end": 368,
+          "exact_quote": "- Resolver authority is modeled separately from both owner and creator.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 376,
+          "line_end": 376,
+          "exact_quote": "- Required fields: `concern_id`, `project_id`, `run_ref`, `scope_ref`, `source_event_ref`, `evidence_refs[]`, `artifact_refs[]`, `lineage_refs[]`, `severity`, `category`, `status`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect?`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "intra_document_contract_conflict",
+      "impact": "Producers and consumers can emit incompatible concern records, lose authority provenance, or fail to resolve the source-event reference consistently.",
+      "builder_discretion": "Builders must choose field names, requiredness, cardinality for run/scope refs, and where authority/governance data lives.",
+      "feature_keys": ["concern_schema"]
+    },
+    {
+      "item_id": "A005-45-I008",
+      "item_type": "gap",
+      "title": "Weak-integration category and subtype semantics are ambiguous",
+      "statement": "`weak_integration` is declared to be the concern category, while a second canonical enum of wiring, workflow, state, gui, and design is called the weak-integration taxonomy without naming the field that carries it or stating whether it replaces or refines category.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 351,
+          "line_end": 351,
+          "exact_quote": "- `weak_integration` is the concern category for owner/consumer seams whose live owner record, consumer projection, or corroborating evidence is absent, stale, degraded, or inconsistent; it does not create a separate warning family outside the concern lifecycle.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 361,
+          "line_end": 361,
+          "exact_quote": "- Weak-integration concern taxonomy uses the canonical enum `wiring | workflow | state | gui | design`. `wiring` covers missing command, route, event, or handler joins; `workflow` covers broken or under-specified multi-step execution paths; `state` covers stale, degraded, or contradictory owner/projection state; `gui` covers consumer-surface behavior that fails to expose the owner truth; and `design` covers unresolved owner/consumer responsibility gaps.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "taxonomy_field_ambiguity",
+      "impact": "Filtering, storage, metrics, and lifecycle consumers can disagree on the canonical category value.",
+      "builder_discretion": "A subtype field name, nesting model, and migration rule remain undefined.",
+      "feature_keys": ["weak_integration"]
+    },
+    {
+      "item_id": "A005-45-I009",
+      "item_type": "authority",
+      "title": "Concern ownership, creation, and resolution are intentionally separate",
+      "statement": "Concern identity survives owner reassignment, and resolver authority is not inferred from either owner or creator identity.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 369,
+          "line_end": 369,
+          "exact_quote": "- Ownership may change without changing concern identity.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 381,
+          "line_end": 381,
+          "exact_quote": "- `concern resolver` is distinct from owner and source roles.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["concern_authority"]
+    },
+    {
+      "item_id": "A005-45-I010",
+      "item_type": "gap",
+      "title": "Resolver and concern-action authorization matrix is asserted but absent",
+      "statement": "The source says resolver authority is separate and that acknowledge, dismiss, resolve, and lineage edits have a confirmation matrix, but this core does not enumerate allowed actors, confirmation levels, audit fields, or denied-action behavior per operation.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 359,
+          "line_end": 359,
+          "exact_quote": "- It carries `resolution_kind`, including `accepted_risk`, together with a concern-action confirmation matrix for acknowledge, dismiss, resolve, and lineage-edit operations.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 368,
+          "line_end": 368,
+          "exact_quote": "- Resolver authority is modeled separately from both owner and creator.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 649,
+          "line_end": 649,
+          "exact_quote": "  Concern actions expose authority, confirmation level, rationale requirements, reversibility, audit fields, compact inspectors, route-open full records, and narrow user-facing affordances.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "missing_authorization_matrix",
+      "impact": "A mutation-capable implementation cannot determine who may perform each concern action or how denial and confirmation must behave.",
+      "builder_discretion": "Actor mapping, confirmation policy, audit payload, reversibility mechanics, and denial UX remain open.",
+      "feature_keys": ["concern_actions", "resolver_authority"]
+    },
+    {
+      "item_id": "A005-45-I011",
+      "item_type": "gui_truth",
+      "title": "Compact inspectors do not substitute for canonical full records",
+      "statement": "Summary inspectors show currentness, allowed actions, rationale, and links, while dense records open through canonical routes instead of expanding inline.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 362,
+          "line_end": 362,
+          "exact_quote": "- Inspector and full-record behavior stay split. Summary/action inspectors show compact currentness, allowed actions, rationale, and links; dense full-record views open through canonical route/open contracts to the underlying concern, source event, projection, or governance record instead of expanding giant inline records inside the inspector.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["concern_inspector"]
+    },
+    {
+      "item_id": "A005-45-I012",
+      "item_type": "contract",
+      "title": "Orchestrator page boundary and live tab set are explicit",
+      "statement": "Orchestrator owns its projections and run-control intents, not canonical runtime, storage, or scheduler truth; the live surface has seven named tabs and treats legacy tab/tier labels as compatibility inputs only.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 400,
+          "line_end": 400,
+          "exact_quote": "  Orchestrator owns scheduling, concern tracking, blocked-state handling, runtime identity presentation, page layout and controls, view-model projections, and run-control intents for the Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger tab set, while runtime, storage, and scheduler contracts own canonical truth.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 411,
+          "line_end": 411,
+          "exact_quote": "  - The live tab set is Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 412,
+          "line_end": 412,
+          "exact_quote": "  - Tier, widget, and legacy tab labels remain compatibility inputs rather than execution authority.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["orchestrator_page_shell"]
+    },
+    {
+      "item_id": "A005-45-I013",
+      "item_type": "capability",
+      "title": "Containerized-host information is a projection-only capability",
+      "statement": "Orchestrator may render host readiness, assignments, blockers, access pivots, receipt links, and owner routes, while host mutation semantics remain with their owner contracts and no Hosts top-level tab is added.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 466,
+          "line_end": 466,
+          "exact_quote": "  Orchestrator surfaces containerized-host readiness, assignment, blocker, access, and receipt projections for runs and",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 470,
+          "line_end": 470,
+          "exact_quote": "  it does not own local Docker, Kubernetes, SSH, shell, file, or cleanup mutation semantics and does not create a new",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 480,
+          "line_end": 480,
+          "exact_quote": "  - No new top-level Orchestrator Hosts tab is created by this compile.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["containerized_host_projection"]
+    },
+    {
+      "item_id": "A005-45-I014",
+      "item_type": "authority",
+      "title": "Stale host projections cannot authorize sensitive actions",
+      "statement": "Mutation and launch requests resolve through HostCapabilityCommand and owner receipts; stale or missing projection state must degrade or block the affordance.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 471,
+          "line_end": 471,
+          "exact_quote": "  top-level Orchestrator tab for Hosts. Stale projections cannot authorize sensitive actions; all mutation or launch",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 472,
+          "line_end": 472,
+          "exact_quote": "  requests resolve through HostCapabilityCommand and owner receipts.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 481,
+          "line_end": 481,
+          "exact_quote": "  - Stale or missing host projections degrade or block the visible affordance rather than authorizing sensitive actions.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["host_authority", "projection_freshness"]
+    },
+    {
+      "item_id": "A005-45-I015",
+      "item_type": "gap",
+      "title": "HostCapabilityCommand I/O and failure recovery are unspecified",
+      "statement": "The command and owner receipts are named as the mandatory mutation path, but the core defines no command fields, actor/capability proof, idempotency key, result/receipt shape, blocked_reason_code enum, timeout, cancellation, retry, or recovery transition.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 472,
+          "line_end": 472,
+          "exact_quote": "  requests resolve through HostCapabilityCommand and owner receipts.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 478,
+          "line_end": 478,
+          "exact_quote": "  - Orchestrator run details can display host readiness, active assignments, blocked_reason_code, access pivots, and receipt links.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "missing_command_and_recovery_contract",
+      "impact": "Sensitive host operations cannot be implemented interoperably or safely from this core, and UI recovery behavior is indeterminate.",
+      "builder_discretion": "Command input/output, authorization proof, error taxonomy, idempotency, retry/cancel, and receipt verification are open.",
+      "feature_keys": ["HostCapabilityCommand", "host_recovery"]
+    },
+    {
+      "item_id": "A005-45-I016",
+      "item_type": "gap",
+      "title": "Host freshness and access-pivot security policy are not testable",
+      "statement": "The source requires stale projections not to authorize sensitive actions and exposes access URL pivots, but does not define freshness computation, direct revalidation, authorization scope, URL redaction, secret handling, or safe external-navigation behavior.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 469,
+          "line_end": 469,
+          "exact_quote": "  payloads, active assignments, access URL pivots, receipt/evidence links, and Docker/Hosts routes from run details, but",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 471,
+          "line_end": 471,
+          "exact_quote": "  top-level Orchestrator tab for Hosts. Stale projections cannot authorize sensitive actions; all mutation or launch",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "security_privacy_under_specification",
+      "impact": "A stale or overexposed access pivot could leak host endpoints or enable a sensitive launch under inconsistent freshness rules.",
+      "builder_discretion": "Freshness thresholds, revalidation protocol, URL display/redaction, authorization, and navigation controls remain open.",
+      "feature_keys": ["access_pivots", "projection_freshness"]
+    },
+    {
+      "item_id": "A005-45-I017",
+      "item_type": "gap",
+      "title": "Acceptance surfaces do not prove runtime behavior",
+      "statement": "The accepted units rely on planning/index validators, and the host behavior names only a future fixture. The core provides no current executable oracle for route restart survival, lifecycle persistence, authority rejection, stale projection blocking, or HostCapabilityCommand receipts.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 482,
+          "line_end": 482,
+          "exact_quote": "validation_surfaces:",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 483,
+          "line_end": 483,
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 484,
+          "line_end": 484,
+          "exact_quote": "  - future Orchestrator host-projection fixture",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "missing_executable_acceptance_oracle",
+      "impact": "Plan structure can validate while mutation, persistence, security, and GUI behavior remain unverified.",
+      "builder_discretion": "Runtime test harnesses, fixtures, expected receipts, and failure assertions are not fixed.",
+      "feature_keys": ["acceptance_oracles"]
+    },
+    {
+      "item_id": "A005-45-I018",
+      "item_type": "contract",
+      "title": "Legacy concern aliases are compatibility-only",
+      "statement": "Legacy concern routes and labels resolve to the canonical lifecycle/projection owner and do not create new route, status, storage, or owner families.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 363,
+          "line_end": 363,
+          "exact_quote": "- Legacy import and search aliases `/concern`, `/dismissed`, `/guard/persistence`, and `trust-state` resolve to this concern record/projection lifecycle owner; they are compatibility aliases only and do not create separate route, status, or storage families.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 364,
+          "line_end": 364,
+          "exact_quote": "- Legacy import and search labels `Concern model — formal lifecycle section`, `Seam weak-integration concern taxonomy`, `Inspector / full-record behavior split`, and `Trust/concern projection handoffs` map to the lifecycle, taxonomy, inspector, and projection rules above; they are compatibility labels only and do not create separate owner sections.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["concern_compatibility_aliases"]
+    },
+    {
+      "item_id": "A005-45-I019",
+      "item_type": "gap",
+      "title": "Compatibility alias migration behavior is incomplete",
+      "statement": "Aliases are mapped conceptually, but canonicalization timing, collision precedence, persisted legacy-record migration, unknown-alias failure behavior, and deprecation/version support are not defined.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 363,
+          "line_end": 363,
+          "exact_quote": "- Legacy import and search aliases `/concern`, `/dismissed`, `/guard/persistence`, and `trust-state` resolve to this concern record/projection lifecycle owner; they are compatibility aliases only and do not create separate route, status, or storage families.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "migration_contract_under_specification",
+      "impact": "Imports, search, and persisted links may resolve differently across versions or silently collide with canonical identifiers.",
+      "builder_discretion": "Normalization phase, precedence, deprecation, migration receipts, and invalid-alias errors remain open.",
+      "feature_keys": ["concern_compatibility_aliases"]
+    },
+    {
+      "item_id": "A005-45-I020",
+      "item_type": "gap",
+      "title": "Scale and performance behavior is unspecified",
+      "statement": "The core defines worktree inventories, lineage, concern projections, evidence links, and multi-tab views, but contains no limits or behavior for pagination, virtualization, fan-out, update frequency, backpressure, large evidence sets, or restart restoration latency.",
+      "severity": "medium",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 313,
+          "line_end": 313,
+          "exact_quote": "- Worktree rows display owning package, lane, and run refs together with lifecycle state and blocked/recovery state.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 541,
+          "line_end": 541,
+          "exact_quote": "  - Shared lineage, artifact, and evidence refs stay in the record envelope.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "missing_nonfunctional_contract",
+      "impact": "Large projects can produce divergent or unusable UI behavior without a shared load and rendering contract.",
+      "builder_discretion": "Pagination, caching, rendering strategy, update cadence, load budgets, and degradation behavior remain open.",
+      "feature_keys": ["orchestrator_scale"]
+    },
+    {
+      "item_id": "A005-45-I021",
+      "item_type": "behavior",
+      "title": "Owner corrections precede consumer propagation",
+      "statement": "Canonical owner documents are corrected before consumer and mirror cleanup, and fidelity auditing runs only after both owner and consumer corrections are present.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 341,
+          "line_end": 341,
+          "exact_quote": "- Apply owner-doc corrections before consumer and mirror cleanup.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 342,
+          "line_end": 342,
+          "exact_quote": "- Rerun fidelity audit only after owner and consumer corrections are in place.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "feature_keys": ["owner_consumer_propagation"]
+    },
+    {
+      "item_id": "A005-45-I022",
+      "item_type": "gap",
+      "title": "Normative strength and partial-receipt sufficiency leave consequential discretion",
+      "statement": "A blocked-worktree UI requirement is phrased as 'should', and SCM side effects require only 'at least partial receipts' without a minimum field set or rule for when partial evidence is acceptable.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 315,
+          "line_end": 315,
+          "exact_quote": "- blocked worktree cards should include affected file list and an `Open Conflict Assistant` action that routes to the `Source Control > Changes` conflict group through `cmd.source_control.open_conflict`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 316,
+          "line_end": 316,
+          "exact_quote": "- SCM lineage acceptance is explicit for Orchestrator surfaces: every mutation-capable attempt resolves to `repo/worktree/branch/head`; every `dirty_worktree` or `worktree_conflict` blocked episode shows the exact worktree, affected files summary, safe-point relation, and recovery target; and every run with SCM side effects shows at least partial receipts instead of opaque generic history rows.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ],
+      "gap_kind": "consequential_builder_discretion",
+      "impact": "Builders can omit conflict affordances or expose materially different receipt evidence while still claiming conformance.",
+      "builder_discretion": "Mandatory status, minimum receipt completeness, partial-evidence labels, and failure behavior remain open.",
+      "feature_keys": ["conflict_assistant", "scm_receipts"]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "Lifecycle, routing, canonicalization order, page-shell, and host-projection behavior are stated, with material closure gaps captured separately.",
+      "evidence_item_ids": ["A005-45-I001", "A005-45-I005", "A005-45-I012", "A005-45-I013", "A005-45-I021"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Conflict-assistant, review routing, concern inspection, and container-host projection capabilities are identified.",
+      "evidence_item_ids": ["A005-45-I003", "A005-45-I011", "A005-45-I013"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Route payload, concern record, promotion receipt, and HostCapabilityCommand I/O are not fully specified.",
+      "evidence_item_ids": ["A005-45-I002", "A005-45-I004", "A005-45-I007", "A005-45-I015"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Several boundaries are explicit, but concern serialization, promotion gates, restart routes, and host commands remain non-deterministic.",
+      "evidence_item_ids": ["A005-45-I001", "A005-45-I004", "A005-45-I006", "A005-45-I007", "A005-45-I015"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "addressed",
+      "summary": "Concern lifecycle transitions and revalidation guards are explicit; host and command recovery transitions remain a gap.",
+      "evidence_item_ids": ["A005-45-I005", "A005-45-I015"]
+    },
+    {
+      "dimension": "authority",
+      "status": "gap_found",
+      "summary": "Owner, creator, resolver, and host-owner boundaries are stated, but per-action authorization and confirmation rules are absent.",
+      "evidence_item_ids": ["A005-45-I009", "A005-45-I010", "A005-45-I014"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Orchestrator, Source Control, runtime/storage/scheduler, host owners, and concern role separation are explicitly bounded.",
+      "evidence_item_ids": ["A005-45-I001", "A005-45-I009", "A005-45-I012", "A005-45-I013"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "gap_found",
+      "summary": "Consumer surfaces and projections are named, but consumer payload/version/refresh contracts are not fully closed.",
+      "evidence_item_ids": ["A005-45-I002", "A005-45-I006", "A005-45-I011", "A005-45-I016"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "Tab composition, compact/full-record split, conflict action, host projections, and stale-affordance behavior are specified at the behavioral level.",
+      "evidence_item_ids": ["A005-45-I003", "A005-45-I011", "A005-45-I012", "A005-45-I013", "A005-45-I014"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "SCM blocked episodes and concern reopen guards have recovery direction, while command failures, retries, cancellation, and host recovery are unspecified.",
+      "evidence_item_ids": ["A005-45-I001", "A005-45-I005", "A005-45-I015"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Stale projection denial is explicit, but sensitive-action authorization and access-pivot privacy/redaction rules are not testable.",
+      "evidence_item_ids": ["A005-45-I010", "A005-45-I014", "A005-45-I016"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "addressed",
+      "summary": "Owner-first correction and consumer cleanup order are explicit; route/projection persistence details remain a secondary gap.",
+      "evidence_item_ids": ["A005-45-I002", "A005-45-I006", "A005-45-I021"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Restart stability is required, but persistence ownership, observability, versioning, timeout, and recovery operations are not defined.",
+      "evidence_item_ids": ["A005-45-I002", "A005-45-I015"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "No normative scale limits, rendering/load budgets, pagination, backpressure, or latency oracles are present for the described inventories and projections.",
+      "evidence_item_ids": ["A005-45-I020"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Compatibility-only aliases and legacy labels are preserved, but migration, collision, precedence, and deprecation behavior are incomplete.",
+      "evidence_item_ids": ["A005-45-I012", "A005-45-I018", "A005-45-I019"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "Plan validators exist, but current executable runtime, persistence, authorization, security, and recovery oracles do not.",
+      "evidence_item_ids": ["A005-45-I017"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains across schemas, authorization, freshness, receipt sufficiency, failure recovery, compatibility, and performance.",
+      "evidence_item_ids": ["A005-45-I002", "A005-45-I004", "A005-45-I007", "A005-45-I008", "A005-45-I010", "A005-45-I015", "A005-45-I016", "A005-45-I019", "A005-45-I020", "A005-45-I022"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The primary ambiguities are concern field/taxonomy shape, per-promotion evidence, route persistence, host-command semantics, and compatibility migration.",
+      "evidence_item_ids": ["A005-45-I002", "A005-45-I004", "A005-45-I007", "A005-45-I008", "A005-45-I015", "A005-45-I019"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

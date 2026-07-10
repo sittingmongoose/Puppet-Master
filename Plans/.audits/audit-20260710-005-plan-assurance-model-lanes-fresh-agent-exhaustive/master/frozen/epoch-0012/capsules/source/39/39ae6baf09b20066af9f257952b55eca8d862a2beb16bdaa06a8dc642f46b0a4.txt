@@ -1,0 +1,358 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4926-4937 >>>
+L00004926	  - Plans/Permissions_System.md
+L00004927	  - Plans/FinalGUISpec.md
+L00004928	  - Plans/Runtime_Artifacts_Panel.md
+L00004929	  - Plans/Executor_Protocol.md
+L00004930	  - Plans/Prompt_Pipeline.md
+L00004931	  - Plans/FileSafe.md
+L00004932	```
+L00004933	
+L00004934	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00004935	
+L00004936	This addendum registers the containerized-hosts compile owner map. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, implementation files, runtime dispatch, production build tasks, or a governance seal.
+L00004937	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4938-5280 >>>
+L00004938	### 0PI-065 - Containerized Hosts Compile Owner Map
+L00004939	
+L00004940	```yaml
+L00004941	plan_unit_id: 0PI-065
+L00004942	unit_type: owner_map
+L00004943	status: accepted
+L00004944	owner_doc: Plans/00-plans-index.md
+L00004945	canonical_text: >-
+L00004946	  The containerized-hosts ledger compiles into existing owner docs rather than a new Coasts or Hosts plan doc.
+L00004947	  Containers_Registry_and_Unraid owns PM-native containerized-host capability, Docker Manager ownership, the
+L00004948	  RuntimeHostFamilyProfile whole-MVP matrix, and Docker/Hosts operational boundaries. Contracts_V0 owns
+L00004949	  host_capability_ref, host_profile_id, host instance/assignment/receipt/blocker envelopes, HostCapabilityCommand,
+L00004950	  and HostOperationRequest. storage-plan owns persisted host profile, instance, assignment, build artifact,
+L00004951	  port_access_record, receipt, projection, cleanup, and retention records. Permissions_System and FileSafe own host
+L00004952	  trust, approval, secret, mount, network, Docker socket, remote-side-effect, and FileSafe gates. Automated_Testing_System
+L00004953	  owns the containerized-host adapter, Compose-primary test path, and TestRunReceipt proof fields. Executor_Protocol,
+L00004954	  Run_Modes, Tools, orchestrator-subagent-integration, assistant-chat-design, Orchestrator_Page, Run_Graph_View,
+L00004955	  FinalGUISpec, UI_Command_Catalog, and Runtime_Artifacts_Panel consume those owner contracts for execution lanes,
+L00004956	  agent use, visible readiness, routed Docker/Hosts navigation, command envelopes, and evidence projection without
+L00004957	  becoming host mutation authorities.
+L00004958	gui_related: false
+L00004959	gui_classification_reason: This index entry records owner routing and compile lineage; GUI behavior is owned by referenced GUI PlanUnits.
+L00004960	depends_on: [PDS-003, PNC-001]
+L00004961	unblocks: []
+L00004962	acceptance_criteria:
+L00004963	  - Containerized-hosts ownership is registered without creating a separate Coasts website, a new Activity Bar slot, or a new owner doc.
+L00004964	  - "`Docker/Hosts` remains a routed primary-content page/lab opened from Docker Manager and cross-surface links while `docker_manager` remains the Activity Bar side-panel owner and command namespace."
+L00004965	  - Coasts and PMConcept.html remain source-lineage or directional evidence only.
+L00004966	  - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00004967	validation_surfaces:
+L00004968	  - python3 scripts/pm-plan-index.py validate
+L00004969	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake
+L00004970	  - git diff --check
+L00004971	risk_class: owner_map_drift
+L00004972	reasoning_tier: standard
+L00004973	context_scope: containerized_hosts_compile_owner_map
+L00004974	implementation_surfaces:
+L00004975	  - Plans/00-plans-index.md
+L00004976	node_compile_hint:
+L00004977	  mode: containerized_hosts_owner_map
+L00004978	  create_worknodes: false
+L00004979	  create_nodeseeds: false
+L00004980	source_lineage:
+L00004981	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json
+L00004982	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json
+L00004983	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl
+L00004984	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0006
+L00004985	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0017
+L00004986	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0051
+L00004987	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0054
+L00004988	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0055
+L00004989	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0056
+L00004990	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0076
+L00004991	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0082
+L00004992	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json
+L00004993	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json
+L00004994	source_atom_ids: [atom-0006, atom-0017, atom-0051, atom-0054, atom-0055, atom-0056, atom-0076, atom-0082]
+L00004995	decision_refs: [dec-0001, dec-0003, dec-0004, dec-0005, dec-0011, dec-0017, dec-0018, dec-0019, dec-0020]
+L00004996	preserved_exact_tokens:
+L00004997	  - "containerized hosts"
+L00004998	  - "Docker/Hosts"
+L00004999	  - "docker_manager"
+L00005000	  - "Activity Bar side-panel owner"
+L00005001	  - "routed primary-content page"
+L00005002	  - "Coasts source-lineage"
+L00005003	  - "PMConcept.html"
+L00005004	  - "whole thing for mvp"
+L00005005	  - "HostCapabilityCommand"
+L00005006	  - "RuntimeHostFamilyProfile"
+L00005007	negative_constraints:
+L00005008	  - Do not compile containerized-host ownership into a separate Coasts website, vendored Coasts daemon, new Hosts owner doc, new Activity Bar slot, or stale `newtools.md` owner bridge.
+L00005009	  - Do not promote Coasts runtime claims, PMConcept.html concept code, or ledger prose into product canon without PM-owned PlanUnits.
+L00005010	  - Do not call this compile governance sealed until an explicit governance seal phase refreshes generated governance artifacts.
+L00005011	owner_hints:
+L00005012	  - Plans/00-plans-index.md
+L00005013	  - Plans/Containers_Registry_and_Unraid.md
+L00005014	  - Plans/Contracts_V0.md
+L00005015	  - Plans/storage-plan.md
+L00005016	  - Plans/Permissions_System.md
+L00005017	  - Plans/FileSafe.md
+L00005018	  - Plans/Automated_Testing_System.md
+L00005019	  - Plans/Executor_Protocol.md
+L00005020	  - Plans/Run_Modes.md
+L00005021	  - Plans/Tools.md
+L00005022	  - Plans/orchestrator-subagent-integration.md
+L00005023	  - Plans/assistant-chat-design.md
+L00005024	  - Plans/Orchestrator_Page.md
+L00005025	  - Plans/Run_Graph_View.md
+L00005026	  - Plans/FinalGUISpec.md
+L00005027	  - Plans/UI_Command_Catalog.md
+L00005028	  - Plans/Runtime_Artifacts_Panel.md
+L00005029	```
+L00005030	
+L00005031	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00005032	
+L00005033	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. The ordinary compile did not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal; the later explicit seal phase refreshed generated governance/provenance artifacts without creating runtime or build artifacts.
+L00005034	
+L00005035	### 0PI-066 - 0PI-066
+L00005036	
+L00005037	```yaml
+L00005038	plan_unit_id: 0PI-066
+L00005039	unit_type: requirement
+L00005040	status: accepted
+L00005041	owner_doc: Plans/00-plans-index.md
+L00005042	canonical_text: >-
+L00005043	  The external repo system-wide improvement import from pldg-20260703-001-feature-intake is routed to existing Puppet Master subsystem owners plus the new Release_Supply_Chain owner for release/install/provenance gaps. The compile preserves GUI-first/no-PM-CLI constraints, treats terminal/CLI lessons as GUI-native runtime/provider/tool/context/agent-control contracts, keeps imported rows source-lineage-backed rather than ledger-canonical, and creates no WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks during ordinary compile; the later explicit governance seal refreshes only generated governance/provenance artifacts.
+L00005044	gui_related: false
+L00005045	gui_classification_reason: Index owner-routing metadata, not direct GUI implementation.
+L00005046	depends_on:
+L00005047	- PDS-003
+L00005048	- PNC-001
+L00005049	unblocks: []
+L00005050	acceptance_criteria:
+L00005051	- All 113 imported external repo rows and 5 import guardrails have a compiled PlanUnit or existing PlanUnit disposition.
+L00005052	- The 12 rows that arrived with empty target_docs are owner-adjudicated without asking row-by-row.
+L00005053	- Terminal lessons remain GUI-terminal/runtime contracts, not a Puppet Master CLI product surface.
+L00005054	- Only live Plans docs and allowed Plans/.plan_index outputs are changed during ordinary compile; the later explicit governance seal refreshes generated governance/provenance artifacts only.
+L00005055	validation_surfaces:
+L00005056	- python3 scripts/pm-plan-index.py validate
+L00005057	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00005058	- git diff --check
+L00005059	risk_class: owner_map_drift
+L00005060	reasoning_tier: high
+L00005061	context_scope: external_repo_system_wide_compile_owner_map
+L00005062	implementation_surfaces:
+L00005063	- Plans/00-plans-index.md
+L00005064	- Plans/00-plans-index.md
+L00005065	- Plans/Automated_Testing_System.md
+L00005066	- Plans/BinaryLocator_Spec.md
+L00005067	- Plans/CLI_Bridged_Providers.md
+L00005068	- Plans/Contracts_V0.md
+L00005069	- Plans/Executor_Protocol.md
+L00005070	- Plans/FileSafe.md
+L00005071	- Plans/FinalGUISpec.md
+L00005072	- Plans/GitHub_Integration.md
+L00005073	- Plans/Goal_Runtime_System.md
+L00005074	- Plans/MCP_Integration.md
+L00005075	- Plans/Media_Generation_and_Capabilities.md
+L00005076	- Plans/Models_System.md
+L00005077	- Plans/Multi-Account.md
+L00005078	- Plans/Permissions_System.md
+L00005079	- Plans/Plan_Document_System.md
+L00005080	- Plans/Plan_To_Node_Compilation.md
+L00005081	- Plans/Planning_Ledger_System.md
+L00005082	- Plans/Plugins_System.md
+L00005083	- Plans/Prompt_Pipeline.md
+L00005084	- Plans/Provider_OpenCode.md
+L00005085	- Plans/Release_Supply_Chain.md
+L00005086	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005087	- Plans/Tools.md
+L00005088	- Plans/assistant-chat-design.md
+L00005089	- Plans/assistant-memory-subsystem.md
+L00005090	- Plans/storage-plan.md
+L00005091	- Plans/usage-feature.md
+L00005092	node_compile_hint:
+L00005093	  mode: external_repo_system_wide_owner_map
+L00005094	  create_worknodes: false
+L00005095	  create_nodeseeds: false
+L00005096	source_lineage:
+L00005097	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/current.json
+L00005098	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/state/handoff.json
+L00005099	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl
+L00005100	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl
+L00005101	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_recheck_20260703.json
+L00005102	source_atom_ids:
+L00005103	- atom-0001
+L00005104	- atom-0002
+L00005105	- atom-0003
+L00005106	- atom-0004
+L00005107	- atom-0005
+L00005108	- atom-0006
+L00005109	- atom-0007
+L00005110	- atom-0008
+L00005111	- atom-0009
+L00005112	- atom-0010
+L00005113	- atom-0011
+L00005114	- atom-0012
+L00005115	- atom-0013
+L00005116	- atom-0014
+L00005117	- atom-0015
+L00005118	- atom-0016
+L00005119	- atom-0017
+L00005120	- atom-0018
+L00005121	- atom-0019
+L00005122	- atom-0020
+L00005123	- atom-0021
+L00005124	- atom-0022
+L00005125	- atom-0023
+L00005126	- atom-0024
+L00005127	- atom-0025
+L00005128	- atom-0026
+L00005129	- atom-0027
+L00005130	- atom-0028
+L00005131	- atom-0029
+L00005132	- atom-0030
+L00005133	- atom-0031
+L00005134	- atom-0032
+L00005135	- atom-0033
+L00005136	- atom-0034
+L00005137	- atom-0035
+L00005138	- atom-0036
+L00005139	- atom-0037
+L00005140	- atom-0038
+L00005141	- atom-0039
+L00005142	- atom-0040
+L00005143	- atom-0041
+L00005144	- atom-0042
+L00005145	- atom-0043
+L00005146	- atom-0044
+L00005147	- atom-0045
+L00005148	- atom-0046
+L00005149	- atom-0047
+L00005150	- atom-0048
+L00005151	- atom-0049
+L00005152	- atom-0050
+L00005153	- atom-0051
+L00005154	- atom-0052
+L00005155	- atom-0053
+L00005156	- atom-0054
+L00005157	- atom-0055
+L00005158	- atom-0056
+L00005159	- atom-0057
+L00005160	- atom-0058
+L00005161	- atom-0059
+L00005162	- atom-0060
+L00005163	- atom-0061
+L00005164	- atom-0062
+L00005165	- atom-0063
+L00005166	- atom-0064
+L00005167	- atom-0065
+L00005168	- atom-0066
+L00005169	- atom-0067
+L00005170	- atom-0068
+L00005171	- atom-0069
+L00005172	- atom-0070
+L00005173	- atom-0071
+L00005174	- atom-0072
+L00005175	- atom-0073
+L00005176	- atom-0074
+L00005177	- atom-0075
+L00005178	- atom-0076
+L00005179	- atom-0077
+L00005180	- atom-0078
+L00005181	- atom-0079
+L00005182	- atom-0080
+L00005183	- atom-0081
+L00005184	- atom-0082
+L00005185	- atom-0083
+L00005186	- atom-0084
+L00005187	- atom-0085
+L00005188	- atom-0086
+L00005189	- atom-0087
+L00005190	- atom-0088
+L00005191	- atom-0089
+L00005192	- atom-0090
+L00005193	- atom-0091
+L00005194	- atom-0092
+L00005195	- atom-0093
+L00005196	- atom-0094
+L00005197	- atom-0095
+L00005198	- atom-0096
+L00005199	- atom-0097
+L00005200	- atom-0098
+L00005201	- atom-0099
+L00005202	- atom-0100
+L00005203	- atom-0101
+L00005204	- atom-0102
+L00005205	- atom-0103
+L00005206	- atom-0104
+L00005207	- atom-0105
+L00005208	- atom-0106
+L00005209	- atom-0107
+L00005210	- atom-0108
+L00005211	- atom-0109
+L00005212	- atom-0110
+L00005213	- atom-0111
+L00005214	- atom-0112
+L00005215	- atom-0113
+L00005216	- atom-0114
+L00005217	- atom-0115
+L00005218	- atom-0116
+L00005219	- atom-0117
+L00005220	- atom-0118
+L00005221	- atom-0119
+L00005222	- atom-0120
+L00005223	- atom-0121
+L00005224	- atom-0122
+L00005225	decision_refs:
+L00005226	- dec-0002
+L00005227	- dec-0003
+L00005228	- dec-0004
+L00005229	preserved_exact_tokens:
+L00005230	- OpenCode v1/dev/beta
+L00005231	- OpenCode v2 specs
+L00005232	- Cline
+L00005233	- Agent Zero
+L00005234	- Pi
+L00005235	- OpenAI Codex
+L00005236	- Ghostty
+L00005237	- Warp
+L00005238	- tmux
+L00005239	- GUI-first
+L00005240	- not building a CLI
+L00005241	- ContextEpoch
+L00005242	- ProviderCapabilityEpoch
+L00005243	- ToolTurnSettlement
+L00005244	- AgentControlEnvelope
+L00005245	- TerminalBackpressureState
+L00005246	- Command approval is a GUI-visible lease
+L00005247	negative_constraints:
+L00005248	- Do not translate terminal/CLI lessons into a Puppet Master CLI product shape.
+L00005249	- Do not collapse the 113 imported rows into a vague summary.
+L00005250	- Do not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs during ordinary compile; refresh governance outputs only in an explicit seal phase.
+L00005251	owner_hints:
+L00005252	- Plans/00-plans-index.md
+L00005253	- Plans/Automated_Testing_System.md
+L00005254	- Plans/BinaryLocator_Spec.md
+L00005255	- Plans/CLI_Bridged_Providers.md
+L00005256	- Plans/Contracts_V0.md
+L00005257	- Plans/Executor_Protocol.md
+L00005258	- Plans/FileSafe.md
+L00005259	- Plans/FinalGUISpec.md
+L00005260	- Plans/GitHub_Integration.md
+L00005261	- Plans/Goal_Runtime_System.md
+L00005262	- Plans/MCP_Integration.md
+L00005263	- Plans/Media_Generation_and_Capabilities.md
+L00005264	- Plans/Models_System.md
+L00005265	- Plans/Multi-Account.md
+L00005266	- Plans/Permissions_System.md
+L00005267	- Plans/Plan_Document_System.md
+L00005268	- Plans/Plan_To_Node_Compilation.md
+L00005269	- Plans/Planning_Ledger_System.md
+L00005270	- Plans/Plugins_System.md
+L00005271	- Plans/Prompt_Pipeline.md
+L00005272	- Plans/Provider_OpenCode.md
+L00005273	- Plans/Release_Supply_Chain.md
+L00005274	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00005275	- Plans/Tools.md
+L00005276	- Plans/assistant-chat-design.md
+L00005277	- Plans/assistant-memory-subsystem.md
+L00005278	- Plans/storage-plan.md
+L00005279	- Plans/usage-feature.md
+L00005280	```

@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE canonical_document_lines=16725-16736 >>>
+L00016725	  - "`blocked`"
+L00016726	  - "`awaiting_parent`"
+L00016727	  - "`These are not interchangeable.`"
+L00016728	negative_constraints:
+L00016729	  - "`blocked` and `awaiting_parent` MUST remain distinct canonical runtime meanings across permissions, events, chat projection, and recovery."
+L00016730	owner_hints:
+L00016731	  - Plans/Contracts_V0.md
+L00016732	  - Plans/Permissions_System.md
+L00016733	  - Plans/assistant-chat-design.md
+L00016734	```
+L00016735	
+L00016736	### CV-001 - Contracts V0 Explicit Residual Source-Token-Bank Disposition
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=16737-17136 >>>
+L00016737	
+L00016738	```yaml
+L00016739	plan_unit_id: CV-001
+L00016740	unit_type: source_lineage_residual_disposition
+L00016741	status: accepted
+L00016742	owner_doc: Plans/Contracts_V0.md
+L00016743	canonical_text: 'CV-001 is an explicit justified source-lineage residual disposition for Contracts_V0-S0001. The span is
+L00016744	  a source-token bank rather than coherent canonical product prose: it preserves exact tokens, aliases, owner hints, ContractRefs,
+L00016745	  audit counts, stale lineage refs, and isolated vocabulary fragments. Creating new implementation-ready PlanUnits from the
+L00016746	  remaining S0001 material would require inferring missing relationships and would risk duplicating completed CV-002 through
+L00016747	  CV-278, especially the already mapped route/open compatibility material carried by CV-005.'
+L00016748	gui_related: true
+L00016749	gui_classification_reason: The residual token bank includes UICommand, route/open, GUI, blocked-flow, and user-visible runtime/auth
+L00016750	  projection tokens, but it is not implementation-ready product prose.
+L00016751	split_recommended: true
+L00016752	depends_on:
+L00016753	- CV-005
+L00016754	- CV-002
+L00016755	- CV-003
+L00016756	- CV-004
+L00016757	- CV-006
+L00016758	- CV-007
+L00016759	- CV-008
+L00016760	- CV-009
+L00016761	- CV-010
+L00016762	- CV-011
+L00016763	- CV-012
+L00016764	- CV-013
+L00016765	- CV-014
+L00016766	- CV-015
+L00016767	- CV-016
+L00016768	- CV-017
+L00016769	- CV-018
+L00016770	- CV-019
+L00016771	- CV-020
+L00016772	- CV-021
+L00016773	- CV-022
+L00016774	- CV-023
+L00016775	- CV-024
+L00016776	- CV-025
+L00016777	- CV-026
+L00016778	- CV-027
+L00016779	- CV-028
+L00016780	- CV-029
+L00016781	- CV-030
+L00016782	- CV-031
+L00016783	- CV-032
+L00016784	- CV-033
+L00016785	- CV-034
+L00016786	- CV-035
+L00016787	- CV-036
+L00016788	- CV-037
+L00016789	- CV-038
+L00016790	- CV-039
+L00016791	- CV-040
+L00016792	- CV-041
+L00016793	- CV-042
+L00016794	- CV-043
+L00016795	- CV-044
+L00016796	- CV-045
+L00016797	- CV-046
+L00016798	- CV-047
+L00016799	- CV-048
+L00016800	- CV-049
+L00016801	- CV-050
+L00016802	- CV-051
+L00016803	- CV-052
+L00016804	- CV-053
+L00016805	- CV-054
+L00016806	- CV-055
+L00016807	- CV-056
+L00016808	- CV-057
+L00016809	- CV-058
+L00016810	- CV-059
+L00016811	- CV-060
+L00016812	- CV-061
+L00016813	- CV-062
+L00016814	- CV-063
+L00016815	- CV-064
+L00016816	- CV-065
+L00016817	- CV-066
+L00016818	- CV-067
+L00016819	- CV-068
+L00016820	- CV-069
+L00016821	- CV-070
+L00016822	- CV-071
+L00016823	- CV-072
+L00016824	- CV-073
+L00016825	- CV-074
+L00016826	- CV-075
+L00016827	- CV-076
+L00016828	- CV-077
+L00016829	- CV-078
+L00016830	- CV-079
+L00016831	- CV-080
+L00016832	- CV-081
+L00016833	- CV-082
+L00016834	- CV-083
+L00016835	- CV-084
+L00016836	- CV-085
+L00016837	- CV-086
+L00016838	- CV-087
+L00016839	- CV-088
+L00016840	- CV-089
+L00016841	- CV-090
+L00016842	- CV-091
+L00016843	- CV-092
+L00016844	- CV-093
+L00016845	- CV-094
+L00016846	- CV-095
+L00016847	- CV-096
+L00016848	- CV-097
+L00016849	- CV-098
+L00016850	- CV-099
+L00016851	- CV-100
+L00016852	- CV-101
+L00016853	- CV-102
+L00016854	- CV-103
+L00016855	- CV-104
+L00016856	- CV-105
+L00016857	- CV-106
+L00016858	- CV-107
+L00016859	- CV-108
+L00016860	- CV-109
+L00016861	- CV-110
+L00016862	- CV-111
+L00016863	- CV-112
+L00016864	- CV-113
+L00016865	- CV-114
+L00016866	- CV-115
+L00016867	- CV-116
+L00016868	- CV-117
+L00016869	- CV-118
+L00016870	- CV-119
+L00016871	- CV-120
+L00016872	- CV-121
+L00016873	- CV-122
+L00016874	- CV-123
+L00016875	- CV-124
+L00016876	- CV-125
+L00016877	- CV-126
+L00016878	- CV-127
+L00016879	- CV-128
+L00016880	- CV-129
+L00016881	- CV-130
+L00016882	- CV-131
+L00016883	- CV-132
+L00016884	- CV-133
+L00016885	- CV-134
+L00016886	- CV-135
+L00016887	- CV-136
+L00016888	- CV-137
+L00016889	- CV-138
+L00016890	- CV-139
+L00016891	- CV-140
+L00016892	- CV-141
+L00016893	- CV-142
+L00016894	- CV-143
+L00016895	- CV-144
+L00016896	- CV-145
+L00016897	- CV-146
+L00016898	- CV-147
+L00016899	- CV-148
+L00016900	- CV-149
+L00016901	- CV-150
+L00016902	- CV-151
+L00016903	- CV-152
+L00016904	- CV-153
+L00016905	- CV-154
+L00016906	- CV-155
+L00016907	- CV-156
+L00016908	- CV-157
+L00016909	- CV-158
+L00016910	- CV-159
+L00016911	- CV-160
+L00016912	- CV-161
+L00016913	- CV-162
+L00016914	- CV-163
+L00016915	- CV-164
+L00016916	- CV-165
+L00016917	- CV-166
+L00016918	- CV-167
+L00016919	- CV-168
+L00016920	- CV-169
+L00016921	- CV-170
+L00016922	- CV-171
+L00016923	- CV-172
+L00016924	- CV-173
+L00016925	- CV-174
+L00016926	- CV-175
+L00016927	- CV-176
+L00016928	- CV-177
+L00016929	- CV-178
+L00016930	- CV-179
+L00016931	- CV-180
+L00016932	- CV-181
+L00016933	- CV-182
+L00016934	- CV-183
+L00016935	- CV-184
+L00016936	- CV-185
+L00016937	- CV-186
+L00016938	- CV-187
+L00016939	- CV-188
+L00016940	- CV-189
+L00016941	- CV-190
+L00016942	- CV-191
+L00016943	- CV-192
+L00016944	- CV-193
+L00016945	- CV-194
+L00016946	- CV-195
+L00016947	- CV-196
+L00016948	- CV-197
+L00016949	- CV-198
+L00016950	- CV-199
+L00016951	- CV-200
+L00016952	- CV-201
+L00016953	- CV-202
+L00016954	- CV-203
+L00016955	- CV-204
+L00016956	- CV-205
+L00016957	- CV-206
+L00016958	- CV-207
+L00016959	- CV-208
+L00016960	- CV-209
+L00016961	- CV-210
+L00016962	- CV-211
+L00016963	- CV-212
+L00016964	- CV-213
+L00016965	- CV-214
+L00016966	- CV-215
+L00016967	- CV-216
+L00016968	- CV-217
+L00016969	- CV-218
+L00016970	- CV-219
+L00016971	- CV-220
+L00016972	- CV-221
+L00016973	- CV-222
+L00016974	- CV-223
+L00016975	- CV-224
+L00016976	- CV-225
+L00016977	- CV-226
+L00016978	- CV-227
+L00016979	- CV-228
+L00016980	- CV-229
+L00016981	- CV-230
+L00016982	- CV-231
+L00016983	- CV-232
+L00016984	- CV-233
+L00016985	- CV-234
+L00016986	- CV-235
+L00016987	- CV-236
+L00016988	- CV-237
+L00016989	- CV-238
+L00016990	- CV-239
+L00016991	- CV-240
+L00016992	- CV-241
+L00016993	- CV-242
+L00016994	- CV-243
+L00016995	- CV-244
+L00016996	- CV-245
+L00016997	- CV-246
+L00016998	- CV-247
+L00016999	- CV-248
+L00017000	- CV-249
+L00017001	- CV-250
+L00017002	- CV-251
+L00017003	- CV-252
+L00017004	- CV-253
+L00017005	- CV-254
+L00017006	- CV-255
+L00017007	- CV-256
+L00017008	- CV-257
+L00017009	- CV-258
+L00017010	- CV-259
+L00017011	- CV-260
+L00017012	- CV-261
+L00017013	- CV-262
+L00017014	- CV-263
+L00017015	- CV-264
+L00017016	- CV-265
+L00017017	- CV-266
+L00017018	- CV-267
+L00017019	- CV-268
+L00017020	- CV-269
+L00017021	- CV-270
+L00017022	- CV-271
+L00017023	- CV-272
+L00017024	- CV-273
+L00017025	- CV-274
+L00017026	- CV-275
+L00017027	- CV-276
+L00017028	- CV-277
+L00017029	- CV-278
+L00017030	unblocks: []
+L00017031	acceptance_criteria:
+L00017032	- Contracts_V0-S0001 remains available for exact-text audit as source-token-bank material.
+L00017033	- Residual source-token-bank material is not converted into new PlanUnits without evidence that doing so would not infer missing
+L00017034	  relationships or duplicate CV-002 through CV-278.
+L00017035	- Contracts_V0-S0002 through S0118 remain covered by CV-002 through CV-278 or explicit structural dispositions.
+L00017036	- CV-001 does not override fine-grained PlanUnits CV-002 through CV-278.
+L00017037	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition.
+L00017038	validation_surfaces:
+L00017039	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017040	- python3 scripts/pm-plan-index.py validate
+L00017041	risk_class: justified_source_token_bank_residual
+L00017042	reasoning_tier: standard
+L00017043	context_scope: contracts_v0_residual_source
+L00017044	implementation_surfaces:
+L00017045	- Plans/Contracts_V0.md
+L00017046	node_compile_hint:
+L00017047	  mode: source_lineage_residual_disposition
+L00017048	  create_worknodes: false
+L00017049	source_lineage:
+L00017050	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0001
+L00017051	preserved_exact_tokens:
+L00017052	- Contracts V0 (Canonical)
+L00017053	- 'ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject'
+L00017054	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2'
+L00017055	- active_subview
+L00017056	- focus_thread_usage
+L00017057	- navigation_wrapper
+L00017058	- domain_action
+L00017059	- backing_document_id
+L00017060	- last_saved_path
+L00017061	- object_kind = blocked_episode
+L00017062	- focused_run_id = run_id
+L00017063	- object_id = blocked_sequence
+L00017064	- object_kind = usage_event
+L00017065	- project_id = <project_id>
+L00017066	- thread_id = <thread_id>
+L00017067	- focused_run_id = <run_id>
+L00017068	- object_id = <attempt_id>
+L00017069	- object_kind = scheduler_pass
+L00017070	- object_id = <scheduler_pass_id>
+L00017071	- object_id = <safe_point_id>
+L00017072	- object_id = <remediation_root_id>
+L00017073	- object_kind = graph_generation
+L00017074	- object_id = <graph_generation_id>
+L00017075	- object_kind = graph_patch
+L00017076	- object_id = <graph_patch_id>
+L00017077	- object_id = <worktree_id>
+L00017078	- object_id = <lane_id>
+L00017079	- object_kind = feature_seam
+L00017080	- object_id = <feature_seam_id>
+L00017081	- object_kind = work_package
+L00017082	- object_id = <work_package_id>
+L00017083	- object_id = <concern_id>
+L00017084	- object_id = <promotion_id>
+L00017085	- seams
+L00017086	- node_graph
+L00017087	- 7.2 WiringEntry
+L00017088	- handler_location
+L00017089	- expected_event_types
+L00017090	- unknown-command rejection
+L00017091	- workflow_refs
+L00017092	- docker_refs
+L00017093	- kubernetes_refs
+L00017094	- attempt_record
+L00017095	- wizard-blocked
+L00017096	- usage_record
+L00017097	- evidence_record
+L00017098	- resume_url?
+L00017099	- requested_platform
+L00017100	- effective_platform
+L00017101	- requested_model
+L00017102	- effective_model
+L00017103	- worker_provider
+L00017104	- worker_model
+L00017105	- verifier_provider
+L00017106	- verifier_model
+L00017107	- request_id
+L00017108	- request_kind = tier_boundary_approval
+L00017109	- PuppetMasterEvent::TierChanged
+L00017110	- PuppetMasterEvent::IterationStart
+L00017111	- PuppetMasterEvent::EvidenceStored
+L00017112	- GraphNode
+L00017113	- GraphNodeUI
+L00017114	- '39'
+L00017115	- '22'
+L00017116	- '61'
+L00017117	- '3.13'
+L00017118	- '3.14'
+L00017119	- '3.15'
+L00017120	- plan_or_tier_default
+L00017121	- MUST RECONCILE
+L00017122	- MUST VERIFY
+L00017123	- Plans/_shards/**
+L00017124	- pressure-summary field
+L00017125	- execution_unit_context
+L00017126	- requested_account_binding
+L00017127	- requested_account_policy
+L00017128	- operational_identity
+L00017129	- active
+L00017130	- acknowledged
+L00017131	- resolved
+L00017132	- dismissed
+L00017133	- resolution_kind
+L00017134	- accepted_risk
+L00017135	- working_ledger.md:L806
+L00017136	- working_ledger.md:L1030
+
+<<< CONTEXT_AFTER canonical_document_lines=17137-17148 >>>
+L00017137	- working_ledger.md:L1035-L1036
+L00017138	- working_ledger.md:L1283-L1290
+L00017139	- working_ledger.md:L1539
+L00017140	- working_ledger.md:L3070-L3092
+L00017141	- working_ledger.md:L3170-L3182
+L00017142	- working_ledger.md:L5990-L6015
+L00017143	- working_ledger.md:L6442-L6490
+L00017144	negative_constraints:
+L00017145	- Residual source-lineage disposition must not override CV-002 through CV-278 for already atomized or structurally dispositioned
+L00017146	  spans.
+L00017147	- New implementation-ready PlanUnits must not be inferred from S0001 token-list fragments without coherent source prose or
+L00017148	  coverage proof.

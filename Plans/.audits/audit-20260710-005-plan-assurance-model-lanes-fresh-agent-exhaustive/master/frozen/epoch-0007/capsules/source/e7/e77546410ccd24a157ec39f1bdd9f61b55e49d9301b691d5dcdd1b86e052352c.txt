@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9608-9619 >>>
+L00009608	- include_images
+L00009609	- include_raw_content
+L00009610	- chunks_per_source
+L00009611	- provider priority ordering
+L00009612	negative_constraints: []
+L00009613	preserved_contractrefs: []
+L00009614	compatibility_only_notes: []
+L00009615	stale_retired_dispositions: []
+L00009616	owner_hints:
+L00009617	- Plans/Tools.md
+L00009618	```
+L00009619	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9620-9992 >>>
+L00009620	### T-138 - Tavily Search-Then-Extract Economics
+L00009621	
+L00009622	```yaml
+L00009623	plan_unit_id: T-138
+L00009624	unit_type: requirement
+L00009625	status: accepted
+L00009626	owner_doc: Plans/Tools.md
+L00009627	canonical_text: Tavily search returns candidate URLs/snippets first and may enrich later, but Tavily extract does not replace
+L00009628	  native Site Reader in MVP.
+L00009629	gui_related: false
+L00009630	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00009631	split_recommended: false
+L00009632	depends_on: []
+L00009633	unblocks: []
+L00009634	acceptance_criteria:
+L00009635	- '`include_raw_content` defaults conservative/false for discovery.'
+L00009636	- Free-tier/PAYG economics and `ultra-fast/fast/basic/advanced` values are preserved.
+L00009637	- Extract remains additive future enrichment only.
+L00009638	validation_surfaces:
+L00009639	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009640	- python3 scripts/pm-plan-index.py validate
+L00009641	risk_class: web_provider_routing_contract_drift
+L00009642	reasoning_tier: standard
+L00009643	context_scope: tools_phase2b_batch_186
+L00009644	implementation_surfaces:
+L00009645	- Plans/Tools.md
+L00009646	node_compile_hint:
+L00009647	  mode: tavily_search_extract_economics
+L00009648	  create_worknodes: false
+L00009649	source_lineage:
+L00009650	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+L00009651	preserved_exact_tokens:
+L00009652	- free tier = 1,000 credits/month
+L00009653	- $0.008/credit PAYG
+L00009654	- ultra-fast/fast/basic/advanced
+L00009655	- search-then-extract
+L00009656	- include_raw_content
+L00009657	- 'false'
+L00009658	- Tavily extract must NOT replace native Site Reader
+L00009659	- ADDITIVE
+L00009660	- not MVP
+L00009661	negative_constraints: []
+L00009662	preserved_contractrefs: []
+L00009663	compatibility_only_notes: []
+L00009664	stale_retired_dispositions: []
+L00009665	owner_hints:
+L00009666	- Plans/Tools.md
+L00009667	```
+L00009668	
+L00009669	### T-139 - Support Tier Vocabulary
+L00009670	
+L00009671	```yaml
+L00009672	plan_unit_id: T-139
+L00009673	unit_type: requirement
+L00009674	status: accepted
+L00009675	owner_doc: Plans/Tools.md
+L00009676	canonical_text: Support tiers are canonical capability labels and `pm-composed` is display/source-lineage alias for stored
+L00009677	  `pm_composed`.
+L00009678	gui_related: false
+L00009679	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00009680	split_recommended: false
+L00009681	depends_on: []
+L00009682	unblocks: []
+L00009683	acceptance_criteria:
+L00009684	- All eight tier labels survive.
+L00009685	- Site Reader primacy remains routing posture, not capability erasure.
+L00009686	validation_surfaces:
+L00009687	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009688	- python3 scripts/pm-plan-index.py validate
+L00009689	risk_class: web_provider_routing_contract_drift
+L00009690	reasoning_tier: standard
+L00009691	context_scope: tools_phase2b_batch_186
+L00009692	implementation_surfaces:
+L00009693	- Plans/Tools.md
+L00009694	node_compile_hint:
+L00009695	  mode: support_tier_vocabulary
+L00009696	  create_worknodes: false
+L00009697	source_lineage:
+L00009698	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0104
+L00009699	preserved_exact_tokens:
+L00009700	- native
+L00009701	- native (model)
+L00009702	- native-ish
+L00009703	- near-native
+L00009704	- pm_composed
+L00009705	- pm-composed
+L00009706	- fallback-only
+L00009707	- partial
+L00009708	- unsupported
+L00009709	- Site Reader primacy
+L00009710	negative_constraints: []
+L00009711	preserved_contractrefs:
+L00009712	- 'ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/assistant-chat-design.md'
+L00009713	compatibility_only_notes: []
+L00009714	stale_retired_dispositions: []
+L00009715	owner_hints:
+L00009716	- Plans/Tools.md
+L00009717	```
+L00009718	
+L00009719	### T-140 - Provider Operation Capability Matrix
+L00009720	
+L00009721	```yaml
+L00009722	plan_unit_id: T-140
+L00009723	unit_type: requirement
+L00009724	status: accepted
+L00009725	owner_doc: Plans/Tools.md
+L00009726	canonical_text: The Exa/Tavily/Firecrawl/Anthropic-OpenAI/Google/DDG operation matrix is canonical for `websearch` through
+L00009727	  `webmap`.
+L00009728	gui_related: false
+L00009729	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00009730	split_recommended: false
+L00009731	depends_on:
+L00009732	- T-139
+L00009733	unblocks: []
+L00009734	acceptance_criteria:
+L00009735	- Matrix row values remain exact.
+L00009736	- '`fallback-only` cannot replace real fetch capability.'
+L00009737	- Unsupported map/crawl branches keep PM-composed conditions.
+L00009738	validation_surfaces:
+L00009739	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009740	- python3 scripts/pm-plan-index.py validate
+L00009741	risk_class: web_provider_routing_contract_drift
+L00009742	reasoning_tier: standard
+L00009743	context_scope: tools_phase2b_batch_186
+L00009744	implementation_surfaces:
+L00009745	- Plans/Tools.md
+L00009746	node_compile_hint:
+L00009747	  mode: provider_operation_capability_matrix
+L00009748	  create_worknodes: false
+L00009749	source_lineage:
+L00009750	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0105
+L00009751	preserved_exact_tokens:
+L00009752	- websearch
+L00009753	- webfetch
+L00009754	- webextract
+L00009755	- webresearch
+L00009756	- webcrawl
+L00009757	- webmap
+L00009758	- partial native-ish / pm_composed
+L00009759	- unsupported unless PM composes it
+L00009760	- provider-native
+L00009761	- /deep-research
+L00009762	- search_and_crawl
+L00009763	- fallback-only
+L00009764	negative_constraints: []
+L00009765	preserved_contractrefs:
+L00009766	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00009767	compatibility_only_notes: []
+L00009768	stale_retired_dispositions: []
+L00009769	owner_hints:
+L00009770	- Plans/Tools.md
+L00009771	```
+L00009772	
+L00009773	### T-141 - Model-Native Auth And Tool-Key Boundary
+L00009774	
+L00009775	```yaml
+L00009776	plan_unit_id: T-141
+L00009777	unit_type: requirement
+L00009778	status: accepted
+L00009779	owner_doc: Plans/Tools.md
+L00009780	canonical_text: Model-native web search reuses configured provider account, auth, and model; `web_search` remains provider
+L00009781	  convention, not the PM tool key.
+L00009782	gui_related: true
+L00009783	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+L00009784	  provider disclosure surfaces.
+L00009785	split_recommended: false
+L00009786	depends_on:
+L00009787	- T-140
+L00009788	unblocks: []
+L00009789	acceptance_criteria:
+L00009790	- No second auth silo is created for model-native search.
+L00009791	- Settings shows provider, effective account, model, auth, and rate-limit summary.
+L00009792	- PM tool key remains `websearch`.
+L00009793	validation_surfaces:
+L00009794	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009795	- python3 scripts/pm-plan-index.py validate
+L00009796	risk_class: web_provider_routing_contract_drift
+L00009797	reasoning_tier: standard
+L00009798	context_scope: tools_phase2b_batch_186
+L00009799	implementation_surfaces:
+L00009800	- Plans/Tools.md
+L00009801	node_compile_hint:
+L00009802	  mode: model_native_auth_tool_key_boundary
+L00009803	  create_worknodes: false
+L00009804	source_lineage:
+L00009805	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0105
+L00009806	preserved_exact_tokens:
+L00009807	- web_search
+L00009808	- websearch
+L00009809	- enabled toggle
+L00009810	- capability badges
+L00009811	- effective account label
+L00009812	- effective model
+L00009813	- auth state
+L00009814	- rate-limit summary
+L00009815	- second auth silo
+L00009816	- model-native
+L00009817	negative_constraints: []
+L00009818	preserved_contractrefs:
+L00009819	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00009820	compatibility_only_notes: []
+L00009821	stale_retired_dispositions: []
+L00009822	owner_hints:
+L00009823	- Plans/Tools.md
+L00009824	```
+L00009825	
+L00009826	### T-142 - Web Routing Selection And Recovery
+L00009827	
+L00009828	```yaml
+L00009829	plan_unit_id: T-142
+L00009830	unit_type: requirement
+L00009831	status: accepted
+L00009832	owner_doc: Plans/Tools.md
+L00009833	canonical_text: Routing normalizes operation/input, checks permissions and capability registry, chooses an eligible same-operation
+L00009834	  adapter, and returns setup guidance or `adapter_unavailable` when exhausted.
+L00009835	gui_related: false
+L00009836	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00009837	split_recommended: false
+L00009838	depends_on:
+L00009839	- T-140
+L00009840	unblocks: []
+L00009841	acceptance_criteria:
+L00009842	- '`search_provider` is not exposed as a tool parameter.'
+L00009843	- Fallback records `provider_fallback_occurred` and `provider_fallback_summary`.
+L00009844	- All-provider failure returns `adapter_unavailable`, not a success-shaped fallback.
+L00009845	validation_surfaces:
+L00009846	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009847	- python3 scripts/pm-plan-index.py validate
+L00009848	risk_class: web_provider_routing_contract_drift
+L00009849	reasoning_tier: standard
+L00009850	context_scope: tools_phase2b_batch_186
+L00009851	implementation_surfaces:
+L00009852	- Plans/Tools.md
+L00009853	node_compile_hint:
+L00009854	  mode: web_routing_selection_recovery
+L00009855	  create_worknodes: false
+L00009856	source_lineage:
+L00009857	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0106
+L00009858	preserved_exact_tokens:
+L00009859	- capability-unavailable terminal branch
+L00009860	- 'Step 1: NORMALIZE OPERATION'
+L00009861	- 'Step 5: QUERY CAPABILITY MATRIX'
+L00009862	- search_provider
+L00009863	- NOT exposed
+L00009864	- adapter_unavailable
+L00009865	- provider_fallback_occurred
+L00009866	- provider_fallback_summary
+L00009867	- /rate-limit/outage
+L00009868	- /unconfigured
+L00009869	- success-shaped fallback
+L00009870	negative_constraints: []
+L00009871	preserved_contractrefs:
+L00009872	- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+L00009873	  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+L00009874	- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+L00009875	  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+L00009876	compatibility_only_notes: []
+L00009877	stale_retired_dispositions: []
+L00009878	owner_hints:
+L00009879	- Plans/Tools.md
+L00009880	```
+L00009881	
+L00009882	### T-143 - Site Reader Identity And Browser Labels
+L00009883	
+L00009884	```yaml
+L00009885	plan_unit_id: T-143
+L00009886	unit_type: requirement
+L00009887	status: accepted
+L00009888	owner_doc: Plans/Tools.md
+L00009889	canonical_text: '`Reading Site: <url>` is reserved exclusively for PM-native Site Reader with browser interaction metadata,
+L00009890	  while provider fetch uses `Fetching Site: <url> (via <provider>)`.'
+L00009891	gui_related: true
+L00009892	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+L00009893	  provider disclosure surfaces.
+L00009894	split_recommended: false
+L00009895	depends_on:
+L00009896	- T-142
+L00009897	unblocks: []
+L00009898	acceptance_criteria:
+L00009899	- Provider-routed fetch never reuses Site Reader identity.
+L00009900	- Browser interaction is metadata/sub-annotation, not a new activity label.
+L00009901	validation_surfaces:
+L00009902	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009903	- python3 scripts/pm-plan-index.py validate
+L00009904	risk_class: web_provider_routing_contract_drift
+L00009905	reasoning_tier: standard
+L00009906	context_scope: tools_phase2b_batch_186
+L00009907	implementation_surfaces:
+L00009908	- Plans/Tools.md
+L00009909	node_compile_hint:
+L00009910	  mode: site_reader_identity_browser_labels
+L00009911	  create_worknodes: false
+L00009912	source_lineage:
+L00009913	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0106
+L00009914	preserved_exact_tokens:
+L00009915	- 'Reading Site: <url>'
+L00009916	- 'Fetching Site: <url> (via <provider>)'
+L00009917	- reserved EXCLUSIVELY
+L00009918	- real browser-interaction capability
+L00009919	- 'interaction: true'
+L00009920	- (with browser interaction)
+L00009921	- seventh web activity label
+L00009922	negative_constraints: []
+L00009923	preserved_contractrefs:
+L00009924	- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+L00009925	  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+L00009926	- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+L00009927	  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+L00009928	compatibility_only_notes: []
+L00009929	stale_retired_dispositions: []
+L00009930	owner_hints:
+L00009931	- Plans/Tools.md
+L00009932	```
+L00009933	
+L00009934	### T-144 - Web Provenance And Citation Strength
+L00009935	
+L00009936	```yaml
+L00009937	plan_unit_id: T-144
+L00009938	unit_type: requirement
+L00009939	status: accepted
+L00009940	owner_doc: Plans/Tools.md
+L00009941	canonical_text: Final claims cite the actual read/extract/research/crawl/map path, with search snippets allowed only as visibly
+L00009942	  snippet-level provenance.
+L00009943	gui_related: true
+L00009944	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+L00009945	  provider disclosure surfaces.
+L00009946	split_recommended: false
+L00009947	depends_on:
+L00009948	- T-142
+L00009949	- T-143
+L00009950	unblocks: []
+L00009951	acceptance_criteria:
+L00009952	- Strongest provenance order is preserved.
+L00009953	- Repeated URLs and mapped page sets dedupe without losing strongest provenance badge.
+L00009954	- Snippet-only citations are labeled as snippet-level provenance.
+L00009955	validation_surfaces:
+L00009956	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009957	- python3 scripts/pm-plan-index.py validate
+L00009958	risk_class: web_provider_routing_contract_drift
+L00009959	reasoning_tier: standard
+L00009960	context_scope: tools_phase2b_batch_186
+L00009961	implementation_surfaces:
+L00009962	- Plans/Tools.md
+L00009963	node_compile_hint:
+L00009964	  mode: web_provenance_citation_strength
+L00009965	  create_worknodes: false
+L00009966	source_lineage:
+L00009967	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0106
+L00009968	preserved_exact_tokens:
+L00009969	- 'Searching Web: <query>'
+L00009970	- 'Extracting Site: <url>'
+L00009971	- 'Researching Web: <task>'
+L00009972	- 'Crawling Site: <url>'
+L00009973	- 'Mapping Site: <url>'
+L00009974	- site_reader
+L00009975	- site_extract
+L00009976	- research_synthesis
+L00009977	- crawl_result
+L00009978	- map_result
+L00009979	- search_snippet
+L00009980	- raw search snippets alone are not enough provenance
+L00009981	negative_constraints: []
+L00009982	preserved_contractrefs:
+L00009983	- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+L00009984	  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+L00009985	- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+L00009986	  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+L00009987	compatibility_only_notes: []
+L00009988	stale_retired_dispositions: []
+L00009989	owner_hints:
+L00009990	- Plans/Tools.md
+L00009991	```
+L00009992	
+
+<<< CONTEXT_AFTER canonical_document_lines=9993-10004 >>>
+L00009993	### T-145 - Cost-Aware Routing And Completion Audit
+L00009994	
+L00009995	```yaml
+L00009996	plan_unit_id: T-145
+L00009997	unit_type: requirement
+L00009998	status: accepted
+L00009999	owner_doc: Plans/Tools.md
+L00010000	canonical_text: Routing is cost-aware when providers are similar and completion records output, cache/diff, and audit metadata.
+L00010001	gui_related: true
+L00010002	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+L00010003	  provider disclosure surfaces.
+L00010004	split_recommended: false

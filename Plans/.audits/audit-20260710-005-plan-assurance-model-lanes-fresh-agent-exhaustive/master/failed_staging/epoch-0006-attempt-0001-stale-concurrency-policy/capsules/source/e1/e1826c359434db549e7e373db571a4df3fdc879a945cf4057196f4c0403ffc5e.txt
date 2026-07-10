@@ -1,0 +1,375 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2253-2264 >>>
+L00002253	negative_constraints: []
+L00002254	compatibility_only_notes: []
+L00002255	stale_retired_dispositions: []
+L00002256	owner_boundary_notes:
+L00002257	- Models_System.md owns provider and model option scope.
+L00002258	owner_hints:
+L00002259	- Plans/Models_System.md
+L00002260	preserved_contractrefs: []
+L00002261	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002262	  where safe.
+L00002263	```
+L00002264	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2265-2610 >>>
+L00002265	### MS-017 - Capability Matrix Fields And Data Driven Checks
+L00002266	
+L00002267	```yaml
+L00002268	plan_unit_id: MS-017
+L00002269	unit_type: requirement
+L00002270	status: accepted
+L00002271	owner_doc: Plans/Models_System.md
+L00002272	canonical_text: Capability metadata covers transport, tool, context-window, max-token, fallback-chain, cache, payload,
+L00002273	  pricing, billing, provenance, and source fields. Checks are data-driven, Gemini Direct and Antigravity CLI remain
+L00002274	  distinct active entries, retired Gemini CLI and platform_specs capability tokens remain source-lineage only, and
+L00002275	  disableCache maps through cache capability fields.
+L00002276	gui_related: false
+L00002277	gui_classification_reason: The unit covers capability metadata and runtime checks rather than direct GUI presentation.
+L00002278	split_recommended: false
+L00002279	depends_on:
+L00002280	- MS-016
+L00002281	unblocks: []
+L00002282	acceptance_criteria:
+L00002283	- Capability matrix rows include `context_window_tokens`, `max_input_tokens`, `max_output_tokens`, `effective_context_window_tokens`, and `fallback_chain[]` where applicable.
+L00002284	- Context-window and max-token fields carry provenance and verification/staleness state.
+L00002285	- Fallback chains are ordered, eligibility-gated, and explain selected/rejected candidates.
+L00002286	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002287	validation_surfaces:
+L00002288	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002289	- python3 scripts/pm-plan-index.py validate
+L00002290	risk_class: capability_matrix_data_driven_checks
+L00002291	reasoning_tier: standard
+L00002292	context_scope: models_system_standardization
+L00002293	implementation_surfaces:
+L00002294	- Plans/Models_System.md
+L00002295	node_compile_hint:
+L00002296	  mode: capability_matrix_data_driven_checks
+L00002297	  create_worknodes: false
+L00002298	source_lineage:
+L00002299	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0020
+L00002300	preserved_exact_tokens:
+L00002301	- system_role_name
+L00002302	- streaming
+L00002303	- tool_use
+L00002304	- context_window_tokens
+L00002305	- max_input_tokens
+L00002306	- max_output_tokens
+L00002307	- effective_context_window_tokens
+L00002308	- fallback_chain[]
+L00002309	- cache_control
+L00002310	- billing_entity
+L00002311	- billing_source
+L00002312	- disableCache
+L00002313	- Gemini Direct and Gemini CLI remain distinct
+L00002314	negative_constraints:
+L00002315	- Capability checks must not devolve into scattered if-else branches.
+L00002316	- Do not use legacy platform_specs or platform_specs.rs as the active capability source.
+L00002317	- Do not populate fallback chains from platform_specs::fallback_model_ids(platform).
+L00002318	compatibility_only_notes:
+L00002319	- Gemini disableCache compatibility evidence maps through cache_control or cache_with_oauth rather than a hidden provider
+L00002320	  flag.
+L00002321	- platform_specs and platform_specs.rs are retired source-lineage only.
+L00002322	stale_retired_dispositions: []
+L00002323	owner_boundary_notes:
+L00002324	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002325	owner_hints:
+L00002326	- Plans/Models_System.md
+L00002327	preserved_contractrefs:
+L00002328	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md'
+L00002329	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md'
+L00002330	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002331	  where safe.
+L00002332	```
+L00002333	
+L00002334	### MS-018 - Dynamic Catalog Discovery And Selectable Unit Snapshots
+L00002335	
+L00002336	```yaml
+L00002337	plan_unit_id: MS-018
+L00002338	unit_type: requirement
+L00002339	status: accepted
+L00002340	owner_doc: Plans/Models_System.md
+L00002341	canonical_text: OpenCode models.dev, provider catalog, and cursor-agent models supply model-scoped capability metadata. Snapshots
+L00002342	  preserve requested_default and effective_capabilities for UI, default, and runtime explanation.
+L00002343	gui_related: true
+L00002344	gui_classification_reason: The unit includes selectable-unit snapshots that explain UI defaults and user-visible runtime choices.
+L00002345	split_recommended: false
+L00002346	depends_on:
+L00002347	- MS-017
+L00002348	unblocks: []
+L00002349	acceptance_criteria:
+L00002350	- Covered source spans remain losslessly available for exact-text audit.
+L00002351	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002352	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002353	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002354	validation_surfaces:
+L00002355	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002356	- python3 scripts/pm-plan-index.py validate
+L00002357	risk_class: dynamic_catalog_selectable_snapshots
+L00002358	reasoning_tier: standard
+L00002359	context_scope: models_system_standardization
+L00002360	implementation_surfaces:
+L00002361	- Plans/Models_System.md
+L00002362	node_compile_hint:
+L00002363	  mode: dynamic_catalog_selectable_snapshots
+L00002364	  create_worknodes: false
+L00002365	source_lineage:
+L00002366	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0020
+L00002367	preserved_exact_tokens:
+L00002368	- models.dev
+L00002369	- /catalog
+L00002370	- requested_default
+L00002371	- effective_capabilities
+L00002372	- cursor-agent models
+L00002373	negative_constraints:
+L00002374	- Provider defaults and variants must not be hardcoded when returned IDs and catalog metadata are available.
+L00002375	compatibility_only_notes:
+L00002376	- Retired Gemini CLI capability-entry wording is source-lineage only; current active split is Gemini Direct and Antigravity CLI.
+L00002377	stale_retired_dispositions:
+L00002378	- Active Gemini CLI capability rows are retired by provider-update ledger pldg-20260624-001-provider-updates.
+L00002379	owner_boundary_notes:
+L00002380	- Models_System.md owns catalog-derived capability interpretation.
+L00002381	owner_hints:
+L00002382	- Plans/Models_System.md
+L00002383	preserved_contractrefs: []
+L00002384	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002385	  where safe.
+L00002386	```
+L00002387	
+L00002388	### MS-019 - System Role Name Mapping
+L00002389	
+L00002390	```yaml
+L00002391	plan_unit_id: MS-019
+L00002392	unit_type: requirement
+L00002393	status: accepted
+L00002394	owner_doc: Plans/Models_System.md
+L00002395	canonical_text: system_role_name role mapping is data-driven. OpenAI reasoning uses developer, other listed families use system,
+L00002396	  and bridged adapters align with CLI_Bridged_Providers.
+L00002397	gui_related: false
+L00002398	gui_classification_reason: The unit covers provider adapter role mapping rather than direct GUI presentation.
+L00002399	split_recommended: false
+L00002400	depends_on:
+L00002401	- MS-017
+L00002402	unblocks: []
+L00002403	acceptance_criteria:
+L00002404	- Covered source spans remain losslessly available for exact-text audit.
+L00002405	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002406	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002407	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002408	validation_surfaces:
+L00002409	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002410	- python3 scripts/pm-plan-index.py validate
+L00002411	risk_class: system_role_name_mapping
+L00002412	reasoning_tier: standard
+L00002413	context_scope: models_system_standardization
+L00002414	implementation_surfaces:
+L00002415	- Plans/Models_System.md
+L00002416	node_compile_hint:
+L00002417	  mode: system_role_name_mapping
+L00002418	  create_worknodes: false
+L00002419	source_lineage:
+L00002420	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0021
+L00002421	preserved_exact_tokens:
+L00002422	- system_role_name
+L00002423	- developer
+L00002424	- Anthropic
+L00002425	- OpenAI reasoning family
+L00002426	- Gemini CLI
+L00002427	negative_constraints:
+L00002428	- Adapters must not invent local role names outside model capability metadata.
+L00002429	compatibility_only_notes: []
+L00002430	stale_retired_dispositions: []
+L00002431	owner_boundary_notes:
+L00002432	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002433	owner_hints:
+L00002434	- Plans/Models_System.md
+L00002435	preserved_contractrefs:
+L00002436	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md'
+L00002437	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002438	  where safe.
+L00002439	```
+L00002440	
+L00002441	### MS-020 - Compaction Threshold Metadata
+L00002442	
+L00002443	```yaml
+L00002444	plan_unit_id: MS-020
+L00002445	unit_type: requirement
+L00002446	status: accepted
+L00002447	owner_doc: Plans/Models_System.md
+L00002448	canonical_text: Per-model metadata may set pressure_start_pct, pressure_aggressive_pct, large_block_threshold, and compact-threshold.
+L00002449	  Unknown capability state is represented explicitly instead of guessed.
+L00002450	gui_related: false
+L00002451	gui_classification_reason: The unit covers model metadata used by prompt/runtime systems rather than direct GUI presentation.
+L00002452	split_recommended: false
+L00002453	depends_on:
+L00002454	- MS-017
+L00002455	unblocks: []
+L00002456	acceptance_criteria:
+L00002457	- Covered source spans remain losslessly available for exact-text audit.
+L00002458	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002459	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002460	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002461	validation_surfaces:
+L00002462	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002463	- python3 scripts/pm-plan-index.py validate
+L00002464	risk_class: compaction_threshold_metadata
+L00002465	reasoning_tier: standard
+L00002466	context_scope: models_system_standardization
+L00002467	implementation_surfaces:
+L00002468	- Plans/Models_System.md
+L00002469	node_compile_hint:
+L00002470	  mode: compaction_threshold_metadata
+L00002471	  create_worknodes: false
+L00002472	source_lineage:
+L00002473	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0022
+L00002474	preserved_exact_tokens:
+L00002475	- pressure_start_pct = 70
+L00002476	- pressure_aggressive_pct = 85
+L00002477	- large_block_threshold = 1200
+L00002478	- compact-threshold
+L00002479	negative_constraints:
+L00002480	- Unknown threshold or capability state must not be guessed.
+L00002481	compatibility_only_notes: []
+L00002482	stale_retired_dispositions: []
+L00002483	owner_boundary_notes:
+L00002484	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002485	owner_hints:
+L00002486	- Plans/Models_System.md
+L00002487	preserved_contractrefs:
+L00002488	- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00002489	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002490	  where safe.
+L00002491	```
+L00002492	
+L00002493	### MS-021 - Provider Transform And Cache Capability Semantics
+L00002494	
+L00002495	```yaml
+L00002496	plan_unit_id: MS-021
+L00002497	unit_type: requirement
+L00002498	status: accepted
+L00002499	owner_doc: Plans/Models_System.md
+L00002500	canonical_text: Provider transform handles normalization and option injection. Provider-side cache and native cache marker
+L00002501	  semantics are capability and request metadata, not PM web-content-cache behavior or generic user settings.
+L00002502	gui_related: false
+L00002503	gui_classification_reason: The unit covers provider transform and cache capability semantics rather than direct GUI presentation.
+L00002504	split_recommended: false
+L00002505	depends_on:
+L00002506	- MS-017
+L00002507	unblocks: []
+L00002508	acceptance_criteria:
+L00002509	- Covered source spans remain losslessly available for exact-text audit.
+L00002510	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002511	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002512	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002513	validation_surfaces:
+L00002514	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002515	- python3 scripts/pm-plan-index.py validate
+L00002516	risk_class: provider_transform_cache_semantics
+L00002517	reasoning_tier: standard
+L00002518	context_scope: models_system_standardization
+L00002519	implementation_surfaces:
+L00002520	- Plans/Models_System.md
+L00002521	node_compile_hint:
+L00002522	  mode: provider_transform_cache_semantics
+L00002523	  create_worknodes: false
+L00002524	source_lineage:
+L00002525	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0023
+L00002526	preserved_exact_tokens:
+L00002527	- cache-key
+L00002528	- cache-TTL
+L00002529	- setCacheKey
+L00002530	- /automatic
+L00002531	- cacheControl
+L00002532	- cachePoint
+L00002533	- cachedContent
+L00002534	- metadata.user_id
+L00002535	negative_constraints:
+L00002536	- Provider cache wire fields must not be treated as identical across runtimes.
+L00002537	- Provider-cache controls must not be exposed as general MVP user settings.
+L00002538	compatibility_only_notes:
+L00002539	- cachePoint gap evidence remains a cache_control or cachedContent capability issue.
+L00002540	stale_retired_dispositions: []
+L00002541	owner_boundary_notes:
+L00002542	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002543	owner_hints:
+L00002544	- Plans/Models_System.md
+L00002545	preserved_contractrefs:
+L00002546	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md'
+L00002547	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002548	  where safe.
+L00002549	```
+L00002550	
+L00002551	### MS-022 - Runtime Specific Request Shaping And API Family Evidence
+L00002552	
+L00002553	```yaml
+L00002554	plan_unit_id: MS-022
+L00002555	unit_type: constraint
+L00002556	status: accepted
+L00002557	owner_doc: Plans/Models_System.md
+L00002558	canonical_text: Provider-specific request shaping, 1M-context support, reasoning or effort controls, and OpenAI/Azure API-family
+L00002559	  routing are per runtime surface and preserved in capability and request metadata.
+L00002560	gui_related: false
+L00002561	gui_classification_reason: The unit covers provider request shaping and route evidence rather than direct GUI presentation.
+L00002562	split_recommended: false
+L00002563	depends_on:
+L00002564	- MS-021
+L00002565	unblocks: []
+L00002566	acceptance_criteria:
+L00002567	- Covered source spans remain losslessly available for exact-text audit.
+L00002568	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00002569	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00002570	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002571	validation_surfaces:
+L00002572	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002573	- python3 scripts/pm-plan-index.py validate
+L00002574	risk_class: runtime_request_shaping_api_family_evidence
+L00002575	reasoning_tier: standard
+L00002576	context_scope: models_system_standardization
+L00002577	implementation_surfaces:
+L00002578	- Plans/Models_System.md
+L00002579	node_compile_hint:
+L00002580	  mode: runtime_request_shaping_api_family_evidence
+L00002581	  create_worknodes: false
+L00002582	source_lineage:
+L00002583	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0023
+L00002584	preserved_exact_tokens:
+L00002585	- enable_thinking=true
+L00002586	- '#14003'
+L00002587	- '#17494'
+L00002588	- '#14055'
+L00002589	- useCompletionUrls
+L00002590	- responses()
+L00002591	- chat()
+L00002592	- '#15016'
+L00002593	- '#7793'
+L00002594	negative_constraints:
+L00002595	- PM must not hardcode a universal 1M-context signal.
+L00002596	- Non-OpenAI Azure-hosted models must not be forced down the wrong OpenAI API path.
+L00002597	- PM must not assume one universal OpenAI/Azure route.
+L00002598	compatibility_only_notes:
+L00002599	- OpenCode prefers Responses API for OpenAI while Chat-Completions-only proxies have known compatibility issues.
+L00002600	stale_retired_dispositions: []
+L00002601	owner_boundary_notes:
+L00002602	- Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
+L00002603	owner_hints:
+L00002604	- Plans/Models_System.md
+L00002605	preserved_contractrefs:
+L00002606	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md'
+L00002607	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00002608	  where safe.
+L00002609	```
+L00002610	
+
+<<< CONTEXT_AFTER canonical_document_lines=2611-2622 >>>
+L00002611	### MS-023 - Availability Lifecycle And Finish Reason Handling
+L00002612	
+L00002613	```yaml
+L00002614	plan_unit_id: MS-023
+L00002615	unit_type: requirement
+L00002616	status: accepted
+L00002617	owner_doc: Plans/Models_System.md
+L00002618	canonical_text: Model availability requires registered, authenticated, reachable, and compatible runtime surface. Lifecycle
+L00002619	  state controls dispatch eligibility, and finish_reason stop is insufficient when tool calls require continuation.
+L00002620	gui_related: false
+L00002621	gui_classification_reason: The unit covers runtime dispatch eligibility and tool-loop control flow rather than direct GUI
+L00002622	  presentation.

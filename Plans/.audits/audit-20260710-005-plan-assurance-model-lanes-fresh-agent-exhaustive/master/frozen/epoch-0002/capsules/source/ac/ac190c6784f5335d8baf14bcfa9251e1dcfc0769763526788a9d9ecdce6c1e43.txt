@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 3890-3901 >>>
+- "FileSafe state"
+- "exact file"
+- "hunk"
+- "persisted mutation"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3902-4268 >>>
+### F-063 - Git Mutations Versus Restore History Boundary
+
+```yaml
+plan_unit_id: F-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Git source-control discard, compare, and stage actions are not ordinary editor undo; restore
+  points, rollback, and revert-last-agent-edit remain explicit restore-history actions,
+  diff-specific projections are required over compare state, and
+  conflicted/staged/unstaged/reverted feedback stays visually distinct without creating a new
+  persistent heat-map class.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs visible undo/revert controls, git-panel affordances, heat maps, and change
+  markers.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: git_mutations_versus_restore_history_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0052"
+preserved_exact_tokens:
+- "Git/source-control discard/compare/stage"
+- "ordinary editor undo"
+- "Restore points"
+- "rollback"
+- "revert-last-agent-edit"
+- "diff-specific heat-map/change-marker"
+- "diff-edit"
+- "per-hunk controls"
+- "open-in-diff"
+- "scrollbar change-marker"
+- "Conflicted markers"
+- "staged and unstaged"
+- "toast/banner"
+- "persistent heat-map class"
+negative_constraints:
+- "Git/source-control discard/compare/stage actions are not ordinary editor undo."
+- "Restore points, rollback, and revert-last-agent-edit must not be hidden behind git-panel affordances."
+- "Conflicted markers override staged/unstaged styling until resolved."
+- "Revert/restore outcomes MUST NOT create a new persistent heat-map class."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-064 - Diff-Affecting Taxonomy And Restore Event Refresh
+
+```yaml
+plan_unit_id: F-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The diff-affecting taxonomy distinguishes source-buffer edits, git mutations, and
+  restore/rollback actions, and those actions resolve to confirmed restore events that refresh
+  affected buffers rather than popping a local editor stack.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs source-buffer refresh and review-state feedback after diff-affecting actions.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: diff_affecting_taxonomy_and_restore_event_refresh
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0052"
+preserved_exact_tokens:
+- "source-buffer edits"
+- "typing"
+- "preview-originated bounded patch apply"
+- "assistant patch apply"
+- "conflict-result text edits"
+- "stage"
+- "unstage"
+- "discard"
+- "stash push/pop"
+- "mark conflict resolved"
+- "Restore to…"
+- "checkpoint restore"
+- "rewind"
+- "rollback"
+- "confirmed restore events"
+- "refresh affected buffers"
+negative_constraints:
+- "Diff-affecting restore events refresh affected buffers rather than popping a local editor stack."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-065 - Diff Undo Scope And Chat Diff Affordances
+
+```yaml
+plan_unit_id: F-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Diff undo/redo scope remains action-class based and never collapses into one global editor undo
+  stack; chat routing exposes files-touched strip, diff card, open-in-editor, and open-in-diff as
+  distinct affordances, revert scope is declared as last edit, last turn, per-file, or per-thread,
+  and GUI ownership remains split across docked editor diff, detached review, Source Control
+  side-panel state, scrollbar heat-map, gutter markers, and dirty/staged/conflicted/reverted
+  feedback loops.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs visible chat, diff, editor affordances and undo scope declarations.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: diff_undo_scope_and_chat_diff_affordances
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0052"
+preserved_exact_tokens:
+- "single-file assistant edits"
+- "multi-file assistant edits"
+- "hunk-level Git actions"
+- "patch-apply / preview-apply actions"
+- "conflict-resolution actions"
+- "one global editor undo stack"
+- "files-touched strip"
+- "diff card"
+- "open-in-editor"
+- "open-in-diff"
+- "last edit"
+- "last turn"
+- "per-file"
+- "per-thread"
+- "docked editor diff"
+- "detached review window"
+- "Source Control side-panel pivot"
+- "scrollbar heat-map"
+- "dirty / staged / conflicted / reverted feedback loops"
+negative_constraints:
+- "Diff undo/redo actions never collapse into one global editor undo stack."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "GUI ownership remains split across docked editor diff, detached review window, Source Control side-panel pivot/selection state, scrollbar heat-map/gutter change markers, and dirty/staged/conflicted/reverted feedback loops."
+owner_hints:
+- "Plans/FileManager.md"
+split_recommendation_reason: >-
+  The span mixes action-class undo grouping, chat routing affordances, revert scope labels, and
+  GUI surface ownership.
+```
+
+### F-066 - Runtime Artifact Open By Identity Addendum
+
+```yaml
+plan_unit_id: F-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The Runtime Artifact Open-by-Identity Consolidation Addendum makes runtime artifacts
+  attempt-native by default with artifact identity, routing refs, content refs, and provider/usage
+  linkage, and resolves artifact open flows by artifact_id before linked envelope refs.
+gui_related: false
+gui_classification_reason: >-
+  This addendum defines runtime artifact identity resolution rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: runtime_artifact_open_by_identity_addendum
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0053"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0054"
+preserved_exact_tokens:
+- "Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)"
+- "attempt-native"
+- "artifact identity"
+- "routing refs"
+- "content refs"
+- "provider/usage linkage"
+- "artifact_id"
+- "linked envelope refs"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-001 - File Manager Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: F-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The former FileManager source-preserving bridge is retired after Phase 2B atomized
+  FileManager-S0001 through FileManager-S0054 into F-002 through F-066 and structurally
+  dispositioned the owner map, PlanUnits heading, retired bridge lineage, and Migration Coverage.
+  F-001 remains only as migration lineage for the retired bridge span and must not re-own atomized
+  source coverage.
+gui_related: false
+gui_classification_reason: >-
+  The retired bridge is migration lineage and no longer owns GUI or product behavior; coverage_map
+  preserves gui_related_inferred=true from the historical broad bridge span.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "F-001 no longer uses the source-preserving PlanUnit compile hint."
+- "F-002 through F-066 own product coverage for FileManager-S0001 through FileManager-S0054."
+- "FileManager-S0055, S0056, and S0058 are structural owner-map, heading, and migration-coverage dispositions."
+- "The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: plan_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0057"
+preserved_exact_tokens:
+- "F-001"
+- "source_preserving_planunit"
+- "source_preserving_bridge_retired"
+- "F-002"
+- "F-066"
+- "FileManager-S0001"
+- "FileManager-S0058"
+- "Owner / Consumer Map"
+- "PlanUnits"
+- "Migration Coverage"
+negative_constraints:
+- "Do not remap atomized FileManager spans back to F-001."
+- "Do not treat the retired bridge as implementation-ready product coverage."
+- "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+compatibility_only_notes:
+- "The old source-preserving bridge is retained only so migration lineage and historical references to F-001 remain auditable."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F-002 through F-066 own product coverage for FileManager-S0001 through FileManager-S0054."
+owner_hints:
+- "Plans/FileManager.md"
+```
+## Migration Coverage
+
+Original hash: `665c217a8e576921149964c9a0f864af053a2f6b3ceb2d62b4742bc5c6d7a426`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+Phase 2B batch 054 atomized or structurally dispositioned `FileManager-S0001` through `FileManager-S0032` into `F-002` through `F-033`. Phase 2B batch 055 atomized `FileManager-S0033` through `FileManager-S0054` into `F-034` through `F-066`, structurally dispositioned `FileManager-S0055`, `FileManager-S0056`, and `FileManager-S0058`, and retired `F-001` as a `source_preserving_bridge_retired` migration-lineage unit for `FileManager-S0057`. FileManager.md now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### F-067 - Preview Browser Terminal And Hot Reload Recovery Compile Addendum
+
+```yaml
+plan_unit_id: F-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager owns file-surface placement for editor, terminal, browser tab, image viewing, HTML/browser preview, and hot-reload entrypoints.
+  Missing Sections 5 through 8 and 13 through 14, plus the three-line Section 9 Tabs stub, must recover by consuming live browser,
+  terminal, preview, persistence, and command-owner PlanUnits rather than inventing separate FileManager-only behavior.
+gui_related: true
+gui_classification_reason: This unit governs visible file manager tabs, previews, browser/terminal panes, image viewing, and hot-reload controls.
+depends_on: [F-002, F-009, F-010]
+unblocks: [F3-387]
+acceptance_criteria:
+  - Image viewing remains first-class where FileManager references Sections 8.1 and 14.
+  - HTML/browser preview and hot reload controls resolve to FileManager placement plus Section15/UI Command behavior owners.
+  - Section 9 Tabs covers Editor, Terminal, and Browser without re-owning terminal or browser runtime internals.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual FileManager cross-reference review
+risk_class: file_surface_anchor_loss
+reasoning_tier: standard
+context_scope: file_manager_preview_tabs
+implementation_surfaces: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: file_surface_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0016
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0048
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0049
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0050
+  - source_ref:chat:next-gui-filemanager-cluster
+preserved_exact_tokens: ["§5", "§8.1", "§8.2", "§9", "§13", "§14", "§14.6", "Tabs: Editor, Terminal, Browser", "built-in browser", "browser/terminal tabs", "hot-reload controls", "image viewing"]
+negative_constraints:
+  - Do not make FileManager the browser behavior SSOT.
+  - Do not leave the Tabs section as a three-line stub when compiling this recovery.
+owner_hints: [Plans/FileManager.md, Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/UI_Command_Catalog.md, Plans/Runtime_Artifacts_Panel.md]
+```
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+
+<<< CONTEXT_AFTER 4269-4280 >>>
+### F-068 - Shared Mutation Session Actions
+
+```yaml
+plan_unit_id: F-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager edit, rename, delete, duplicate, patch, preview-edit, and generated-output apply actions
+  must open or join a FileSafe mutation session before mutation. The UI derives save, apply, discard,
+  stage, retry, request approval, resolve conflict, open diff, and rollback actions from session state,
+  permission result, conflict policy, preview trust, watcher snapshot, and degraded/offline/LSP state.

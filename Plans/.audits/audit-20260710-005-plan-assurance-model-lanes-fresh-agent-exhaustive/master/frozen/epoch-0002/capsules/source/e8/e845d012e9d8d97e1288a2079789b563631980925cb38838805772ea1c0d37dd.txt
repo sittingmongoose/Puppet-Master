@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 3554-3565 >>>
+      ]
+    },
+    "merge_policy": {
+      "type": "string",
+      "enum": [
+        "no_merge",
+        "fast_forward_only",
+        "squash_allowed",
+        "merge_commit_allowed",
+        "promotion_only"
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 3566-3960 >>>
+    "github_policy": {
+      "type": "string",
+      "enum": [
+        "local_only",
+        "optional_promotion",
+        "required_checks",
+        "not_configured"
+      ]
+    },
+    "change_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "applied",
+        "blocked",
+        "failed",
+        "reverted",
+        "complete"
+      ]
+    },
+    "promotion_type": {
+      "type": "string",
+      "enum": [
+        "local_finalization",
+        "branch_merge",
+        "pull_request",
+        "tag",
+        "release",
+        "not_applicable"
+      ]
+    },
+    "promotion_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "promoted",
+        "blocked",
+        "failed",
+        "skipped",
+        "complete"
+      ]
+    },
+    "finding_severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "error",
+        "critical"
+      ]
+    },
+    "finding_status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "repaired",
+        "dispositioned",
+        "blocked",
+        "certified"
+      ]
+    },
+    "cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "item_index",
+        "checkpoint_ref",
+        "source_hash"
+      ],
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "item_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "item_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "checkpoint_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "hash_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_index_hash",
+        "plan_unit_hash_refs",
+        "schema_hash_refs",
+        "created_at_utc"
+      ],
+      "properties": {
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "plan_unit_hash_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "schema_hash_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "created_at_utc": {
+          "type": "string"
+        }
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "blocker_id",
+        "blocker_type",
+        "severity",
+        "description",
+        "owner",
+        "resolution_route",
+        "evidence_refs"
+      ],
+      "properties": {
+        "blocker_id": {
+          "type": "string"
+        },
+        "blocker_type": {
+          "type": "string",
+          "enum": [
+            "missing_evidence",
+            "authority_boundary",
+            "schema_gap",
+            "test_gap",
+            "source_control_gap",
+            "currentness_gap",
+            "runtime_forbidden",
+            "other"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "warning",
+            "error",
+            "critical"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "resolution_route": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "capability_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requirement_id",
+        "capability_lane",
+        "required_capability_refs",
+        "required_level",
+        "verification_refs",
+        "fallback_policy",
+        "blocker_policy"
+      ],
+      "properties": {
+        "requirement_id": {
+          "type": "string"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "required_capability_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_level": {
+          "type": "string",
+          "enum": [
+            "required",
+            "preferred",
+            "fallback",
+            "blocked_if_missing"
+          ]
+        },
+        "verification_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "fallback_policy": {
+          "type": "string",
+          "enum": [
+            "no_fallback",
+            "allowed_with_evidence",
+            "requires_research",
+            "not_applicable"
+          ]
+        },
+        "blocker_policy": {
+          "type": "string",
+          "enum": [
+            "block_if_missing",
+            "warn_if_missing",
+            "defer_with_disposition"
+          ]
+        }
+      }
+    },
+    "capability_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "check_id",
+        "capability_ref",
+        "capability_lane",
+        "result",
+        "fallback_allowed",
+        "evidence_refs"
+      ],
+      "properties": {
+        "check_id": {
+          "type": "string"
+        },
+        "capability_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "capability_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "not_checked"
+          ]
+        },
+        "fallback_allowed": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_level",
+        "mutation_policy",
+        "escalation_required",
+        "owner_refs"
+      ],
+      "properties": {
+        "authority_level": {
+          "type": "string",
+          "enum": [
+            "design_only",
+            "review_only",
+            "executor_owned",
+            "owner_doc_owned",
+            "blocked"
+          ]
+        },
+        "mutation_policy": {
+          "type": "string",
+          "enum": [
+            "no_mutation",
+            "schema_only",
+            "plans_only",
+            "mutation_after_executor_intake",
+            "blocked"
+          ]
+        },
+        "escalation_required": {
+          "type": "boolean"
+        },
+        "owner_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "sizing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "size_class",
+        "estimated_files",
+        "estimated_plan_units",
+        "split_recommended",
+        "sizing_reason"
+      ],
+      "properties": {
+        "size_class": {
+          "type": "string",
+          "enum": [
+            "xs",
+            "small",
+            "medium",
+            "large",
+            "xl",
+            "unknown"
+          ]
+        },
+        "estimated_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_plan_units": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "split_recommended": {
+          "type": "boolean"
+        },
+        "sizing_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "item_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_items",
+        "source_refs",
+        "write_scope",
+        "split_merge_policy"
+      ],
+      "properties": {
+        "max_items": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "source_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_scope": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "split_merge_policy": {
+          "type": "string",
+          "enum": [
+            "split_if_over_limit",
+            "merge_if_same_owner",
+            "block_if_ambiguous"
+          ]
+        }
+      }
+    },
+    "parent_writeback_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parent_only_writes",
+        "parent_writeback_required",
+        "allowed_write_refs"
+      ],
+      "properties": {
+        "parent_only_writes": {
+          "const": true
+        },
+        "parent_writeback_required": {
+          "const": true
+        },
+        "allowed_write_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 3961-3972 >>>
+    "compile_parallelism_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parallelism_required",
+        "minimum_parallel_assignments",
+        "assignment_receipt_refs",
+        "completion_receipt_refs",
+        "certification_rule"
+      ],
+      "properties": {
+        "parallelism_required": {

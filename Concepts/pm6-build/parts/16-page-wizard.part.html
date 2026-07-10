@@ -2,9 +2,11 @@
 
             <!-- ============================================================
                  PMConcept6 Planning Wizard (flagship rebuild)
-                 Stages: intake -> discovery -> workspace (topic map +
-                 interview thread + live plan preview / readiness rail)
-                 -> integration -> final review -> Approve And Build.
+                 Stages: intake -> requirements (attach docs + PRD builder
+                 -> Approved PRD Pack) -> discovery (read-only scan + topic
+                 derivation) -> workspace (topic map + interview thread +
+                 live plan preview / readiness rail) -> integration
+                 -> final review -> Approve And Build.
                  All dynamic regions are rendered by pm6-js-wizard.
                  ============================================================ -->
 
@@ -72,16 +74,68 @@
                 <div class="pm6-wiz-intake-foot pm-enter-up">
                   <div class="pm6-wiz-intake-note">
                     <span class="pm6-ico" data-pm6-icon="info"></span>
-                    <span>Next, the wizard takes a <strong>read-only look</strong> at the repo &mdash; branch, frameworks, test commands. Nothing is changed.</span>
+                    <span>Next: attach requirement docs or build a PRD &mdash; the wizard plans from an <strong>Approved PRD Pack</strong>.</span>
                   </div>
-                  <button class="pm6-wiz-bigbtn pm-press" type="button" data-demo-action="wizard.startDiscovery">
-                    Start discovery <span class="pm6-wiz-glyph">&#8594;</span>
+                  <button class="pm6-wiz-bigbtn pm-press" type="button" data-demo-action="wizard.to_requirements">
+                    Continue &mdash; provide requirements <span class="pm6-wiz-glyph">&#8594;</span>
                   </button>
                 </div>
               </div>
             </section>
 
-            <!-- STAGE 2: DISCOVERY --------------------------------------------->
+            <!-- STAGE 2: REQUIREMENTS (attach docs + PRD builder) --------------->
+            <section class="pm6-wiz-stage pm6-wiz-stage-reqs" id="pm6WizStageReqs" data-wiz-stage="requirements">
+              <div class="pm6-wiz-intake-scroll pm6-wiz-reqs-scroll">
+                <div class="pm6-wiz-hero pm-enter-up">
+                  <div class="pm6-wiz-kicker">Provide requirements</div>
+                  <h1 class="pm6-wiz-hero-title">Ground the plan in a PRD.</h1>
+                  <p class="pm6-wiz-hero-sub">Attach requirement docs, answer the PRD builder, or both &mdash; every source reconciles into one PRD ledger, and planning starts only from the approved snapshot.</p>
+                </div>
+
+                <div class="pm6-wiz-seedchips pm-enter-up" id="pm6WizReqSeeds">
+                  <span class="pm6-wiz-mchip sel">Approved PRD Pack</span>
+                  <span class="pm6-wiz-mchip">Normalized requirements pack</span>
+                  <span class="pm6-wiz-mchip ok">Assistant Chat handoff seed <span class="pm6-wiz-glyph">&#10003;</span></span>
+                </div>
+
+                <div class="pm6-wiz-reqs-grid pm-enter-up">
+                  <div class="pm6-wiz-reqs-pane pm6-wiz-reqs-docs">
+                    <div class="pm6-wiz-col-head">
+                      <span class="pm6-wiz-col-title">Attach requirement docs</span>
+                      <span class="pm6-wiz-col-meta">optional &middot; originals preserved</span>
+                    </div>
+                    <button class="pm6-wiz-drop" id="pm6WizReqDrop" type="button" data-demo-action="wizard.upload_doc">
+                      <span class="pm6-ico" data-pm6-icon="folder"></span>
+                      <span class="pm6-wiz-drop-title">Drop requirement docs here</span>
+                      <span class="pm6-wiz-drop-sub">Originals are preserved byte-for-byte with stable source IDs and hashes.</span>
+                    </button>
+                    <div class="pm6-wiz-samplerow" id="pm6WizReqSamples">
+                      <span class="pm6-wiz-samplerow-label">Demo files:</span>
+                      <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d1">media-pipeline-brief.docx &middot; 184 KB</button>
+                      <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d2">import-hardening-notes.md &middot; 12 KB</button>
+                      <button class="pm6-wiz-ghostbtn pm6-wiz-sampledoc" type="button" data-demo-action="wizard.upload_doc" data-demo-arg="d3">storage-vendor-quotes.pdf &middot; 631 KB</button>
+                    </div>
+                    <div class="pm6-wiz-docrows" id="pm6WizReqDocs"></div>
+                  </div>
+                  <div class="pm6-wiz-reqs-pane pm6-wiz-reqs-prd">
+                    <div class="pm6-wiz-col-head">
+                      <span class="pm6-wiz-col-title">PRD Builder</span>
+                      <span class="pm6-wiz-col-meta">3 quick turns</span>
+                    </div>
+                    <div class="pm6-wiz-prd-chat" id="pm6WizPrdChat"></div>
+                    <div class="pm6-wiz-col-head">
+                      <span class="pm6-wiz-col-title">Live PRD outline</span>
+                      <span class="pm6-wiz-col-meta">PRD ledger &middot; updated every turn</span>
+                    </div>
+                    <div class="pm6-wiz-prd-outline" id="pm6WizPrdOutline"></div>
+                  </div>
+                </div>
+
+                <div class="pm6-wiz-reqfoot pm-enter-up" id="pm6WizReqFoot"></div>
+              </div>
+            </section>
+
+            <!-- STAGE 3: DISCOVERY --------------------------------------------->
             <section class="pm6-wiz-stage pm6-wiz-stage-discovery" id="pm6WizStageDiscovery" data-wiz-stage="discovery">
               <div class="pm6-wiz-disc-wrap">
                 <div class="pm6-wiz-disc-card pm-enter-scale">
@@ -90,11 +144,17 @@
                   <div class="pm6-wiz-disc-sub"><span class="pm6-wiz-ro-badge">READ-ONLY</span> Looking, not touching. This takes a few seconds.</div>
                   <div class="pm6-wiz-scanrows" id="pm6WizScanRows"></div>
                   <div class="pm6-wiz-scanbar"><div class="pm6-wiz-scanbar-fill" id="pm6WizScanBar"></div></div>
+                  <div class="pm6-wiz-scanrows pm6-wiz-deriverows" id="pm6WizDeriveRows"></div>
+                  <div class="pm6-wiz-disc-foot" id="pm6WizDiscFoot" hidden style="display:none">
+                    <button class="pm6-wiz-bigbtn pm-press" type="button" data-demo-action="wizard.enter_workspace">
+                      Open the topic workspace <span class="pm6-wiz-glyph">&#8594;</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </section>
 
-            <!-- STAGE 3: WORKSPACE (topic map / thread / preview + rail) -------->
+            <!-- STAGE 4: WORKSPACE (topic map / thread / preview + rail) -------->
             <section class="pm6-wiz-stage pm6-wiz-stage-work" id="pm6WizStageWork" data-wiz-stage="workspace">
 
               <header class="pm6-wiz-runhead" id="pm6WizRunHead">
@@ -111,6 +171,7 @@
                     <span class="pm6-wiz-mchip">topic map <span id="pm6WizMapVersion">v9</span></span>
                     <span class="pm6-wiz-mchip">SvelteKit &middot; Axum &middot; Postgres</span>
                     <span class="pm6-wiz-mchip ok">imported from Assistant Chat</span>
+                    <span class="pm6-wiz-mchip ok" id="pm6WizPrdChip" hidden style="display:none">Approved PRD Pack v1 <span class="pm6-wiz-glyph">&#10003;</span></span>
                   </div>
                 </div>
                 <div class="pm6-wiz-runhead-state" id="pm6WizRunState"></div>

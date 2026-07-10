@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=371-382 >>>
+L00000371	  - `puppet-master-rs/src/platforms/path_utils.rs`
+L00000372	  - `puppet-master-rs/src/platforms/platform_detector.rs`
+L00000373	  - `puppet-master-rs/src/install/script_installer.rs`
+L00000374	
+L00000375	## Owner / Consumer Map
+L00000376	
+L00000377	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/BinaryLocator_Spec.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000378	
+L00000379	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000380	
+L00000381	## PlanUnits
+L00000382	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=383-777 >>>
+L00000383	### BS-001 - BinaryLocator Spec (Canonical) Source-Preserving PlanUnit
+L00000384	
+L00000385	```yaml
+L00000386	plan_unit_id: BS-001
+L00000387	unit_type: compatibility_disposition
+L00000388	status: accepted
+L00000389	owner_doc: Plans/BinaryLocator_Spec.md
+L00000390	canonical_text: >-
+L00000391	  The former doc-level source-preserving bridge is retired in place after
+L00000392	  Phase 2B atomized BinaryLocator_Spec-S0001 through BinaryLocator_Spec-S0043
+L00000393	  into BS-002 through BS-024. BS-001 remains only as migration lineage for the
+L00000394	  retired bridge span and must not re-own atomized source coverage.
+L00000395	gui_related: false
+L00000396	gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior.
+L00000397	split_recommended: false
+L00000398	depends_on: []
+L00000399	unblocks: []
+L00000400	acceptance_criteria:
+L00000401	  - BS-001 no longer uses the source-preserving PlanUnit compile hint.
+L00000402	  - Prior source coverage remains carried by BS-002 through BS-024.
+L00000403	  - The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000404	  - Coverage for the retired bridge is recorded in the Phase 2B batch 014 coverage map.
+L00000405	validation_surfaces:
+L00000406	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000407	  - python3 scripts/pm-plan-index.py validate
+L00000408	risk_class: migration_lineage
+L00000409	reasoning_tier: standard
+L00000410	context_scope: plan_standardization
+L00000411	implementation_surfaces:
+L00000412	  - Plans/BinaryLocator_Spec.md
+L00000413	node_compile_hint:
+L00000414	  mode: source_preserving_bridge_retired
+L00000415	  create_worknodes: false
+L00000416	source_lineage:
+L00000417	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0044
+L00000418	preserved_exact_tokens:
+L00000419	  - "BS-001"
+L00000420	  - "source_preserving_planunit"
+L00000421	  - "BS-002"
+L00000422	  - "BS-024"
+L00000423	negative_constraints:
+L00000424	  - "Do not remap atomized BinaryLocator spans back to BS-001."
+L00000425	  - "Do not treat the retired bridge as implementation-ready product coverage."
+L00000426	  - "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+L00000427	compatibility_only_notes:
+L00000428	  - "The old source-preserving bridge is retained only so migration lineage and historical references to BS-001 remain auditable."
+L00000429	owner_hints:
+L00000430	  - Plans/BinaryLocator_Spec.md
+L00000431	```
+L00000432	
+L00000433	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00000434	
+L00000435	This addendum compiles accepted provider-update ledger atoms into binary/provider launcher discovery requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00000436	
+L00000437	### BS-026 - Provider Launcher Metadata For Antigravity And CLI Runtime Routes
+L00000438	
+L00000439	```yaml
+L00000440	plan_unit_id: BS-026
+L00000441	unit_type: requirement
+L00000442	status: accepted
+L00000443	owner_doc: Plans/BinaryLocator_Spec.md
+L00000444	canonical_text: >-
+L00000445	  Binary/provider launcher discovery must include provider-owned setup-health metadata for active CLI-runtime routes such as Antigravity `agy`, Claude Code `claude`, and Cursor `cursor-agent` while keeping Codex, GitHub Copilot, OpenCode server, and direct coding-plan providers out of required CLI bridge discovery. `agy` discovery is version-gated and records command templates, account-root/env requirements, model-list support, prompt-output proof state, and unsupported format caveats without storing secrets.
+L00000446	gui_related: false
+L00000447	gui_classification_reason: Binary discovery and launcher metadata are backend setup contracts, though GUI consumes status.
+L00000448	depends_on: [CBP-020, CBP-021, CBP-022]
+L00000449	unblocks: [F3-400]
+L00000450	acceptance_criteria:
+L00000451	  - "`agy` is a first-class active CLI-runtime launcher entry."
+L00000452	  - Launcher metadata tracks setup health, version, command templates, output-proof state, and account-root/env requirements.
+L00000453	  - Direct providers are not incorrectly marked as requiring CLI bridge binaries.
+L00000454	  - Secret material is never captured in launcher metadata.
+L00000455	validation_surfaces:
+L00000456	  - python3 scripts/pm-plan-index.py validate
+L00000457	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000458	risk_class: provider_launcher_discovery_drift
+L00000459	reasoning_tier: standard
+L00000460	context_scope: provider_launcher_metadata
+L00000461	implementation_surfaces: [Plans/BinaryLocator_Spec.md, future binary locator, future provider setup health registry]
+L00000462	node_compile_hint: {mode: provider_launcher_metadata, create_worknodes: false, create_nodeseeds: false}
+L00000463	source_lineage:
+L00000464	  - pldg-20260624-001-provider-updates:atom-0019
+L00000465	  - pldg-20260624-001-provider-updates:atom-0020
+L00000466	  - pldg-20260624-001-provider-updates:atom-0116
+L00000467	source_atom_ids: [atom-0019, atom-0020, atom-0022, atom-0023, atom-0054, atom-0061, atom-0087, atom-0088, atom-0116, atom-0132]
+L00000468	preserved_exact_tokens: ["agy", "Antigravity CLI", "claude", "cursor-agent", "version-gate", "setup-health", "--print-timeout", "agy models", "command templates", "output-level proof"]
+L00000469	negative_constraints:
+L00000470	  - Do not require Copilot CLI discovery for GitHub Copilot direct hosted API support.
+L00000471	  - Do not require Codex CLI discovery for Codex/OpenAI direct provider support.
+L00000472	  - Do not store provider secret material in launcher metadata.
+L00000473	owner_hints: [Plans/BinaryLocator_Spec.md, Plans/CLI_Bridged_Providers.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+L00000474	```
+L00000475	
+L00000476	### BS-002 - BinaryLocator Authority, Purpose, And Non-Goals
+L00000477	
+L00000478	```yaml
+L00000479	plan_unit_id: BS-002
+L00000480	unit_type: constraint
+L00000481	status: accepted
+L00000482	owner_doc: Plans/BinaryLocator_Spec.md
+L00000483	canonical_text: >-
+L00000484	  BinaryLocator remains the canonical Provider-owned location and validation
+L00000485	  spec for external Provider CLIs, preserving the Puppet Master naming rule,
+L00000486	  deterministic/testable purpose, official-install boundary, usage source
+L00000487	  metadata boundary, provider-signal alias normalization, and diagnostics non-ownership constraints.
+L00000488	gui_related: false
+L00000489	gui_classification_reason: Provider discovery scope, usage metadata routing, and diagnostics ownership are backend contract boundaries.
+L00000490	split_recommended: false
+L00000491	depends_on: []
+L00000492	unblocks: [BS-006, BS-007, BS-008, BS-009]
+L00000493	acceptance_criteria:
+L00000494	  - The document title and compliance statement preserve the Puppet Master naming and deterministic-default requirements.
+L00000495	  - BinaryLocator locates and validates external Provider CLIs for Cursor Agent and Claude Code across Windows, macOS, and Linux.
+L00000496	  - BinaryLocator does not install, update, uninstall, crawl heuristically, orchestrate providers, authenticate, discover models, or own PM-managed browser runtime health.
+L00000497	  - BinaryLocator only reports detected usage_source_kind availability as provider-discovery/evidence-signal aliases, which normalize to source_class/source_confidence/source_authority before UsageRecord accounting, display, rollups, or route/open behavior.
+L00000498	  - BinaryLocator diagnostics do not define /outcome, reason-code taxonomies, bridge-side usage-field mapping, or failure-class mapping.
+L00000499	validation_surfaces:
+L00000500	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000501	  - python3 scripts/pm-plan-index.py validate
+L00000502	risk_class: provider_scope_boundary
+L00000503	reasoning_tier: high
+L00000504	context_scope: provider
+L00000505	implementation_surfaces:
+L00000506	  - Plans/BinaryLocator_Spec.md
+L00000507	  - Plans/Run_Modes.md
+L00000508	  - Plans/CLI_Bridged_Providers.md
+L00000509	  - Plans/usage-feature.md
+L00000510	node_compile_hint:
+L00000511	  mode: binarylocator_authority_scope_boundary
+L00000512	  create_worknodes: false
+L00000513	source_lineage:
+L00000514	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0001
+L00000515	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0002
+L00000516	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0003
+L00000517	preserved_exact_tokens:
+L00000518	  - "BinaryLocator Spec (Canonical)"
+L00000519	  - "Puppet Master"
+L00000520	  - "deterministic, testable"
+L00000521	  - "external Provider CLIs"
+L00000522	  - "Cursor Agent"
+L00000523	  - "Claude Code"
+L00000524	  - "official install methods"
+L00000525	  - "usage_source_kind"
+L00000526	  - "source_class"
+L00000527	  - "source_confidence"
+L00000528	  - "source_authority"
+L00000529	  - "provider_runtime_usage"
+L00000530	  - "provider_quota_api"
+L00000531	  - "provider_usage_api"
+L00000532	  - "provider_error_hint"
+L00000533	  - "project_rollup"
+L00000534	  - "/outcome"
+L00000535	  - "usage-field"
+L00000536	  - "failure-class"
+L00000537	negative_constraints:
+L00000538	  - "BinaryLocator must not install, update, or uninstall Provider CLIs."
+L00000539	  - "usage_source_kind must not become accounting authority, permission authority, display authority, or a replacement for UF-085 source fields."
+L00000540	compatibility_only_notes:
+L00000541	  - "usage_source_kind and its provider_runtime_usage/provider_quota_api/provider_usage_api/provider_error_hint/project_rollup values are provider-discovery/evidence-signal aliases only and normalize to source_class, source_confidence, and source_authority before UsageRecord use."
+L00000542	  - "BinaryLocator must not perform filesystem crawling or heuristic best-guess scanning beyond enumerated probe layers."
+L00000543	  - "BinaryLocator must not own provider orchestration, authentication, model discovery, PM-managed browser runtime distribution, canonical usage accounting, /outcome taxonomies, bridge-side usage-field mapping, or failure-class mapping."
+L00000544	owner_boundary_notes:
+L00000545	  - "Canonical usage accounting remains owned by Plans/usage-feature.md."
+L00000546	  - "Diagnostics classification remains owned by Plans/Run_Modes.md and Plans/CLI_Bridged_Providers.md."
+L00000547	owner_hints:
+L00000548	  - Plans/BinaryLocator_Spec.md
+L00000549	```
+L00000550	
+L00000551	### BS-003 - BinaryLocator Locked Platform Decisions
+L00000552	
+L00000553	```yaml
+L00000554	plan_unit_id: BS-003
+L00000555	unit_type: constraint
+L00000556	status: accepted
+L00000557	owner_doc: Plans/BinaryLocator_Spec.md
+L00000558	canonical_text: BinaryLocator inherits the locked Puppet Master platform name, Slint 1.17.1 on Rust stable 1.96.1 UI toolkit decision, and seglog/redb/Tantivy storage stack while preserving the SQLite prohibition.
+L00000559	gui_related: true
+L00000560	gui_classification_reason: The locked decision span includes the user-interface toolkit requirement Slint 1.17.1 on Rust stable 1.96.1 and the legacy Iced prohibition.
+L00000561	split_recommended: false
+L00000562	depends_on: [BS-002]
+L00000563	unblocks: [BS-005, BS-019]
+L00000564	acceptance_criteria:
+L00000565	  - The platform name remains Puppet Master only.
+L00000566	  - UI toolkit references use Slint 1.17.1 on Rust stable 1.96.1, reverified before implementation, and treat Iced as legacy.
+L00000567	  - Storage references use seglog, redb, and Tantivy.
+L00000568	  - SQLite remains forbidden.
+L00000569	validation_surfaces:
+L00000570	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000571	  - python3 scripts/pm-plan-index.py validate
+L00000572	risk_class: locked_stack_drift
+L00000573	reasoning_tier: standard
+L00000574	context_scope: platform
+L00000575	implementation_surfaces:
+L00000576	  - Plans/BinaryLocator_Spec.md
+L00000577	node_compile_hint:
+L00000578	  mode: binarylocator_locked_platform_decisions
+L00000579	  create_worknodes: false
+L00000580	source_lineage:
+L00000581	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0004
+L00000582	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0005
+L00000583	preserved_exact_tokens:
+L00000584	  - "Canonical references and constraints (SSOT; DRY)"
+L00000585	  - "Puppet Master"
+L00000586	  - "Rust stable 1.96.1"
+L00000587	  - "Slint 1.17.1"
+L00000588	  - "Iced is legacy"
+L00000589	  - "seglog + redb + Tantivy"
+L00000590	  - "SQLite is forbidden"
+L00000591	  - "Invariant:INV-010"
+L00000592	  - "SchemaID:spec_lock"
+L00000593	negative_constraints:
+L00000594	  - "BinaryLocator must not reintroduce Iced or SQLite as valid rewrite choices."
+L00000595	owner_hints:
+L00000596	  - Plans/BinaryLocator_Spec.md
+L00000597	```
+L00000598	
+L00000599	### BS-004 - BinaryLocator Canonical References And Legacy Anchors
+L00000600	
+L00000601	```yaml
+L00000602	plan_unit_id: BS-004
+L00000603	unit_type: constraint
+L00000604	status: accepted
+L00000605	owner_doc: Plans/BinaryLocator_Spec.md
+L00000606	canonical_text: >-
+L00000607	  BinaryLocator references primitive, DRY, decision, contract, storage, and
+L00000608	  glossary owners without duplicating them, treats legacy puppet-master-rs paths
+L00000609	  as read-only behavior anchors, and preserves the packet-derived output
+L00000610	  boundary for MUST CHANGE, MUST RECONCILE, and MUST VERIFY material.
+L00000611	gui_related: false
+L00000612	gui_classification_reason: Canonical reference routing, legacy anchors, and packet intent handling are documentation-governance constraints.
+L00000613	split_recommended: false
+L00000614	depends_on: [BS-002]
+L00000615	unblocks: [BS-005, BS-009, BS-014, BS-015]
+L00000616	acceptance_criteria:
+L00000617	  - BinaryLocator references canonical owner docs rather than duplicating their contracts.
+L00000618	  - Legacy puppet-master-rs paths remain read-only behavior anchors and not canonical SSOT.
+L00000619	  - Conflict precedence remains Spec Lock, Crosswalk, DRY Rules, Glossary, then Decision Policy defaults.
+L00000620	  - Packet-derived research outputs remain non-canonical unless routed through primary MUST CHANGE or MUST RECONCILE docs.
+L00000621	validation_surfaces:
+L00000622	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000623	  - python3 scripts/pm-plan-index.py validate
+L00000624	risk_class: owner_reference_drift
+L00000625	reasoning_tier: high
+L00000626	context_scope: governance
+L00000627	implementation_surfaces:
+L00000628	  - Plans/BinaryLocator_Spec.md
+L00000629	  - Plans/Crosswalk.md
+L00000630	  - Plans/DRY_Rules.md
+L00000631	  - Plans/Decision_Policy.md
+L00000632	  - Plans/Contracts_V0.md
+L00000633	  - Plans/storage-plan.md
+L00000634	  - Plans/Glossary.md
+L00000635	node_compile_hint:
+L00000636	  mode: binarylocator_reference_and_anchor_boundary
+L00000637	  create_worknodes: false
+L00000638	source_lineage:
+L00000639	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0006
+L00000640	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0007
+L00000641	preserved_exact_tokens:
+L00000642	  - "Canonical sources (reference, don't duplicate)"
+L00000643	  - "legacy-code behavior anchors"
+L00000644	  - "not the canonical SSOT"
+L00000645	  - "Spec Lock"
+L00000646	  - "Crosswalk"
+L00000647	  - "DRY Rules"
+L00000648	  - "Glossary"
+L00000649	  - "Decision Policy defaults"
+L00000650	  - "MUST CHANGE"
+L00000651	  - "MUST RECONCILE"
+L00000652	  - "MUST VERIFY"
+L00000653	  - "REFERENCE"
+L00000654	negative_constraints:
+L00000655	  - "Legacy puppet-master-rs paths must not become canonical rewrite architecture SSOT."
+L00000656	  - "Derived-only ledger summaries, audit tables, and cross-reference matrices must not become BinaryLocator doc intents."
+L00000657	compatibility_only_notes:
+L00000658	  - "Legacy-code anchors are read-only behavior anchors for compatibility review only."
+L00000659	owner_hints:
+L00000660	  - Plans/BinaryLocator_Spec.md
+L00000661	```
+L00000662	
+L00000663	### BS-005 - BinaryLocator Cross-Owner Boundary Constraints
+L00000664	
+L00000665	```yaml
+L00000666	plan_unit_id: BS-005
+L00000667	unit_type: constraint
+L00000668	status: accepted
+L00000669	owner_doc: Plans/BinaryLocator_Spec.md
+L00000670	canonical_text: >-
+L00000671	  BinaryLocator preserves routed cross-owner constraints exposed by provider or
+L00000672	  binary-discovery packet material without absorbing runtime, storage, usage,
+L00000673	  permissions, chat, HITL, Run Graph, Orchestrator, command, GUI, or help-copy
+L00000674	  ownership into binary validation behavior.
+L00000675	gui_related: true
+L00000676	gui_classification_reason: The boundary span includes GUI/help copy, assistant chat, wizard, and user-facing Orchestrator surface routing constraints.
+L00000677	split_recommended: false
+L00000678	depends_on: [BS-003, BS-004]
+L00000679	unblocks: [BS-008, BS-014, BS-019]
+L00000680	acceptance_criteria:
+L00000681	  - Agent coordination state remains event-sourced through seglog/redb, with active-agents files/views debug-only.
+L00000682	  - usage_event_ref remains a locator-grade structured locator and not a display string, timestamp heuristic, or opaque replacement ID family.
+L00000683	  - Execution, handoff, route identity, permission scope, chat compatibility drift, HITL, Run Graph, Orchestrator, command, GUI, and help-copy concerns route to their owner docs.
+L00000684	  - BinaryLocator diagnostics may reference owner outcomes without encoding those seams as locator state, binary validation, or provider discovery contracts.
+L00000685	validation_surfaces:
+L00000686	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000687	  - python3 scripts/pm-plan-index.py validate
+L00000688	risk_class: cross_owner_drift
+L00000689	reasoning_tier: high
+L00000690	context_scope: owner_boundary
+L00000691	implementation_surfaces:
+L00000692	  - Plans/BinaryLocator_Spec.md
+L00000693	  - Plans/Executor_Protocol.md
+L00000694	  - Plans/storage-plan.md
+L00000695	  - Plans/FileManager.md
+L00000696	  - Plans/Permissions_System.md
+L00000697	  - Plans/assistant-chat-design.md
+L00000698	  - Plans/Orchestrator_Page.md
+L00000699	node_compile_hint:
+L00000700	  mode: binarylocator_cross_owner_boundary_constraints
+L00000701	  create_worknodes: false
+L00000702	source_lineage:
+L00000703	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0008
+L00000704	preserved_exact_tokens:
+L00000705	  - "seglog"
+L00000706	  - "redb"
+L00000707	  - "active-agents.json"
+L00000708	  - "usage_event_ref"
+L00000709	  - "/runtime"
+L00000710	  - "Executor_Protocol.md"
+L00000711	  - "/handshake"
+L00000712	  - "Permissions_System.md"
+L00000713	  - "assistant-chat-design.md"
+L00000714	  - "HITL"
+L00000715	  - "Run Graph"
+L00000716	  - "Orchestrator GUI/help copy drift"
+L00000717	negative_constraints:
+L00000718	  - "BinaryLocator must not absorb Executor_Protocol mint, handshake, or handoff rules while validating provider binaries."
+L00000719	  - "BinaryLocator diagnostics may reference permission results but must not define permission scope."
+L00000720	  - "BinaryLocator must not encode approval/blocking seams as locator state, binary validation, or provider discovery contracts."
+L00000721	compatibility_only_notes:
+L00000722	  - "assistant-chat-design is mostly aligned; remaining compatibility-oriented drift stays with the chat owner."
+L00000723	stale_retired_dispositions:
+L00000724	  - "Stale newfeatures.md four-tier hierarchy and no new tiers claims must not override the chain-wizard-flexibility node-graph model."
+L00000725	owner_hints:
+L00000726	  - Plans/BinaryLocator_Spec.md
+L00000727	```
+L00000728	
+L00000729	### BS-006 - BinaryLocator Terminology And Service Boundary
+L00000730	
+L00000731	```yaml
+L00000732	plan_unit_id: BS-006
+L00000733	unit_type: requirement
+L00000734	status: accepted
+L00000735	owner_doc: Plans/BinaryLocator_Spec.md
+L00000736	canonical_text: BinaryLocator uses Provider, Session, and probe layer terminology and remains a Provider-owned discovery, validation, and trace service.
+L00000737	gui_related: false
+L00000738	gui_classification_reason: Terminology and service ownership are canonical vocabulary and backend boundary requirements.
+L00000739	split_recommended: false
+L00000740	depends_on: [BS-002]
+L00000741	unblocks: [BS-007, BS-008, BS-009]
+L00000742	acceptance_criteria:
+L00000743	  - Provider remains the canonical term and runner is not used.
+L00000744	  - Session remains the canonical user-facing term.
+L00000745	  - Probe layer terminology avoids conflicts with hierarchy naming rules.
+L00000746	  - BinaryLocator remains Provider-owned discovery, validation, and trace service.
+L00000747	validation_surfaces:
+L00000748	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000749	  - python3 scripts/pm-plan-index.py validate
+L00000750	risk_class: terminology_drift
+L00000751	reasoning_tier: standard
+L00000752	context_scope: provider
+L00000753	implementation_surfaces:
+L00000754	  - Plans/BinaryLocator_Spec.md
+L00000755	  - Plans/Glossary.md
+L00000756	  - Plans/Crosswalk.md
+L00000757	node_compile_hint:
+L00000758	  mode: binarylocator_terminology_service_boundary
+L00000759	  create_worknodes: false
+L00000760	source_lineage:
+L00000761	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0009
+L00000762	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0010
+L00000763	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0011
+L00000764	preserved_exact_tokens:
+L00000765	  - "Provider"
+L00000766	  - "runner"
+L00000767	  - "Session"
+L00000768	  - "probe layer"
+L00000769	  - "Provider-owned"
+L00000770	  - "discovery + validation + trace service"
+L00000771	  - "Primitive:Provider"
+L00000772	negative_constraints:
+L00000773	  - "Legacy terminology must not appear in user-facing text."
+L00000774	owner_hints:
+L00000775	  - Plans/BinaryLocator_Spec.md
+L00000776	```
+L00000777	
+
+<<< CONTEXT_AFTER canonical_document_lines=778-789 >>>
+L00000778	### BS-007 - BinaryLocateRequest Input Contract
+L00000779	
+L00000780	```yaml
+L00000781	plan_unit_id: BS-007
+L00000782	unit_type: requirement
+L00000783	status: accepted
+L00000784	owner_doc: Plans/BinaryLocator_Spec.md
+L00000785	canonical_text: BinaryLocateRequest is a conceptual Provider-domain contract with provider_cli and force_rescan required, and workspace_root, override_path, and env_path optional under the stated probing and cache-scope boundaries.
+L00000786	gui_related: false
+L00000787	gui_classification_reason: Request shape is backend provider-domain contract data; GUI manual controls are covered in the Override and UI mapping PlanUnits.
+L00000788	split_recommended: false
+L00000789	depends_on: [BS-006]

@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1880-1891 >>>
+L00001880	negative_constraints:
+L00001881	- Phase/task/subtask labels must not redefine approval scope, blocked identity, recovery semantics, or persistence ownership.
+L00001882	compatibility_only_notes:
+L00001883	- Remaining phase/task/subtask labels are explanatory UI copy only.
+L00001884	stale_retired_dispositions: []
+L00001885	owner_boundary_notes:
+L00001886	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00001887	owner_hints:
+L00001888	- Plans/human-in-the-loop.md
+L00001889	split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+L00001890	```
+L00001891	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1892-2285 >>>
+L00001892	### HITL-028 - Scheduler Wake And Approval Wait Timers
+L00001893	
+L00001894	```yaml
+L00001895	plan_unit_id: HITL-028
+L00001896	unit_type: requirement
+L00001897	status: accepted
+L00001898	owner_doc: Plans/human-in-the-loop.md
+L00001899	canonical_text: 'HITL approval/rejection resolution is a primary scheduler wake trigger: hitl.approved and hitl.rejected cause immediate queue reevaluation while unrelated runnable work continues; approval waits consume the shared temporal taxonomy as approval_wait and possibly long_governance_wait, known timers must not render generic deadlock/stall or auto-pause unrelated runnable work, and user_visible_wait_timer_expiry keeps the same blocked episode identity.'
+L00001900	gui_related: true
+L00001901	gui_classification_reason: This unit includes user-visible wait timers and scheduler wake behavior.
+L00001902	split_recommended: false
+L00001903	depends_on: []
+L00001904	unblocks: []
+L00001905	acceptance_criteria:
+L00001906	- The covered source span remains losslessly available for exact-text audit.
+L00001907	- This behavior is addressable through HITL-028 instead of broad HITL-001 source-preserving coverage.
+L00001908	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001909	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001910	validation_surfaces:
+L00001911	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001912	- python3 scripts/pm-plan-index.py validate
+L00001913	risk_class: hitl_contract_drift
+L00001914	reasoning_tier: standard
+L00001915	context_scope: human_in_the_loop_standardization
+L00001916	implementation_surfaces:
+L00001917	- Plans/human-in-the-loop.md
+L00001918	node_compile_hint:
+L00001919	  mode: scheduler_wake_and_approval_wait_timers
+L00001920	  create_worknodes: false
+L00001921	source_lineage:
+L00001922	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0031
+L00001923	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0032
+L00001924	preserved_exact_tokens:
+L00001925	- hitl.approved
+L00001926	- hitl.rejected
+L00001927	- immediate queue reevaluation
+L00001928	- unrelated runnable work
+L00001929	- approval_wait
+L00001930	- long_governance_wait
+L00001931	- long-governance-wait
+L00001932	- deadlock/stall
+L00001933	- stall banners
+L00001934	- user_visible_wait_timer_expiry
+L00001935	- user-visible wait timer expiry
+L00001936	- run_id
+L00001937	- node_id
+L00001938	- blocked_sequence
+L00001939	- approval_scope_key
+L00001940	negative_constraints:
+L00001941	- HITL surfaces must not render known approval waits as generic deadlock/stall, must not show stall banners, and must not auto-pause unrelated runnable work.
+L00001942	compatibility_only_notes: []
+L00001943	stale_retired_dispositions: []
+L00001944	owner_boundary_notes:
+L00001945	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00001946	owner_hints:
+L00001947	- Plans/human-in-the-loop.md
+L00001948	```
+L00001949	
+L00001950	### HITL-029 - Reject Rerun, Skip, Abort, And Acceptance Criteria
+L00001951	
+L00001952	```yaml
+L00001953	plan_unit_id: HITL-029
+L00001954	unit_type: requirement
+L00001955	status: accepted
+L00001956	owner_doc: Plans/human-in-the-loop.md
+L00001957	canonical_text: After reject, Re-run must declare retry_from_safe_point or fresh_attempt, defaulting to retry_from_safe_point for mutation-capable attempts with a valid safe point and using fresh_attempt when no safe point exists or recovery is forbidden; Skip preserves lineage and shows the user advanced without rerunning, downstream behavior obeys graph policy, Abort terminates the run while preserving paused/rejected lineage, and acceptance criteria require scheduler wake, explicit rerun semantics, skip lineage, and abort audit history.
+L00001958	gui_related: true
+L00001959	gui_classification_reason: This unit governs visible rerun/skip/abort choices and their audit behavior.
+L00001960	split_recommended: false
+L00001961	depends_on: []
+L00001962	unblocks: []
+L00001963	acceptance_criteria:
+L00001964	- The covered source span remains losslessly available for exact-text audit.
+L00001965	- This behavior is addressable through HITL-029 instead of broad HITL-001 source-preserving coverage.
+L00001966	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001967	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001968	validation_surfaces:
+L00001969	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001970	- python3 scripts/pm-plan-index.py validate
+L00001971	risk_class: hitl_contract_drift
+L00001972	reasoning_tier: standard
+L00001973	context_scope: human_in_the_loop_standardization
+L00001974	implementation_surfaces:
+L00001975	- Plans/human-in-the-loop.md
+L00001976	node_compile_hint:
+L00001977	  mode: reject_rerun_skip_abort_and_acceptance_criteria
+L00001978	  create_worknodes: false
+L00001979	source_lineage:
+L00001980	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0033
+L00001981	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0034
+L00001982	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0035
+L00001983	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0036
+L00001984	preserved_exact_tokens:
+L00001985	- Re-run
+L00001986	- retry_from_safe_point
+L00001987	- fresh_attempt
+L00001988	- valid safe point
+L00001989	- mutation-capable attempts
+L00001990	- Skip
+L00001991	- skipped attempt remains in history
+L00001992	- UI must show
+L00001993	- advance without rerunning
+L00001994	- graph semantics
+L00001995	- Abort
+L00001996	- full paused/rejected lineage
+L00001997	- Acceptance criteria
+L00001998	negative_constraints:
+L00001999	- Skip is not silent success.
+L00002000	compatibility_only_notes: []
+L00002001	stale_retired_dispositions: []
+L00002002	owner_boundary_notes:
+L00002003	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00002004	owner_hints:
+L00002005	- Plans/human-in-the-loop.md
+L00002006	```
+L00002007	
+L00002008	### HITL-030 - Canonical Recovery Action Families
+L00002009	
+L00002010	```yaml
+L00002011	plan_unit_id: HITL-030
+L00002012	unit_type: requirement
+L00002013	status: accepted
+L00002014	owner_doc: Plans/human-in-the-loop.md
+L00002015	canonical_text: HITL actions are canonical across graph, Orchestrator, and chat surfaces; allowed action families are approve, decline, retry_now, resume_after_prerequisite, skip_node, abort_run, replan, and restore_safe_point_then_retry.
+L00002016	gui_related: false
+L00002017	gui_classification_reason: This unit defines canonical action families and naming semantics rather than GUI layout.
+L00002018	split_recommended: false
+L00002019	depends_on: []
+L00002020	unblocks: []
+L00002021	acceptance_criteria:
+L00002022	- The covered source span remains losslessly available for exact-text audit.
+L00002023	- This behavior is addressable through HITL-030 instead of broad HITL-001 source-preserving coverage.
+L00002024	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002025	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002026	validation_surfaces:
+L00002027	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002028	- python3 scripts/pm-plan-index.py validate
+L00002029	risk_class: hitl_contract_drift
+L00002030	reasoning_tier: standard
+L00002031	context_scope: human_in_the_loop_standardization
+L00002032	implementation_surfaces:
+L00002033	- Plans/human-in-the-loop.md
+L00002034	node_compile_hint:
+L00002035	  mode: canonical_recovery_action_families
+L00002036	  create_worknodes: false
+L00002037	source_lineage:
+L00002038	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0037
+L00002039	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0038
+L00002040	preserved_exact_tokens:
+L00002041	- Canonical HITL Recovery Action Alignment Addendum (2026-03-09)
+L00002042	- approve
+L00002043	- decline
+L00002044	- retry_now
+L00002045	- resume_after_prerequisite
+L00002046	- skip_node
+L00002047	- abort_run
+L00002048	- replan
+L00002049	- restore_safe_point_then_retry
+L00002050	- graph
+L00002051	- orchestrator
+L00002052	- chat surfaces
+L00002053	negative_constraints: []
+L00002054	compatibility_only_notes: []
+L00002055	stale_retired_dispositions: []
+L00002056	owner_boundary_notes:
+L00002057	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00002058	owner_hints:
+L00002059	- Plans/human-in-the-loop.md
+L00002060	```
+L00002061	
+L00002062	### HITL-031 - Recovery Action Gating And Surface Consistency
+L00002063	
+L00002064	```yaml
+L00002065	plan_unit_id: HITL-031
+L00002066	unit_type: requirement
+L00002067	status: accepted
+L00002068	owner_doc: Plans/human-in-the-loop.md
+L00002069	canonical_text: Recovery action gating keeps approve/decline for side-effect gates and review approvals, resume_after_prerequisite for auth or policy prerequisites, restore_safe_point_then_retry when rollback is required, skip_node only when graph integrity permits it, and replan when classification is replan_required; all surfaces must use the same action names, meanings, and enablement conditions, and may hide actions for layout but must not rename or reinterpret them.
+L00002070	gui_related: true
+L00002071	gui_classification_reason: This unit governs visible action availability and cross-surface consistency.
+L00002072	split_recommended: false
+L00002073	depends_on: []
+L00002074	unblocks: []
+L00002075	acceptance_criteria:
+L00002076	- The covered source span remains losslessly available for exact-text audit.
+L00002077	- This behavior is addressable through HITL-031 instead of broad HITL-001 source-preserving coverage.
+L00002078	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002079	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002080	validation_surfaces:
+L00002081	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002082	- python3 scripts/pm-plan-index.py validate
+L00002083	risk_class: hitl_contract_drift
+L00002084	reasoning_tier: standard
+L00002085	context_scope: human_in_the_loop_standardization
+L00002086	implementation_surfaces:
+L00002087	- Plans/human-in-the-loop.md
+L00002088	node_compile_hint:
+L00002089	  mode: recovery_action_gating_and_surface_consistency
+L00002090	  create_worknodes: false
+L00002091	source_lineage:
+L00002092	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0039
+L00002093	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0040
+L00002094	preserved_exact_tokens:
+L00002095	- approve
+L00002096	- decline
+L00002097	- external-side-effect gates
+L00002098	- resume_after_prerequisite
+L00002099	- auth recovery
+L00002100	- policy change
+L00002101	- restore_safe_point_then_retry
+L00002102	- skip_node
+L00002103	- graph integrity
+L00002104	- replan
+L00002105	- replan_required
+L00002106	- same action names
+L00002107	- enablement conditions
+L00002108	negative_constraints:
+L00002109	- A surface may hide an action for layout reasons, but it must not rename or reinterpret it.
+L00002110	compatibility_only_notes: []
+L00002111	stale_retired_dispositions: []
+L00002112	owner_boundary_notes:
+L00002113	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00002114	owner_hints:
+L00002115	- Plans/human-in-the-loop.md
+L00002116	```
+L00002117	
+L00002118	### HITL-032 - Approval Resolution And Rerun Event Semantics
+L00002119	
+L00002120	```yaml
+L00002121	plan_unit_id: HITL-032
+L00002122	unit_type: requirement
+L00002123	status: accepted
+L00002124	owner_doc: Plans/human-in-the-loop.md
+L00002125	canonical_text: Waiting for approval is a blocked state with blocked_reason_code=waiting_approval; approval resolution emits node.prerequisite_resolved and wakes scheduling in the same cycle, valid safe points default to Retry from safe point for mutation-capable attempts, Start fresh attempt is the explicit alternative when no valid safe point exists or policy forbids restore, and Skip remains a separate graph policy action that never masquerades as success.
+L00002126	gui_related: true
+L00002127	gui_classification_reason: This unit defines visible rerun affordances and event semantics after approval resolution.
+L00002128	split_recommended: false
+L00002129	depends_on: []
+L00002130	unblocks: []
+L00002131	acceptance_criteria:
+L00002132	- The covered source span remains losslessly available for exact-text audit.
+L00002133	- This behavior is addressable through HITL-032 instead of broad HITL-001 source-preserving coverage.
+L00002134	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002135	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002136	validation_surfaces:
+L00002137	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002138	- python3 scripts/pm-plan-index.py validate
+L00002139	risk_class: hitl_contract_drift
+L00002140	reasoning_tier: standard
+L00002141	context_scope: human_in_the_loop_standardization
+L00002142	implementation_surfaces:
+L00002143	- Plans/human-in-the-loop.md
+L00002144	node_compile_hint:
+L00002145	  mode: approval_resolution_and_rerun_event_semantics
+L00002146	  create_worknodes: false
+L00002147	source_lineage:
+L00002148	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0041
+L00002149	preserved_exact_tokens:
+L00002150	- blocked_reason_code = waiting_approval
+L00002151	- node.prerequisite_resolved
+L00002152	- same cycle
+L00002153	- Retry from safe point
+L00002154	- Start fresh attempt
+L00002155	- Skip
+L00002156	- graph policy action
+L00002157	- never masquerades as success
+L00002158	negative_constraints: []
+L00002159	compatibility_only_notes: []
+L00002160	stale_retired_dispositions: []
+L00002161	owner_boundary_notes:
+L00002162	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00002163	owner_hints:
+L00002164	- Plans/human-in-the-loop.md
+L00002165	```
+L00002166	
+L00002167	### HITL-033 - Visible Labels And Decline/Reject Follow-Up Choices
+L00002168	
+L00002169	```yaml
+L00002170	plan_unit_id: HITL-033
+L00002171	unit_type: requirement
+L00002172	status: accepted
+L00002173	owner_doc: Plans/human-in-the-loop.md
+L00002174	canonical_text: HITL surfaces use canonical visible labels Approve, Decline, Retry from safe point, Start fresh attempt, Resume after prerequisite, Replan, Skip node, and Abort run; Reject, Deny, and other variants map back to canonical action families, and after decline/reject the surface chooses among safe-point retry, fresh attempt, Replan, Skip node only when permitted, or debug verification rerun in the active isolated automation session unless corrupted state requires a fresh isolated session.
+L00002175	gui_related: true
+L00002176	gui_classification_reason: This unit governs user-visible labels and decline/reject follow-up choices.
+L00002177	split_recommended: false
+L00002178	depends_on: []
+L00002179	unblocks: []
+L00002180	acceptance_criteria:
+L00002181	- The covered source span remains losslessly available for exact-text audit.
+L00002182	- This behavior is addressable through HITL-033 instead of broad HITL-001 source-preserving coverage.
+L00002183	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002184	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002185	validation_surfaces:
+L00002186	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002187	- python3 scripts/pm-plan-index.py validate
+L00002188	risk_class: hitl_contract_drift
+L00002189	reasoning_tier: standard
+L00002190	context_scope: human_in_the_loop_standardization
+L00002191	implementation_surfaces:
+L00002192	- Plans/human-in-the-loop.md
+L00002193	node_compile_hint:
+L00002194	  mode: visible_labels_and_decline_reject_follow_up_choices
+L00002195	  create_worknodes: false
+L00002196	source_lineage:
+L00002197	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0042
+L00002198	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0043
+L00002199	preserved_exact_tokens:
+L00002200	- Approve
+L00002201	- Decline
+L00002202	- Retry from safe point
+L00002203	- Start fresh attempt
+L00002204	- Resume after prerequisite
+L00002205	- Replan
+L00002206	- Skip node
+L00002207	- Abort run
+L00002208	- Reject
+L00002209	- Deny
+L00002210	- decline/reject
+L00002211	- active isolated automation session
+L00002212	- fresh isolated session
+L00002213	negative_constraints:
+L00002214	- Reject, Deny, and other variants must map back to canonical action families.
+L00002215	compatibility_only_notes: []
+L00002216	stale_retired_dispositions: []
+L00002217	owner_boundary_notes:
+L00002218	- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+L00002219	owner_hints:
+L00002220	- Plans/human-in-the-loop.md
+L00002221	```
+L00002222	
+L00002223	### HITL-034 - Shared Approval Ladder And Approval Vocabulary Consumption
+L00002224	
+L00002225	```yaml
+L00002226	plan_unit_id: HITL-034
+L00002227	unit_type: requirement
+L00002228	status: accepted
+L00002229	owner_doc: Plans/human-in-the-loop.md
+L00002230	canonical_text: HITL-specific affordances consume the shared permission ladder instead of defining a shorter local approval menu; approval choices are deny, once, for session, and always, batch web review may present one domain-grouped approval surface, question defaults to allow only when HITL is available and otherwise remains ask-gated, and HITL surfaces do not create a competing approval vocabulary.
+L00002231	gui_related: true
+L00002232	gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts, terminal blocked-state handling, or approval labels.
+L00002233	split_recommended: true
+L00002234	depends_on: []
+L00002235	unblocks: []
+L00002236	acceptance_criteria:
+L00002237	- The covered source span remains losslessly available for exact-text audit.
+L00002238	- This behavior is addressable through HITL-034 instead of broad HITL-001 source-preserving coverage.
+L00002239	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002240	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002241	validation_surfaces:
+L00002242	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002243	- python3 scripts/pm-plan-index.py validate
+L00002244	risk_class: hitl_permission_ladder_drift
+L00002245	reasoning_tier: standard
+L00002246	context_scope: human_in_the_loop_standardization
+L00002247	implementation_surfaces:
+L00002248	- Plans/human-in-the-loop.md
+L00002249	node_compile_hint:
+L00002250	  mode: shared_approval_ladder_and_approval_vocabulary_consumption
+L00002251	  create_worknodes: false
+L00002252	source_lineage:
+L00002253	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0044
+L00002254	preserved_exact_tokens:
+L00002255	- Shared approval-ladder alignment (2026-04-04)
+L00002256	- HITL-specific affordances
+L00002257	- shared permission ladder
+L00002258	- shorter local approval menu
+L00002259	- deny
+L00002260	- once
+L00002261	- for session
+L00002262	- always
+L00002263	- batch web review
+L00002264	- one domain-grouped approval surface
+L00002265	- question
+L00002266	- allow
+L00002267	- HITL is available
+L00002268	- ask-gated
+L00002269	- competing approval vocabulary
+L00002270	negative_constraints:
+L00002271	- HITL must not define a shorter local approval menu.
+L00002272	- question defaults to allow only when HITL is available; otherwise it remains ask-gated.
+L00002273	- HITL surfaces must not create competing approval vocabulary.
+L00002274	compatibility_only_notes: []
+L00002275	stale_retired_dispositions: []
+L00002276	owner_boundary_notes:
+L00002277	- Plans/human-in-the-loop.md owns HITL consumer alignment only.
+L00002278	- Plans/Permissions_System.md and Plans/Tools.md remain owners for the shared permission ladder and tool permission behavior.
+L00002279	owner_hints:
+L00002280	- Plans/human-in-the-loop.md
+L00002281	preserved_contractrefs:
+L00002282	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md'
+L00002283	split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing subspans.
+L00002284	```
+L00002285	
+
+<<< CONTEXT_AFTER canonical_document_lines=2286-2297 >>>
+L00002286	### HITL-035 - Ask-Flow And Terminal Block Consumer Alignment
+L00002287	
+L00002288	```yaml
+L00002289	plan_unit_id: HITL-035
+L00002290	unit_type: requirement
+L00002291	status: accepted
+L00002292	owner_doc: Plans/human-in-the-loop.md
+L00002293	canonical_text: As an approval/ask-flow consumer, HITL preserves repaired permission, question, and terminal block handling exactly through the shared permission ladder and blocked-episode model rather than drifting into local-only action names or terminal-only approval behavior; /ask-flow and /question/terminal routes are consumer labels over the shared model and not independent HITL-only state machines.
+L00002294	gui_related: true
+L00002295	gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts, terminal blocked-state handling, or approval labels.
+L00002296	split_recommended: true
+L00002297	depends_on: []

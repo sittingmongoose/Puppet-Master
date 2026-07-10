@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 6325-6336 >>>
+- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+preserved_contractrefs:
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6337-6695 >>>
+### SMPFS-096 - Browser Lifecycle Distribution Platform Guarantees
+
+```yaml
+plan_unit_id: SMPFS-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: PM-managed browser helpers use helper/subprocess lifecycle, crash detection, restart policy, sandboxing, diagnostics, per-platform bundle layout, update rules, signature/hash verification, uninstall/removal evidence, and explicit Linux/macOS/Windows platform guarantees.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+- PS-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-096 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_lifecycle_distribution_drift
+reasoning_tier: standard
+context_scope: browser_distribution
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_lifecycle_distribution_platform_guarantees
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+preserved_exact_tokens:
+- helper/subprocess layout
+- /subprocess
+- startup
+- shutdown
+- crash detection
+- restart policy
+- sandboxing
+- diagnostics
+- bundle layout
+- update rules
+- signature/hash verification
+- /hash
+- uninstall/removal
+- /removal
+- macOS
+- Linux
+- Windows
+negative_constraints:
+- provider-routed fetch must not reuse the reserved native Site Reader identity.
+- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+preserved_contractrefs:
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/storage-plan.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+```
+
+### SMPFS-097 - Browser Permissions And Safety
+
+```yaml
+plan_unit_id: SMPFS-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Browser actions, storage/auth use, DevTools flows, artifact capture, agent-vs-user authority, permission keys, trust tiers, auth/session sensitivity, and no-silent-fallback blocked semantics are governed by Permissions and safety contracts.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-097 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_permission_drift
+reasoning_tier: standard
+context_scope: browser_safety
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_permissions_safety
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+preserved_exact_tokens:
+- permission keys
+- trust tiers
+- agent-vs-user authority
+- auth/session sensitivity
+- no-silent-fallback blocked semantics
+- browser action
+- storage/auth
+- DevTools flow
+- artifact capture
+negative_constraints:
+- No-silent-fallback blocked semantics govern every browser action, storage/auth use, DevTools flow, and artifact capture.
+- provider-routed fetch must not reuse the reserved native Site Reader identity.
+- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+preserved_contractrefs:
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+```
+
+### SMPFS-098 - Browser Chrome Controls And Test Plan
+
+```yaml
+plan_unit_id: SMPFS-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Browser command/UI surfaces expose inspect, screenshot, DevTools, automation controls, exact browser chrome controls, status indicators, activity disclosure, and scenario-driven acceptance criteria for preview, interaction, screenshots, DevTools, auth, crash recovery, restore, and cross-platform packaging.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- UCC-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-098 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_controls_testplan_drift
+reasoning_tier: standard
+context_scope: browser_controls_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_chrome_controls_test_plan
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+preserved_exact_tokens:
+- inspect
+- screenshot
+- devtools
+- automation
+- browser chrome controls
+- status indicators
+- activity disclosure
+- local HTML preview
+- web app interaction
+- auth flow
+- crash recovery
+- cross-platform packaging
+negative_constraints:
+- provider-routed fetch must not reuse the reserved native Site Reader identity.
+- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+preserved_contractrefs:
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/UI_Command_Catalog.md
+- Plans/Permissions_System.md
+```
+
+### SMPFS-099 - Browser Reference Material Dispositions
+
+```yaml
+plan_unit_id: SMPFS-099
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Playwright MCP, Chrome DevTools MCP, BrowserMCP, Saik0s/mcp-browser-use, browser-use, chromiumoxide, Wry, WebView2, WKWebView, WebKitGTK, OS webviews, CDP sidecars, and MCP config shapes remain reference, comparison, lineage, or background inputs and do not replace PM-owned browser architecture.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-099 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_reference_disposition_drift
+reasoning_tier: standard
+context_scope: browser_reference_material
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_reference_material_dispositions
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+preserved_exact_tokens:
+- Playwright MCP
+- Chrome DevTools MCP
+- BrowserMCP/mcp
+- Saik0s/mcp-browser-use
+- browser-use
+- chromiumoxide
+- Wry
+- WebView2
+- WKWebView
+- WebKitGTK
+- OS webviews
+- CDP
+- storage-state
+- cdpEndpoint
+negative_constraints:
+- Reference material does not change PM design center away from a PM-owned built-in browser surface.
+- provider-routed fetch must not reuse the reserved native Site Reader identity.
+- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+preserved_contractrefs:
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+compatibility_only_notes:
+- Reference/comparison/background labels remain lineage only and do not become PM product commands or core architecture.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+```
+
+### SMPFS-100 - Browser Action Schema And Output Shape
+
+```yaml
+plan_unit_id: SMPFS-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The canonical browser action table and output shape preserve action_id, bucket, tier, permission_layer, allowed_session_classes, requested_capabilities, artifacts_emitted, degradation_or_blocking_behavior, user_visible_entry_points, typed output sections, fields, limits, sequential execution, URL validation, and invalid_input errors.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- CV-215
+unblocks: []
+acceptance_criteria:
+- SMPFS-100 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_action_schema_drift
+reasoning_tier: standard
+context_scope: browser_action_schema
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_action_schema_output_shape
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0047
+preserved_exact_tokens:
+- action_id
+- bucket
+- tier
+- guaranteed_everyday
+- advanced_debug_testing
+- permission_layer
+- allowed_session_classes
+- requested_capabilities
+- artifacts_emitted
+- degradation_or_blocking_behavior
+- user_visible_entry_points
+- Open tabs
+- Page state
+- Snapshot
+- New console messages
+- Modal state
+- Downloads
+- timeout_ms
+- invalid_input
+- 5 MB default
+- 5000ms
+- 30000ms
+- 30s
+- HTTP(S)
+- https://
+negative_constraints:
+- Unknown type values produce invalid_input error.
+- Reject non-HTTP(S) schemes and malformed URLs.
+- provider-routed fetch must not reuse the reserved native Site Reader identity.
+- 'The PM built-in browser and click-to-context /browser-interaction topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into websearch, provider-routed webfetch, site/page reading intents, or Site Reader-only behavior.'
+- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+- Playwright MCP remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as browser_run_code and browser_evaluate MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+- An explicit advanced browser /test-debug escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+- Legacy runtime comparison inputs Wry, WebView2, WKWebView, and WebKitGTK are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure under-specified, because degraded states are advertised through requested/effective browser capability fields, runtime_unavailable, and /capability-degradation before a feature is offered.
+preserved_contractrefs:
+- 'ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 6696-6707 >>>
+### SMPFS-101 - Promoted Command Families
+
+```yaml
+plan_unit_id: SMPFS-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The UI command catalog exposes stable command families for project switching/open-new-tab, workspace tabs, detached windows, thread context detail, branching, browser controls, terminal actions, dev-session actions, and catalog lifecycle actions.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:

@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 15579-15590 >>>
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Orchestrator_Page.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Permissions_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 15591-15988 >>>
+### SP-220 - Teach Memory Capture Storage Boundary
+
+```yaml
+plan_unit_id: SP-220
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Teach memory capture is explicit and separate from one-off Teacher-guided instruction. Eligible
+  Teacher answers may offer Save as taught memory; durable records preserve normalized fact, scope selector thread/project/user,
+  source message/thread, secret-safety warning, conflict or supersession state, and user-locked record state. Users
+  can inspect, narrow, supersede, revoke, or unlock records; one-off guidance is not auto-saved and secrets must
+  not be persisted.
+gui_related: false
+gui_classification_reason: Durable taught-memory scope and record state are storage behavior; capture UI is owned
+  by Assistant Chat.
+depends_on:
+- ACD-426
+unblocks:
+- G-026
+- ATS-014
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: teach_memory_persistence_drift
+reasoning_tier: standard
+context_scope: teach_memory_capture_records
+implementation_surfaces:
+- Plans/storage-plan.md
+- future taught memory records
+node_compile_hint:
+  mode: teach_memory_storage_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0094
+- pldg-20260626-001-feature-name:atom-0122
+- pldg-20260626-001-feature-name:atom-0123
+- pldg-20260626-001-feature-name:atom-0146
+- Plans/assistant-chat-design.md#6-Teach
+- chat:teach-teacher-correction
+- chat:teach-gap-fill-correction
+- q-0028
+- chat:teach-bundle-accepted-pmconcept-reference
+- chat:work-through-teach-gaps
+- Plans/assistant-chat-design.md#6-teach
+source_atom_ids:
+- atom-0094
+- atom-0122
+- atom-0123
+- atom-0146
+decision_refs:
+- dec-0018
+- dec-0019
+- dec-0020
+- dec-0024
+correction_refs:
+- corr-0003
+preserved_exact_tokens:
+- Teach
+- Teacher
+- remember that...
+- for this repo always...
+- please prefer...
+- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+- taught memory
+- memory scope
+- durable
+- user-approved
+- current thread
+- current project
+- feature area
+- scope selector
+- edit/delete
+- one-off Teacher instruction
+- user-locked record
+- must not silently overwrite
+- rejects an update
+- resolves a conflict
+- pins a correction
+- unlock/edit flow
+- conflict display
+- Save as taught memory
+- normalized fact
+- thread
+- project
+- user
+- source message/thread
+- secret-safety warning
+- conflict/supersession preview
+- Save/Cancel
+- inspect
+- narrow
+- supersede
+- revoke
+- unlock
+negative_constraints:
+- Do not make Teacher-guided instruction automatically persist memory.
+- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
+- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
+- Do not persist Teach conversation content as memory without confirmation.
+- Do not use taught memory outside its approved scope.
+- Do not bury edit/delete controls away from the memory explanation.
+- Do not let later Teach runs overwrite locked corrections without explicit user action.
+- Do not cite a locked record without showing its scope/source when relevant.
+- Do not auto-save one-off Teacher guidance as taught memory.
+- Do not persist secrets, tokens, passwords, or credentials.
+- Do not allow conflicting teachings to silently overwrite prior locked records.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/Prompt_Pipeline.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Personas.md
+- Plans/Glossary.md
+- Plans/FinalGUISpec.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Storage Plan owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### SP-221 - Inline Visualizer V2 State And Replay Storage
+
+```yaml
+plan_unit_id: SP-221
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata,
+  PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread,
+  message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot
+  fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace
+  `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only
+  JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes
+  replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and
+  diagnostic payload leaks are never persistence sources.
+gui_related: false
+gui_classification_reason: Defines durable visualizer record scope and replay storage behavior; visible rendering is owned by GUI and Assistant Chat.
+depends_on: [ACD-427, CV-300]
+unblocks: [RAP-037, ATS-015]
+acceptance_criteria:
+  - Visualizer records are scoped by project, thread, message, and visualizer artifact.
+  - Reload can replay from persisted source/config/state or show the stored fallback/error state.
+  - PM-managed visualizer state is namespaced, quota-bound, JSON-serializable, and reload/export/purge aware.
+  - PM-managed state outputs are allowed; raw parent localStorage and runtime heap persistence are forbidden.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Inline visualizer reload and export storage fixtures
+risk_class: inline_visualizer_replay_storage_gap
+reasoning_tier: high
+context_scope: inline_visualizer_v2_storage
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - future visualizer artifact records
+node_compile_hint:
+  mode: inline_visualizer_v2_storage_replay
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+source_atom_ids: [atom-0060, atom-0088]
+preserved_exact_tokens:
+  - "source fragment"
+  - "title/type/version"
+  - "render config"
+  - "approved bridge metadata"
+  - "PM-managed state outputs"
+  - "visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}"
+  - "project/thread/message/visualizer artifact"
+  - "screenshot/snapshot fallback"
+  - "raw parent localStorage"
+negative_constraints:
+  - Do not persist runtime heap as visualizer state.
+  - Do not read or write raw parent localStorage from the visualizer iframe.
+  - Do not store secrets or unredacted diagnostic payloads in visualizer replay records.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### SP-222 - Notification Settings Destinations Receipts And Sound Assets Storage
+
+```yaml
+plan_unit_id: SP-222
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests,
+  uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`,
+  project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`,
+  `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`.
+  Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus
+  policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for
+  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored
+  only as OS credential references; receipts store redacted request and response digests, provider kind, destination id,
+  event id, event category, status class, HTTP status, provider request/message id when available, retry count, next
+  retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id,
+  built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution,
+  version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category
+  mappings.
+gui_related: false
+gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
+depends_on: [CV-298, PS-124]
+unblocks: [F3-405, RAP-039, ATS-016]
+acceptance_criteria:
+  - Non-secret notification settings and sound manifests are durable and scope-aware.
+  - Provider-specific destination profile payloads are persisted as credential refs and non-secret settings, not as raw tokens or URLs.
+  - Built-in normal notification sounds carry source, license, attribution, version, duration, hash, and default event-category mapping metadata.
+  - Webhook URLs, tokens, and push credentials are represented only by credential refs outside redb/plain settings.
+  - Uploaded sound assets validate MIME/header/decode/path, cap at 5 MiB and 10 seconds decoded, warn above 3 seconds, normalize to PM-managed copies, trim silence, hash duplicates, soft-delete user assets, and never export secrets.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Notification settings and sound asset storage fixtures
+risk_class: notification_storage_secret_leak
+reasoning_tier: high
+context_scope: notifications_sounds_storage
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - future notification settings records
+  - future sound asset records
+node_compile_hint:
+  mode: notifications_sounds_storage
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+source_atom_ids: [atom-0061, atom-0063, atom-0064, atom-0065, atom-0066, atom-0067]
+preserved_exact_tokens:
+  - "notification_settings.v1:global"
+  - "notification_destination.v1:{scope}:{destination_id}"
+  - "notification_sound_mapping.v1:{scope}:{event_category}"
+  - "sound_asset_manifest.v1:{scope}:{sound_id}"
+  - "provider_kind"
+  - "event_category"
+  - "rate_limit_profile"
+  - "idempotency"
+  - "source_kind"
+  - "license_ref"
+  - "source_url_or_package_ref"
+  - "WAV"
+  - "MP3"
+  - "OGG"
+  - "5MiB"
+  - "10s"
+  - "warn >3s"
+  - "soft-delete"
+negative_constraints:
+  - Do not store webhook URLs or provider tokens in non-secret settings.
+  - Do not export secrets with sound packs or notification settings.
+  - Do not hard-delete built-in sounds; built-ins may be hidden or disabled.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/FinalGUISpec.md
+```
+
+### SP-223 - DRY Setting Receipt And Rules Provenance Storage
+
+```yaml
+plan_unit_id: SP-223
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  DRY Method storage preserves the application setting `app.agent_rules.dry_method_default_guard` as enabled or
+  disabled_by_user with default enabled, plus run/turn receipts carrying `instruction_bundle_ref`,
+  `rules_application_sha256`, `rules_project_sha256`, `dry_method_effective_state`, `dry_method_reason`, and
+  `dry_method_source_refs`. Turning DRY off disables only the default DRY guard and DRY-specific caveat/block behavior;
+  it does not delete receipt provenance or disable explicit instructions, safety, secrets, source authority,
+  governance phase boundaries, permissions, or source-control hygiene.
+gui_related: false
+gui_classification_reason: Defines durable setting and provenance/receipt fields rather than visible presentation.
+depends_on: [ARC-036, CV-299]
+unblocks: [F3-406, ATS-018]
+acceptance_criteria:
+  - The stored enum is exactly enabled or disabled_by_user, with enabled as the default.
+  - Run-start minimum fields include instruction_bundle_ref, rules_application_sha256, rules_project_sha256, dry_method_effective_state, and dry_method_reason.
+  - DRY-off state remains auditable through receipts and does not weaken non-DRY authority boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY setting and receipt persistence fixtures
+risk_class: dry_method_provenance_storage_gap
+reasoning_tier: high
+context_scope: dry_method_storage
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - future run receipts
+node_compile_hint:
+  mode: dry_method_setting_receipt_storage
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-rules-provenance
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-002
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0075
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+source_atom_ids: [atom-0073, atom-0075, atom-0083]
+decision_refs: [dec-0016]
+preserved_exact_tokens:
+  - "app.agent_rules.dry_method_default_guard"
+  - "enabled"
+  - "disabled_by_user"
+  - "instruction_bundle_ref"
+  - "rules_application_sha256"
+  - "rules_project_sha256"
+  - "dry_method_effective_state"
+  - "dry_method_reason"
+  - "dry_method_source_refs"
+negative_constraints:
+  - Do not make disabling DRY delete receipts or provenance.
+  - Do not treat disabled DRY as permission to bypass safety, secrets, source authority, governance, permissions, or source-control hygiene.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/agent-rules-context.md
+```
+
+## Ledger Compile Addendum - pldg-20260629-001-feature-name
+
+This addendum compiles Free Models storage requirements for import snapshots, currentness, activation/quarantine/rollback, and redacted diagnostics. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+
+### SP-224 - Free Models Import Snapshot Alias And Currentness Storage
+
+```yaml
+plan_unit_id: SP-224
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  PM persists Free Models trusted source state, source resolver outcomes, source refs, release/tag/commit/npm/changelog/source hashes, current and previous imported catalog snapshots, import disposition, check cadence/timestamps, stable internal imported ids, and alias/rename/provider-move mappings. Storage keeps underlying provider/account/model/source identity intact and stores secret material only as credential references, never raw secrets.
+gui_related: false
+gui_classification_reason: Defines persistence records, not user-visible visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Import snapshots preserve current and previous source state with hashes and source refs.
+  - Alias/rename/provider-move mappings keep top-10 lists, section settings, Usage history, and diagnostics stable across upstream churn.
+  - Secrets are represented only by refs and never raw secret/token values.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Free Models import snapshot persistence fixtures
+  - Alias/rename/provider-move persistence fixtures
+risk_class: import_snapshot_storage_drift
+reasoning_tier: high
+context_scope: free_models_import_storage
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: free_models_import_snapshot_storage_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_upstream_inspection_20260629.json
+source_atom_ids: [atom-0011, atom-0017, atom-0020, atom-0025, atom-0051, atom-0052, atom-0057, atom-0071, atom-0129, atom-0193, atom-0194, atom-0197, atom-0198, atom-0242, atom-0250, atom-0258, atom-0262, atom-0289, atom-0290]
+preserved_exact_tokens:
+  - "source/ref/version"
+  - "source/ref/hash"
+  - "Last checked"
+  - "Last updated"
+  - "stable PM internal IDs"
+  - "upstream alias/rename mappings"
+negative_constraints:
+  - Do not store raw secret material in Free Models import snapshots.
+  - Do not lose alias/rename/provider-move history during Auto Apply updates.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+```
+
+
+<<< CONTEXT_AFTER 15989-16000 >>>
+### SP-225 - Free Models Activation Quarantine Rollback And Diagnostics Storage
+
+```yaml
+plan_unit_id: SP-225
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  PM persists Free Models activation receipts, last-known-good refs, quarantine state, rollback evidence, failed-check state, route impact, affected provider/model ids, redaction profile, redaction summary, and support export manifests. Failed or quarantined updates keep the current known-good state active. Diagnostics/export may preserve source/ref/hash and route impact while raw secrets, tokens, provider error payloads, and sensitive provider responses remain redacted or Advanced/Support-only.
+gui_related: false
+gui_classification_reason: Defines stored receipts and export manifests; GUI projection is owned elsewhere.
+depends_on: []

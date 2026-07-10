@@ -1,0 +1,267 @@
+<<< CONTEXT_BEFORE canonical_document_lines=27081-27092 >>>
+L00027081	- P1-UI-PROJECTION-STORE-BUDGET
+L00027082	- P1
+L00027083	- Bounded UI projection stores
+L00027084	- Cline
+L00027085	- Warp
+L00027086	- OpenAI Codex
+L00027087	negative_constraints: []
+L00027088	observed_signal: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
+L00027089	pm_gap_or_delta: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts.
+L00027090	compile_disposition: create_new_planunit
+L00027091	```
+L00027092	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=27093-27344 >>>
+L00027093	### F3-417 - GUI Platform Currentness Renderer Web And Icon Contract
+L00027094	
+L00027095	```yaml
+L00027096	plan_unit_id: F3-417
+L00027097	unit_type: decision
+L00027098	status: accepted
+L00027099	owner_doc: Plans/FinalGUISpec.md
+L00027100	canonical_text: >-
+L00027101	  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia compiled
+L00027102	  in and selected by default on Windows, Linux, and macOS; fallback order is explicit SLINT_BACKEND override, persisted
+L00027103	  preference, Winit + Skia, Winit + FemtoVG-wgpu, then Winit software emergency mode. The first GUI build includes
+L00027104	  native desktop plus a Rust Slint/WASM canvas web GUI compiled as cdylib through wasm-bindgen, wasm-pack, or an
+L00027105	  approved equivalent and loaded through minimal HTML/canvas bootstrap rather than React, Tauri, or DOM product UI.
+L00027106	  Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
+L00027107	  authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
+L00027108	  pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
+L00027109	  reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct,
+L00027110	  web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses
+L00027111	  bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons,
+L00027112	  network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+L00027113	gui_related: true
+L00027114	gui_classification_reason: This unit locks GUI platform, renderer, web GUI, visible capability, and icon policy decisions.
+L00027115	split_recommended: false
+L00027116	depends_on:
+L00027117	- F3-026
+L00027118	- F3-029
+L00027119	- F3-030
+L00027120	- F3-033
+L00027121	- ATS-023
+L00027122	unblocks: []
+L00027123	acceptance_criteria:
+L00027124	- Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
+L00027125	- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults.
+L00027126	- Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
+L00027127	- Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
+L00027128	- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
+L00027129	validation_surfaces:
+L00027130	- python3 scripts/pm-gui-asset-policy.py
+L00027131	- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
+L00027132	- python3 scripts/pm-plans-verify.py verify-spec-lock
+L00027133	- python3 scripts/pm-plan-index.py validate
+L00027134	risk_class: gui_platform_currentness_drift
+L00027135	reasoning_tier: high
+L00027136	context_scope: fable_20260706_gui_platform_currentness_repair
+L00027137	implementation_surfaces:
+L00027138	- Plans/FinalGUISpec.md
+L00027139	- Plans/00-plans-index.md
+L00027140	- Plans/BinaryLocator_Spec.md
+L00027141	- Plans/MiscPlan.md
+L00027142	- Plans/LSPSupport.md
+L00027143	- Plans/PMConcept_Control_Reconciliation.json
+L00027144	- Plans/Spec_Lock.json
+L00027145	- scripts/pm-gui-asset-policy.py
+L00027146	node_compile_hint:
+L00027147	  mode: gui_platform_contract_only
+L00027148	  create_worknodes: false
+L00027149	  create_nodeseeds: false
+L00027150	source_lineage:
+L00027151	- fablereport.md:103-112
+L00027152	- Plans/.audits/fable-20260706/currentness_check_report.json
+L00027153	- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+L00027154	source_atom_ids: []
+L00027155	preserved_exact_tokens:
+L00027156	- "Slint 1.17.1"
+L00027157	- "Winit + Skia"
+L00027158	- "Winit + FemtoVG-wgpu"
+L00027159	- "Winit software renderer"
+L00027160	- "SLINT_BACKEND"
+L00027161	- "Slint/WASM canvas"
+L00027162	- "trusted local daemon"
+L00027163	- "native_full"
+L00027164	- "web_supported_direct"
+L00027165	- "web_supported_via_trusted_local_daemon"
+L00027166	- "web_simulated_or_degraded"
+L00027167	- "web_disabled"
+L00027168	- "icon_id"
+L00027169	- "no emoji"
+L00027170	negative_constraints:
+L00027171	- "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
+L00027172	- "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
+L00027173	- "Do not use React, Tauri, or DOM-rendered product UI for the Slint web GUI."
+L00027174	- "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
+L00027175	compatibility_only_notes:
+L00027176	- "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
+L00027177	owner_boundary_notes:
+L00027178	- "FinalGUISpec owns GUI platform and visible capability policy; Automated_Testing_System owns web GUI dev/test workflow; UI_Command_Catalog owns only development-preview command IDs."
+L00027179	```
+L00027180	
+L00027181	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00027182	
+L00027183	This addendum is canonical GUI spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00027184	
+L00027185	### CTA Card Contracts
+L00027186	
+L00027187	Repairs row `sfk-cae1da5c6109a0d306d04dd9`.
+L00027188	
+L00027189	All CTA cards share fields `card_id`, `card_kind`, `severity`, `title`, `body`, `primary_action_id`, `secondary_action_ids[]`, `dismissible`, `owner_route`, `blocked_reason_code?`, and `created_at_utc`.
+L00027190	
+L00027191	| card_kind | Required primary action | Secondary actions | Required fields |
+L00027192	| --- | --- | --- | --- |
+L00027193	| `hitl_approval` | `cmd.runtime.approve` | `cmd.runtime.decline`, `cmd.runtime.view_details` | `approval_scope_key`, `permission_snapshot_id` |
+L00027194	| `run_interrupted` | `cmd.run.resume` | `cmd.run.view_log`, `cmd.run.stop` | `run_id`, `interruption_reason_code` |
+L00027195	| `rate_limit` | `cmd.provider.retry_after` | `cmd.provider.switch_route`, `cmd.usage.view_budget` | `provider_id`, `retry_after_ms` |
+L00027196	| `warning` | `cmd.warning.acknowledge` | `cmd.warning.open_owner` | `warning_code`, `owner_doc_ref` |
+L00027197	| `wizard_attention_required` | `cmd.planning_wizard.open_topic` | `cmd.planning_wizard.defer` | `planning_run_id`, `topic_card_id` |
+L00027198	
+L00027199	CTA cards must never rely on generic "function identically" prose without the row-specific fields above.
+L00027200	
+L00027201	### Activity Bar Groups And Shortcut Binding
+L00027202	
+L00027203	Repairs row `sfk-94c4451c654561bebe80cef7`.
+L00027204	
+L00027205	The five Activity Bar groups are:
+L00027206	
+L00027207	1. `work`: Orchestrator, Run Graph, Planning Wizard.
+L00027208	2. `project`: File Manager, Search, Source Control.
+L00027209	3. `automation`: GitHub Actions, Docker Manager, Testing.
+L00027210	4. `communication`: Chat, Agents, Notifications.
+L00027211	5. `system`: Settings, Usage, Runtime Artifacts.
+L00027212	
+L00027213	`Ctrl+1..8` binds to the first eight visible side-panel items in group order after policy and feature availability filtering. Hidden or unsupported items remain command-palette addressable but do not consume a shortcut slot.
+L00027214	
+L00027215	### Settings Registry And Numbering Supersession
+L00027216	
+L00027217	Repairs rows `sfk-66fc2872ed5f759cc6aaa0f5`, `sfk-832d3cce203e9e0009e0b90b`, and `sfk-affcf9f0d9b8260854b1bfc4`.
+L00027218	
+L00027219	- The canonical Settings registry remains 19 tabs. Catalog, Sync, SSH, and Debug are not new tabs; they are subsections under Settings > Advanced or owner panels when surfaced.
+L00027220	- `Settings > Terminal` is owned by the terminal settings subsection; `Agent Config Skills` is owned by Agent Config and Skills owner docs.
+L00027221	- The duplicate promoted-widget `## 15` heading is superseded by the named promoted-widget addendum anchor. Any "Section 15 terminal-core architecture" reference resolves to the terminal-core screen/buffer section, not the promoted-widget catalog.
+L00027222	- New citations must use explicit heading names instead of bare `§7.4` or `§15` when more than one migration-era alias exists.
+L00027223	
+L00027224	### Slint Host File Inventory
+L00027225	
+L00027226	Repairs row `sfk-4c6ed162c01a11a1649fac43`.
+L00027227	
+L00027228	Required Slint host files:
+L00027229	
+L00027230	| Surface | Host file |
+L00027231	| --- | --- |
+L00027232	| Orchestrator seven-tab page | `ui/orchestrator/orchestrator_page.slint` |
+L00027233	| Docker/Hosts | `ui/docker/docker_hosts_view.slint` |
+L00027234	| Source Control | `ui/source_control/source_control_panel.slint` |
+L00027235	| GitHub Actions | `ui/github_actions/github_actions_panel.slint` |
+L00027236	| Docker Manager | `ui/docker/docker_manager_panel.slint` |
+L00027237	| Artifacts | `ui/artifacts/artifacts_panel.slint` |
+L00027238	| Search | `ui/search/search_panel.slint` |
+L00027239	| Run & Debug | `ui/run_debug/run_debug_panel.slint` |
+L00027240	
+L00027241	These paths are planned GUI host locations only. They do not create implementation files or authorize a source tree.
+L00027242	
+L00027243	### Startup Restore GUI State
+L00027244	
+L00027245	Repairs row `sfk-047b362fce3b487a9bce5d6b`.
+L00027246	
+L00027247	Startup restore reads `hotreload_state.v1:{project_id}` and `onboarding_state.v1:{project_id}` as defined by `Plans/storage-plan.md`. The GUI treats missing keys as first-run defaults, corrupt keys as recoverable reset with a warning card, and compatibility aliases as migration inputs only.
+L00027248	
+L00027249	### Terminal-Core Section Anchor
+L00027250	
+L00027251	Repairs row `sfk-832d3cce203e9e0009e0b90b`.
+L00027252	
+L00027253	The terminal-core architecture reference means the screen/buffer/diff-painting model: high-frequency render loop, dirty-region diffing, off-UI-thread PTY ingestion, bounded UI event delivery, and explicit session/pane identity. If a future section number changes, citations must use `terminal-core screen/buffer architecture` rather than a bare Section 15 number.
+L00027254	
+L00027255	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00027256	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00027257	
+L00027258	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00027259	
+L00027260	- `registry_line 39` (source_lineage_only; source line 315; `sfk-dbfb199dce43d628bb3dc410`): PMConcept Settings alternatives are source-lineage only; live canon remains the unified Settings registry, two-level/sidebar model, and separate Agent Config placement. Source summary: 1. **Settings IA** concept ships three alternate Settings prototypes (`.page-settings-a/-b/-c`, CSS 73377345) plus an 18-card bento grid + slide-in inspector (1343614450) plus a Project Settings Modal (10380) plus a separate 7-tab Agent Config page (12694). Plans canon is a s
+L00027261	- `registry_line 44` (repaired; source line 321; `sfk-abfc2f6cec0ea06de128b05e`): Dashboard widget canon repaired: PMConcept twenty-widget/sub-tab variants are source-lineage only; the default Dashboard set is exactly widget-orchestrator-progress, widget-active-lanes, widget-recent-results, and widget-custom-metrics. Source summary: 7. **Dashboard widgets** concept ~20 bespoke widgets across Main/Metrics/Monitoring sub-tabs (990110163) vs plans-locked catalog of exactly 4 dashboard widgets (F3-277/279) + 13 `progress.*` widget ids (F3-099), and plans themselves disagree 3-vs-4 on the default set (GUI-1 ME
+L00027262	- `registry_line 83` (repaired; source line 447; `sfk-fa1be2ed51683d179c169cb8`): Dashboard reorder precedence repaired: F3-275 full widget grid behavior supersedes the F3-252 drag-handle/click-to-swap mitigation; the latter remains migration-risk lineage only. Source summary: - [HIGH] L17073-18305 (F3-252 vs F3-275): Dashboard widget-grid reorder is locked to "drag-handle + click-to-swap, full DnD deferred" in one accepted unit while a later accepted unit requires full drag-to-reorder + edge resize + grid snapping as required MVP no precedence state
+L00027263	- `registry_line 84` (repaired; source line 448; `sfk-4c1d61c95c67c91b36401598`): Add Widget flow repaired: visible entrypoints dispatch cmd.dashboard.add_widget through catalog.dashboard_add_widget; the flow opens catalog, chooses widget, chooses or accepts slot/size, and persists layout. Source summary: - [HIGH] L18470-18474: "Add Widget" has three undecided entry points (menu/FAB/toolbar) with no command ID and a flow contradiction (choose-then-place vs auto-place-then-move) FIX: decide entrypoint, register `dashboard.add_widget`, sequence the flow.
+L00027264	
+L00027265	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+L00027266	
+L00027267	## Usage GUI Propagation Addendum - 2026-07-09
+L00027268	
+L00027269	This addendum binds visible Usage, Dashboard, settings, graph, orchestrator, and artifact entrypoints to the canonical UsageRecord projection. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00027270	
+L00027271	### F3-418 - Usage Value-State Rendering And Identity Contract
+L00027272	
+L00027273	```yaml
+L00027274	plan_unit_id: F3-418
+L00027275	unit_type: requirement
+L00027276	status: accepted
+L00027277	owner_doc: Plans/FinalGUISpec.md
+L00027278	canonical_text: >-
+L00027279	  Every visible Usage, Ledger, Dashboard-hosted Usage widget, chat context summary, Context Detail Pane, Runtime Artifacts drill-through, provider/settings row, model row, Run Graph usage overlay, and Orchestrator usage/cost row renders UsageRecord projections through a shared value-state matrix. A numeric cell is not only a number: it carries value, value_state, source_class, source_confidence, source_authority, settlement_status, projection_freshness, projection_health, last_updated or observed_at_utc, reason, and raw/debug redaction availability where relevant. UsageRecord identity and usage_event_ref normalized to object_kind = usage_event are the primary navigation and rollup identity; thread_id, tier_id, timestamp, and run_id are filters or narrowing context only. GUI copy for Antigravity CLI uses provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, or `/credits` and disabled buckets render as unavailable/unknown/not_exposed/disabled states, while G1 credits remain credits and never become tokens, cost, quota, or provider_total.
+L00027280	gui_related: true
+L00027281	gui_classification_reason: Defines visible Usage, Dashboard, settings, graph, orchestrator, and artifact rendering behavior.
+L00027282	depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
+L00027283	unblocks: []
+L00027284	acceptance_criteria:
+L00027285	  - Usage page and Ledger rollups pivot by usage_event_ref or usage_record_id first; thread_id, tier_id, timestamp, and run_id are filter chips or scope labels only.
+L00027286	  - Visible token, cost, quota, context, cache, reasoning, provider_total, and credit cells render disabled, not_exposed, unknown, stale, estimated, hidden_byok, hidden_subscription, streaming_partial, failed, adjusted, and provider-reported zero as distinct states.
+L00027287	  - Cache zero is shown as a real reported zero only with source_class/source_confidence evidence; missing cache support, unsupported cache, and not exposed cache use state copy instead of zero.
+L00027288	  - Usage widgets hosted on Dashboard either use the same value-state matrix or remain explicitly unavailable as a Dashboard widget; no dashboard widget may use a simplified zero-for-missing model.
+L00027289	  - Runtime Artifact `Show in Usage` and `Show in Ledger` actions land by object_kind = usage_event plus usage_event_ref and secondary refs, not timestamp/run/thread/tier-only filters.
+L00027290	  - Provider/settings and model rows show Antigravity CLI `antigravity_cli`/`agy` usage, quota, credits, statusline, disabled bucket, and G1 credit states without inferring counters from model names or login status.
+L00027291	  - Raw/debug affordances show redaction_status, provider_payload_hash, raw_payload_ref, omitted count, and permissioned-unavailable state rather than unredacted payload content.
+L00027292	validation_surfaces:
+L00027293	  - python3 scripts/pm-plan-index.py validate
+L00027294	  - python3 scripts/pm-shard-plans.py --check
+L00027295	  - python3 scripts/pm-plans-verify.py run-gates
+L00027296	  - future GUI usage value-state fixture suite
+L00027297	risk_class: gui_usage_state_false_zero
+L00027298	reasoning_tier: high
+L00027299	context_scope: gui_usage_value_state
+L00027300	implementation_surfaces:
+L00027301	  - Plans/FinalGUISpec.md
+L00027302	  - Plans/usage-feature.md
+L00027303	  - Plans/Widget_System.md
+L00027304	  - Plans/assistant-chat-design.md
+L00027305	  - Plans/Runtime_Artifacts_Panel.md
+L00027306	  - Plans/Multi-Account.md
+L00027307	  - Plans/Models_System.md
+L00027308	node_compile_hint:
+L00027309	  mode: gui_usage_value_state_contract
+L00027310	  create_worknodes: false
+L00027311	  create_nodeseeds: false
+L00027312	source_lineage:
+L00027313	  - "Plans/FinalGUISpec.md:1265-1293"
+L00027314	  - "Plans/FinalGUISpec.md:1548-1595"
+L00027315	  - "Plans/usage-feature.md:5412-5605"
+L00027316	  - "Plans/CLI_Bridged_Providers.md:1429-1510"
+L00027317	  - "Plans/runtime_artifact_cost_usage.schema.json:47-510"
+L00027318	  - "https://github.com/anomalyco/opencode/issues/30649"
+L00027319	  - "https://github.com/cline/cline/issues/11037"
+L00027320	  - "https://github.com/google-antigravity/antigravity-cli/issues/46"
+L00027321	preserved_exact_tokens:
+L00027322	  - value_state
+L00027323	  - source_class
+L00027324	  - source_confidence
+L00027325	  - settlement_status
+L00027326	  - projection_freshness
+L00027327	  - hidden_byok
+L00027328	  - hidden_subscription
+L00027329	  - usage_event_ref
+L00027330	  - object_kind = usage_event
+L00027331	  - antigravity_cli
+L00027332	  - agy
+L00027333	  - G1 credits
+L00027334	negative_constraints:
+L00027335	  - Do not render missing, unknown, hidden, stale, disabled, not exposed, partial, failed, or unsupported values as zero.
+L00027336	  - Do not treat thread_id, tier_id, timestamp, or run_id as primary Usage identity when usage_event_ref is available.
+L00027337	  - Do not infer Antigravity usage, quota, credits, or countdowns from status/login/model probes.
+L00027338	  - Do not expose unredacted raw provider payloads in GUI debug views.
+L00027339	owner_hints:
+L00027340	  - Plans/FinalGUISpec.md
+L00027341	  - Plans/usage-feature.md
+L00027342	  - Plans/Widget_System.md
+L00027343	  - Plans/Runtime_Artifacts_Panel.md
+L00027344	```

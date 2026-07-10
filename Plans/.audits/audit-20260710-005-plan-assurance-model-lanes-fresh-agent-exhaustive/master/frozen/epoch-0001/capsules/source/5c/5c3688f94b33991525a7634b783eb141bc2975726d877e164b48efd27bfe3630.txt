@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE 7387-7398 >>>
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7399-7777 >>>
+### SMPFS-113 - Profile Scope Isolation And SaveChanges
+
+```yaml
+plan_unit_id: SMPFS-113
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Browser or terminal session classes must not silently bleed storage into another profile scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while disabled saveChanges keeps the session isolated.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-113 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: profile_scope_isolation_savechanges
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+preserved_exact_tokens:
+- 'profile: { name: string, saveChanges: boolean }'
+- cookies
+- localStorage
+- profile name
+- project
+- saveChanges
+- isolated
+- storage bleed
+negative_constraints:
+- No browser or terminal session class may silently bleed storage into another profile scope.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/storage-plan.md
+- Plans/Permissions_System.md
+```
+
+### SMPFS-114 - Retired Shell Navigation And Usage Surfaces
+
+```yaml
+plan_unit_id: SMPFS-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The title-bar project bar, floating thread-selector overlay, and detached usage pop-out are explicitly non-canonical promoted shell, thread navigation, and per-thread usage models.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+- UF-001
+- ACD-008
+unblocks: []
+acceptance_criteria:
+- SMPFS-114 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: retired_shell_navigation_usage_surfaces
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- title-bar project bar
+- floating thread-selector overlay
+- detached usage pop-out
+- non-canonical
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- These surfaces are explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/UI_Command_Catalog.md
+- Plans/usage-feature.md
+- Plans/assistant-chat-design.md
+```
+
+### SMPFS-115 - Browser Instance Reuse Non Goal
+
+```yaml
+plan_unit_id: SMPFS-115
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: One broad browser-instance model with LRU reuse is not the core browser contract.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-115 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_instance_reuse_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- one broad browser-instance model
+- LRU reuse
+- browser contract
+negative_constraints:
+- One broad browser-instance model with LRU reuse is not the core browser contract.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- This model is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/storage-plan.md
+```
+
+### SMPFS-116 - Browser Host Placement Non Goal
+
+```yaml
+plan_unit_id: SMPFS-116
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The bottom panel is not the primary browser host for the promoted browser model.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+- WM-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-116 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: browser_host_placement_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- bottom panel
+- primary browser host
+negative_constraints:
+- The bottom panel is not the primary browser host.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Bottom-panel-as-primary-browser-host is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+```
+
+### SMPFS-117 - Silent Browser Context Injection Prohibition
+
+```yaml
+plan_unit_id: SMPFS-117
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Ordinary browser clicks or text selection must not silently inject context into assistant prompts or runtime state.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-117 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: silent_browser_context_injection_prohibition
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- silent automatic context injection
+- ordinary browser clicks
+- text selection
+negative_constraints:
+- Silent automatic context injection from ordinary browser clicks or text selection is non-canonical.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Silent browser context injection is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+### SMPFS-118 - Storage Bleed Non Goal
+
+```yaml
+plan_unit_id: SMPFS-118
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Silent storage bleed between browser session classes or profile scopes is non-canonical.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-118 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: storage_bleed_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- silent storage bleed
+- browser session classes
+- profile scopes
+negative_constraints:
+- Silent storage bleed between browser session classes or profile scopes is non-canonical.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Silent storage bleed is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/storage-plan.md
+- Plans/Permissions_System.md
+```
+
+### SMPFS-119 - Low Level Browser Execution Non Goal
+
+```yaml
+plan_unit_id: SMPFS-119
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Raw CDP or arbitrary browser code execution is not the guaranteed core browser contract.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-119 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: section15_tail_drift
+reasoning_tier: standard
+context_scope: section15_tail
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: low_level_browser_execution_non_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+preserved_exact_tokens:
+- raw CDP
+- arbitrary browser code execution
+- guaranteed core browser contract
+negative_constraints:
+- Raw CDP or arbitrary browser code execution is not the guaranteed core browser contract.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Raw CDP/code execution as core browser contract is explicitly non-canonical after promotion.
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+
+<<< CONTEXT_AFTER 7778-7789 >>>
+### SMPFS-120 - Generic Watch Mode Non Goal
+
+```yaml
+plan_unit_id: SMPFS-120
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Generic watch mode is not the primary dev-loop model.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:

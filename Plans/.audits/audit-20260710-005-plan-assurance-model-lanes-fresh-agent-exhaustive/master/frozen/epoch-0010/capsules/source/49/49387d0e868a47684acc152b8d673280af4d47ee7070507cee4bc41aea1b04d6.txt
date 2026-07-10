@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1042-1053 >>>
+L00001042	  - "TierContext"
+L00001043	  - "tier_runtime_record"
+L00001044	  - "execution_unit_context"
+L00001045	negative_constraints:
+L00001046	  - "Commands must not invent alternate requested/effective account history or erase switch notifications."
+L00001047	  - "TierContext and tier_runtime_record must not act as rewrite-era canonical execution context."
+L00001048	owner_hints:
+L00001049	  - Plans/Commands_System.md
+L00001050	  - Plans/Prompt_Pipeline.md
+L00001051	  - Plans/Executor_Protocol.md
+L00001052	```
+L00001053	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1054-1397 >>>
+L00001054	### CS-008 - Widget Artifact Checklist Availability and Confirmation Consumers
+L00001055	
+L00001056	```yaml
+L00001057	plan_unit_id: CS-008
+L00001058	unit_type: constraint
+L00001059	status: accepted
+L00001060	owner_doc: Plans/Commands_System.md
+L00001061	canonical_text: >-
+L00001062	  Commands may expose widget, native-surface, artifact, checklist, availability,
+L00001063	  summary, and mutation entries only as owner-routed consumers that preserve
+L00001064	  widget trust, artifact provenance, checklist freshness, availability classes,
+L00001065	  alias/deprecation gates, stale or degraded projection revalidation, and
+L00001066	  confirmation requirements for strong or non-reversible actions.
+L00001067	gui_related: true
+L00001068	gui_classification_reason: Widgets, native surfaces, artifact panels, command-palette summaries, badges, and confirmation gates are visible user-facing surfaces.
+L00001069	split_recommended: true
+L00001070	split_recommendation_reason: Source span S0005 mixes GUI-facing consumer constraints with backend mutation and availability gates.
+L00001071	depends_on: [CS-006, CS-007]
+L00001072	unblocks: [CS-013]
+L00001073	acceptance_criteria:
+L00001074	  - Widget_System owns chrome slots, /trust-state, projection-trust semantics, hostability, tab-boundary direction, and risky widget config boundaries.
+L00001075	  - Runtime_Artifacts_Panel owns artifact-type semantics, panel behavior, schema family references, and artifact evidence/provenance.
+L00001076	  - Section15_MVP_Promoted_Features_Spec remains verification-only unless upstream reconciliation requires direct edits.
+L00001077	  - GATE-010 evaluates subject-open commands, wrappers, route-payload completeness, alias /deprecation, blocked-action admissibility, allowed_action_ids, and stale or /degraded projection revalidation.
+L00001078	  - Command definitions and UICommands declare live-run only, historical-safe, or record-only/export-only before palette, shortcut, or route dispatch.
+L00001079	  - strong, hard_gate, non_reversible, and compensating_action_only actions preserve owner-defined confirmation, gating, preview, and blocked-action checks before dispatch.
+L00001080	validation_surfaces:
+L00001081	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001082	  - python3 scripts/pm-plan-index.py validate
+L00001083	risk_class: command_consumer_surface_drift
+L00001084	reasoning_tier: high
+L00001085	context_scope: command_widget_artifact_confirmation_consumers
+L00001086	implementation_surfaces:
+L00001087	  - Plans/Commands_System.md
+L00001088	  - Plans/Widget_System.md
+L00001089	  - Plans/Runtime_Artifacts_Panel.md
+L00001090	  - Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001091	  - Plans/FinalGUISpec.md
+L00001092	  - Plans/Contracts_V0.md
+L00001093	node_compile_hint:
+L00001094	  mode: command_widget_artifact_confirmation_consumers
+L00001095	  create_worknodes: false
+L00001096	source_lineage:
+L00001097	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+L00001098	preserved_exact_tokens:
+L00001099	  - "/trust-state"
+L00001100	  - "/completed/integration"
+L00001101	  - "/historical-run"
+L00001102	  - "GATE-010"
+L00001103	  - "allowed_action_ids"
+L00001104	  - "live-run only"
+L00001105	  - "historical-safe"
+L00001106	  - "record-only/export-only"
+L00001107	  - "strong"
+L00001108	  - "hard_gate"
+L00001109	  - "non_reversible"
+L00001110	  - "compensating_action_only"
+L00001111	negative_constraints:
+L00001112	  - "Commands must not define a parallel widget trust schema, widget-local state classification, artifact schema family, or stale Tiers scope through command metadata."
+L00001113	owner_hints:
+L00001114	  - Plans/Commands_System.md
+L00001115	  - Plans/Widget_System.md
+L00001116	  - Plans/Runtime_Artifacts_Panel.md
+L00001117	```
+L00001118	
+L00001119	### CS-009 - Debug and Launcher Command Boundary
+L00001120	
+L00001121	```yaml
+L00001122	plan_unit_id: CS-009
+L00001123	unit_type: constraint
+L00001124	status: accepted
+L00001125	owner_doc: Plans/Commands_System.md
+L00001126	canonical_text: >-
+L00001127	  Command-facing Debug terminology distinguishes DAP debugging, agentic
+L00001128	  app/runtime investigation, and assistant-session inspection; any command that
+L00001129	  requests wrapper-script, launcher-file, launch-command/env, external-directory,
+L00001130	  degraded-runtime, or browser-health-sensitive actions must preserve revert
+L00001131	  paths and central permission/capability gate routing.
+L00001132	gui_related: false
+L00001133	gui_classification_reason: Debug terminology, launcher mutation cleanup, and permission/capability gates are runtime and policy behavior.
+L00001134	split_recommended: false
+L00001135	depends_on: [CS-004]
+L00001136	unblocks: []
+L00001137	acceptance_criteria:
+L00001138	  - Debug terminology does not collapse classical DAP debugging, agentic app/runtime investigation, and assistant-session inspection.
+L00001139	  - Wrapper script, /launcher file, or /launch-command/env edits record an exact revert path.
+L00001140	  - Cleanup restores from a restore point or generated revert patch.
+L00001141	  - External directory access outside the active policy /allowlist resolves through central permission/capability gates.
+L00001142	  - Actions unavailable or degraded for the active runtime or /browser health state resolve through central permission/capability gates before command injection.
+L00001143	validation_surfaces:
+L00001144	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001145	  - python3 scripts/pm-plan-index.py validate
+L00001146	risk_class: debug_launcher_boundary_drift
+L00001147	reasoning_tier: high
+L00001148	context_scope: command_debug_launcher_boundary
+L00001149	implementation_surfaces:
+L00001150	  - Plans/Commands_System.md
+L00001151	  - Plans/Permissions_System.md
+L00001152	  - Plans/BinaryLocator_Spec.md
+L00001153	node_compile_hint:
+L00001154	  mode: command_debug_launcher_boundary
+L00001155	  create_worknodes: false
+L00001156	source_lineage:
+L00001157	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0006
+L00001158	preserved_exact_tokens:
+L00001159	  - "Debug"
+L00001160	  - "/launcher"
+L00001161	  - "/launch-command/env"
+L00001162	  - "/allowlist"
+L00001163	  - "/browser"
+L00001164	negative_constraints:
+L00001165	  - "Command templates may request launcher cleanup workflow, but they do not themselves become persistent launcher owners."
+L00001166	owner_hints:
+L00001167	  - Plans/Commands_System.md
+L00001168	```
+L00001169	
+L00001170	### CS-010 - User Command Definition
+L00001171	
+L00001172	```yaml
+L00001173	plan_unit_id: CS-010
+L00001174	unit_type: requirement
+L00001175	status: accepted
+L00001176	owner_doc: Plans/Commands_System.md
+L00001177	canonical_text: >-
+L00001178	  A User Command is a user-authored or catalog-installed Markdown preset with
+L00001179	  YAML frontmatter whose resolved template body is submitted to the active chat
+L00001180	  thread or run as a repeatable prompt workflow.
+L00001181	gui_related: false
+L00001182	gui_classification_reason: The User Command definition is data/model semantics for command presets.
+L00001183	split_recommended: true
+L00001184	split_recommendation_reason: Source span S0008 includes the next anchor for UICommand distinction, so lineage is shared with CS-011.
+L00001185	depends_on: [CS-002]
+L00001186	unblocks: [CS-011, CS-014]
+L00001187	acceptance_criteria:
+L00001188	  - DEF-USER-COMMAND remains the anchor for the User Command definition.
+L00001189	  - User Commands are user-authored or catalog-installed command presets stored as Markdown files with YAML frontmatter.
+L00001190	  - Invocation resolves placeholders, file includes, and shell output injection before submission.
+L00001191	  - User Commands package repeatable prompt workflows without requiring code.
+L00001192	validation_surfaces:
+L00001193	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001194	  - python3 scripts/pm-plan-index.py validate
+L00001195	risk_class: user_command_definition_drift
+L00001196	reasoning_tier: standard
+L00001197	context_scope: command_definitions
+L00001198	implementation_surfaces:
+L00001199	  - Plans/Commands_System.md
+L00001200	node_compile_hint:
+L00001201	  mode: user_command_definition
+L00001202	  create_worknodes: false
+L00001203	source_lineage:
+L00001204	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0007
+L00001205	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0008
+L00001206	preserved_exact_tokens:
+L00001207	  - "DEF-USER-COMMAND"
+L00001208	  - "User Command"
+L00001209	  - "YAML frontmatter"
+L00001210	negative_constraints: []
+L00001211	owner_hints:
+L00001212	  - Plans/Commands_System.md
+L00001213	```
+L00001214	
+L00001215	### CS-011 - UICommand Distinction and Invocation Surfaces
+L00001216	
+L00001217	```yaml
+L00001218	plan_unit_id: CS-011
+L00001219	unit_type: requirement
+L00001220	status: accepted
+L00001221	owner_doc: Plans/Commands_System.md
+L00001222	canonical_text: >-
+L00001223	  UICommands are developer-defined internal dispatch identifiers distinct from
+L00001224	  user-authored User Commands; User Commands may be invoked from Assistant chat,
+L00001225	  the command palette, and optional Orchestrator shortcut triggers through the
+L00001226	  command execution seam without becoming UICommand definitions.
+L00001227	gui_related: true
+L00001228	gui_classification_reason: UICommand dispatch, slash autocomplete, command palette entries, and shortcut triggers are visible UI interaction surfaces.
+L00001229	split_recommended: true
+L00001230	split_recommendation_reason: Source spans S0008 and S0010 mix definition anchors with visible invocation surfaces.
+L00001231	depends_on: [CS-006, CS-010]
+L00001232	unblocks: [CS-013, CS-022]
+L00001233	acceptance_criteria:
+L00001234	  - DEF-UICOMMAND-DISTINCTION remains the anchor for UICommand distinction.
+L00001235	  - UICommands are stable IDs that bind UI elements to handlers and are developer-defined, code-registered, and wiring-matrix-verified.
+L00001236	  - User Commands are content presets and UICommands are internal dispatch actions.
+L00001237	  - User Command invocation ultimately dispatches cmd.chat.run_user_command without making the User Command itself a UICommand.
+L00001238	  - Assistant chat uses slash-command prefix / with custom /x-<command-name> support.
+L00001239	  - Command palette entries appear as Run command: <name>.
+L00001240	  - Orchestrator shortcut trigger keybindings remain optional via Settings > Shortcuts.
+L00001241	validation_surfaces:
+L00001242	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001243	  - python3 scripts/pm-plan-index.py validate
+L00001244	risk_class: uicommand_user_command_conflation
+L00001245	reasoning_tier: high
+L00001246	context_scope: command_invocation_surfaces
+L00001247	implementation_surfaces:
+L00001248	  - Plans/Commands_System.md
+L00001249	  - Plans/Contracts_V0.md
+L00001250	  - Plans/UI_Command_Catalog.md
+L00001251	  - Plans/assistant-chat-design.md
+L00001252	  - Plans/FinalGUISpec.md
+L00001253	node_compile_hint:
+L00001254	  mode: uicommand_distinction_invocation_surfaces
+L00001255	  create_worknodes: false
+L00001256	source_lineage:
+L00001257	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0008
+L00001258	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0009
+L00001259	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0010
+L00001260	preserved_exact_tokens:
+L00001261	  - "DEF-UICOMMAND-DISTINCTION"
+L00001262	  - "UICommand"
+L00001263	  - "cmd.chat.run_user_command"
+L00001264	  - "project-local `/symbols/commands/other`"
+L00001265	  - "Run command: <name>"
+L00001266	  - "Settings > Shortcuts"
+L00001267	negative_constraints:
+L00001268	  - "User Commands are not user-authored UICommands."
+L00001269	  - "File tree actions and editor/file operations use canonical UICommands, not user-authored command presets."
+L00001270	owner_hints:
+L00001271	  - Plans/Commands_System.md
+L00001272	  - Plans/UI_Command_Catalog.md
+L00001273	```
+L00001274	
+L00001275	### CS-012 - Command Storage Roots and Resolution
+L00001276	
+L00001277	```yaml
+L00001278	plan_unit_id: CS-012
+L00001279	unit_type: requirement
+L00001280	status: accepted
+L00001281	owner_doc: Plans/Commands_System.md
+L00001282	canonical_text: >-
+L00001283	  User Command files use a deterministic project-local and global two-tier
+L00001284	  layout where project-local commands override global commands by name and
+L00001285	  unresolved command names surface the exact Unknown command error.
+L00001286	gui_related: false
+L00001287	gui_classification_reason: Command file storage roots and resolution order are filesystem and lookup semantics.
+L00001288	split_recommended: false
+L00001289	depends_on: [CS-002]
+L00001290	unblocks: [CS-013, CS-014]
+L00001291	acceptance_criteria:
+L00001292	  - STORAGE-LAYOUT remains the anchor for User Command storage layout.
+L00001293	  - Project-local commands live at <project_root>/.puppet-master/commands/<name>.md and are available only when that project is active.
+L00001294	  - Global commands live at ~/.config/puppet-master/commands/<name>.md and are overridden by a project-local command with the same name.
+L00001295	  - Resolution checks project-local commands first, global commands second, and returns unresolved when neither path exists.
+L00001296	  - Unresolved invocation surfaces display "Unknown command: <name>".
+L00001297	validation_surfaces:
+L00001298	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001299	  - python3 scripts/pm-plan-index.py validate
+L00001300	risk_class: command_storage_resolution_drift
+L00001301	reasoning_tier: standard
+L00001302	context_scope: command_storage_discovery
+L00001303	implementation_surfaces:
+L00001304	  - Plans/Commands_System.md
+L00001305	  - Plans/storage-plan.md
+L00001306	node_compile_hint:
+L00001307	  mode: command_storage_roots_resolution
+L00001308	  create_worknodes: false
+L00001309	source_lineage:
+L00001310	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0011
+L00001311	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0012
+L00001312	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0013
+L00001313	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0014
+L00001314	preserved_exact_tokens:
+L00001315	  - "STORAGE-LAYOUT"
+L00001316	  - "<project_root>/.puppet-master/commands/<name>.md"
+L00001317	  - "~/.config/puppet-master/commands/<name>.md"
+L00001318	  - "Unknown command: <name>"
+L00001319	negative_constraints: []
+L00001320	owner_hints:
+L00001321	  - Plans/Commands_System.md
+L00001322	  - Plans/storage-plan.md
+L00001323	```
+L00001324	
+L00001325	### CS-013 - Reserved Names Collisions and Name Validation
+L00001326	
+L00001327	```yaml
+L00001328	plan_unit_id: CS-013
+L00001329	unit_type: constraint
+L00001330	status: accepted
+L00001331	owner_doc: Plans/Commands_System.md
+L00001332	canonical_text: >-
+L00001333	  Reserved built-in slash commands and their families cannot be overridden by
+L00001334	  provider, skill, plugin, extension, natural-language, or custom User Command
+L00001335	  names; command creation also enforces the canonical lowercase name regex and
+L00001336	  disambiguates /mode by owner context.
+L00001337	gui_related: false
+L00001338	gui_classification_reason: Reserved-name collision handling and regex validation are command registry and schema constraints.
+L00001339	split_recommended: false
+L00001340	depends_on: [CS-011, CS-012]
+L00001341	unblocks: [CS-014, CS-016]
+L00001342	acceptance_criteria:
+L00001343	  - /web reserves the family namespace for /web search, /web fetch, /web extract, /web research, /web crawl, and /web map.
+L00001344	  - override_builtin: true is /forbid for reserved Assistant Chat built-ins and cannot override /web, /skill, /cancel, /clear, /stop, or canonical chat commands.
+L00001345	  - /web commands are network /external-read operations, not /shell mutation commands.
+L00001346	  - /worktree is reserved and cannot be re-bound by a custom command.
+L00001347	  - /skill cannot be rebound by User Commands or override_builtin.
+L00001348	  - /plugins remains plugin-management/navigation, not a User Command namespace.
+L00001349	  - Natural-language and slash dispatch share the same dispatcher collision handling.
+L00001350	  - GPT-era registry audits do not create new event names by observation.
+L00001351	  - Ask /Plan behavior for command-triggered tools follows Run_Modes and Permissions_System permission rows.
+L00001352	  - Names match ^[a-z][a-z0-9_-]{0,48}[a-z0-9]$ and length 2-50 characters.
+L00001353	validation_surfaces:
+L00001354	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001355	  - python3 scripts/pm-plan-index.py validate
+L00001356	risk_class: command_reserved_name_drift
+L00001357	reasoning_tier: high
+L00001358	context_scope: command_name_validation
+L00001359	implementation_surfaces:
+L00001360	  - Plans/Commands_System.md
+L00001361	  - Plans/UI_Command_Catalog.md
+L00001362	  - Plans/assistant-chat-design.md
+L00001363	  - Plans/Permissions_System.md
+L00001364	  - Plans/Run_Modes.md
+L00001365	node_compile_hint:
+L00001366	  mode: command_reserved_name_validation
+L00001367	  create_worknodes: false
+L00001368	source_lineage:
+L00001369	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0015
+L00001370	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0016
+L00001371	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0017
+L00001372	preserved_exact_tokens:
+L00001373	  - "/web"
+L00001374	  - "/web search"
+L00001375	  - "/web fetch"
+L00001376	  - "/web extract"
+L00001377	  - "/web research"
+L00001378	  - "/web crawl"
+L00001379	  - "/web map"
+L00001380	  - "override_builtin: true"
+L00001381	  - "/forbid"
+L00001382	  - "/worktree"
+L00001383	  - "/skill"
+L00001384	  - "/plugins"
+L00001385	  - "chat.thread.created"
+L00001386	  - "chat.thread_created"
+L00001387	  - "chat.message.submitted"
+L00001388	  - "^[a-z][a-z0-9_-]{0,48}[a-z0-9]$"
+L00001389	negative_constraints:
+L00001390	  - "Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming."
+L00001391	  - "GPT-era registry audits do not create new event names by observation."
+L00001392	owner_hints:
+L00001393	  - Plans/Commands_System.md
+L00001394	  - Plans/UI_Command_Catalog.md
+L00001395	  - Plans/assistant-chat-design.md
+L00001396	```
+L00001397	
+
+<<< CONTEXT_AFTER canonical_document_lines=1398-1409 >>>
+L00001398	### CS-014 - Command File Schema and Frontmatter Fields
+L00001399	
+L00001400	```yaml
+L00001401	plan_unit_id: CS-014
+L00001402	unit_type: requirement
+L00001403	status: accepted
+L00001404	owner_doc: Plans/Commands_System.md
+L00001405	canonical_text: >-
+L00001406	  A User Command file consists of YAML frontmatter plus a Markdown template body,
+L00001407	  with canonical fields for name, description, arguments, persona/model/mode
+L00001408	  overrides, permissions_profile_override, and override_builtin.
+L00001409	gui_related: false

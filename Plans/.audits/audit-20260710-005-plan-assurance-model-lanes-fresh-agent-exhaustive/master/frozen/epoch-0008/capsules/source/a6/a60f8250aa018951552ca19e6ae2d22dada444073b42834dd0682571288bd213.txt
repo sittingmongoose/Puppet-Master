@@ -1,0 +1,163 @@
+<<< CONTEXT_BEFORE canonical_document_lines=788-799 >>>
+L00000788	        "operation": {"$ref": "#/$defs/WebOperation"},
+L00000789	        "phase": {"type": "string", "enum": ["queued", "searching", "reading", "extracting", "crawling", "mapping", "synthesizing", "completed", "denied", "failed", "cancelled"]},
+L00000790	        "detail": {"type": "string"},
+L00000791	        "pages_completed": {"type": "integer", "minimum": 0},
+L00000792	        "pages_total": {"type": "integer", "minimum": 0},
+L00000793	        "elapsed_ms": {"type": "integer", "minimum": 0},
+L00000794	        "estimated_remaining_ms": {"type": "integer", "minimum": 0},
+L00000795	        "cancelled": {"type": "boolean"},
+L00000796	        "partial_result_ref": {"type": "string"},
+L00000797	        "created_at_utc": {"type": "string", "minLength": 1}
+L00000798	      }
+L00000799	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=800-947 >>>
+L00000800	    "WebDeniedOperationCard": {
+L00000801	      "type": "object",
+L00000802	      "additionalProperties": false,
+L00000803	      "required": ["denial_reason_code", "denial_source", "allowed_action_ids"],
+L00000804	      "properties": {
+L00000805	        "denial_reason_code": {"type": "string", "minLength": 1},
+L00000806	        "denial_source": {"type": "string", "enum": ["policy", "permission", "mode", "user", "provider", "runtime"]},
+L00000807	        "suggested_recovery_action": {"type": "string"},
+L00000808	        "allowed_action_ids": {"type": "array", "items": {"type": "string"}},
+L00000809	        "headless_denied": {"type": "boolean"}
+L00000810	      }
+L00000811	    },
+L00000812	    "WebBatchOperationCard": {
+L00000813	      "type": "object",
+L00000814	      "additionalProperties": false,
+L00000815	      "required": ["batch_id", "operation", "total", "completed", "failed", "continue_on_error"],
+L00000816	      "properties": {
+L00000817	        "batch_id": {"type": "string", "minLength": 1},
+L00000818	        "operation": {"$ref": "#/$defs/WebOperation"},
+L00000819	        "total": {"type": "integer", "minimum": 1},
+L00000820	        "completed": {"type": "integer", "minimum": 0},
+L00000821	        "failed": {"type": "integer", "minimum": 0},
+L00000822	        "continue_on_error": {"type": "boolean"},
+L00000823	        "shared_host_permission_ref": {"type": "string"},
+L00000824	        "timeout_policy_ref": {"type": "string"}
+L00000825	      }
+L00000826	    },
+L00000827	    "WebOperationCard": {
+L00000828	      "type": "object",
+L00000829	      "additionalProperties": false,
+L00000830	      "allOf": [
+L00000831	        {
+L00000832	          "if": {"properties": {"card_kind": {"const": "denied"}}},
+L00000833	          "then": {"required": ["denial"]}
+L00000834	        },
+L00000835	        {
+L00000836	          "if": {"properties": {"card_kind": {"enum": ["progress", "partial"]}}},
+L00000837	          "then": {"required": ["progress"]}
+L00000838	        },
+L00000839	        {
+L00000840	          "if": {"properties": {"card_kind": {"const": "fallback"}}},
+L00000841	          "then": {"required": ["provider_fallback_summary"]}
+L00000842	        },
+L00000843	        {
+L00000844	          "if": {"properties": {"card_kind": {"const": "batch"}}},
+L00000845	          "then": {"required": ["batch"]}
+L00000846	        },
+L00000847	        {
+L00000848	          "if": {"properties": {"card_kind": {"const": "settings_health"}}},
+L00000849	          "then": {"required": ["settings_health_ref", "credential_status_ref"]}
+L00000850	        },
+L00000851	        {
+L00000852	          "if": {"properties": {"command_id": {"const": "cmd.chat.web.search"}}},
+L00000853	          "then": {"properties": {"web_operation": {"const": "search"}, "tool_id": {"const": "websearch"}}}
+L00000854	        },
+L00000855	        {
+L00000856	          "if": {"properties": {"command_id": {"const": "cmd.chat.web.fetch"}}},
+L00000857	          "then": {"properties": {"web_operation": {"const": "read"}, "tool_id": {"const": "webfetch"}}}
+L00000858	        },
+L00000859	        {
+L00000860	          "if": {"properties": {"command_id": {"const": "cmd.chat.web.extract"}}},
+L00000861	          "then": {"properties": {"web_operation": {"const": "extract"}, "tool_id": {"const": "webextract"}}}
+L00000862	        },
+L00000863	        {
+L00000864	          "if": {"properties": {"command_id": {"const": "cmd.chat.web.research"}}},
+L00000865	          "then": {"properties": {"web_operation": {"enum": ["research", "deep_research"]}, "tool_id": {"const": "webresearch"}}}
+L00000866	        },
+L00000867	        {
+L00000868	          "if": {"properties": {"command_id": {"const": "cmd.chat.web.crawl"}}},
+L00000869	          "then": {"properties": {"web_operation": {"const": "crawl"}, "tool_id": {"const": "webcrawl"}}}
+L00000870	        },
+L00000871	        {
+L00000872	          "if": {"properties": {"command_id": {"const": "cmd.chat.web.map"}}},
+L00000873	          "then": {"properties": {"web_operation": {"const": "map"}, "tool_id": {"const": "webmap"}}}
+L00000874	        }
+L00000875	      ],
+L00000876	      "required": ["card_id", "card_kind", "command_id", "web_operation", "tool_id", "invocation", "card_state", "operation_input_ref", "operation_input_preview", "created_at_utc"],
+L00000877	      "properties": {
+L00000878	        "card_id": {"type": "string", "minLength": 1},
+L00000879	        "card_kind": {"type": "string", "enum": ["operation", "progress", "denied", "partial", "fallback", "refs", "settings_health", "approval", "session", "batch"]},
+L00000880	        "command_id": {"type": "string", "enum": ["cmd.chat.web.search", "cmd.chat.web.fetch", "cmd.chat.web.extract", "cmd.chat.web.research", "cmd.chat.web.crawl", "cmd.chat.web.map"]},
+L00000881	        "web_operation": {"$ref": "#/$defs/WebOperation"},
+L00000882	        "tool_id": {"$ref": "#/$defs/WebToolId"},
+L00000883	        "invocation": {"$ref": "#/$defs/InvocationProvenance"},
+L00000884	        "card_state": {"type": "string", "enum": ["pending", "running", "completed", "denied", "partial", "failed", "blocked", "unavailable", "background", "cancelled"]},
+L00000885	        "operation_input_ref": {"type": "string", "minLength": 1},
+L00000886	        "operation_input_preview": {"type": "string", "minLength": 1},
+L00000887	        "collapsed_label": {"type": "string"},
+L00000888	        "progress": {"$ref": "#/$defs/ResearchProgressCard"},
+L00000889	        "denial": {"$ref": "#/$defs/WebDeniedOperationCard"},
+L00000890	        "batch": {"$ref": "#/$defs/WebBatchOperationCard"},
+L00000891	        "provider_fallback_summary": {"type": "string"},
+L00000892	        "requested_adapter_id": {"type": "string"},
+L00000893	        "effective_adapter_id": {"type": "string"},
+L00000894	        "source_count": {"type": "integer", "minimum": 0},
+L00000895	        "sources_ref": {"type": "string"},
+L00000896	        "content_ref": {"type": "string"},
+L00000897	        "citation_refs": {"type": "array", "items": {"type": "string"}},
+L00000898	        "settings_health_ref": {"type": "string"},
+L00000899	        "cost_policy_ref": {"type": "string"},
+L00000900	        "credential_status_ref": {"type": "string"},
+L00000901	        "approval_ref": {"type": "string"},
+L00000902	        "browser_session_id": {"type": "string"},
+L00000903	        "created_at_utc": {"type": "string", "minLength": 1}
+L00000904	      }
+L00000905	    },
+L00000906	    "TestingBrowserManifest": {
+L00000907	      "type": "object",
+L00000908	      "additionalProperties": false,
+L00000909	      "allOf": [
+L00000910	        {
+L00000911	          "if": {
+L00000912	            "properties": {
+L00000913	              "visibility_state": {"const": "runtime_unavailable"}
+L00000914	            },
+L00000915	            "required": ["visibility_state"]
+L00000916	          },
+L00000917	          "then": {
+L00000918	            "required": ["disabled_reason_code", "remediation_action_ids"]
+L00000919	          }
+L00000920	        },
+L00000921	        {
+L00000922	          "if": {
+L00000923	            "properties": {
+L00000924	              "open_watch_state": {"const": "fallback_open_external"}
+L00000925	            },
+L00000926	            "required": ["open_watch_state"]
+L00000927	          },
+L00000928	          "then": {
+L00000929	            "required": ["fallback_route_ref"]
+L00000930	          }
+L00000931	        }
+L00000932	      ],
+L00000933	      "required": ["browser_session_id", "visibility_state", "open_watch_state", "evidence_refs", "redaction_manifest_ref"],
+L00000934	      "properties": {
+L00000935	        "browser_session_id": {"type": "string", "minLength": 1},
+L00000936	        "visibility_state": {"type": "string", "enum": ["show_when_possible", "visible", "collapsed", "detached", "background", "runtime_unavailable"]},
+L00000937	        "open_watch_state": {"type": "string", "enum": ["open_available", "watch_available", "fallback_open_external", "background_only", "unavailable"]},
+L00000938	        "stream_refs": {"type": "array", "items": {"type": "string"}},
+L00000939	        "evidence_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+L00000940	        "fallback_route_ref": {"type": "string"},
+L00000941	        "disabled_reason_code": {"type": "string"},
+L00000942	        "remediation_action_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+L00000943	        "redaction_manifest_ref": {"type": "string", "minLength": 1}
+L00000944	      }
+L00000945	    }
+L00000946	  }
+L00000947	}

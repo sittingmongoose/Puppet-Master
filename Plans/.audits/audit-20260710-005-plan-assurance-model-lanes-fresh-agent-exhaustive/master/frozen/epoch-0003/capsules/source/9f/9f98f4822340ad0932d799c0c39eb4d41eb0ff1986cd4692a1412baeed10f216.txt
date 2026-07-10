@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE 4863-4874 >>>
+- MUST NOT change final correctness
+- ripgrep
+- no cross-project index merging
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4875-5223 >>>
+### T-047 - Grep Sparse N-Gram Extraction And Frequency Table
+
+```yaml
+plan_unit_id: T-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Grep index build extracts all sparse n-grams through `build_all`; query time extracts a `minimal-covering`
+  set; boundary weighting uses the shipped 256x256 `u16` table and `effective[a][b] = α × base[a][b] + (1-α) × project[a][b]`;
+  extraction stays byte-level.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-046
+unblocks: []
+acceptance_criteria:
+- Fixed-width 3-gram fallback remains available when boundary weighting cannot place sparse boundaries.
+- CRLF stripping and ASCII-only lowercase normalization are preserved.
+- Non-ASCII bytes pass through unchanged.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: grep_sparse_ngram_algorithm_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+preserved_exact_tokens:
+- build_all
+- minimal-covering
+- 256x256
+- u16
+- The Stack Smol
+- effective[a][b] = α × base[a][b] + (1-α) × project[a][b]
+- frequency_table.bin
+- fixed-width 3-gram
+- raw bytes
+- u8::to_ascii_lowercase()
+- "CRLF `\r`"
+- hash("fo")
+- hash("Fo")
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-048 - Grep Query Planning Alternation And Skip Rules
+
+```yaml
+plan_unit_id: T-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Regex HIR/literal extraction feeds xxh3 lookup, Roaring postings, branch intersection/union, file-map resolution,
+  path/glob filtering, dirty paths, and ripgrep verification.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-047
+unblocks: []
+acceptance_criteria:
+- Alternation uses union-of-intersections, not pure intersection.
+- Index is skipped for no-literal queries, non-ASCII case-insensitive literals, and covering sets above 64 n-grams.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: grep_query_planner_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+preserved_exact_tokens:
+- regex-syntax
+- regex_syntax
+- HIR
+- regex_syntax::literal
+- regex_syntax::literal::Seq
+- xxh3
+- lookup.bin
+- Roaring Bitmap
+- file_map.bin
+- git cat-file --batch
+- foo|bar
+- .*
+- '[a-z]+'
+- \d{3}
+- '>64 n-grams'
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-049 - Grep Freshness Dirty Layer And Watcher Recovery
+
+```yaml
+plan_unit_id: T-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: PM-mediated writes update the dirty layer synchronously; watcher overflow marks indexed files dirty and re-anchors;
+  stale snapshots remain queryable while refresh or re-anchor work runs.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-046
+- T-047
+unblocks: []
+acceptance_criteria:
+- Deleted dirty paths suppress stale base-index hits.
+- Raw fallback remains reserved for missing, corrupted/building, disabled, or query-skip paths.
+- Per-file verification races do not fail the whole query.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: grep_freshness_recovery_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+preserved_exact_tokens:
+- dirty layer
+- generation-aware path records
+- IN_Q_OVERFLOW
+- FSEvents "must scan"
+- Windows RDCW
+- 64 KB
+- no stale-threshold cutoff
+- no commit-count-based fallback threshold
+- /corrupted/building
+- ENOENT
+- skip-and-continue
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-050 - Grep Filtering And Path Safety
+
+```yaml
+plan_unit_id: T-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Grep indexing respects ignore baselines, mandatory secret-path exclusions, binary detection, large-file thresholds,
+  generated-file exclusions, path canonicalization, and project/cache containment.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-046
+unblocks: []
+acceptance_criteria:
+- The generated-file exclusion default list is preserved.
+- Paths from `.gitmodules`, dirty staging, and remote events are canonicalized and contained.
+- Submodule paths containing `..` are rejected with a logged warning.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: grep_filtering_path_safety
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+preserved_exact_tokens:
+- .gitignore
+- .ignore
+- secret-path exclusions
+- null-byte
+- default 10 MB
+- package-lock.json
+- yarn.lock
+- pnpm-lock.yaml
+- '*.min.js'
+- '*.min.css'
+- '*.map'
+- '*.generated.*'
+- '*.g.dart'
+- '*.pb.go'
+- starts_with(project_root)
+- starts_with(cache_root)
+- .gitmodules
+- ..
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-051 - Grep Indexing And Search GUI Consumers
+
+```yaml
+plan_unit_id: T-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The user-facing Search regex mode and optional Indexing setting consume the same sparse-n-gram path without
+  weakening backend safeguards.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on:
+- T-046
+- T-050
+unblocks: []
+acceptance_criteria:
+- '`Follow symlinks` remains off by default.'
+- Enabled symlink targets are still canonicalized and project-root-contained.
+- Search panel regex mode inherits dirty-layer guarantees and fallback causes.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: grep_search_panel_gui_consumer
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+preserved_exact_tokens:
+- Search panel regex toggle is ON
+- Indexing settings
+- Follow symlinks
+- OFF by default
+- --no-follow
+- no-follow
+- starts_with(project_root)
+- dirty-layer freshness guarantee
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-052 - Grep Performance Publication And Rust Foundation
+
+```yaml
+plan_unit_id: T-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Grep index targets <20 ms queries, bounded build and storage envelopes, generation publication with flush,
+  cancellation checks, and Rust crate foundations without treating study references as dependencies.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-047
+- T-048
+- T-049
+unblocks: []
+acceptance_criteria:
+- Generation publication and cancellation handoff are preserved.
+- Rust crate list and scheduling notes are preserved.
+- '`trigrep` and `fast-grep-rust` remain study references only.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: grep_performance_publication_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+preserved_exact_tokens:
+- <20 ms
+- <2 minutes
+- <=500 MB
+- <10 minutes
+- <=5 GB
+- <30 minutes
+- <=50 GB
+- 1.5x index size
+- RSS contribution typically <500 MB
+- 1-10%
+- thread-priority
+- regex-syntax
+- roaring
+- memmap2
+- xxhash-rust
+- arc-swap
+- ThreadPriority::Min
+- pthread_set_qos_class_self_np(QOS_CLASS_UTILITY)
+- gen-{N+1}/
+- File::sync_all();
+- sync_all
+- CancellationToken
+- O(index_size)
+- trigrep
+- fast-grep-rust
+- Cursor
+- ClickHouse
+- GitHub Code Search
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 5224-5235 >>>
+### T-053 - Logsearch Logread Project Logs Contract
+
+```yaml
+plan_unit_id: T-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`logsearch` indexes summaries and snippets; `logread` fetches bounded full payloads by `event_id` or `blob_ref`;
+  full payload remains out of the index and all persisted or returned log material is strictly scrubbed.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE 21329-21340 >>>
+preserved_exact_tokens:
+  - "Git submodules out of scope"
+  - "App uninstall does NOT auto-clean worktrees"
+  - "no special terminal management"
+negative_constraints:
+  - "No changes to orchestrator's own worktree management."
+  - "No orchestrator-to-assistant worktree transfer on handoff."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+
+<<< AUTHORITATIVE_CORE 21341-21703 >>>
+### ACD-400 - Chat Actor Runtime Identity Boundary
+
+```yaml
+plan_unit_id: ACD-400
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Chat actors share runtime identity semantics but remain chat/session actors, not nodes or lanes; requested/effective identity fields are visible in chat surfaces and child handoffs.
+gui_related: false
+gui_classification_reason: Actor identity boundary is runtime semantics, while visible display is covered by acceptance.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Chat actors share runtime identity semantics with Orchestrator and Interview agents.
+  - Chat actors remain chat/session actors and do not become nodes or lanes when delegating.
+  - Requested/effective runtime identity, execution role, and operational identity are visible on chat surfaces and child handoffs.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: actor_boundary
+reasoning_tier: high
+context_scope: runtime_identity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+node_compile_hint:
+  mode: chat_actor_runtime_identity_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0175
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0176
+preserved_exact_tokens:
+  - "execution_role"
+  - "operational_identity"
+  - "package-overseer"
+  - "seam-overseer"
+negative_constraints:
+  - "Delegating to subagents does not make chat actors nodes or lanes."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+```
+
+### ACD-401 - Chat Route Args Immutability
+
+```yaml
+plan_unit_id: ACD-401
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Route args are included from parent run/session, govern accessible tools/subagents, and remain immutable for the chat session.
+gui_related: false
+gui_classification_reason: Route payload immutability is runtime routing behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Chat context includes route args from the parent run or session.
+  - Route args govern accessible tools and subagents.
+  - Route args remain immutable for the chat session.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_payload
+reasoning_tier: high
+context_scope: routing
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: chat_route_args_immutability
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0175
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0177
+preserved_exact_tokens:
+  - "route args"
+  - "immutable"
+  - "dynamic route changes are prohibited"
+negative_constraints:
+  - "Dynamic route changes are prohibited for the duration of the chat session."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+### ACD-402 - Chat Blocked Notice Packet
+
+```yaml
+plan_unit_id: ACD-402
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Unresolved route/context queries emit structured `blocked_notice` packets
+  with reason, detail refs, preserved-local-work summary, and ordered allowed
+  actions; older `pre-runtime-escalation` wizard shape is compatibility evidence
+  only.
+gui_related: false
+gui_classification_reason: Blocked notice packet content is runtime/route behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Blocked notices include blocked reason, detail reference, applicable attempt/node refs, preserved-local-work summary, and ordered allowed actions.
+  - Wizard and node blocked states consume the stronger blocked taxonomy.
+  - Older pre-runtime escalation wizard shape remains compatibility evidence only.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_notice
+reasoning_tier: high
+context_scope: routing
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: chat_blocked_notice_packet
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0175
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0178
+preserved_exact_tokens:
+  - "blocked_notice"
+  - "/attempt"
+  - "allowed_action_ids[]"
+  - "wizard.blocked"
+  - "node.blocked"
+  - "pre-runtime-escalation"
+negative_constraints:
+  - "Blocked notices are distinct from errors."
+  - "Older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Executor_Protocol.md
+```
+
+### ACD-403 - Shared Conversational Runtime Identity
+
+```yaml
+plan_unit_id: ACD-403
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Assistant chat, interview, requirements-doc-builder, and PRD builder share `/account/usage/runtime` identity behavior and requested/effective provider/model/persona/account/auth display while remaining conversational/document-production actors.
+gui_related: true
+gui_classification_reason: Requested/effective provider/model/persona/account/auth display is visible conversational actor UI.
+depends_on: [ACD-400]
+unblocks: [ACD-404, ACD-405, ACD-406]
+acceptance_criteria:
+  - Conversational actors share account/usage/runtime identity behavior and requested/effective identity display.
+  - Conversational actors remain conversational or document-production actors rather than orchestration nodes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity
+reasoning_tier: high
+context_scope: actor_identity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+node_compile_hint:
+  mode: shared_conversational_runtime_identity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0179
+preserved_exact_tokens:
+  - "/account/usage/runtime"
+  - "/model/effort/persona"
+  - "/brainstorming"
+  - "/artifacts"
+  - "/rules"
+  - "/contract"
+negative_constraints:
+  - "Requirements-doc-builder and PRD flows are not orchestration-style HITL escalation routes."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+```
+
+### ACD-404 - Conversational Runtime Recovery Boundary
+
+```yaml
+plan_unit_id: ACD-404
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Blocked `/HITL/critical` resolution-thread pattern must not be projected back onto ordinary assistant/interview/requirements-builder conversation, and adjacent runtime recovery owners must not soften chat `/effective` identity or safe-point rules.
+gui_related: false
+gui_classification_reason: Runtime recovery boundary is ownership/runtime behavior.
+depends_on: [ACD-403]
+unblocks: []
+acceptance_criteria:
+  - Orchestrator HITL resolution-thread behavior is not projected onto ordinary conversational actors.
+  - Adjacent runtime recovery owners preserve chat effective identity and safe-point rules.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_recovery
+reasoning_tier: high
+context_scope: actor_identity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Architecture_Invariants.md
+  - Plans/Decision_Log.md
+  - Plans/MiscPlan.md
+  - Plans/FileSafe.md
+node_compile_hint:
+  mode: conversational_runtime_recovery_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0179
+preserved_exact_tokens:
+  - "/HITL/critical"
+  - "/interviewer/requirements-builder"
+  - "Architecture_Invariants.md"
+  - "Decision_Log.md"
+  - "MiscPlan.md"
+  - "FileSafe.md"
+  - "/remediation"
+negative_constraints:
+  - "Ordinary conversational actors do not become Orchestrator-style resolution objects."
+  - "Under-documentation in adjacent docs must not soften chat's own `/effective` identity and safe-point rules."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Architecture_Invariants.md
+```
+
+### ACD-405 - Execution Policy UI Identity Split
+
+```yaml
+plan_unit_id: ACD-405
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Execution-policy `/UI` split keeps worker kind and retry-context policy separate, exposes requested-identity override/display/account disclosure, and aligns requested/effective identity across chat and orchestration actors.
+gui_related: true
+gui_classification_reason: Requested identity override/display and account disclosure are visible UI behavior.
+depends_on: [ACD-403]
+unblocks: []
+acceptance_criteria:
+  - Worker kind and retry-context policy remain separate settings.
+  - Requested identity override, display, execution role, actor kind, platform/model identity, account switch identity, and account disclosure are exposed.
+  - Requested/effective identity aligns across chat actors and orchestration actors.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: execution_policy
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: execution_policy_ui_identity_split
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0179
+preserved_exact_tokens:
+  - "/UI"
+  - "execution_role"
+  - "actor_kind"
+  - "/platform/model-level"
+  - "/account/switch"
+  - "delegated-worker provider/model/effort policy"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-406 - Chat Package Seam Lane Boundary
+
+```yaml
+plan_unit_id: ACD-406
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Package/seam/lane schema questions stay owned by package `/seam/lane` family; chat may render a small `inspector_target` route, attempt/lane/session-aware attribution, and persisted `auto` selections must retain resolved reason.
+gui_related: true
+gui_classification_reason: Inspector routes and live attribution are visible chat UI behavior.
+depends_on: [ACD-403]
+unblocks: []
+acceptance_criteria:
+  - Package, seam, lane, promotion, review, and resolution-thread schemas remain owned by the package/seam/lane family.
+  - Chat inspector target enum stays small and does not become a fallback bag.
+  - Live attribution is attempt/lane/session-aware and avoids tier-only routing.
+  - Historical auto persona/model selections preserve resolved effective reason.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_boundary
+reasoning_tier: high
+context_scope: actor_identity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: chat_package_seam_lane_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0179
+preserved_exact_tokens:
+  - "package"
+  - "seam"
+  - "lane"
+  - "resolution_thread"
+  - "inspector_target"
+  - "attempt_id"
+  - "scheduler_lane"
+  - "tier_id"
+  - "/widget"
+  - "auto"
+  - "/reason"
+negative_constraints:
+  - "`inspector_target` must never become a fallback bag for unresolved route design."
+  - "Live page/widget attribution avoids tier-only routing through `tier_id` or generic `/widget` summaries."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-407 - Permission Approval Scope Boundary
+
+```yaml
+plan_unit_id: ACD-407
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Permission approval state is scoped by canonical actor/account/lane key and must not leak across lanes, accounts, or shared-runtime actors.
+gui_related: false
+gui_classification_reason: Permission approval scope is runtime policy behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Permission approval state is scoped by canonical actor/account/lane scope key.
+  - Permission approval does not leak across lanes, accounts, or shared-runtime actors.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: permissions
+reasoning_tier: high
+context_scope: permissions
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_approval_scope_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0180
+preserved_exact_tokens:
+  - "always"
+  - "reject-cascade"
+  - "doom-loop"
+  - "todoread"
+  - "todowrite"
+  - "/member/lane/account-bounded"
+negative_constraints:
+  - "Permission approval state must not leak across lanes, accounts, or shared-runtime actors."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+```
+
+
+<<< CONTEXT_AFTER 21704-21715 >>>
+### ACD-408 - Worker Handoff Retry Memory Records
+
+```yaml
+plan_unit_id: ACD-408
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Worker handoff and `/retry` memory are project-scoped structured runtime records, not vague JSON-like logs; projections and bounded worker packets stay separate from full raw history.
+gui_related: false
+gui_classification_reason: Worker handoff/retry memory records are runtime/storage behavior.
+depends_on: []
+unblocks: []

@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE 5093-5104 >>>
+  - "source_surface"
+  - "/diffs"
+  - "/run-level"
+  - "/replans"
+  - "stale artifact copy"
+negative_constraints:
+  - "`todoread` must not survive as a `source_surface` mutation source."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 5105-5484 >>>
+### ACD-035 - Plan Thoroughness Control Surface
+
+```yaml
+plan_unit_id: ACD-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Plan Thoroughness is a visible Assistant Chat GUI control for Plan and Deep Plan with the enum Light, Balanced, and Comprehensive; both Plan and Deep Plan default to Balanced.
+gui_related: true
+gui_classification_reason: Plan Thoroughness is a visible Assistant Chat GUI control.
+depends_on: [ACD-032]
+unblocks: [ACD-036, ACD-037]
+acceptance_criteria:
+  - The Plan Thoroughness enum is limited to Light, Balanced, and Comprehensive.
+  - Plan and Deep Plan default Plan Thoroughness is Balanced.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: planning_control_sync
+reasoning_tier: standard
+context_scope: pt
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: pt_control_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0036
+preserved_exact_tokens:
+  - "Plan Thoroughness (PT)"
+  - "Assistant Chat GUI"
+  - "Light"
+  - "Balanced"
+  - "Comprehensive"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-036 - Plan Thoroughness Intensity Semantics
+
+```yaml
+plan_unit_id: ACD-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Plan Thoroughness controls clarifying-question budget, repo research breadth, cited web research posture, risk, alternative, dependency, and validation detail, TODO detail, and relative intensity between Plan and Deep Plan.
+gui_related: false
+gui_classification_reason: Planning intensity and research-budget semantics are workflow behavior, not GUI implementation.
+depends_on: [ACD-035]
+unblocks: [ACD-037]
+acceptance_criteria:
+  - Deep Plan at a given PT remains more intensive than Plan at the same PT.
+  - Research continuation starts from the current work-item ledger and narrows to relevant docs rather than sweeping unrelated docs by default.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: planning_intensity
+reasoning_tier: standard
+context_scope: pt
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: pt_intensity_semantics
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0036
+preserved_exact_tokens:
+  - "clarifying-question budget"
+  - "repo-research breadth"
+  - "cited web research"
+  - "current work-item ledger"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-037 - Plan Thoroughness Budget Matrix
+
+```yaml
+plan_unit_id: ACD-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: The PT budget matrix is the deterministic first-implementation ceiling/default baseline, including Plan budgets 2, 4, and 6, Deep Plan budgets 4, 6, and 8, web-research rules, and primary or official source preference for platform-capability research.
+gui_related: false
+gui_classification_reason: Budget ceilings and research-source posture are planning workflow constraints, not GUI implementation.
+depends_on: [ACD-035, ACD-036]
+unblocks: [ACD-038, ACD-040]
+acceptance_criteria:
+  - PT budget values are ceilings/defaults rather than promises that every run uses the full budget.
+  - Web research follows the cited web-search contract when used.
+  - Deep Plan favors primary or official sources when researching current platform capabilities, provider behavior, or best practices.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: budget_drift
+reasoning_tier: standard
+context_scope: pt_matrix
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: pt_budget_matrix
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0037
+preserved_exact_tokens:
+  - "ceilings/defaults"
+  - "Plan | Light | 2"
+  - "Plan | Balanced | 4"
+  - "Plan | Comprehensive | 6"
+  - "Deep Plan | Light | 4"
+  - "Deep Plan | Balanced | 6"
+  - "Deep Plan | Comprehensive | 8"
+  - "primary/official sources"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-038 - Standard Plan Workflow
+
+```yaml
+plan_unit_id: ACD-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Standard Plan is for medium-complexity work, asks clarifying questions, remains a read-only planning run, may use safe parallel research where allowed, and prefers repo or codebase research first.
+gui_related: false
+gui_classification_reason: Standard Plan mode boundaries and research posture are workflow behavior, not GUI implementation.
+depends_on: [ACD-032, ACD-037]
+unblocks: [ACD-039]
+acceptance_criteria:
+  - Clarifying questions are allowed and expected in Standard Plan.
+  - Standard Plan remains read-only during planning.
+  - Standard Plan prefers repo/codebase research first and uses shorter web research than Deep Plan.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: mode_boundary
+reasoning_tier: standard
+context_scope: standard_plan
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: standard_plan_workflow
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0038
+preserved_exact_tokens:
+  - "Clarifying questions are allowed and expected; they are not optional."
+  - "read-only planning run"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-039 - Standard Plan Artifact Surface
+
+```yaml
+plan_unit_id: ACD-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the editor on demand, and has defined minimum artifact contents.
+gui_related: true
+gui_classification_reason: Plan panel display, editor opening, and artifact review are user-visible GUI behavior.
+depends_on: [ACD-038]
+unblocks: []
+acceptance_criteria:
+  - Standard Plan displays written plan content and normalized TODO list in the plan panel.
+  - Opening the plan artifact in the editor is available on demand but is not automatic.
+  - Standard Plan artifact minimums are preserved.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: artifact_surface
+reasoning_tier: standard
+context_scope: standard_plan
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: standard_plan_artifact_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0038
+preserved_exact_tokens:
+  - "concise problem statement"
+  - "current-state summary"
+  - "proposed approach summary"
+  - "normalized TODO list"
+  - "verification / validation notes"
+  - "unresolved questions"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-040 - Deep Plan Intensity Boundary
+
+```yaml
+plan_unit_id: ACD-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Deep Plan is for larger or higher-uncertainty work and differs from Standard
+  Plan by degree and intensity: more questions, broader local research, and
+  broader web research at the same PT.
+gui_related: false
+gui_classification_reason: Deep Plan intensity and mode boundary are planning workflow behavior, not GUI implementation.
+depends_on: [ACD-032, ACD-037]
+unblocks: [ACD-041, ACD-042]
+acceptance_criteria:
+  - Deep Plan asks more questions than Standard Plan at the same PT.
+  - Deep Plan performs materially broader repo and web research than Standard Plan at the same PT.
+  - Plan versus Deep Plan difference remains degree/intensity, not categorical.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: mode_boundary
+reasoning_tier: standard
+context_scope: deep_plan
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: deep_plan_intensity_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0039
+preserved_exact_tokens:
+  - "LOCKED behavior"
+  - "degree/intensity, not categorical"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-041 - Deep Plan Artifact Opening
+
+```yaml
+plan_unit_id: ACD-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface, defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.
+gui_related: true
+gui_classification_reason: Automatic preview-capable editor opening and rich document rendering are user-visible GUI behavior.
+depends_on: [ACD-040]
+unblocks: [ACD-042]
+acceptance_criteria:
+  - Deep Plan documents open automatically in a preview-capable editing surface.
+  - Non-persisted Deep Plan documents open as transient generated:// artifact buffers.
+  - Source markdown and Mermaid text remain canonical even when richly rendered.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: artifact_identity
+reasoning_tier: standard
+context_scope: deep_plan
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FileManager.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: deep_plan_artifact_opening
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0039
+preserved_exact_tokens:
+  - "planning_draft"
+  - "open_source"
+  - "generated://<artifact_id>"
+  - "source markdown / Mermaid text"
+  - "Mermaid Diagrams"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FileManager.md
+```
+
+### ACD-042 - Deep Plan Section Minimums
+
+```yaml
+plan_unit_id: ACD-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Deep Plan documents have locked minimum sections and allowed optional sections covering objective, scope, context, approach, questions, execution TODOs, validation, risks, alternatives, diagrams, snippets, affected areas, and rollout notes.
+gui_related: false
+gui_classification_reason: Document section requirements are content structure constraints, not GUI implementation.
+depends_on: [ACD-041]
+unblocks: []
+acceptance_criteria:
+  - Deep Plan documents include every minimum section.
+  - Optional Deep Plan sections remain allowed without becoming required for every document.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: document_completeness
+reasoning_tier: standard
+context_scope: deep_plan
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: deep_plan_section_minimums
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0039
+preserved_exact_tokens:
+  - "Objective"
+  - "Scope"
+  - "Current State / Relevant Context"
+  - "Proposed Approach"
+  - "Open Questions / Assumptions"
+  - "Execution Plan / TODOs"
+  - "Validation / Acceptance"
+  - "Risks"
+  - "Alternatives Considered"
+  - "Mermaid Diagrams"
+  - "Code Snippets"
+  - "Affected Files / Areas"
+  - "Rollout / Migration Notes"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-043 - Normalized TODO Schema
+
+```yaml
+plan_unit_id: ACD-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: The normalized TODO schema owns fields, ordering, notes, legacy payload normalization, plan-level superseded summaries, verification scope labeling, and visible TODO checklist terminology.
+gui_related: false
+gui_classification_reason: TODO field shape, compatibility normalization, and plan-level status semantics are data-contract behavior, not GUI implementation.
+depends_on: [ACD-032, ACD-034]
+unblocks: [ACD-044, ACD-045]
+acceptance_criteria:
+  - TODO items use order_index and notes as canonical fields.
+  - Legacy TODO payloads normalize into the Assistant TODO schema.
+  - Superseded TODO N/N remains a plan-level summary and not an active item-level TODO status.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: schema_compatibility
+reasoning_tier: standard
+context_scope: todo
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: normalized_todo_schema
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040
+preserved_exact_tokens:
+  - "order_index"
+  - "notes"
+  - "notes?"
+  - "order_index?"
+  - "Superseded TODO N/N"
+  - "verification_hint"
+  - "todos: Array<{ id?, content, status? }>"
+  - "todos: Array<{ id, content, status }>"
+  - "TODO"
+negative_constraints: []
+compatibility_only_notes:
+  - "Legacy optional spellings notes? and order_index? normalize to canonical notes and order_index."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 5485-5496 >>>
+### ACD-044 - TODO Tool Mutation Boundary
+
+```yaml
+plan_unit_id: ACD-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or plan mode, and Deep Plan markdown edits resync TODO projection before execution begins.
+gui_related: false
+gui_classification_reason: TODO tool mutation, read behavior, and execution gating are runtime/tool behavior, not GUI implementation.
+depends_on: [ACD-043]
+unblocks: [ACD-045]

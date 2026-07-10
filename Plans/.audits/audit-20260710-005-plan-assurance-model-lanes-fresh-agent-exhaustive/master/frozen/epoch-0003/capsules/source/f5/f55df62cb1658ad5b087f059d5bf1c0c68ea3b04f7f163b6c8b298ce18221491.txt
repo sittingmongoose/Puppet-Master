@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE 10924-10935 >>>
+- 'iteration'
+negative_constraints:
+- 'Per-node overrides are out of scope for the first version.'
+- 'Persona description/instruction edits do not persist inside SubagentGuiConfig.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 10936-11290 >>>
+### OSI-082 - Subagents Config UI And Registry Validation
+
+```yaml
+plan_unit_id: OSI-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The Config page exposes a Subagents section with enable toggle, tier override editors, disabled and required lists, registry-backed autocomplete or multi-select validation, clear inline errors for unknown names, save/apply rejection for invalid entries, backend fail-fast validation, and shared names from subagent_registry and persona_registry.
+gui_related: true
+gui_classification_reason: This unit covers the Config page subagents UI and validation surfaces.
+split_recommended: false
+depends_on:
+- OSI-081
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: subagents_config_ui_registry_validation
+node_compile_hint:
+  mode: subagents_config_ui_registry_validation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0046
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0053
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0073
+preserved_exact_tokens:
+- 'Subagents'
+- 'ConfigSubagentEnableTierSubagentsToggled'
+- 'ConfigSubagentTierOverrideChanged'
+- 'disabledSubagents'
+- 'requiredSubagents'
+- 'subagent_registry'
+- 'persona_registry'
+- 'architect-reviewer'
+- 'security-auditor'
+- 'Unknown subagent: [name]'
+negative_constraints:
+- 'Reject invalid entries with a clear error message.'
+- 'Fail fast with a clear error.'
+- 'Do not silently filter invalid backend entries.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-083 - Agent Config Personas UI And Import Seeds
+
+```yaml
+plan_unit_id: OSI-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Agent Config > Personas provides UI for discovering/importing provider-native definitions as seed content, letting users add and delete mutable Personas, duplicating protected built-ins to non-reserved IDs, showing list metadata and prompt preview, and optionally trimming persona content to a smaller token footprint while preserving intent and provenance.
+gui_related: true
+gui_classification_reason: This unit covers user-visible Persona management UI.
+split_recommended: false
+depends_on:
+- OSI-084
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: agent_config_personas_ui_import_seeds
+node_compile_hint:
+  mode: agent_config_personas_ui_import_seeds
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0046
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0085
+preserved_exact_tokens:
+- 'Agent Config > Personas'
+- '.claude/agents'
+- 'add their own'
+- 'delete any'
+- 'trim'
+- '500-1000 chars'
+- 'prompt preview'
+- 'protected built-ins'
+- 'duplicated to a non-reserved ID'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-084 - Persona Storage And Injection Boundary
+
+```yaml
+plan_unit_id: OSI-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Persona storage layout, schema, validation, GUI management, and context-injection rules are owned by Plans/Personas.md; canonical Persona content persists in Puppet Master Persona storage only, provider-native directories are import/refresh sources only, SubagentGuiConfig is not a second runtime source, and orchestrator/interview share the same Persona resolution and injection logic.
+gui_related: false
+gui_classification_reason: This unit covers storage/injection ownership boundaries, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: persona_storage_injection_boundary
+node_compile_hint:
+  mode: persona_storage_injection_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0046
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0062
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0085
+preserved_exact_tokens:
+- 'Puppet Master Persona storage'
+- 'not to provider-native directories'
+- 'not as a second runtime source in SubagentGuiConfig'
+- 'do not restate those definitions here'
+- 'PERSONA.md'
+- 'Instruction Bundle'
+- 'Orchestrator and interview use the same injection logic'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT'
+```
+
+### OSI-085 - Google-Family Provider Validation And Config Loading
+
+```yaml
+plan_unit_id: OSI-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Doctor and plan-mode validation for Google-family provider routes resolve the selected provider entry, auth mode, project context, and account readiness for active Gemini Direct and Antigravity routes, discover/load the same project GuiConfig inside run(), and skip or warn neutrally when config cannot be loaded rather than assuming a single API-key-only settings surface. Gemini CLI validation vocabulary is retired/source-lineage only.
+gui_related: false
+gui_classification_reason: This unit covers provider/account validation and config loading, not GUI copy.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: google_family_provider_validation_config_loading
+node_compile_hint:
+  mode: google_family_provider_validation_config_loading
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0042
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0052
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0074
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0075
+preserved_exact_tokens:
+- 'Gemini Direct'
+- 'Antigravity'
+- 'Gemini CLI'
+- 'OAuth'
+- 'API-key'
+- 'Google/Vertex credential'
+- 'Antigravity CLI login/ADC'
+- 'config_discovery::discover_config_path(None)'
+- 'gui_config::load_config(path)'
+- 'skip check'
+- 'neutral warning'
+negative_constraints:
+- Do not validate active Google-family provider setup by assuming Gemini API key is the only fix.
+- Do not select or validate Gemini CLI as an active provider route.
+compatibility_only_notes:
+- Gemini CLI validation wording is preserved only as retired/source-lineage vocabulary.
+stale_retired_dispositions:
+- Active Gemini CLI validation is retired by provider-update ledger pldg-20260624-001-provider-updates.
+owner_boundary_notes:
+- 'Plans/Multi-Account.md and Plans/Contracts_V0.md own account/auth resolution semantics.'
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-086 - Gemini Project Context UX And Copy Boundary
+
+```yaml
+plan_unit_id: OSI-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Doctor UX exposes project-context fields, validation-required and onboarding-needed states where the resolved active provider route requires them, and setup copy names the resolved provider/auth mode rather than using "Configure Gemini access" as generic setup text or treating Gemini API key as the primary or only settings path.
+gui_related: true
+gui_classification_reason: This unit covers Doctor/Config/Wizard user-visible Gemini access copy and UX.
+split_recommended: false
+depends_on:
+- OSI-085
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: provider_project_context_ux_copy_boundary
+node_compile_hint:
+  mode: provider_project_context_ux_copy_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0074
+preserved_exact_tokens:
+- 'project-context'
+- 'validation-required'
+- 'onboarding-needed'
+- 'Configure Gemini access'
+- 'Gemini API key'
+- '/only'
+negative_constraints:
+- 'Config, Wizard, and Doctor GUI text MUST NOT frame Gemini API key as the primary or /only settings path when another provider/auth route is selected.'
+- 'Config, Wizard, and Doctor GUI text MUST NOT use Configure Gemini access as generic provider setup copy.'
+compatibility_only_notes:
+- 'Configure Gemini access is preserved only as older source-lineage copy.'
+stale_retired_dispositions:
+- 'Generic Gemini setup copy is retired for route-specific provider setup.'
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-087 - Config Message Variants And App Handlers
+
+```yaml
+plan_unit_id: OSI-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Every new Config plan-mode and subagent message variant must be added to the Message enum and handled in App::update, including global plan-mode toggles and subagent enable/override/disabled/required list changes.
+gui_related: true
+gui_classification_reason: This unit covers GUI application message handling.
+split_recommended: false
+depends_on:
+- OSI-077
+- OSI-082
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: config_message_variants_app_handlers
+node_compile_hint:
+  mode: config_message_variants_app_handlers
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0058
+preserved_exact_tokens:
+- 'Message'
+- 'App::update'
+- 'ConfigUsePlanModeAllTiersToggled'
+- 'ConfigEnablePlanModeAllTiers'
+- 'ConfigSubagentEnableTierSubagentsToggled'
+- 'ConfigSubagentTierOverrideChanged'
+- 'ConfigSubagentDisabledListChanged'
+- 'ConfigSubagentRequiredListChanged'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 11291-11302 >>>
+### OSI-088 - Interview Built But Not Wired Audit
+
+```yaml
+plan_unit_id: OSI-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Interview Config currently builds settings that are not all wired into interview execution: max_questions_per_phase, require_architecture_confirmation, and vision_provider are present in GUI/config but absent from InterviewOrchestratorConfig and interview runtime use; the detailed resolutions continue in the next source window.
+gui_related: true
+gui_classification_reason: This unit covers GUI/config settings and their runtime wiring audit.
+split_recommended: true

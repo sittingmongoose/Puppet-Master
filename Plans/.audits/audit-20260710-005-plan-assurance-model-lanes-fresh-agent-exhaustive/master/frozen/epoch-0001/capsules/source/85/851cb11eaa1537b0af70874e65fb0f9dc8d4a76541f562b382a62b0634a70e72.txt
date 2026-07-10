@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE 1251-1262 >>>
+  - "Optional (GUI)"
+  - ".puppet-master/project/ui/wiring_matrix.json"
+  - ".puppet-master/project/ui/ui_command_catalog.json"
+  - "UICommand"
+negative_constraints:
+  - "A project MUST NOT emit only one of the two GUI artifacts."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1263-1620 >>>
+### POA-010 - Non-Canonical Execution Workspace Sidecar
+
+```yaml
+plan_unit_id: POA-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Execution-time Attempt Journal, Parent Summary, AGENTS, and iteration artifacts live in the non-canonical workspace sidecar, while .puppet-master/project/** remains package staging and .puppet-master/state/** remains reserved for project-local runtime state.
+gui_related: false
+gui_classification_reason: This unit defines execution workspace and storage boundaries rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-007
+unblocks: []
+acceptance_criteria:
+  - "Non-Canonical Execution Workspace Sidecar remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - ".puppet-master/workspace/** remains non-canonical sidecar storage."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: canonical_workspace_boundary_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0008
+preserved_exact_tokens:
+  - ".puppet-master/workspace/<project>/<phase>/<task>/<subtask>/"
+  - "Attempt Journal"
+  - "Parent Summary"
+  - ".puppet-master/state/**"
+  - "AGENTS.md"
+  - "Promotion rules"
+  - "AGENTS.md lightness budgets"
+negative_constraints:
+  - ".puppet-master/workspace/** remains the non-canonical execution sidecar and must not be repurposed as canonical storage."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/agent-rules-context.md#FeatureSpecVerbatim"
+  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Project_Output_Artifacts.md"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### POA-011 - Document Set Packaging Trigger And Pointer Stub
+
+```yaml
+plan_unit_id: POA-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Markdown/text artifacts under .puppet-master/** that reach packaging triggers become adjacent .docset/ Document Sets per policy, with the original path retained as a deterministic derived pointer stub.
+gui_related: true
+gui_classification_reason: This unit preserves Document Set packaging behavior for user-visible Markdown/text artifacts and pointer stubs.
+split_recommended: false
+depends_on:
+  - POA-008
+unblocks: []
+acceptance_criteria:
+  - "Document Set Packaging Trigger And Pointer Stub remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Packaging trigger behavior remains aligned to Document Packaging Policy and Gate:GATE-014."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: document_set_packaging_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0009
+preserved_exact_tokens:
+  - "Plans/Document_Packaging_Policy.md"
+  - ".docset/"
+  - ".puppet-master/project/requirements.md.docset/"
+  - "deterministic pointer stub"
+  - "Gate:GATE-014"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014, SchemaID:pm.project-plan-graph-index.v1"
+  - "ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Document_Packaging_Policy.md
+```
+
+### POA-012 - Packaged Document Set Canonical Members And No Recursion
+
+```yaml
+plan_unit_id: POA-012
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Packaged Document Sets make index, manifest, shards, and evidence canonical for the logical artifact while the original path remains only a derived pointer stub; sharded plan graph identity remains unchanged.
+gui_related: false
+gui_classification_reason: This unit defines packaging output and recursion constraints rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-011
+unblocks: []
+acceptance_criteria:
+  - "Packaged Document Set Canonical Members And No Recursion remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Generated Document Set contents do not recursively become new packaging inputs."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: document_set_recursion_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0010
+preserved_exact_tokens:
+  - "<logical_artifact_path>.docset/00-index.md"
+  - "manifest.json"
+  - "evidence/"
+  - "<logical_artifact_path>"
+  - "plan_graph/index.json"
+  - "nodes/<node_id>.json"
+negative_constraints:
+  - "Generated .docset/** contents are packaging outputs, not new packaging inputs; verifiers and generators must not recurse and package Document Set members again."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014"
+  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Document_Packaging_Policy.md
+```
+
+### POA-013 - Schema Alignment Exact Field Names
+
+```yaml
+plan_unit_id: POA-013
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  The listed Puppet Master internal schemas and exact field names are authoritative; this document owns paths, sharding, DRY requirements, and cross-file integrity rules.
+gui_related: false
+gui_classification_reason: This unit defines schema and field-name requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-008
+unblocks: []
+acceptance_criteria:
+  - "Schema Alignment Exact Field Names remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Exact schema IDs and field names remain stable and are not renamed during implementation."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: schema_field_name_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0011
+preserved_exact_tokens:
+  - "pm.project-plan-graph-index.v1"
+  - "pm.project-plan-node.v1"
+  - "pm.project-plan-graph.v1"
+  - "pm.project_contracts_index.schema.v1"
+  - "pm.acceptance_manifest.schema.v1"
+  - "pm.auto_decisions.schema.v1"
+  - "pm.requirements_quality_report.schema.v1"
+  - "nodes[].path"
+  - "nodes[].sha256"
+  - "contract_refs"
+  - "depends_on"
+negative_constraints:
+  - "Do not rename fields."
+preserved_contractrefs: []
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+```
+
+### POA-014 - Platform And Project Contract Pack Index Layers
+
+```yaml
+plan_unit_id: POA-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Internal Platform Contracts are referenced by stable IDs, while generated Project Contracts live in the Project Contract Pack; contracts/index.json is the canonical mapping from ProjectContract:* IDs to kind, path, sha256, and related metadata.
+gui_related: false
+gui_classification_reason: This unit defines contract layering and project contract index semantics rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-013
+unblocks: []
+acceptance_criteria:
+  - "Platform And Project Contract Pack Index Layers remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Platform Contracts remain referenced rather than embedded in generated user projects."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: contract_pack_index_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0012
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0013
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0014
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0015
+preserved_exact_tokens:
+  - "Platform Contracts"
+  - "Project Contracts"
+  - "PolicyRule:*"
+  - "SchemaID:*"
+  - "ProjectContract:*"
+  - ".puppet-master/project/contracts/index.json"
+  - "contracts[].contract_id"
+  - "contracts[].path"
+  - "^ProjectContract:"
+  - "pm.project_contracts_index.schema.v1"
+negative_constraints:
+  - "Platform Contracts are referenced from project artifacts but not embedded verbatim in user projects."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project_contracts_index.schema.v1"
+  - "ContractRef: SchemaID:pm.project_contracts_index.schema.v1, ContractName:Plans/DRY_Rules.md#7"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/DRY_Rules.md
+```
+
+### POA-015 - DRY Graph And Acceptance Cross-References
+
+```yaml
+plan_unit_id: POA-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Node shards and acceptance manifests cross-reference Project Contract IDs instead of duplicating specifications, and human plan.md summaries must point to canonical ProjectContract sources.
+gui_related: false
+gui_classification_reason: This unit defines DRY graph and acceptance cross-reference rules rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-014
+unblocks: []
+acceptance_criteria:
+  - "DRY Graph And Acceptance Cross-References remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "Node shards and acceptance manifests reference contract IDs rather than inlining canonical specifications."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: dry_contract_duplication
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0016
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0017
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0018
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0019
+preserved_exact_tokens:
+  - "contract_refs"
+  - "ProjectContract:*"
+  - "acceptance_manifest.json"
+  - "nodes[].node_id"
+  - "nodes[].checks[].contract_refs"
+  - "acceptance[].check_id"
+  - "Canonical source: ProjectContract:<...>"
+negative_constraints:
+  - "Node shards must not repeat or inline the contract pack canonical specifications; use contract_refs instead."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.project-plan-node.v1, ContractName:Plans/DRY_Rules.md#7"
+  - "ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md"
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#7"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/DRY_Rules.md
+```
+
+### POA-016 - Autonomous Decision Logging Projection
+
+```yaml
+plan_unit_id: POA-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Puppet Master applies deterministic defaults autonomously, records valid ambiguities to user-project auto_decisions.jsonl, keeps internal SSOT decisions separate, and supports optional HITL approval-boundary nodes through tool_policy_mode: "ask".
+gui_related: false
+gui_classification_reason: This unit defines decision logging and autonomy behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - POA-007
+unblocks: []
+acceptance_criteria:
+  - "Autonomous Decision Logging Projection remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "User-project decision projections stay separate from internal Plans/auto_decisions.jsonl."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: decision_log_projection_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0020
+preserved_exact_tokens:
+  - "Plans/Decision_Policy.md"
+  - ".puppet-master/project/auto_decisions.jsonl"
+  - "Plans/auto_decisions.jsonl"
+  - "pm.auto_decisions.schema.v1"
+  - "tool_policy_mode: \"ask\""
+  - "pm.project-plan-node.v1"
+negative_constraints:
+  - "Human ambiguity resolution is not required for continued execution; decision logging is traceability, not gating."
+preserved_contractrefs:
+  - "ContractRef: `PolicyRule:Decision_Policy.md`"
+  - "ContractRef: SchemaID:pm.auto_decisions.schema.v1, PolicyRule:Decision_Policy.md§4"
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Decision_Policy.md
+```
+
+
+<<< CONTEXT_AFTER 1621-1632 >>>
+### POA-017 - Sharded-Only Plan Graph Root
+
+```yaml
+plan_unit_id: POA-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Puppet Master produces user-project plans as a canonical sharded-only graph under .puppet-master/project/plan_graph/, while plan.md remains the required human-readable view.
+gui_related: true
+gui_classification_reason: This unit preserves the user-visible human plan view boundary while defining the sharded headless graph root.
+split_recommended: false

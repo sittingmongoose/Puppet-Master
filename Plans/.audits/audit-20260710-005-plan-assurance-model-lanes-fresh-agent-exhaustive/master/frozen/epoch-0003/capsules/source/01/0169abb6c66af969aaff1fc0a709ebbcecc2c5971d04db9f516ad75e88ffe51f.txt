@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 9743-9754 >>>
+  - "`service_account_json`"
+  - "`vertex_api_key`"
+negative_constraints:
+  - "Google credential branches must not be collapsed into a single unlabeled Google credentials setup path in user-facing flows."
+  - "Do not expose Nanobanana as an active installable helper."
+  - "Do not expose Gemini CLI Vertex/Google Cloud setup as an active setup path."
+compatibility_only_notes:
+  - Nanobanana and Gemini CLI media/setup branches are retained only as retired source-lineage.
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 9755-10116 >>>
+### CV-139 - Usage Pressure Cooldown And Resolution Outcome
+
+```yaml
+plan_unit_id: CV-139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Usage pressure normalizes provider-agnostic scheduler vocabulary, preserves
+  provider-reported cooldown facts, post-reset eligible_pending_recheck and
+  validating flow, and auditable resolution_outcome for threshold or exhaustion
+  handling.
+gui_related: false
+gui_classification_reason: This unit defines provider/account pressure state and scheduler semantics.
+split_recommended: true
+depends_on: [CV-137]
+unblocks: [CV-140]
+acceptance_criteria:
+  - UsagePressureState and provider projections preserve nominal, approaching_threshold, threshold_reached, exhausted, and unknown.
+  - unhealthy provider remains readiness/health presentation and does not collapse into usage pressure.
+  - Provider-reported cooldown windows remain facts and PM overlays do not overwrite cooldown metadata.
+  - When reset_at or cooldown_until passes, availability becomes eligible_pending_recheck and readiness enters validating until validation or a successful run returns an observed state.
+  - threshold_reached or exhausted records resolution_outcome for audit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_pressure_cooldown_drift
+reasoning_tier: high
+context_scope: usage_pressure_cooldown_resolution
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: usage_pressure_cooldown_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0049
+preserved_exact_tokens:
+  - "`nominal`"
+  - "`approaching_threshold`"
+  - "`threshold_reached`"
+  - "`exhausted`"
+  - "`unknown`"
+  - "`pressure_state`"
+  - "`reset_at`"
+  - "`cooldown_until`"
+  - "`eligible_pending_recheck`"
+  - "`resolution_outcome`"
+negative_constraints:
+  - "Provider-reported cooldown metadata must not be overwritten by PM-imposed overlays."
+  - "An unhealthy provider remains readiness/health presentation and must not be collapsed into usage pressure."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-140 - Usage Warning Quiet Window And Setup Action Labels
+
+```yaml
+plan_unit_id: CV-140
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Usage warnings expose configurable thresholds, dismiss and quiet windows, and
+  Usage/config provenance, while provider setup actions use stable
+  action-progress labels such as Sign In, Signing In..., and Logged In.
+gui_related: true
+gui_classification_reason: This unit affects user-visible usage warnings and provider setup actions.
+split_recommended: true
+depends_on: [CV-137, CV-139]
+unblocks: []
+acceptance_criteria:
+  - Usage warnings expose configurable threshold, dismiss/quiet window, and path to Usage/config.
+  - Non-blocking account pressure can be quieted without losing /config provenance or /quiet period explanation.
+  - Provider setup actions use stable action-progress labels.
+  - Provider-specific setup copy may specialize the provider name while shared lifecycle labels remain stable.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_warning_setup_label_drift
+reasoning_tier: standard
+context_scope: usage_warning_setup_action_labels
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_warning_setup_label_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0049
+preserved_exact_tokens:
+  - "`Temporary Pause`"
+  - "`Resume Now`"
+  - "`Mark Needs Recheck`"
+  - "`/config`"
+  - "`/quiet`"
+  - "`Sign In`"
+  - "`Signing In...`"
+  - "`Logged In`"
+negative_constraints:
+  - "User overlays must not overwrite provider-reported cooldown facts."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-141 - Provider Operational Blockers And Claude Import Boundary
+
+```yaml
+plan_unit_id: CV-141
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  A provider account can be auth-ready while workspace trust, first-run prompts,
+  billing-entity selection, or validation still blocks full operation for a run
+  context, and Claude Code import is bounded by CLAUDE_CONFIG_DIR with only
+  auth-bearing credentials material seeded before validation.
+gui_related: false
+gui_classification_reason: This unit defines provider operational blockers and import boundaries.
+split_recommended: true
+depends_on: [CV-125, CV-138]
+unblocks: []
+acceptance_criteria:
+  - Auth-ready providers may still be blocked by workspace trust, first-run prompts, billing-entity selection, or validation requirements for a specific run context.
+  - Claude Code import uses CLAUDE_CONFIG_DIR as the account root boundary.
+  - Claude Code auth import may seed only auth-bearing credentials.json / .credentials.json material before validation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_operational_blocker_import_boundary_drift
+reasoning_tier: high
+context_scope: provider_operational_blockers_claude_import
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/storage-plan.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: provider_operational_blocker_import_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0049
+preserved_exact_tokens:
+  - "workspace trust"
+  - "first-run prompts"
+  - "billing-entity selection"
+  - "`CLAUDE_CONFIG_DIR`"
+  - "`credentials.json`"
+  - "`.credentials.json`"
+  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md"
+negative_constraints:
+  - "Claude Code import may seed only auth-bearing credentials material before validation."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-142 - Provider Profile Lifecycle Reconciliation
+
+```yaml
+plan_unit_id: CV-142
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Provider-profile state maps canonically to Executor Protocol and Contracts
+  equivalents for reconciliation, but it does not replace the canonical
+  child-run lifecycle.
+gui_related: false
+gui_classification_reason: This unit defines provider lifecycle reconciliation semantics rather than UI presentation.
+split_recommended: true
+depends_on: [CV-137]
+unblocks: [CV-143, CV-144]
+acceptance_criteria:
+  - "The provider state mapping table preserves unknown, discovered, configuring, ready, active, degraded, suspended, expired, and removed."
+  - "Provider-profile state remains a reconciliation input across provider profile, Executor Protocol node state, and PM runtime/contract state."
+  - "The mapping table does not replace the canonical child-run lifecycle."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_lifecycle_child_state_confusion
+reasoning_tier: high
+context_scope: provider_profile_lifecycle_reconciliation
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Multi-Account.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: provider_lifecycle_reconciliation_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+preserved_exact_tokens:
+  - "provider-profile state"
+  - "EP equivalent"
+  - "Contracts equivalent"
+  - "`unknown`"
+  - "`discovered`"
+  - "`configuring`"
+  - "`ready`"
+  - "`degraded`"
+  - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md"
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-143 - Provider-To-Child Execution Projection Boundary
+
+```yaml
+plan_unit_id: CV-143
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Only execution-relevant provider states project through child execution:
+  active and degraded map to active execution, suspended maps to blocked
+  execution, and expired maps to failure; discovery and configuration states
+  remain provider-profile states.
+gui_related: false
+gui_classification_reason: This unit defines provider-to-child execution state projection boundaries.
+split_recommended: true
+depends_on: [CV-026, CV-142]
+unblocks: []
+acceptance_criteria:
+  - "active and degraded correspond to active execution."
+  - "suspended corresponds to blocked execution."
+  - "expired corresponds to failure."
+  - "Discovery and configuration-only states remain provider-profile states."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_state_false_child_execution
+reasoning_tier: high
+context_scope: provider_child_execution_projection
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: provider_child_execution_projection_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+preserved_exact_tokens:
+  - "`active`"
+  - "`degraded`"
+  - "`suspended`"
+  - "`expired`"
+  - "MUST NOT"
+negative_constraints:
+  - "Discovery/configuration-only states must not be misreported as in-flight child execution."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-144 - Model Lifecycle State And Sunset Dispatch Boundary
+
+```yaml
+plan_unit_id: CV-144
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Model lifecycle is separate from provider account readiness and uses
+  model_lifecycle_state with active, deprecated, sunset_pending, sunset, and
+  removed; /sunset is UI/help shorthand, not a separate state family.
+gui_related: true
+gui_classification_reason: This unit affects UI/help shorthand for model lifecycle status.
+split_recommended: true
+depends_on: [CV-142]
+unblocks: []
+acceptance_criteria:
+  - "model_lifecycle_state preserves active, deprecated, sunset_pending, sunset, and removed."
+  - "sunset_at_utc?, replacement_model_id?, and deprecation_notice_ref? are preserved when model owners expose them."
+  - "sunset and removed models are ineligible for new dispatch unless explicit compatibility policy permits them."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: model_lifecycle_readiness_collapse
+reasoning_tier: high
+context_scope: model_lifecycle_sunset_dispatch
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: model_lifecycle_dispatch_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+preserved_exact_tokens:
+  - "`model_lifecycle_state`"
+  - "`active | deprecated | sunset_pending | sunset | removed`"
+  - "`/sunset`"
+  - "`sunset_at_utc?`"
+  - "`replacement_model_id?`"
+  - "`deprecation_notice_ref?`"
+compatibility_only_notes:
+  - "sunset or removed models are ineligible for new dispatch unless an explicit compatibility policy permits them."
+negative_constraints:
+  - "/sunset is UI/help shorthand for model_lifecycle_state, not a separate state family."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-145 - Requested Effective Account Identity Fields
+
+```yaml
+plan_unit_id: CV-145
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Requested/effective execution identity preserves requested account policy
+  fields and effective stable account, provider, role, and operational identity
+  fields, while provider_account_id remains subordinate provider-native
+  metadata unless explicitly governed.
+gui_related: false
+gui_classification_reason: This unit defines runtime account identity fields.
+split_recommended: true
+depends_on: [CV-125, CV-131]
+unblocks: [CV-146, CV-147, CV-148, CV-149, CV-154]
+acceptance_criteria:
+  - "Requested fields preserve requested_account_id, requested_account_binding, and requested_account_policy."
+  - "Effective fields preserve effective_account_id, effective_provider_identity, provider_account_id, execution_role, and operational_identity."
+  - "Requested state remains recoverable in historical snapshots."
+  - "Provider-native metadata remains subordinate to the stable internal account key."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: requested_effective_identity_field_loss
+reasoning_tier: high
+context_scope: requested_effective_account_identity_fields
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Multi-Account.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: requested_effective_identity_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+preserved_exact_tokens:
+  - "`requested_account_id`"
+  - "`requested_account_binding`"
+  - "`requested_account_policy`"
+  - "`effective_account_id`"
+  - "`effective_provider_identity`"
+  - "`provider_account_id`"
+  - "`execution_role`"
+  - "`operational_identity`"
+  - "ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"
+compatibility_only_notes:
+  - "provider_account_id is provider-native metadata subordinate to stable internal identity unless explicitly governed."
+negative_constraints:
+  - "provider_account_id must not replace stable internal identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 10117-10128 >>>
+### CV-146 - Non-Persona Runtime Field Adoption Guard
+
+```yaml
+plan_unit_id: CV-146
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Non-persona runtime fields must land in shared runtime contracts before
+  question, todowrite, web, tool/chat, or other feature-specific packets depend
+  on them, and those packets reuse canonical runtime names with only additive
+  child payloads.

@@ -1,0 +1,374 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3224-3235 >>>
+L00003224	  - "Runtime retry/backoff policy applies"
+L00003225	  - "structured-output remediation / retry policy"
+L00003226	negative_constraints:
+L00003227	  - "The adapter MUST NOT collapse permission_denied, filesafe_blocked, external_side_effect_blocked, or other already-determined canonical runtime classes to generic error or provider_failed."
+L00003228	preserved_contractrefs: []
+L00003229	owner_hints:
+L00003230	  - "Plans/Provider_OpenCode.md"
+L00003231	  - "Plans/Contracts_V0.md"
+L00003232	  - "Plans/FinalGUISpec.md"
+L00003233	  - "Plans/FileSafe.md"
+L00003234	```
+L00003235	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3236-3580 >>>
+L00003236	### PO-046 - Capability And Usage Runtime Alignment
+L00003237	
+L00003238	```yaml
+L00003239	plan_unit_id: PO-046
+L00003240	unit_type: requirement
+L00003241	status: accepted
+L00003242	owner_doc: Plans/Provider_OpenCode.md
+L00003243	canonical_text: >-
+L00003244	  OpenCode capability reporting declares server-bridged HTTP/SSE transport, normalized streaming support,
+L00003245	  canonical tool-policy snapshot use, split server/upstream auth realms, and no hidden retries; unsupported
+L00003246	  runtime controls are recorded as unsupported/skipped, and Session.getUsage message usage maps to normalized
+L00003247	  usage.event persistence and Ledger/Usage consumption.
+L00003248	gui_related: false
+L00003249	gui_classification_reason: "This unit defines runtime capability and usage mapping rather than visual presentation."
+L00003250	split_recommended: false
+L00003251	depends_on:
+L00003252	  - "PO-016"
+L00003253	  - "PO-017"
+L00003254	  - "PO-022"
+L00003255	  - "PO-024"
+L00003256	  - "PO-025"
+L00003257	  - "PO-040"
+L00003258	unblocks: []
+L00003259	acceptance_criteria:
+L00003260	  - "Capability And Usage Runtime Alignment remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00003261	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003262	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003263	validation_surfaces:
+L00003264	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003265	  - "python3 scripts/pm-plan-index.py validate"
+L00003266	risk_class: opencode_provider_drift
+L00003267	reasoning_tier: standard
+L00003268	context_scope: provider_opencode_capability_usage
+L00003269	implementation_surfaces:
+L00003270	  - "Plans/Provider_OpenCode.md"
+L00003271	node_compile_hint:
+L00003272	  mode: opencode_capability_usage_alignment
+L00003273	  create_worknodes: false
+L00003274	source_lineage:
+L00003275	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0054"
+L00003276	preserved_exact_tokens:
+L00003277	  - "server-bridged HTTP/SSE"
+L00003278	  - "supports streaming normalized events"
+L00003279	  - "canonical tool-policy snapshot"
+L00003280	  - "split auth realms"
+L00003281	  - "server credentials vs upstream provider auth"
+L00003282	  - "performs no hidden runtime retries"
+L00003283	  - "unsupported/skipped"
+L00003284	  - "effective runtime state"
+L00003285	  - "OpenCode server returns message-level usage"
+L00003286	  - "usage.event"
+L00003287	  - "Persistence and Ledger/Usage consumption"
+L00003288	  - "storage-plan.md"
+L00003289	  - "usage-feature.md"
+L00003290	  - "Session.getUsage"
+L00003291	  - "processor finish-step"
+L00003292	  - "terminology should not drift"
+L00003293	negative_constraints:
+L00003294	  - "OpenCode must not perform hidden runtime retries."
+L00003295	  - "Unsupported runtime controls must be recorded as unsupported/skipped rather than silently ignored."
+L00003296	preserved_contractrefs:
+L00003297	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md"
+L00003298	owner_hints:
+L00003299	  - "Plans/Provider_OpenCode.md"
+L00003300	  - "Plans/CLI_Bridged_Providers.md"
+L00003301	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00003302	  - "Plans/Models_System.md"
+L00003303	  - "Plans/Contracts_V0.md"
+L00003304	  - "Plans/storage-plan.md"
+L00003305	  - "Plans/usage-feature.md"
+L00003306	```
+L00003307	
+L00003308	### PO-001 - Provider OpenCode Retired Source-Preserving Bridge
+L00003309	
+L00003310	```yaml
+L00003311	plan_unit_id: PO-001
+L00003312	unit_type: compatibility_disposition
+L00003313	status: retired
+L00003314	owner_doc: Plans/Provider_OpenCode.md
+L00003315	canonical_text: >-
+L00003316	  PO-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 158.
+L00003317	  Provider_OpenCode-S0001 through Provider_OpenCode-S0031 are covered by PO-002 through PO-026 or structural
+L00003318	  dispositions, Provider_OpenCode-S0032 through Provider_OpenCode-S0054 are covered by PO-027 through PO-046
+L00003319	  or structural/reference dispositions, and Provider_OpenCode-S0055 through Provider_OpenCode-S0058 are
+L00003320	  generated structural/audit dispositions. PO-001 must not re-own or override implementation-facing PlanUnits
+L00003321	  and must not use source_preserving_planunit compile mode.
+L00003322	gui_related: false
+L00003323	gui_classification_reason: "The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map."
+L00003324	split_recommended: false
+L00003325	depends_on:
+L00003326	  - "PO-002"
+L00003327	  - "PO-003"
+L00003328	  - "PO-004"
+L00003329	  - "PO-005"
+L00003330	  - "PO-006"
+L00003331	  - "PO-007"
+L00003332	  - "PO-008"
+L00003333	  - "PO-009"
+L00003334	  - "PO-010"
+L00003335	  - "PO-011"
+L00003336	  - "PO-012"
+L00003337	  - "PO-013"
+L00003338	  - "PO-014"
+L00003339	  - "PO-015"
+L00003340	  - "PO-016"
+L00003341	  - "PO-017"
+L00003342	  - "PO-018"
+L00003343	  - "PO-019"
+L00003344	  - "PO-020"
+L00003345	  - "PO-021"
+L00003346	  - "PO-022"
+L00003347	  - "PO-023"
+L00003348	  - "PO-024"
+L00003349	  - "PO-025"
+L00003350	  - "PO-026"
+L00003351	  - "PO-027"
+L00003352	  - "PO-028"
+L00003353	  - "PO-029"
+L00003354	  - "PO-030"
+L00003355	  - "PO-031"
+L00003356	  - "PO-032"
+L00003357	  - "PO-033"
+L00003358	  - "PO-034"
+L00003359	  - "PO-035"
+L00003360	  - "PO-036"
+L00003361	  - "PO-037"
+L00003362	  - "PO-038"
+L00003363	  - "PO-039"
+L00003364	  - "PO-040"
+L00003365	  - "PO-041"
+L00003366	  - "PO-042"
+L00003367	  - "PO-043"
+L00003368	  - "PO-044"
+L00003369	  - "PO-045"
+L00003370	  - "PO-046"
+L00003371	unblocks: []
+L00003372	acceptance_criteria:
+L00003373	  - "Generated-tail structural and audit spans remain available for exact-text audit."
+L00003374	  - "Provider_OpenCode-S0001 through Provider_OpenCode-S0054 remain mapped to PO-002 through PO-046 or explicit structural/reference dispositions rather than PO-001."
+L00003375	  - "Provider_OpenCode-S0055 through Provider_OpenCode-S0058 are structurally dispositioned as generated tail/audit material."
+L00003376	  - "PO-001 no longer uses node_compile_hint.mode=source_preserving_planunit."
+L00003377	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003378	validation_surfaces:
+L00003379	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003380	  - "python3 scripts/pm-plan-index.py validate"
+L00003381	risk_class: residual_bridge_overreach
+L00003382	reasoning_tier: standard
+L00003383	context_scope: provider_opencode_retired_bridge
+L00003384	implementation_surfaces:
+L00003385	  - "Plans/Provider_OpenCode.md"
+L00003386	node_compile_hint:
+L00003387	  mode: retired_source_preserving_bridge
+L00003388	  create_worknodes: false
+L00003389	source_lineage:
+L00003390	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0055"
+L00003391	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0056"
+L00003392	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0057"
+L00003393	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0058"
+L00003394	preserved_exact_tokens:
+L00003395	  - "source_preserving_planunit"
+L00003396	  - "retired_source_preserving_bridge"
+L00003397	  - "Owner / Consumer Map"
+L00003398	  - "PlanUnits"
+L00003399	  - "Provider OpenCode Residual Source-Preserving Bridge"
+L00003400	  - "Provider OpenCode Residual Generated-Tail Bridge"
+L00003401	  - "Provider OpenCode Retired Source-Preserving Bridge"
+L00003402	  - "Migration Coverage"
+L00003403	  - "Provider_OpenCode-S0055"
+L00003404	  - "Provider_OpenCode-S0058"
+L00003405	negative_constraints:
+L00003406	  - "PO-001 must not provide product implementation coverage for Provider_OpenCode-S0001 through Provider_OpenCode-S0054."
+L00003407	  - "PO-001 must not override PO-002 through PO-046 or structural/reference dispositions."
+L00003408	  - "PO-001 must not use source_preserving_planunit compile mode after Phase 2B batch 158."
+L00003409	preserved_contractrefs:
+L00003410	  - "ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md"
+L00003411	compatibility_only_notes:
+L00003412	  - "The retired bridge remains only as migration-lineage compatibility metadata."
+L00003413	stale_retired_dispositions:
+L00003414	  - "source_preserving_bridge_retired"
+L00003415	owner_hints:
+L00003416	  - "Plans/Provider_OpenCode.md"
+L00003417	```
+L00003418	
+L00003419	## Migration Coverage
+L00003420	
+L00003421	Original hash: `e0d27c1494bf01c5a72ca17abb7f28b8f6a1045f19aa2ef941b87d7c9ab6d2e9`.
+L00003422	
+L00003423	Run-scoped proof artifacts:
+L00003424	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00003425	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00003426	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00003427	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00003428	
+L00003429	Original spans from `Provider_OpenCode-S0001` through `Provider_OpenCode-S0054` are preserved in place and atomized into fine-grained PlanUnits `PO-002` through `PO-046` or explicit structural/reference dispositions. Generated tail spans `Provider_OpenCode-S0055` through `Provider_OpenCode-S0058` are structurally dispositioned, and `PO-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode=retired_source_preserving_bridge`. No residual source-preserving product bridge remains for `Plans/Provider_OpenCode.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00003430	
+L00003431	## Ledger Compile Addendum - pldg-20260614-002
+L00003432	
+L00003433	### PO-047 - Requested Effective Provider Attempt Identity
+L00003434	
+L00003435	```yaml
+L00003436	plan_unit_id: PO-047
+L00003437	unit_type: requirement
+L00003438	status: accepted
+L00003439	owner_doc: Plans/Provider_OpenCode.md
+L00003440	canonical_text: >-
+L00003441	  OpenCode server-bridged attempts must preserve requested and effective PM runtime identity while keeping
+L00003442	  OpenCode session ids and SSE ids in provider-native correlation fields. Each provider attempt records
+L00003443	  `provider_attempt_ref`, PM attempt_id, requested provider/profile/model/account, effective
+L00003444	  provider/profile/model/account, server profile, transport/session correlation, continuity/reconnect
+L00003445	  fields, and parity gaps when server-bridged identity cannot match direct-provider disclosure.
+L00003446	gui_related: false
+L00003447	gui_classification_reason: Provider attempt identity and SSE correlation fields are runtime/provider contracts, not visual presentation.
+L00003448	depends_on: [CV-281]
+L00003449	unblocks: []
+L00003450	acceptance_criteria:
+L00003451	  - OpenCode session identity never replaces canonical `thread_id`, `run_id`, or `attempt_id`.
+L00003452	  - "`provider_attempt_ref` and continuity/reconnect fields have a stable schema slot for replay and usage correlation."
+L00003453	  - Requested/effective identity parity gaps are explicit for server-bridged providers.
+L00003454	validation_surfaces:
+L00003455	  - python3 scripts/pm-plan-index.py validate
+L00003456	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+L00003457	risk_class: provider_identity_correlation_drift
+L00003458	reasoning_tier: high
+L00003459	context_scope: opencode_provider_attempt_identity
+L00003460	implementation_surfaces: [Plans/Provider_OpenCode.md, Plans/Provider_Stream_Mapping_External_Reference_A2A.md, Plans/usage-feature.md]
+L00003461	node_compile_hint: {mode: provider_attempt_identity_contract, create_worknodes: false}
+L00003462	source_lineage:
+L00003463	  - pldg-20260614-002-part-3-fable-cleanup:atom-0035
+L00003464	  - pldg-20260614-002-part-3-fable-cleanup:atom-0049
+L00003465	preserved_exact_tokens: ["provider_attempt_ref?", "SSE correlation fields", "requested/effective identity parity", "server-bridged providers", "usage-feature.md:74"]
+L00003466	negative_constraints:
+L00003467	  - Do not map OpenCode session id into canonical `thread_id`.
+L00003468	  - Do not treat server-bridged identity parity as equal to direct providers unless evidence proves it.
+L00003469	owner_hints: [Plans/Provider_OpenCode.md, Plans/Provider_Stream_Mapping_External_Reference_A2A.md, Plans/usage-feature.md]
+L00003470	```
+L00003471	
+L00003472	
+L00003473	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00003474	
+L00003475	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00003476	
+L00003477	### PO-049 - opencode-see-image Source Lineage Boundary
+L00003478	
+L00003479	```yaml
+L00003480	plan_unit_id: PO-049
+L00003481	unit_type: constraint
+L00003482	status: accepted
+L00003483	owner_doc: Plans/Provider_OpenCode.md
+L00003484	canonical_text: 'https://github.com/alfaoz/opencode-see-image is preserved as source-lineage for the PM-native vision
+L00003485	  bridge shape: a see_image tool, prompt guidance to avoid guessing, image/screenshot resolution, and a vision-capable
+L00003486	  route returning text. PM must not inherit OpenCode-specific plugin APIs, auth.json, SQLite DB layout, Bun runtime,
+L00003487	  opencode run, --dangerously-skip-permissions behavior, or hardcoded opencode-go/minimax-m3/mimo-v2.5-free defaults
+L00003488	  as product requirements.'
+L00003489	gui_related: false
+L00003490	gui_classification_reason: Provider lineage and dependency boundaries are provider integration semantics, not GUI.
+L00003491	depends_on:
+L00003492	- T-165
+L00003493	unblocks:
+L00003494	- MGAC-099
+L00003495	acceptance_criteria:
+L00003496	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00003497	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00003498	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00003499	  are created by this compile.
+L00003500	validation_surfaces:
+L00003501	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00003502	- python3 scripts/pm-plan-index.py validate
+L00003503	- git diff --check
+L00003504	risk_class: opencode_dependency_leak
+L00003505	reasoning_tier: standard
+L00003506	context_scope: opencode_see_image_lineage
+L00003507	implementation_surfaces:
+L00003508	- Plans/Provider_OpenCode.md
+L00003509	- future provider docs
+L00003510	node_compile_hint:
+L00003511	  mode: source_lineage_boundary
+L00003512	  create_worknodes: false
+L00003513	  create_nodeseeds: false
+L00003514	source_lineage:
+L00003515	- pldg-20260626-001-feature-name:atom-0070
+L00003516	- pldg-20260626-001-feature-name:atom-0071
+L00003517	- pldg-20260626-001-feature-name:atom-0072
+L00003518	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00003519	- local:/tmp/pm-ext-opencode-see-image
+L00003520	- chat:opencode-see-image-request
+L00003521	- Plans/Provider_OpenCode.md
+L00003522	source_atom_ids:
+L00003523	- atom-0070
+L00003524	- atom-0071
+L00003525	- atom-0072
+L00003526	decision_refs:
+L00003527	- dec-0014
+L00003528	preserved_exact_tokens:
+L00003529	- https://github.com/alfaoz/opencode-see-image
+L00003530	- cde1615f6dfc9039c58da6813112ee53391b5b49
+L00003531	- 1.1.0
+L00003532	- MIT
+L00003533	- bun
+L00003534	- /tmp/pm-ext-opencode-see-image
+L00003535	- see_image
+L00003536	- experimental.chat.system.transform
+L00003537	- OpenCode SQLite
+L00003538	- part
+L00003539	- screenshotSearchDirs
+L00003540	- SEE_IMAGE_MODEL
+L00003541	- SEE_IMAGE_PROVIDER
+L00003542	- minimax-m3
+L00003543	- opencode-go
+L00003544	- mimo-v2.5-free
+L00003545	- never guess image contents
+L00003546	- adopt it to PM
+L00003547	- that is for Opencode
+L00003548	- OpenCode plugin APIs
+L00003549	- auth.json
+L00003550	- opencode.db
+L00003551	- Bun
+L00003552	- opencode run
+L00003553	- --dangerously-skip-permissions
+L00003554	negative_constraints:
+L00003555	- Do not vendor or import the external repo into PM as canonical code during this ledger-only planning thread.
+L00003556	- Do not assume the repo's OpenCode-specific runtime dependencies are PM requirements.
+L00003557	- Do not claim local selftests passed because `bun` was unavailable.
+L00003558	- Do not copy OpenCode's SQLite/session model as PM's source of truth.
+L00003559	- Do not hardcode `opencode-go`, `minimax-m3`, or `mimo-v2.5-free` as PM defaults without an explicit provider-routing
+L00003560	  decision.
+L00003561	- Do not carry over OpenCode-specific prompt injection unchanged.
+L00003562	- Do not make OpenCode the owner of PM media tools.
+L00003563	- Do not use OpenCode provider capability reporting as a substitute for PM-native media capability records.
+L00003564	- Do not introduce a provider-specific dependency where a PM-native tool/capability can serve all provider routes.
+L00003565	owner_hints:
+L00003566	- Plans/Media_Generation_and_Capabilities.md
+L00003567	- Plans/Provider_OpenCode.md
+L00003568	- Plans/Tools.md
+L00003569	- Plans/Prompt_Pipeline.md
+L00003570	- Plans/Models_System.md
+L00003571	- Plans/MCP_Integration.md
+L00003572	compatibility_only_notes:
+L00003573	- Concept/source-lineage references are preserved for routing and audit only; they do not make external plugins
+L00003574	  or PMConcept.html canonical implementation source.
+L00003575	```
+L00003576	
+L00003577	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00003578	
+L00003579	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00003580	
+
+<<< CONTEXT_AFTER canonical_document_lines=3581-3592 >>>
+L00003581	### PO-050 - opencode_v2_delta
+L00003582	
+L00003583	```yaml
+L00003584	plan_unit_id: PO-050
+L00003585	unit_type: requirement
+L00003586	status: accepted
+L00003587	owner_doc: Plans/Provider_OpenCode.md
+L00003588	canonical_text: >-
+L00003589	  opencode_v2_delta (P0) is compiled as canonical Puppet Master intent for opencode_v2_delta: Add OPEN-CODE-V2-DELTA-MATRIX The preserved PM gap/delta is: Older OpenCode limitations may remain treated as hard assumptions without v2 review The observed external-repo signal remains source-lineage evidence: OpenCode beta/specs/v2 config/provider/session/tools/API are major redesign
+L00003590	gui_related: false
+L00003591	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00003592	depends_on:

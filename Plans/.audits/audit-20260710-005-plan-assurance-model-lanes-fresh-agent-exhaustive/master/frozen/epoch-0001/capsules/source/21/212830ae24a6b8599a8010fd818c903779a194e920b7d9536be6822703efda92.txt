@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE 14862-14873 >>>
+- "rodio-based audio playback"
+- "events.rs"
+- "Event-to-sound mapping"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "F3-187 owns user-facing sound effects accessibility behavior."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 14874-15260 >>>
+### F3-212 - Catalog And Sync Module Layout
+
+```yaml
+plan_unit_id: F3-212
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Catalog and sync modules live under `src/catalog/` and `src/sync/`, covering catalog index
+  fetch/cache, one-click install logic, bundle export, bundle import, and conflict resolution.
+gui_related: false
+gui_classification_reason: >-
+  This unit is catalog and sync backend module organization, not itself a visual surface
+  contract.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: catalog_and_sync_module_layout
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+preserved_exact_tokens:
+- "catalog/"
+- "index.rs"
+- "Catalog index fetch/cache"
+- "installer.rs"
+- "One-click install logic"
+- "sync/"
+- "exporter.rs"
+- "Bundle export"
+- "importer.rs"
+- "Bundle import + conflict resolution"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-213 - Detection And Hot Reload Module Layout
+
+```yaml
+plan_unit_id: F3-213
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Detection and hot-reload modules live under `src/detect/` and `src/hotreload/`, covering
+  project root scanning for marker files, notify-based file watching, and build command
+  execution.
+gui_related: false
+gui_classification_reason: >-
+  This unit is detection and hot-reload backend module organization, not itself a visual
+  surface contract.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: detection_and_hot_reload_module_layout
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+preserved_exact_tokens:
+- "detect/"
+- "scanner.rs"
+- "Project root scanning for marker files"
+- "hotreload/"
+- "watcher.rs"
+- "notify-based file watcher"
+- "builder.rs"
+- "Build command execution"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-214 - Slint Conditional View Switching
+
+```yaml
+plan_unit_id: F3-214
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Slint page switching uses conditional `if` blocks keyed by `root.current-page` so hidden
+  views have zero runtime cost and widget trees are destroyed and recreated with the
+  condition.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible lazy page rendering in Slint.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: slint_conditional_view_switching
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0142"
+preserved_exact_tokens:
+- "conditional `if` blocks"
+- "root.current-page"
+- "DashboardView"
+- "ProjectsView"
+- "SettingsView"
+- "Hidden views have zero runtime cost"
+- "Widget trees are destroyed"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-215 - Standard Virtualized List Models
+
+```yaml
+plan_unit_id: F3-215
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Chat messages, file trees, log outputs, evidence lists, and other long GUI lists use Slint
+  `ListView` with `VecModel`.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible long-list rendering behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: standard_virtualized_list_models
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0143"
+preserved_exact_tokens:
+- "Chat messages"
+- "file trees"
+- "log outputs"
+- "evidence lists"
+- "ListView"
+- "VecModel"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-216 - Large Dataset And Terminal List Boundary
+
+```yaml
+plan_unit_id: F3-216
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Extremely large datasets use a custom `Model` trait backed by a ring buffer; live terminal
+  rendering is excluded from the normal list rule and follows the Section 15 screen/buffer,
+  diff-painting, off-UI-thread PTY/buffer architecture, while only bounded terminal transcript
+  or plain-log projections use `VecModel`/`ListView`.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains GUI list virtualization and live terminal rendering boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: large_dataset_and_terminal_list_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0143"
+preserved_exact_tokens:
+- "100k+ log lines"
+- "custom `Model` trait"
+- "ring buffer"
+- "Live terminal rendering is excluded"
+- "Section 15 screen/buffer"
+- "diff-based painting"
+- "off-UI-thread PTY/buffer"
+- "bounded terminal transcript"
+- "plain-log projections"
+negative_constraints:
+- "Live terminal rendering must not be implemented as a normal `VecModel`/`ListView` list."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-217 - Shell Layout And Editor Persistence Keys
+
+```yaml
+plan_unit_id: F3-217
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  GUI shell persistence includes `layout:v1`, `widget_layout:v1:dashboard`,
+  `activity_bar_order:v1`, `theme:v1`, `editor_state:v1:{project_id}`,
+  `filetree_state:v1:{project_id}`, `search_panel_state.v1:{project_id}`,
+  `project_state:v1:{project_id}`, `gha_panel_state.v1:{project_id}`, and
+  `artifact_panel_state.v1:{project_id}` with their debounce/write frequencies and owner
+  ContractRefs.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI shell, layout, editor, search, project, GitHub Actions, and artifact
+  persistence keys.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: shell_layout_and_editor_persistence_keys
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+preserved_exact_tokens:
+- "layout:v1"
+- "widget_layout:v1:dashboard"
+- "activity_bar_order:v1"
+- "theme:v1"
+- "editor_state:v1:{project_id}"
+- "filetree_state:v1:{project_id}"
+- "search_panel_state.v1:{project_id}"
+- "project_state:v1:{project_id}"
+- "gha_panel_state.v1:{project_id}"
+- "artifact_panel_state.v1:{project_id}"
+- "ContractName:Plans/storage-plan.md"
+- "ContractName:Plans/FileManager.md"
+- "ContractName:Plans/LSPSupport.md"
+negative_constraints:
+- "`layout:v1` is not terminal topology or terminal session identity."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Project state is a lightweight shell/UX projection cache, not a canonical state store."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-218 - Chat Settings Review Persistence Keys
+
+```yaml
+plan_unit_id: F3-218
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Chat, settings, and review persistence includes `settings:v1`, `config:v1`, `chat_state:v1`,
+  `wizard_state:v1:{project_id}`, document pane/checkpoint records, review finding/approval
+  records, debug investigation records, bundle/note records, slash command keys, and
+  `projects:v1`.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI chat, settings, wizard, document, review, bundle, note, command, and
+  project persistence keys.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: chat_settings_review_persistence_keys
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+preserved_exact_tokens:
+- "settings:v1"
+- "config:v1"
+- "chat_state:v1"
+- "wizard_state:v1:{project_id}"
+- "document_pane_state:v1:{project_id}:{page_context}"
+- "document_checkpoints:v1:{project_id}"
+- "review_findings_summary:v1:{project_id}:{run_id}"
+- "review_approval_gate:v1:{project_id}:{run_id}"
+- "debug_investigation_record.v1:{project_id}:{investigation_id}"
+- "bundle_registry.v1:{project_id}:{bundle_id}"
+- "note_record.v1:{bundle_id}:{note_id}"
+- "slash_commands:v1"
+- "projects:v1"
+- "ContractName:Plans/assistant-chat-design.md"
+- "ContractName:Plans/Prompt_Pipeline.md"
+negative_constraints:
+- "`config:v1` is subordinate to `settings:v1`, not a competing global config key."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 15261-15272 >>>
+### F3-219 - Preview Browser LSP Account Remote Keys
+
+```yaml
+plan_unit_id: F3-219
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI
+  persistence keys include preview state/source artifact, browser session/profile state,
+  unsaved buffer, search query, LSP session/diagnostics, provider account/server profile,
+  pressure/switch records, MCP/skill records, `web_operation_payload`, terminal layout/session

@@ -1,0 +1,413 @@
+<<< CONTEXT_BEFORE canonical_document_lines=299-310 >>>
+L00000299	Concern-specific future record/action docs are not instruction-rule sources yet. `Plans/Orchestrator_Page.md` and `/Orchestrator_Page.md` remain `/action` consumers for concern and attention workflows, while this doc only carries the context needed for scoped instructions, route-aware recovery, and project-level handoff.
+L00000300	
+L00000301	Historical `/current` run switching must not change layout identity. Layout scope remains project-level rather than run-level, so route context may focus a historical or current run without rewriting the instruction/rules target identity.
+L00000302	
+L00000303	## Owner / Consumer Map
+L00000304	
+L00000305	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/agent-rules-context.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000306	
+L00000307	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000308	
+L00000309	## PlanUnits
+L00000310	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=311-694 >>>
+L00000311	### ARC-001 - Application- and Project-Level Agent Rules Retired Source-Preserving Bridge
+L00000312	
+L00000313	```yaml
+L00000314	plan_unit_id: ARC-001
+L00000315	unit_type: compatibility_disposition
+L00000316	status: accepted
+L00000317	owner_doc: Plans/agent-rules-context.md
+L00000318	canonical_text: ARC-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 114 because agent-rules-context-S0001
+L00000319	  through S0046 are covered by ARC-002 through ARC-035 or explicit structural, retired, and migration-coverage dispositions.
+L00000320	  ARC-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+L00000321	gui_related: false
+L00000322	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried
+L00000323	  by fine-grained agent-rules-context PlanUnits and coverage_map proof.
+L00000324	split_recommended: false
+L00000325	depends_on:
+L00000326	- ARC-002
+L00000327	- ARC-003
+L00000328	- ARC-004
+L00000329	- ARC-005
+L00000330	- ARC-006
+L00000331	- ARC-007
+L00000332	- ARC-008
+L00000333	- ARC-009
+L00000334	- ARC-010
+L00000335	- ARC-011
+L00000336	- ARC-012
+L00000337	- ARC-013
+L00000338	- ARC-014
+L00000339	- ARC-015
+L00000340	- ARC-016
+L00000341	- ARC-017
+L00000342	- ARC-018
+L00000343	- ARC-019
+L00000344	- ARC-020
+L00000345	- ARC-021
+L00000346	- ARC-022
+L00000347	- ARC-023
+L00000348	- ARC-024
+L00000349	- ARC-025
+L00000350	- ARC-026
+L00000351	- ARC-027
+L00000352	- ARC-028
+L00000353	- ARC-029
+L00000354	- ARC-030
+L00000355	- ARC-031
+L00000356	- ARC-032
+L00000357	- ARC-033
+L00000358	- ARC-034
+L00000359	- ARC-035
+L00000360	unblocks: []
+L00000361	acceptance_criteria:
+L00000362	- ARC-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 114.
+L00000363	- agent-rules-context-S0001 through S0046 coverage is owned by ARC-002 through ARC-035 or explicit structural, retired, and
+L00000364	  migration-coverage dispositions.
+L00000365	- ARC-001 remains only to preserve migration lineage for the former source-preserving bridge.
+L00000366	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000367	validation_surfaces:
+L00000368	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000369	- python3 scripts/pm-plan-index.py validate
+L00000370	risk_class: migration_lineage
+L00000371	reasoning_tier: standard
+L00000372	context_scope: residual_plan_standardization
+L00000373	implementation_surfaces:
+L00000374	- Plans/agent-rules-context.md
+L00000375	node_compile_hint:
+L00000376	  mode: source_preserving_bridge_retired
+L00000377	  create_worknodes: false
+L00000378	source_lineage:
+L00000379	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0045
+L00000380	preserved_exact_tokens:
+L00000381	- ARC-001
+L00000382	- Application- and Project-Level Agent Rules -- Plan Source-Preserving PlanUnit
+L00000383	- source_preserving_planunit
+L00000384	- source_preserving_bridge_retired
+L00000385	- PlanUnits
+L00000386	- Migration Coverage
+L00000387	- Original hash
+L00000388	negative_constraints:
+L00000389	- ARC-001 must not re-own agent-rules-context-S0001 through S0046 after Phase 2B batch 114.
+L00000390	- ARC-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00000391	- Retired bridge lineage must not be treated as implementation-ready product coverage.
+L00000392	- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000393	compatibility_only_notes:
+L00000394	- ARC-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00000395	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00000396	stale_retired_dispositions:
+L00000397	- The former ARC-001 residual source-preserving bridge is retired by Phase 2B batch 114.
+L00000398	owner_boundary_notes:
+L00000399	- Fine-grained PlanUnits ARC-002 through ARC-035 carry product/source coverage for agent-rules-context-S0001 through S0043;
+L00000400	  S0044 and S0046 are structural/metadata dispositions.
+L00000401	owner_hints:
+L00000402	- Plans/agent-rules-context.md
+L00000403	preserved_contractrefs: []
+L00000404	```
+L00000405	
+L00000406	### ARC-002 - Compliance And Plan Document Boundary
+L00000407	
+L00000408	```yaml
+L00000409	plan_unit_id: ARC-002
+L00000410	unit_type: requirement
+L00000411	status: accepted
+L00000412	owner_doc: Plans/agent-rules-context.md
+L00000413	canonical_text: The document preserves the Application- and Project-Level Agent Rules plan title, compliance with DRY and
+L00000414	  Contracts references, Puppet Master naming, deterministic defaults, PLAN DOCUMENT ONLY status, no code changes, two durable
+L00000415	  rule scopes, and a single rules pipeline consumed by orchestrator, interview, and Assistant.
+L00000416	gui_related: false
+L00000417	gui_classification_reason: This unit covers document governance and rules-pipeline scope, not GUI behavior.
+L00000418	split_recommended: false
+L00000419	depends_on: []
+L00000420	unblocks: []
+L00000421	acceptance_criteria:
+L00000422	- Covered source spans remain losslessly available for exact-text audit.
+L00000423	- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00000424	  bridge.
+L00000425	- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+L00000426	  own contracts.
+L00000427	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000428	validation_surfaces:
+L00000429	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000430	- python3 scripts/pm-plan-index.py validate
+L00000431	risk_class: compliance_and_plan_document_boundary
+L00000432	reasoning_tier: standard
+L00000433	context_scope: agent_rules_context_standardization
+L00000434	implementation_surfaces:
+L00000435	- Plans/agent-rules-context.md
+L00000436	node_compile_hint:
+L00000437	  mode: compliance_and_plan_document_boundary
+L00000438	  create_worknodes: false
+L00000439	source_lineage:
+L00000440	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0001
+L00000441	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0002
+L00000442	preserved_exact_tokens:
+L00000443	- Application- and Project-Level Agent Rules -- Plan
+L00000444	- PLAN DOCUMENT ONLY
+L00000445	- No code changes
+L00000446	- Puppet Master
+L00000447	- two durable rule scopes
+L00000448	- Application (Puppet Master) level
+L00000449	- Project level
+L00000450	- single rules pipeline
+L00000451	- orchestrator
+L00000452	- interview
+L00000453	- Assistant
+L00000454	negative_constraints: []
+L00000455	compatibility_only_notes: []
+L00000456	stale_retired_dispositions: []
+L00000457	owner_boundary_notes: []
+L00000458	owner_hints:
+L00000459	- Plans/agent-rules-context.md
+L00000460	preserved_contractrefs:
+L00000461	- 'ContractRef: Primitive:DRYRules, Gate:GATE-004, Gate:GATE-009, Invariant:INV-010'
+L00000462	```
+L00000463	
+L00000464	### ARC-003 - Rewrite Rules Provenance
+L00000465	
+L00000466	```yaml
+L00000467	plan_unit_id: ARC-003
+L00000468	unit_type: requirement
+L00000469	status: accepted
+L00000470	owner_doc: Plans/agent-rules-context.md
+L00000471	canonical_text: Rewrite alignment preserves that providers, tool policy, and the agent loop MUST consume the same single rules
+L00000472	  pipeline output, no API keys now means no API keys except Gemini, and OpenCode-style determinism requires reproducible rules
+L00000473	  injection with rules_application_sha256 and rules_project_sha256 in the run.started payload.
+L00000474	gui_related: false
+L00000475	gui_classification_reason: This unit covers rewrite, provenance, and event metadata rules, not GUI behavior.
+L00000476	split_recommended: false
+L00000477	depends_on: []
+L00000478	unblocks: []
+L00000479	acceptance_criteria:
+L00000480	- Covered source spans remain losslessly available for exact-text audit.
+L00000481	- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00000482	  bridge.
+L00000483	- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+L00000484	  own contracts.
+L00000485	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000486	validation_surfaces:
+L00000487	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000488	- python3 scripts/pm-plan-index.py validate
+L00000489	risk_class: rewrite_rules_provenance
+L00000490	reasoning_tier: standard
+L00000491	context_scope: agent_rules_context_standardization
+L00000492	implementation_surfaces:
+L00000493	- Plans/agent-rules-context.md
+L00000494	node_compile_hint:
+L00000495	  mode: rewrite_rules_provenance
+L00000496	  create_worknodes: false
+L00000497	source_lineage:
+L00000498	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0003
+L00000499	preserved_exact_tokens:
+L00000500	- Rewrite alignment (2026-02-21)
+L00000501	- single rules pipeline
+L00000502	- No API keys
+L00000503	- no API keys **except Gemini**
+L00000504	- subscription-backed API key allowed
+L00000505	- OpenCode-style determinism
+L00000506	- rules_application_sha256
+L00000507	- rules_project_sha256
+L00000508	- run.started
+L00000509	- seglog ledger
+L00000510	negative_constraints: []
+L00000511	compatibility_only_notes: []
+L00000512	stale_retired_dispositions: []
+L00000513	owner_boundary_notes: []
+L00000514	owner_hints:
+L00000515	- Plans/agent-rules-context.md
+L00000516	preserved_contractrefs:
+L00000517	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/Crosswalk.md'
+L00000518	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, Invariant:INV-002'
+L00000519	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord'
+L00000520	```
+L00000521	
+L00000522	### ARC-004 - Two Durable Rule Scopes
+L00000523	
+L00000524	```yaml
+L00000525	plan_unit_id: ARC-004
+L00000526	unit_type: requirement
+L00000527	status: accepted
+L00000528	owner_doc: Plans/agent-rules-context.md
+L00000529	canonical_text: 'Every Puppet Master agent invocation must receive Application-level rules and Project-level rules through
+L00000530	  the DRY single rules pipeline: application rules apply to every agent everywhere and project rules apply to every agent
+L00000531	  working on that project.'
+L00000532	gui_related: false
+L00000533	gui_classification_reason: This unit covers durable rules scope and injection policy, not GUI behavior.
+L00000534	split_recommended: false
+L00000535	depends_on: []
+L00000536	unblocks: []
+L00000537	acceptance_criteria:
+L00000538	- Covered source spans remain losslessly available for exact-text audit.
+L00000539	- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00000540	  bridge.
+L00000541	- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+L00000542	  own contracts.
+L00000543	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000544	validation_surfaces:
+L00000545	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000546	- python3 scripts/pm-plan-index.py validate
+L00000547	risk_class: two_durable_rule_scopes
+L00000548	reasoning_tier: standard
+L00000549	context_scope: agent_rules_context_standardization
+L00000550	implementation_surfaces:
+L00000551	- Plans/agent-rules-context.md
+L00000552	node_compile_hint:
+L00000553	  mode: two_durable_rule_scopes
+L00000554	  create_worknodes: false
+L00000555	source_lineage:
+L00000556	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0004
+L00000557	preserved_exact_tokens:
+L00000558	- Executive Summary
+L00000559	- Application-level rules (Puppet Master)
+L00000560	- Project-level rules
+L00000561	- Always use Context7 MCP.
+L00000562	- Always use DRY Method.
+L00000563	- every agent, everywhere
+L00000564	- every agent that works on that project
+L00000565	- single rules pipeline
+L00000566	- DRY
+L00000567	negative_constraints: []
+L00000568	compatibility_only_notes: []
+L00000569	stale_retired_dispositions: []
+L00000570	owner_boundary_notes: []
+L00000571	owner_hints:
+L00000572	- Plans/agent-rules-context.md
+L00000573	preserved_contractrefs:
+L00000574	- 'ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§4'
+L00000575	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+L00000576	```
+L00000577	
+L00000578	### ARC-005 - Cross-Doc Rules Ownership
+L00000579	
+L00000580	```yaml
+L00000581	plan_unit_id: ARC-005
+L00000582	unit_type: requirement
+L00000583	status: accepted
+L00000584	owner_doc: Plans/agent-rules-context.md
+L00000585	canonical_text: Relationship to Other Plans preserves that orchestrator, interview, and Assistant consume the shared rules
+L00000586	  block without duplicating rule content; AGENTS.md may seed default application rules while long-term application rules remain
+L00000587	  configurable, and Prompt_Pipeline plus Provider_Stream_Mapping_External_Reference_A2A are consumed rather than re-owned.
+L00000588	gui_related: false
+L00000589	gui_classification_reason: This unit records cross-doc ownership and consumer boundaries, not GUI behavior.
+L00000590	split_recommended: false
+L00000591	depends_on: []
+L00000592	unblocks: []
+L00000593	acceptance_criteria:
+L00000594	- Covered source spans remain losslessly available for exact-text audit.
+L00000595	- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00000596	  bridge.
+L00000597	- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+L00000598	  own contracts.
+L00000599	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000600	validation_surfaces:
+L00000601	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000602	- python3 scripts/pm-plan-index.py validate
+L00000603	risk_class: cross_doc_rules_ownership
+L00000604	reasoning_tier: standard
+L00000605	context_scope: agent_rules_context_standardization
+L00000606	implementation_surfaces:
+L00000607	- Plans/agent-rules-context.md
+L00000608	node_compile_hint:
+L00000609	  mode: cross_doc_rules_ownership
+L00000610	  create_worknodes: false
+L00000611	source_lineage:
+L00000612	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0005
+L00000613	preserved_exact_tokens:
+L00000614	- Relationship to Other Plans
+L00000615	- two-tier-rules-model
+L00000616	- Plans/orchestrator-subagent-integration.md
+L00000617	- Plans/interview-subagent-integration.md
+L00000618	- Plans/assistant-chat-design.md
+L00000619	- AGENTS.md
+L00000620	- Always use Context7 MCP.
+L00000621	- configurable
+L00000622	- Plans/Prompt_Pipeline.md
+L00000623	- Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00000624	- does not re-own
+L00000625	negative_constraints: []
+L00000626	compatibility_only_notes: []
+L00000627	stale_retired_dispositions: []
+L00000628	owner_boundary_notes:
+L00000629	- Rules-context assembly consumes Prompt Pipeline and external A2A mapping references; this doc does not re-own either contract.
+L00000630	owner_hints:
+L00000631	- Plans/agent-rules-context.md
+L00000632	preserved_contractrefs:
+L00000633	- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md,
+L00000634	  ContractName:Plans/assistant-chat-design.md'
+L00000635	```
+L00000636	
+L00000637	### ARC-006 - Application Rules Storage
+L00000638	
+L00000639	```yaml
+L00000640	plan_unit_id: ARC-006
+L00000641	unit_type: requirement
+L00000642	status: accepted
+L00000643	owner_doc: Plans/agent-rules-context.md
+L00000644	canonical_text: Application-Level Rules apply to every agent run under Puppet Master, regardless of Assistant, Interview,
+L00000645	  Orchestrator, or delegated child run; they serve global policies, store in redb settings key app.agent_rules.application_markdown,
+L00000646	  and bootstrap from the Puppet Master repo AGENTS.md when empty.
+L00000647	gui_related: false
+L00000648	gui_classification_reason: This unit covers storage and scope for application rules, not GUI behavior.
+L00000649	split_recommended: false
+L00000650	depends_on: []
+L00000651	unblocks: []
+L00000652	acceptance_criteria:
+L00000653	- Covered source spans remain losslessly available for exact-text audit.
+L00000654	- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00000655	  bridge.
+L00000656	- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+L00000657	  own contracts.
+L00000658	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000659	validation_surfaces:
+L00000660	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000661	- python3 scripts/pm-plan-index.py validate
+L00000662	risk_class: application_rules_storage
+L00000663	reasoning_tier: standard
+L00000664	context_scope: agent_rules_context_standardization
+L00000665	implementation_surfaces:
+L00000666	- Plans/agent-rules-context.md
+L00000667	node_compile_hint:
+L00000668	  mode: application_rules_storage
+L00000669	  create_worknodes: false
+L00000670	source_lineage:
+L00000671	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0006
+L00000672	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0007
+L00000673	preserved_exact_tokens:
+L00000674	- Rule Scope Model
+L00000675	- Application-Level Rules (Puppet Master)
+L00000676	- every agent run under Puppet Master
+L00000677	- Assistant
+L00000678	- Interview
+L00000679	- Orchestrator
+L00000680	- delegated child run
+L00000681	- global policies
+L00000682	- redb settings key
+L00000683	- app.agent_rules.application_markdown
+L00000684	- Bootstrap
+L00000685	- AGENTS.md
+L00000686	negative_constraints: []
+L00000687	compatibility_only_notes: []
+L00000688	stale_retired_dispositions: []
+L00000689	owner_boundary_notes: []
+L00000690	owner_hints:
+L00000691	- Plans/agent-rules-context.md
+L00000692	preserved_contractrefs: []
+L00000693	```
+L00000694	
+
+<<< CONTEXT_AFTER canonical_document_lines=695-706 >>>
+L00000695	### ARC-007 - Project Rules Storage
+L00000696	
+L00000697	```yaml
+L00000698	plan_unit_id: ARC-007
+L00000699	unit_type: requirement
+L00000700	status: accepted
+L00000701	owner_doc: Plans/agent-rules-context.md
+L00000702	canonical_text: Project-Level Rules apply to every agent invocation against a selected project/workspace, carry project-specific
+L00000703	  conventions, tooling expectations, and non-obvious constraints, and store at <project_root>/.puppet-master/project-rules.md.
+L00000704	gui_related: false
+L00000705	gui_classification_reason: This unit covers storage and scope for project rules, not GUI behavior.
+L00000706	split_recommended: false

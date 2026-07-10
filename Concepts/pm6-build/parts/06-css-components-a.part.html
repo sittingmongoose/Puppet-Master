@@ -2,9 +2,9 @@
     /* (W3 reaper: dead ac-layout/ac-sidebar/ac-content/ac-inspector
        and provider-row family rules removed — zero markup/JS references.
        ac-nav-item + ac-section kept: part 25 JS still wires them.) */
-    .ac-sidebar .ac-nav-item { display: block; padding: 8px 16px; font-size: 12px; color: var(--text-secondary); cursor: pointer; text-decoration: none; transition: all 0.2s ease; border-left: 3px solid transparent; }
+    .ac-sidebar .ac-nav-item { display: block; padding: 8px 16px; font-size: 12px; color: var(--text-secondary); cursor: pointer; text-decoration: none; transition: all 0.2s ease; border-radius: var(--radius-sm); }
     .ac-sidebar .ac-nav-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
-    .ac-sidebar .ac-nav-item.active { color: var(--accent-blue); border-left-color: var(--accent-blue); background: rgba(var(--accent-blue-rgb, 100,149,237), 0.08); font-weight: 600; }
+    .ac-sidebar .ac-nav-item.active { color: var(--accent-primary); background: var(--accent-soft); font-weight: 600; }
     .ac-section { display: none; animation: acFadeIn 0.25s ease; }
     .ac-section.active { display: block; }
     @keyframes acFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -201,11 +201,8 @@
     .message-block {
       margin-top: var(--sm);
       font-size: 11px;
-      border-left: 2px solid var(--accent-lime);
       padding-left: var(--sm);
     }
-    [data-theme="basic-light"] .message-block,
-    [data-theme="basic-dark"] .message-block { border-left-color: var(--accent-blue); }
     .message-block.collapsed .block-body { display: none; }
     .message-block .block-header {
       cursor: pointer;
@@ -294,11 +291,11 @@
       color: var(--accent-blue) !important;
       border-radius: 3px;
     }
-    [data-theme="glass-dark"] .file-tree .file.file-active {
-      background: rgba(45, 212, 191, 0.10);
-    }
-    [data-theme="glass-light"] .file-tree .file.file-active {
-      background: rgba(8, 145, 178, 0.10);
+    [data-theme^="glass"] .file-tree .file.file-active {
+      background: var(--pm6-glass-step-3);
+      color: var(--text-primary) !important;
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      border-radius: 9px;
     }
     .files-status {
       padding: var(--sm) var(--md);
@@ -467,7 +464,6 @@
       padding: 1px 3px 2px 3px;
       border-radius: 3px;
       border: 1px solid color-mix(in srgb, var(--border-light) 70%, transparent);
-      border-left: 2px solid var(--sub-accent, var(--text-muted));
       border-bottom: 1px solid transparent;
       background: color-mix(in srgb, var(--terminal-bg, var(--surface)) 92%, transparent);
       font-family: ui-monospace, 'Consolas', 'Monaco', monospace;
@@ -500,10 +496,8 @@
       color: var(--text-primary);
       transform: translateY(-1px);
       border-width: 1px;
-      border-left-width: 5px;
       --pm-tab-hi: var(--wg-accent, var(--sub-accent, var(--accent-lime)));
       border-color: color-mix(in srgb, var(--pm-tab-hi) 58%, var(--border-light));
-      border-left-color: var(--pm-tab-hi);
       border-bottom: 2px solid var(--pm-tab-hi);
       background: linear-gradient(
         100deg,
@@ -634,67 +628,46 @@
     .pm-term-ctx-ic:hover { border-color: var(--accent-lime); color: var(--accent-lime); }
     [data-theme^="glass"] .pm-term-wg-tab {
       font-family: var(--display-font, 'Inter', sans-serif);
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
       box-shadow: inset 0 0 0 1px var(--glass-hairline);
-      border-color: color-mix(in srgb, var(--wg-accent, var(--text-muted)) 30%, rgba(255,255,255,0.18));
+      border-color: color-mix(in srgb, var(--wg-accent, var(--text-muted)) 30%, transparent);
     }
+    /* active worktree tab = lighter frosted pill + quiet accent border */
     [data-theme^="glass"] .pm-term-wg-tab.pm-term-tab-active {
-      background: color-mix(in srgb, var(--surface-elevated) 42%, var(--wg-accent, var(--accent-blue)) 38%);
-      outline: 2px solid var(--wg-accent, var(--accent-blue));
-      outline-offset: 2px;
-      border-color: color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 60%, rgba(255,255,255,0.25));
+      background: var(--pm6-glass-step-3);
+      outline: none;
+      border-color: color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 45%, transparent);
       box-shadow:
-        0 0 0 3px color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 40%, transparent),
-        0 0 0 1px var(--wg-accent, var(--accent-blue)),
-        0 0 28px color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 50%, transparent),
-        0 0 52px color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 22%, transparent),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+        inset 0 1px 0 var(--glass-edge),
+        0 4px 12px var(--pm6-glass-pane-shadow2);
     }
     [data-theme^="glass"] .pm-term-subtab {
       font-family: var(--display-font, 'Inter', sans-serif);
       border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-left-width: 1px;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      border: 1px solid var(--glass-hairline);
+      background: var(--pm6-glass-step-1);
     }
     [data-theme="glass-light"] .pm-term-subtab {
-      color: #2a4a5a;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
-      border-color: rgba(8, 145, 178, 0.10);
-      border-left-width: 1px;
+      color: var(--text-secondary);
+      background: var(--pm6-glass-step-1);
+      border-color: var(--glass-hairline);
       border-radius: 10px;
     }
     [data-theme="glass-light"] .pm-term-subtab span,
-    [data-theme="glass-light"] .pm-term-subtab svg { color: #3a5a6a; }
+    [data-theme="glass-light"] .pm-term-subtab svg { color: var(--text-secondary); }
     [data-theme="glass-light"] .pm-term-subtab.pm-term-subtab-focused {
-      color: #044050;
-      border-color: rgba(8, 145, 178, 0.30);
-      border-left-width: 1px;
-      background: rgba(8, 145, 178, 0.18);
-      box-shadow:
-        inset 0 0 8px rgba(8, 145, 178, 0.12),
-        0 0 8px rgba(8, 145, 178, 0.08),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.40);
+      color: var(--text-primary);
+      border-color: var(--glass-edge);
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 0 var(--glass-edge);
     }
     [data-theme^="glass"] .pm-term-subtab.pm-term-subtab-focused {
       --pm-tab-hi: var(--wg-accent, var(--sub-accent, var(--accent-blue)));
       border-radius: 10px;
-      border: 1px solid color-mix(in srgb, var(--pm-tab-hi) 40%, rgba(255, 255, 255, 0.10));
-      border-left-width: 1px;
+      border: 1px solid color-mix(in srgb, var(--pm-tab-hi) 35%, transparent);
       border-bottom: 2px solid var(--pm-tab-hi);
-      background: color-mix(in srgb, var(--pm-tab-hi) 18%, rgba(255, 255, 255, 0.06));
-      box-shadow:
-        inset 0 0 10px color-mix(in srgb, var(--pm-tab-hi) 22%, transparent),
-        0 0 10px color-mix(in srgb, var(--pm-tab-hi) 12%, transparent),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-    }
-    [data-theme="glass-light"] .pm-term-wg-tab.pm-term-tab-active {
-      background: color-mix(in srgb, var(--surface-elevated) 44%, var(--wg-accent, var(--accent-blue)) 42%);
-      outline: 2px solid var(--wg-accent, var(--accent-blue));
-      box-shadow:
-        0 0 0 3px color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 35%, transparent),
-        0 0 20px color-mix(in srgb, var(--wg-accent, var(--accent-blue)) 45%, transparent),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 0 var(--glass-edge);
     }
     [data-theme="basic-light"] .pm-term-wg-tab {
       border-color: color-mix(in srgb, var(--wg-accent, var(--text-muted)) 40%, var(--border));
@@ -713,13 +686,11 @@
     [data-theme^="basic"] .pm-term-subtab {
       border-radius: 10px;
       border: 1px solid var(--border-light);
-      border-left-width: 1px;
       padding: 1px 4px 1px 3px;
       background: color-mix(in srgb, var(--terminal-bg, var(--surface)) 85%, transparent);
     }
     [data-theme^="basic"] .pm-term-subtab.pm-term-subtab-focused {
       border-radius: 10px;
-      border-left-width: 1px;
       --pm-tab-hi: var(--wg-accent, var(--sub-accent, var(--accent-blue)));
       border-color: var(--pm-tab-hi);
       border-bottom: 2px solid var(--pm-tab-hi);
@@ -775,7 +746,6 @@
     [data-theme="retro-dark"] .pm-term-subtab.pm-term-subtab-focused {
       --pm-tab-hi: var(--wg-accent, var(--sub-accent, var(--accent-lime)));
       border-color: color-mix(in srgb, var(--pm-tab-hi) 50%, var(--border));
-      border-left-color: var(--pm-tab-hi);
       border-bottom-color: var(--pm-tab-hi);
       background: linear-gradient(
         100deg,
@@ -813,7 +783,6 @@
       --pm-tab-hi: var(--wg-accent, var(--sub-accent, var(--accent-lime)));
       outline: none;
       border-color: var(--pm-tab-hi);
-      border-left-color: var(--pm-tab-hi);
       border-bottom-color: var(--pm-tab-hi);
       background: linear-gradient(
         100deg,
@@ -1002,21 +971,22 @@
       --terminal-fg-4: #90a4ae;
       --terminal-chrome: #12181f;
     }
+    /* terminal = near-opaque reading plate (violet family, slider-driven) */
     [data-theme="glass-dark"] {
-      --terminal-bg: rgba(5, 8, 14, 0.28);
-      --terminal-fg: #a5f3fc;
-      --terminal-fg-2: #f9a8d4;
-      --terminal-fg-3: #fdba74;
-      --terminal-fg-4: #94a3b8;
-      --terminal-chrome: rgba(12, 10, 30, 0.50);
+      --terminal-bg: var(--pm6-glass-plate);
+      --terminal-fg: #CFC5E6;
+      --terminal-fg-2: #F2A3D2;
+      --terminal-fg-3: #F3B266;
+      --terminal-fg-4: #9A8FB8;
+      --terminal-chrome: rgba(16, 10, 32, calc(var(--glass-alpha) * .85));
     }
     [data-theme="glass-light"] {
-      --terminal-bg: rgba(190, 218, 235, 0.30);
-      --terminal-fg: #1a2a3a;
-      --terminal-fg-2: #9b1b60;
-      --terminal-fg-3: #b45309;
-      --terminal-fg-4: #4b5563;
-      --terminal-chrome: rgba(170, 205, 225, 0.50);
+      --terminal-bg: var(--pm6-glass-plate);
+      --terminal-fg: #4A4458;
+      --terminal-fg-2: #B0508A;
+      --terminal-fg-3: #B26A2A;
+      --terminal-fg-4: #6C6480;
+      --terminal-chrome: rgba(255, 255, 255, calc(var(--glass-alpha) * .95));
     }
 
     /* (W3 reaper: dead .pm-tab-model-strip / .pm-route-chip rules removed —
@@ -1075,8 +1045,9 @@
       display: inline-flex;
       align-items: center;
       gap: 1px;
-      padding: 0px 2px;
-      font-size: 8px;
+      padding: 0 var(--sm);
+      font-size: var(--fs-2xs);
+      height: 22px;
       cursor: pointer;
       color: var(--text-secondary);
       border: none;
@@ -1183,7 +1154,7 @@
       border-bottom: 1px solid var(--border-light);
     }
     [data-theme^="glass"] .terminal-pane-toolbar {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
       box-shadow: inset 0 0 0 1px var(--glass-hairline);
     }
     .pm-identity-chip {
@@ -1233,15 +1204,13 @@
 
     /* (glass .terminal-pane blur demoted: terminal already gets a solid --terminal-bg fill from glass-a) */
     [data-theme^="glass"] .terminal-pane {
-      border: 1px solid color-mix(in srgb, var(--accent-blue) 25%, rgba(255,255,255,0.1));
-      box-shadow: inset 0 0 10px color-mix(in srgb, var(--accent-blue) 10%, transparent);
+      border: 1px solid var(--glass-hairline);
+      box-shadow: inset 0 1px 0 var(--glass-hairline);
     }
     [data-theme^="glass"] .terminal-pane.pm-pane-focused {
-      border-color: color-mix(in srgb, var(--accent-blue) 50%, rgba(255,255,255,0.2));
-      box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--accent-blue) 30%, transparent),
-        inset 0 0 18px color-mix(in srgb, var(--accent-blue) 22%, transparent),
-        inset 0 0 36px color-mix(in srgb, var(--accent-blue) 8%, transparent);
+      outline-color: color-mix(in srgb, var(--accent-blue) 60%, transparent);
+      border-color: color-mix(in srgb, var(--accent-blue) 45%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-blue) 25%, transparent);
     }
     [data-theme^="retro"] .terminal-workspace .terminal-pane-body {
       background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 3px);
@@ -1359,7 +1328,6 @@
       background: var(--surface);
     }
     .pm-blocked-banner {
-      border-left: 3px solid var(--accent-magenta);
       padding: var(--md);
       margin: var(--sm) 0;
       background: var(--surface-elevated);
@@ -1571,7 +1539,6 @@
       padding: var(--xs) var(--md) 0 calc(var(--md) + 8px);
       gap: 2px;
       border-bottom: var(--border-width) solid var(--border);
-      overflow: visible;
     }
     .editor-tabs .tab {
       padding: var(--xs) var(--md);
@@ -1609,12 +1576,12 @@
       border-radius: 12px !important;
     }
     [data-theme="glass-dark"] .dashboard-tabs .tab.active {
-      background: rgba(22, 20, 48, 0.45) !important;
-      border: 1px solid rgba(148, 163, 184, 0.15) !important;
+      background: var(--pm6-glass-step-3) !important;
+      border: 1px solid var(--glass-edge) !important;
     }
     [data-theme="glass-light"] .dashboard-tabs .tab.active {
-      background: rgba(190, 220, 240, 0.55) !important;
-      border: 1px solid rgba(8, 145, 178, 0.20) !important;
+      background: var(--pm6-glass-step-3) !important;
+      border: 1px solid var(--glass-edge) !important;
     }
 
     .editor-area {

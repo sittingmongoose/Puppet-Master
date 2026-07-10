@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7047-7058 >>>
+L00007047	negative_constraints:
+L00007048	- generated-workflow and generated required-secrets /configuration lists must not override current repo /worktree workflow YAML, hosted /variables/environments, or GitHub Actions > Current Branch context.
+L00007049	- Receipts never store secret values or reversible value-derived material.
+L00007050	compatibility_only_notes: []
+L00007051	stale_retired_dispositions: []
+L00007052	owner_boundary_notes: []
+L00007053	owner_hints:
+L00007054	- Plans/newtools.md
+L00007055	preserved_contractrefs:
+L00007056	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md'
+L00007057	```
+L00007058	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7059-7415 >>>
+L00007059	### N2-125 - Iced To Slint Automation Migration Boundary
+L00007060	
+L00007061	```yaml
+L00007062	plan_unit_id: N2-125
+L00007063	unit_type: requirement
+L00007064	status: accepted
+L00007065	owner_doc: Plans/newtools.md
+L00007066	canonical_text: The existing Iced automation implementation remains a reference pattern while rewrite deliverables target Slint runtime semantics. Migration preserves manifest/timeline/media evidence schema compatibility, introduces backend abstraction for Slint UI surfaces, supports both headless and visible modes, and preserves doctor/preflight checks for automation dependencies and media capture capability.
+L00007067	gui_related: true
+L00007068	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00007069	split_recommended: false
+L00007070	depends_on: []
+L00007071	unblocks: []
+L00007072	acceptance_criteria:
+L00007073	- Covered source spans remain losslessly available for exact-text audit.
+L00007074	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007075	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007076	validation_surfaces:
+L00007077	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007078	- python3 scripts/pm-plan-index.py validate
+L00007079	risk_class: iced_slint_automation_migration_boundary
+L00007080	reasoning_tier: standard
+L00007081	context_scope: newtools_standardization
+L00007082	implementation_surfaces:
+L00007083	- Plans/newtools.md
+L00007084	node_compile_hint:
+L00007085	  mode: iced_slint_automation_migration_boundary
+L00007086	  create_worknodes: false
+L00007087	source_lineage:
+L00007088	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0067
+L00007089	preserved_exact_tokens:
+L00007090	- Iced automation implementation
+L00007091	- reference pattern
+L00007092	- Slint runtime semantics
+L00007093	- manifest/timeline/media
+L00007094	- backend abstraction
+L00007095	- headless
+L00007096	- visible
+L00007097	- doctor/preflight
+L00007098	negative_constraints: []
+L00007099	compatibility_only_notes:
+L00007100	- Keep evidence schema compatibility (manifest/timeline/media) across automation backends.
+L00007101	stale_retired_dispositions: []
+L00007102	owner_boundary_notes: []
+L00007103	owner_hints:
+L00007104	- Plans/newtools.md
+L00007105	preserved_contractrefs:
+L00007106	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md#2, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:evidence.schema.json'
+L00007107	```
+L00007108	
+L00007109	### N2-126 - Core Preview Build Docker Actions Doctor Matrix
+L00007110	
+L00007111	```yaml
+L00007112	plan_unit_id: N2-126
+L00007113	unit_type: requirement
+L00007114	status: accepted
+L00007115	owner_doc: Plans/newtools.md
+L00007116	canonical_text: The Doctor/preflight matrix preserves deterministic readiness checks before Preview/Build/Docker/Actions flows execute, including doctor.preview.visual-runtime, doctor.mobile.ios-simulator, doctor.mobile.android-emulator, doctor.docker.engine, doctor.docker.compose, doctor.dockerhub.auth.capability, doctor.actions.workflow-ready, and doctor.evidence.media with their block, degrade, remediation, and fallback behaviors.
+L00007117	gui_related: true
+L00007118	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00007119	split_recommended: false
+L00007120	depends_on: []
+L00007121	unblocks: []
+L00007122	acceptance_criteria:
+L00007123	- Covered source spans remain losslessly available for exact-text audit.
+L00007124	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007125	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007126	validation_surfaces:
+L00007127	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007128	- python3 scripts/pm-plan-index.py validate
+L00007129	risk_class: core_preview_build_docker_actions_doctor_matrix
+L00007130	reasoning_tier: standard
+L00007131	context_scope: newtools_standardization
+L00007132	implementation_surfaces:
+L00007133	- Plans/newtools.md
+L00007134	node_compile_hint:
+L00007135	  mode: core_preview_build_docker_actions_doctor_matrix
+L00007136	  create_worknodes: false
+L00007137	source_lineage:
+L00007138	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0068
+L00007139	preserved_exact_tokens:
+L00007140	- doctor.preview.visual-runtime
+L00007141	- doctor.mobile.ios-simulator
+L00007142	- doctor.mobile.android-emulator
+L00007143	- doctor.docker.engine
+L00007144	- doctor.docker.compose
+L00007145	- doctor.dockerhub.auth.capability
+L00007146	- doctor.actions.workflow-ready
+L00007147	- doctor.evidence.media
+L00007148	- Block
+L00007149	- Keep run result
+L00007150	negative_constraints: []
+L00007151	compatibility_only_notes: []
+L00007152	stale_retired_dispositions: []
+L00007153	owner_boundary_notes: []
+L00007154	owner_hints:
+L00007155	- Plans/newtools.md
+L00007156	preserved_contractrefs:
+L00007157	- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json'
+L00007158	```
+L00007159	
+L00007160	### N2-127 - Browser And Custom GUI Doctor Matrix
+L00007161	
+L00007162	```yaml
+L00007163	plan_unit_id: N2-127
+L00007164	unit_type: requirement
+L00007165	status: accepted
+L00007166	owner_doc: Plans/newtools.md
+L00007167	canonical_text: Browser and custom GUI Doctor checks preserve doctor.browser.runtime for PM-managed bundled CEF-class runtime health, wef/cargo-wef CEF cache integrity, runtime_unavailable failure behavior, doctor.gui.custom-headless for plan_custom_headless_tool = true evidence layout, and doctor.gui_tool_catalog.freshness last_updated metadata warnings.
+L00007168	gui_related: true
+L00007169	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00007170	split_recommended: false
+L00007171	depends_on: []
+L00007172	unblocks: []
+L00007173	acceptance_criteria:
+L00007174	- Covered source spans remain losslessly available for exact-text audit.
+L00007175	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007176	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007177	validation_surfaces:
+L00007178	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007179	- python3 scripts/pm-plan-index.py validate
+L00007180	risk_class: browser_custom_gui_doctor_matrix
+L00007181	reasoning_tier: standard
+L00007182	context_scope: newtools_standardization
+L00007183	implementation_surfaces:
+L00007184	- Plans/newtools.md
+L00007185	node_compile_hint:
+L00007186	  mode: browser_custom_gui_doctor_matrix
+L00007187	  create_worknodes: false
+L00007188	source_lineage:
+L00007189	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0068
+L00007190	preserved_exact_tokens:
+L00007191	- doctor.browser.runtime
+L00007192	- PM-managed bundled CEF-class runtime
+L00007193	- wef
+L00007194	- cargo-wef
+L00007195	- runtime_unavailable
+L00007196	- doctor.gui.custom-headless
+L00007197	- plan_custom_headless_tool = true
+L00007198	- doctor.gui_tool_catalog.freshness
+L00007199	- last_updated
+L00007200	negative_constraints: []
+L00007201	compatibility_only_notes: []
+L00007202	stale_retired_dispositions:
+L00007203	- doctor.gui_tool_catalog.freshness warns when catalog metadata may be stale.
+L00007204	owner_boundary_notes: []
+L00007205	owner_hints:
+L00007206	- Plans/newtools.md
+L00007207	preserved_contractrefs:
+L00007208	- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json'
+L00007209	```
+L00007210	
+L00007211	### N2-128 - MCP And Cited Websearch Doctor Matrix
+L00007212	
+L00007213	```yaml
+L00007214	plan_unit_id: N2-128
+L00007215	unit_type: requirement
+L00007216	status: accepted
+L00007217	owner_doc: Plans/newtools.md
+L00007218	canonical_text: MCP and cited websearch Doctor checks preserve doctor.mcp.context7, doctor.mcp.provider-ready, doctor.websearch.cited, and websearch_cited dry-run/provider health behavior; missing tools are not silently advertised and unavailable cited search surfaces explicit config, auth, or timeout reasons.
+L00007219	gui_related: false
+L00007220	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00007221	split_recommended: false
+L00007222	depends_on: []
+L00007223	unblocks: []
+L00007224	acceptance_criteria:
+L00007225	- Covered source spans remain losslessly available for exact-text audit.
+L00007226	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007227	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007228	validation_surfaces:
+L00007229	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007230	- python3 scripts/pm-plan-index.py validate
+L00007231	risk_class: mcp_cited_websearch_doctor_matrix
+L00007232	reasoning_tier: standard
+L00007233	context_scope: newtools_standardization
+L00007234	implementation_surfaces:
+L00007235	- Plans/newtools.md
+L00007236	node_compile_hint:
+L00007237	  mode: mcp_cited_websearch_doctor_matrix
+L00007238	  create_worknodes: false
+L00007239	source_lineage:
+L00007240	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0068
+L00007241	preserved_exact_tokens:
+L00007242	- doctor.mcp.context7
+L00007243	- doctor.mcp.provider-ready
+L00007244	- doctor.websearch.cited
+L00007245	- websearch_cited
+L00007246	- configured provider order
+L00007247	- do not silently advertise missing tools
+L00007248	negative_constraints:
+L00007249	- MCP-backed tools must not be silently advertised when missing.
+L00007250	compatibility_only_notes: []
+L00007251	stale_retired_dispositions: []
+L00007252	owner_boundary_notes: []
+L00007253	owner_hints:
+L00007254	- Plans/newtools.md
+L00007255	preserved_contractrefs:
+L00007256	- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json'
+L00007257	```
+L00007258	
+L00007259	### N2-129 - Debug Target Classification And Routing
+L00007260	
+L00007261	```yaml
+L00007262	plan_unit_id: N2-129
+L00007263	unit_type: requirement
+L00007264	status: accepted
+L00007265	owner_doc: Plans/newtools.md
+L00007266	canonical_text: Debug Mode classifies targets as workspace-built /workspace, browser/website, or black-box binary/app before choosing tooling. The Debug target registry records launch config, URL, attach PID, browser session, or imported evidence bundle and routes each target to the collector through log sink, built-in browser session plus agent tools, DAP adapter, or manual attach intake.
+L00007267	gui_related: true
+L00007268	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00007269	split_recommended: false
+L00007270	depends_on: []
+L00007271	unblocks: []
+L00007272	acceptance_criteria:
+L00007273	- Covered source spans remain losslessly available for exact-text audit.
+L00007274	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007275	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007276	validation_surfaces:
+L00007277	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007278	- python3 scripts/pm-plan-index.py validate
+L00007279	risk_class: debug_target_classification_routing
+L00007280	reasoning_tier: standard
+L00007281	context_scope: newtools_standardization
+L00007282	implementation_surfaces:
+L00007283	- Plans/newtools.md
+L00007284	node_compile_hint:
+L00007285	  mode: debug_target_classification_routing
+L00007286	  create_worknodes: false
+L00007287	source_lineage:
+L00007288	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0069
+L00007289	preserved_exact_tokens:
+L00007290	- Debug Mode
+L00007291	- /workspace
+L00007292	- browser/website
+L00007293	- black-box binary/app
+L00007294	- Debug target registry
+L00007295	- launch config
+L00007296	- URL
+L00007297	- attach PID
+L00007298	- browser session
+L00007299	- imported evidence bundle
+L00007300	- collector
+L00007301	- DAP adapter
+L00007302	- manual attach intake
+L00007303	negative_constraints: []
+L00007304	compatibility_only_notes: []
+L00007305	stale_retired_dispositions: []
+L00007306	owner_boundary_notes: []
+L00007307	owner_hints:
+L00007308	- Plans/newtools.md
+L00007309	preserved_contractrefs: []
+L00007310	```
+L00007311	
+L00007312	### N2-130 - Grounded PM Debug Core And Web Repro Path
+L00007313	
+L00007314	```yaml
+L00007315	plan_unit_id: N2-130
+L00007316	unit_type: requirement
+L00007317	status: accepted
+L00007318	owner_doc: Plans/newtools.md
+L00007319	canonical_text: 'The grounded PM Debug core is H + I + J + E + A: PM points at a target, stays inside the overlay/runtime architecture rather than creating a new runtime mode, sends evidence through runtime-artifact and seglog pipelines, supports assistant/session inspection, and allows MVP temporary instrumentation only under an explicit instrumentation contract. MVP web/debug repro prefers PM built-in browser + automation_session with dev_session_id and output-problems-ports linkage, including /test/dev-server loops; classical DAP remains a separate adapter/surface.'
+L00007320	gui_related: false
+L00007321	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00007322	split_recommended: false
+L00007323	depends_on: []
+L00007324	unblocks: []
+L00007325	acceptance_criteria:
+L00007326	- Covered source spans remain losslessly available for exact-text audit.
+L00007327	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007328	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007329	validation_surfaces:
+L00007330	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007331	- python3 scripts/pm-plan-index.py validate
+L00007332	risk_class: grounded_pm_debug_core_web_repro
+L00007333	reasoning_tier: standard
+L00007334	context_scope: newtools_standardization
+L00007335	implementation_surfaces:
+L00007336	- Plans/newtools.md
+L00007337	node_compile_hint:
+L00007338	  mode: grounded_pm_debug_core_web_repro
+L00007339	  create_worknodes: false
+L00007340	source_lineage:
+L00007341	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0069
+L00007342	preserved_exact_tokens:
+L00007343	- H + I + J + E + A
+L00007344	- overlay/runtime architecture
+L00007345	- new runtime mode
+L00007346	- runtime-artifact
+L00007347	- seglog
+L00007348	- temporary instrumentation
+L00007349	- PM built-in browser + automation_session
+L00007350	- dev_session_id
+L00007351	- output-problems-ports
+L00007352	- /test/dev-server
+L00007353	- Classical DAP
+L00007354	negative_constraints:
+L00007355	- Debug Mode must stay inside the overlay/runtime architecture instead of creating a new runtime mode.
+L00007356	- Classical DAP debugging remains a separate related adapter/surface rather than the primary web repro mode.
+L00007357	compatibility_only_notes: []
+L00007358	stale_retired_dispositions: []
+L00007359	owner_boundary_notes: []
+L00007360	owner_hints:
+L00007361	- Plans/newtools.md
+L00007362	preserved_contractrefs: []
+L00007363	```
+L00007364	
+L00007365	### N2-131 - Debug Adapters Auth Session And Evidence Attach Constraints
+L00007366	
+L00007367	```yaml
+L00007368	plan_unit_id: N2-131
+L00007369	unit_type: requirement
+L00007370	status: accepted
+L00007371	owner_doc: Plans/newtools.md
+L00007372	canonical_text: Research-grade adapters remain advanced options behind target-registry and policy checks; browser/session automation defaults to an ephemeral automation profile/session and moves to attention_required when authentication is required and no valid automation session exists. External Playwright or Browser MCP remains orthogonal to the promoted named-action browser contract unless explicitly bridged, and tool-emitted debug evidence enters chat only through bounded user-visible attach rules.
+L00007373	gui_related: true
+L00007374	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00007375	split_recommended: false
+L00007376	depends_on: []
+L00007377	unblocks: []
+L00007378	acceptance_criteria:
+L00007379	- Covered source spans remain losslessly available for exact-text audit.
+L00007380	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00007381	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00007382	validation_surfaces:
+L00007383	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007384	- python3 scripts/pm-plan-index.py validate
+L00007385	risk_class: debug_adapters_auth_evidence_attach_constraints
+L00007386	reasoning_tier: standard
+L00007387	context_scope: newtools_standardization
+L00007388	implementation_surfaces:
+L00007389	- Plans/newtools.md
+L00007390	node_compile_hint:
+L00007391	  mode: debug_adapters_auth_evidence_attach_constraints
+L00007392	  create_worknodes: false
+L00007393	source_lineage:
+L00007394	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0069
+L00007395	preserved_exact_tokens:
+L00007396	- Research-grade adapters
+L00007397	- advanced options
+L00007398	- ephemeral automation profile/session
+L00007399	- attention_required
+L00007400	- External Playwright
+L00007401	- Browser MCP
+L00007402	- orthogonal
+L00007403	- promoted named-action browser contract
+L00007404	- bounded, user-visible attach model
+L00007405	negative_constraints:
+L00007406	- If a target requires authentication and no valid automation session exists, Debug moves to attention_required rather than silently reusing an unrelated user profile.
+L00007407	- External Playwright or Browser MCP tooling remains orthogonal unless a product surface explicitly bridges it.
+L00007408	compatibility_only_notes: []
+L00007409	stale_retired_dispositions: []
+L00007410	owner_boundary_notes: []
+L00007411	owner_hints:
+L00007412	- Plans/newtools.md
+L00007413	preserved_contractrefs: []
+L00007414	```
+L00007415	
+
+<<< CONTEXT_AFTER canonical_document_lines=7416-7427 >>>
+L00007416	### N2-132 - Enterprise Host Trust Preflight
+L00007417	
+L00007418	```yaml
+L00007419	plan_unit_id: N2-132
+L00007420	unit_type: requirement
+L00007421	status: accepted
+L00007422	owner_doc: Plans/newtools.md
+L00007423	canonical_text: Debug, MCP, custom-plugin, networked-tool, /shell/debugger, and /tunnel/browser actions run through shared /trust/proxy/governance preflight. Every /custom/plugin/networked tool profile declares contacted hosts and /domains before dispatch; undeclared hosts, domains, proxy targets, or remote authorities return blocked_preflight. Governance denials preserve deny-code families, and restart-persistent host/trust decisions must be explicit /durable permission or trust records rather than inferred from transient debug runs.
+L00007424	gui_related: false
+L00007425	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00007426	split_recommended: false
+L00007427	depends_on: []

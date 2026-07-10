@@ -1,0 +1,385 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8130-8141 >>>
+L00008130	- allowed_action_ids[]
+L00008131	- executed_at_all
+L00008132	- MUST NOT publish a parallel `recovery_options[]` schema
+L00008133	negative_constraints: []
+L00008134	preserved_contractrefs: []
+L00008135	compatibility_only_notes: []
+L00008136	stale_retired_dispositions:
+L00008137	- Parallel `recovery_options[]` schema is retired for runtime-facing tool-denial paths.
+L00008138	owner_hints:
+L00008139	- Plans/Tools.md
+L00008140	```
+L00008141	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8142-8497 >>>
+L00008142	### T-110 - Tool Denial Payload Consolidation
+L00008143	
+L00008144	```yaml
+L00008145	plan_unit_id: T-110
+L00008146	unit_type: requirement
+L00008147	status: accepted
+L00008148	owner_doc: Plans/Tools.md
+L00008149	canonical_text: Runtime-facing tool denial payloads consolidate source mapping rules and preserve blocked state instead of
+L00008150	  converting denied work into success-shaped or generic-failure fallbacks.
+L00008151	gui_related: true
+L00008152	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+L00008153	  visual tool surfaces.
+L00008154	split_recommended: false
+L00008155	depends_on: []
+L00008156	unblocks: []
+L00008157	acceptance_criteria:
+L00008158	- Source mappings remain exact.
+L00008159	- Blocked state survives through UI and scheduler consumption.
+L00008160	- Denied work is not converted to generic failure.
+L00008161	validation_surfaces:
+L00008162	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008163	- python3 scripts/pm-plan-index.py validate
+L00008164	risk_class: tool_contract_drift
+L00008165	reasoning_tier: standard
+L00008166	context_scope: tools_phase2b_batch_184
+L00008167	implementation_surfaces:
+L00008168	- Plans/Tools.md
+L00008169	node_compile_hint:
+L00008170	  mode: tool_denial_payload_consolidation
+L00008171	  create_worknodes: false
+L00008172	source_lineage:
+L00008173	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0085
+L00008174	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0086
+L00008175	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0087
+L00008176	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0088
+L00008177	preserved_exact_tokens:
+L00008178	- Canonical runtime-facing payload
+L00008179	- blocked_reason_code
+L00008180	- allowed_action_ids[]
+L00008181	- executed_at_all
+L00008182	- permission-layer denial
+L00008183	- headless interactive denial
+L00008184	- FileSafe denial
+L00008185	- plugin_hook_blocked
+L00008186	- success-shaped
+L00008187	- generic-failure
+L00008188	negative_constraints: []
+L00008189	preserved_contractrefs: []
+L00008190	compatibility_only_notes: []
+L00008191	stale_retired_dispositions: []
+L00008192	owner_hints:
+L00008193	- Plans/Tools.md
+L00008194	```
+L00008195	
+L00008196	### T-111 - Tool Blocked Field Name Contract
+L00008197	
+L00008198	```yaml
+L00008199	plan_unit_id: T-111
+L00008200	unit_type: requirement
+L00008201	status: accepted
+L00008202	owner_doc: Plans/Tools.md
+L00008203	canonical_text: Tool-originated blocked payloads use `allowed_action_ids[]` only and canonical `blocked_reason_code` values,
+L00008204	  including `validation_blocked`, for post-validation paths.
+L00008205	gui_related: false
+L00008206	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008207	split_recommended: false
+L00008208	depends_on: []
+L00008209	unblocks: []
+L00008210	acceptance_criteria:
+L00008211	- Deprecated names are absent from new tool contracts.
+L00008212	- Post-validation paths use canonical blocked reason codes.
+L00008213	validation_surfaces:
+L00008214	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008215	- python3 scripts/pm-plan-index.py validate
+L00008216	risk_class: tool_contract_drift
+L00008217	reasoning_tier: standard
+L00008218	context_scope: tools_phase2b_batch_184
+L00008219	implementation_surfaces:
+L00008220	- Plans/Tools.md
+L00008221	node_compile_hint:
+L00008222	  mode: tool_blocked_field_name_contract
+L00008223	  create_worknodes: false
+L00008224	source_lineage:
+L00008225	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0089
+L00008226	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0090
+L00008227	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0091
+L00008228	preserved_exact_tokens:
+L00008229	- allowed_action_ids[]
+L00008230	- Deprecated names MUST NOT appear
+L00008231	- blocked_reason_code
+L00008232	- validation_blocked
+L00008233	- Tool-originated blocked payloads
+L00008234	negative_constraints: []
+L00008235	preserved_contractrefs: []
+L00008236	compatibility_only_notes: []
+L00008237	stale_retired_dispositions:
+L00008238	- Deprecated blocked-payload field names are retired from new tool contracts.
+L00008239	owner_hints:
+L00008240	- Plans/Tools.md
+L00008241	```
+L00008242	
+L00008243	### T-112 - Tool Mutation Capability Recovery Contract
+L00008244	
+L00008245	```yaml
+L00008246	plan_unit_id: T-112
+L00008247	unit_type: requirement
+L00008248	status: accepted
+L00008249	owner_doc: Plans/Tools.md
+L00008250	canonical_text: 'Every tool definition includes `mutation_capable: bool` defaulting false, and recovery paths use the canonical
+L00008251	  runtime action family with prerequisite metadata rather than tool-private action arrays.'
+L00008252	gui_related: false
+L00008253	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008254	split_recommended: false
+L00008255	depends_on: []
+L00008256	unblocks: []
+L00008257	acceptance_criteria:
+L00008258	- Tool definitions expose mutation capability.
+L00008259	- Recovery paths do not invent private action arrays.
+L00008260	- Blocked state is not converted to fallback output.
+L00008261	validation_surfaces:
+L00008262	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008263	- python3 scripts/pm-plan-index.py validate
+L00008264	risk_class: tool_contract_drift
+L00008265	reasoning_tier: standard
+L00008266	context_scope: tools_phase2b_batch_184
+L00008267	implementation_surfaces:
+L00008268	- Plans/Tools.md
+L00008269	node_compile_hint:
+L00008270	  mode: tool_mutation_capability_recovery_contract
+L00008271	  create_worknodes: false
+L00008272	source_lineage:
+L00008273	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0092
+L00008274	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0093
+L00008275	preserved_exact_tokens:
+L00008276	- 'mutation_capable: bool'
+L00008277	- default `false`
+L00008278	- planning
+L00008279	- safe-point
+L00008280	- recovery decisions
+L00008281	- MUST NOT invent tool-private action arrays
+L00008282	- MUST preserve the blocked state
+L00008283	- prerequisite metadata
+L00008284	negative_constraints: []
+L00008285	preserved_contractrefs:
+L00008286	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md'
+L00008287	compatibility_only_notes: []
+L00008288	stale_retired_dispositions: []
+L00008289	owner_hints:
+L00008290	- Plans/Tools.md
+L00008291	```
+L00008292	
+L00008293	### T-113 - Firecrawl Owner Section Boundary
+L00008294	
+L00008295	```yaml
+L00008296	plan_unit_id: T-113
+L00008297	unit_type: requirement
+L00008298	status: accepted
+L00008299	owner_doc: Plans/Tools.md
+L00008300	canonical_text: Firecrawl is a distinct provider owner section; packet regeneration treats `## 10` as one coherent owner-section
+L00008301	  replacement unit and collapses stale parent/child duplicate canon.
+L00008302	gui_related: false
+L00008303	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008304	split_recommended: false
+L00008305	depends_on: []
+L00008306	unblocks: []
+L00008307	acceptance_criteria:
+L00008308	- Consumer summaries defer to this owner section and Contracts_V0 for payload fields.
+L00008309	- Stale peer Firecrawl owner bodies are not preserved beside current provider capability/routing canon.
+L00008310	validation_surfaces:
+L00008311	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008312	- python3 scripts/pm-plan-index.py validate
+L00008313	risk_class: tool_contract_drift
+L00008314	reasoning_tier: standard
+L00008315	context_scope: tools_phase2b_batch_184
+L00008316	implementation_surfaces:
+L00008317	- Plans/Tools.md
+L00008318	node_compile_hint:
+L00008319	  mode: firecrawl_owner_section_boundary
+L00008320	  create_worknodes: false
+L00008321	source_lineage:
+L00008322	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0094
+L00008323	preserved_exact_tokens:
+L00008324	- Firecrawl
+L00008325	- '## 10'
+L00008326	- '### 10.3'
+L00008327	- '### 10.7'
+L00008328	- single owner-level Firecrawl subtree
+L00008329	- distinct provider
+L00008330	- Packet regeneration
+L00008331	- stale parent
+L00008332	- child bodies
+L00008333	- peer canon
+L00008334	negative_constraints: []
+L00008335	preserved_contractrefs:
+L00008336	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md,
+L00008337	  ContractName:Plans/Contracts_V0.md'
+L00008338	compatibility_only_notes: []
+L00008339	stale_retired_dispositions:
+L00008340	- Duplicate stale parent/child Firecrawl owner bodies are retired as peer canon.
+L00008341	owner_hints:
+L00008342	- Plans/Tools.md
+L00008343	```
+L00008344	
+L00008345	### T-114 - Firecrawl Provider Identity And Defaults
+L00008346	
+L00008347	```yaml
+L00008348	plan_unit_id: T-114
+L00008349	unit_type: requirement
+L00008350	status: accepted
+L00008351	owner_doc: Plans/Tools.md
+L00008352	canonical_text: Firecrawl identity is provider ID `firecrawl`, display name `Firecrawl`, default priority below Exa/Tavily
+L00008353	  and above DDG, user-adjustable ordering, and disabled until API key or self-hosted URL configuration.
+L00008354	gui_related: false
+L00008355	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008356	split_recommended: false
+L00008357	depends_on: []
+L00008358	unblocks: []
+L00008359	acceptance_criteria:
+L00008360	- Firecrawl identity and defaults are preserved exactly.
+L00008361	- Stale cited-search/newtools residue remains retired from owner/provider canon.
+L00008362	validation_surfaces:
+L00008363	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008364	- python3 scripts/pm-plan-index.py validate
+L00008365	risk_class: firecrawl_provider_contract_drift
+L00008366	reasoning_tier: standard
+L00008367	context_scope: tools_phase2b_batch_185
+L00008368	implementation_surfaces:
+L00008369	- Plans/Tools.md
+L00008370	node_compile_hint:
+L00008371	  mode: firecrawl_provider_identity_defaults
+L00008372	  create_worknodes: false
+L00008373	source_lineage:
+L00008374	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0095
+L00008375	preserved_exact_tokens:
+L00008376	- firecrawl
+L00008377	- Firecrawl
+L00008378	- below Exa, Tavily; above DDG (user-adjustable)
+L00008379	- disabled (requires API key or self-hosted URL)
+L00008380	- '"stale cited-search framing and older `newtools` wording"'
+L00008381	negative_constraints: []
+L00008382	preserved_contractrefs: []
+L00008383	compatibility_only_notes: []
+L00008384	stale_retired_dispositions:
+L00008385	- Exact stale residue "stale cited-search framing and older `newtools` wording" is retired from Firecrawl owner/provider canon.
+L00008386	owner_hints:
+L00008387	- Plans/Tools.md
+L00008388	```
+L00008389	
+L00008390	### T-115 - Firecrawl Configuration Field Boundary
+L00008391	
+L00008392	```yaml
+L00008393	plan_unit_id: T-115
+L00008394	unit_type: requirement
+L00008395	status: accepted
+L00008396	owner_doc: Plans/Tools.md
+L00008397	canonical_text: 'Firecrawl configuration preserves `enabled`, `api_key`, `base_url`, `timeout_ms`, `cache_enabled`, `proxy_mode?:
+L00008398	  "basic" | "enhanced" | "auto"` default `"auto"`, `timeout_ms?: number` default `60000`, and the self-hosted Fire Engine
+L00008399	  limitation.'
+L00008400	gui_related: false
+L00008401	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008402	split_recommended: false
+L00008403	depends_on:
+L00008404	- T-114
+L00008405	unblocks: []
+L00008406	acceptance_criteria:
+L00008407	- '`timeout_ms` remains provider-level configuration, not per-invocation `timeout`.'
+L00008408	- Provider-reference implementation notes stay non-normative unless Firecrawl documents them.
+L00008409	validation_surfaces:
+L00008410	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008411	- python3 scripts/pm-plan-index.py validate
+L00008412	risk_class: firecrawl_provider_contract_drift
+L00008413	reasoning_tier: standard
+L00008414	context_scope: tools_phase2b_batch_185
+L00008415	implementation_surfaces:
+L00008416	- Plans/Tools.md
+L00008417	node_compile_hint:
+L00008418	  mode: firecrawl_config_timeout_proxy_boundary
+L00008419	  create_worknodes: false
+L00008420	source_lineage:
+L00008421	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0095
+L00008422	preserved_exact_tokens:
+L00008423	- enabled
+L00008424	- api_key
+L00008425	- base_url
+L00008426	- timeout_ms
+L00008427	- cache_enabled
+L00008428	- 'proxy_mode?: "basic" | "enhanced" | "auto"'
+L00008429	- '"auto"'
+L00008430	- '60000'
+L00008431	- /enhanced/auto
+L00008432	- webfetch
+L00008433	- Fire Engine
+L00008434	- Node.js/TypeScript (Express)
+L00008435	- Redis
+L00008436	- playwright-service
+L00008437	negative_constraints: []
+L00008438	preserved_contractrefs: []
+L00008439	compatibility_only_notes: []
+L00008440	stale_retired_dispositions: []
+L00008441	owner_hints:
+L00008442	- Plans/Tools.md
+L00008443	```
+L00008444	
+L00008445	### T-116 - Firecrawl Method-Locked Endpoint Inventory
+L00008446	
+L00008447	```yaml
+L00008448	plan_unit_id: T-116
+L00008449	unit_type: requirement
+L00008450	status: accepted
+L00008451	owner_doc: Plans/Tools.md
+L00008452	canonical_text: Firecrawl endpoint inventory and PM operation routing are exact and method-locked for search, extract, research,
+L00008453	  crawl, map, fetch, and batch fetch.
+L00008454	gui_related: false
+L00008455	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008456	split_recommended: false
+L00008457	depends_on:
+L00008458	- T-114
+L00008459	unblocks: []
+L00008460	acceptance_criteria:
+L00008461	- Every endpoint/method pair remains preserved.
+L00008462	validation_surfaces:
+L00008463	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008464	- python3 scripts/pm-plan-index.py validate
+L00008465	risk_class: firecrawl_provider_contract_drift
+L00008466	reasoning_tier: standard
+L00008467	context_scope: tools_phase2b_batch_185
+L00008468	implementation_surfaces:
+L00008469	- Plans/Tools.md
+L00008470	node_compile_hint:
+L00008471	  mode: firecrawl_endpoint_inventory_method_lock
+L00008472	  create_worknodes: false
+L00008473	source_lineage:
+L00008474	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0096
+L00008475	preserved_exact_tokens:
+L00008476	- /v2/scrape
+L00008477	- /v2/crawl
+L00008478	- /v2/map
+L00008479	- /v2/search
+L00008480	- /v2/extract
+L00008481	- /v2/batch/scrape
+L00008482	- /v2/agent
+L00008483	- websearch -> POST /v2/search
+L00008484	- webextract -> POST /v2/extract
+L00008485	- webresearch -> POST /v2/agent
+L00008486	- webcrawl -> POST /v2/crawl
+L00008487	- webmap -> POST /v2/map
+L00008488	- webfetch -> POST /v2/scrape
+L00008489	- batch_webfetch -> POST /v2/batch/scrape
+L00008490	negative_constraints: []
+L00008491	preserved_contractrefs: []
+L00008492	compatibility_only_notes: []
+L00008493	stale_retired_dispositions: []
+L00008494	owner_hints:
+L00008495	- Plans/Tools.md
+L00008496	```
+L00008497	
+
+<<< CONTEXT_AFTER canonical_document_lines=8498-8509 >>>
+L00008498	### T-117 - Firecrawl Provider Capability Exclusion
+L00008499	
+L00008500	```yaml
+L00008501	plan_unit_id: T-117
+L00008502	unit_type: requirement
+L00008503	status: accepted
+L00008504	owner_doc: Plans/Tools.md
+L00008505	canonical_text: Provider-side capability names are adapter-lineage only unless future provider contracts map them; PM does
+L00008506	  not add them to `WebAction` or expose arbitrary provider code execution as a first-class user tool.
+L00008507	gui_related: false
+L00008508	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008509	split_recommended: false

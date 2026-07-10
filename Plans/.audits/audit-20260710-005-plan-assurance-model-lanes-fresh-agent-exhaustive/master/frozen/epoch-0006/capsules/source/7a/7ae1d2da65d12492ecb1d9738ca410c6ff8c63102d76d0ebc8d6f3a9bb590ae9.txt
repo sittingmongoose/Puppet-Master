@@ -1,0 +1,316 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2959-2970 >>>
+L00002959	  - "Consumer wording must not decide feature-owner conflicts."
+L00002960	  - "`/blocked` routing must not be retyped locally by Crosswalk."
+L00002961	  - "Legacy `allowed_actions[]` is compatibility-only; canonical blocked and recovery payloads use ordered `allowed_action_ids[]`."
+L00002962	owner_hints:
+L00002963	  - Plans/Crosswalk.md
+L00002964	  - Plans/newtools.md
+L00002965	  - Plans/usage-feature.md
+L00002966	  - Plans/Executor_Protocol.md
+L00002967	  - Plans/human-in-the-loop.md
+L00002968	  - Plans/Contracts_V0.md
+L00002969	```
+L00002970	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2971-3271 >>>
+L00002971	### C-047 - HITL Action List Vocabulary Boundary
+L00002972	
+L00002973	```yaml
+L00002974	plan_unit_id: C-047
+L00002975	unit_type: requirement
+L00002976	status: accepted
+L00002977	owner_doc: Plans/Crosswalk.md
+L00002978	canonical_text: >-
+L00002979	  HITL approval requests may use explicit action-list vocabulary only where
+L00002980	  Contracts_V0 owns the request shape; blocked and recovery payloads stay on
+L00002981	  canonical action-id and allowed_action_ids naming so implementers do not
+L00002982	  guess between HITL and recovery fields.
+L00002983	gui_related: false
+L00002984	gui_classification_reason: This unit defines payload vocabulary ownership rather than UI presentation.
+L00002985	split_recommended: true
+L00002986	split_recommendation_reason: Crosswalk-S0035 is split across feature-owner precedence, HITL action-list, and secondary cleanup concerns.
+L00002987	depends_on: [C-046]
+L00002988	unblocks: [C-048]
+L00002989	acceptance_criteria:
+L00002990	  - "HITL approval requests use action-list vocabulary only where Contracts_V0 owns the request shape."
+L00002991	  - "Blocked/recovery payloads stay on canonical action-id and allowed_action_ids naming."
+L00002992	validation_surfaces:
+L00002993	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002994	  - python3 scripts/pm-plan-index.py validate
+L00002995	risk_class: hitl_action_list_vocabulary_drift
+L00002996	reasoning_tier: high
+L00002997	context_scope: hitl_action_list_vocabulary_boundary
+L00002998	implementation_surfaces:
+L00002999	  - Plans/Crosswalk.md
+L00003000	  - Plans/Contracts_V0.md
+L00003001	  - Plans/human-in-the-loop.md
+L00003002	node_compile_hint:
+L00003003	  mode: hitl_action_list_vocabulary_boundary
+L00003004	  create_worknodes: false
+L00003005	source_lineage:
+L00003006	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0035
+L00003007	preserved_exact_tokens:
+L00003008	  - "`HITL`"
+L00003009	  - "`Contracts_V0`"
+L00003010	  - "`action-list`"
+L00003011	  - "`action-id`"
+L00003012	  - "`allowed_action_ids[]`"
+L00003013	negative_constraints:
+L00003014	  - "Action-list vocabulary is allowed only where Contracts_V0 owns the request shape."
+L00003015	  - "Blocked/recovery payloads must stay on canonical action-id and allowed_action_ids naming."
+L00003016	owner_hints:
+L00003017	  - Plans/Crosswalk.md
+L00003018	  - Plans/Contracts_V0.md
+L00003019	  - Plans/human-in-the-loop.md
+L00003020	```
+L00003021	
+L00003022	### C-048 - Secondary Consumer Cleanup UI State Resolution
+L00003023	
+L00003024	```yaml
+L00003025	plan_unit_id: C-048
+L00003026	unit_type: requirement
+L00003027	status: accepted
+L00003028	owner_doc: Plans/Crosswalk.md
+L00003029	canonical_text: >-
+L00003030	  Secondary broad-pass cleanup keeps chat and file-tree docs as consumers of the
+L00003031	  legacy Git/GitHub model until reconciled with feature-owner docs, preserves
+L00003032	  git* and actions* built-in chat namespaces, leaves Docker/registry/Kubernetes
+L00003033	  operational identity outside Multi-Account unless later moved by an owner doc,
+L00003034	  and resolves underdefined UI-state contracts in named surface owner docs
+L00003035	  rather than consumer-only state.
+L00003036	gui_related: true
+L00003037	gui_classification_reason: This unit governs chat/file-tree consumers, built-in chat namespaces, and underdefined UI-state contracts.
+L00003038	split_recommended: true
+L00003039	split_recommendation_reason: Crosswalk-S0035 is split across feature-owner precedence, HITL action-list, and secondary cleanup concerns.
+L00003040	depends_on: [C-046, C-047]
+L00003041	unblocks: []
+L00003042	acceptance_criteria:
+L00003043	  - "Chat and file-tree docs remain consumers of the legacy Git/GitHub model until reconciled with feature-owner docs."
+L00003044	  - "git* and actions* remain built-in chat command namespaces."
+L00003045	  - "Docker/registry/Kubernetes operational identity is not owned by Multi-Account unless a later owner doc explicitly moves it."
+L00003046	  - "Underdefined UI-state contracts are resolved in named surface owner docs rather than by adding consumer-only state."
+L00003047	validation_surfaces:
+L00003048	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003049	  - python3 scripts/pm-plan-index.py validate
+L00003050	risk_class: secondary_consumer_ui_state_owner_drift
+L00003051	reasoning_tier: high
+L00003052	context_scope: secondary_consumer_cleanup_ui_state_resolution
+L00003053	implementation_surfaces:
+L00003054	  - Plans/Crosswalk.md
+L00003055	  - Plans/newtools.md
+L00003056	  - Plans/usage-feature.md
+L00003057	  - Plans/Executor_Protocol.md
+L00003058	  - Plans/human-in-the-loop.md
+L00003059	node_compile_hint:
+L00003060	  mode: secondary_consumer_cleanup_ui_state_resolution
+L00003061	  create_worknodes: false
+L00003062	source_lineage:
+L00003063	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0035
+L00003064	preserved_exact_tokens:
+L00003065	  - "`chat and file-tree`"
+L00003066	  - "`legacy Git/GitHub model`"
+L00003067	  - "`git*`"
+L00003068	  - "`actions*`"
+L00003069	  - "`Docker/registry/Kubernetes`"
+L00003070	  - "`Multi-Account`"
+L00003071	  - "`/underdefined`"
+L00003072	  - "`recovery_options`"
+L00003073	  - "`recovery_options[]`"
+L00003074	  - "`allowed_action_ids`"
+L00003075	negative_constraints:
+L00003076	  - "Docker/registry/Kubernetes operational identity is not owned by Multi-Account unless a later owner doc explicitly moves it."
+L00003077	  - "`/underdefined` UI-state contracts must be resolved in the named surface owner docs rather than by adding consumer-only state."
+L00003078	  - "Prescriptive recovery_options or recovery_options[] wording must be retired in favor of allowed_action_ids and allowed_action_ids[]."
+L00003079	owner_hints:
+L00003080	  - Plans/Crosswalk.md
+L00003081	  - Plans/newtools.md
+L00003082	  - Plans/usage-feature.md
+L00003083	  - Plans/Executor_Protocol.md
+L00003084	  - Plans/human-in-the-loop.md
+L00003085	```
+L00003086	
+L00003087	### C-001 - Crosswalk Source-Preserving Bridge Retired
+L00003088	
+L00003089	```yaml
+L00003090	plan_unit_id: C-001
+L00003091	unit_type: compatibility_disposition
+L00003092	status: accepted
+L00003093	owner_doc: Plans/Crosswalk.md
+L00003094	canonical_text: >-
+L00003095	  The former Crosswalk source-preserving bridge is retired in place after Phase
+L00003096	  2B atomized or structurally dispositioned Crosswalk-S0001 through
+L00003097	  Crosswalk-S0039 into C-002 through C-048 or explicit structural coverage.
+L00003098	  C-001 remains only as migration lineage for the retired bridge span and must
+L00003099	  not re-own atomized source coverage.
+L00003100	gui_related: false
+L00003101	gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior.
+L00003102	split_recommended: false
+L00003103	depends_on: []
+L00003104	unblocks: []
+L00003105	acceptance_criteria:
+L00003106	- C-001 no longer uses the source-preserving PlanUnit compile hint.
+L00003107	- Prior source coverage remains carried by C-002 through C-048 and structural coverage_map dispositions.
+L00003108	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00003109	- Coverage for the retired bridge is recorded in the Phase 2B batch 042 coverage map.
+L00003110	validation_surfaces:
+L00003111	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003112	- python3 scripts/pm-plan-index.py validate
+L00003113	risk_class: migration_lineage
+L00003114	reasoning_tier: standard
+L00003115	context_scope: plan_standardization
+L00003116	implementation_surfaces:
+L00003117	- Plans/Crosswalk.md
+L00003118	node_compile_hint:
+L00003119	  mode: source_preserving_bridge_retired
+L00003120	  create_worknodes: false
+L00003121	source_lineage:
+L00003122	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0038
+L00003123	preserved_exact_tokens:
+L00003124	- C-001
+L00003125	- source_preserving_planunit
+L00003126	- C-002
+L00003127	- C-048
+L00003128	negative_constraints:
+L00003129	- "Do not remap atomized Crosswalk spans back to C-001."
+L00003130	- "Do not treat the retired bridge as implementation-ready product coverage."
+L00003131	- "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+L00003132	compatibility_only_notes:
+L00003133	- "The old source-preserving bridge is retained only so migration lineage and historical references to C-001 remain auditable."
+L00003134	owner_hints:
+L00003135	- Plans/Crosswalk.md
+L00003136	```
+L00003137	
+L00003138	## Migration Coverage
+L00003139	
+L00003140	Original hash: `b3ab29d3fdfc69b5ac8ad8d1f6c9d2873085fa86f03b37bb459fba8bf6e57564`.
+L00003141	
+L00003142	Run-scoped proof artifacts:
+L00003143	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00003144	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00003145	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00003146	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00003147	
+L00003148	All original spans from `Crosswalk-S0001` through `Crosswalk-S0039` are preserved in place. Phase 2B batch 041 atomized or structurally dispositioned `Crosswalk-S0001` through `Crosswalk-S0028` into fine-grained PlanUnits `C-002` through `C-037` or explicit structural dispositions. Phase 2B batch 042 atomized or structurally dispositioned `Crosswalk-S0029` through `Crosswalk-S0039` into fine-grained PlanUnits `C-038` through `C-048`, the retired migration-lineage bridge `C-001`, or explicit structural dispositions. `C-001` is retained only as a retired bridge and must not re-own atomized source coverage. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00003149	
+L00003150	## Ledger Compile Addendum - pldg-20260614-001
+L00003151	
+L00003152	### C-049 - Boundary Stub And Route Open Fallback Recovery
+L00003153	
+L00003154	```yaml
+L00003155	plan_unit_id: C-049
+L00003156	unit_type: constraint
+L00003157	status: accepted
+L00003158	owner_doc: Plans/Crosswalk.md
+L00003159	canonical_text: >-
+L00003160	  Crosswalk top stubs for coverage blocker, route/open fallback, package/worktree allocation, and boundary maps recover as owner pointers.
+L00003161	  Crosswalk may map boundaries and precedence but must not re-own Contracts route/open primitives, storage records, Executor runtime policy,
+L00003162	  worktree allocation, or Persona/subagent registry semantics.
+L00003163	gui_related: true
+L00003164	gui_classification_reason: Crosswalk boundary maps include GUI route/open and page destination relationships, even though Crosswalk is not a visual implementation doc.
+L00003165	depends_on: [C-001]
+L00003166	unblocks: []
+L00003167	acceptance_criteria:
+L00003168	  - Base route/open primitives landed, but missing: is retired or converted to an owner pointer.
+L00003169	  - coverage blocker headings point to the owner doc that actually owns the blocked behavior.
+L00003170	  - Crosswalk does not preserve stale boundary-map text as peer canon.
+L00003171	validation_surfaces:
+L00003172	  - python3 scripts/pm-plan-index.py validate
+L00003173	  - manual Crosswalk owner-pointer review
+L00003174	risk_class: crosswalk_owner_drift
+L00003175	reasoning_tier: standard
+L00003176	context_scope: cross_doc_boundary_map
+L00003177	implementation_surfaces: [Plans/Crosswalk.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/WorktreeGitImprovement.md]
+L00003178	node_compile_hint: {mode: crosswalk_owner_pointer_recovery, create_worknodes: false}
+L00003179	source_lineage:
+L00003180	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0068
+L00003181	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0073
+L00003182	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0074
+L00003183	preserved_exact_tokens: ["Coverage blocker", "Base route/open primitives landed, but missing:", "route/open fallback", "boundary-map owner pointers"]
+L00003184	negative_constraints:
+L00003185	  - Do not let Crosswalk become the owner for route/open primitives or worktree allocation.
+L00003186	owner_hints: [Plans/Crosswalk.md, Plans/Contracts_V0.md, Plans/WorktreeGitImprovement.md, Plans/Executor_Protocol.md]
+L00003187	```
+L00003188	
+L00003189	
+L00003190	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00003191	
+L00003192	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00003193	
+L00003194	### C-050 - PRD Builder And Planning Wizard Term Routing
+L00003195	
+L00003196	```yaml
+L00003197	plan_unit_id: C-050
+L00003198	unit_type: requirement
+L00003199	status: accepted
+L00003200	owner_doc: Plans/Crosswalk.md
+L00003201	canonical_text: 'The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Review, split, update, or retire Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md into the new PRD Builder and Planning Wizard owners, preserving still-valid requirements and explicitly retiring stale workflow concepts. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs.'
+L00003202	gui_related: true
+L00003203	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00003204	depends_on: []
+L00003205	unblocks: []
+L00003206	acceptance_criteria:
+L00003207	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00003208	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00003209	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00003210	validation_surfaces:
+L00003211	- python3 scripts/pm-plan-index.py validate
+L00003212	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00003213	risk_class: owner_drift
+L00003214	reasoning_tier: standard
+L00003215	context_scope: ledger_to_plans_compile
+L00003216	implementation_surfaces:
+L00003217	- Plans/Crosswalk.md
+L00003218	- Plans/PRD_Builder.md
+L00003219	- Plans/FinalGUISpec.md
+L00003220	- Plans/00-plans-index.md
+L00003221	- Plans/Planning_Wizard.md
+L00003222	- Plans/Wiring_Matrix.md
+L00003223	node_compile_hint:
+L00003224	  mode: canonical_planunit_from_bootstrap_ledger
+L00003225	  create_worknodes: false
+L00003226	  create_nodeseeds: false
+L00003227	source_lineage:
+L00003228	- pldg-20260618-001-prd-planning-wizard:atom-0001
+L00003229	- pldg-20260618-001-prd-planning-wizard:atom-0002
+L00003230	- pldg-20260618-001-prd-planning-wizard:atom-0159
+L00003231	- pldg-20260618-001-prd-planning-wizard:atom-0160
+L00003232	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+L00003233	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md#SRC-IMPACT
+L00003234	source_atom_ids:
+L00003235	- atom-0001
+L00003236	- atom-0002
+L00003237	- atom-0159
+L00003238	- atom-0160
+L00003239	decision_refs:
+L00003240	- dec-0001
+L00003241	- dec-0029
+L00003242	correction_refs:
+L00003243	- corr-0001
+L00003244	- corr-0002
+L00003245	preserved_exact_tokens:
+L00003246	- PRD Builder
+L00003247	- Requirements Doc Builder
+L00003248	- Planning Wizard
+L00003249	- Chain Wizard
+L00003250	- Plan Wizard
+L00003251	- Plans/chain-wizard.md
+L00003252	- Plans/chain-wizard-flexibility.md
+L00003253	- doc-impact pass
+L00003254	negative_constraints:
+L00003255	- Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.
+L00003256	- Do not use Chain Wizard or Plan Wizard as current terminology.
+L00003257	- Do not perform a blind filename or term replacement that preserves obsolete ownership and workflow.
+L00003258	owner_hints:
+L00003259	- Plans/PRD_Builder.md
+L00003260	- Plans/FinalGUISpec.md
+L00003261	- Plans/00-plans-index.md
+L00003262	- Plans/Planning_Wizard.md
+L00003263	- Plans/Crosswalk.md
+L00003264	- Plans/Wiring_Matrix.md
+L00003265	```
+L00003266	
+L00003267	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00003268	
+L00003269	This addendum repairs non-runtime Crosswalk pointer rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00003270	
+L00003271	- Repairs `sfk-276a3e41fd08d5c4adaff514` and `sfk-973c4b99a2e3f9e5ad705e53`: `max_subagents_spawn` is owned by `Plans/interview-subagent-integration.md` as `interview.max_subagents_spawn`. Crosswalk may route to that owner but must not invent a separate field.

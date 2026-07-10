@@ -1,0 +1,403 @@
+<<< CONTEXT_BEFORE 1517-1528 >>>
+- toggler
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+
+<<< AUTHORITATIVE_CORE 1529-1902 >>>
+### M-005 - Target Project AGENTS DRY Seeding Handoff
+
+```yaml
+plan_unit_id: M-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Target project AGENTS.md may be seeded with DRY Method and technology/version constraints from the interview, but implementation ownership remains with interview-subagent-integration.md §5.1 and agents_md_generator.
+gui_related: false
+gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: target_agents_handoff_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: target_project_agents_dry_seeding_handoff
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0008
+preserved_exact_tokens:
+- Target-project DRY
+- interview-seeded
+- AGENTS.md
+- DRY Method
+- Technology & version constraints
+- Stack conventions
+- React 18
+- Pydantic v2
+- critical-first block
+- ~150-200 lines
+- linked docs
+- two-tier structure
+- agents_md_generator
+- preserving the DRY section
+- overwrite vs. merge
+negative_constraints: []
+compatibility_only_notes:
+- This is a handoff/consumer PlanUnit; it must not duplicate the Interview plan implementation owner.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- MiscPlan records cleanup-adjacent DRY guidance, while Plans/interview-subagent-integration.md §5.1 and agents_md_generator own target-project AGENTS.md generation.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### M-006 - Cleanup Protection And Allowlist Policy
+
+```yaml
+plan_unit_id: M-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup never removes state files, .puppet-master except explicitly allowed pruning, config/discovery paths, .gitignore, sensitive credential patterns, or the headless GUI evidence path; agent-output may be cleared only by policy while preserving the rest of .puppet-master.
+gui_related: false
+gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: destructive_cleanup_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_protection_allowlist_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0011
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0012
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0017
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0023
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0026
+preserved_exact_tokens:
+- progress.txt
+- AGENTS.md
+- prd.json
+- STATE_FILES.md
+- .puppet-master/
+- .puppet-master/config.yaml
+- .puppet-master/capabilities/
+- .puppet-master/plans/
+- .gitignore
+- .env
+- .env.*
+- '*.env'
+- '*.pem'
+- '*.key'
+- '*.crt'
+- '*.p12'
+- .ssh/
+- .ssh/*
+- .puppet-master/evidence/gui-automation/
+- .puppet-master/agent-output/
+- CLEANUP_EXCLUDE_PATTERNS
+- cleanup_exclude_patterns()
+negative_constraints:
+- Cleanup must not remove state files, .puppet-master except explicit pruning, .gitignore, or sensitive credential paths.
+- No cleanup caller may hardcode a divergent allowlist.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002'
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### M-007 - Assistant Worktree Cleanup Controls And Persistence UX
+
+```yaml
+plan_unit_id: M-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Assistant-owned worktrees identified by owner_thread_id are persistent by default; chat header Remove, thread delete, Source Control row Remove, Doctor orphan cleanup, app uninstall, and completed-thread behavior each have explicit cleanup semantics and confirmations.
+gui_related: true
+gui_classification_reason: The unit covers user-visible cleanup configuration, confirmation, tooltip, or interaction behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: assistant_worktree_cleanup_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: assistant_worktree_cleanup_controls_persistence_ux
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0014
+preserved_exact_tokens:
+- owner_thread_id
+- persistent by default
+- User clicks Remove in chat header dropdown
+- confirmation dialog
+- dirty
+- branching.assistant_worktree_cleanup_default
+- ask
+- keep
+- remove
+- Source Control worktree row
+- thread-bound
+- Force-remove via Doctor
+- orphan cleanup
+- App uninstall
+- Completed threads
+- merge
+- create PR
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md'
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### M-008 - Cleanup Workspace Scope Isolation
+
+```yaml
+plan_unit_id: M-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup runs only in the actual selected main repo, worktree, lane, attempt workspace, or worktree path used by the agent, and must not clean the main working tree for artifacts owned by another lane, attempt, or worktree.
+gui_related: false
+gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- M-007
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cross_worktree_data_loss
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_workspace_scope_isolation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0014
+preserved_exact_tokens:
+- paths.workspace
+- configured project root
+- worktree
+- lane
+- attempt-specific working directory
+- selected path only
+- must not clean the main working tree
+- another lane, attempt, or worktree
+- same directory the agent used
+negative_constraints:
+- Cleanup must not clean artifacts owned by another lane, attempt, or worktree.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md'
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### M-009 - Cleanup Mode Configuration And Conservative Defaults
+
+```yaml
+plan_unit_id: M-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup supports conservative, moderate, and configurable modes, with operator-controlled untracked, clean_ignored, clear_agent_output, remove_build_artifacts, and skip_prepare_for_conversation fields and conservative defaults that avoid aggressive cleanup unless configured.
+gui_related: false
+gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_config_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_mode_configuration_conservative_defaults
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0015
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0026
+preserved_exact_tokens:
+- Option A -- Conservative
+- Option B -- Moderate
+- Option C -- Configurable
+- cleanup.untracked
+- cleanup.ignored
+- clean_ignored
+- clear_agent_output
+- remove_build_artifacts
+- skip_prepare_for_conversation
+- 'Default: conservative'
+- git clean -fd
+- git clean -fdx
+- CleanupConfig
+negative_constraints:
+- Ignored-file cleanup must run only when configured.
+- Cleanup defaults must avoid aggressive deletion.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### M-010 - Cleanup DRY Module And Reuse Registry
+
+```yaml
+plan_unit_id: M-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: The src/cleanup module owns cleanup policy and execution; reusable cleanup functions, helpers, and data are DRY-tagged, parent module declaration is explicit, and pre-implementation checks prevent duplicate cleanup logic.
+gui_related: false
+gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- M-006
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_cleanup_logic_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_dry_module_reuse_registry
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0016
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0025
+preserved_exact_tokens:
+- DRY Method
+- single implementation
+- src/cleanup/
+- src/cleanup/mod.rs
+- src/cleanup/workspace.rs
+- pub mod cleanup
+- DRY:FN
+- DRY:DATA
+- DRY:HELPER
+- cleanup_allowlist()
+- CLEANUP_EXCLUDE_PATTERNS
+- prepare_working_directory
+- cleanup_after_execution
+- run_git_clean_with_excludes
+- run_with_cleanup
+- grep `DRY:`
+- no duplicate allowlist or git-clean logic
+negative_constraints:
+- Runners and call sites must not reimplement git clean or allowlist logic.
+- Call sites must not hardcode exclude lists.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002'
+split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+
+<<< CONTEXT_AFTER 1903-1914 >>>
+### M-011 - Gitignore Sensitive File And No Secrets Safety
+
+```yaml
+plan_unit_id: M-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Git operations respect .gitignore, never introduce git add -f for paths that could be secrets, optionally guard staged sensitive files, and never log, commit, capture in evidence, or include in GitHub content tokens, keys, or credential file contents.
+gui_related: false
+gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on:

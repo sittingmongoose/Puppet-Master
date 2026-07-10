@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 19814-19825 >>>
+          "requirement": "cmd.plan_compile.inspect_assignment records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_assignment.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.inspect_assignment records dispatch receipt cmd.plan_compile.inspect_assignment.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 19826-20217 >>>
+    "catalog.plan_compile_inspect_blocker": {
+      "ui_element_id": "catalog.plan_compile_inspect_blocker",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.inspect_blocker",
+      "handler_location": "handlers::plan_compile::inspect_blocker",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.inspect_blocker must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.inspect_blocker must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.inspect_blocker dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.plan_compile.inspect_blocker must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.inspect_blocker must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.inspect_blocker; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_inspect_blocker.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_inspect_blocker.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.plan_compile.inspect_blocker records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.inspect_blocker.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_inspect_blocker exposes a stable role/name/description matching cmd.plan_compile.inspect_blocker.",
+        "keyboard_access": "catalog.plan_compile_inspect_blocker is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_inspect_blocker preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_inspect_blocker surfaces state.commands.plan_compile_inspect_blocker.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_blocker.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.inspect_blocker reaches handlers::plan_compile::inspect_blocker with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_blocker.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_inspect_blocker.availability and disabled copy reads state.commands.plan_compile_inspect_blocker.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_blocker.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.inspect_blocker records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_blocker.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.inspect_blocker records dispatch receipt cmd.plan_compile.inspect_blocker.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.plan_compile_inspect_evidence": {
+      "ui_element_id": "catalog.plan_compile_inspect_evidence",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.inspect_evidence",
+      "handler_location": "handlers::plan_compile::inspect_evidence",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.inspect_evidence must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.inspect_evidence must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.inspect_evidence dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.plan_compile.inspect_evidence must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.inspect_evidence must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.inspect_evidence; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_inspect_evidence.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_inspect_evidence.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.plan_compile.inspect_evidence records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.inspect_evidence.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_inspect_evidence exposes a stable role/name/description matching cmd.plan_compile.inspect_evidence.",
+        "keyboard_access": "catalog.plan_compile_inspect_evidence is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_inspect_evidence preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_inspect_evidence surfaces state.commands.plan_compile_inspect_evidence.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_evidence.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.inspect_evidence reaches handlers::plan_compile::inspect_evidence with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_evidence.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_inspect_evidence.availability and disabled copy reads state.commands.plan_compile_inspect_evidence.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_evidence.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.inspect_evidence records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_inspect_evidence.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.inspect_evidence records dispatch receipt cmd.plan_compile.inspect_evidence.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.plan_compile_open_build": {
+      "ui_element_id": "catalog.plan_compile_open_build",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.open_build",
+      "handler_location": "handlers::plan_compile::open_build",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.open_build must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.open_build must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.open_build dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and route/open receipt effect",
+        "cmd.plan_compile.open_build must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.open_build must declare state selector, disabled reason, route/open receipt effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.open_build; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_open_build.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_open_build.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "route_open",
+        "description": "cmd.plan_compile.open_build opens the resulting build/artifact route when a build identity exists, or records a disabled route/open receipt while runtime activation remains blocked; it must not fabricate plan_compile.command_applied.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.open_build.route_open_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_open_build exposes a stable role/name/description matching cmd.plan_compile.open_build.",
+        "keyboard_access": "catalog.plan_compile_open_build is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_open_build preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_open_build surfaces state.commands.plan_compile_open_build.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_open_build.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.open_build reaches handlers::plan_compile::open_build with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_open_build.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_open_build.availability and disabled copy reads state.commands.plan_compile_open_build.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_open_build.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.open_build opens the resulting build/artifact route when a build identity exists, or records a disabled route/open receipt while runtime activation remains blocked; it must not fabricate plan_compile.command_applied."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_open_build.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.open_build records route/open receipt cmd.plan_compile.open_build.route_open_receipt and emits no fabricated plan_compile.command_applied event."
+      ]
+    },
+    "catalog.plan_compile_pause": {
+      "ui_element_id": "catalog.plan_compile_pause",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.pause",
+      "handler_location": "handlers::plan_compile::pause",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.pause must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.pause must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.pause dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.plan_compile.pause must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.pause must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.pause; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_pause.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_pause.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.plan_compile.pause records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.pause.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_pause exposes a stable role/name/description matching cmd.plan_compile.pause.",
+        "keyboard_access": "catalog.plan_compile_pause is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_pause preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_pause surfaces state.commands.plan_compile_pause.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_pause.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.pause reaches handlers::plan_compile::pause with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_pause.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_pause.availability and disabled copy reads state.commands.plan_compile_pause.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_pause.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.pause records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_pause.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.pause records dispatch receipt cmd.plan_compile.pause.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.plan_compile_request_bounded_recompile": {
+      "ui_element_id": "catalog.plan_compile_request_bounded_recompile",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.request_bounded_recompile",
+      "handler_location": "handlers::plan_compile::request_bounded_recompile",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.request_bounded_recompile must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.request_bounded_recompile must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.request_bounded_recompile dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.plan_compile.request_bounded_recompile must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.request_bounded_recompile must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.request_bounded_recompile; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_request_bounded_recompile.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_request_bounded_recompile.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.plan_compile.request_bounded_recompile records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.request_bounded_recompile.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_request_bounded_recompile exposes a stable role/name/description matching cmd.plan_compile.request_bounded_recompile.",
+        "keyboard_access": "catalog.plan_compile_request_bounded_recompile is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_request_bounded_recompile preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_request_bounded_recompile surfaces state.commands.plan_compile_request_bounded_recompile.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_request_bounded_recompile.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.request_bounded_recompile reaches handlers::plan_compile::request_bounded_recompile with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_request_bounded_recompile.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_request_bounded_recompile.availability and disabled copy reads state.commands.plan_compile_request_bounded_recompile.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_request_bounded_recompile.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.request_bounded_recompile records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_request_bounded_recompile.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.request_bounded_recompile records dispatch receipt cmd.plan_compile.request_bounded_recompile.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.plan_compile_resume": {
+      "ui_element_id": "catalog.plan_compile_resume",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.resume",
+      "handler_location": "handlers::plan_compile::resume",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.resume must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.resume must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.resume dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.plan_compile.resume must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.resume must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.resume; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_resume.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_resume.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.plan_compile.resume records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.resume.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_resume exposes a stable role/name/description matching cmd.plan_compile.resume.",
+        "keyboard_access": "catalog.plan_compile_resume is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_resume preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_resume surfaces state.commands.plan_compile_resume.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_resume.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.resume reaches handlers::plan_compile::resume with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_resume.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_resume.availability and disabled copy reads state.commands.plan_compile_resume.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_resume.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.resume records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_resume.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.resume records dispatch receipt cmd.plan_compile.resume.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.plan_compile_retry": {
+      "ui_element_id": "catalog.plan_compile_retry",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.retry",
+      "handler_location": "handlers::plan_compile::retry",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.retry must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.retry must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.retry dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.plan_compile.retry must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "cmd.plan_compile.retry must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.retry; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+      "state_selector": "state.commands.plan_compile_retry.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_retry.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.plan_compile.retry records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.retry.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.plan_compile_retry exposes a stable role/name/description matching cmd.plan_compile.retry.",
+        "keyboard_access": "catalog.plan_compile_retry is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.plan_compile_retry preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.plan_compile_retry surfaces state.commands.plan_compile_retry.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.plan_compile_retry.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.retry reaches handlers::plan_compile::retry with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_retry.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_retry.availability and disabled copy reads state.commands.plan_compile_retry.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_retry.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.retry records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.plan_compile_retry.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.retry records dispatch receipt cmd.plan_compile.retry.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 20218-20229 >>>
+    "catalog.planning_wizard_amendment_accept": {
+      "ui_element_id": "catalog.planning_wizard_amendment_accept",
+      "ui_location": "Planning Wizard workspace",
+      "ui_command_id": "cmd.planning_wizard.amendment.accept",
+      "handler_location": "handlers::planning_wizard::amendment_accept",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.planning_wizard.amendment.accept must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.planning_wizard.amendment.accept must expose projected state selector and disabled reason before dispatch",
+        "cmd.planning_wizard.amendment.accept dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.planning_wizard.amendment.accept must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.planning_wizard.amendment.accept must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE canonical_document_lines=29801-29812 >>>
+L00029801	- UI surfaces
+L00029802	negative_constraints:
+L00029803	- UI surfaces do not own Persona runtime records.
+L00029804	compatibility_only_notes: []
+L00029805	stale_retired_dispositions: []
+L00029806	owner_boundary_notes:
+L00029807	- Runtime emits Persona state; UI consumes and displays it.
+L00029808	owner_hints:
+L00029809	- Plans/orchestrator-subagent-integration.md
+L00029810	preserved_contractrefs: []
+L00029811	```
+L00029812	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=29813-30179 >>>
+L00029813	### OSI-406 - Auto Persona Resolution Inputs And Examples
+L00029814	
+L00029815	```yaml
+L00029816	plan_unit_id: OSI-406
+L00029817	unit_type: requirement
+L00029818	status: accepted
+L00029819	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029820	canonical_text: >-
+L00029821	  Auto Persona resolution consumes tier, task, repo, operation, PRD/plan, and config override signals; example Personas
+L00029822	  remain illustrative, and future sre remains unpromoted until explicit promotion.
+L00029823	gui_related: false
+L00029824	gui_classification_reason: This unit covers backend Persona selection inputs, not GUI presentation.
+L00029825	split_recommended: false
+L00029826	depends_on:
+L00029827	- OSI-084
+L00029828	- OSI-196
+L00029829	- OSI-403
+L00029830	unblocks: []
+L00029831	acceptance_criteria:
+L00029832	- Covered auto Persona resolution inputs and examples remain losslessly available for exact-text audit.
+L00029833	- Future sre remains unpromoted unless a later canonical owner explicitly promotes it.
+L00029834	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029835	validation_surfaces:
+L00029836	- >-
+L00029837	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029838	- python3 scripts/pm-plan-index.py validate
+L00029839	reasoning_tier: standard
+L00029840	context_scope: orchestrator_subagent_standardization
+L00029841	implementation_surfaces:
+L00029842	- Plans/orchestrator-subagent-integration.md
+L00029843	risk_class: auto_persona_resolution_inputs_examples
+L00029844	node_compile_hint:
+L00029845	  mode: auto_persona_resolution_inputs_examples
+L00029846	  create_worknodes: false
+L00029847	source_lineage:
+L00029848	- >-
+L00029849	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0198
+L00029850	preserved_exact_tokens:
+L00029851	- tier level
+L00029852	- task type
+L00029853	- repo language/framework
+L00029854	- PRD/plan recommendations
+L00029855	- rust-engineer
+L00029856	- collaborator
+L00029857	- explorer
+L00029858	- devops-engineer
+L00029859	- performance-engineer
+L00029860	- sre
+L00029861	negative_constraints:
+L00029862	- Future sre Persona is not promoted by this example.
+L00029863	compatibility_only_notes:
+L00029864	- Persona examples are illustrative source evidence.
+L00029865	stale_retired_dispositions: []
+L00029866	owner_boundary_notes:
+L00029867	- Persona registry owner controls promoted Persona IDs.
+L00029868	owner_hints:
+L00029869	- Plans/orchestrator-subagent-integration.md
+L00029870	preserved_contractrefs: []
+L00029871	```
+L00029872	
+L00029873	### OSI-407 - Persona Registry Normalization And Provider Seed Boundary
+L00029874	
+L00029875	```yaml
+L00029876	plan_unit_id: OSI-407
+L00029877	unit_type: requirement
+L00029878	status: accepted
+L00029879	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029880	canonical_text: >-
+L00029881	  Persona registry language normalizes stale explore references to explorer and treats provider-native directories as
+L00029882	  seed/import sources only, with Puppet Master Persona storage as the sole canonical source after import.
+L00029883	gui_related: false
+L00029884	gui_classification_reason: This unit covers backend registry normalization and storage ownership, not GUI presentation.
+L00029885	split_recommended: false
+L00029886	depends_on:
+L00029887	- OSI-083
+L00029888	- OSI-084
+L00029889	unblocks: []
+L00029890	acceptance_criteria:
+L00029891	- Covered registry normalization and provider seed boundary sections remain losslessly available for exact-text audit.
+L00029892	- Provider-native directories are not canonical Persona storage after import.
+L00029893	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029894	validation_surfaces:
+L00029895	- >-
+L00029896	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029897	- python3 scripts/pm-plan-index.py validate
+L00029898	reasoning_tier: standard
+L00029899	context_scope: orchestrator_subagent_standardization
+L00029900	implementation_surfaces:
+L00029901	- Plans/orchestrator-subagent-integration.md
+L00029902	risk_class: persona_registry_normalization_provider_seed_boundary
+L00029903	node_compile_hint:
+L00029904	  mode: persona_registry_normalization_provider_seed_boundary
+L00029905	  create_worknodes: false
+L00029906	source_lineage:
+L00029907	- >-
+L00029908	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0199
+L00029909	- >-
+L00029910	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0200
+L00029911	preserved_exact_tokens:
+L00029912	- explore
+L00029913	- explorer
+L00029914	- .claude/agents
+L00029915	- provider-native directories
+L00029916	- seed/import sources only
+L00029917	- Puppet Master Persona storage
+L00029918	- sole canonical source after import
+L00029919	negative_constraints:
+L00029920	- Provider-native directories are not canonical Persona storage after import.
+L00029921	compatibility_only_notes:
+L00029922	- explore is stale vocabulary normalized to explorer.
+L00029923	stale_retired_dispositions:
+L00029924	- Legacy explore references are stale and must normalize to explorer.
+L00029925	owner_boundary_notes:
+L00029926	- Persona storage owner retains canonical registry/storage authority.
+L00029927	owner_hints:
+L00029928	- Plans/orchestrator-subagent-integration.md
+L00029929	preserved_contractrefs: []
+L00029930	```
+L00029931	
+L00029932	### OSI-408 - Persona Acceptance Criteria Addendum
+L00029933	
+L00029934	```yaml
+L00029935	plan_unit_id: OSI-408
+L00029936	unit_type: requirement
+L00029937	status: accepted
+L00029938	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029939	canonical_text: >-
+L00029940	  Persona acceptance criteria preserve defaults/auto selection by canonical execution scope: node, package, seam, lane, and phase.
+L00029941	  Legacy Phase/Task/Subtask/Iteration labels, including "Iteration remains the lowest tier," are compatibility/search aliases
+L00029942	  only and must not drive live runtime routing, Persona selection, or completion authority. Effective Persona/model/platform
+L00029943	  state emission and registry language standardized on explorer rather than explore remain required.
+L00029944	gui_related: false
+L00029945	gui_classification_reason: This unit covers backend Persona acceptance criteria, not GUI presentation.
+L00029946	split_recommended: false
+L00029947	depends_on:
+L00029948	- OSI-402
+L00029949	- OSI-403
+L00029950	- OSI-404
+L00029951	- OSI-406
+L00029952	- OSI-407
+L00029953	unblocks: []
+L00029954	acceptance_criteria:
+L00029955	- Covered Persona acceptance criteria remain losslessly available for exact-text audit.
+L00029956	- Persona switching must not add live runtime tiers or use legacy task/subtask/iteration labels for runtime authority.
+L00029957	- Legacy Phase/Task/Subtask/Iteration labels are retained only as compatibility/search aliases.
+L00029958	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029959	validation_surfaces:
+L00029960	- >-
+L00029961	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029962	- python3 scripts/pm-plan-index.py validate
+L00029963	reasoning_tier: standard
+L00029964	context_scope: orchestrator_subagent_standardization
+L00029965	implementation_surfaces:
+L00029966	- Plans/orchestrator-subagent-integration.md
+L00029967	risk_class: persona_acceptance_criteria_addendum
+L00029968	node_compile_hint:
+L00029969	  mode: persona_acceptance_criteria_addendum
+L00029970	  create_worknodes: false
+L00029971	source_lineage:
+L00029972	- >-
+L00029973	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0201
+L00029974	preserved_exact_tokens:
+L00029975	- Persona defaults/auto selection per tier
+L00029976	- Iteration remains the lowest tier
+L00029977	- effective Persona/model/platform state
+L00029978	- explorer
+L00029979	- explore
+L00029980	negative_constraints:
+L00029981	- Iteration remains the lowest tier; Persona switching must not add tiers.
+L00029982	compatibility_only_notes:
+L00029983	- explore is compatibility/stale vocabulary only.
+L00029984	stale_retired_dispositions:
+L00029985	- Registry and plan language must standardize on explorer, not explore.
+L00029986	owner_boundary_notes:
+L00029987	- Persona owner docs retain registry and tier-default ownership.
+L00029988	owner_hints:
+L00029989	- Plans/orchestrator-subagent-integration.md
+L00029990	preserved_contractrefs: []
+L00029991	```
+L00029992	
+L00029993	### OSI-409 - Scored Ready Set Scheduler And Parallel Dispatch
+L00029994	
+L00029995	```yaml
+L00029996	plan_unit_id: OSI-409
+L00029997	unit_type: requirement
+L00029998	status: accepted
+L00029999	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030000	canonical_text: >-
+L00030001	  Orchestrator scheduling consumes the executor scored ready-set model, global ready set, canonical score tuple, available
+L00030002	  capacity, queue-analysis observability, DAG readiness, isolation, blocked/backoff states, and remediation lanes.
+L00030003	gui_related: false
+L00030004	gui_classification_reason: This unit covers backend scheduler behavior, not GUI presentation.
+L00030005	split_recommended: false
+L00030006	depends_on:
+L00030007	- OSI-018
+L00030008	- OSI-030
+L00030009	- OSI-352
+L00030010	- OSI-357
+L00030011	unblocks: []
+L00030012	acceptance_criteria:
+L00030013	- Covered scheduler model, parallel execution contract, runtime addendum heading, and relevant acceptance bullets remain losslessly available.
+L00030014	- Scheduler evidence does not create WorkNodes or executable queues.
+L00030015	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030016	validation_surfaces:
+L00030017	- >-
+L00030018	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030019	- python3 scripts/pm-plan-index.py validate
+L00030020	reasoning_tier: standard
+L00030021	context_scope: orchestrator_subagent_standardization
+L00030022	implementation_surfaces:
+L00030023	- Plans/orchestrator-subagent-integration.md
+L00030024	risk_class: scored_ready_set_scheduler_parallel_dispatch
+L00030025	node_compile_hint:
+L00030026	  mode: scored_ready_set_scheduler_parallel_dispatch
+L00030027	  create_worknodes: false
+L00030028	source_lineage:
+L00030029	- >-
+L00030030	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0202
+L00030031	- >-
+L00030032	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0203
+L00030033	- >-
+L00030034	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0204
+L00030035	- >-
+L00030036	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030037	preserved_exact_tokens:
+L00030038	- global ready set
+L00030039	- canonical score tuple
+L00030040	- available capacity
+L00030041	- queue-analysis observability
+L00030042	- canonical DAG readiness
+L00030043	- worktree/runtime isolation
+L00030044	- blocked/backoff states
+L00030045	- remediation lane handling
+L00030046	negative_constraints:
+L00030047	- Scheduler evidence does not create executable queues or WorkNodes.
+L00030048	compatibility_only_notes: []
+L00030049	stale_retired_dispositions: []
+L00030050	owner_boundary_notes:
+L00030051	- Executor, runtime, and storage contracts own scheduler fields and scoring semantics.
+L00030052	owner_hints:
+L00030053	- Plans/orchestrator-subagent-integration.md
+L00030054	preserved_contractrefs:
+L00030055	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+L00030056	```
+L00030057	
+L00030058	### OSI-410 - Worktree Native Conflict Control Observability
+L00030059	
+L00030060	```yaml
+L00030061	plan_unit_id: OSI-410
+L00030062	unit_type: requirement
+L00030063	status: accepted
+L00030064	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030065	canonical_text: >-
+L00030066	  Parallel safety preserves worktree-native isolation, declared touch-set recording, merge/conflict risk observability,
+L00030067	  blocked or capacity_deferred classification, and backoff/yield policy without introducing file-lease orchestration.
+L00030068	gui_related: false
+L00030069	gui_classification_reason: This unit covers backend worktree/conflict behavior, not GUI presentation.
+L00030070	split_recommended: false
+L00030071	depends_on:
+L00030072	- OSI-020
+L00030073	- OSI-354
+L00030074	- OSI-357
+L00030075	unblocks: []
+L00030076	acceptance_criteria:
+L00030077	- Covered worktree-native conflict control section and relevant acceptance bullet remain losslessly available.
+L00030078	- This packet does not introduce a file-lease system.
+L00030079	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030080	validation_surfaces:
+L00030081	- >-
+L00030082	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030083	- python3 scripts/pm-plan-index.py validate
+L00030084	reasoning_tier: standard
+L00030085	context_scope: orchestrator_subagent_standardization
+L00030086	implementation_surfaces:
+L00030087	- Plans/orchestrator-subagent-integration.md
+L00030088	risk_class: worktree_native_conflict_control_observability
+L00030089	node_compile_hint:
+L00030090	  mode: worktree_native_conflict_control_observability
+L00030091	  create_worknodes: false
+L00030092	source_lineage:
+L00030093	- >-
+L00030094	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0205
+L00030095	- >-
+L00030096	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0213
+L00030097	preserved_exact_tokens:
+L00030098	- worktree-native isolation
+L00030099	- file-lease orchestration
+L00030100	- declared touch sets
+L00030101	- merge/conflict risk
+L00030102	- blocked
+L00030103	- capacity_deferred
+L00030104	- backoff/yield policies
+L00030105	negative_constraints:
+L00030106	- This packet does not introduce a file-lease system.
+L00030107	compatibility_only_notes: []
+L00030108	stale_retired_dispositions: []
+L00030109	owner_boundary_notes:
+L00030110	- WorktreeGitImprovement, Decision Policy, and storage plans own accepted conflict-control semantics.
+L00030111	owner_hints:
+L00030112	- Plans/orchestrator-subagent-integration.md
+L00030113	preserved_contractrefs:
+L00030114	- 'ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md'
+L00030115	```
+L00030116	
+L00030117	### OSI-411 - Wake Reason Cascade Semantics
+L00030118	
+L00030119	```yaml
+L00030120	plan_unit_id: OSI-411
+L00030121	unit_type: requirement
+L00030122	status: accepted
+L00030123	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030124	canonical_text: >-
+L00030125	  Orchestrator consumes event-driven wakeups, preserves the required wake_reason values, reevaluates direct dependents
+L00030126	  immediately, and makes newly ready nodes eligible in the same wake cycle.
+L00030127	gui_related: false
+L00030128	gui_classification_reason: This unit covers backend wake/cascade behavior, not GUI presentation.
+L00030129	split_recommended: false
+L00030130	depends_on:
+L00030131	- OSI-018
+L00030132	- OSI-031
+L00030133	- OSI-409
+L00030134	unblocks: []
+L00030135	acceptance_criteria:
+L00030136	- Covered wakeup/cascade semantics and wake_reason list remain losslessly available for exact-text audit.
+L00030137	- Wakeup evidence does not create executable queues.
+L00030138	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00030139	validation_surfaces:
+L00030140	- >-
+L00030141	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00030142	- python3 scripts/pm-plan-index.py validate
+L00030143	reasoning_tier: standard
+L00030144	context_scope: orchestrator_subagent_standardization
+L00030145	implementation_surfaces:
+L00030146	- Plans/orchestrator-subagent-integration.md
+L00030147	risk_class: wake_reason_cascade_semantics
+L00030148	node_compile_hint:
+L00030149	  mode: wake_reason_cascade_semantics
+L00030150	  create_worknodes: false
+L00030151	source_lineage:
+L00030152	- >-
+L00030153	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0206
+L00030154	preserved_exact_tokens:
+L00030155	- wake_reason
+L00030156	- node_finished
+L00030157	- prerequisite_resolved
+L00030158	- verification_finished
+L00030159	- approval_resolved
+L00030160	- clarification_resolved
+L00030161	- remediation_finished
+L00030162	- backoff_expired
+L00030163	- capacity_changed
+L00030164	- restore_recovery_finished
+L00030165	- replan_patch_applied
+L00030166	- auth_recovered
+L00030167	- startup_recovered
+L00030168	- watchdog_recheck
+L00030169	negative_constraints:
+L00030170	- Newly ready nodes must not be deferred to a later sweep when eligible in the same wake cycle.
+L00030171	compatibility_only_notes: []
+L00030172	stale_retired_dispositions: []
+L00030173	owner_boundary_notes:
+L00030174	- Executor/runtime contracts own canonical wake events.
+L00030175	owner_hints:
+L00030176	- Plans/orchestrator-subagent-integration.md
+L00030177	preserved_contractrefs: []
+L00030178	```
+L00030179	
+
+<<< CONTEXT_AFTER canonical_document_lines=30180-30191 >>>
+L00030180	### OSI-412 - Temporal Wait And Timeout Scheduler Semantics
+L00030181	
+L00030182	```yaml
+L00030183	plan_unit_id: OSI-412
+L00030184	unit_type: requirement
+L00030185	status: accepted
+L00030186	owner_doc: Plans/orchestrator-subagent-integration.md
+L00030187	canonical_text: >-
+L00030188	  Orchestrator treats scheduled observations, wait timers, and governance waits as explicit scheduler inputs and must not
+L00030189	  infer skipped/failed, stall, pause, or blocked outcomes before the governing timestamp or timer expires.
+L00030190	gui_related: false
+L00030191	gui_classification_reason: This unit covers backend wait/timeout semantics, not GUI presentation.

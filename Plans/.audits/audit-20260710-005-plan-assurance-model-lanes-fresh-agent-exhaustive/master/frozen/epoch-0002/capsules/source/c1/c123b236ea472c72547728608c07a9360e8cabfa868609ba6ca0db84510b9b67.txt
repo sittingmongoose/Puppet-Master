@@ -1,0 +1,381 @@
+<<< CONTEXT_BEFORE 7757-7768 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+preserved_exact_tokens:
+  - "usage.event"
+  - "run.completed.usage"
+  - "Investigation Context"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7769-8120 >>>
+### ACD-094 - Context Usage Runtime Source Boundary
+
+```yaml
+plan_unit_id: ACD-094
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The thread surface derives usage from canonical runtime records and must not
+  invent a second chat-local cost model; hidden/background helper usage remains
+  source-class inspectable, and truncation, redaction, and
+  context-serialization state remain visible so omitted context is never
+  presented as serialized.
+gui_related: true
+gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
+depends_on: [ACD-091, ACD-093]
+unblocks: []
+acceptance_criteria:
+  - Usage derives from canonical runtime records.
+  - Hidden/background helper usage remains inspectable by source class.
+  - Truncation, redaction, and serialization state remain visible.
+  - Omitted context is never presented as serialized.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: cost_model_drift
+reasoning_tier: high
+context_scope: context_usage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: context_usage_runtime_source_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+preserved_exact_tokens:
+  - "MUST NOT invent a second chat-local cost model"
+  - "UI MUST NOT silently present omitted context as if it were still serialized"
+negative_constraints:
+  - "MUST NOT invent a second chat-local cost model"
+  - "UI MUST NOT silently present omitted context as if it were still serialized"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+```
+
+### ACD-095 - Investigation Context Debug Surface Scope
+
+```yaml
+plan_unit_id: ACD-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Debug threads expose visible Investigation Context alongside normal
+  context-usage affordances as a live bounded bundle of evidence, target
+  metadata, instrumentation state, verification outcomes, and revalidation
+  state.
+gui_related: true
+gui_classification_reason: Investigation Context is a visible debug-thread surface.
+depends_on: [ACD-078, ACD-091]
+unblocks: [ACD-096, ACD-097, ACD-098, ACD-099, ACD-100]
+acceptance_criteria:
+  - Debug threads expose Investigation Context as visible context.
+  - Evidence, target metadata, instrumentation, verification, and revalidation state remain bounded.
+  - Normal context usage affordances remain available alongside Investigation Context.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_context_scope
+reasoning_tier: standard
+context_scope: investigation_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: investigation_context_debug_surface_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+preserved_exact_tokens:
+  - "Investigation Context"
+  - "evidence"
+  - "target metadata"
+  - "instrumentation state"
+  - "verification outcomes"
+  - "revalidation state"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-096 - Investigation Context Header Field Boundary
+
+```yaml
+plan_unit_id: ACD-096
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat consumes canonical Investigation Context header fields from
+  Contracts_V0 without durable chat-local renaming; presentation labels may
+  layer on top, but aliases such as `primary_target` and
+  `final_or_intermediate_state` are retired.
+gui_related: false
+gui_classification_reason: Header field names and retired aliases are durable contract boundaries.
+depends_on: [ACD-095]
+unblocks: [ACD-097]
+acceptance_criteria:
+  - Assistant Chat consumes canonical Investigation Context header fields.
+  - Presentation labels do not become durable chat-local field names.
+  - Retired aliases remain retired.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: field_name_drift
+reasoning_tier: high
+context_scope: investigation_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: investigation_context_header_field_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+preserved_exact_tokens:
+  - "investigation_id"
+  - "target"
+  - "requested_target?"
+  - "effective_target?"
+  - "display_label?"
+  - "primary_target_summary"
+  - "debug_target_kind"
+  - "adapter_id?"
+  - "investigation_phase"
+  - "state"
+  - "verification_state?"
+  - "attention_reason_code?"
+  - "blocked_reason_code?"
+  - "revalidation_reason_code?"
+  - "active_instrumentation_count"
+  - "last_updated_at_utc"
+  - "primary_target"
+  - "final_or_intermediate_state"
+negative_constraints:
+  - "Assistant Chat must not durably rename canonical Investigation Context header fields."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+### ACD-097 - Investigation Context Item State Serialization Boundary
+
+```yaml
+plan_unit_id: ACD-097
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Investigation Context item states are `active`, `redacted`, `revoked`,
+  `blocked`, `expired`, and `omitted`; only `active` and `redacted` items may
+  serialize into prompt context, while the others remain audit-visible and must
+  not serialize as successful context.
+gui_related: false
+gui_classification_reason: Serialization eligibility is prompt/runtime behavior; visible rendering is covered separately.
+depends_on: [ACD-096]
+unblocks: [ACD-098, ACD-100]
+acceptance_criteria:
+  - Item state values remain machine-readable and canonical.
+  - Only active and redacted items serialize into prompt context.
+  - Revoked, blocked, expired, and omitted items remain audit-visible without successful-context serialization.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prompt_leak
+reasoning_tier: high
+context_scope: investigation_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: investigation_context_item_state_serialization
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+preserved_exact_tokens:
+  - "active"
+  - "redacted"
+  - "revoked"
+  - "blocked"
+  - "expired"
+  - "omitted"
+negative_constraints:
+  - "Only active/redacted items may serialize into prompt context."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-098 - Debug Auto-Ingestion Visibility Boundary
+
+```yaml
+plan_unit_id: ACD-098
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Investigation Context is separate from ordinary browser/document composer
+  chips; ordinary browser `/capture` remains explicit, and debug
+  auto-ingestion or agent-fed evidence may enter only an active investigation
+  as visible Investigation Context items, not hidden messages.
+gui_related: true
+gui_classification_reason: Auto-ingested debug evidence must remain visible in the user-facing Investigation Context surface.
+depends_on: [ACD-095, ACD-097]
+unblocks: []
+acceptance_criteria:
+  - Investigation Context remains separate from ordinary composer chips.
+  - Ordinary browser /capture remains explicit.
+  - Debug auto-ingestion and agent-fed evidence enter only active investigations as visible items.
+  - Hidden message injection is prohibited.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hidden_context_injection
+reasoning_tier: high
+context_scope: investigation_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: debug_auto_ingestion_visibility_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+preserved_exact_tokens:
+  - "/capture"
+  - "debug auto-ingestion"
+  - "agent-fed evidence"
+  - "not hidden messages"
+negative_constraints:
+  - "Debug auto-ingestion and agent-fed evidence must not enter as hidden messages."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-099 - Investigation Context Artifact Ownership Boundary
+
+```yaml
+plan_unit_id: ACD-099
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Runtime Artifacts owns raw logs, traces, screenshots, recordings, full
+  transcripts, raw manifests, artifact bytes, and export/import schema;
+  Investigation Context carries bounded summaries and stable refs, and
+  revocation does not imply deletion of the underlying artifact record.
+gui_related: false
+gui_classification_reason: Artifact ownership and retention are storage/runtime boundaries.
+depends_on: [ACD-095]
+unblocks: [ACD-100]
+acceptance_criteria:
+  - Runtime Artifacts owns raw artifact payloads and export/import schema.
+  - Investigation Context carries only bounded summaries and stable refs.
+  - Revocation does not delete the underlying artifact record.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: artifact_ownership_drift
+reasoning_tier: high
+context_scope: investigation_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: investigation_context_artifact_ownership_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+preserved_exact_tokens:
+  - "Runtime Artifacts"
+  - "bounded summaries"
+  - "stable refs"
+  - "revocation does not imply deletion"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-100 - Investigation Context Rendering Filtering Actions
+
+```yaml
+plan_unit_id: ACD-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Investigation Context may render as card, `/chip/panel`, or compact
+  equivalent with explicit attach, `/removal/revocation`, `/revoke`,
+  provenance, timestamp, redaction/truncation state, filtering, and actions
+  `Open target`, `Open artifacts`, `Export bundle`, `Revalidate target`,
+  `Revoke item`, and `Show raw in Context Detail Pane`.
+gui_related: true
+gui_classification_reason: Rendering, filtering, and actions are visible Investigation Context UI.
+depends_on: [ACD-092, ACD-095, ACD-097, ACD-099]
+unblocks: []
+acceptance_criteria:
+  - Investigation Context renders as a card, /chip/panel, or compact equivalent.
+  - Attach, removal/revocation, provenance, timestamps, redaction/truncation, and filtering are visible.
+  - Open, export, revalidate, revoke, and raw-detail actions are available where supported.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: investigation_surface
+reasoning_tier: standard
+context_scope: investigation_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: investigation_context_rendering_filtering_actions
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+preserved_exact_tokens:
+  - "/chip/panel"
+  - "/removal/revocation"
+  - "/revoke"
+  - "Open target"
+  - "Open artifacts"
+  - "Export bundle"
+  - "Revalidate target"
+  - "Revoke item"
+  - "Show raw in Context Detail Pane"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+
+<<< CONTEXT_AFTER 8121-8132 >>>
+### ACD-101 - Activity Transparency Operation Card Owner Scope
+
+```yaml
+plan_unit_id: ACD-101
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Activity transparency uses a shared `inline operation card` family rather
+  than isolated widgets; Assistant Chat is the primary owner for
+  operation-card behavior, while FinalGUISpec, Permissions_System, and
+  UI_Command_Catalog consume the relevant surfaces.

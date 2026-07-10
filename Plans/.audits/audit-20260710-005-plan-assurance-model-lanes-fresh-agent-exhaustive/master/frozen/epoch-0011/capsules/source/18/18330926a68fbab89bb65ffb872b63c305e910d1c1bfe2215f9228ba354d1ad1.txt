@@ -1,0 +1,303 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8369-8380 >>>
+L00008369	- SchemaID:evidence.schema.json
+L00008370	negative_constraints: []
+L00008371	compatibility_only_notes: []
+L00008372	stale_retired_dispositions: []
+L00008373	owner_boundary_notes:
+L00008374	- Plans/Containers_Registry_and_Unraid.md, FinalGUISpec, Orchestrator_Page, and evidence schema remain cross-doc consumers/authorities through the preserved ContractRef.
+L00008375	owner_hints:
+L00008376	- Plans/newtools.md
+L00008377	preserved_contractrefs:
+L00008378	- 'ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json'
+L00008379	```
+L00008380	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8381-8668 >>>
+L00008381	### N2-001 - GUI Testing Tools Retired Source-Preserving Bridge
+L00008382	
+L00008383	```yaml
+L00008384	plan_unit_id: N2-001
+L00008385	unit_type: compatibility_disposition
+L00008386	status: accepted
+L00008387	owner_doc: Plans/newtools.md
+L00008388	canonical_text: N2-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 107 because newtools-S0001 through newtools-S0078 are covered by N2-002 through N2-150 or explicit structural, reference-only, retired, and migration-coverage dispositions. N2-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+L00008389	gui_related: false
+L00008390	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained newtools PlanUnits and coverage_map proof.
+L00008391	split_recommended: false
+L00008392	depends_on:
+L00008393	- N2-002
+L00008394	- N2-003
+L00008395	- N2-004
+L00008396	- N2-005
+L00008397	- N2-006
+L00008398	- N2-007
+L00008399	- N2-008
+L00008400	- N2-009
+L00008401	- N2-010
+L00008402	- N2-011
+L00008403	- N2-012
+L00008404	- N2-013
+L00008405	- N2-014
+L00008406	- N2-015
+L00008407	- N2-016
+L00008408	- N2-017
+L00008409	- N2-018
+L00008410	- N2-019
+L00008411	- N2-020
+L00008412	- N2-021
+L00008413	- N2-022
+L00008414	- N2-023
+L00008415	- N2-024
+L00008416	- N2-025
+L00008417	- N2-026
+L00008418	- N2-027
+L00008419	- N2-028
+L00008420	- N2-029
+L00008421	- N2-030
+L00008422	- N2-031
+L00008423	- N2-032
+L00008424	- N2-033
+L00008425	- N2-034
+L00008426	- N2-035
+L00008427	- N2-036
+L00008428	- N2-037
+L00008429	- N2-038
+L00008430	- N2-039
+L00008431	- N2-040
+L00008432	- N2-041
+L00008433	- N2-042
+L00008434	- N2-043
+L00008435	- N2-044
+L00008436	- N2-045
+L00008437	- N2-046
+L00008438	- N2-047
+L00008439	- N2-048
+L00008440	- N2-049
+L00008441	- N2-050
+L00008442	- N2-051
+L00008443	- N2-052
+L00008444	- N2-053
+L00008445	- N2-054
+L00008446	- N2-055
+L00008447	- N2-056
+L00008448	- N2-057
+L00008449	- N2-058
+L00008450	- N2-059
+L00008451	- N2-060
+L00008452	- N2-061
+L00008453	- N2-062
+L00008454	- N2-063
+L00008455	- N2-064
+L00008456	- N2-065
+L00008457	- N2-066
+L00008458	- N2-067
+L00008459	- N2-068
+L00008460	- N2-069
+L00008461	- N2-070
+L00008462	- N2-071
+L00008463	- N2-072
+L00008464	- N2-073
+L00008465	- N2-074
+L00008466	- N2-075
+L00008467	- N2-076
+L00008468	- N2-077
+L00008469	- N2-078
+L00008470	- N2-079
+L00008471	- N2-080
+L00008472	- N2-081
+L00008473	- N2-082
+L00008474	- N2-083
+L00008475	- N2-084
+L00008476	- N2-085
+L00008477	- N2-086
+L00008478	- N2-087
+L00008479	- N2-088
+L00008480	- N2-089
+L00008481	- N2-090
+L00008482	- N2-091
+L00008483	- N2-092
+L00008484	- N2-093
+L00008485	- N2-094
+L00008486	- N2-095
+L00008487	- N2-096
+L00008488	- N2-097
+L00008489	- N2-098
+L00008490	- N2-099
+L00008491	- N2-100
+L00008492	- N2-101
+L00008493	- N2-102
+L00008494	- N2-103
+L00008495	- N2-104
+L00008496	- N2-105
+L00008497	- N2-106
+L00008498	- N2-107
+L00008499	- N2-108
+L00008500	- N2-109
+L00008501	- N2-110
+L00008502	- N2-111
+L00008503	- N2-112
+L00008504	- N2-113
+L00008505	- N2-114
+L00008506	- N2-115
+L00008507	- N2-116
+L00008508	- N2-117
+L00008509	- N2-118
+L00008510	- N2-119
+L00008511	- N2-120
+L00008512	- N2-121
+L00008513	- N2-122
+L00008514	- N2-123
+L00008515	- N2-124
+L00008516	- N2-125
+L00008517	- N2-126
+L00008518	- N2-127
+L00008519	- N2-128
+L00008520	- N2-129
+L00008521	- N2-130
+L00008522	- N2-131
+L00008523	- N2-132
+L00008524	- N2-133
+L00008525	- N2-134
+L00008526	- N2-135
+L00008527	- N2-136
+L00008528	- N2-137
+L00008529	- N2-138
+L00008530	- N2-139
+L00008531	- N2-140
+L00008532	- N2-141
+L00008533	- N2-142
+L00008534	- N2-143
+L00008535	- N2-144
+L00008536	- N2-145
+L00008537	- N2-146
+L00008538	- N2-147
+L00008539	- N2-148
+L00008540	- N2-149
+L00008541	- N2-150
+L00008542	unblocks: []
+L00008543	acceptance_criteria:
+L00008544	- N2-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 107.
+L00008545	- newtools-S0001 through newtools-S0078 product coverage is owned by N2-002 through N2-150 or explicit structural, reference-only, retired, and migration-coverage dispositions.
+L00008546	- N2-001 remains only to preserve migration lineage for the former source-preserving bridge.
+L00008547	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00008548	validation_surfaces:
+L00008549	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008550	- python3 scripts/pm-plan-index.py validate
+L00008551	risk_class: migration_lineage
+L00008552	reasoning_tier: standard
+L00008553	context_scope: residual_plan_standardization
+L00008554	implementation_surfaces:
+L00008555	- Plans/newtools.md
+L00008556	node_compile_hint:
+L00008557	  mode: source_preserving_bridge_retired
+L00008558	  create_worknodes: false
+L00008559	source_lineage:
+L00008560	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0072
+L00008561	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0073
+L00008562	preserved_exact_tokens:
+L00008563	- N2-001
+L00008564	- GUI Testing Tools Residual Source-Preserving PlanUnit
+L00008565	- source_preserving_planunit
+L00008566	- source_preserving_bridge_retired
+L00008567	- 15. References
+L00008568	- 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum
+L00008569	- Result payload minima
+L00008570	- Owner / Consumer Map
+L00008571	- PlanUnits
+L00008572	- Migration Coverage
+L00008573	negative_constraints:
+L00008574	- N2-001 must not re-own newtools-S0001 through newtools-S0078 after Phase 2B batch 107.
+L00008575	- N2-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00008576	- Retired bridge lineage must not be treated as implementation-ready product coverage.
+L00008577	- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00008578	compatibility_only_notes:
+L00008579	- N2-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00008580	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00008581	stale_retired_dispositions:
+L00008582	- The former N2-001 residual source-preserving bridge is retired by Phase 2B batch 107.
+L00008583	owner_boundary_notes:
+L00008584	- N2-002 through N2-150 and explicit coverage dispositions own newtools product coverage after bridge retirement.
+L00008585	- newtools-S0072 is reference-only lineage/provenance coverage after bridge retirement.
+L00008586	- newtools-S0073 is a structural addendum heading after bridge retirement.
+L00008587	owner_hints:
+L00008588	- Plans/newtools.md
+L00008589	preserved_contractrefs:
+L00008590	- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+L00008591	split_recommendation_reason: The former source-preserving bridge has been atomized or structurally/reference dispositioned and is now retired.
+L00008592	```
+L00008593	
+L00008594	## Migration Coverage
+L00008595	
+L00008596	Original hash: `e71a3c15b076255cc614c4ef56c333212e88f0cb72c6d02b58af24ebe454f904`.
+L00008597	
+L00008598	Run-scoped proof artifacts:
+L00008599	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00008600	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00008601	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00008602	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00008603	
+L00008604	Phase 2B batches 104 through 107 atomized source spans `newtools-S0002` through `newtools-S0078` into fine-grained PlanUnits `N2-002` through `N2-150`, except for structural, reference-only, and migration-lineage dispositions. `newtools-S0001`, `newtools-S0007`, `newtools-S0013`, `newtools-S0017`, `newtools-S0030`, `newtools-S0035`, `newtools-S0057`, `newtools-S0072`, `newtools-S0073`, and `newtools-S0076` are structurally or reference-only dispositioned; `newtools-S0034` is fully covered by `N2-048` and `N2-049`; `newtools-S0052` is split across `N2-096`, `N2-097`, and `N2-098`. `N2-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00008605	
+L00008606	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00008607	
+L00008608	This addendum is canonical newtools spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00008609	
+L00008610	### Framework And Tool Catalog Entry Schemas
+L00008611	
+L00008612	Repairs row `sfk-88d1096d2627a98e841dc23e`.
+L00008613	
+L00008614	`FrameworkEntry` fields: `framework_id`, `display_name`, `language_family`, `default_tool_ids[]`, `detection_patterns[]`, `install_strategy`, `support_state`, `owner_doc_ref`, and `schema_version`.
+L00008615	
+L00008616	`ToolEntry` fields: `tool_id`, `display_name`, `framework_id?`, `command_ref?`, `capability_tags[]`, `default_enabled`, `support_classification`, `requires_credentials`, `health_check_id?`, `policy_refs[]`, and `schema_version`.
+L00008617	
+L00008618	### Action Catalog And Scenario File Contract
+L00008619	
+L00008620	Repairs row `sfk-4d4d2855408c239af5a00ef3`.
+L00008621	
+L00008622	- Action catalog records use `action_id`, `display_name`, `scenario_file`, `trigger_kind`, `required_tool_ids[]`, `input_schema_ref`, `output_schema_ref?`, `permission_class`, `default_enabled`, and `owner_doc_ref`.
+L00008623	- Scenario files use JSON with top-level fields `scenario_id`, `schema_version`, `steps[]`, `fixtures[]?`, `expected_results[]`, and `cleanup[]?`.
+L00008624	- Step fields are `step_id`, `action_id`, `inputs`, `timeout_ms`, `retry_policy_ref?`, and `on_failure`.
+L00008625	
+L00008626	### Doctor Check Registry
+L00008627	
+L00008628	Repairs row `sfk-daa3fd5eb054bd8c6be82b8d`.
+L00008629	
+L00008630	Canonical doctor check ids include `doctor.mcp.context7`, `doctor.registry.auth`, `doctor.dockerhub.auth.capability`, `doctor.docker.buildx`, `doctor.debug.launch_config`, `doctor.debug.browser_session`, and `doctor.debug.attach_pid`.
+L00008631	
+L00008632	Each doctor check record fields: `check_id`, `owner_doc_ref`, `input_schema_ref?`, `success_state`, `failure_codes[]`, `remediation_action_ids[]`, `credential_scope?`, `network_required`, `cache_ttl_seconds`, and `support_state`.
+L00008633	
+L00008634	### Preflight Failure Enums
+L00008635	
+L00008636	Repairs row `sfk-8d03b002e270c0c2db010037`.
+L00008637	
+L00008638	- `severity` values are `info`, `warning`, `blocked`, and `fatal`.
+L00008639	- `code` values are `dependency_missing`, `dependency_version_unsupported`, `credential_missing`, `permission_denied`, `network_unavailable`, `policy_blocked`, `host_unreachable`, `runtime_unavailable`, `schema_invalid`, and `unknown`.
+L00008640	- Preflight failure fields are `code`, `severity`, `dependency?`, `expected?`, `observed?`, `remediation`, `owner_doc_ref`, and `retryable`.
+L00008641	
+L00008642	### Manifest Render Hints
+L00008643	
+L00008644	Repairs row `sfk-181db601e331e0d9b1cd52c7`.
+L00008645	
+L00008646	`manifest.json` fields are `manifest_id`, `schema_version`, `tool_ids[]`, `framework_ids[]`, `render_hints`, `policy_refs[]`, `credential_refs[]?`, and `generated_at_utc`.
+L00008647	
+L00008648	`render_hints` fields are `group_by`, `sort_order`, `compact_labels`, `show_health_badges`, `default_filter?`, and `empty_state_copy_id?`.
+L00008649	
+L00008650	### Shared Trust Proxy Deny Codes
+L00008651	
+L00008652	Repairs row `sfk-c5e20efd85f389d003c5cf07`.
+L00008653	
+L00008654	Canonical deny-code families are `permission_denied`, `credential_missing`, `trust_proxy_unavailable`, `network_forbidden`, `policy_blocked`, `registry_auth_failed`, `capability_unverified`, and `unsafe_target`. These deny codes must map to the corresponding permission or preflight reason before a tool action can surface as retryable.
+L00008655	
+L00008656	### Instrumentation Scope And Debug Target Storage
+L00008657	
+L00008658	Repairs rows `sfk-d832771f93a3e3541cd1b774` and `sfk-18048251633869d004e48189`.
+L00008659	
+L00008660	- Instrumentation scope records use storage key `instrumentation_scope.v1:{project_id}:{scope_id}` with fields `scope_id`, `project_id`, `target_ref`, `status`, `temporary`, `cleanup_path?`, `created_at_utc`, `expires_at_utc?`, and `owner_doc_ref`.
+L00008661	- Debug target registry records use storage key `debug_target.v1:{project_id}:{target_id}` with fields `target_id`, `target_kind`, `launch_config_ref?`, `url?`, `attach_pid?`, `browser_session_ref?`, `permission_snapshot_id?`, `last_verified_at_utc?`, and `support_state`.
+L00008662	
+L00008663	### Split Recommendation Closure And Deprecated Registry Auth Constraint
+L00008664	
+L00008665	Repairs rows `sfk-69876bef3b441cb17b89d231` and `sfk-db7708202eb32b69931bb737`.
+L00008666	
+L00008667	- `split_recommended: true` on N2-096 through N2-140 is a planning-quality signal, not a buildability claim. A row may remain unsplit only when it has an explicit `split_deferred_reason`, `owner_doc_ref`, and `reopen_condition`.
+L00008668	- The canonical registry auth constraint is: `doctor.registry.auth` is deprecated for DockerHub auth; use `doctor.dockerhub.auth.capability` for DockerHub-specific capability checks. Any N2-120/N2-141 duplicate wording must normalize to that single sentence.

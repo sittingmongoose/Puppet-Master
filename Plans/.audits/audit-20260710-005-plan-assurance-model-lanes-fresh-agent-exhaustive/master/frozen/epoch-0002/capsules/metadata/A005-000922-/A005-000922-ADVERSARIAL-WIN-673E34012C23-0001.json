@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-000922-ADVERSARIAL-WIN-673E34012C23-0001",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      400,
+      411
+    ]
+  ],
+  "core_range": [
+    1,
+    399
+  ],
+  "core_sha256": "d17344628437c72bde66b0bef3f877d2a7b70d61e5117d4117b905ecefa01d6b",
+  "document_path": "Plans/Run_Modes.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/9a/9a6c40e64a79a3bbd1057257597b42f4759300805289791328ee5523d1aeb84e.txt",
+  "source_excerpt_sha256": "9a6c40e64a79a3bbd1057257597b42f4759300805289791328ee5523d1aeb84e",
+  "source_sha256": "8fbb20f19c293128bb9f79d8e14be0b565e02aeaf0ee804723207fd778e0eb8e",
+  "window_id": "WIN-673E34012C23-0001"
+}

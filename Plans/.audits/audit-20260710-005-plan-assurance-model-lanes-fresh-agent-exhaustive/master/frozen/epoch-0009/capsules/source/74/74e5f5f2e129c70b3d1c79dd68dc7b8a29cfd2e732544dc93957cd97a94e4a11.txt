@@ -1,0 +1,340 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15977-15988 >>>
+L00015977	  - "Last updated"
+L00015978	  - "stable PM internal IDs"
+L00015979	  - "upstream alias/rename mappings"
+L00015980	negative_constraints:
+L00015981	  - Do not store raw secret material in Free Models import snapshots.
+L00015982	  - Do not lose alias/rename/provider-move history during Auto Apply updates.
+L00015983	owner_hints:
+L00015984	  - Plans/storage-plan.md
+L00015985	  - Plans/Contracts_V0.md
+L00015986	  - Plans/Models_System.md
+L00015987	```
+L00015988	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15989-16299 >>>
+L00015989	### SP-225 - Free Models Activation Quarantine Rollback And Diagnostics Storage
+L00015990	
+L00015991	```yaml
+L00015992	plan_unit_id: SP-225
+L00015993	unit_type: requirement
+L00015994	status: accepted
+L00015995	owner_doc: Plans/storage-plan.md
+L00015996	canonical_text: >-
+L00015997	  PM persists Free Models activation receipts, last-known-good refs, quarantine state, rollback evidence, failed-check state, route impact, affected provider/model ids, redaction profile, redaction summary, and support export manifests. Failed or quarantined updates keep the current known-good state active. Diagnostics/export may preserve source/ref/hash and route impact while raw secrets, tokens, provider error payloads, and sensitive provider responses remain redacted or Advanced/Support-only.
+L00015998	gui_related: false
+L00015999	gui_classification_reason: Defines stored receipts and export manifests; GUI projection is owned elsewhere.
+L00016000	depends_on: []
+L00016001	unblocks: []
+L00016002	acceptance_criteria:
+L00016003	  - Failed/quarantined updates preserve last-known-good active state and write quarantine/rollback evidence.
+L00016004	  - Support exports include redaction profile and redaction summary.
+L00016005	  - Raw secrets/tokens and raw provider error payloads are never stored or exported in unredacted normal records.
+L00016006	validation_surfaces:
+L00016007	  - python3 scripts/pm-plan-index.py validate
+L00016008	  - Free Models quarantine and rollback storage fixtures
+L00016009	  - Redacted diagnostics export fixtures
+L00016010	risk_class: rollback_diagnostics_storage_drift
+L00016011	reasoning_tier: high
+L00016012	context_scope: free_models_activation_storage
+L00016013	implementation_surfaces:
+L00016014	  - Plans/storage-plan.md
+L00016015	  - Plans/Runtime_Artifacts_Panel.md
+L00016016	  - Plans/Permissions_System.md
+L00016017	  - Plans/Contracts_V0.md
+L00016018	node_compile_hint:
+L00016019	  mode: free_models_activation_diagnostics_storage_planunit
+L00016020	  create_worknodes: false
+L00016021	  create_nodeseeds: false
+L00016022	source_lineage:
+L00016023	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00016024	source_atom_ids: [atom-0034, atom-0061, atom-0064, atom-0066, atom-0070, atom-0083, atom-0087, atom-0178, atom-0182, atom-0225, atom-0229, atom-0233, atom-0237, atom-0241, atom-0245, atom-0249, atom-0252, atom-0253, atom-0256, atom-0260, atom-0264, atom-0277, atom-0278, atom-0287, atom-0288, atom-0291, atom-0292]
+L00016025	preserved_exact_tokens:
+L00016026	  - "current known-good state active"
+L00016027	  - "Free Models update needs attention"
+L00016028	  - "Retry check"
+L00016029	  - "View details"
+L00016030	  - "redacted copy/export"
+L00016031	  - "redaction summary"
+L00016032	  - "secrets/tokens always redacted"
+L00016033	  - "The user can’t fix this"
+L00016034	negative_constraints:
+L00016035	  - Do not expose secrets or tokens in Advanced/Support diagnostics.
+L00016036	  - Do not export raw secrets or tokens in diagnostics copy/export.
+L00016037	  - Do not expose raw provider error payloads in normal expanded availability rows.
+L00016038	owner_hints:
+L00016039	  - Plans/storage-plan.md
+L00016040	  - Plans/Runtime_Artifacts_Panel.md
+L00016041	  - Plans/Permissions_System.md
+L00016042	```
+L00016043	
+L00016044	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00016045	
+L00016046	This addendum compiles containerized-host persistence, projection, cleanup, and retention records. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00016047	
+L00016048	### SP-226 - Containerized Host Persistence Projection And Cleanup Records
+L00016049	
+L00016050	```yaml
+L00016051	plan_unit_id: SP-226
+L00016052	unit_type: requirement
+L00016053	status: accepted
+L00016054	owner_doc: Plans/storage-plan.md
+L00016055	canonical_text: >-
+L00016056	  PM persists containerized-host profiles, instances, assignments, build artifacts, port access records, capability
+L00016057	  states, preflight receipts, execution receipts, TestRunReceipt host proof refs, cleanup_retention_receipt records,
+L00016058	  blocker payloads, and projection indexes under PM-owned identity. Host records preserve host_capability_ref,
+L00016059	  host_profile_id, host_instance_id, host_assignment_id, runtime_family, runtime_context_ref, permission_snapshot_id,
+L00016060	  filesafe_scope_ref, redaction_profile, retention_state, cleanup_policy, cleanup receipt refs, stale_window_expires_at_utc,
+L00016061	  confidence, health_state, source, and blocked_reason_code. Instances are ephemeral by default, retain-on-failure is
+L00016062	  explicit, and stale/orphaned resources reconcile through retained_for_debug, cleanup_pending, cleaned, orphaned, or
+L00016063	  historical states rather than inference from missing runtime resources.
+L00016064	gui_related: false
+L00016065	gui_classification_reason: Persistence, projection, and cleanup records are storage/data behavior, not GUI presentation.
+L00016066	depends_on: [CV-303, CRAU-091, PS-126, F2-194]
+L00016067	unblocks: [RAP-042, ATS-019, EP-109, F3-410]
+L00016068	acceptance_criteria:
+L00016069	  - Stored host profiles, instances, assignments, artifacts, access records, receipts, and blockers use PM-owned ids and preserve backend facts separately.
+L00016070	  - Dynamic port/access discoveries persist with source, confidence, health, staleness, redaction, and manual override state rather than becoming unqualified canon.
+L00016071	  - Failed or retained instances cannot disappear without cleanup_retention_receipt or explicit orphan reconciliation state.
+L00016072	  - Raw secrets, decrypted env values, registry credentials, and secret-bearing outputs are absent from persisted records and exports.
+L00016073	validation_surfaces:
+L00016074	  - python3 scripts/pm-plan-index.py validate
+L00016075	  - future containerized host storage schema fixtures
+L00016076	  - future cleanup/orphan reconciliation fixtures
+L00016077	risk_class: containerized_host_storage_drift
+L00016078	reasoning_tier: high
+L00016079	context_scope: containerized_host_persistence
+L00016080	implementation_surfaces:
+L00016081	  - Plans/storage-plan.md
+L00016082	  - future redb host profile, instance, assignment, access, receipt, and projection stores
+L00016083	node_compile_hint:
+L00016084	  mode: containerized_host_persistence_projection_records
+L00016085	  create_worknodes: false
+L00016086	  create_nodeseeds: false
+L00016087	source_lineage:
+L00016088	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0012
+L00016089	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0015
+L00016090	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0016
+L00016091	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0020
+L00016092	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0039
+L00016093	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0048
+L00016094	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0058
+L00016095	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0063
+L00016096	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0066
+L00016097	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0067
+L00016098	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0072
+L00016099	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00016100	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0078
+L00016101	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+L00016102	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#core_contracts
+L00016103	source_atom_ids: [atom-0012, atom-0015, atom-0016, atom-0020, atom-0039, atom-0048, atom-0058, atom-0063, atom-0066, atom-0067, atom-0072, atom-0075, atom-0078, atom-0079]
+L00016104	decision_refs: [dec-0012, dec-0013, dec-0020]
+L00016105	preserved_exact_tokens:
+L00016106	  - "ephemeral instances by default"
+L00016107	  - "retain-on-failure"
+L00016108	  - "cleanup/retention"
+L00016109	  - "cleanup_retention_receipt"
+L00016110	  - "stale_window_expires_at_utc?"
+L00016111	  - "redaction_profile"
+L00016112	  - "retained_for_debug"
+L00016113	  - "cleanup_pending"
+L00016114	  - "orphaned"
+L00016115	  - "port_access_ref"
+L00016116	  - "dynamic URLs remain visible"
+L00016117	  - "canonical ports/URLs"
+L00016118	  - "confidence"
+L00016119	  - "health_state"
+L00016120	  - "source"
+L00016121	negative_constraints:
+L00016122	  - Do not persist transient port discoveries as canonical state without source/confidence/staleness.
+L00016123	  - Do not infer cleanup from missing runtime resources; use reference_state and cleanup receipts.
+L00016124	  - Do not silently discard failed host instances before receipts/artifacts are available.
+L00016125	  - Do not store raw secrets, decrypted env values, or unredacted registry credentials.
+L00016126	owner_hints:
+L00016127	  - Plans/storage-plan.md
+L00016128	  - Plans/Contracts_V0.md
+L00016129	  - Plans/Containers_Registry_and_Unraid.md
+L00016130	  - Plans/Runtime_Artifacts_Panel.md
+L00016131	  - Plans/Permissions_System.md
+L00016132	  - Plans/FileSafe.md
+L00016133	```
+L00016134	
+L00016135	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00016136	
+L00016137	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00016138	
+L00016139	### SP-227 - P0-HISTORY-STORAGE-CAPS
+L00016140	
+L00016141	```yaml
+L00016142	plan_unit_id: SP-227
+L00016143	unit_type: requirement
+L00016144	status: accepted
+L00016145	owner_doc: Plans/storage-plan.md
+L00016146	canonical_text: >-
+L00016147	  P0-HISTORY-STORAGE-CAPS (P0) is compiled as canonical Puppet Master intent for Bounded session/history storage: Add HistoryObjectBudget and ManagedOutputRef requirements. Segment large histories by reference; never inline unbounded JSON into model context. The preserved PM gap/delta is: Need explicit per-record, per-turn, per-tool-result, and per-thread cap policy with managed-output references and context compiler backpressure. The observed external-repo signal remains source-lineage evidence: Agent Zero issue list reports chat history metadata ~127MB and raw JSON pollution of utility-model context; Cline issues/PRs target large MCP result crashes and compacted provider history; Pi has a SQLite session-storage PR.
+L00016148	gui_related: true
+L00016149	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00016150	depends_on:
+L00016151	- PDS-003
+L00016152	- PNC-001
+L00016153	unblocks: []
+L00016154	acceptance_criteria:
+L00016155	- 127MB metadata fixture is rejected/segmented before UI or model context load.
+L00016156	- Context compiler emits compact summaries plus refs, not raw massive JSON.
+L00016157	- Large tool results remain retrievable from artifacts with hashes.
+L00016158	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00016159	validation_surfaces:
+L00016160	- python3 scripts/pm-plan-index.py validate
+L00016161	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00016162	- 127MB metadata fixture is rejected/segmented before UI or model context load.
+L00016163	- Context compiler emits compact summaries plus refs, not raw massive JSON.
+L00016164	- Large tool results remain retrievable from artifacts with hashes.
+L00016165	risk_class: p0_memory_history_logging_hardening
+L00016166	reasoning_tier: high
+L00016167	context_scope: memory_history_logging
+L00016168	implementation_surfaces:
+L00016169	- Plans/storage-plan.md
+L00016170	- Plans/Prompt_Pipeline.md
+L00016171	- Plans/Runtime_Artifacts_Panel.md
+L00016172	node_compile_hint:
+L00016173	  mode: p0_history_storage_caps
+L00016174	  create_worknodes: false
+L00016175	  create_nodeseeds: false
+L00016176	source_lineage:
+L00016177	- pldg-20260703-001-feature-intake:atom-0011
+L00016178	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0011
+L00016179	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0007/P0-HISTORY-STORAGE-CAPS@line=7
+L00016180	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0007/P0-HISTORY-STORAGE-CAPS
+L00016181	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00016182	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00016183	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:7
+L00016184	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00016185	source_atom_ids:
+L00016186	- atom-0011
+L00016187	external_atom_id: extrepo-20260703-0007
+L00016188	source_row_id: P0-HISTORY-STORAGE-CAPS
+L00016189	priority: P0
+L00016190	finding_family: Bounded session/history storage
+L00016191	source_repos:
+L00016192	- agent0ai/agent-zero
+L00016193	- cline/cline
+L00016194	- earendil-works/pi
+L00016195	target_docs:
+L00016196	- Plans/storage-plan.md
+L00016197	- Plans/Prompt_Pipeline.md
+L00016198	- Plans/Runtime_Artifacts_Panel.md
+L00016199	owner_hints:
+L00016200	- Plans/storage-plan.md
+L00016201	- Plans/Prompt_Pipeline.md
+L00016202	- Plans/Runtime_Artifacts_Panel.md
+L00016203	preserved_exact_tokens:
+L00016204	- extrepo-20260703-0007
+L00016205	- P0-HISTORY-STORAGE-CAPS
+L00016206	- P0
+L00016207	- Bounded session/history storage
+L00016208	- agent0ai/agent-zero
+L00016209	- cline/cline
+L00016210	- earendil-works/pi
+L00016211	negative_constraints: []
+L00016212	observed_signal: Agent Zero issue list reports chat history metadata ~127MB and raw JSON pollution of utility-model context; Cline issues/PRs target large MCP result crashes and compacted provider history; Pi has a SQLite session-storage PR.
+L00016213	pm_current_coverage: PM uses seglog/redb/checkpoints and says transcript retention is bounded/honest.
+L00016214	pm_gap_or_delta: Need explicit per-record, per-turn, per-tool-result, and per-thread cap policy with managed-output references and context compiler backpressure.
+L00016215	proposal_or_recommendation: Add HistoryObjectBudget and ManagedOutputRef requirements. Segment large histories by reference; never inline unbounded JSON into model context.
+L00016216	compile_disposition: create_new_planunit
+L00016217	```
+L00016218	
+L00016219	### SP-228 - P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS
+L00016220	
+L00016221	```yaml
+L00016222	plan_unit_id: SP-228
+L00016223	unit_type: requirement
+L00016224	status: accepted
+L00016225	owner_doc: Plans/storage-plan.md
+L00016226	canonical_text: >-
+L00016227	  P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS (P1) is compiled as canonical Puppet Master intent for Resource ceilings for indexers/watchers/background agents: Add RuntimeResourceGovernor PlanUnit with quotas, backoff, suspension, prioritization, and Explain/Resume controls. The preserved PM gap/delta is: Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation. The observed external-repo signal remains source-lineage evidence: Warp issue reports exhausting hundreds of thousands of file watchers; Agent Zero history bloat crashes; Cline large MCP/history issues.
+L00016228	gui_related: true
+L00016229	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00016230	depends_on:
+L00016231	- PDS-003
+L00016232	- PNC-001
+L00016233	unblocks: []
+L00016234	acceptance_criteria:
+L00016235	- Large repo cannot allocate unbounded watchers.
+L00016236	- Quota exceeded degrades with warning and exact subsystem, not crash.
+L00016237	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00016238	validation_surfaces:
+L00016239	- python3 scripts/pm-plan-index.py validate
+L00016240	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00016241	- Large repo cannot allocate unbounded watchers.
+L00016242	- Quota exceeded degrades with warning and exact subsystem, not crash.
+L00016243	risk_class: p1_provider_capability_and_metadata_hardening
+L00016244	reasoning_tier: standard
+L00016245	context_scope: provider_capability_and_metadata
+L00016246	implementation_surfaces:
+L00016247	- Plans/storage-plan.md
+L00016248	- Plans/FileManager.md
+L00016249	- Plans/Runtime_Artifacts_Panel.md
+L00016250	- Plans/FinalGUISpec.md
+L00016251	node_compile_hint:
+L00016252	  mode: p1_resource_quotas_indexers_watchers
+L00016253	  create_worknodes: false
+L00016254	  create_nodeseeds: false
+L00016255	source_lineage:
+L00016256	- pldg-20260703-001-feature-intake:atom-0016
+L00016257	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0016
+L00016258	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0012/P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS@line=12
+L00016259	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0012/P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS
+L00016260	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00016261	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00016262	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:12
+L00016263	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00016264	source_atom_ids:
+L00016265	- atom-0016
+L00016266	external_atom_id: extrepo-20260703-0012
+L00016267	source_row_id: P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS
+L00016268	priority: P1
+L00016269	finding_family: Resource ceilings for indexers/watchers/background agents
+L00016270	source_repos:
+L00016271	- warpdotdev/warp
+L00016272	- agent0ai/agent-zero
+L00016273	- cline/cline
+L00016274	target_docs:
+L00016275	- Plans/FileManager.md
+L00016276	- Plans/storage-plan.md
+L00016277	- Plans/Runtime_Artifacts_Panel.md
+L00016278	- Plans/FinalGUISpec.md
+L00016279	owner_hints:
+L00016280	- Plans/FileManager.md
+L00016281	- Plans/storage-plan.md
+L00016282	- Plans/Runtime_Artifacts_Panel.md
+L00016283	- Plans/FinalGUISpec.md
+L00016284	preserved_exact_tokens:
+L00016285	- extrepo-20260703-0012
+L00016286	- P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS
+L00016287	- P1
+L00016288	- Resource ceilings for indexers/watchers/background agents
+L00016289	- warpdotdev/warp
+L00016290	- agent0ai/agent-zero
+L00016291	- cline/cline
+L00016292	negative_constraints: []
+L00016293	observed_signal: Warp issue reports exhausting hundreds of thousands of file watchers; Agent Zero history bloat crashes; Cline large MCP/history issues.
+L00016294	pm_current_coverage: PM has dirty-layer watcher design and storage rollups but not a global resource-governor narrative for all background services.
+L00016295	pm_gap_or_delta: Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation.
+L00016296	proposal_or_recommendation: Add RuntimeResourceGovernor PlanUnit with quotas, backoff, suspension, prioritization, and Explain/Resume controls.
+L00016297	compile_disposition: create_new_planunit
+L00016298	```
+L00016299	
+
+<<< CONTEXT_AFTER canonical_document_lines=16300-16311 >>>
+L00016300	### SP-229 - P0-SYSTEM-RESOURCE-GOVERNOR
+L00016301	
+L00016302	```yaml
+L00016303	plan_unit_id: SP-229
+L00016304	unit_type: requirement
+L00016305	status: accepted
+L00016306	owner_doc: Plans/storage-plan.md
+L00016307	canonical_text: >-
+L00016308	  P0-SYSTEM-RESOURCE-GOVERNOR (P0) is compiled as canonical Puppet Master intent for System memory/process/file-watcher/resource management: Define RuntimeResourceGovernor: memory budgets, queue budgets, process pools, stale helper reaper, file-watcher caps, terminal scrollback/transcript retention, MCP transport cleanup, crash snapshot budget, low-memory degradation mode, and GUI-visible resource alerts. The preserved PM gap/delta is: PM needs a cross-runtime resource governor with explicit limits and cleanup for GUI renderer, PTY terminal, agents, MCP, browser/device sessions, file watchers, logs, memory stores, and helper processes. The observed external-repo signal remains source-lineage evidence: Ghostty reports major memory leaks under long-running Claude Code sessions; Warp reports CPU hangs and large-output TUI crashes; Codex reports stale Computer Use/MCP/app-server helper accumulation; Agent Zero reports large chat.json/memory scalability issues.
+L00016309	gui_related: true
+L00016310	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00016311	depends_on:

@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE 1362-1373 >>>
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Stale pre-promotion page, /title-bar/recovery, and feature-list/newfeatures shell wording are not live owner alternatives.'
+owner_boundary_notes:
+- 'Provider/account/promoted-shell routing stays split by owner surface.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 1374-1731 >>>
+### 0PI-012 - PM Planning And Node Readiness Owner Split
+
+```yaml
+plan_unit_id: 0PI-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The PM Bootstrap Planning map preserves owner split for Planning_Ledger_System, Plan_Document_System, Plan_To_Node_Compilation, and Bootstrap_Planning_Migration; it preserves literal gui_related: true|false and states that ordinary ledger writing, plan drafting, conversion, indexing, and node-readiness reporting do not update governance artifacts or create WorkNodes, executable build tasks, or NodeSeed candidates.
+gui_related: false
+gui_classification_reason: This unit is plan/governance metadata rather than GUI behavior, while preserving the literal gui_related token.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: pm_planning_and_node_readiness_owner_split
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: pm_planning_and_node_readiness_owner_split
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0008'
+preserved_exact_tokens:
+- 'Planning_Ledger_System.md'
+- 'Plan_Document_System.md'
+- 'Plan_To_Node_Compilation.md'
+- 'Bootstrap_Planning_Migration.md'
+- 'gui_related: true|false'
+- 'Spec_Lock.json'
+- 'WorkNodes'
+- 'NodeSeed'
+negative_constraints:
+- 'It does not create WorkNodes, executable build tasks, or NodeSeed candidates until the compiler contract is complete and the PNC-019 executable lifecycle certification harness has passed with recorded evidence.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+```
+
+### 0PI-013 - Instant Grep Live Canon Map
+
+```yaml
+plan_unit_id: 0PI-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The Instant Grep note makes 00-plans-index.md the live canon-map and /index discoverability map for promoted Instant Grep canon, preserving owner boundaries for implementation-safe detail and clarification-gate routing to owner maps.
+gui_related: true
+gui_classification_reason: The unit covers user-visible /index discoverability and clarification flows.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: instant_grep_live_canon_map
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: instant_grep_live_canon_map
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0009'
+preserved_exact_tokens:
+- '/00-plans-index.md'
+- '/index'
+- 'Instant Grep'
+- 'ArcSwap'
+- 'dirty-layer'
+- 'clarification gate'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Storage, runtime contracts, FinalGUISpec, and Usage analytics retain their owner boundaries.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-014 - Instant Grep Owner Split
+
+```yaml
+plan_unit_id: 0PI-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The Instant Grep packet owner split preserves Tools ownership for grep semantics, storage ownership for regex-index layout and dirty-layer lifecycle, FinalGUISpec ownership for indexing settings/status/Search UX, GitHub ownership for remote cache behavior, and named reconciliation consumers.
+gui_related: true
+gui_classification_reason: The unit includes FinalGUISpec settings, status-bar, Search ownership, and remote-cache administration surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: instant_grep_owner_split
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: instant_grep_owner_split
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0009'
+preserved_exact_tokens:
+- 'Tools.md'
+- 'storage-plan.md'
+- 'FinalGUISpec.md'
+- 'GitHub_Integration.md'
+- 'sparse-n-gram'
+- 'tool.invoked.index_used'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md'
+```
+
+### 0PI-015 - Browser Owner Split
+
+```yaml
+plan_unit_id: 0PI-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The Browser owner split preserves Section 15 as browser behavior SSOT, rewrite-tie-in as browser-runtime baseline owner, FinalGUISpec/FileManager/UI_Command_Catalog as primary browser consumers, related reconciliation consumers, and signal_confidence values authoritative, structured, heuristic, and local_only.
+gui_related: true
+gui_classification_reason: The unit covers browser UI placement, preview/click-to-context, user-visible commands, DevTools, and evidence surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_owner_split
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: browser_owner_split
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0010'
+preserved_exact_tokens:
+- 'Section15_MVP_Promoted_Features_Spec.md'
+- 'rewrite-tie-in-memo.md'
+- 'FinalGUISpec.md'
+- 'FileManager.md'
+- 'UI_Command_Catalog.md'
+- 'signal_confidence'
+- 'authoritative'
+- 'structured'
+- 'heuristic'
+- 'local_only'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/UI_Command_Catalog.md'
+```
+
+### 0PI-016 - Browser Stale Cleanup And Consumer Map
+
+```yaml
+plan_unit_id: 0PI-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Browser cleanup preserves newfeatures.md as historical/origin material only, retires stale cues such as /stale-canon, /WebView2/WebKitGTK, older trust-tier browser permission matrices, bottom-panel/browser panel wording, and maps Section 15, Final GUI, File Manager, UI Command Catalog, Wiring Matrix, and newtools consumer responsibilities.
+gui_related: true
+gui_classification_reason: The unit covers visible browser/session behavior, command routing, placement, and stale GUI terminology cleanup.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_stale_cleanup_and_consumer_map
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: browser_stale_cleanup_and_consumer_map
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0010'
+preserved_exact_tokens:
+- 'newfeatures.md'
+- 'historical/origin material only'
+- '/stale-canon'
+- '/WebView2/WebKitGTK'
+- 'trust-tier'
+- 'bottom-panel'
+- 'browser panel/window'
+- 'preview_mode = browser_panel'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Browser stale-reference cues are retired origin/stale-canon cues, not live browser owners or implementation alternatives.'
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+### 0PI-017 - Slash Chat SSOT Boundary
+
+```yaml
+plan_unit_id: 0PI-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The Slash-Command and Chat-Tools map preserves that 00-plans-index.md is index and ownership map only, not SSOT for slash-command schemas, tool permissions, GUI /presentation, or persisted event payloads; it locks phase A through D reconciliation order across chat, commands, tools, permissions, GUI behavior, and storage registration.
+gui_related: true
+gui_classification_reason: The unit covers chat tools, slash commands, GUI /presentation, and persisted payload routing.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: slash_chat_ssot_boundary
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: slash_chat_ssot_boundary
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0011'
+preserved_exact_tokens:
+- 'Slash-Command and Chat-Tools SSOT Map'
+- 'not the SSOT'
+- 'GUI `/presentation`'
+- 'phase A'
+- 'phase B'
+- 'phase C'
+- 'phase D'
+negative_constraints:
+- 'Avoid schema duplication here.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Runtime/event envelope stays in Contracts_V0 and concrete payload registration in storage-plan.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-018 - Slash Chat Scope And Drift Risks
+
+```yaml
+plan_unit_id: 0PI-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Slash/chat scope preserves ready-now /web command family, normalized operation set, distinct activity labels and tool keys, permission-key expansion, citation/provenance precedence, bounded operation defaults, additive web child payload recommendations, blocked provider-runtime scope, and highest drift-risk pairs.
+gui_related: true
+gui_classification_reason: The unit covers chat command UX, activity labels, permission behavior, and provider settings UX boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: slash_chat_scope_and_drift_risks
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: slash_chat_scope_and_drift_risks
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0011'
+preserved_exact_tokens:
+- '/web'
+- 'permission-key expansion'
+- 'citation/provenance precedence'
+- 'bounded operation defaults'
+- 'provider taxonomy'
+- 'account-selection'
+- 'provider settings rows/layout'
+- 'global versus per-operation provider ordering UX'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Named owner docs resolve drift-risk pairs.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< CONTEXT_AFTER 1732-1743 >>>
+### 0PI-019 - Artifact HITL Tool Owner Split
+
+```yaml
+plan_unit_id: 0PI-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Artifact, HITL, and tool approval canon preserves owner split across Runtime_Artifacts_Panel, storage-plan, Contracts_V0, Tools, human-in-the-loop, and Permissions_System for artifact presentation, durable projections, event envelope, tool policy, HITL approval UX, and permission snapshot semantics.
+gui_related: true
+gui_classification_reason: The unit includes runtime artifact presentation and approval UX surfaces.
+split_recommended: false

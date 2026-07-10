@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8839-8850 >>>
+L00008839	- batch_webextract
+L00008840	- POST /v2/extract
+L00008841	- urls[]
+L00008842	- POST /v2/batch/scrape
+L00008843	negative_constraints: []
+L00008844	preserved_contractrefs: []
+L00008845	compatibility_only_notes: []
+L00008846	stale_retired_dispositions: []
+L00008847	owner_hints:
+L00008848	- Plans/Tools.md
+L00008849	```
+L00008850	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8851-9246 >>>
+L00008851	### T-124 - Firecrawl Async Polling And Timeout
+L00008852	
+L00008853	```yaml
+L00008854	plan_unit_id: T-124
+L00008855	unit_type: requirement
+L00008856	status: accepted
+L00008857	owner_doc: Plans/Tools.md
+L00008858	canonical_text: Async Firecrawl operations use POST job creation, polling, terminal status mapping, provider `timeout_ms`,
+L00008859	  and partial-result survival on timeout.
+L00008860	gui_related: false
+L00008861	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008862	split_recommended: false
+L00008863	depends_on:
+L00008864	- T-116
+L00008865	unblocks: []
+L00008866	acceptance_criteria:
+L00008867	- Webhooks remain non-MVP unless a future HMAC-verified completion path is enabled.
+L00008868	- Partial materialized results survive timeout.
+L00008869	validation_surfaces:
+L00008870	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008871	- python3 scripts/pm-plan-index.py validate
+L00008872	risk_class: firecrawl_provider_contract_drift
+L00008873	reasoning_tier: standard
+L00008874	context_scope: tools_phase2b_batch_185
+L00008875	implementation_surfaces:
+L00008876	- Plans/Tools.md
+L00008877	node_compile_hint:
+L00008878	  mode: firecrawl_async_polling_timeout_contract
+L00008879	  create_worknodes: false
+L00008880	source_lineage:
+L00008881	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0098
+L00008882	preserved_exact_tokens:
+L00008883	- '{ success: true, id: "<job_id>" }'
+L00008884	- GET /v2/<operation>/<job_id>
+L00008885	- scraping
+L00008886	- processing
+L00008887	- completed
+L00008888	- failed
+L00008889	- cancelled
+L00008890	- timeout_ms
+L00008891	- partial `data`
+L00008892	- X-Firecrawl-Signature
+L00008893	- HMAC-SHA256
+L00008894	- 2s, 4s, 8s, 15s, 30s
+L00008895	negative_constraints: []
+L00008896	preserved_contractrefs: []
+L00008897	compatibility_only_notes: []
+L00008898	stale_retired_dispositions: []
+L00008899	owner_hints:
+L00008900	- Plans/Tools.md
+L00008901	```
+L00008902	
+L00008903	### T-125 - Firecrawl Progress Cancellation Activity
+L00008904	
+L00008905	```yaml
+L00008906	plan_unit_id: T-125
+L00008907	unit_type: requirement
+L00008908	status: accepted
+L00008909	owner_doc: Plans/Tools.md
+L00008910	canonical_text: Long-running web operations emit structured progress, support activity-stream Stop cancellation, return partial
+L00008911	  results with cancellation, and do not render chat/activity complete before terminal status.
+L00008912	gui_related: true
+L00008913	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, activity,
+L00008914	  or browser/provider disclosure surfaces.
+L00008915	split_recommended: false
+L00008916	depends_on:
+L00008917	- T-124
+L00008918	unblocks: []
+L00008919	acceptance_criteria:
+L00008920	- 'Stop cancellation returns collected partial results with `cancelled: true`.'
+L00008921	- Chat/activity surfaces do not appear complete before terminal status.
+L00008922	validation_surfaces:
+L00008923	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008924	- python3 scripts/pm-plan-index.py validate
+L00008925	risk_class: firecrawl_provider_contract_drift
+L00008926	reasoning_tier: standard
+L00008927	context_scope: tools_phase2b_batch_185
+L00008928	implementation_surfaces:
+L00008929	- Plans/Tools.md
+L00008930	node_compile_hint:
+L00008931	  mode: firecrawl_progress_cancellation_activity_contract
+L00008932	  create_worknodes: false
+L00008933	source_lineage:
+L00008934	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0098
+L00008935	preserved_exact_tokens:
+L00008936	- progress_event
+L00008937	- tool_use_id
+L00008938	- operation
+L00008939	- phase
+L00008940	- detail
+L00008941	- pages_completed
+L00008942	- pages_total
+L00008943	- elapsed_ms
+L00008944	- estimated_remaining_ms
+L00008945	- 'cancelled: true'
+L00008946	- Researching Web
+L00008947	- 'Fetching sites: 5/20 complete'
+L00008948	- appear-complete
+L00008949	negative_constraints: []
+L00008950	preserved_contractrefs: []
+L00008951	compatibility_only_notes: []
+L00008952	stale_retired_dispositions: []
+L00008953	owner_hints:
+L00008954	- Plans/Tools.md
+L00008955	```
+L00008956	
+L00008957	### T-126 - Firecrawl Cost-Aware Routing
+L00008958	
+L00008959	```yaml
+L00008960	plan_unit_id: T-126
+L00008961	unit_type: requirement
+L00008962	status: accepted
+L00008963	owner_doc: Plans/Tools.md
+L00008964	canonical_text: Firecrawl routing prefers lower `estimated_credit_cost` unless capability, policy, or freshness gives a stronger
+L00008965	  `adapter_selection_reason`; static priority alone is insufficient.
+L00008966	gui_related: false
+L00008967	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00008968	split_recommended: false
+L00008969	depends_on: []
+L00008970	unblocks: []
+L00008971	acceptance_criteria:
+L00008972	- Estimates above 100 credits require cost confirmation before execution.
+L00008973	- The 500 credits cap remains aligned with routing.
+L00008974	validation_surfaces:
+L00008975	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008976	- python3 scripts/pm-plan-index.py validate
+L00008977	risk_class: firecrawl_provider_contract_drift
+L00008978	reasoning_tier: standard
+L00008979	context_scope: tools_phase2b_batch_185
+L00008980	implementation_surfaces:
+L00008981	- Plans/Tools.md
+L00008982	node_compile_hint:
+L00008983	  mode: firecrawl_credit_cost_routing_contract
+L00008984	  create_worknodes: false
+L00008985	source_lineage:
+L00008986	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0099
+L00008987	preserved_exact_tokens:
+L00008988	- estimated_credit_cost
+L00008989	- adapter_selection_reason
+L00008990	- '>100 credits'
+L00008991	- 500 credits
+L00008992	- cost-aware selection
+L00008993	- static priority alone is insufficient
+L00008994	- provider endpoint
+L00008995	- estimated credit class
+L00008996	- ZDR modifier
+L00008997	negative_constraints: []
+L00008998	preserved_contractrefs: []
+L00008999	compatibility_only_notes: []
+L00009000	stale_retired_dispositions: []
+L00009001	owner_hints:
+L00009002	- Plans/Tools.md
+L00009003	```
+L00009004	
+L00009005	### T-127 - Firecrawl ZDR And Billing Disclosure
+L00009006	
+L00009007	```yaml
+L00009008	plan_unit_id: T-127
+L00009009	unit_type: requirement
+L00009010	status: accepted
+L00009011	owner_doc: Plans/Tools.md
+L00009012	canonical_text: 'Firecrawl costs are advisory routing inputs, ZDR is not MVP, global `firecrawl_zdr?: boolean` controls future
+L00009013	  ZDR, and self-hosted Firecrawl does not use hosted credit billing.'
+L00009014	gui_related: true
+L00009015	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, activity,
+L00009016	  or browser/provider disclosure surfaces.
+L00009017	split_recommended: false
+L00009018	depends_on:
+L00009019	- T-126
+L00009020	unblocks: []
+L00009021	acceptance_criteria:
+L00009022	- Batch and agent credit warnings are explicit before dispatch.
+L00009023	- Self-hosted billing exception remains visible.
+L00009024	validation_surfaces:
+L00009025	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009026	- python3 scripts/pm-plan-index.py validate
+L00009027	risk_class: firecrawl_provider_contract_drift
+L00009028	reasoning_tier: standard
+L00009029	context_scope: tools_phase2b_batch_185
+L00009030	implementation_surfaces:
+L00009031	- Plans/Tools.md
+L00009032	node_compile_hint:
+L00009033	  mode: firecrawl_zdr_self_hosted_billing_disclosure
+L00009034	  create_worknodes: false
+L00009035	source_lineage:
+L00009036	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0099
+L00009037	preserved_exact_tokens:
+L00009038	- 'zeroDataRetention: true'
+L00009039	- 'enterprise: ["zdr"]'
+L00009040	- PM cache is the ONLY persistence layer
+L00009041	- 'firecrawl_zdr?: boolean'
+L00009042	- url_count × per_url_credit_estimate
+L00009043	- estimated_credit_cost
+L00009044	- ignoreInvalidURLs
+L00009045	- maxConcurrency
+L00009046	- 20-2500
+L00009047	- batch_scrape
+L00009048	- batch_webfetch
+L00009049	- self-hosted Firecrawl does not use credit billing
+L00009050	negative_constraints: []
+L00009051	preserved_contractrefs: []
+L00009052	compatibility_only_notes:
+L00009053	- Legacy `batch_scrape` normalizes to `batch_webfetch`.
+L00009054	stale_retired_dispositions: []
+L00009055	owner_hints:
+L00009056	- Plans/Tools.md
+L00009057	```
+L00009058	
+L00009059	### T-128 - Firecrawl Interact Session Lifecycle
+L00009060	
+L00009061	```yaml
+L00009062	plan_unit_id: T-128
+L00009063	unit_type: requirement
+L00009064	status: accepted
+L00009065	owner_doc: Plans/Tools.md
+L00009066	canonical_text: '`/interact` is a stateful multi-turn browser session with scrape, interact, repeated stateful calls, explicit
+L00009067	  cleanup, prompt/code modes, retry behavior, TTL, and non-MVP profile/live-view limits.'
+L00009068	gui_related: true
+L00009069	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, activity,
+L00009070	  or browser/provider disclosure surfaces.
+L00009071	split_recommended: false
+L00009072	depends_on:
+L00009073	- T-122
+L00009074	unblocks: []
+L00009075	acceptance_criteria:
+L00009076	- PM does not expose raw provider code execution as a first-class user tool.
+L00009077	- PM does not surface live view URLs as first-class MVP UI.
+L00009078	- Provider interact cleanup remains explicit.
+L00009079	validation_surfaces:
+L00009080	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009081	- python3 scripts/pm-plan-index.py validate
+L00009082	risk_class: firecrawl_provider_contract_drift
+L00009083	reasoning_tier: standard
+L00009084	context_scope: tools_phase2b_batch_185
+L00009085	implementation_surfaces:
+L00009086	- Plans/Tools.md
+L00009087	node_compile_hint:
+L00009088	  mode: firecrawl_interact_session_lifecycle
+L00009089	  create_worknodes: false
+L00009090	source_lineage:
+L00009091	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0100
+L00009092	preserved_exact_tokens:
+L00009093	- /interact
+L00009094	- /v2/scrape/{scrapeId}/interact
+L00009095	- scrapeId
+L00009096	- prompt | code
+L00009097	- DELETE /v2/scrape/{scrapeId}/interact
+L00009098	- DOM
+L00009099	- cookies
+L00009100	- scroll position
+L00009101	- codeOptions
+L00009102	- 'language: "nodejs" | "python" | "bash"'
+L00009103	- 2 credits/min
+L00009104	- 7/min
+L00009105	- 10-minute TTL
+L00009106	- 5-minute inactivity timeout
+L00009107	- liveViewUrl
+L00009108	- interactiveLiveViewUrl
+L00009109	- 'profile: { name: string, saveChanges: boolean }'
+L00009110	- /localStorage
+L00009111	negative_constraints: []
+L00009112	preserved_contractrefs:
+L00009113	- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md#3.5D-web-operation-family-runtime-contract'
+L00009114	compatibility_only_notes:
+L00009115	- Persistent profiles are not MVP for this interact surface.
+L00009116	- Legacy `/localStorage` slash notation is retained only as lineage for canonical `localStorage`.
+L00009117	stale_retired_dispositions: []
+L00009118	owner_hints:
+L00009119	- Plans/Tools.md
+L00009120	```
+L00009121	
+L00009122	### T-129 - Firecrawl Audit Traceability
+L00009123	
+L00009124	```yaml
+L00009125	plan_unit_id: T-129
+L00009126	unit_type: requirement
+L00009127	status: accepted
+L00009128	owner_doc: Plans/Tools.md
+L00009129	canonical_text: Firecrawl audit payloads preserve provider lineage and requested/effective adapter disclosure fields used
+L00009130	  for routing, projection, and audit visibility.
+L00009131	gui_related: false
+L00009132	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00009133	split_recommended: false
+L00009134	depends_on: []
+L00009135	unblocks: []
+L00009136	acceptance_criteria:
+L00009137	- Traceability fields remain contract-owned.
+L00009138	- Requested/effective adapter and execution path fields remain available for routing/audit disclosure.
+L00009139	validation_surfaces:
+L00009140	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009141	- python3 scripts/pm-plan-index.py validate
+L00009142	risk_class: firecrawl_provider_contract_drift
+L00009143	reasoning_tier: standard
+L00009144	context_scope: tools_phase2b_batch_185
+L00009145	implementation_surfaces:
+L00009146	- Plans/Tools.md
+L00009147	node_compile_hint:
+L00009148	  mode: firecrawl_audit_traceability_adapter_selection
+L00009149	  create_worknodes: false
+L00009150	source_lineage:
+L00009151	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0101
+L00009152	preserved_exact_tokens:
+L00009153	- firecrawl_credits_used
+L00009154	- firecrawl_cache_state
+L00009155	- firecrawl_scrape_id
+L00009156	- 'firecrawl_scrape_id?: string'
+L00009157	- data.metadata.scrapeId
+L00009158	- requested_adapter_id
+L00009159	- effective_adapter_id
+L00009160	- adapter_selection_reason
+L00009161	- execution_path
+L00009162	- provider_search_native
+L00009163	- pm_search_plus_site_reader
+L00009164	- pm_site_reader
+L00009165	- provider_firecrawl_scrape
+L00009166	- pm_fetch_fallback
+L00009167	- provider_firecrawl_agent
+L00009168	- pm_research_composed
+L00009169	- projection_freshness
+L00009170	- projection_health
+L00009171	- warnings_count
+L00009172	negative_constraints: []
+L00009173	preserved_contractrefs:
+L00009174	- 'ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget, Plans/Contracts_V0.md#3.4 Tool-specific payload
+L00009175	  extensions, Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Permissions_System.md#3.4A Web-operation permission-key
+L00009176	  derivation, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability'
+L00009177	compatibility_only_notes: []
+L00009178	stale_retired_dispositions: []
+L00009179	owner_hints:
+L00009180	- Plans/Tools.md
+L00009181	```
+L00009182	
+L00009183	### T-130 - Firecrawl Permission And Deployment Disclosure
+L00009184	
+L00009185	```yaml
+L00009186	plan_unit_id: T-130
+L00009187	unit_type: requirement
+L00009188	status: accepted
+L00009189	owner_doc: Plans/Tools.md
+L00009190	canonical_text: PM must not silently switch hosted/self-hosted Firecrawl, deployment mode remains visible, and web permission
+L00009191	  approval summaries defer to Permissions_System and approval-card owners.
+L00009192	gui_related: true
+L00009193	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, activity,
+L00009194	  or browser/provider disclosure surfaces.
+L00009195	split_recommended: false
+L00009196	depends_on:
+L00009197	- T-129
+L00009198	unblocks: []
+L00009199	acceptance_criteria:
+L00009200	- Six web tools remain independently visible and ask-gated unless stricter read-only/no-network presets deny them.
+L00009201	- Hosted/self-hosted deployment mode remains visible.
+L00009202	validation_surfaces:
+L00009203	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009204	- python3 scripts/pm-plan-index.py validate
+L00009205	risk_class: firecrawl_provider_contract_drift
+L00009206	reasoning_tier: standard
+L00009207	context_scope: tools_phase2b_batch_185
+L00009208	implementation_surfaces:
+L00009209	- Plans/Tools.md
+L00009210	node_compile_hint:
+L00009211	  mode: firecrawl_permission_deployment_disclosure
+L00009212	  create_worknodes: false
+L00009213	source_lineage:
+L00009214	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0101
+L00009215	preserved_exact_tokens:
+L00009216	- PM MUST NOT silently switch
+L00009217	- no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+L00009218	- deployment-mode disclosure remains visible
+L00009219	- tool.denied
+L00009220	- tool.invoked
+L00009221	- websearch summary shows tool name + query preview
+L00009222	- webfetch/webextract summary shows tool name + target host/URL
+L00009223	- webresearch summary shows tool name + task summary + estimated source count when available
+L00009224	- webcrawl/webmap summary shows tool name + root URL + page/depth caps
+L00009225	- deny
+L00009226	- once
+L00009227	- for session
+L00009228	- always
+L00009229	- question default `allow` only when HITL is available
+L00009230	- read_only
+L00009231	- plan
+L00009232	- blocked_reason_code
+L00009233	- allowed_action_ids[]
+L00009234	- 'status: "unavailable"'
+L00009235	negative_constraints: []
+L00009236	preserved_contractrefs:
+L00009237	- 'ContractRef: Plans/Permissions_System.md#3.4A Web-operation permission-key derivation'
+L00009238	- 'ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget, ContractName:Plans/Contracts_V0.md#3.4
+L00009239	  Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4A
+L00009240	  Web error taxonomy and applicability'
+L00009241	compatibility_only_notes: []
+L00009242	stale_retired_dispositions: []
+L00009243	owner_hints:
+L00009244	- Plans/Tools.md
+L00009245	```
+L00009246	
+
+<<< CONTEXT_AFTER canonical_document_lines=9247-9258 >>>
+L00009247	### T-131 - Firecrawl Error Taxonomy And Retired Aliases
+L00009248	
+L00009249	```yaml
+L00009250	plan_unit_id: T-131
+L00009251	unit_type: requirement
+L00009252	status: accepted
+L00009253	owner_doc: Plans/Tools.md
+L00009254	canonical_text: 'Firecrawl HTTP and provider errors map to PM canonical error codes; unmapped `success: false` preserves provider
+L00009255	  detail in `error_message`; `stealth` and legacy `scrape_id` are retired.'
+L00009256	gui_related: false
+L00009257	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00009258	split_recommended: false

@@ -1,0 +1,323 @@
+<<< CONTEXT_BEFORE 1834-1845 >>>
+Rules:
+- commands are the mutation boundary
+- mutations write to canonical projections first
+- UI updates render from the new projection state rather than optimistic ad hoc local rewrites unless explicitly marked pending
+
+### 9.4 Conflict resolution
+
+- last-write-wins for UI state
+- merge strategy for project state when multiple durable sources contribute
+- requested vs effective runtime values must remain separately inspectable
+
+### 9.5 Persistence boundaries
+
+<<< AUTHORITATIVE_CORE 1846-2139 >>>
+
+- ephemeral state may be discarded on restart unless explicitly promoted
+- persisted state must have stable keys and versioned migrations
+- migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family
+- Shell persistence keeps `/floating`, `/document`, `/chat/editor`, workspace-tab identity, per-project `project_state`, per-surface `source_control.project_state.{project_id}`, and `/file-tree/chat` restore state in narrow project shell records, not in canonical blocked or `/attention` truth.
+- `FinalGUISpec.md` treats `widget_layout:v1:orchestrator:progress` as a `Progress` layout key layered from `app-global` defaults plus `project-scoped` overrides under `project_state:v1:{project_id}`; it is not a page-global record and `widget_layout` entries must name `project_id` when they depend on project state.
+- Per-surface state may persist `line`, `range`, `active_subview`, compare target, panel layout, browser tab state, and widget layout only as view state; it must not replace canonical route identity.
+- FileManager restore and handoff state preserves `repo_id`, `worktree_id`, identity-backed `/history/checkpoint` references, and backend-driven restore pipelines rather than treating path opens as the only canonical document identity.
+
+### 9.6 Context management
+
+Context management combines thread context, Investigation Context, editor/file references, and review/document references without hiding provenance.
+
+Rules:
+- each context block has stable identity and owner surface
+- context usage counters and token summaries derive from canonical usage/state projections
+- pruning, compaction, and restoration rules must disclose what was removed, summarized, or rehydrated
+
+### 9.7 Agent-Config instruction projections
+
+The Agent-Config surface must show a canonical instruction editor for PM-owned instruction source plus a per-target rendered preview for each provider-native projection target.
+
+The now-locked Agent-Config `/provider` model is the visible provider/model/account/instruction management surface. Settings and `/inspector` language must name Agent-Config, persistent Effective Runtime inspectors, provider entries, account/profile rows, instruction projections, and skill/MCP status rather than generic provider settings.
+
+Per-target control state is closed to:
+- `controlled`
+- `manual_override`
+- `projection_failed`
+
+Rules:
+- `controlled` means PM owns semantic sync for that target and regenerates provider-native projection text from the canonical instruction editor.
+- `manual_override` means the target has been detached by the user; the GUI must show that semantic sync is broken for that target only.
+- `projection_failed` means PM could not generate or write the target projection and must expose repair/retry actions without pretending the target is current.
+
+The visible label for `manual_override` is Manual Override. Direct edits to a PM-controlled provider-native projection target require switching only that target to Manual Override first; otherwise the GUI treats the edit as a canonical-source change and regenerates provider projections.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md
+
+## 10. UX Patterns
+
+Section 10 defines reusable interaction patterns across pages, panels, dialogs, and editor/runtime surfaces.
+
+### 10.1 Confirmation dialogs
+
+Destructive or irreversible actions require confirmation with explicit consequence copy, especially for delete, reset, merge, publish, repository creation, and credential removal flows.
+
+Every action surface classifies confirmation level as `none`, `light`, `strong`, or `hard_gate` and separately records reversibility, so navigation-only affordances, low-risk state changes, destructive mutations, and runtime-blocked recovery gates do not share one generic confirmation dialog.
+
+The `light` confirmation level covers `moderate-impact` actions where accidental activation is plausible and a short confirm or inline affordance is enough.
+
+Concern actions map acknowledgement and `/dismiss` to `light` or `strong` confirmation according to severity and `/blocking` effect, while merge and `/split` always use `strong` because they alter structural lineage.
+
+Scoped-identity runtime families remain object-first and resolver-backed: GUI routes carry the owning object plus scope, while `Contracts_V0.md` owns the scoped-identity resolver rules and prevents family-specific top-level route fields.
+
+### 10.2 Undo
+
+Support `Ctrl+Z` / `Cmd+Z` where the owning surface allows reversible edits, including file operations that can be safely reverted, text editing, and message editing. Git-native history actions and external side effects are not mislabeled as editor undo.
+
+Git/source-control discard/compare/stage actions are not editor undo. Restore points, rollback, and revert-last-agent-edit stay explicit restore-history commands, and the GUI must not bury them behind git-panel affordances. The File Editor must expose diff heat-map/change-marker and scrollbar change-marker state as compare/review feedback while keeping the revert operation routed to the owning Source Control or FileSafe command.
+
+### 10.3 Loading states
+
+- skeleton screens for panel/page loads
+- inline spinners or progress indicators for discrete actions
+- keep prior validated content visible with stale/degraded labels when a refresh is in progress
+
+### 10.4 Error display
+
+- inline errors for field validation
+- toast notifications for transient non-blocking failures
+- blocking dialogs for failures that prevent forward progress or risk destructive ambiguity
+
+### 10.5 Empty states
+
+Empty panels must show helpful onboarding content, clear next actions, and contextual shortcuts instead of blank chrome.
+
+### 10.6 Blocked and recovery surfaces
+
+Blocked state, retry, remediation, and recovery affordances must use the canonical blocked/recovery contract and stay visually distinct from ordinary paused or idle states.
+
+### 10.7 Event-driven refresh rule
+
+Event-driven updates are canonical. UI state refresh happens on relevant runtime, filesystem, or provider events rather than generic timers.
+
+Exception:
+- polling is acceptable for external systems that do not provide push updates, such as GitHub Actions status checks; those intervals are freshness aids only and must not become the correctness model for the rest of the shell
+
+### 10.8 Human-in-the-loop approvals
+
+Sensitive operations requiring approval must present:
+- explicit action summary
+- affected resources
+- approval / deny actions
+- audit trail link back to the originating thread, run, or bundle
+
+Approval surfaces must preserve context and never auto-approve hidden follow-up side effects.
+
+### 10.9 Context menus and clipboard
+
+Context menus are the canonical discoverability surface for copy, paste, Add Note, file actions, and selection-scoped operations.
+
+Copy, paste, share, and export actions must keep their payload families separate even when the user-visible labels look similar. Text clipboard, file-operation clipboard, chat context insertion, OS export, `/download`, remote-host transfer, and `/paste/share` flows carry different permissions, undo models, remote availability, and confirmation copy.
+
+#### 10.9.1 Copy path and copy value
+
+
+Non-text path/value copy actions must copy the exact underlying value via the shared clipboard helper and must not depend on text rendering quirks.
+
+#### 10.9.2 Text selection and read-only copy
+
+Read-only text, code blocks, logs, and labels must remain selectable and copyable without entering edit mode.
+
+#### 10.9.3 Clipboard safety and feedback
+
+Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
+
+### 10.10 LSP-informed affordances
+
+This section consumes the linked owner contract and stays aligned with it.
+
+Core rules:
+- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
+- LSP GUI consumers preserve the nine `read-op` set by long-name and short-name aliases only as display/compatibility labels; canonical operations remain owner names, `diagnostics` is context/panel data, and `rename` is approval-gated.
+
+Fields:
+- operation
+- query
+- path
+- position
+- newName
+- status
+
+Labels and values:
+- goToDefinition
+- findReferences
+- hover
+- documentSymbol
+- workspaceSymbol
+- rename
+
+Rules:
+- goToImplementation
+- prepareCallHierarchy
+- incomingCalls
+- outgoingCalls
+- ok | partial | unavailable | error
+- `workspaceSymbol` requires `query`
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+- `rename` is approval-gated because it applies edits.
+
+Compatibility/source-lineage disposition: this extract preserves source tokens for LSP GUI display and compatibility search. Treat operation names, aliases, status values, and approval rules by their typed role through the Core rules and owner LSP contract; do not read the `Fields:` list as a standalone schema.
+### 10.11 Loading-to-live transitions
+
+
+When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.
+
+### 10.12 Detached-surface continuity
+
+Detached panels and windows must preserve identity, selection, and keyboard focus expectations when re-docked.
+
+### 10.13 Sound effects
+
+Optional sound effects may reinforce key workflow events such as approvals required, run completion, or error escalation, but they must remain user-controllable, accessible, and never the sole carrier of important information.
+
+## 11. Anti-Flickering and Scroll Preservation
+
+### 11.1 Core Principle
+
+The GUI must never visually "jump" or "flicker" when background data updates arrive. Users must not lose their scroll position or see layout shifts during normal operation.
+
+### 11.2 Strategies
+
+**Scroll position preservation:**
+- When new items are added to a `VecModel` (e.g., chat messages, log lists, evidence lists, or bounded terminal transcript projections), preserve the current scroll position unless the user is scrolled to the bottom
+- If scrolled to bottom: auto-scroll to show new content
+- If scrolled up (reviewing history): hold position; show a "New messages below" indicator
+- Implementation: Track `viewport-y` property on `ListView`; only update if at bottom threshold
+
+**Batch UI updates:**
+- When multiple properties change simultaneously (e.g., orchestrator status + progress + transcript projection updates), batch them into a single `invoke_from_event_loop` call to prevent partial renders
+- Example: Do NOT call `invoke_from_event_loop` three times for three properties; collect changes, then apply all in one call
+
+**Stable list keys:**
+- Each item in a `VecModel` has a stable ID (not just an index) so that Slint can reconcile updates without destroying and recreating all items
+- When updating a list item, modify the existing model entry rather than clearing and rebuilding the entire model
+
+**Avoid full-model replacement:**
+- Never call `VecModel::clear()` + re-add all items when only one item changed
+- Use `VecModel::set_row_data()` for individual item updates
+- Use `VecModel::push()` / `VecModel::remove()` for additions/removals
+
+**Layout stability:**
+- Fixed-size containers for status badges, progress bars, and other indicators so they do not cause layout shifts when values change
+- Reserve space for optional elements (error messages, loading indicators) even when not visible, or use animation to smoothly reveal them
+
+**Debounce layout persistence:**
+- When the user resizes panels or rearranges cards, debounce the redb write (300-500ms) to avoid disk thrashing and potential UI stutter
+
+### 11.3 Terminal-Specific Anti-Flickering
+
+- Live terminal rendering follows the Section 15 terminal-core architecture: terminal output is a high-frequency mutable grid, DOM/React/webview-style document-UI terminal cores are non-ship, and the core centers native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer ingestion and processing.
+- Bounded terminal transcript or plain-log projections may expose a visible row window in `VecModel`/`ListView`, but those projections are derived views rather than the live terminal core.
+- When output arrives rapidly, throttle GUI projection updates to max 30fps and batch rows arriving within 33ms; PTY/buffer ingestion and diff computation remain off the UI thread.
+- Ring buffers stay in Rust; the GUI holds only the visible transcript or plain-log projection window.
+- high-volume terminal output uses ring-buffer backed `/virtualized` projections so 4-split terminal panes keep layout ratios stable while the live core remains off the UI thread.
+
+---
+
+## 12. Responsive Design
+
+### 12.1 Breakpoints
+
+| Window Width | Layout Adaptation |
+|-------------|-------------------|
+| >= 1360px | **Full layout:** All panels visible at comfortable widths |
+| 1080-1359px | **Compact:** Side panel at minimum (240px); bottom panel compact |
+| 720-1079px | **Collapsed:** Side panel auto-collapses to 48px icon tab; bottom panel collapses to header row (24px) |
+| < 720px | **Single-column:** Activity bar only; panels accessible as overlays/drawers from activity bar icons |
+
+At narrow widths where panels become `/overlays` or drawers, `AnnotationDrawer`, `AnnotationActionMenu`, and `ContextChipStrip` collapse into overlay/drawer patterns without hiding keyboard access or breaking `keyboard-shortcut` expectations.
+
+### 12.2 Side Panel Responsive Widths
+
+
+| Panel Width | Adaptation |
+|------------|------------|
+| 480px+ | Full layout with all controls |
+| 360-479px | Mode tabs use abbreviated text; footer collapses platform/model to icons |
+| 280-359px | Mode tabs show icons only (tooltip on hover); footer shows only context % |
+| 240px (minimum) | Mode icons, messages, input only; all extras behind overflow menu |
+
+### 12.3 Dashboard Grid Responsive
+
+| Window Width | Grid Columns |
+|-------------|-------------|
+| < 1200px | 2 columns |
+| 1200-1600px | 3 columns |
+| > 1600px | 4 columns |
+
+### 12.4 Activity Bar Responsive
+
+Activity bar remains at 48px at all breakpoints. At < 720px, it becomes the primary navigation mechanism, with panels opening as overlay drawers.
+
+The shared `/binder` and document-review surfaces use the same responsive rule: left binder rail owns document switching/status, right binder rail or drawer owns annotation management, selection actions stay in the inline `AnnotationActionMenu`, ephemeral send-to-chat state stays in `ContextChipStrip`, and chat itself remains a separate panel rather than embedded inside the binder review surface.
+
+The concept lineage from `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) narrows the binder placement without making the concept file a live owner. Wizard review uses a binder-style layout: the left document list `/sidebar` contains `wizard-doc-pill`, the central document content area is `wizard-binder-view`, and the top binder toolbar is `wizard-binder-toolbar`. Annotation UI belongs in a right-side drawer, `/rail`, or overlay inside binder content, not in the left document rail and not in a browser-style `annotation-review` modal. Chat remains the separate `#chatPanel` / `chatPanel` side panel with its own thread list, composer, `queued-intervention` strip, footer, and context-usage display; `send-to-chat` chips live in that chat composer through `ContextChipStrip`.
+
+---
+
+## 13. Accessibility
+
+### 13.1 Basic Theme as Accessibility Option
+
+The Basic theme is the primary accessibility-friendly option:
+- No decorative effects (pixel grid, paper texture, scanlines)
+- WCAG AA compliant color palette (4.5:1 minimum contrast for all text)
+- System fonts designed for screen readability
+- Minimum 14px body text, 1.6 line height, 0.02em letter spacing
+- 4px border radius (less visually harsh)
+- No hard shadows
+- Respects `prefers-reduced-motion` (no animations or transitions)
+
+### 13.2 Focus Indicators
+
+
+All themes must show visible focus indicators:
+- **Retro Dark/Light:** ACID_LIME 2px border on focus
+- **Basic:** High-contrast 2px ring with 2px offset in accent-blue
+
+### 13.3 Keyboard Navigation
+
+- All interactive elements reachable via Tab navigation
+- Focus order follows visual layout: Activity bar -> primary content -> side panel -> bottom panel -> status bar
+- Every list, table, and tree supports: Up/Down arrow navigation, Enter to select/activate, Escape to deselect/go back, Home/End to jump to first/last item
+- Type-ahead filtering where appropriate (thread list, project list, file tree)
+
+### 13.4 Screen Reader Support
+
+Slint's screen reader support is limited. Mitigations:
+- Set `accessible-role` and `accessible-label` properties on all interactive components where available in current stable Slint
+- Panel state (docked/floating) announced via accessible labels
+- Theme name available to assistive technology
+- Keyboard shortcuts prominently documented and discoverable via command palette
+
+### 13.5 Minimum Touch/Click Targets
+
+All clickable/draggable controls must be at least 24px in height/width for reliable interaction.
+
+---
+
+## 14. Slint File Organization
+
+### 14.1 Directory Structure
+
+<<< CONTEXT_AFTER 2140-2151 >>>
+
+```
+puppet-master-rs/
++-- build.rs                          # slint_build::compile("ui/app.slint")
++-- ui/                               # All .slint files
+|   +-- app.slint                     # Root component, imports all views
+|   +-- theme.slint                   # Theme global + token definitions
+|   +-- widgets/                      # Reusable .slint widgets
+|   |   +-- panel_card.slint
+|   |   +-- status_badge.slint
+|   |   +-- styled_button.slint
+|   |   +-- styled_input.slint

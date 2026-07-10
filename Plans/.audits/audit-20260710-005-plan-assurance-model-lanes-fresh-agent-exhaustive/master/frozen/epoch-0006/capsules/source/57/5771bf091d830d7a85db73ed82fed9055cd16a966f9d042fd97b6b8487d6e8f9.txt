@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1681-1692 >>>
+L00001681	- Diagnostics-only attachments must not imply full completion, navigation, hover, or semantic capability.
+L00001682	compatibility_only_notes: []
+L00001683	stale_retired_dispositions: []
+L00001684	owner_boundary_notes:
+L00001685	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00001686	owner_hints:
+L00001687	- Plans/LSPSupport.md
+L00001688	preserved_contractrefs:
+L00001689	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
+L00001690	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001691	```
+L00001692	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1693-2086 >>>
+L00001693	### LSPS-013 - Native Client Architecture And Protocol Guardrails
+L00001694	
+L00001695	```yaml
+L00001696	plan_unit_id: LSPS-013
+L00001697	unit_type: requirement
+L00001698	status: accepted
+L00001699	owner_doc: Plans/LSPSupport.md
+L00001700	canonical_text: Puppet Master owns the LSP client architecture through host, supervisor, session, registry, workspace resolver, document store, sync engine, request broker, capability registry, diagnostics store, intelligence facade, and trace service, with conservative protocol lifecycle and FileSafe routing for mutation-capable edits.
+L00001701	gui_related: false
+L00001702	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00001703	split_recommended: true
+L00001704	depends_on: []
+L00001705	unblocks: []
+L00001706	acceptance_criteria:
+L00001707	- The covered source span remains losslessly available for exact-text audit.
+L00001708	- This behavior is addressable through LSPS-013 instead of broad L-001 source-preserving coverage.
+L00001709	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001710	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001711	validation_surfaces:
+L00001712	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001713	- python3 scripts/pm-plan-index.py validate
+L00001714	risk_class: lsp_contract_drift
+L00001715	reasoning_tier: standard
+L00001716	context_scope: lspsupport_standardization
+L00001717	implementation_surfaces:
+L00001718	- Plans/LSPSupport.md
+L00001719	node_compile_hint:
+L00001720	  mode: native_client_architecture_and_protocol_guardrails
+L00001721	  create_worknodes: false
+L00001722	source_lineage:
+L00001723	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0010
+L00001724	preserved_exact_tokens:
+L00001725	- LspHost
+L00001726	- LspSupervisor
+L00001727	- LspSession
+L00001728	- LspSessionRegistry
+L00001729	- LspRegistry
+L00001730	- WorkspaceResolver
+L00001731	- DocumentStore
+L00001732	- DocumentSyncEngine
+L00001733	- LspRequestBroker
+L00001734	- CapabilityRegistry
+L00001735	- DiagnosticsStore
+L00001736	- LanguageIntelligenceFacade
+L00001737	- LspTraceService
+L00001738	- initialize -> initialized -> normal traffic -> shutdown -> exit
+L00001739	- FileSafe
+L00001740	- lsp-types
+L00001741	- tokio
+L00001742	- CancellationToken
+L00001743	negative_constraints:
+L00001744	- Dynamic registration stays disabled until PM can handle /unregister.
+L00001745	- Over-advertising unsupported snippets, resolve support, progress, workspace edit, or workspaceFolders behavior is forbidden.
+L00001746	- Rename, format, code action, and workspace edits always route through FileSafe.
+L00001747	compatibility_only_notes: []
+L00001748	stale_retired_dispositions: []
+L00001749	owner_boundary_notes:
+L00001750	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00001751	owner_hints:
+L00001752	- Plans/LSPSupport.md
+L00001753	preserved_contractrefs:
+L00001754	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
+L00001755	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001756	```
+L00001757	
+L00001758	### LSPS-014 - OpenCode Compatibility Inputs And Rejections
+L00001759	
+L00001760	```yaml
+L00001761	plan_unit_id: LSPS-014
+L00001762	unit_type: requirement
+L00001763	status: accepted
+L00001764	owner_doc: Plans/LSPSupport.md
+L00001765	canonical_text: OpenCode-style registry findings are compatibility input for built-in/custom definitions, stdio transport, lazy spawn, root discovery, and diagnostics into Assistant context, while full-buffer or disk resync, uncontrolled auto-downloads, process duplication, weak status visibility, and unbounded backoff are rejected.
+L00001766	gui_related: false
+L00001767	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00001768	split_recommended: true
+L00001769	depends_on: []
+L00001770	unblocks: []
+L00001771	acceptance_criteria:
+L00001772	- The covered source span remains losslessly available for exact-text audit.
+L00001773	- This behavior is addressable through LSPS-014 instead of broad L-001 source-preserving coverage.
+L00001774	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001775	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001776	validation_surfaces:
+L00001777	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001778	- python3 scripts/pm-plan-index.py validate
+L00001779	risk_class: lsp_contract_drift
+L00001780	reasoning_tier: standard
+L00001781	context_scope: lspsupport_standardization
+L00001782	implementation_surfaces:
+L00001783	- Plans/LSPSupport.md
+L00001784	node_compile_hint:
+L00001785	  mode: opencode_compatibility_inputs_and_rejections
+L00001786	  create_worknodes: false
+L00001787	source_lineage:
+L00001788	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0010
+L00001789	preserved_exact_tokens:
+L00001790	- OpenCode-style registry findings
+L00001791	- built-in and custom server definitions
+L00001792	- local stdio transport
+L00001793	- lazy spawn
+L00001794	- per-server root discovery
+L00001795	- diagnostics into Assistant context
+L00001796	- /full-buffer-or-disk-resync
+L00001797	- uncontrolled auto-downloads
+L00001798	- session/process duplication
+L00001799	- weak status visibility
+L00001800	- unbounded /backoff/eviction
+L00001801	negative_constraints:
+L00001802	- PM must not copy weak OpenCode behavior such as uncontrolled auto-downloads, duplicate sessions/processes, weak status visibility, or unbounded backoff.
+L00001803	compatibility_only_notes: []
+L00001804	stale_retired_dispositions: []
+L00001805	owner_boundary_notes:
+L00001806	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00001807	owner_hints:
+L00001808	- Plans/LSPSupport.md
+L00001809	preserved_contractrefs:
+L00001810	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
+L00001811	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001812	```
+L00001813	
+L00001814	### LSPS-015 - Tool Internal Event Ownership Boundary
+L00001815	
+L00001816	```yaml
+L00001817	plan_unit_id: LSPS-015
+L00001818	unit_type: requirement
+L00001819	status: accepted
+L00001820	owner_doc: Plans/LSPSupport.md
+L00001821	canonical_text: LSP internal-tool boundaries preserve run-scoped tool event records, mutation_capable apply-edit separation, formatter-vs-LSP ownership, DAE non-triggering host writes, plugin/tool telemetry, workspace-tab routing, and resolver-priority inputs without bypassing adjacent tool subsystems.
+L00001822	gui_related: false
+L00001823	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00001824	split_recommended: true
+L00001825	depends_on: []
+L00001826	unblocks: []
+L00001827	acceptance_criteria:
+L00001828	- The covered source span remains losslessly available for exact-text audit.
+L00001829	- This behavior is addressable through LSPS-015 instead of broad L-001 source-preserving coverage.
+L00001830	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001831	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001832	validation_surfaces:
+L00001833	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001834	- python3 scripts/pm-plan-index.py validate
+L00001835	risk_class: lsp_contract_drift
+L00001836	reasoning_tier: standard
+L00001837	context_scope: lspsupport_standardization
+L00001838	implementation_surfaces:
+L00001839	- Plans/LSPSupport.md
+L00001840	node_compile_hint:
+L00001841	  mode: tool_internal_event_ownership_boundary
+L00001842	  create_worknodes: false
+L00001843	source_lineage:
+L00001844	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0010
+L00001845	preserved_exact_tokens:
+L00001846	- internal-tool
+L00001847	- run_id
+L00001848	- tool.invoked
+L00001849	- 'mutation_capable: bool'
+L00001850	- formatter-vs-LSP ownership
+L00001851	- DAE non-triggering host writes
+L00001852	- Formatters_System.md
+L00001853	- Plugins_System.md
+L00001854	- tool.* telemetry
+L00001855	- plugin tool IDs
+L00001856	- /workspace-tab
+L00001857	- multi-project routing
+L00001858	- apply-edit paths
+L00001859	- Resolver priority inputs
+L00001860	negative_constraints:
+L00001861	- Formatter, plugin, telemetry, policy, workspace-tab, multi-project, mutation-capable, and apply-edit paths must not bypass one another.
+L00001862	compatibility_only_notes: []
+L00001863	stale_retired_dispositions: []
+L00001864	owner_boundary_notes:
+L00001865	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00001866	owner_hints:
+L00001867	- Plans/LSPSupport.md
+L00001868	preserved_contractrefs:
+L00001869	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
+L00001870	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001871	```
+L00001872	
+L00001873	### LSPS-016 - ESLint JS TS Reinforced Support
+L00001874	
+L00001875	```yaml
+L00001876	plan_unit_id: LSPS-016
+L00001877	unit_type: requirement
+L00001878	status: accepted
+L00001879	owner_doc: Plans/LSPSupport.md
+L00001880	canonical_text: ESLint is reinforced as the primary lint and diagnostics LSP for ECMAScript/JavaScript and common TypeScript/Vue projects, with v10 flat-config root discovery, Problems/Assistant diagnostics integration, and JavaScript/TypeScript preset alignment.
+L00001881	gui_related: true
+L00001882	gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+L00001883	split_recommended: false
+L00001884	depends_on: []
+L00001885	unblocks: []
+L00001886	acceptance_criteria:
+L00001887	- The covered source span remains losslessly available for exact-text audit.
+L00001888	- This behavior is addressable through LSPS-016 instead of broad L-001 source-preserving coverage.
+L00001889	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001890	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001891	validation_surfaces:
+L00001892	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001893	- python3 scripts/pm-plan-index.py validate
+L00001894	risk_class: lsp_contract_drift
+L00001895	reasoning_tier: standard
+L00001896	context_scope: lspsupport_standardization
+L00001897	implementation_surfaces:
+L00001898	- Plans/LSPSupport.md
+L00001899	node_compile_hint:
+L00001900	  mode: eslint_js_ts_reinforced_support
+L00001901	  create_worknodes: false
+L00001902	source_lineage:
+L00001903	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0011
+L00001904	preserved_exact_tokens:
+L00001905	- ESLint
+L00001906	- ECMAScript/JavaScript
+L00001907	- ESLint v10
+L00001908	- flat config only
+L00001909	- eslint.config.js
+L00001910	- eslint.config.mjs
+L00001911	- eslint.config.ts
+L00001912	- 'Node.js: ^20.19.0, ^22.13.0, or >=24'
+L00001913	- VS Code ESLint server
+L00001914	- Problems panel
+L00001915	- LLM/Assistant context
+L00001916	- JavaScript/TypeScript preset
+L00001917	negative_constraints:
+L00001918	- Do not rely on legacy .eslintrc* for ESLint v10 projects.
+L00001919	compatibility_only_notes: []
+L00001920	stale_retired_dispositions: []
+L00001921	owner_boundary_notes:
+L00001922	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00001923	owner_hints:
+L00001924	- Plans/LSPSupport.md
+L00001925	preserved_contractrefs: []
+L00001926	```
+L00001927	
+L00001928	### LSPS-017 - Slint LSP Support
+L00001929	
+L00001930	```yaml
+L00001931	plan_unit_id: LSPS-017
+L00001932	unit_type: requirement
+L00001933	status: accepted
+L00001934	owner_doc: Plans/LSPSupport.md
+L00001935	canonical_text: Because the GUI rewrite is Rust plus Slint, slint-lsp is included for .slint files with diagnostics, completion, goto definition, live-preview, formatting support, PATH-based command availability, and Settings > LSP toggles/configuration.
+L00001936	gui_related: true
+L00001937	gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+L00001938	split_recommended: false
+L00001939	depends_on: []
+L00001940	unblocks: []
+L00001941	acceptance_criteria:
+L00001942	- The covered source span remains losslessly available for exact-text audit.
+L00001943	- This behavior is addressable through LSPS-017 instead of broad L-001 source-preserving coverage.
+L00001944	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001945	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001946	validation_surfaces:
+L00001947	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001948	- python3 scripts/pm-plan-index.py validate
+L00001949	risk_class: lsp_contract_drift
+L00001950	reasoning_tier: standard
+L00001951	context_scope: lspsupport_standardization
+L00001952	implementation_surfaces:
+L00001953	- Plans/LSPSupport.md
+L00001954	node_compile_hint:
+L00001955	  mode: slint_lsp_support
+L00001956	  create_worknodes: false
+L00001957	source_lineage:
+L00001958	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0012
+L00001959	preserved_exact_tokens:
+L00001960	- Rust + Slint
+L00001961	- slint-lsp
+L00001962	- .slint
+L00001963	- stdio
+L00001964	- Diagnostics
+L00001965	- code completion
+L00001966	- goto definition
+L00001967	- live-preview
+L00001968	- Code formatting
+L00001969	- cargo install slint-lsp
+L00001970	- Settings > LSP
+L00001971	negative_constraints:
+L00001972	- slint-lsp has no special command-line arguments; editors spawn the binary and use LSP over stdio.
+L00001973	compatibility_only_notes: []
+L00001974	stale_retired_dispositions: []
+L00001975	owner_boundary_notes:
+L00001976	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00001977	owner_hints:
+L00001978	- Plans/LSPSupport.md
+L00001979	preserved_contractrefs: []
+L00001980	```
+L00001981	
+L00001982	### LSPS-018 - OpenCode Server Ts Lazy Spawn Model
+L00001983	
+L00001984	```yaml
+L00001985	plan_unit_id: LSPS-018
+L00001986	unit_type: requirement
+L00001987	status: accepted
+L00001988	owner_doc: Plans/LSPSupport.md
+L00001989	canonical_text: OpenCode server.ts remains an implementation reference for id/extensions/root/spawn registry shape, nearest-root discovery, one supervised process per host/server/root identity, lazy spawn, initialize handshake, config overrides, env, and initialization options.
+L00001990	gui_related: false
+L00001991	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00001992	split_recommended: false
+L00001993	depends_on: []
+L00001994	unblocks: []
+L00001995	acceptance_criteria:
+L00001996	- The covered source span remains losslessly available for exact-text audit.
+L00001997	- This behavior is addressable through LSPS-018 instead of broad L-001 source-preserving coverage.
+L00001998	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001999	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002000	validation_surfaces:
+L00002001	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002002	- python3 scripts/pm-plan-index.py validate
+L00002003	risk_class: lsp_contract_drift
+L00002004	reasoning_tier: standard
+L00002005	context_scope: lspsupport_standardization
+L00002006	implementation_surfaces:
+L00002007	- Plans/LSPSupport.md
+L00002008	node_compile_hint:
+L00002009	  mode: opencode_server_ts_lazy_spawn_model
+L00002010	  create_worknodes: false
+L00002011	source_lineage:
+L00002012	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0013
+L00002013	preserved_exact_tokens:
+L00002014	- packages/opencode/src/lsp/server.ts
+L00002015	- id
+L00002016	- extensions[]
+L00002017	- root(file, host_context) -> root identity
+L00002018	- spawn(session_key)
+L00002019	- NearestRoot
+L00002020	- one process per effective host/root identity
+L00002021	- Lazy spawn
+L00002022	- initialize handshake
+L00002023	- initializationOptions
+L00002024	negative_constraints:
+L00002025	- The supervised session key remains host-aware even when OpenCode examples use a simpler discovered-root key.
+L00002026	compatibility_only_notes: []
+L00002027	stale_retired_dispositions: []
+L00002028	owner_boundary_notes:
+L00002029	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00002030	owner_hints:
+L00002031	- Plans/LSPSupport.md
+L00002032	preserved_contractrefs: []
+L00002033	```
+L00002034	
+L00002035	### LSPS-019 - Rust Client Stack Baseline
+L00002036	
+L00002037	```yaml
+L00002038	plan_unit_id: LSPS-019
+L00002039	unit_type: requirement
+L00002040	status: accepted
+L00002041	owner_doc: Plans/LSPSupport.md
+L00002042	canonical_text: The GUI-side LSP client baseline uses lsp-types plus an evaluated async stdio client stack, with tower-lsp and lsp-server style crates reserved for optional custom-server use rather than the desktop client foundation.
+L00002043	gui_related: false
+L00002044	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00002045	split_recommended: false
+L00002046	depends_on: []
+L00002047	unblocks: []
+L00002048	acceptance_criteria:
+L00002049	- The covered source span remains losslessly available for exact-text audit.
+L00002050	- This behavior is addressable through LSPS-019 instead of broad L-001 source-preserving coverage.
+L00002051	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002052	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002053	validation_surfaces:
+L00002054	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002055	- python3 scripts/pm-plan-index.py validate
+L00002056	risk_class: lsp_contract_drift
+L00002057	reasoning_tier: standard
+L00002058	context_scope: lspsupport_standardization
+L00002059	implementation_surfaces:
+L00002060	- Plans/LSPSupport.md
+L00002061	node_compile_hint:
+L00002062	  mode: rust_client_stack_baseline
+L00002063	  create_worknodes: false
+L00002064	source_lineage:
+L00002065	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0014
+L00002066	preserved_exact_tokens:
+L00002067	- Rust Stack (Client Side)
+L00002068	- lsp-types
+L00002069	- lsp-client
+L00002070	- async_lsp_client
+L00002071	- lsp-client-rs
+L00002072	- stdio
+L00002073	- tower-lsp
+L00002074	- lsp-server
+L00002075	- GUI-side client foundation
+L00002076	negative_constraints:
+L00002077	- tower-lsp and lsp-server are server-oriented and rejected as GUI-side client foundations.
+L00002078	compatibility_only_notes: []
+L00002079	stale_retired_dispositions: []
+L00002080	owner_boundary_notes:
+L00002081	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00002082	owner_hints:
+L00002083	- Plans/LSPSupport.md
+L00002084	preserved_contractrefs: []
+L00002085	```
+L00002086	
+
+<<< CONTEXT_AFTER canonical_document_lines=2087-2098 >>>
+L00002087	### LSPS-020 - Editor DocumentStore And FileSafe Boundary
+L00002088	
+L00002089	```yaml
+L00002090	plan_unit_id: LSPS-020
+L00002091	unit_type: requirement
+L00002092	status: accepted
+L00002093	owner_doc: Plans/LSPSupport.md
+L00002094	canonical_text: The editor integrates LSP through a shared authoritative document store, sync barriers, document-scoped request gating, and FileSafe-backed workspace edit paths for rename, format, and code actions while preserving Search, diff/review, and chat restore ownership outside LSP.
+L00002095	gui_related: true
+L00002096	gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+L00002097	split_recommended: true
+L00002098	depends_on: []

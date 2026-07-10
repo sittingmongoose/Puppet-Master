@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2439-2450 >>>
+L00002439	- Gemini CLI root/provisioning tokens are preserved only for migration/currentness lineage.
+L00002440	stale_retired_dispositions:
+L00002441	- Gemini CLI managed-root provisioning is retired by CBP-019/MA-062.
+L00002442	owner_boundary_notes:
+L00002443	- Gemini state under GEMINI_CLI_HOME is retired source-lineage only; Antigravity CLI root ownership is separate.
+L00002444	owner_hints:
+L00002445	- Plans/Multi-Account.md
+L00002446	preserved_contractrefs:
+L00002447	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002448	split_recommendation_reason: Provider root layout remains cohesive; Gemini CLI root provisioning is retained only as retired filesystem lineage.
+L00002449	```
+L00002450	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2451-2848 >>>
+L00002451	### MA-026 - Gemini Auth Project Context And Quota Plane Readiness
+L00002452	
+L00002453	```yaml
+L00002454	plan_unit_id: MA-026
+L00002455	unit_type: requirement
+L00002456	status: accepted
+L00002457	owner_doc: Plans/Multi-Account.md
+L00002458	canonical_text: Gemini auth states are richer than a binary logged-in flag. OAuth, API-key, and Vertex/Google credential
+L00002459	  families remain distinct auth, billing, quota, project-context, capability, and readiness planes, with requested/effective
+L00002460	  storage vocabulary preserving auth, capability, billing/quota plane, project context, and usage source.
+L00002461	gui_related: true
+L00002462	gui_classification_reason: The unit includes Gemini setup/readiness states and user-visible validation behavior.
+L00002463	split_recommended: false
+L00002464	depends_on:
+L00002465	- MA-025
+L00002466	unblocks: []
+L00002467	acceptance_criteria:
+L00002468	- Covered source spans remain losslessly available for exact-text audit.
+L00002469	- Gemini OAuth, API-key, and Vertex/Google credential families remain distinct.
+L00002470	- validation_required is surfaced before onboarding when project/account context cannot be proven.
+L00002471	- configured project id outranks persisted managed-project id.
+L00002472	- Credentials stay out of redb and seglog.
+L00002473	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002474	validation_surfaces:
+L00002475	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002476	- python3 scripts/pm-plan-index.py validate
+L00002477	risk_class: gemini_auth_quota_readiness
+L00002478	reasoning_tier: standard
+L00002479	context_scope: multi_account_standardization
+L00002480	implementation_surfaces:
+L00002481	- Plans/Multi-Account.md
+L00002482	node_compile_hint:
+L00002483	  mode: gemini_auth_quota_readiness
+L00002484	  create_worknodes: false
+L00002485	source_lineage:
+L00002486	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002487	preserved_exact_tokens:
+L00002488	- oauth_logged_out
+L00002489	- oauth_logged_in
+L00002490	- oauth_needs_project_context
+L00002491	- oauth_needs_configuration
+L00002492	- api_key_configured
+L00002493	- validation_required
+L00002494	- managed-project
+L00002495	- PKCE
+L00002496	- /project-context
+L00002497	- requested_auth_mode
+L00002498	- effective_*
+L00002499	- /capability
+L00002500	- billing/quota plane
+L00002501	negative_constraints:
+L00002502	- Gemini OAuth and API-key paths are not interchangeable labels over one key-centric bucket.
+L00002503	compatibility_only_notes: []
+L00002504	stale_retired_dispositions: []
+L00002505	owner_boundary_notes:
+L00002506	- Gemini account/runtime records use requested/effective storage vocabulary for auth, capability, billing/quota, project context, and usage source.
+L00002507	owner_hints:
+L00002508	- Plans/Multi-Account.md
+L00002509	preserved_contractrefs:
+L00002510	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002511	split_recommendation_reason: Gemini auth/project/quota readiness is split from root layout and capability declarations.
+L00002512	```
+L00002513	
+L00002514	### MA-027 - Cursor Agent Home XDG Isolation And Import Boundary
+L00002515	
+L00002516	```yaml
+L00002517	plan_unit_id: MA-027
+L00002518	unit_type: requirement
+L00002519	status: accepted
+L00002520	owner_doc: Plans/Multi-Account.md
+L00002521	canonical_text: Cursor account isolation is tied to PM-owned HOME and XDG roots for cursor-agent execution, login, status,
+L00002522	  import, and launch behavior. Editor-oriented user-data flags and Cursor ACP do not replace the account-root boundary,
+L00002523	  and Cursor-owned profile/native state remains account-local unless a later owner contract promotes it.
+L00002524	gui_related: false
+L00002525	gui_classification_reason: The unit defines Cursor account-root and launch isolation rather than GUI presentation.
+L00002526	split_recommended: false
+L00002527	depends_on:
+L00002528	- MA-026
+L00002529	unblocks: []
+L00002530	acceptance_criteria:
+L00002531	- Covered source spans remain losslessly available for exact-text audit.
+L00002532	- Fresh HOME/XDG roots remain account-boundary inputs for Cursor probes.
+L00002533	- cursor-agent status under isolated roots is evidence for the isolated account row.
+L00002534	- Import Existing Cursor Auth copies only narrow auth-bearing state.
+L00002535	- Editor user-data flags do not become PM's core Cursor multi-account isolation mechanism.
+L00002536	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002537	validation_surfaces:
+L00002538	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002539	- python3 scripts/pm-plan-index.py validate
+L00002540	risk_class: cursor_account_isolation
+L00002541	reasoning_tier: standard
+L00002542	context_scope: multi_account_standardization
+L00002543	implementation_surfaces:
+L00002544	- Plans/Multi-Account.md
+L00002545	node_compile_hint:
+L00002546	  mode: cursor_account_isolation
+L00002547	  create_worknodes: false
+L00002548	source_lineage:
+L00002549	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002550	preserved_exact_tokens:
+L00002551	- HOME
+L00002552	- XDG_*
+L00002553	- XDG_CONFIG_HOME
+L00002554	- XDG_DATA_HOME
+L00002555	- XDG_CACHE_HOME
+L00002556	- CURSOR_USER_DATA_DIR
+L00002557	- cursor-agent
+L00002558	- cursor-agent login
+L00002559	- NO_OPEN_BROWSER
+L00002560	- cursor-agent status
+L00002561	- Not logged in
+L00002562	- cursor --user-data-dir
+L00002563	- Import Existing Cursor Auth
+L00002564	- ~/.config/cursor/auth.json
+L00002565	- statsig-cache.json
+L00002566	- ~/.cursor/projects/
+L00002567	- Cursor ACP
+L00002568	- /its
+L00002569	negative_constraints:
+L00002570	- Cursor isolation is not a config-path/manual switching model.
+L00002571	- Cursor ACP is not an account-root boundary.
+L00002572	compatibility_only_notes: []
+L00002573	stale_retired_dispositions:
+L00002574	- Editor-facing cursor --user-data-dir assumptions are provider/desktop details only, not the core account isolation contract.
+L00002575	owner_boundary_notes:
+L00002576	- Cursor profile-local/native state remains Cursor-owned and account-local unless promoted by a later owner contract.
+L00002577	owner_hints:
+L00002578	- Plans/Multi-Account.md
+L00002579	preserved_contractrefs:
+L00002580	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002581	split_recommendation_reason: Cursor isolation is split from Codex and Gemini provider-root behavior.
+L00002582	```
+L00002583	
+L00002584	### MA-028 - Codex Account Roots And Auth Family Separation
+L00002585	
+L00002586	```yaml
+L00002587	plan_unit_id: MA-028
+L00002588	unit_type: requirement
+L00002589	status: accepted
+L00002590	owner_doc: Plans/Multi-Account.md
+L00002591	canonical_text: Codex account roots are isolated with CODEX_HOME. Auth probes and authenticated structured execution validate
+L00002592	  account/root state, upstream runtime artifacts remain account-local provider state, and ChatGPT-backed and API-key-backed
+L00002593	  Codex accounts stay separate for switching, usage display, cooldown behavior, and preferred-account policy.
+L00002594	gui_related: false
+L00002595	gui_classification_reason: The unit covers Codex account-root validation and auth-family semantics rather than GUI presentation.
+L00002596	split_recommended: false
+L00002597	depends_on:
+L00002598	- MA-027
+L00002599	unblocks: []
+L00002600	acceptance_criteria:
+L00002601	- Covered source spans remain losslessly available for exact-text audit.
+L00002602	- Fresh CODEX_HOME logged-out probes are account-sandbox evidence.
+L00002603	- Upstream Codex runtime artifacts are not shared across PM account rows by default.
+L00002604	- ChatGPT and API-key auth families remain distinct entitlement pools.
+L00002605	- Structured codex exec event output remains valid account/root validation evidence.
+L00002606	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002607	validation_surfaces:
+L00002608	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002609	- python3 scripts/pm-plan-index.py validate
+L00002610	risk_class: codex_account_root_auth_family
+L00002611	reasoning_tier: standard
+L00002612	context_scope: multi_account_standardization
+L00002613	implementation_surfaces:
+L00002614	- Plans/Multi-Account.md
+L00002615	node_compile_hint:
+L00002616	  mode: codex_account_root_auth_family
+L00002617	  create_worknodes: false
+L00002618	source_lineage:
+L00002619	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002620	preserved_exact_tokens:
+L00002621	- CODEX_HOME
+L00002622	- auth.json
+L00002623	- codex login status
+L00002624	- codex exec --json
+L00002625	- thread.started
+L00002626	- turn.started
+L00002627	- error
+L00002628	- item.completed
+L00002629	- sessions/
+L00002630	- models_cache
+L00002631	- models_cache.json
+L00002632	- logs_1.sqlite
+L00002633	- state_5.sqlite
+L00002634	- skills/.system/
+L00002635	- /.system/
+L00002636	- tmp/
+L00002637	- ChatGPT-backed
+L00002638	- API-key-backed
+L00002639	negative_constraints:
+L00002640	- Codex plan-backed and API-billed usage/cooldowns must not collapse into one generic Codex account bucket.
+L00002641	compatibility_only_notes: []
+L00002642	stale_retired_dispositions: []
+L00002643	owner_boundary_notes:
+L00002644	- Codex SQLite filenames are upstream-provider artifacts, not PM storage technology.
+L00002645	owner_hints:
+L00002646	- Plans/Multi-Account.md
+L00002647	preserved_contractrefs:
+L00002648	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002649	split_recommendation_reason: Codex account roots and auth-family separation are independently addressable.
+L00002650	```
+L00002651	
+L00002652	### MA-029 - Gemini Copilot Direct Provider Identity And Capability Boundaries
+L00002653	
+L00002654	```yaml
+L00002655	plan_unit_id: MA-029
+L00002656	unit_type: requirement
+L00002657	status: accepted
+L00002658	owner_doc: Plans/Multi-Account.md
+L00002659	canonical_text: Gemini Direct is an active direct API provider entry, retired Gemini CLI vocabulary is source-lineage only,
+L00002660	  Antigravity CLI is the active Google-owned CLI-runtime entry, Codex and GitHub Copilot are direct providers in PM,
+L00002661	  GitHub API auth remains independent from GitHub Copilot provider auth, and Copilot account records preserve auth realm,
+L00002662	  billing/entity context, entitlement class, policy block, and cooldown reason codes.
+L00002663	gui_related: false
+L00002664	gui_classification_reason: The unit defines provider identity and capability boundaries rather than GUI presentation.
+L00002665	split_recommended: false
+L00002666	depends_on:
+L00002667	- MA-028
+L00002668	unblocks: []
+L00002669	acceptance_criteria:
+L00002670	- Covered source spans remain losslessly available for exact-text audit.
+L00002671	- Gemini Direct remains active, Gemini CLI is retired/source-lineage only, and Antigravity CLI is a separate active CLI-runtime entry.
+L00002672	- Gemini capability declarations use the shared provider capability model.
+L00002673	- GitHub Copilot account switching does not alter Git or GitHub API identity.
+L00002674	- Copilot entitlement and cooldown reason codes remain explicit.
+L00002675	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002676	validation_surfaces:
+L00002677	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002678	- python3 scripts/pm-plan-index.py validate
+L00002679	risk_class: direct_provider_capability_boundary
+L00002680	reasoning_tier: standard
+L00002681	context_scope: multi_account_standardization
+L00002682	implementation_surfaces:
+L00002683	- Plans/Multi-Account.md
+L00002684	node_compile_hint:
+L00002685	  mode: direct_provider_capability_boundary
+L00002686	  create_worknodes: false
+L00002687	source_lineage:
+L00002688	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002689	preserved_exact_tokens:
+L00002690	- direct-only
+L00002691	- supports_multi_account
+L00002692	- account_identity_kind
+L00002693	- quota_signal_sources
+L00002694	- supports_threshold_switch
+L00002695	- supports_reset_countdown
+L00002696	- supports_role_scoped_account_pools
+L00002697	- requested_auth_mode
+L00002698	- effective_*
+L00002699	- billing_entity_required
+L00002700	- included_premium_exhausted
+L00002701	- paid_overage_disallowed
+L00002702	- copilot_org_policy_blocked
+L00002703	- copilot_entitlement_missing
+L00002704	negative_constraints:
+L00002705	- Switching GitHub Copilot accounts must not change Git transport, local Git/worktree state, remotes, worktree ownership, repository transport state, or GitHub API account binding.
+L00002706	compatibility_only_notes:
+L00002707	- Retired "Gemini Direct and Gemini CLI remain separate provider entries" wording is kept only for source-lineage.
+L00002708	stale_retired_dispositions:
+L00002709	- Active Gemini CLI family pooling is retired; requested/effective pooling now applies to active provider entries only.
+L00002710	owner_boundary_notes:
+L00002711	- GitHub API auth for repository operations is independent from GitHub Copilot provider auth.
+L00002712	owner_hints:
+L00002713	- Plans/Multi-Account.md
+L00002714	preserved_contractrefs:
+L00002715	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/FinalGUISpec.md'
+L00002716	split_recommendation_reason: Direct-provider identity and capability declarations are split from OpenCode and sharing policy.
+L00002717	```
+L00002718	
+L00002719	### MA-030 - Provider-Native Advanced Instructions OpenCode Evidence And Skill Boundary
+L00002720	
+L00002721	```yaml
+L00002722	plan_unit_id: MA-030
+L00002723	unit_type: requirement
+L00002724	status: accepted
+L00002725	owner_doc: Plans/Multi-Account.md
+L00002726	canonical_text: >-
+L00002727	  Provider-native advanced instruction surfaces, OpenCode evidence, and skill/MCP behavior remain bounded: Copilot advanced
+L00002728	  target groups carry PM control and drift state, native projections have explicit failure behavior, OpenCode pressure
+L00002729	  evidence preserves source authority, and PM does not invent provider-specific skill plumbing inside the OpenCode server
+L00002730	  profile for direct providers.
+L00002731	gui_related: true
+L00002732	gui_classification_reason: The unit includes user-visible advanced instruction panes, target groups, and drift controls.
+L00002733	split_recommended: false
+L00002734	depends_on:
+L00002735	- MA-029
+L00002736	unblocks: []
+L00002737	acceptance_criteria:
+L00002738	- Covered source spans remain losslessly available for exact-text audit.
+L00002739	- GitHub Copilot Advanced target groups remain provider-native instruction surfaces.
+L00002740	- native_projected failure behavior remains explicit.
+L00002741	- OpenCode pressure records preserve observed versus upstream-authoritative source authority.
+L00002742	- Direct-provider differences remain in auth/model/runtime/capability transforms, not OpenCode skill plumbing.
+L00002743	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002744	validation_surfaces:
+L00002745	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002746	- python3 scripts/pm-plan-index.py validate
+L00002747	risk_class: provider_native_instruction_boundary
+L00002748	reasoning_tier: standard
+L00002749	context_scope: multi_account_standardization
+L00002750	implementation_surfaces:
+L00002751	- Plans/Multi-Account.md
+L00002752	node_compile_hint:
+L00002753	  mode: provider_native_instruction_boundary
+L00002754	  create_worknodes: false
+L00002755	source_lineage:
+L00002756	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002757	preserved_exact_tokens:
+L00002758	- GitHub Copilot Advanced
+L00002759	- Repository Instructions
+L00002760	- .github/copilot-instructions.md
+L00002761	- Path Instructions
+L00002762	- .github/instructions/*.instructions.md
+L00002763	- Custom Agents
+L00002764	- .github/agents/*.agent.md
+L00002765	- PM Controlled
+L00002766	- Manual Override
+L00002767	- native_projected
+L00002768	- '429'
+L00002769	- rateLimitedUntil
+L00002770	- OpenCode-observed
+L00002771	- upstream-authoritative
+L00002772	negative_constraints:
+L00002773	- PM should not invent provider-specific skill plumbing inside the OpenCode server profile for direct-provider entries.
+L00002774	compatibility_only_notes: []
+L00002775	stale_retired_dispositions: []
+L00002776	owner_boundary_notes:
+L00002777	- Provider differences belong in auth, model/runtime, and capability transforms rather than replacing PM-native skill delivery.
+L00002778	owner_hints:
+L00002779	- Plans/Multi-Account.md
+L00002780	preserved_contractrefs:
+L00002781	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/FinalGUISpec.md'
+L00002782	split_recommendation_reason: Advanced instruction and OpenCode evidence boundaries are split from sharing deny classes.
+L00002783	```
+L00002784	
+L00002785	### MA-031 - CLI Provider Sharing Deny Classes And Overlay Policy
+L00002786	
+L00002787	```yaml
+L00002788	plan_unit_id: MA-031
+L00002789	unit_type: requirement
+L00002790	status: accepted
+L00002791	owner_doc: Plans/Multi-Account.md
+L00002792	canonical_text: CLI-backed providers deny sharing for account-bearing state and runtime residue by default. PM-managed overlays
+L00002793	  may be projected only when target-specific, deny_classes wins for account-bearing state, and provider_api projection
+L00002794	  remains a provider adapter boundary rather than a filesystem sharing shortcut.
+L00002795	gui_related: false
+L00002796	gui_classification_reason: The unit defines provider account state sharing policy rather than GUI presentation.
+L00002797	split_recommended: false
+L00002798	depends_on:
+L00002799	- MA-030
+L00002800	unblocks: []
+L00002801	acceptance_criteria:
+L00002802	- Covered source spans remain losslessly available for exact-text audit.
+L00002803	- Account-bearing state and residue do not leak between runnable profiles.
+L00002804	- Runtime sharing defaults preserve account-local provider-generated state unless explicitly promoted.
+L00002805	- share_classes, deny_classes, and projection_mode remain recorded policy fields.
+L00002806	- provider_api projection remains a provider adapter boundary.
+L00002807	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002808	validation_surfaces:
+L00002809	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002810	- python3 scripts/pm-plan-index.py validate
+L00002811	risk_class: cli_provider_sharing_policy
+L00002812	reasoning_tier: standard
+L00002813	context_scope: multi_account_standardization
+L00002814	implementation_surfaces:
+L00002815	- Plans/Multi-Account.md
+L00002816	node_compile_hint:
+L00002817	  mode: cli_provider_sharing_policy
+L00002818	  create_worknodes: false
+L00002819	source_lineage:
+L00002820	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002821	preserved_exact_tokens:
+L00002822	- auth_state
+L00002823	- history
+L00002824	- mcp_oauth_tokens
+L00002825	- extensions runtime state
+L00002826	- project registry
+L00002827	- temp chats
+L00002828	- workspace_trust
+L00002829	- runtime_cache
+L00002830	- cooldown_residue
+L00002831	- telemetry_state
+L00002832	- share_classes[]
+L00002833	- deny_classes[]
+L00002834	- projection_mode = copy | symlink | generated | provider_api
+L00002835	negative_constraints:
+L00002836	- Account-bearing state and residue from one profile must not leak into another account's runnable profile.
+L00002837	- deny_classes[] wins for account-bearing state.
+L00002838	compatibility_only_notes: []
+L00002839	stale_retired_dispositions: []
+L00002840	owner_boundary_notes:
+L00002841	- PM-managed overlays for instructions, skills, selected MCP definitions, and selected bridge config are allowed only when target-specific.
+L00002842	owner_hints:
+L00002843	- Plans/Multi-Account.md
+L00002844	preserved_contractrefs:
+L00002845	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/FinalGUISpec.md'
+L00002846	split_recommendation_reason: Sharing deny classes close the provider-specific S0020 split.
+L00002847	```
+L00002848	
+
+<<< CONTEXT_AFTER canonical_document_lines=2849-2860 >>>
+L00002849	### MA-032 - Runner Orchestration Account Contract
+L00002850	
+L00002851	```yaml
+L00002852	plan_unit_id: MA-032
+L00002853	unit_type: requirement
+L00002854	status: accepted
+L00002855	owner_doc: Plans/Multi-Account.md
+L00002856	canonical_text: The multi-account contract applies across assistant, interviewer, builders, overseers, and node workers.
+L00002857	  Auto-switching is on by default for provider-using actors, provider selection is provider-aware, account-aware, and
+L00002858	  role-aware, same-provider accounts are not interchangeable, and manual set-active remains an override/debug control.
+L00002859	gui_related: false
+L00002860	gui_classification_reason: The unit defines runtime actor coverage rather than GUI presentation.

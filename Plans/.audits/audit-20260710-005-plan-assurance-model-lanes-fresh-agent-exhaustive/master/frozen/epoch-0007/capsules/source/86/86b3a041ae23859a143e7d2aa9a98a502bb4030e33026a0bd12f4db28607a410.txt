@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE canonical_document_lines=10839-10850 >>>
+L00010839	  - "`cmd.chat.worktree.bind_existing`"
+L00010840	  - "`cmd.chat.worktree.open_files`"
+L00010841	  - "`cmd.chat.worktree.create_pr`"
+L00010842	  - "`alias_of_command_id`"
+L00010843	compatibility_only_notes:
+L00010844	  - "Compatibility aliases may route to canonical assistant worktree commands."
+L00010845	negative_constraints:
+L00010846	  - "Compatibility aliases are not replacements for the canonical six command IDs."
+L00010847	owner_hints:
+L00010848	  - Plans/Contracts_V0.md
+L00010849	```
+L00010850	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10851-11221 >>>
+L00010851	### CV-161 - UICommand Envelope Fields And Closed Kinds
+L00010852	
+L00010853	```yaml
+L00010854	plan_unit_id: CV-161
+L00010855	unit_type: requirement
+L00010856	status: accepted
+L00010857	owner_doc: Plans/Contracts_V0.md
+L00010858	canonical_text: >-
+L00010859	  UICommand is the canonical command envelope with command_id, command_kind,
+L00010860	  args, context?, normalization?, and closed command_kind and normalization
+L00010861	  values, with normalization.kind required.
+L00010862	gui_related: false
+L00010863	gui_classification_reason: This unit defines command envelope schema fields.
+L00010864	split_recommended: true
+L00010865	depends_on: [CV-031]
+L00010866	unblocks: [CV-162]
+L00010867	acceptance_criteria:
+L00010868	  - "UICommand preserves command_id, command_kind, args, context?, and normalization?."
+L00010869	  - "command_kind closes to shell_view, navigation_wrapper, and domain_action."
+L00010870	  - "normalization closes to wrapper and deprecated_alias."
+L00010871	  - "normalization.kind is required."
+L00010872	validation_surfaces:
+L00010873	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010874	  - python3 scripts/pm-plan-index.py validate
+L00010875	risk_class: uicommand_envelope_schema_drift
+L00010876	reasoning_tier: high
+L00010877	context_scope: uicommand_envelope_fields
+L00010878	implementation_surfaces:
+L00010879	  - Plans/Contracts_V0.md
+L00010880	  - Plans/UI_Command_Catalog.md
+L00010881	  - Plans/Crosswalk.md
+L00010882	node_compile_hint:
+L00010883	  mode: uicommand_envelope_contract
+L00010884	  create_worknodes: false
+L00010885	source_lineage:
+L00010886	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0058
+L00010887	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0059
+L00010888	preserved_exact_tokens:
+L00010889	  - "`UICommand`"
+L00010890	  - "`command_id`"
+L00010891	  - "`command_kind`"
+L00010892	  - "`args`"
+L00010893	  - "`context?`"
+L00010894	  - "`normalization?`"
+L00010895	  - "`shell_view`"
+L00010896	  - "`navigation_wrapper`"
+L00010897	  - "`domain_action`"
+L00010898	  - "ContractRef: Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level), Plans/Crosswalk.md#3.1 Runtime orchestration ownership"
+L00010899	compatibility_only_notes:
+L00010900	  - "deprecated_alias remains migration normalization."
+L00010901	owner_hints:
+L00010902	  - Plans/Contracts_V0.md
+L00010903	```
+L00010904	
+L00010905	### CV-162 - UICommand Wrapper Primitive Boundary
+L00010906	
+L00010907	```yaml
+L00010908	plan_unit_id: CV-162
+L00010909	unit_type: constraint
+L00010910	status: accepted
+L00010911	owner_doc: Plans/Contracts_V0.md
+L00010912	canonical_text: >-
+L00010913	  Shared navigation and identity-open primitives sit under public wrapper
+L00010914	  commands; wrapper metadata stays narrow, points only to canonical primitive
+L00010915	  families, and does not restate route payload structure.
+L00010916	gui_related: false
+L00010917	gui_classification_reason: This unit defines command wrapper boundaries around route/open primitives.
+L00010918	split_recommended: true
+L00010919	depends_on: [CV-055, CV-057, CV-161]
+L00010920	unblocks: []
+L00010921	acceptance_criteria:
+L00010922	  - "Deprecated aliases point at alias_of_command_id."
+L00010923	  - "Stable wrapper commands point at normalizes_to_contract."
+L00010924	  - "Wrapper metadata stays narrow and contract-level."
+L00010925	  - "Route payload structure is not restated inside command metadata."
+L00010926	validation_surfaces:
+L00010927	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010928	  - python3 scripts/pm-plan-index.py validate
+L00010929	risk_class: uicommand_route_payload_fork
+L00010930	reasoning_tier: high
+L00010931	context_scope: uicommand_wrapper_primitive_boundary
+L00010932	implementation_surfaces:
+L00010933	  - Plans/Contracts_V0.md
+L00010934	  - Plans/UI_Command_Catalog.md
+L00010935	  - Plans/Progression_Gates.md
+L00010936	  - Plans/Crosswalk.md
+L00010937	node_compile_hint:
+L00010938	  mode: uicommand_wrapper_boundary_constraint
+L00010939	  create_worknodes: false
+L00010940	source_lineage:
+L00010941	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0058
+L00010942	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0059
+L00010943	preserved_exact_tokens:
+L00010944	  - "`normalizes_to_contract`"
+L00010945	  - "`wrapper`"
+L00010946	  - "`deprecated_alias`"
+L00010947	  - "`shell_view`"
+L00010948	  - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md"
+L00010949	compatibility_only_notes:
+L00010950	  - "deprecated aliases point at alias_of_command_id."
+L00010951	negative_constraints:
+L00010952	  - "Wrappers must not restate route payload structure or create command-owned route models."
+L00010953	owner_hints:
+L00010954	  - Plans/Contracts_V0.md
+L00010955	```
+L00010956	
+L00010957	### CV-163 - RouteTarget Required Scope And Destination Class
+L00010958	
+L00010959	```yaml
+L00010960	plan_unit_id: CV-163
+L00010961	unit_type: requirement
+L00010962	status: accepted
+L00010963	owner_doc: Plans/Contracts_V0.md
+L00010964	canonical_text: >-
+L00010965	  route_target is the canonical navigation-and-focus contract requiring
+L00010966	  target_kind and project_id, with target_kind as destination class only.
+L00010967	gui_related: false
+L00010968	gui_classification_reason: This unit defines route_target required fields and destination classes.
+L00010969	split_recommended: true
+L00010970	depends_on: [CV-031, CV-054]
+L00010971	unblocks: [CV-164, CV-166, CV-169, CV-173]
+L00010972	acceptance_criteria:
+L00010973	  - "route_target remains the canonical navigation-and-focus contract."
+L00010974	  - "target_kind and project_id are required."
+L00010975	  - "target_kind closes to primary_view, side_panel, bottom_panel, embedded_surface, and page_tab."
+L00010976	  - "target_kind is destination class only."
+L00010977	validation_surfaces:
+L00010978	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010979	  - python3 scripts/pm-plan-index.py validate
+L00010980	risk_class: route_target_destination_scope_drift
+L00010981	reasoning_tier: high
+L00010982	context_scope: routetarget_required_scope_destination
+L00010983	implementation_surfaces:
+L00010984	  - Plans/Contracts_V0.md
+L00010985	  - Plans/Crosswalk.md
+L00010986	  - Plans/FileManager.md
+L00010987	  - Plans/FinalGUISpec.md
+L00010988	node_compile_hint:
+L00010989	  mode: routetarget_required_scope_contract
+L00010990	  create_worknodes: false
+L00010991	source_lineage:
+L00010992	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00010993	preserved_exact_tokens:
+L00010994	  - "`route_target`"
+L00010995	  - "`target_kind`"
+L00010996	  - "`project_id`"
+L00010997	  - "`primary_view`"
+L00010998	  - "`side_panel`"
+L00010999	  - "`bottom_panel`"
+L00011000	  - "`embedded_surface`"
+L00011001	  - "`page_tab`"
+L00011002	  - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md"
+L00011003	negative_constraints:
+L00011004	  - "target_kind must not replace selector identity."
+L00011005	owner_hints:
+L00011006	  - Plans/Contracts_V0.md
+L00011007	```
+L00011008	
+L00011009	### CV-164 - RouteTarget Primary Selector Families
+L00011010	
+L00011011	```yaml
+L00011012	plan_unit_id: CV-164
+L00011013	unit_type: requirement
+L00011014	status: accepted
+L00011015	owner_doc: Plans/Contracts_V0.md
+L00011016	canonical_text: >-
+L00011017	  route_target permits exactly one canonical primary selector: subject_id or
+L00011018	  object_kind plus object_id, with closed subject and object-kind families.
+L00011019	gui_related: false
+L00011020	gui_classification_reason: This unit defines route primary selector identity.
+L00011021	split_recommended: true
+L00011022	depends_on: [CV-054, CV-055, CV-163]
+L00011023	unblocks: [CV-165, CV-166, CV-171]
+L00011024	acceptance_criteria:
+L00011025	  - "Exactly one canonical primary selector is permitted."
+L00011026	  - "subject_id closes to doc:<document_id> and artifact:<artifact_id>."
+L00011027	  - "object_kind list from the source span is preserved."
+L00011028	  - "object_id pairs with object_kind for object selectors."
+L00011029	validation_surfaces:
+L00011030	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011031	  - python3 scripts/pm-plan-index.py validate
+L00011032	risk_class: route_primary_selector_competition
+L00011033	reasoning_tier: high
+L00011034	context_scope: routetarget_primary_selector_families
+L00011035	implementation_surfaces:
+L00011036	  - Plans/Contracts_V0.md
+L00011037	  - Plans/Crosswalk.md
+L00011038	  - Plans/FileManager.md
+L00011039	node_compile_hint:
+L00011040	  mode: routetarget_primary_selector_contract
+L00011041	  create_worknodes: false
+L00011042	source_lineage:
+L00011043	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011044	preserved_exact_tokens:
+L00011045	  - "`subject_id`"
+L00011046	  - "`object_kind`"
+L00011047	  - "`object_id`"
+L00011048	  - "`thread`"
+L00011049	  - "`message`"
+L00011050	  - "`wizard`"
+L00011051	  - "`usage_event`"
+L00011052	  - "`blocked_episode`"
+L00011053	  - "`browser_session`"
+L00011054	  - "`terminal_session`"
+L00011055	  - "`dev_session`"
+L00011056	negative_constraints:
+L00011057	  - "Route payloads must not use competing primary selectors."
+L00011058	owner_hints:
+L00011059	  - Plans/Contracts_V0.md
+L00011060	```
+L00011061	
+L00011062	### CV-165 - Terminal And Dev Session Route Identity
+L00011063	
+L00011064	```yaml
+L00011065	plan_unit_id: CV-165
+L00011066	unit_type: constraint
+L00011067	status: accepted
+L00011068	owner_doc: Plans/Contracts_V0.md
+L00011069	canonical_text: >-
+L00011070	  Terminal-focused open and reveal contracts use terminal and dev-session
+L00011071	  object kinds with matching focus identifiers inside route_target object
+L00011072	  identity; terminal widgets target runtime/worker identity rather than tier_id.
+L00011073	gui_related: true
+L00011074	gui_classification_reason: This unit affects user-visible terminal and dev-session route behavior.
+L00011075	split_recommended: true
+L00011076	depends_on: [CV-057, CV-164]
+L00011077	unblocks: []
+L00011078	acceptance_criteria:
+L00011079	  - "Terminal section, tab, pane, session, and dev-session reveals stay in route_target object identity."
+L00011080	  - "Terminal routes prefer exact same-session reveal when terminal_session_id is supplied and still resolvable."
+L00011081	  - "Historical terminal routes may reveal a historical pane or receipt view."
+L00011082	  - "Terminal widgets target runtime/worker identity and terminal object identity rather than tier_id."
+L00011083	validation_surfaces:
+L00011084	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011085	  - python3 scripts/pm-plan-index.py validate
+L00011086	risk_class: terminal_route_identity_fork
+L00011087	reasoning_tier: high
+L00011088	context_scope: terminal_dev_session_route_identity
+L00011089	implementation_surfaces:
+L00011090	  - Plans/Contracts_V0.md
+L00011091	  - Plans/FinalGUISpec.md
+L00011092	  - Plans/Crosswalk.md
+L00011093	node_compile_hint:
+L00011094	  mode: terminal_route_identity_constraint
+L00011095	  create_worknodes: false
+L00011096	source_lineage:
+L00011097	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011098	preserved_exact_tokens:
+L00011099	  - "`terminal_section_id`"
+L00011100	  - "`terminal_tab_id`"
+L00011101	  - "`terminal_pane_id`"
+L00011102	  - "`terminal_session_id`"
+L00011103	  - "`dev_session_id`"
+L00011104	  - "`/worker`"
+L00011105	  - "`tier_id`"
+L00011106	  - "PTY"
+L00011107	compatibility_only_notes:
+L00011108	  - "Historical terminal routes may reveal a historical pane or receipt view."
+L00011109	negative_constraints:
+L00011110	  - "Terminal routes must not invent panel-local terminal routing semantics."
+L00011111	  - "Historical terminal routes must not synthesize live PTY continuity."
+L00011112	owner_hints:
+L00011113	  - Plans/Contracts_V0.md
+L00011114	```
+L00011115	
+L00011116	### CV-166 - Route Activation Scope And Shell-State Boundary
+L00011117	
+L00011118	```yaml
+L00011119	plan_unit_id: CV-166
+L00011120	unit_type: requirement
+L00011121	status: accepted
+L00011122	owner_doc: Plans/Contracts_V0.md
+L00011123	canonical_text: >-
+L00011124	  Route activation restores destination surface plus scope, selected object, and
+L00011125	  focus fields, while shell realization details remain view state and resume_url
+L00011126	  is serialized transport that decodes to route_target.
+L00011127	gui_related: true
+L00011128	gui_classification_reason: This unit affects route activation and visible destination surface restoration.
+L00011129	split_recommended: true
+L00011130	depends_on: [CV-057, CV-163, CV-164]
+L00011131	unblocks: [CV-167]
+L00011132	acceptance_criteria:
+L00011133	  - "Route activation overrides remembered shell state when needed to reveal the requested object, scope, and destination surface."
+L00011134	  - "Route activation may reuse remembered shell state only when that state still reveals the requested object cleanly."
+L00011135	  - "Destination surface plus project_id, focused_run_id, thread_id, selected object, and inspector_target are restored."
+L00011136	  - "resume_url decodes to route_target and remains serialized transport only."
+L00011137	validation_surfaces:
+L00011138	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011139	  - python3 scripts/pm-plan-index.py validate
+L00011140	risk_class: route_activation_shell_state_boundary_drift
+L00011141	reasoning_tier: high
+L00011142	context_scope: route_activation_shell_state_boundary
+L00011143	implementation_surfaces:
+L00011144	  - Plans/Contracts_V0.md
+L00011145	  - Plans/Crosswalk.md
+L00011146	  - Plans/FinalGUISpec.md
+L00011147	node_compile_hint:
+L00011148	  mode: route_activation_boundary_contract
+L00011149	  create_worknodes: false
+L00011150	source_lineage:
+L00011151	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011152	preserved_exact_tokens:
+L00011153	  - "`focused_run_id`"
+L00011154	  - "`thread_id`"
+L00011155	  - "`tab_id`"
+L00011156	  - "`inspector_target`"
+L00011157	  - "`resume_url`"
+L00011158	  - "`/focus/destination-surface`"
+L00011159	  - "`/chrome`"
+L00011160	  - "`/editor/tree/session`"
+L00011161	compatibility_only_notes:
+L00011162	  - "resume_url is serialized transport only and decodes to route_target."
+L00011163	negative_constraints:
+L00011164	  - "Docked/floating placement, widths, local panel layout, chrome, editor tree state, line, and range must stay outside base route identity."
+L00011165	owner_hints:
+L00011166	  - Plans/Contracts_V0.md
+L00011167	```
+L00011168	
+L00011169	### CV-167 - Inspector Target Refinement Boundary
+L00011170	
+L00011171	```yaml
+L00011172	plan_unit_id: CV-167
+L00011173	unit_type: constraint
+L00011174	status: accepted
+L00011175	owner_doc: Plans/Contracts_V0.md
+L00011176	canonical_text: >-
+L00011177	  inspector_target is reusable detail or subsection focus after primary selector
+L00011178	  identity is established; it is not selector identity and not a feature-local
+L00011179	  anchor bag.
+L00011180	gui_related: true
+L00011181	gui_classification_reason: This unit affects user-visible detail pane and subsection focus.
+L00011182	split_recommended: true
+L00011183	depends_on: [CV-058, CV-166]
+L00011184	unblocks: []
+L00011185	acceptance_criteria:
+L00011186	  - "inspector_target closed values are preserved."
+L00011187	  - "tab_id and inspector_target remain narrow focus-refinement fields."
+L00011188	  - "inspector_target = usage and inspector_target = lineage focus rules are preserved."
+L00011189	  - "Primary selector identity is established before inspector_target refinement."
+L00011190	validation_surfaces:
+L00011191	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011192	  - python3 scripts/pm-plan-index.py validate
+L00011193	risk_class: inspector_target_selector_replacement
+L00011194	reasoning_tier: high
+L00011195	context_scope: inspector_target_refinement_boundary
+L00011196	implementation_surfaces:
+L00011197	  - Plans/Contracts_V0.md
+L00011198	  - Plans/FinalGUISpec.md
+L00011199	  - Plans/Runtime_Artifacts_Panel.md
+L00011200	node_compile_hint:
+L00011201	  mode: inspector_target_refinement_constraint
+L00011202	  create_worknodes: false
+L00011203	source_lineage:
+L00011204	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011205	preserved_exact_tokens:
+L00011206	  - "`summary`"
+L00011207	  - "`evidence`"
+L00011208	  - "`artifacts`"
+L00011209	  - "`history`"
+L00011210	  - "`reviews`"
+L00011211	  - "`usage`"
+L00011212	  - "`lineage`"
+L00011213	  - "`details`"
+L00011214	  - "`/subsection`"
+L00011215	negative_constraints:
+L00011216	  - "inspector_target must not replace selector identity."
+L00011217	  - "inspector_target must not become a universal dumping ground for feature-local anchors."
+L00011218	owner_hints:
+L00011219	  - Plans/Contracts_V0.md
+L00011220	```
+L00011221	
+
+<<< CONTEXT_AFTER canonical_document_lines=11222-11233 >>>
+L00011222	### CV-168 - Route Open Normalization Anti-Fork
+L00011223	
+L00011224	```yaml
+L00011225	plan_unit_id: CV-168
+L00011226	unit_type: constraint
+L00011227	status: accepted
+L00011228	owner_doc: Plans/Contracts_V0.md
+L00011229	canonical_text: >-
+L00011230	  Settings, object navigation, search/open entry points, chat links, file-tree
+L00011231	  selections, and wizard/object links normalize to route_target plus OpenFile or
+L00011232	  OpenSubject; generated, thread-backed, artifact-backed, browser-session,
+L00011233	  terminal-session, and dev-session reveals must not mint new routing primitives.

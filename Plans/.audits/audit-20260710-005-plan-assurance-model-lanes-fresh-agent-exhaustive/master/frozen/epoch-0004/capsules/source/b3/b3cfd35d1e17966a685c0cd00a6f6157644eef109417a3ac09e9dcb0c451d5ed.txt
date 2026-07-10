@@ -1,0 +1,368 @@
+<<< CONTEXT_BEFORE 947-958 >>>
+- redaction
+negative_constraints:
+- Do not expose credentials, tokens, personal data, or protected project content through visible testing.
+owner_hints:
+- Plans/Automated_Testing_System.md
+- Plans/Orchestrator_Page.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Permissions_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+
+<<< AUTHORITATIVE_CORE 959-1297 >>>
+### RAP-031 - Discovery Receipt Browsing, Redaction, And Retention Projection
+
+```yaml
+plan_unit_id: RAP-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts may browse persisted discovery receipts, fallback summaries, selected opaque ids, redacted candidate counts, freshness/fallback/policy state, remote/SSH identity, permission snapshot, host trust state, elapsed/budget fields, and exact-verification links when receipt persistence is promoted. Runtime Artifacts consumes the DiscoveryService receipt envelope but does not own DiscoveryService behavior. Assistant Chat visibility settings never delete or hide durable audit receipts; frecency/history reset stops future ranking use for the selected identity without deleting durable redacted discovery receipts by default unless a separate retention/export/delete owner action applies.
+gui_related: true
+gui_classification_reason: This is user-visible receipt browsing, redaction, and artifact projection.
+depends_on: [CV-291, SP-217, F2-191, PS-118, ACD-422]
+unblocks: [ATS-011]
+acceptance_criteria:
+  - Discovery receipts remain browseable in Runtime Artifacts/audit views when persisted even if Assistant Chat routine inline activity is hidden.
+  - Receipt browsing respects redaction_profile, policy_context, and permission_snapshot_id.
+  - Discovery receipts link to exact verification receipts and final relevant summaries when available.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future Runtime Artifacts receipt browsing tests.
+  - Future Assistant Chat inline display off but durable receipt available test.
+risk_class: receipt_redaction_retention_drift
+reasoning_tier: standard
+context_scope: discovery_receipts
+implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, future runtime artifact receipt browser]
+node_compile_hint: {mode: receipt_projection_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260622-001-fff:atom-0043
+  - pldg-20260622-001-fff:atom-0045
+  - pldg-20260622-001-fff:atom-0058
+  - pldg-20260622-001-fff:atom-0063
+  - pldg-20260622-001-fff:atom-0067
+  - pldg-20260622-001-fff:atom-0086
+  - pldg-20260622-001-fff:atom-0090
+  - pldg-20260622-001-fff:atom-0093
+  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#runtime_artifacts_and_audit
+source_atom_ids: [atom-0043, atom-0045, atom-0058, atom-0063, atom-0067, atom-0086, atom-0090, atom-0093]
+preserved_exact_tokens: ["discovery.invoked", "discovery.candidates_returned", "discovery.selected", "discovery.fallback", "discovery.verified", "candidate_count", "selected_result_ids", "redaction_profile", "permission_snapshot_id", "host trust state", "verification_receipt_ref", "Assistant Chat visibility settings never delete or hide durable audit receipts"]
+negative_constraints:
+  - Do not make Runtime Artifacts Panel the DiscoveryService behavior owner.
+  - Do not bypass redaction.
+  - Do not make hiding Assistant Chat routine activity delete durable receipts.
+owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/assistant-chat-design.md]
+```
+
+
+## Ledger Compile Addendum - pldg-20260626-001-feature-name
+
+This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+
+### RAP-034 - History Runtime Artifact And Evidence Projection
+
+```yaml
+plan_unit_id: RAP-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: History rows preserve links to runtime artifacts, evidence, ledger/raw records, usage, package manifests,
+  and receipts through stable source refs rather than path-only summaries. The Runtime Artifacts surface consumes
+  the unified History projection for preview/inspect affordances while resolving immutable source records for opens,
+  evidence profiles, exports, and authority-gated actions. Raw records and evidence are included in exports only
+  through an explicit evidence/redaction profile.
+gui_related: true
+gui_classification_reason: Runtime artifact/evidence links are user-visible panels and inspector content.
+depends_on:
+- OP-026
+- SP-219
+- POA-051
+unblocks:
+- OP-027
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: history_artifact_link_loss
+reasoning_tier: standard
+context_scope: history_runtime_artifacts
+implementation_surfaces:
+- Plans/Runtime_Artifacts_Panel.md
+- future History artifact/evidence inspector
+node_compile_hint:
+  mode: history_artifact_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0009
+- pldg-20260626-001-feature-name:atom-0012
+- pldg-20260626-001-feature-name:atom-0017
+- pldg-20260626-001-feature-name:atom-0038
+- pldg-20260626-001-feature-name:atom-0041
+- pldg-20260626-001-feature-name:atom-0042
+- pldg-20260626-001-feature-name:atom-0047
+- pldg-20260626-001-feature-name:atom-0048
+- pldg-20260626-001-feature-name:atom-0049
+- pldg-20260626-001-feature-name:atom-0062
+- chat:misc-history-scope
+- Plans/Orchestrator_Page.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Project_Output_Artifacts.md
+- chat:history-defaults-answers
+- chat:history-export-granularity-answer
+- chat:history-export-compare-archive-answers
+- chat:history-source-index-answer
+- chat:history-pressure-test-request
+- chat:history-pressure-test-defaults-answer
+source_atom_ids:
+- atom-0009
+- atom-0012
+- atom-0017
+- atom-0038
+- atom-0041
+- atom-0042
+- atom-0047
+- atom-0048
+- atom-0049
+- atom-0062
+decision_refs:
+- dec-0002
+- dec-0003
+- dec-0006
+- dec-0007
+- dec-0008
+- dec-0011
+- dec-0012
+preserved_exact_tokens:
+- historical orchestrator runs in PM
+- historical orchestrator runs
+- Runtime-artifact route-state answers "where should the user land," not "how should every panel be laid out when
+  they get there."
+- artifact_id
+- run_id
+- thread_id
+- attempt_id
+- identity-based open
+- History versus Ledger
+- All of that.
+- status/date/project search
+- opening artifacts/evidence
+- resuming/retrying
+- cloning as a new run
+- exporting
+- viewing what happened
+- all of thodse
+- selected-row export
+- multi-select bundle export
+- whole filtered-view export
+- manifest
+- yes, and yes.
+- zip+manifest
+- JSON
+- rendered Markdown/HTML/PDF
+- raw records/evidence
+- explicit evidence/redaction profile
+- 'yes'
+- project-scoped unified History index/projection
+- source-of-truth shape
+- immutable wizard, run, artifact, evidence, and lineage records
+- History surface
+- filters
+- exports
+- compare
+- artifact
+- evidence
+- permissions/redaction profile details
+negative_constraints:
+- Do not show historical runs as ambiguous text summaries without stable run identity.
+- Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical.
+- Do not use shell-state, current tab, filesystem path, or timestamp heuristics as the primary identity for historical
+  documents or runs.
+- Do not mint shadow IDs for manifest-backed bundles or receipt-like historical objects.
+- Do not reduce historical runs to read-only summaries when the user needs action routes.
+- Do not omit evidence/artifact/Ledger pivots from historical run rows.
+- Do not limit MVP export to selected-row-only.
+- Do not make whole filtered-view export omit the active filter context.
+- Do not collapse export into only one opaque archive format.
+- Do not omit the manifest from archive/zip exports.
+- Do not silently include raw records or evidence in ordinary exports.
+- Do not bypass permissions or redaction policy when exporting evidence/raw records.
+- Do not implement the History surface as fragile cross-subsystem ad hoc scans at view time.
+- Do not make the History read model global or cross-project by default.
+- Do not duplicate mutable source-of-truth content into the projection as if it were authoritative.
+- Do not lose canonical IDs or lineage refs when projecting History rows.
+- Do not mutate historical records through projection updates.
+- Do not let UI rows, exports, or compare flows drift into different identity models.
+- Do not open or export stale copies without resolving preserved source refs and currentness/authority checks where
+  required.
+- Do not export secrets, unauthorized provider/account details, or evidence outside the user's permissions.
+- Do not omit a manifest of redactions/omissions when evidence export is requested.
+owner_hints:
+- Plans/Orchestrator_Page.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
+- Plans/UI_Command_Catalog.md
+- Plans/Permissions_System.md
+```
+
+### RAP-035 - Vision Bridge Derived Description Artifacts
+
+```yaml
+plan_unit_id: RAP-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: Each generated vision description is persisted as an inspectable runtime artifact or tool/LLM trace
+  entry with source image ref/hash, prompt or question, bridge provider/model/account, timestamp, usage/cost refs
+  when available, freshness/staleness, cached/newly generated state, and permission/degraded state. Cache keys include
+  source image content hash, source ref, bridge prompt/question, requested language/detail mode, bridge provider/model/version,
+  redaction/sensitivity class, and relevant permission scope. Reruns create new versions rather than mutating old
+  derived descriptions in place.
+gui_related: true
+gui_classification_reason: Vision-description artifacts, cache state, source chips, inspect, and rerun controls
+  are user-visible.
+depends_on:
+- T-165
+- CV-296
+- PS-121
+unblocks:
+- ACD-425
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: vision_artifact_lineage_loss
+reasoning_tier: standard
+context_scope: vision_bridge_artifacts
+implementation_surfaces:
+- Plans/Runtime_Artifacts_Panel.md
+- future derived vision-description artifact rows
+node_compile_hint:
+  mode: vision_description_artifact
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0076
+- pldg-20260626-001-feature-name:atom-0078
+- pldg-20260626-001-feature-name:atom-0084
+- pldg-20260626-001-feature-name:atom-0153
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Prompt_Pipeline.md
+- chat:vision-bridge-defaults-answer
+- chat:opencode-see-image-request
+- chat:vision-pressure-test-request
+- chat:vision-pressure-test-defaults-answer
+- chat:pmconcept-gui-reference
+- Concepts/PMConcept.html#Screenshot-to-Chat
+- Concepts/PMConcept.html#composer-chip
+- Concepts/PMConcept.html#activity-card
+- Concepts/PMConcept.html#requested-effective-model
+source_atom_ids:
+- atom-0076
+- atom-0078
+- atom-0084
+- atom-0153
+decision_refs:
+- dec-0014
+- dec-0015
+- dec-0016
+- dec-0017
+- dec-0024
+preserved_exact_tokens:
+- runtime artifact
+- tool/LLM trace
+- source image ref/hash
+- prompt/question
+- provider/model/account
+- cost/usage
+- cached
+- newly generated
+- 4. Yes
+- GUI
+- provider/model used
+- derived description
+- source image/artifact link
+- freshness/cache state
+- inspect
+- rerun with a question
+- copy description
+- attach result
+- always accept
+- stops asking
+- source image content hash
+- source ref
+- bridge prompt/question
+- provider/model/version
+- redaction/sensitivity class
+- rerunnable
+- stale
+- superseded/deleted
+- 'yes'
+- Screenshot to Chat
+- composer-chip
+- activity-card
+- Requested Model
+- Effective Model
+- inspect/rerun
+- provider/model disclosure
+negative_constraints:
+- Do not make the derived description invisible or unauditable.
+- Do not lose source lineage between the image and the generated text description.
+- Do not reuse a cached description when the source image, question, or bridge model changed without marking freshness.
+- Do not hide bridge outputs inside opaque provider logs only.
+- Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
+- Do not omit failure/denial states from the user-visible surface.
+- Do not omit a user-visible way to inspect or reset remembered always-accept behavior.
+- Do not reuse a cached description after the source image, prompt/question, bridge model/version, redaction class,
+  or permission scope changes without marking freshness.
+- Do not hide cache reuse from the user.
+- Do not mutate old derived descriptions in place when rerun creates a new version.
+- Do not make vision bridge artifacts feel like detached plugin output.
+- Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route.
+- Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls.
+owner_hints:
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Tools.md
+- Plans/usage-feature.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+- Plans/Orchestrator_Page.md
+- Plans/Permissions_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/Models_System.md
+```
+
+
+<<< CONTEXT_AFTER 1298-1309 >>>
+### RAP-036 - Teacher Activity Transparency Projection
+
+```yaml
+plan_unit_id: RAP-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: Teacher activity such as route opens, highlights, source lookups, permission waits, model fallback,
+  missing coverage, memory save prompts, and handoffs is represented as compact Assistant Chat cards or rows with
+  durable detail payloads. Important blocked or degraded activity remains visible in the thread and can be inspected
+  later without forcing the user into raw traces.
+gui_related: true

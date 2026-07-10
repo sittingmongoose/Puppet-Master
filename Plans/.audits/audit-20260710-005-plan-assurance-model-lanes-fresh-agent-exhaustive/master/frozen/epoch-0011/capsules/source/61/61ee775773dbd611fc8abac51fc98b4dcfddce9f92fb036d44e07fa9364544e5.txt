@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE canonical_document_lines=28588-28599 >>>
+L00028588	        "click_handler_without_keyboard_parity"
+L00028589	      ],
+L00028590	      "disposition": "concept_only_owner_adjudicated",
+L00028591	      "canonical_command_id": null,
+L00028592	      "wiring_matrix_key": null,
+L00028593	      "notes": [
+L00028594	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028595	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028596	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028597	      ],
+L00028598	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028599	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=28600-28989 >>>
+L00028600	    {
+L00028601	      "inventory_id": "pmconcept.l14825.1085",
+L00028602	      "line": 14825,
+L00028603	      "tag": "button",
+L00028604	      "html_id": null,
+L00028605	      "name": null,
+L00028606	      "role": null,
+L00028607	      "class": "thread-action-btn",
+L00028608	      "ui_location": "chatPanel",
+L00028609	      "label": "Archive",
+L00028610	      "attrs": {
+L00028611	        "title": "Archive"
+L00028612	      },
+L00028613	      "inline_handlers": {},
+L00028614	      "command_tokens": [],
+L00028615	      "local_or_demo_markers": [],
+L00028616	      "accessibility_gaps": [],
+L00028617	      "disposition": "concept_only_owner_adjudicated",
+L00028618	      "canonical_command_id": null,
+L00028619	      "wiring_matrix_key": null,
+L00028620	      "notes": [
+L00028621	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028622	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028623	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028624	      ],
+L00028625	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028626	    },
+L00028627	    {
+L00028628	      "inventory_id": "pmconcept.l14826.1086",
+L00028629	      "line": 14826,
+L00028630	      "tag": "button",
+L00028631	      "html_id": null,
+L00028632	      "name": null,
+L00028633	      "role": null,
+L00028634	      "class": "thread-action-btn",
+L00028635	      "ui_location": "chatPanel",
+L00028636	      "label": "More...",
+L00028637	      "attrs": {
+L00028638	        "title": "More..."
+L00028639	      },
+L00028640	      "inline_handlers": {},
+L00028641	      "command_tokens": [],
+L00028642	      "local_or_demo_markers": [],
+L00028643	      "accessibility_gaps": [],
+L00028644	      "disposition": "concept_only_owner_adjudicated",
+L00028645	      "canonical_command_id": null,
+L00028646	      "wiring_matrix_key": null,
+L00028647	      "notes": [
+L00028648	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028649	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028650	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028651	      ],
+L00028652	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028653	    },
+L00028654	    {
+L00028655	      "inventory_id": "pmconcept.l14829.1087",
+L00028656	      "line": 14829,
+L00028657	      "tag": "div",
+L00028658	      "html_id": null,
+L00028659	      "name": null,
+L00028660	      "role": null,
+L00028661	      "class": "chat-thread-item role-assistant",
+L00028662	      "ui_location": "chatPanel",
+L00028663	      "label": "2m Database Optimization 2 subagents: 1 awaiting, 1 blocked perf/analytics-opt \u00b7 needs guidance",
+L00028664	      "attrs": {
+L00028665	        "data-thread": "thread-escalation",
+L00028666	        "onclick": "switchToChatThread('thread-escalation')"
+L00028667	      },
+L00028668	      "inline_handlers": {
+L00028669	        "onclick": "switchToChatThread('thread-escalation')"
+L00028670	      },
+L00028671	      "command_tokens": [],
+L00028672	      "local_or_demo_markers": [],
+L00028673	      "accessibility_gaps": [
+L00028674	        "custom_click_target_missing_role",
+L00028675	        "click_handler_without_keyboard_parity"
+L00028676	      ],
+L00028677	      "disposition": "concept_only_owner_adjudicated",
+L00028678	      "canonical_command_id": null,
+L00028679	      "wiring_matrix_key": null,
+L00028680	      "notes": [
+L00028681	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028682	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028683	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028684	      ],
+L00028685	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028686	    },
+L00028687	    {
+L00028688	      "inventory_id": "pmconcept.l14839.1088",
+L00028689	      "line": 14839,
+L00028690	      "tag": "button",
+L00028691	      "html_id": null,
+L00028692	      "name": null,
+L00028693	      "role": null,
+L00028694	      "class": "thread-action-btn",
+L00028695	      "ui_location": "chatPanel",
+L00028696	      "label": "Archive",
+L00028697	      "attrs": {
+L00028698	        "title": "Archive"
+L00028699	      },
+L00028700	      "inline_handlers": {},
+L00028701	      "command_tokens": [],
+L00028702	      "local_or_demo_markers": [],
+L00028703	      "accessibility_gaps": [],
+L00028704	      "disposition": "concept_only_owner_adjudicated",
+L00028705	      "canonical_command_id": null,
+L00028706	      "wiring_matrix_key": null,
+L00028707	      "notes": [
+L00028708	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028709	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028710	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028711	      ],
+L00028712	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028713	    },
+L00028714	    {
+L00028715	      "inventory_id": "pmconcept.l14840.1089",
+L00028716	      "line": 14840,
+L00028717	      "tag": "button",
+L00028718	      "html_id": null,
+L00028719	      "name": null,
+L00028720	      "role": null,
+L00028721	      "class": "thread-action-btn",
+L00028722	      "ui_location": "chatPanel",
+L00028723	      "label": "More...",
+L00028724	      "attrs": {
+L00028725	        "title": "More..."
+L00028726	      },
+L00028727	      "inline_handlers": {},
+L00028728	      "command_tokens": [],
+L00028729	      "local_or_demo_markers": [],
+L00028730	      "accessibility_gaps": [],
+L00028731	      "disposition": "concept_only_owner_adjudicated",
+L00028732	      "canonical_command_id": null,
+L00028733	      "wiring_matrix_key": null,
+L00028734	      "notes": [
+L00028735	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028736	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028737	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028738	      ],
+L00028739	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028740	    },
+L00028741	    {
+L00028742	      "inventory_id": "pmconcept.l14843.1090",
+L00028743	      "line": 14843,
+L00028744	      "tag": "div",
+L00028745	      "html_id": null,
+L00028746	      "name": null,
+L00028747	      "role": null,
+L00028748	      "class": "chat-thread-item role-doc",
+L00028749	      "ui_location": "chatPanel",
+L00028750	      "label": "12m Requirements Doc Updating dashboard widget layout. Read 3 files, +142 -10",
+L00028751	      "attrs": {
+L00028752	        "data-thread": "thread1"
+L00028753	      },
+L00028754	      "inline_handlers": {},
+L00028755	      "command_tokens": [],
+L00028756	      "local_or_demo_markers": [],
+L00028757	      "accessibility_gaps": [
+L00028758	        "custom_click_target_missing_role"
+L00028759	      ],
+L00028760	      "disposition": "concept_only_owner_adjudicated",
+L00028761	      "canonical_command_id": null,
+L00028762	      "wiring_matrix_key": null,
+L00028763	      "notes": [
+L00028764	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028765	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028766	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028767	      ],
+L00028768	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028769	    },
+L00028770	    {
+L00028771	      "inventory_id": "pmconcept.l14853.1091",
+L00028772	      "line": 14853,
+L00028773	      "tag": "button",
+L00028774	      "html_id": null,
+L00028775	      "name": null,
+L00028776	      "role": null,
+L00028777	      "class": "thread-action-btn",
+L00028778	      "ui_location": "chatPanel",
+L00028779	      "label": "Archive",
+L00028780	      "attrs": {
+L00028781	        "title": "Archive"
+L00028782	      },
+L00028783	      "inline_handlers": {},
+L00028784	      "command_tokens": [],
+L00028785	      "local_or_demo_markers": [],
+L00028786	      "accessibility_gaps": [],
+L00028787	      "disposition": "concept_only_owner_adjudicated",
+L00028788	      "canonical_command_id": null,
+L00028789	      "wiring_matrix_key": null,
+L00028790	      "notes": [
+L00028791	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028792	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028793	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028794	      ],
+L00028795	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028796	    },
+L00028797	    {
+L00028798	      "inventory_id": "pmconcept.l14854.1092",
+L00028799	      "line": 14854,
+L00028800	      "tag": "button",
+L00028801	      "html_id": null,
+L00028802	      "name": null,
+L00028803	      "role": null,
+L00028804	      "class": "thread-action-btn",
+L00028805	      "ui_location": "chatPanel",
+L00028806	      "label": "More...",
+L00028807	      "attrs": {
+L00028808	        "title": "More..."
+L00028809	      },
+L00028810	      "inline_handlers": {},
+L00028811	      "command_tokens": [],
+L00028812	      "local_or_demo_markers": [],
+L00028813	      "accessibility_gaps": [],
+L00028814	      "disposition": "concept_only_owner_adjudicated",
+L00028815	      "canonical_command_id": null,
+L00028816	      "wiring_matrix_key": null,
+L00028817	      "notes": [
+L00028818	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028819	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028820	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028821	      ],
+L00028822	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028823	    },
+L00028824	    {
+L00028825	      "inventory_id": "pmconcept.l14858.1093",
+L00028826	      "line": 14858,
+L00028827	      "tag": "div",
+L00028828	      "html_id": null,
+L00028829	      "name": null,
+L00028830	      "role": null,
+L00028831	      "class": "chat-thread-item role-assistant",
+L00028832	      "ui_location": "chatPanel",
+L00028833	      "label": "1h Refactor Database Layer Consolidated queries into repository pattern. Ran `cargo test`, 35 passed.",
+L00028834	      "attrs": {
+L00028835	        "data-thread": "thread2"
+L00028836	      },
+L00028837	      "inline_handlers": {},
+L00028838	      "command_tokens": [],
+L00028839	      "local_or_demo_markers": [],
+L00028840	      "accessibility_gaps": [
+L00028841	        "custom_click_target_missing_role"
+L00028842	      ],
+L00028843	      "disposition": "concept_only_owner_adjudicated",
+L00028844	      "canonical_command_id": null,
+L00028845	      "wiring_matrix_key": null,
+L00028846	      "notes": [
+L00028847	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028848	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028849	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028850	      ],
+L00028851	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028852	    },
+L00028853	    {
+L00028854	      "inventory_id": "pmconcept.l14868.1094",
+L00028855	      "line": 14868,
+L00028856	      "tag": "button",
+L00028857	      "html_id": null,
+L00028858	      "name": null,
+L00028859	      "role": null,
+L00028860	      "class": "thread-action-btn",
+L00028861	      "ui_location": "chatPanel",
+L00028862	      "label": "Archive",
+L00028863	      "attrs": {
+L00028864	        "title": "Archive"
+L00028865	      },
+L00028866	      "inline_handlers": {},
+L00028867	      "command_tokens": [],
+L00028868	      "local_or_demo_markers": [],
+L00028869	      "accessibility_gaps": [],
+L00028870	      "disposition": "concept_only_owner_adjudicated",
+L00028871	      "canonical_command_id": null,
+L00028872	      "wiring_matrix_key": null,
+L00028873	      "notes": [
+L00028874	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028875	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028876	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028877	      ],
+L00028878	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028879	    },
+L00028880	    {
+L00028881	      "inventory_id": "pmconcept.l14869.1095",
+L00028882	      "line": 14869,
+L00028883	      "tag": "button",
+L00028884	      "html_id": null,
+L00028885	      "name": null,
+L00028886	      "role": null,
+L00028887	      "class": "thread-action-btn",
+L00028888	      "ui_location": "chatPanel",
+L00028889	      "label": "More...",
+L00028890	      "attrs": {
+L00028891	        "title": "More..."
+L00028892	      },
+L00028893	      "inline_handlers": {},
+L00028894	      "command_tokens": [],
+L00028895	      "local_or_demo_markers": [],
+L00028896	      "accessibility_gaps": [],
+L00028897	      "disposition": "concept_only_owner_adjudicated",
+L00028898	      "canonical_command_id": null,
+L00028899	      "wiring_matrix_key": null,
+L00028900	      "notes": [
+L00028901	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028902	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028903	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028904	      ],
+L00028905	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028906	    },
+L00028907	    {
+L00028908	      "inventory_id": "pmconcept.l14873.1096",
+L00028909	      "line": 14873,
+L00028910	      "tag": "div",
+L00028911	      "html_id": null,
+L00028912	      "name": null,
+L00028913	      "role": null,
+L00028914	      "class": "chat-thread-item role-assistant",
+L00028915	      "ui_location": "chatPanel",
+L00028916	      "label": "2h Fix Auth Token Bug Found issue in JWT expiration check. Applied fix to auth.rs, verified locally.",
+L00028917	      "attrs": {
+L00028918	        "data-thread": "thread3"
+L00028919	      },
+L00028920	      "inline_handlers": {},
+L00028921	      "command_tokens": [],
+L00028922	      "local_or_demo_markers": [],
+L00028923	      "accessibility_gaps": [
+L00028924	        "custom_click_target_missing_role"
+L00028925	      ],
+L00028926	      "disposition": "concept_only_owner_adjudicated",
+L00028927	      "canonical_command_id": null,
+L00028928	      "wiring_matrix_key": null,
+L00028929	      "notes": [
+L00028930	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028931	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028932	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028933	      ],
+L00028934	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028935	    },
+L00028936	    {
+L00028937	      "inventory_id": "pmconcept.l14883.1097",
+L00028938	      "line": 14883,
+L00028939	      "tag": "button",
+L00028940	      "html_id": null,
+L00028941	      "name": null,
+L00028942	      "role": null,
+L00028943	      "class": "thread-action-btn",
+L00028944	      "ui_location": "chatPanel",
+L00028945	      "label": "Archive",
+L00028946	      "attrs": {
+L00028947	        "title": "Archive"
+L00028948	      },
+L00028949	      "inline_handlers": {},
+L00028950	      "command_tokens": [],
+L00028951	      "local_or_demo_markers": [],
+L00028952	      "accessibility_gaps": [],
+L00028953	      "disposition": "concept_only_owner_adjudicated",
+L00028954	      "canonical_command_id": null,
+L00028955	      "wiring_matrix_key": null,
+L00028956	      "notes": [
+L00028957	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028958	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028959	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028960	      ],
+L00028961	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028962	    },
+L00028963	    {
+L00028964	      "inventory_id": "pmconcept.l14884.1098",
+L00028965	      "line": 14884,
+L00028966	      "tag": "button",
+L00028967	      "html_id": null,
+L00028968	      "name": null,
+L00028969	      "role": null,
+L00028970	      "class": "thread-action-btn",
+L00028971	      "ui_location": "chatPanel",
+L00028972	      "label": "More...",
+L00028973	      "attrs": {
+L00028974	        "title": "More..."
+L00028975	      },
+L00028976	      "inline_handlers": {},
+L00028977	      "command_tokens": [],
+L00028978	      "local_or_demo_markers": [],
+L00028979	      "accessibility_gaps": [],
+L00028980	      "disposition": "concept_only_owner_adjudicated",
+L00028981	      "canonical_command_id": null,
+L00028982	      "wiring_matrix_key": null,
+L00028983	      "notes": [
+L00028984	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00028985	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00028986	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00028987	      ],
+L00028988	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00028989	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=28990-29001 >>>
+L00028990	    {
+L00028991	      "inventory_id": "pmconcept.l14888.1099",
+L00028992	      "line": 14888,
+L00028993	      "tag": "div",
+L00028994	      "html_id": null,
+L00028995	      "name": null,
+L00028996	      "role": null,
+L00028997	      "class": "chat-thread-item role-interviewer",
+L00028998	      "ui_location": "chatPanel",
+L00028999	      "label": "3h Research Web Frameworks Compared Axum and Actix-web. User selected Axum for the new API.",
+L00029000	      "attrs": {
+L00029001	        "data-thread": "thread4"

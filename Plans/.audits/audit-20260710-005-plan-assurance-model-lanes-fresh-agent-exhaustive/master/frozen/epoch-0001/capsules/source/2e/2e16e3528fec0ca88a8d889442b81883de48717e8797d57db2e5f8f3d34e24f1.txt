@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE 19425-19436 >>>
+- regex on stderr
+- exit codes
+- non-zero exit + keyword in stderr
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 19437-19833 >>>
+### OSI-218 - SubagentManager Optional V1 Boundary
+
+```yaml
+plan_unit_id: OSI-218
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  SubagentManager is referenced as coming from the interview plan, but for v1 it is optional: if unavailable, implement only
+  the selection and invocation needed by Phase 3 through the existing runner, with no separate manager required beyond a thin
+  workspace-path wrapper.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend module optionality and runner integration rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-060
+- OSI-061
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Missing SubagentManager does not block v1 if selector and runner integration provide the needed behavior.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: subagentmanager_optional_v1_boundary
+node_compile_hint:
+  mode: subagentmanager_optional_v1_boundary
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0131
+preserved_exact_tokens:
+- SubagentManager
+- from interview plan
+- loading agent definitions from disk
+- optional for v1
+- thin wrapper
+- workspace path
+negative_constraints:
+- No separate manager is strictly required for v1.
+compatibility_only_notes:
+- SubagentManager is preserved as source lineage and optional integration with interview-plan capabilities.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-219 - Config Wiring Module Placement And Orchestrator/Interview Ownership
+
+```yaml
+plan_unit_id: OSI-219
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Config-wiring validation may live in src/core/config_wiring.rs, src/verification/config_wiring.rs, or split
+  config_wiring/orchestrator.rs and config_wiring/interview.rs, with the main orchestrator calling from
+  src/core/orchestrator.rs and the interview orchestrator calling its interview-specific validator from
+  src/interview/orchestrator.rs.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend validation module placement and owner boundaries rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-105
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Main and interview orchestrators retain distinct validation call sites.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: config_wiring_module_placement_orchestrator_interview_ownership
+node_compile_hint:
+  mode: config_wiring_module_placement_orchestrator_interview_ownership
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0132
+preserved_exact_tokens:
+- src/core/config_wiring.rs
+- src/verification/config_wiring.rs
+- config_wiring/orchestrator.rs
+- config_wiring/interview.rs
+- src/core/orchestrator.rs
+- src/interview/orchestrator.rs
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-220 - Config Wiring Tier Matrix And Non-Skip Timing
+
+```yaml
+plan_unit_id: OSI-220
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Config-wiring validation exposes validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>
+  or equivalent, checks Phase, Task, Subtask, and Iteration required/optional fields against the resolved table, and runs
+  immediately before context building or agent spawning without skipping fast paths or tests unless explicitly gated.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend validation matrix and timing behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-105
+- OSI-106
+- OSI-110
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Validation timing is before execution context construction or agent spawning at each applicable tier boundary.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: config_wiring_tier_matrix_non_skip_timing
+node_compile_hint:
+  mode: config_wiring_tier_matrix_non_skip_timing
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0132
+preserved_exact_tokens:
+- "validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>"
+- Phase
+- Task
+- Subtask
+- Iteration
+- Config-Wiring Validation: Required vs Optional Fields (Resolved)
+- fast path
+- env var
+negative_constraints:
+- Do not skip validation for fast path or tests unless explicitly gated.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-221 - Tier Start/End Verification Placement
+
+```yaml
+plan_unit_id: OSI-221
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Tier start/end verification lives with config-wiring verification under src/verification/, src/core/, or tier_verification.rs,
+  and the main orchestrator calls verify_tier_start on Phase/Task/Subtask entry and verify_tier_end after the acceptance gate
+  before marking the tier complete.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend verification placement and lifecycle timing rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-107
+- OSI-108
+- OSI-109
+- OSI-110
+- OSI-111
+- OSI-112
+- OSI-113
+- OSI-114
+- OSI-184
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Start and end verification are wired at Phase, Task, and Subtask boundaries.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: tier_start_end_verification_placement
+node_compile_hint:
+  mode: tier_start_end_verification_placement
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0133
+preserved_exact_tokens:
+- src/verification/
+- src/core/
+- tier_verification.rs
+- verify_tier_start
+- verify_tier_end
+- acceptance gate
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-222 - GUI Readiness Verification Criterion
+
+```yaml
+plan_unit_id: OSI-222
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Start verification includes GUI updated? as a readiness checklist criterion for user-visible readiness, while this unit
+  remains a verification consumer and does not become the owner of GUI implementation requirements.
+gui_related: true
+gui_classification_reason: >-
+  This unit explicitly preserves a GUI readiness criterion for user-visible surfaces.
+split_recommended: false
+depends_on:
+- OSI-112
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- GUI readiness remains a verification criterion without moving GUI implementation ownership into this document.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: gui_readiness_verification_criterion
+node_compile_hint:
+  mode: gui_readiness_verification_criterion
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0133
+preserved_exact_tokens:
+- GUI updated?
+- readiness checklist
+negative_constraints:
+- This unit is not the owner of GUI implementation requirements.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- GUI owner docs consume this as readiness/verification criteria where applicable.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-223 - Quality Review And Gate Criteria
+
+```yaml
+plan_unit_id: OSI-223
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Quality verification requires a code-reviewer subagent at end-of-tier, on retry, and when the gate fails, plus gate criteria
+  such as clippy and tests, with per-tier checklists for Phase docs, Task design, and Subtask code plus tests plus clippy;
+  parent-tier orchestration addresses unrelated failures.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend quality gate and review orchestration behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-170
+- OSI-172
+- OSI-188
+- OSI-197
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Quality review and gate criteria are both represented in the verification path.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: quality_review_gate_criteria
+node_compile_hint:
+  mode: quality_review_gate_criteria
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0133
+preserved_exact_tokens:
+- code-reviewer
+- end-of-tier
+- on retry
+- gate fails
+- clippy
+- tests
+- Phase: docs
+- Task: design
+- Subtask: code + tests + clippy
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-224 - Hook/Verification Ordering Compatibility
+
+```yaml
+plan_unit_id: OSI-224
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Hook integration preserves the ordering that BeforeUnit runs before verify_tier_start and AfterUnit runs after
+  verify_tier_end, with active-subagent tracking, context injection, stale-state pruning, handoff-format validation, and
+  completion tracking treated as compatibility/source summary for the hook owner path.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend hook and verification ordering rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-184
+- OSI-186
+- OSI-200
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Hook ordering remains explicit relative to start/end verification.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: hook_verification_ordering_compatibility
+node_compile_hint:
+  mode: hook_verification_ordering_compatibility
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0133
+preserved_exact_tokens:
+- BeforeUnit hook
+- verify_tier_start
+- AfterUnit hook
+- verify_tier_end
+- tracks active subagent
+- injects context
+- prunes stale state
+- validates handoff format
+negative_constraints:
+- This compatibility/source summary must not override the canonical hook owner path.
+compatibility_only_notes:
+- Hook implementation details remain aligned with Lifecycle and Quality Features owner text.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 19834-19845 >>>
+### OSI-225 - Agent Coordination Module And Canonical Projection Boundary
+
+```yaml
+plan_unit_id: OSI-225
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Agent coordination is placed in src/core/agent_coordination.rs around an AgentCoordinator over child-run state, lineage,
+  current file activity, and platform/runtime metadata projected from seglog/redb; optional debug mirrors may exist, but
+  active-agents.json is not canon.
+gui_related: false

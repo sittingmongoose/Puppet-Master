@@ -1,0 +1,666 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001014-ADVERSARIAL-WIN-7414C6C901F8-0009",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001014_adversarial_0009_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "1f9a410a3b3f36331ad906e5a52b69a23c3c551e1d56038a48e274613d5b9e80",
+    "core_range": [2885, 3281]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001014-GAP-001",
+      "item_type": "gap",
+      "title": "Phase ordering is not represented as a dependency",
+      "statement": "LSPS-034 explicitly forbids treating Phase 3 enhancements as prerequisites before MVP and Phase 2, yet declares no dependency. The core does not define a machine-checkable readiness condition that prevents premature enablement or scheduling.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Optional work can be surfaced or scheduled before its required foundation, contradicting the negative constraint.",
+      "builder_discretion": "Define explicit dependency/readiness edges and the blocked-state behavior.",
+      "feature_keys": ["LSPS-034"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2896,
+          "line_end": 2896,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2930,
+          "line_end": 2930,
+          "exact_quote": "- Optional Phase 3 enhancements must not be treated as required before the MVP LSP foundation and Phase 2 surfaces.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-002",
+      "item_type": "consumer",
+      "title": "Optional chat and evidence features lack caller and result contracts",
+      "statement": "The Phase 3 unit names diagnostics verification, evidence capture, chat fix/rename/usage/format affordances, tool promotion, and protocol requests, but the core does not identify their callers, authorization point, target selection, result consumers, or failure presentation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "Implementations can disagree about where actions originate, what they mutate, and how results propagate to editor, chat, Problems, and evidence surfaces.",
+      "builder_discretion": "Specify caller, target, authority, completion, and consumer contracts for each separable enhancement.",
+      "feature_keys": ["LSPS-034"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2892,
+          "line_end": 2892,
+          "exact_quote": "canonical_text: Phase 3 optional enhancements may add the LSP diagnostics verification gate, LSP snapshot in evidence, chat fix/rename/usage/format affordances, lsp tool promotion, and advanced protocol requests without moving optional work into MVP foundations.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-003",
+      "item_type": "gap",
+      "title": "LSP evidence has no privacy or retention contract",
+      "statement": "The LSP snapshot and diagnostics gate are named as evidence features, but the core does not constrain captured paths, code excerpts, diagnostics, server metadata, retention, redaction, access, deletion, or export.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Evidence can persist or expose source paths, source-derived text, or diagnostic content beyond user expectations.",
+      "builder_discretion": "Define the evidence payload, minimization and redaction rules, retention/deletion lifecycle, and access boundary.",
+      "feature_keys": ["LSPS-034"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2919,
+          "line_end": 2919,
+          "exact_quote": "- LSP snapshot in evidence",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-004",
+      "item_type": "state_transition",
+      "title": "Registry precedence and concurrent transition rules are absent",
+      "statement": "The registry exposes global, catalog, per-server, and custom-server controls plus requested and effective state, but does not define precedence, transition ordering, persistence atomicity, concurrent edits, attach/detach races, or the state shown while reconciliation is pending or fails.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_races",
+      "impact": "Rapid or concurrent changes can produce stale attachment, contradictory toggles, or a UI that reports a request without explaining whether it took effect.",
+      "builder_discretion": "Define a state machine with precedence, pending, success, failure, conflict, and retry semantics.",
+      "feature_keys": ["LSPS-036"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3008,
+          "line_end": 3008,
+          "exact_quote": "canonical_text: Settings > LSP is a searchable registry-management surface with global enable/disable, support-catalog search and filtering, per-server toggles, custom server add/edit/remove, command/config validation, and requested versus effective attach-state disclosure.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-005",
+      "item_type": "gap",
+      "title": "Custom-server removal has no destructive-action safeguards",
+      "statement": "Custom servers can be removed, but the core does not specify confirmation, affected-session disclosure, cancellation, rollback or undo, preservation of configuration, or behavior when shutdown or persistence partially fails.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "destructive_actions",
+      "impact": "A user can lose configuration or disrupt active sessions without a defined recovery path.",
+      "builder_discretion": "Define confirmation, transactional persistence, active-session handling, and recoverability.",
+      "feature_keys": ["LSPS-036"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3038,
+          "line_end": 3038,
+          "exact_quote": "- add custom servers",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-006",
+      "item_type": "authority",
+      "title": "Executable configuration and environment fields lack a trust boundary",
+      "statement": "Server inspectors expose command, environment, initialization, provisioning, path, and override controls, but the core does not define who may set them, shell versus argv parsing, executable allowlisting, secret redaction, environment inheritance, path confinement, or protection from malicious catalog/custom input.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "A crafted server entry can become command execution or secret exfiltration at the host or remote authority boundary.",
+      "builder_discretion": "Specify validated structured arguments, provenance and approval, environment minimization/redaction, and execution authority.",
+      "feature_keys": ["LSPS-037"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3065,
+          "line_end": 3065,
+          "exact_quote": "canonical_text: LSP registry rows and inspector detail panes expose languages, selectors, source and classification badges, install/toolchain provenance, effective state, path/exclusion controls, built-in override and reset actions, canonical names, aliases, provisioning, platform, command/env/init fields, and validation errors.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-007",
+      "item_type": "gap",
+      "title": "GUI controls have no accessibility requirements",
+      "statement": "Searchable registries, toggles, inspector panes, validation errors, filters, and add/edit forms are required, but no core line defines keyboard traversal, focus restoration, names and roles, error association, screen-reader announcements, contrast, reduced motion, or non-color state cues.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility",
+      "impact": "Core LSP setup and recovery workflows may be unusable or misleading for keyboard and assistive-technology users.",
+      "builder_discretion": "Add observable accessibility criteria for every interactive state and error transition.",
+      "feature_keys": ["LSPS-036", "LSPS-037"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3043,
+          "line_end": 3043,
+          "exact_quote": "- add custom server /form",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3110,
+          "line_end": 3110,
+          "exact_quote": "- validation errors",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-008",
+      "item_type": "gap",
+      "title": "GUI text and matching have no localization contract",
+      "statement": "The core requires search, filtering, grouping, badges, validation errors, lifecycle states, and requested/effective disclosures but does not define localizable message ownership, locale-aware search, sorting, truncation, pluralization, or expansion tolerance.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "localization",
+      "impact": "Translated labels and errors can overflow or become unsearchable, and state terminology can diverge across surfaces.",
+      "builder_discretion": "Define localization keys, locale-aware matching/sorting, and layout resilience criteria.",
+      "feature_keys": ["LSPS-036", "LSPS-037"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3034,
+          "line_end": 3034,
+          "exact_quote": "- searchable registry-management surface",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-009",
+      "item_type": "failure_recovery",
+      "title": "Worktree lifecycle races are unspecified",
+      "statement": "Warm start, graceful shutdown on worktree removal, and persistence across thread switches are stated, but the core does not define behavior for removal during initialization or requests, rapid remove/recreate at the same path, shutdown timeout, orphan cleanup, or requests racing a root lifecycle transition.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "Sessions can attach to a replaced root, leak processes, serve stale results, or drop in-flight work without a deterministic recovery state.",
+      "builder_discretion": "Define lifecycle epochs, cancellation/drain rules, shutdown deadlines, and orphan reconciliation.",
+      "feature_keys": ["LSPS-039"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3181,
+          "line_end": 3181,
+          "exact_quote": "canonical_text: LSP sessions for worktree files are keyed by host, server, and canonical on-host worktree root_identity; worktree sessions may warm-start, shut down when the worktree is removed, and remain alive across thread switches until the worktree lifecycle ends.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-010",
+      "item_type": "gap",
+      "title": "Canonical root identity lacks compatibility and migration semantics",
+      "statement": "The key uses a canonical on-host worktree path, but the core does not define case normalization, symlinks, mount aliases, path rename, host identity reset, persisted-key versioning, or migration from prior/raw-path identities.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Upgrades and filesystem changes can create duplicate sessions, collisions, or stale session reuse.",
+      "builder_discretion": "Version root identities and specify canonicalization, invalidation, rename, and migration rules.",
+      "feature_keys": ["LSPS-039"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3209,
+          "line_end": 3209,
+          "exact_quote": "- root_identity = worktree_path",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3216,
+          "line_end": 3216,
+          "exact_quote": "- A worktree LSP root_identity must not use a raw path copied across hosts.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-011",
+      "item_type": "failure_recovery",
+      "title": "SSH reconnect recovery is underspecified",
+      "statement": "The transport reinitializes after reconnect and multiplies timeouts, but the core does not define loss detection, retry/backoff limits, authentication failure, cancellation or replay of in-flight requests, document resynchronization, idempotency, channel teardown, or the terminal offline state.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "offline_network_loss",
+      "impact": "Reconnect can duplicate mutations, return stale diagnostics, hang pending work, or silently diverge from editor document state.",
+      "builder_discretion": "Define a reconnect state machine with request disposition, resync barrier, bounded backoff, and user-visible terminal failure.",
+      "feature_keys": ["LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3235,
+          "line_end": 3235,
+          "exact_quote": "canonical_text: Remote LSP uses SSH as a stdio tunnel rather than a port-forwarded secondary protocol, spawning remote servers through the SSH connection, multiplexing channels, reinitializing after reconnect, applying a remote timeout multiplier, and avoiding hidden local sync or mirror behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-012",
+      "item_type": "authority",
+      "title": "SSH server spawn lacks authentication and remote execution policy",
+      "statement": "Remote LSP spawns a server through SSH, but the core does not define host-key verification, credential and agent forwarding policy, remote executable provenance, command quoting, environment inheritance, privilege level, user consent, or what authority owns termination.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "A wrong or compromised host, crafted command, or over-broad credential forwarding can execute code or expose credentials under unintended authority.",
+      "builder_discretion": "Bind spawn to verified SSH authority and structured commands with explicit credential, environment, privilege, and termination policy.",
+      "feature_keys": ["LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3263,
+          "line_end": 3263,
+          "exact_quote": "- SSH connection established → remote LSP server spawned → stdio streams connected → initialize handshake → ready",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-013",
+      "item_type": "gap",
+      "title": "Multiplexing has no scale, fairness, or resource limits",
+      "statement": "Multiplexed SSH channels are required, but the core does not bound hosts, roots, servers, channels, queue depth, message size, memory, process count, or bandwidth, and does not define fairness or overload shedding.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "One busy server or many roots can starve other sessions, exhaust host/remote resources, or make timeouts indistinguishable from overload.",
+      "builder_discretion": "Set quotas, backpressure, fair scheduling, overload states, and measurable limits.",
+      "feature_keys": ["LSPS-039", "LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3264,
+          "line_end": 3264,
+          "exact_quote": "- multiplexed channels",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-014",
+      "item_type": "gap",
+      "title": "Status disclosure lacks an operational observability contract",
+      "statement": "Freshness, health, effective capability, and degraded attach disclosure are named, but the core does not define timestamps, reason codes, correlation identifiers, logs/metrics, history, copyable support diagnostics, privacy redaction, or thresholds that map runtime events to those states.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Users and support cannot distinguish stale data, server faults, transport loss, configuration failure, or overload from the same degraded label.",
+      "builder_discretion": "Define the event-to-state mapping and redacted diagnostics needed to reproduce and support failures.",
+      "feature_keys": ["LSPS-038"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3159,
+          "line_end": 3159,
+          "exact_quote": "- status surfaces disclose freshness, health, and effective capability state",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3160,
+          "line_end": 3160,
+          "exact_quote": "- degraded attach conditions",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-015",
+      "item_type": "contract",
+      "title": "Cross-document references do not define seam behavior",
+      "statement": "The core names owner documents and ContractRefs, but every shown unit has empty dependency and unblock arrays and the window does not define versioned payloads, update ordering, stale-data behavior, error ownership, or compatibility rules across Settings, storage, File Manager, Search, Problems, chat, GitHub, and executor seams.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "Owner boundaries can be nominally correct while consumers disagree on state shape, freshness, failure handling, and migration.",
+      "builder_discretion": "Add explicit cross-owner contracts and dependency edges with schema, lifecycle, and failure semantics.",
+      "feature_keys": ["LSPS-036", "LSPS-037", "LSPS-038", "LSPS-039", "LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3170,
+          "line_end": 3170,
+          "exact_quote": "- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3135,
+          "line_end": 3135,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-GAP-016",
+      "item_type": "acceptance_oracle",
+      "title": "Acceptance criteria do not falsify runtime or GUI behavior",
+      "statement": "The repeated criteria validate source preservation, addressability, traceability, and absence of executable nodes, while the validation surfaces check migration/index tooling. The core supplies no executable oracle for settings transitions, command validation, cross-surface freshness, worktree lifecycle, or SSH loss/reconnect.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Governance validation can pass while every user-visible, security, concurrency, and recovery contract remains untested.",
+      "builder_discretion": "Add deterministic state-machine, failure-injection, security, accessibility, and cross-surface acceptance oracles.",
+      "feature_keys": ["LSPS-034", "LSPS-035", "LSPS-036", "LSPS-037", "LSPS-038", "LSPS-039", "LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3242,
+          "line_end": 3242,
+          "exact_quote": "- The covered source span remains losslessly available for exact-text audit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3247,
+          "line_end": 3247,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-NG-001",
+      "item_type": "explicit_non_gap",
+      "title": "Search and Problems ownership is explicit",
+      "statement": "The core explicitly prevents LSP from taking ownership of Search text search/replace-in-files and Problems aggregation while identifying File Manager and editor as LSP-state consumers.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-038"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3131,
+          "line_end": 3131,
+          "exact_quote": "canonical_text: File Manager and editor consume LSP state for semantic affordances, Search remains owner of text search and replace-in-files, Problems remains owner of aggregated diagnostics display, and status surfaces disclose freshness, health, and effective capability state.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3162,
+          "line_end": 3162,
+          "exact_quote": "- LSP must not take ownership of Search text search/replace-in-files or Problems aggregation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-NG-002",
+      "item_type": "explicit_non_gap",
+      "title": "Requested and effective attachment state are distinguished",
+      "statement": "The Settings contract explicitly distinguishes requested state from effective attachment state, preventing a successful toggle gesture alone from being presented as proof that a server attached.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-036"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3039,
+          "line_end": 3039,
+          "exact_quote": "- requested vs effective attach state",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-NG-003",
+      "item_type": "explicit_non_gap",
+      "title": "Remote transport and mirroring exclusions are explicit",
+      "statement": "The core requires stdio over SSH, excludes a port-forwarded secondary protocol and hidden local mirroring, and calls for reinitialization plus a remote timeout multiplier.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3261,
+          "line_end": 3261,
+          "exact_quote": "- stdio over SSH",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3270,
+          "line_end": 3270,
+          "exact_quote": "- Remote LSP does not use a port-forwarded secondary protocol or hidden local sync/mirror for LSP operations.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-NG-004",
+      "item_type": "explicit_non_gap",
+      "title": "Baseline worktree session identity and lifetime are explicit",
+      "statement": "The core keys worktree sessions by host, server, and canonical on-host root, keeps them alive across thread switches, ties their lifetime to worktree existence, and rejects raw cross-host path reuse.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-039"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3207,
+          "line_end": 3207,
+          "exact_quote": "- (host_id, server_id, root_identity)",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3213,
+          "line_end": 3213,
+          "exact_quote": "- Switching threads does NOT kill LSP sessions",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001014-UNK-001",
+      "item_type": "unknown",
+      "title": "Referenced owner documents may contain missing seam contracts",
+      "statement": "Blind-window rules prevent determining whether the named owner documents define the state schemas, privacy, authority, recovery, accessibility, localization, migration, observability, and test contracts absent from this authoritative core. The omissions are supportable gaps in this window; their global absence remains unknown.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "unknown_unknowns",
+      "impact": "The review cannot safely claim repo-wide absence or closure from this isolated source window.",
+      "builder_discretion": "Resolve in the later cross-document seam phase without weakening the window-local findings.",
+      "feature_keys": ["LSPS-036", "LSPS-037", "LSPS-038", "LSPS-039", "LSPS-040"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3034,
+          "line_end": 3034,
+          "exact_quote": "- searchable registry-management surface",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3054,
+          "line_end": 3054,
+          "exact_quote": "- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Optional chat, evidence, and protocol affordances lack explicit caller, target, authorization, completion, and consumer contracts; cross-surface baseline consumers are partially named.",
+      "evidence_item_ids": ["A005-001014-GAP-002", "A005-001014-NG-001"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Phase readiness and registry precedence/pending/failure transitions are unspecified despite a stated Phase 3 constraint and multiple control layers.",
+      "evidence_item_ids": ["A005-001014-GAP-001", "A005-001014-GAP-004"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Concurrent registry changes, worktree removal/recreation, session initialization, in-flight requests, and SSH reconnect are not serialized or reconciled.",
+      "evidence_item_ids": ["A005-001014-GAP-004", "A005-001014-GAP-009", "A005-001014-GAP-011"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Custom-server persistence/shutdown, worktree lifecycle, and SSH request/reinitialization partial failures lack deterministic outcomes.",
+      "evidence_item_ids": ["A005-001014-GAP-005", "A005-001014-GAP-009", "A005-001014-GAP-011"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "The core does not define undo for server removal, orphan cleanup for worktree sessions, or request/resync recovery after SSH loss.",
+      "evidence_item_ids": ["A005-001014-GAP-005", "A005-001014-GAP-009", "A005-001014-GAP-011"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Search and Problems ownership is explicit, but local executable configuration and remote SSH spawn authority, credentials, privileges, and termination ownership are not.",
+      "evidence_item_ids": ["A005-001014-GAP-006", "A005-001014-GAP-012", "A005-001014-NG-001"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Evidence snapshots and command/environment fields have no minimization, redaction, retention, deletion, or export contract.",
+      "evidence_item_ids": ["A005-001014-GAP-003", "A005-001014-GAP-006"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Catalog/custom command, environment, init, provisioning, paths, and remote spawn inputs lack structured parsing, provenance, confinement, and approval rules.",
+      "evidence_item_ids": ["A005-001014-GAP-006", "A005-001014-GAP-012"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Requested versus effective state and freshness/health are explicitly distinguished, but pending, conflict, failure, stale, overload, and offline mappings remain undefined.",
+      "evidence_item_ids": ["A005-001014-GAP-004", "A005-001014-GAP-014", "A005-001014-NG-002"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "SSH reconnect is named without bounded retry, offline terminal state, in-flight request disposition, or document resynchronization semantics.",
+      "evidence_item_ids": ["A005-001014-GAP-011", "A005-001014-NG-003"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Multiplexed channels and persistent worktree sessions have no quotas, backpressure, fairness, overload shedding, or measurable resource bounds.",
+      "evidence_item_ids": ["A005-001014-GAP-013"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Required Settings forms, toggles, filters, inspectors, errors, badges, and state changes have no accessibility acceptance criteria.",
+      "evidence_item_ids": ["A005-001014-GAP-007"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Search/matching, state labels, validation messages, sorting, and layout expansion have no localization contract.",
+      "evidence_item_ids": ["A005-001014-GAP-008"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Canonical root identity is stated, but normalization, versioning, rename, host reset, and prior/raw-path migration behavior is absent.",
+      "evidence_item_ids": ["A005-001014-GAP-010", "A005-001014-NG-004"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Status categories exist, but timestamps, reason codes, event mapping, correlation, redacted diagnostics, metrics, logs, and support export do not.",
+      "evidence_item_ids": ["A005-001014-GAP-014"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Custom server removal lacks confirmation, affected-session disclosure, transactional persistence, cancellation, and undo semantics.",
+      "evidence_item_ids": ["A005-001014-GAP-005"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Owner names and ContractRefs exist, but this core does not define seam schemas, ordering, errors, staleness, versioning, or dependency edges.",
+      "evidence_item_ids": ["A005-001014-GAP-015", "A005-001014-NG-001", "A005-001014-UNK-001"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Validation is confined to source migration/index governance; no runtime, GUI, security, failure-injection, accessibility, or cross-surface oracle is specified.",
+      "evidence_item_ids": ["A005-001014-GAP-016"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "The blind window cannot establish whether referenced owner documents close the window-local gaps or introduce additional seams.",
+      "evidence_item_ids": ["A005-001014-UNK-001"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,352 @@
+<<< CONTEXT_BEFORE 10595-10606 >>>
+- startup recovery handshake
+- DAE jail/approval policy
+- usage switch-history
+- usage execution-role follow-through
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 10607-10929 >>>
+### T-156 - Tools Migration Owner Map Boundary
+
+```yaml
+plan_unit_id: T-156
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Source-preserving standardization keeps Tools owner/consumer boundaries in the original body text while cross-doc
+  ownership follows ContractRefs and boundary notes.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- '`Plans/Tools.md` remains owner for preserved behavior.'
+- Plan Document System and Bootstrap Migration refs stay attached.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tools_migration_owner_map_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0114
+preserved_exact_tokens:
+- source-preserving standardization
+- Plans/Tools.md remains the owner doc
+- cross-doc ownership follows the ContractRefs
+- Owner / Consumer Map
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-001 - Adding Tool Support Generated Artifact Residual
+
+```yaml
+plan_unit_id: T-001
+unit_type: compatibility_disposition
+status: retired
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  T-001 is retired as active source-preserving product coverage after Phase 2B batch 187. Tools-S0001 through
+  Tools-S0115 are covered by fine-grained T-002 through T-156 or explicit structural/split coverage, while Tools-S0116
+  through Tools-S0117 are generated PlanUnits and Migration Coverage audit material. T-001 remains only a generated-artifact
+  residual for migration lineage and must not override implementation-facing Tools PlanUnits.
+gui_related: true
+gui_classification_reason: >-
+  The retired generated residual preserves GUI-bearing historical bridge metadata from Tools-S0116, but the live T-001
+  disposition is migration/audit lineage rather than product GUI coverage.
+split_recommended: false
+depends_on:
+- T-002
+- T-003
+- T-004
+- T-005
+- T-006
+- T-007
+- T-008
+- T-009
+- T-010
+- T-011
+- T-012
+- T-013
+- T-014
+- T-015
+- T-016
+- T-017
+- T-018
+- T-019
+- T-020
+- T-021
+- T-022
+- T-023
+- T-024
+- T-025
+- T-026
+- T-027
+- T-028
+- T-029
+- T-030
+- T-031
+- T-032
+- T-033
+- T-034
+- T-035
+- T-036
+- T-037
+- T-038
+- T-039
+- T-040
+- T-041
+- T-042
+- T-043
+- T-044
+- T-045
+- T-046
+- T-047
+- T-048
+- T-049
+- T-050
+- T-051
+- T-052
+- T-053
+- T-054
+- T-055
+- T-056
+- T-057
+- T-058
+- T-059
+- T-060
+- T-061
+- T-062
+- T-063
+- T-064
+- T-065
+- T-066
+- T-067
+- T-068
+- T-069
+- T-070
+- T-071
+- T-072
+- T-073
+- T-074
+- T-075
+- T-076
+- T-077
+- T-078
+- T-079
+- T-080
+- T-081
+- T-082
+- T-083
+- T-084
+- T-085
+- T-086
+- T-087
+- T-088
+- T-089
+- T-090
+- T-091
+- T-092
+- T-093
+- T-094
+- T-095
+- T-096
+- T-097
+- T-098
+- T-099
+- T-100
+- T-101
+- T-102
+- T-103
+- T-104
+- T-105
+- T-106
+- T-107
+- T-108
+- T-109
+- T-110
+- T-111
+- T-112
+- T-113
+- T-114
+- T-115
+- T-116
+- T-117
+- T-118
+- T-119
+- T-120
+- T-121
+- T-122
+- T-123
+- T-124
+- T-125
+- T-126
+- T-127
+- T-128
+- T-129
+- T-130
+- T-131
+- T-132
+- T-133
+- T-134
+- T-135
+- T-136
+- T-137
+- T-138
+- T-139
+- T-140
+- T-141
+- T-142
+- T-143
+- T-144
+- T-145
+- T-146
+- T-147
+- T-148
+- T-149
+- T-150
+- T-151
+- T-152
+- T-153
+- T-154
+- T-155
+- T-156
+unblocks: []
+acceptance_criteria:
+- Tools-S0001 through S0115 remain mapped to fine-grained Tools PlanUnits or explicit structural dispositions rather than
+  T-001.
+- Tools-S0116 through S0117 remain available as generated PlanUnits and Migration Coverage audit material only.
+- T-001 no longer uses node_compile_hint.mode source_preserving_planunit; that token is preserved only as migration lineage.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source
+  code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: residual_bridge_overreach
+reasoning_tier: standard
+context_scope: tools_generated_residual_tail
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: generated_artifact_residual
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0116
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0117
+preserved_exact_tokens:
+- source_preserving_planunit
+- generated_artifact_residual
+- Migration Coverage
+- PlanUnits
+- Tools-S0116
+- Tools-S0117
+- T-001 - Adding Tool Support -- Research & Plan Source-Preserving PlanUnit
+- T-001 - Adding Tool Support Generated Artifact Residual
+- Migration Coverage
+negative_constraints:
+- T-001 must not provide product implementation coverage for Tools-S0001 through Tools-S0115 after Phase 2B batch 186.
+- T-001 must not override T-002 through T-156 or later fine-grained Tools PlanUnits.
+- T-001 must not use source_preserving_planunit compile mode after Phase 2B batch 187.
+preserved_contractrefs:
+- Generated PlanUnits and Migration Coverage material remain preserved by span_map and coverage_map as migration-lineage audit
+  material.
+compatibility_only_notes:
+- The source_preserving_planunit token is preserved only as retired migration lineage and not as an active node_compile_hint
+  mode.
+- The old Tools T-001 bridge title is a compatibility alias for audit and search only.
+stale_retired_dispositions:
+- The former T-001 source-preserving bridge is retired as active product coverage; product coverage lives in T-002 through
+  T-156 and coverage_map rows.
+- Generated Tools-S0116 through Tools-S0117 are not product implementation canon.
+owner_hints:
+- Plans/Tools.md
+```
+
+## Migration Coverage
+
+Original hash: `01fed36dead4538803197fcd86d37c352a3950e47715306fc216511d5f524f7f`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 181 atomized `Tools-S0001` through `Tools-S0023` into fine-grained PlanUnits `T-002` through `T-020`. Phase 2B batch 182 atomized `Tools-S0024` through `Tools-S0033` into fine-grained PlanUnits `T-021` through `T-043`. Phase 2B batch 183 atomized `Tools-S0034` through `Tools-S0055` into fine-grained PlanUnits `T-044` through `T-082` and structurally dispositioned `Tools-S0048`. Phase 2B batch 184 atomized `Tools-S0056` through `Tools-S0094` into fine-grained PlanUnits `T-083` through `T-113` and structurally dispositioned `Tools-S0075` and `Tools-S0076`. Phase 2B batch 185 atomized `Tools-S0095` through `Tools-S0101` into fine-grained PlanUnits `T-114` through `T-131` and structurally dispositioned `Tools-S0102`. Phase 2B batch 186 atomized `Tools-S0103` through `Tools-S0114` into fine-grained PlanUnits `T-132` through `T-156` and structurally dispositioned `Tools-S0110`, `Tools-S0112`, and `Tools-S0115`. Phase 2B batch 187 retired `T-001` from active `source_preserving_planunit` mode into `generated_artifact_residual` lineage for generated `Tools-S0116` through `Tools-S0117`; it must not override the fine-grained units. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### T-157 - Tool Section And Subagent Registry Reference Recovery
+
+```yaml
+plan_unit_id: T-157
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Tools.md must repair missing Section 9 and duplicate Section 10 through Section 14 numbering as structural anchor cleanup, and task-tool
+  subagent validation must consume the live subagent_registry instead of a stale inline or count-based subagent list. Count phrases such as
+  42 subagent types are compatibility/source-lineage until registry generation proves them current.
+gui_related: false
+gui_classification_reason: Tool schema and section numbering are backend/tooling documentation contracts, not visual presentation.
+depends_on: [T-055, T-056, T-104]
+unblocks: []
+acceptance_criteria:
+  - Section references such as Tools.md Section 12 resolve unambiguously after cleanup.
+  - task tool subagent_type validation routes through subagent_registry.
+  - Stale count-based subagent lists do not become live registry authority.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual Tools heading/anchor review
+risk_class: tool_anchor_and_registry_drift
+reasoning_tier: standard
+context_scope: tools_doc_structure_and_subagent_validation
+implementation_surfaces: [Plans/Tools.md, Plans/orchestrator-subagent-integration.md]
+node_compile_hint: {mode: tools_anchor_registry_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0034
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0040
+  - source_ref:Plans/Tools.md:884
+preserved_exact_tokens: ["Tools.md is missing §9", "duplicate §10–§14 numbering", "Tools.md §12", "subagent_type", "subagent_registry", "42 subagent types"]
+negative_constraints:
+  - Do not promote stale inline subagent lists over subagent_registry.
+  - Do not change tool permission semantics during numbering repair.
+owner_hints: [Plans/Tools.md, Plans/orchestrator-subagent-integration.md]
+```
+
+## Ledger Compile Addendum - pldg-20260615-001
+
+
+<<< CONTEXT_AFTER 10930-10941 >>>
+### T-158 - Extract Block Semantics Normalization
+
+```yaml
+plan_unit_id: T-158
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Tools.md extract-style `Fields:`, `Labels and values:`, `Permission rules:`,
+  and `Rules:` lists are implementation-ready only when each token is interpreted
+  through the section Core rules and the tool owner boundary. Web, LSP, batch,
+  caching, provider routing, change-tracking, capability-unavailable, and

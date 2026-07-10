@@ -1,0 +1,63 @@
+{
+  "all_fresh": true,
+  "all_unique": true,
+  "attempt_id": "attempt-0012",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "binding_count": 8,
+  "bindings": [
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001046_attempt_0012",
+      "assignment_id": "A005-001046-ADVERSARIAL-WIN-749F06E4B796-0006",
+      "dispatch_receipt_sha256": "ae001538e931e630dc6eea576b787798794702b6e0f53a30e579ad3a4645ee71",
+      "native_child_thread_id": "019f4e1e-38e8-7c62-8010-2088c9a954f2"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001047_attempt_0012",
+      "assignment_id": "A005-001047-EXACT-WIN-74C788D8A63C-0001",
+      "dispatch_receipt_sha256": "88b010996b3bcbbbfcecab42fe6625f53f45f8ce5b7f834a09cc3f4bc9a83ace",
+      "native_child_thread_id": "019f4e1f-5144-7c82-b48d-3967c2c2259b"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001048_attempt_0012",
+      "assignment_id": "A005-001048-ADVERSARIAL-WIN-74C788D8A63C-0001",
+      "dispatch_receipt_sha256": "5a2c7d2b5656115e15f402ffb41dc4859f76d09a0225fc3b25a9ee6abfe361ae",
+      "native_child_thread_id": "019f4e1f-d9d2-7920-bcc3-a5a0c5c722d9"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001049_attempt_0012",
+      "assignment_id": "A005-001049-EXACT-WIN-74C788D8A63C-0002",
+      "dispatch_receipt_sha256": "83c59eb258916b469aaf14403e3bab3df499c46fd411c7d168106e6ab11d48e5",
+      "native_child_thread_id": "019f4e20-6316-7903-a049-07a6039bc19c"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001050_attempt_0012",
+      "assignment_id": "A005-001050-ADVERSARIAL-WIN-74C788D8A63C-0002",
+      "dispatch_receipt_sha256": "413fb10b62e9b54e9ce36ad481ceca51a4bba5a9498acffd7df0e7ff36779333",
+      "native_child_thread_id": "019f4e20-ec9c-7822-8d2d-e05648d3ff9c"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001051_attempt_0012",
+      "assignment_id": "A005-001051-EXACT-WIN-74C788D8A63C-0003",
+      "dispatch_receipt_sha256": "38af8966dfef5f0e4ce1e1b4660446b9e56bf125a0bab67e5c4ccebd1409d954",
+      "native_child_thread_id": "019f4e21-68ee-7661-924a-0d5004546801"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001052_attempt_0012",
+      "assignment_id": "A005-001052-ADVERSARIAL-WIN-74C788D8A63C-0003",
+      "dispatch_receipt_sha256": "d886cc82520732d98280b50fe6b7933d694b120d8d597e8442274a3f50cbed73",
+      "native_child_thread_id": "019f4e21-e933-7752-8c86-6dbaae707913"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001053_attempt_0012",
+      "assignment_id": "A005-001053-EXACT-WIN-74C788D8A63C-0004",
+      "dispatch_receipt_sha256": "ae8ea777f7c5b6ba0df9e93cb4134836f263089b9ef1055e82ac22015de8bb6b",
+      "native_child_thread_id": "019f4e22-a9c1-7360-b8d1-394504b4e2e3"
+    }
+  ],
+  "cohort_dispatcher_thread_id": "019f4e1d-a7b0-7910-84d8-2ab01a3719da",
+  "cohort_dispatcher_turn_id": "019f4e1d-a822-77e1-bcd0-f41592c852c7",
+  "coverage_credit": 0,
+  "lane_thread_id": "019f4d26-0708-7c12-aa17-a4b124fab923",
+  "lane_turn_id": "019f4e1c-92d5-7423-9b80-d8004a28678d",
+  "wave_id": "blind-wave-0005-c"
+}

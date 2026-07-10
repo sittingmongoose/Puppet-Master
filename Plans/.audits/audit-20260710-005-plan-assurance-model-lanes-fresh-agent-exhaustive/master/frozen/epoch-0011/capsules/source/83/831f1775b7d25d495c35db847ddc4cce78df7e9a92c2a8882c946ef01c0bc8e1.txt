@@ -1,0 +1,74 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3626-3637 >>>
+L00003626	  - Do not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this gate.
+L00003627	owner_hints:
+L00003628	  - Plans/Progression_Gates.md
+L00003629	  - Plans/Planning_Wizard.md
+L00003630	  - Plans/Plan_Document_System.md
+L00003631	  - Plans/Plan_To_Node_Compilation.md
+L00003632	```
+L00003633	
+L00003634	## FABLE Gate Registry Repair Addendum - 2026-07-07
+L00003635	
+L00003636	This addendum closes the FABLE gate-registry portion of the GUI command/wiring repair. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime certification harnesses, generated governance artifacts, or production build tasks.
+L00003637	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3638-3696 >>>
+L00003638	### PG-061 - FABLE Gate Registry Tombstones And Manual Traceability Status
+L00003639	
+L00003640	```yaml
+L00003641	plan_unit_id: PG-061
+L00003642	unit_type: validation_rule
+L00003643	status: accepted
+L00003644	owner_doc: Plans/Progression_Gates.md
+L00003645	canonical_text: >-
+L00003646	  The FABLE gate-registry repair makes GATE-007 and GATE-008 explicit reserved tombstones, strengthens GATE-010
+L00003647	  to reject generic production wiring locations, fabricated command_applied events, and catalog namespace-root rows,
+L00003648	  and records GATE-011, GATE-012, and GATE-013 as manual-pending traceability gates with named owner docs until
+L00003649	  live generated-project validators exist. A successful run-gates result cannot be reported as PASS evidence for
+L00003650	  tombstoned or manual-pending gates unless a validator explicitly targets that gate.
+L00003651	gui_related: false
+L00003652	gui_classification_reason: Defines gate-registry validation and governance status rather than visual presentation.
+L00003653	depends_on: [PG-034, PG-037, PG-039]
+L00003654	unblocks: []
+L00003655	acceptance_criteria:
+L00003656	  - GATE-007 and GATE-008 have visible anchors, tombstone sections, owners, and no hidden executable semantics.
+L00003657	  - GATE-010 fails semantic wiring defects for generic production locations, fabricated command_applied events, and catalog namespace-root production rows.
+L00003658	  - GATE-011, GATE-012, and GATE-013 state their manual-pending dispositions, owner docs, and the validator evidence needed before they can be script-enforced.
+L00003659	  - run-gates passing is not claimed as PASS evidence for GATE-007, GATE-008, GATE-011, GATE-012, or GATE-013.
+L00003660	  - No FileSafe, storage, platform_specs, GUI implementation, broad PlanUnit boilerplate, WorkNodes, NodeSeeds, executable queues, or runtime certification harnesses are created by this repair.
+L00003661	validation_surfaces:
+L00003662	  - python3 scripts/pm-plan-index.py validate
+L00003663	  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+L00003664	  - python3 scripts/pm-plans-verify.py run-gates
+L00003665	risk_class: gate_registry_drift
+L00003666	reasoning_tier: high
+L00003667	context_scope: fable_gui_command_wiring_gate_repair
+L00003668	implementation_surfaces:
+L00003669	  - Plans/Progression_Gates.md
+L00003670	  - Plans/Wiring_Matrix.production.json
+L00003671	  - Plans/Wiring_Matrix.production.exclusions.json
+L00003672	node_compile_hint:
+L00003673	  mode: gate_registry_repair
+L00003674	  create_worknodes: false
+L00003675	  create_nodeseeds: false
+L00003676	source_lineage:
+L00003677	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-progression-gates-registry-and-run-gates-coverage
+L00003678	preserved_exact_tokens:
+L00003679	  - GATE-007
+L00003680	  - GATE-008
+L00003681	  - GATE-011
+L00003682	  - GATE-012
+L00003683	  - GATE-013
+L00003684	  - manual_pending_traceability_tooling
+L00003685	  - manual_pending_requirements_quality_tooling
+L00003686	  - manual_pending_ambiguity_marker_tooling
+L00003687	negative_constraints:
+L00003688	  - Do not treat run-gates passing as PASS evidence for manual-pending or tombstoned gates.
+L00003689	  - Do not reuse tombstoned gate numbers without a governed migration.
+L00003690	  - Do not create runtime certification harnesses or executable build tasks in this repair.
+L00003691	owner_hints:
+L00003692	  - Plans/Progression_Gates.md
+L00003693	  - Plans/Project_Output_Artifacts.md
+L00003694	  - Plans/Decision_Policy.md
+L00003695	  - Plans/assistant-chat-design.md
+L00003696	```

@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 3193-3204 >>>
+
+- **UI-initiated:** Conflict markers in files route to `Source Control > Changes` and open the Conflict assistant through `cmd.source_control.open_conflict`; applying a concrete choice may fall through to existing `cmd.git.conflict_apply_resolution`, while lower-level `cmd.git.*` operations may support diff or hunk mechanics but are not the GUI entrypoint
+- **Natural-language-initiated (NL-initiated):** Agent resolves conversationally by reading markers, explaining choices, and proposing edits via file editing tools; semantic resolution requires explicit user approval and then follows the Source Control Conflict assistant flow
+- **Rebase conflicts during `git rebase {target}`:** Auto-abort (`git rebase --abort`). Dialog shows error. Tests never run. Lock released.
+
+Assistant-bound worktree conflicts consume the Source Control owner flow instead of defining a second chat-local conflict UI. When a merge, `/rebase/worktree`, or worktree operation blocks on conflicts, chat surfaces the affected file list and routes `Open Conflict Assistant` to `Source Control > Changes` through `cmd.source_control.open_conflict`; pre-merge review pivots may open `cmd.source_control.open_review` with the current worktree and target branch as the compare pair. Natural-language assistance may explain conflict choices and propose edits, but semantic resolution still requires explicit user approval and follows the Source Control `/disabled`, `/settings`, and per-project preference rules.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md
+
+#### W.8.6 Create PR flow
+
+Opens existing PR creation panel from GitHub_Integration.md §B with pre-filled fields: title (thread title), body (commit messages), target branch, source branch.
+
+<<< AUTHORITATIVE_CORE 3205-3603 >>>
+
+**Auto-push:** `git push -u origin {branch}` before PR panel opens. Push failure → error toast, PR panel does NOT open, and Chat emits `chat.thread_worktree_pr_failed` with `phase=push`.
+
+**Guard:** Requires configured GitHub remote.
+
+If the PR API call fails after push, the PR panel does not open; Chat shows "PR creation failed: {error}" and emits `chat.thread_worktree_pr_failed` with `phase=api`.
+
+**Post-PR:** Worktree stays bound (PR open, may push more commits). No cleanup modal.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+#### W.8.7 Natural language merge
+
+The agent emits a structured system action `{ "action": "cmd.chat.worktree.merge", "params": { "strategy": "squash|merge|rebase", "target_branch": "string", "commit_message": "string" } }`. This follows the same structured-command pattern as `cmd.chat.revert`; the agent does not run merge directly via bash. PM shows dialog pre-filled with agent's parameters. The merge is user-confirmed regardless of entry path: even yolo or auto-approve posture still shows the dialog before mutation.
+
+For example, "merge my changes into main" may emit `{ "action": "cmd.chat.worktree.merge", "params": { "strategy": "squash", "target_branch": "main" } }` after resolving intent and parameters.
+
+Before emitting the action, the agent may run `git status` through its normal tools; the tool context auto-scopes that check to the bound worktree through `working_directory` / `/cwd`.
+
+**Mode guard:** Agent-NL invocation is rejected when the current mode is `ask` or `plan` with the exact error "Merge is not available via assistant in {mode} mode. Use the Merge button in the chat header dropdown." User UI clicks always allowed.
+
+**Chaining:** Agent can chain commit → merge → cleanup in single conversational exchange.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Modes.md
+
+### W.9 Pre-merge test gate
+
+**Purpose:** Before committing a merge, run the project's test suite against the merged result to verify integration.
+
+**Settings:** `branching.assistant_worktree_pre_merge_test` (bool, default true), `branching.assistant_worktree_pre_merge_cmd` (string, default empty = auto-detect), `branching.worktree_pre_merge_test_timeout_s` (int, default 300, clamped [30, 1800]), `branching.assistant_worktree_pre_merge_test_target` (enum `merged_result` (default, recommended) | `branch_only`).
+
+When `branching.assistant_worktree_pre_merge_cmd` is set, PM runs that exact command. When it is empty, PM auto-detects the command from project files using the rules below.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+#### W.9.1 Auto-detection of test command
+
+When `branching.assistant_worktree_pre_merge_cmd` is empty, detection requires verification that the relevant script/target actually exists, not just that a configuration file is present; rows marked file-presence-sufficient below are explicit convention-backed exceptions.
+
+| File detected | Verification | Inferred command | Priority |
+|---------------|-------------|-----------------|----------|
+| `package.json` | `scripts.test` field exists and non-empty | `npm test` | 1 |
+| `Cargo.toml` | File presence | `cargo test` | 2 |
+| `pyproject.toml` | `[tool.pytest]` or `pytest` in deps | `pytest` | 3 |
+| `setup.py` or `setup.cfg` | File presence | `python -m pytest` | 4 |
+| `Makefile` | Contains `test:` target | `make test` | 5 |
+| `build.gradle` or `build.gradle.kts` | File presence | `./gradlew test` | 6 |
+| `pom.xml` | File presence | `mvn test` | 7 |
+| `Gemfile` | File presence | `bundle exec rake test` | 8 |
+| `go.mod` | File presence | `go test ./...` | 9 |
+
+Multiple matches → highest priority. Persisted command overrides auto-detection. Clear setting to re-run auto-detect.
+
+**First run:** Auto-detected command shown pre-filled; "Change" link for inline edit; confirmed command persisted.
+
+**No detection + enabled:** Info row "No test command detected" with Settings link. Test step skipped (merge NOT blocked).
+
+#### W.9.2 Execution flow with test gate
+
+**For `merged_result` target (default):**
+
+| Strategy | Steps |
+|----------|-------|
+| **Squash** | Fetch → checkout target → `git merge --squash {branch}` → **run tests** (staged, uncommitted) → pass: `git commit` / fail: `git reset --hard HEAD` |
+| **Merge** | Fetch → checkout target → `git merge --no-ff --no-commit {branch}` → **run tests** → pass: `git commit` / fail: `git merge --abort` |
+| **Rebase** | (worktree) `git rebase {target}` → **run tests** against the post-rebase worktree state → pass: (main) `git checkout {target}` → `git merge --ff-only {branch}` / fail: `git rebase --abort` |
+
+The no-commit invariant for Squash/Merge is that tests run before any merge result is committed: Merge uses explicit `--no-commit`, while Squash uses `git merge --squash` to leave the merged result staged and uncommitted.
+
+**For `branch_only` target:** Tests run in worktree against branch as-is BEFORE any merge/rebase operation. Failure blocks merge (with override). Rebase + branch_only: tests run BEFORE rebase begins. This preserves branch_only semantics: test the branch in isolation before any `/rebase` or merge/rebase mutation starts.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+
+#### W.9.3 Test dialog UX
+
+Dialog transitions in-place to test phase. Fields become read-only. Live output in scrollable monospace region (~200px max-height). Cancel aborts test + cleanup. Auto-detect VERIFIES script/target existence before first-run prefill; package.json checks `scripts.test`, and Makefile checks for a `test:` target.
+
+- **Pass (exit 0):** Auto-proceed to commit. Brief "Tests passed" indicator.
+- **Fail (exit ≠ 0):** Red header "Tests failed" + full output + "Merge Anyway" (secondary/destructive) + "Cancel" (primary). Override proceeds to commit; seglog records override.
+- **Timeout:** Same UI as failure.
+- **Process error:** Same UI with error message.
+
+Clean abort paths keep the repo out of a half-committed state: Squash cleanup uses `git reset --hard HEAD`, Merge cleanup uses `git merge --abort`, and Rebase cleanup uses `git rebase --abort`.
+
+**Test execution environment:** Working directory depends on strategy and target. Shell: `/bin/sh -c "{command}"` (Unix), `cmd /c "{command}"` (Windows). No PM environment injection. Stdout + stderr merged. Remote SSH: executes on remote host.
+
+**Output handling:** 1MB cap; ANSI stripped; UTF-8 lossy decode; CRLF normalized to LF.
+
+**Crash recovery:** Orphaned test process. Main repo in transitional state. WorktreeManager reconciliation detects `.git/MERGE_HEAD` or `.git/rebase-merge/` on next launch.
+
+**Test gate does NOT apply to PR creation** (delegates to GitHub CI).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+### W.10 Seglog events (11 total)
+
+| Event type | Fields | Description |
+|------------|--------|-------------|
+| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` (`manual` \| `auto_create`) | Thread bound to worktree |
+| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`, `user_remove`, `thread_delete`, `path_missing`) | Thread unbound from worktree |
+| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | Branch renamed after title generation |
+| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | Worktree creation failed |
+| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` | Worktree branch merged |
+| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` | Merge attempt failed |
+| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | PR created |
+| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push` \| `api`) | PR creation failed |
+| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` | Pre-merge test started |
+| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | Tests passed |
+| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` | Tests failed |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### W.11 Command catalog
+
+| Command ID | Slash command | Parameters | Surface |
+|------------|---------------|------------|---------|
+| `cmd.chat.worktree.create` | `/worktree create` | `{ thread_id, branch_name?, base_ref? }` | Chat dropdown, command palette |
+| `cmd.chat.worktree.unbind` | `/worktree unbind` | `{ thread_id }` | Chat dropdown, command palette |
+| `cmd.chat.worktree.remove` | `/worktree remove` | `{ thread_id }` | Chat dropdown, command palette |
+| `cmd.chat.worktree.merge` | `/worktree merge [--squash\|--rebase]` | `{ thread_id, strategy?, target_branch?, message? }` | Chat dropdown, SC, command palette |
+| `cmd.chat.worktree.pr` | `/worktree pr` | `{ thread_id, title?, body?, target_branch? }` | Chat dropdown, SC, command palette |
+| `cmd.chat.worktree.info` | `/worktree` | `{ thread_id }` | Chat, command palette |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+**Command visibility/enablement conditions:**
+
+| Command | Visible when | Enabled when |
+|---------|-------------|-------------|
+| `cmd.chat.worktree.create` | No binding AND project has git | Always (when visible) |
+| `cmd.chat.worktree.unbind` | Has binding | No active run |
+| `cmd.chat.worktree.remove` | Has binding | No active run |
+| `cmd.chat.worktree.merge` | Has binding (or SC row) | No active run AND no merge lock AND not dirty AND no conflicts AND not detached HEAD |
+| `cmd.chat.worktree.pr` | Has binding AND has GitHub remote | No active run AND not detached HEAD |
+| `cmd.chat.worktree.info` | Has binding | Always (read-only) |
+
+`/worktree merge` is one command with `--squash` and `--rebase` flags; separate slash commands are not introduced.
+
+### W.12 File manager worktree context
+
+When user switches to a thread with a worktree binding (and `file_manager.worktree_follow_thread` is `true`), the file manager switches root to show the worktree's file tree.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+**Breadcrumb indicator:** Worktree glyph + branch name + swap toggle icon at top of file manager tree. Clicking swap toggles between worktree root and main project root. Binary toggle. Toggle resets on ANY thread switch.
+
+**Accessible label:** "Viewing worktree assistant/fix-auth. Click to switch to project root." (and inverse)
+
+**Rules:**
+- Open editor tabs NOT affected by root switch — tabs retain own paths
+- File manager search scope follows current file manager root
+- `@file` resolves relative to thread's `working_directory` (worktree root when bound)
+- MCP tools and `/providers` receive the thread worktree path as `working_directory` when a worktree binding is active.
+- Quick-open (Ctrl+P) remains project-scoped regardless of worktree context
+- If thread unbound mid-session: file manager falls back to project root with toast "Worktree unbound — showing project root."
+
+File-edit card path semantics follow the same execution context: chat file-edit cards display paths relative to the active `working_directory`, so a bound thread naturally shows worktree-relative paths without rewriting captured absolute mutation-log paths.
+
+### W.13 LSP worktree awareness
+
+LSP sessions are already keyed by `(host_id, server_id, root_identity)`. Different worktree path = different root_identity = naturally separate LSP session. No new keying model needed.
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md
+
+**Thread focus change flow:** File manager root changes → LSP client sends `workspace/didChangeWorkspaceFolders` or new session initialized (lazy). Diagnostics/hover/completion operate against worktree file state.
+
+**LSP session lifecycle:** Created on first file open from worktree. Idle-collected after 5 minutes with no open files (configurable). Destroyed when worktree removed.
+
+### W.14 Remote SSH projects
+
+Worktree creation follows project host authority. For remote SSH projects, `WorktreeManager` executes on remote host via SSH subprocess. No silent local fallback. All paths (worktree, FileSafe working_directory, terminal cwd) use remote filesystem.
+
+Remote-mode projects are remote-host-scoped. PM MUST NOT create a silent local checkout `/mirror` as primary authority, and remote editing is not a download-edit-upload flow unless an explicit degraded `/offline` cache path is surfaced. File Manager and `/editor/FileSafe` read and write the remote filesystem, listing uses SFTP by default with SSH `find`/`ls` fallback, terminal sessions bind to remote PTY `/session-supervision`, and provider CLIs execute on the remote host while stdout/stderr stream back over SSH. Exact terminal host/process details belong to `seam-terminal-runtime-environment`, but chat, worktree, and dev-status surfaces must disclose the effective remote host instead of silently launching local equivalents.
+Missing remote provider CLIs surface as degraded or unavailable provider capability: PM may probe or run configured provider CLIs on the remote host, but it MUST NOT auto-install a missing provider CLI without explicit user consent and provisioning confirmation, and it MUST NOT retarget provider execution to a local CLI as a silent fallback.
+
+`GitHub_Integration.md §C` remains the owner of remote host identity, SSH reconnect policy, and remote-means-remote execution semantics. Assistant chat consumes that host-scoped context alongside File Manager, editor, terminal, and LSP: chat actions that target remote files use the shared remote-state vocabulary for `offline`, `stale`, `retrying`, `/pending-write`, and `read-only` situations and must never silently substitute local host behavior for a remote-mode project.
+
+The `/file-manager/remote/review/runtime` seam stays implementation-ready through owner-doc handoffs: FileManager owns file-tree identity and remote file operations, Source Control/review owns compare and hunk review, Terminal/runtime owns PTY and process execution, and assistant chat owns only preview, reveal, and confirmation surfaces.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Executor_Protocol.md
+
+### W.15 Error handling
+
+| Error scenario | User-visible behavior |
+|---------------|----------------------|
+| `create_worktree` fails | Dialog stays open with inline error; retry or cancel |
+| Auto-create fails | Thread created without worktree; warning toast |
+| Branch rename fails after title gen | Keep temp name; no user interruption; log warning |
+| Worktree path no longer exists | On next focus: detect, toast, auto-unbind with reason `path_missing`; PM does not re-create the missing worktree |
+| Remove blocked by active run | Error toast; Remove button disabled |
+| Branch name collision | Auto-append `-2`, `-3`… up to 10 attempts; dialog error if all collide |
+| 1:1 violation attempt | Error toast "Already bound to thread '{title}'" |
+| Merge fails mid-operation | Dialog shows inline error, main repo state is unchanged when git merge auto-aborts, and the dialog stays open for Retry or Cancel; after fixing the cause, the user re-triggers merge |
+| Merge conflict | Dialog closes; conflict markers in files; SC highlights; existing resolution flow |
+| Concurrent merge (lock contention) | Error toast "Another merge in progress"; all Merge buttons disabled |
+| Test not found | Dialog shows error; Retry / Merge Anyway / Cancel |
+| Test timed out | Dialog shows timeout + Merge Anyway / Cancel |
+| Test output > 1MB | "[OUTPUT TRUNCATED]"; does not affect pass/fail |
+| Detached HEAD: merge/PR | Dialog error; buttons disabled |
+| Git hook rejects commit | "Merge failed: {hook} rejected commit"; Retry / Cancel |
+| Stale merge lock at startup | Auto-remove if PID dead or >5 min; advisory toast |
+| Project switch with bound worktree | Button disabled; tooltip "Worktree belongs to project '{name}'"; no auto-unbind |
+| Worktree unbound mid-merge dialog | `binding-disappears-mid-dialog` FINAL behavior: dialog shows error and closes; no merge executes after the when-clause and binding re-check fail |
+| Revert with deleted worktree path | File-not-found error |
+
+### W.16 Acceptance criteria
+
+**Chat header worktree button:** (AC-1) Button visible in all modes; (AC-2) Dropdown correct per binding state; (AC-3) Create dialog works; (AC-4) Unbind detaches without deleting; (AC-5) Remove detaches and prunes; (AC-6) Icon state updates reactively; (AC-7) Binding change applies next turn; (AC-8) Read-only during in-flight turn.
+
+**Settings:** (AC-9) Auto-create toggle works; (AC-10) Cleanup default controls modal; (AC-11) FM follow setting works; (AC-12) Settings persist across restart.
+
+**Thread selector icon:** (AC-13) Appears on bind; (AC-14) Disappears on unbind; (AC-15) Color reflects status; (AC-16) Tooltip shows info.
+
+**File manager:** (AC-25) Switches root on focus change; (AC-26) Breadcrumb toggle works; (AC-27) Toggle resets on switch; (AC-28) Editor tabs unaffected.
+
+**LSP:** (AC-29) Diagnostics reflect worktree state; (AC-30) Lazy-init per worktree; (AC-31) Idle-collected.
+
+**Lifecycle:** (AC-32) Auto-create temp name + rename; (AC-33) Collision suffix; (AC-34) Cleanup modal on delete; (AC-35) 1:1 enforced.
+
+**Merge-back:** (AC-66) Merge dialog with strategy; (AC-67) PR panel with pre-fill; (AC-68) SC row buttons; (AC-69) Slash commands work; (AC-70) NL merge shows dialog; (AC-71) Dirty blocks merge; (AC-72) Conflict resolution; (AC-73) Post-merge cleanup; (AC-77) All modes including Debug; (AC-83) NL merge requires confirmation even in yolo; (AC-84) Ask/Plan NL guard.
+
+**Pre-merge test gate:** (AC-86) Tests merged result; (AC-87) Auto-detect; (AC-88) First-run pre-fill; (AC-89) Failure override UI; (AC-92) Clean rollback; (AC-94) Not for PR; (AC-95) Exclusive lock; (AC-99) Remote SSH executes remotely.
+
+### W.17 Non-goals (explicit)
+
+- No emojis in the GUI
+- No changes to orchestrator's own worktree management (lanes, tiers)
+- Git submodules out of scope
+- No "Bind Existing" in MVP; binding an arbitrary pre-existing manual or orch-owned worktree would break the 1:1 ownership model because orch-owned worktrees carry `owner_node_id` lineage and manual worktrees have no Assistant thread owner
+- No undo for unbind or merge in MVP
+- No per-merge command override in MVP
+- App uninstall does NOT auto-clean worktrees
+- No inline chat history markers for worktree context changes
+- Terminal context (cwd) for worktree-bound threads follows worktree path; no special terminal management
+- Changes section always shows main repo (worktree-scoping Changes is not MVP)
+- No thread export of worktree binding metadata
+- No orchestrator-to-assistant worktree transfer on handoff
+## Shared actor-boundary, route payload, and blocked_notice packet
+
+
+### Actor boundary and runtime identity
+- Assistant chat actors share runtime identity semantics with Orchestrator and Interview agents.
+- Chat actors remain chat/session actors; they do not become nodes or lanes merely because they delegate to subagents.
+- Requested/effective runtime identity, `execution_role`, and `operational_identity` are visible on chat-facing surfaces and in delegated child-run handoffs.
+
+`execution_role` identifies the runtime actor; `operational_identity` identifies the side-effect identity or target context used by the action. `package-overseer` and seam-overseer identities are named runtime actors for handoff/display; they are not ordinary delegated subagents merely because a chat thread shows them.
+
+### Canonical route payload
+- Chat context includes route args from the parent run or session.
+- Route args govern which tools and subagents are accessible within the chat session.
+- Route args are immutable for the duration of the chat session; dynamic route changes are prohibited.
+
+### blocked_notice packet
+- When a chat query cannot be resolved within the current route/context, a structured blocked_notice packet is emitted.
+- The blocked_notice includes the blocked query, the blocker reason, and a fallback resolution path (escalate to human, delegate to full Orchestrator, etc.).
+- Blocked notices are distinct from errors; they indicate that the chat agent is functioning correctly but the requested work is out of scope.
+
+`blocked_notice` packets include the blocked reason, detail ref, `/attempt` and node references when applicable, preserved-local-work summary, and ordered `allowed_action_ids[]` / `allowed_action_ids` action rendering. `wizard.blocked` and `node.blocked` consume the same stronger blocked taxonomy; any older `pre-runtime-escalation` wizard shape is compatibility evidence, not a separate live state.
+
+## Shared Conversational Actor Runtime Identity
+
+Assistant chat, interview, requirements-doc-builder, and PRD builder share `/account/usage/runtime` identity behavior without becoming orchestration nodes, `/packages/seams`, `Feature Seams`, `Work Packages`, graph `Nodes`, graph-plan actors, lane-pool objects, or package `/seam-governance` objects. They share requested/effective provider/model/persona/account/auth semantics, selection reason, skipped `/honored` disclosure, blocked `/retry/remediation/degradation` taxonomy, shared activity `/event-stream` infrastructure, and requested/effective `/model/effort/persona` display, while remaining conversational actors for `/brainstorming`, decision-forming, document-handling, conversational-to-structured questioning, topic-by-topic closure, and traditional requirements documents `/artifacts` under the relevant `/rules` and `/contract`. The requirements-doc-builder and PRD flows are document-production surfaces, not orchestration-style HITL escalation routes.
+
+Blocked `/HITL/critical` Orchestrator events may open a chat-thread resolution-thread, but that pattern must not be projected back onto ordinary assistant, interview, or `/interviewer/requirements-builder` conversation. Those conversational actors already operate directly in chat and share `/account/usage` runtime behavior without becoming Orchestrator-style resolution objects.
+
+Runtime recovery seams that affect chat must preserve `Architecture_Invariants.md` / `Architecture_Invariants`, `Decision_Log.md` / `Decision_Log`, `MiscPlan.md`, and `FileSafe.md` as adjacent owners for frozen requested/effective execution identity bundles, provider-pool concurrency scope, projection trust versus scheduler authority, safe-point lineage exactness, pre-cleanup ordering, deferred-run resume validity, DAE `/post-scan` blocked phases, orphan cleanup, and `/remediation` ordering. Under-documentation in those adjacent docs must not soften chat's own `/effective` identity and safe-point rules.
+
+The execution-policy `/UI` split is explicit: worker kind and retry-context policy are separate settings, chat is a requested-identity override surface, and requested-vs-effective identity must align across chat actors and orchestration actors. The seam covers agent vs subagent, fresh vs reused retry worker, overseer delegation `/off`, delegated-worker provider/model/effort policy, requested-identity display, execution_role, actor_kind, `/platform/model-level` identity, `/account/switch` identity, and requested/effective `/account` disclosure.
+
+Cross-doc parity references are `Plans/assistant-chat-design.md`, `/assistant-chat-design.md`, `Plans/interview-subagent-integration.md`, and `/interview-subagent-integration.md`; both docs must expose `/account` behavior for conversational actors sharing provider runtime.
+
+`package`, `seam`, `lane`, `promotion`, `review`, and `resolution_thread` are persisted-or-projected schema questions owned by the package `/seam/lane` family, not by the chat thread model. Chat may render a detail-focus route with `inspector_target`, but that enum must stay small and must never become a fallback bag for unresolved route design. Live page/widget attribution that chat consumes is attempt-/lane-/session-aware: it uses `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, requested/effective identity, and avoids tier-only routing through `tier_id` or generic `/widget` summaries.
+
+`auto` persona or model selection must never appear as an opaque state with no resolved `/reason`; historical runs preserve the resolved effective persona and reason from the time of execution.
+
+## Chat Route, Permission, and History Behaviors
+
+Permission approval state must not leak across lanes, accounts, or shared-runtime actors just because they share a UI session. `always`, reject-cascade, and doom-loop behavior require a canonical actor/account/lane scope key; `Permissions_System.md` / `Permissions_System` default-deny hints for `todoread` and `todowrite` must narrow by execution-entity, actor-scoped context, and `/member/lane/account-bounded` permissions.
+
+Worker-facing handoff and `/retry` memory are project-scoped structured runtime records, not vague "JSON-like" logs. The design must say whether the backing records/projections are `/JSONL/redb-backed`, which concrete `/path/delivery` or storage domain owns them, and how a worker receives the bounded packet, while keeping `/projections` and worker-facing handoff separate from full raw history.
+
+`History` remains chronological but windowed: initial load shows a recent slice, `load-older` or jump controls bring in older items, dense event bursts collapse low-level records, and initial viewports do not force every low-level record into the thread. `Settings` is source-axis heavy and must show inheritance plus override origin so the user can answer what will be requested from the current surface. `origin` is audit-only even when actor identity is first-class elsewhere; it must never become behavior-driving actor identity.
+
+Graph and history consumers use viewport culling with overscan, table virtualization, per-generation layout caching, incremental row `/item` updates, and frame-cadence burst throttling; when rectangle-based rendering falls below target performance, the fallback is canvas-style rendering.
+
+A CtA card, blocked notice, search result, artifact pivot, thread usage jump, and legacy thread-usage command aliases all restore destination and scope using the same internal payload model. Command palette entries, search results, artifact deep-links, blocked notices, and FileManager / `/Editor` opens all resolve through this internal target model rather than chat-local navigation. Legacy `cmd.chat.focus_thread_usage` citations normalize to route/open Usage or the editor-tab Context Detail Pane; the old command ID is compatibility-only and must not remain a canonical dispatch target. Blocked notices are rendered from `allowed_action_ids[]`, `allowed_action_ids`, and blocked metadata; `assistant-chat-design.md` / `assistant-chat-design` must not invent thread-local recovery semantics.
+
+Route catalog policy is deterministic. Do not make a large public `cmd.nav.*` or `cmd.nav` family the main catalog-facing answer. Do not use hedge words such as `optional` or `maybe` when stating canonical direction. State allowed serialized data classes directly: wizard-step detail is a narrow serialized anchor, not a top-level base route field. `OpenFile` stays path `/editor` scoped; `OpenSubject` is the identity-open contract consumed by FileManager and assistant chat.
+
+owner-consumer reconciliation treats these gaps as spec-integrity failures, not fresh design space. The remaining work is reconciliation-order implementation, not open-ended research or model invention.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/assistant-chat-design.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### ACD-001 - Assistant & Chat UI -- Design Plan Source-Preserving PlanUnit
+
+```yaml
+plan_unit_id: ACD-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The former doc-level source-preserving bridge is retired in place after
+  Phase 2B atomized assistant-chat-design-S0001 through
+  assistant-chat-design-S0182 into ACD-002 through ACD-412. ACD-001 remains
+  only as migration lineage for the retired bridge span and must not re-own
+  atomized source coverage.
+gui_related: false
+gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - ACD-001 no longer uses the source-preserving PlanUnit compile hint.
+  - Prior source coverage remains carried by ACD-002 through ACD-412.
+  - The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+  - Coverage for the retired bridge is recorded in the Phase 2B batch 010 coverage map.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: plan_standardization
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0183
+preserved_exact_tokens:
+  - "ACD-001"
+  - "source_preserving_planunit"
+  - "ACD-002"
+  - "ACD-412"
+negative_constraints:
+  - "Do not remap atomized assistant-chat-design spans back to ACD-001."
+  - "Do not treat the retired bridge as implementation-ready product coverage."
+  - "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+compatibility_only_notes:
+  - "The old source-preserving bridge is retained only so migration lineage and historical references to ACD-001 remain auditable."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-002 - Assistant Chat Scope And Source Authority
+
+```yaml
+plan_unit_id: ACD-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat owns the shared Assistant/Interview chat UX, source-preserved
+  owner-section requirements, compliance posture, route-payload boundary
+  headings, change history, executive role, and table-of-contents anchors for
+  this Phase 2B window. Original source prose remains in place for exact audit.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible Assistant and Interview chat surface and its navigation anchors.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Spans assistant-chat-design-S0001 through assistant-chat-design-S0005 and S0007 through S0008 are mapped to this PlanUnit in the Phase 2B coverage map.
+  - The source body remains available in place for exact-token audit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: source_preservation
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: planunit_atomization
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0001
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0002
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0003
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0004
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0005
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0007
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0008
+preserved_exact_tokens:
+  - "Assistant & Chat UI -- Design Plan"
+  - "Canonical owner-section requirements"
+  - "Shared conversational/runtime boundary"
+  - "Canonical route payload"
+  - "Calls to Action (CtAs)"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< CONTEXT_AFTER 3604-3615 >>>
+### ACD-003 - Rewrite Runtime Identity Boundary
+
+```yaml
+plan_unit_id: ACD-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat targets the rewrite architecture while displaying concrete
+  requested/effective runtime identity and preserving shared provider/auth
+  fields without reopening the Contracts_V0 additive field set.
+gui_related: true

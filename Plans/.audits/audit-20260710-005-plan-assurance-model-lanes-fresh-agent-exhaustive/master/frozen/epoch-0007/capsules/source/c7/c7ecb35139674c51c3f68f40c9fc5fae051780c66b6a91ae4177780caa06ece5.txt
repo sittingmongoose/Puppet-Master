@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=10119-10130 >>>
+L00010119	- abandoned scratch artifacts
+L00010120	negative_constraints: []
+L00010121	preserved_contractrefs:
+L00010122	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md'
+L00010123	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md'
+L00010124	compatibility_only_notes: []
+L00010125	stale_retired_dispositions:
+L00010126	- Temp artifacts and stale rewrite remnants retain their literal row label as bounded-collection material, not a new storage owner.
+L00010127	owner_hints:
+L00010128	- Plans/storage-plan.md
+L00010129	```
+L00010130	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10131-10496 >>>
+L00010131	### SP-136 - Regex Index Byte Build Concurrency And Mmap Contract
+L00010132	
+L00010133	```yaml
+L00010134	plan_unit_id: SP-136
+L00010135	unit_type: requirement
+L00010136	status: accepted
+L00010137	owner_doc: Plans/storage-plan.md
+L00010138	canonical_text: Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS.
+L00010139	gui_related: false
+L00010140	gui_classification_reason: This unit preserves backend regex-index byte, concurrency, and mmap file-handle contracts.
+L00010141	split_recommended: false
+L00010142	depends_on:
+L00010143	- PDS-003
+L00010144	- PDS-004
+L00010145	- PDS-005
+L00010146	- PNC-001
+L00010147	unblocks: []
+L00010148	acceptance_criteria:
+L00010149	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00010150	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010151	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010152	validation_surfaces:
+L00010153	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010154	- python3 scripts/pm-plan-index.py validate
+L00010155	risk_class: storage_plan_drift
+L00010156	reasoning_tier: standard
+L00010157	context_scope: storage_batch_177_runtime_terminal_storage
+L00010158	implementation_surfaces:
+L00010159	- Plans/storage-plan.md
+L00010160	node_compile_hint:
+L00010161	  mode: regex_index_byte_build_concurrency_and_mmap_contract
+L00010162	  create_worknodes: false
+L00010163	source_lineage:
+L00010164	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+L00010165	preserved_exact_tokens:
+L00010166	- Regex-index indexing model byte contract
+L00010167	- MUST NOT decode content to Unicode
+L00010168	- frequency-table computation
+L00010169	- n-gram extraction
+L00010170	- byte-level
+L00010171	- u8
+L00010172	- common build thread pool
+L00010173	- one build slot
+L00010174	- FIFO
+L00010175	- memmap2
+L00010176	- share_mode(0x7)
+L00010177	- FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE
+L00010178	- /macOS
+L00010179	- inode-by-fd
+L00010180	negative_constraints:
+L00010181	- Implementers MUST NOT decode content to Unicode for frequency-table computation or n-gram extraction.
+L00010182	preserved_contractrefs:
+L00010183	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md'
+L00010184	compatibility_only_notes: []
+L00010185	stale_retired_dispositions: []
+L00010186	owner_hints:
+L00010187	- Plans/storage-plan.md
+L00010188	```
+L00010189	
+L00010190	### SP-137 - Projector Consumption Order And JSONL Mirror Policy
+L00010191	
+L00010192	```yaml
+L00010193	plan_unit_id: SP-137
+L00010194	unit_type: requirement
+L00010195	status: accepted
+L00010196	owner_doc: Plans/storage-plan.md
+L00010197	canonical_text: Projectors advance in canonical seglog order from redb checkpoints, write only owned projections, commit checkpoints after durable writes, and maintain JSONL mirrors as derived, rebuildable, sequence-ordered files that never backfill seglog.
+L00010198	gui_related: false
+L00010199	gui_classification_reason: This unit preserves backend projector consumption ordering and JSONL mirror policy.
+L00010200	split_recommended: false
+L00010201	depends_on:
+L00010202	- PDS-003
+L00010203	- PDS-004
+L00010204	- PDS-005
+L00010205	- PNC-001
+L00010206	unblocks: []
+L00010207	acceptance_criteria:
+L00010208	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00010209	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010210	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010211	validation_surfaces:
+L00010212	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010213	- python3 scripts/pm-plan-index.py validate
+L00010214	risk_class: storage_plan_drift
+L00010215	reasoning_tier: standard
+L00010216	context_scope: storage_batch_177_runtime_terminal_storage
+L00010217	implementation_surfaces:
+L00010218	- Plans/storage-plan.md
+L00010219	node_compile_hint:
+L00010220	  mode: projector_consumption_order_and_jsonl_mirror_policy
+L00010221	  create_worknodes: false
+L00010222	source_lineage:
+L00010223	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+L00010224	preserved_exact_tokens:
+L00010225	- canonical seglog order
+L00010226	- segment_generation
+L00010227	- segment_name
+L00010228	- byte_offset
+L00010229	- last_seq
+L00010230	- JSONL mirror
+L00010231	- derived
+L00010232	- human-readable
+L00010233	- rebuildable
+L00010234	- authoritative over seglog
+L00010235	- canonical event envelope
+L00010236	- sequence order
+L00010237	- deterministically
+L00010238	- stale mirror file
+L00010239	- PM MUST NOT backfill seglog from JSONL
+L00010240	- legal-hold
+L00010241	negative_constraints:
+L00010242	- PM MUST NOT backfill seglog from JSONL.
+L00010243	preserved_contractrefs:
+L00010244	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md'
+L00010245	compatibility_only_notes: []
+L00010246	stale_retired_dispositions:
+L00010247	- A missing or stale mirror file is repaired by replaying the corresponding seglog range.
+L00010248	owner_hints:
+L00010249	- Plans/storage-plan.md
+L00010250	```
+L00010251	
+L00010252	### SP-138 - Tantivy And Projection Rebuild Boundaries
+L00010253	
+L00010254	```yaml
+L00010255	plan_unit_id: SP-138
+L00010256	unit_type: requirement
+L00010257	status: accepted
+L00010258	owner_doc: Plans/storage-plan.md
+L00010259	canonical_text: Tantivy indices, analytics rollups, and projections rebuild from seglog or the owning projector canonical source range; projector checkpoints are durable ownership boundaries, partial writes do not advance checkpoints, and schema-version rebuilds clear only derived projection state.
+L00010260	gui_related: false
+L00010261	gui_classification_reason: This unit preserves backend projection rebuild and checkpoint ownership boundaries.
+L00010262	split_recommended: false
+L00010263	depends_on:
+L00010264	- PDS-003
+L00010265	- PDS-004
+L00010266	- PDS-005
+L00010267	- PNC-001
+L00010268	unblocks: []
+L00010269	acceptance_criteria:
+L00010270	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00010271	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010272	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010273	validation_surfaces:
+L00010274	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010275	- python3 scripts/pm-plan-index.py validate
+L00010276	risk_class: storage_plan_drift
+L00010277	reasoning_tier: standard
+L00010278	context_scope: storage_batch_177_runtime_terminal_storage
+L00010279	implementation_surfaces:
+L00010280	- Plans/storage-plan.md
+L00010281	node_compile_hint:
+L00010282	  mode: tantivy_and_projection_rebuild_boundaries
+L00010283	  create_worknodes: false
+L00010284	source_lineage:
+L00010285	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+L00010286	preserved_exact_tokens:
+L00010287	- Tantivy indices
+L00010288	- analytics rollups
+L00010289	- projections
+L00010290	- seglog
+L00010291	- canonical source range
+L00010292	- owning projector
+L00010293	- Projector checkpoints
+L00010294	- durable ownership boundaries
+L00010295	- partial projection writes
+L00010296	- schema-version change
+L00010297	- derived projection state
+L00010298	- canonical seglog
+L00010299	- unrelated redb families
+L00010300	negative_constraints:
+L00010301	- Partial projection writes do not advance checkpoints.
+L00010302	- Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.
+L00010303	preserved_contractrefs:
+L00010304	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md'
+L00010305	compatibility_only_notes: []
+L00010306	stale_retired_dispositions: []
+L00010307	owner_hints:
+L00010308	- Plans/storage-plan.md
+L00010309	```
+L00010310	
+L00010311	### SP-139 - Projector Checkpoints Runtime Recovery And Usage Carry-Through
+L00010312	
+L00010313	```yaml
+L00010314	plan_unit_id: SP-139
+L00010315	unit_type: requirement
+L00010316	status: accepted
+L00010317	owner_doc: Plans/storage-plan.md
+L00010318	canonical_text: Projector checkpoints encode resume state without duplicate semantic writes and are atomic with projector durability, but runtime/executor checkpoint marker events and safe-point lineage records in seglog remain required before mutation-capable execution or restore flows continue; run.completed.usage carries optional usage snapshot attribution from usage.event records.
+L00010319	gui_related: false
+L00010320	gui_classification_reason: This unit preserves backend projector checkpoint, runtime recovery, and usage carry-through boundaries.
+L00010321	split_recommended: false
+L00010322	depends_on:
+L00010323	- PDS-003
+L00010324	- PDS-004
+L00010325	- PDS-005
+L00010326	- PNC-001
+L00010327	unblocks: []
+L00010328	acceptance_criteria:
+L00010329	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00010330	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010331	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010332	validation_surfaces:
+L00010333	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010334	- python3 scripts/pm-plan-index.py validate
+L00010335	risk_class: storage_plan_drift
+L00010336	reasoning_tier: standard
+L00010337	context_scope: storage_batch_177_runtime_terminal_storage
+L00010338	implementation_surfaces:
+L00010339	- Plans/storage-plan.md
+L00010340	node_compile_hint:
+L00010341	  mode: projector_checkpoints_runtime_recovery_and_usage_carry_through
+L00010342	  create_worknodes: false
+L00010343	source_lineage:
+L00010344	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0086
+L00010345	preserved_exact_tokens:
+L00010346	- checkpoints
+L00010347	- duplicate semantic writes
+L00010348	- sequence order
+L00010349	- file mtime
+L00010350	- UI refresh timing
+L00010351	- projector durability
+L00010352	- runtime recovery checkpoint markers
+L00010353	- safe-point lineage records
+L00010354	- seglog
+L00010355	- mutation-capable execution
+L00010356	- restore flows
+L00010357	- canonical runtime checkpoint marker stream
+L00010358	- projector checkpoints alone are insufficient
+L00010359	- run.completed.usage
+L00010360	- run.completed
+L00010361	- usage.event
+L00010362	- attribution tuple
+L00010363	negative_constraints:
+L00010364	- Projector checkpoints are not a substitute for runtime recovery checkpoint markers.
+L00010365	- Projector checkpoints alone are insufficient for mutation/recovery replay.
+L00010366	preserved_contractrefs:
+L00010367	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
+L00010368	compatibility_only_notes:
+L00010369	- run.completed.usage carry-through here is linked to SP-130 and does not create a second usage snapshot owner.
+L00010370	stale_retired_dispositions: []
+L00010371	owner_hints:
+L00010372	- Plans/storage-plan.md
+L00010373	```
+L00010374	
+L00010375	### SP-140 - Analytics Refresh Trigger And UI Rollup Read Boundary
+L00010376	
+L00010377	```yaml
+L00010378	plan_unit_id: SP-140
+L00010379	unit_type: requirement
+L00010380	status: accepted
+L00010381	owner_doc: Plans/storage-plan.md
+L00010382	canonical_text: Analytics scans may run periodically or on-demand without blocking the main UI; on-demand refresh keeps prior rollups visible, writes rollup keys in redb, and dashboard consumers read rollups rather than seglog directly.
+L00010383	gui_related: true
+L00010384	gui_classification_reason: This unit preserves user-visible Usage view refresh behavior and dashboard read boundaries.
+L00010385	split_recommended: false
+L00010386	depends_on:
+L00010387	- PDS-003
+L00010388	- PDS-004
+L00010389	- PDS-005
+L00010390	- PNC-001
+L00010391	unblocks: []
+L00010392	acceptance_criteria:
+L00010393	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00010394	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010395	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010396	validation_surfaces:
+L00010397	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010398	- python3 scripts/pm-plan-index.py validate
+L00010399	risk_class: storage_plan_drift
+L00010400	reasoning_tier: standard
+L00010401	context_scope: storage_batch_178_chat_runtime_state
+L00010402	implementation_surfaces:
+L00010403	- Plans/storage-plan.md
+L00010404	node_compile_hint:
+L00010405	  mode: analytics_refresh_trigger_and_ui_rollup_read_boundary
+L00010406	  create_worknodes: false
+L00010407	source_lineage:
+L00010408	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0087
+L00010409	preserved_exact_tokens:
+L00010410	- Periodic
+L00010411	- every 5 minutes
+L00010412	- on-demand
+L00010413	- Usage view
+L00010414	- background task
+L00010415	- separate thread
+L00010416	- main UI
+L00010417	- previously written rollups visible
+L00010418	- rollups
+L00010419	- usage_5h.{platform}
+L00010420	- usage_7d.{platform}
+L00010421	- tool_latency.{window}
+L00010422	- tool_usage.{window}
+L00010423	- tool_usage_meta.{window}
+L00010424	- no direct seglog read for dashboard
+L00010425	negative_constraints:
+L00010426	- Analytics scans must not block the main UI.
+L00010427	preserved_contractrefs: []
+L00010428	compatibility_only_notes: []
+L00010429	stale_retired_dispositions: []
+L00010430	owner_hints:
+L00010431	- Plans/storage-plan.md
+L00010432	```
+L00010433	
+L00010434	### SP-141 - Analytics Scan Range Computation And Checkpoint Semantics
+L00010435	
+L00010436	```yaml
+L00010437	plan_unit_id: SP-141
+L00010438	unit_type: requirement
+L00010439	status: accepted
+L00010440	owner_doc: Plans/storage-plan.md
+L00010441	canonical_text: Analytics scans read seglog or JSONL mirror in order over canonical windows, compute usage, tool latency, error rate, and tool usage rollups, exclude denied/FileSafe-blocked calls from tool_usage, and checkpoint last scanned sequence or timestamp idempotently.
+L00010442	gui_related: false
+L00010443	gui_classification_reason: This unit preserves backend analytics scan, computation, and checkpoint semantics.
+L00010444	split_recommended: false
+L00010445	depends_on:
+L00010446	- PDS-003
+L00010447	- PDS-004
+L00010448	- PDS-005
+L00010449	- PNC-001
+L00010450	unblocks: []
+L00010451	acceptance_criteria:
+L00010452	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00010453	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010454	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010455	validation_surfaces:
+L00010456	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010457	- python3 scripts/pm-plan-index.py validate
+L00010458	risk_class: storage_plan_drift
+L00010459	reasoning_tier: standard
+L00010460	context_scope: storage_batch_178_chat_runtime_state
+L00010461	implementation_surfaces:
+L00010462	- Plans/storage-plan.md
+L00010463	node_compile_hint:
+L00010464	  mode: analytics_scan_range_computation_and_checkpoint_semantics
+L00010465	  create_worknodes: false
+L00010466	source_lineage:
+L00010467	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0087
+L00010468	preserved_exact_tokens:
+L00010469	- Last N hours
+L00010470	- at least 7d
+L00010471	- tool_usage.7d
+L00010472	- usage.event
+L00010473	- run.completed
+L00010474	- tool.invoked
+L00010475	- 5h
+L00010476	- 24h
+L00010477	- 7d
+L00010478	- 1h
+L00010479	- p50
+L00010480	- p95
+L00010481	- tool_name
+L00010482	- success = false
+L00010483	- tool.denied
+L00010484	- FileSafe blocks
+L00010485	- last scanned up to seq X
+L00010486	- last scanned timestamp
+L00010487	- Idempotent
+L00010488	negative_constraints:
+L00010489	- tool.denied events and FileSafe blocks do not contribute to tool_usage.{window}.
+L00010490	preserved_contractrefs: []
+L00010491	compatibility_only_notes: []
+L00010492	stale_retired_dispositions: []
+L00010493	owner_hints:
+L00010494	- Plans/storage-plan.md
+L00010495	```
+L00010496	
+
+<<< CONTEXT_AFTER canonical_document_lines=10497-10508 >>>
+L00010497	### SP-142 - Assistant Worktree Event Naming And Projection Keys
+L00010498	
+L00010499	```yaml
+L00010500	plan_unit_id: SP-142
+L00010501	unit_type: requirement
+L00010502	status: accepted
+L00010503	owner_doc: Plans/storage-plan.md
+L00010504	canonical_text: Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context.
+L00010505	gui_related: false
+L00010506	gui_classification_reason: This unit preserves backend assistant worktree event naming and projection key ownership.
+L00010507	split_recommended: false
+L00010508	depends_on:

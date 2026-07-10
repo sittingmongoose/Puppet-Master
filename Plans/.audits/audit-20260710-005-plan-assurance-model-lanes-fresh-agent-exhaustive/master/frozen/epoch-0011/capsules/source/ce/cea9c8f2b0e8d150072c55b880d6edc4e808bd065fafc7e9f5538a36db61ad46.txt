@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5313-5324 >>>
+L00005313	          "requirement": "cmd.chat.search has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005314	        },
+L00005315	        {
+L00005316	          "test_id": "wiring.catalog.chat_search.accessibility",
+L00005317	          "evidence_kind": "accessibility_regression",
+L00005318	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005319	        }
+L00005320	      ],
+L00005321	      "event_test_requirements": [
+L00005322	        "Assert cmd.chat.search records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005323	      ]
+L00005324	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5325-5716 >>>
+L00005325	    "catalog.chat_send": {
+L00005326	      "ui_element_id": "catalog.chat_send",
+L00005327	      "ui_location": "Assistant Chat surface > Send",
+L00005328	      "ui_command_id": "cmd.chat.send",
+L00005329	      "handler_location": "handlers::chat::send",
+L00005330	      "expected_event_types": [
+L00005331	        "chat.message.submitted"
+L00005332	      ],
+L00005333	      "acceptance_checks": [
+L00005334	        "cmd.chat.send is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00005335	        "cmd.chat.send exposes state selector and disabled reason before dispatch.",
+L00005336	        "cmd.chat.send dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00005337	        "cmd.chat.send uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00005338	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00005339	      ],
+L00005340	      "evidence_required": "Production wiring contract for cmd.chat.send. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005341	      "state_selector": "state.commands.chat_send.availability",
+L00005342	      "disabled_reason_projection": "state.commands.chat_send.disabled_reason",
+L00005343	      "effect_contract": {
+L00005344	        "effect_kind": "event",
+L00005345	        "description": "cmd.chat.send emits the declared domain event(s) and records dispatch correlation evidence.",
+L00005346	        "receipt_or_event_refs": [
+L00005347	          "chat.message.submitted"
+L00005348	        ]
+L00005349	      },
+L00005350	      "accessibility_contract": {
+L00005351	        "role_or_semantics": "catalog.chat_send exposes a stable role/name/description matching cmd.chat.send.",
+L00005352	        "keyboard_access": "catalog.chat_send is reachable and activatable by keyboard where the control is visible.",
+L00005353	        "focus_management": "catalog.chat_send preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005354	        "disabled_announcement": "catalog.chat_send surfaces state.commands.chat_send.disabled_reason to assistive technology when unavailable."
+L00005355	      },
+L00005356	      "test_evidence": [
+L00005357	        {
+L00005358	          "test_id": "wiring.catalog.chat_send.dispatcher",
+L00005359	          "evidence_kind": "dispatcher_fixture",
+L00005360	          "requirement": "Dispatching cmd.chat.send reaches handlers::chat::send with typed args/result contract."
+L00005361	        },
+L00005362	        {
+L00005363	          "test_id": "wiring.catalog.chat_send.state_projection",
+L00005364	          "evidence_kind": "state_projection",
+L00005365	          "requirement": "Availability reads state.commands.chat_send.availability and disabled copy reads state.commands.chat_send.disabled_reason."
+L00005366	        },
+L00005367	        {
+L00005368	          "test_id": "wiring.catalog.chat_send.effect",
+L00005369	          "evidence_kind": "receipt_or_event_assertion",
+L00005370	          "requirement": "cmd.chat.send emits the declared domain event(s) and records dispatch correlation evidence."
+L00005371	        },
+L00005372	        {
+L00005373	          "test_id": "wiring.catalog.chat_send.accessibility",
+L00005374	          "evidence_kind": "accessibility_regression",
+L00005375	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005376	        },
+L00005377	        {
+L00005378	          "test_id": "wiring.catalog.chat_send.events",
+L00005379	          "evidence_kind": "event_test",
+L00005380	          "requirement": "Assert cmd.chat.send emits chat.message.submitted with command_id, origin, correlation_id, and handler target."
+L00005381	        }
+L00005382	      ],
+L00005383	      "event_test_requirements": [
+L00005384	        "Assert cmd.chat.send emits chat.message.submitted with command_id, origin, correlation_id, and handler target."
+L00005385	      ]
+L00005386	    },
+L00005387	    "catalog.chat_settings": {
+L00005388	      "ui_element_id": "catalog.chat_settings",
+L00005389	      "ui_location": "Assistant Chat surface",
+L00005390	      "ui_command_id": "cmd.chat.settings",
+L00005391	      "handler_location": "handlers::chat::settings",
+L00005392	      "expected_event_types": [],
+L00005393	      "acceptance_checks": [
+L00005394	        "cmd.chat.settings must be registered in the UICommand dispatcher with typed args and result contract",
+L00005395	        "cmd.chat.settings must expose projected state selector and disabled reason before dispatch",
+L00005396	        "cmd.chat.settings dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005397	        "cmd.chat.settings must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005398	        "cmd.chat.settings must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00005399	      ],
+L00005400	      "evidence_required": "Production wiring contract for cmd.chat.settings; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005401	      "state_selector": "state.commands.chat_settings.availability",
+L00005402	      "disabled_reason_projection": "state.commands.chat_settings.disabled_reason",
+L00005403	      "effect_contract": {
+L00005404	        "effect_kind": "receipt",
+L00005405	        "description": "cmd.chat.settings has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00005406	        "receipt_or_event_refs": [
+L00005407	          "cmd.chat.settings.dispatch_receipt"
+L00005408	        ]
+L00005409	      },
+L00005410	      "accessibility_contract": {
+L00005411	        "role_or_semantics": "catalog.chat_settings exposes a stable role/name/description matching cmd.chat.settings.",
+L00005412	        "keyboard_access": "catalog.chat_settings is reachable and activatable by keyboard where the control is visible.",
+L00005413	        "focus_management": "catalog.chat_settings preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005414	        "disabled_announcement": "catalog.chat_settings surfaces state.commands.chat_settings.disabled_reason to assistive technology when unavailable."
+L00005415	      },
+L00005416	      "test_evidence": [
+L00005417	        {
+L00005418	          "test_id": "wiring.catalog.chat_settings.dispatcher",
+L00005419	          "evidence_kind": "dispatcher_fixture",
+L00005420	          "requirement": "Dispatching cmd.chat.settings reaches handlers::chat::settings with typed args/result contract."
+L00005421	        },
+L00005422	        {
+L00005423	          "test_id": "wiring.catalog.chat_settings.state_projection",
+L00005424	          "evidence_kind": "state_projection",
+L00005425	          "requirement": "Availability reads state.commands.chat_settings.availability and disabled copy reads state.commands.chat_settings.disabled_reason."
+L00005426	        },
+L00005427	        {
+L00005428	          "test_id": "wiring.catalog.chat_settings.effect",
+L00005429	          "evidence_kind": "receipt_or_event_assertion",
+L00005430	          "requirement": "cmd.chat.settings has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005431	        },
+L00005432	        {
+L00005433	          "test_id": "wiring.catalog.chat_settings.accessibility",
+L00005434	          "evidence_kind": "accessibility_regression",
+L00005435	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005436	        }
+L00005437	      ],
+L00005438	      "event_test_requirements": [
+L00005439	        "Assert cmd.chat.settings records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005440	      ]
+L00005441	    },
+L00005442	    "catalog.chat_stop": {
+L00005443	      "ui_element_id": "catalog.chat_stop",
+L00005444	      "ui_location": "Assistant Chat surface",
+L00005445	      "ui_command_id": "cmd.chat.stop",
+L00005446	      "handler_location": "handlers::chat::stop",
+L00005447	      "expected_event_types": [],
+L00005448	      "acceptance_checks": [
+L00005449	        "cmd.chat.stop must be registered in the UICommand dispatcher with typed args and result contract",
+L00005450	        "cmd.chat.stop must expose projected state selector and disabled reason before dispatch",
+L00005451	        "cmd.chat.stop dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005452	        "cmd.chat.stop must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005453	        "cmd.chat.stop must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00005454	      ],
+L00005455	      "evidence_required": "Production wiring contract for cmd.chat.stop; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005456	      "state_selector": "state.commands.chat_stop.availability",
+L00005457	      "disabled_reason_projection": "state.commands.chat_stop.disabled_reason",
+L00005458	      "effect_contract": {
+L00005459	        "effect_kind": "receipt",
+L00005460	        "description": "cmd.chat.stop has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00005461	        "receipt_or_event_refs": [
+L00005462	          "cmd.chat.stop.dispatch_receipt"
+L00005463	        ]
+L00005464	      },
+L00005465	      "accessibility_contract": {
+L00005466	        "role_or_semantics": "catalog.chat_stop exposes a stable role/name/description matching cmd.chat.stop.",
+L00005467	        "keyboard_access": "catalog.chat_stop is reachable and activatable by keyboard where the control is visible.",
+L00005468	        "focus_management": "catalog.chat_stop preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005469	        "disabled_announcement": "catalog.chat_stop surfaces state.commands.chat_stop.disabled_reason to assistive technology when unavailable."
+L00005470	      },
+L00005471	      "test_evidence": [
+L00005472	        {
+L00005473	          "test_id": "wiring.catalog.chat_stop.dispatcher",
+L00005474	          "evidence_kind": "dispatcher_fixture",
+L00005475	          "requirement": "Dispatching cmd.chat.stop reaches handlers::chat::stop with typed args/result contract."
+L00005476	        },
+L00005477	        {
+L00005478	          "test_id": "wiring.catalog.chat_stop.state_projection",
+L00005479	          "evidence_kind": "state_projection",
+L00005480	          "requirement": "Availability reads state.commands.chat_stop.availability and disabled copy reads state.commands.chat_stop.disabled_reason."
+L00005481	        },
+L00005482	        {
+L00005483	          "test_id": "wiring.catalog.chat_stop.effect",
+L00005484	          "evidence_kind": "receipt_or_event_assertion",
+L00005485	          "requirement": "cmd.chat.stop has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005486	        },
+L00005487	        {
+L00005488	          "test_id": "wiring.catalog.chat_stop.accessibility",
+L00005489	          "evidence_kind": "accessibility_regression",
+L00005490	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005491	        }
+L00005492	      ],
+L00005493	      "event_test_requirements": [
+L00005494	        "Assert cmd.chat.stop records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005495	      ]
+L00005496	    },
+L00005497	    "catalog.chat_toggle_message_details": {
+L00005498	      "ui_element_id": "catalog.chat_toggle_message_details",
+L00005499	      "ui_location": "Assistant Chat surface",
+L00005500	      "ui_command_id": "cmd.chat.toggle_message_details",
+L00005501	      "handler_location": "handlers::chat::toggle_message_details",
+L00005502	      "expected_event_types": [],
+L00005503	      "acceptance_checks": [
+L00005504	        "cmd.chat.toggle_message_details must be registered in the UICommand dispatcher with typed args and result contract",
+L00005505	        "cmd.chat.toggle_message_details must expose projected state selector and disabled reason before dispatch",
+L00005506	        "cmd.chat.toggle_message_details dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005507	        "cmd.chat.toggle_message_details must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005508	        "cmd.chat.toggle_message_details must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00005509	      ],
+L00005510	      "evidence_required": "Production wiring contract for cmd.chat.toggle_message_details; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005511	      "state_selector": "state.commands.chat_toggle_message_details.availability",
+L00005512	      "disabled_reason_projection": "state.commands.chat_toggle_message_details.disabled_reason",
+L00005513	      "effect_contract": {
+L00005514	        "effect_kind": "receipt",
+L00005515	        "description": "cmd.chat.toggle_message_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00005516	        "receipt_or_event_refs": [
+L00005517	          "cmd.chat.toggle_message_details.dispatch_receipt"
+L00005518	        ]
+L00005519	      },
+L00005520	      "accessibility_contract": {
+L00005521	        "role_or_semantics": "catalog.chat_toggle_message_details exposes a stable role/name/description matching cmd.chat.toggle_message_details.",
+L00005522	        "keyboard_access": "catalog.chat_toggle_message_details is reachable and activatable by keyboard where the control is visible.",
+L00005523	        "focus_management": "catalog.chat_toggle_message_details preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005524	        "disabled_announcement": "catalog.chat_toggle_message_details surfaces state.commands.chat_toggle_message_details.disabled_reason to assistive technology when unavailable."
+L00005525	      },
+L00005526	      "test_evidence": [
+L00005527	        {
+L00005528	          "test_id": "wiring.catalog.chat_toggle_message_details.dispatcher",
+L00005529	          "evidence_kind": "dispatcher_fixture",
+L00005530	          "requirement": "Dispatching cmd.chat.toggle_message_details reaches handlers::chat::toggle_message_details with typed args/result contract."
+L00005531	        },
+L00005532	        {
+L00005533	          "test_id": "wiring.catalog.chat_toggle_message_details.state_projection",
+L00005534	          "evidence_kind": "state_projection",
+L00005535	          "requirement": "Availability reads state.commands.chat_toggle_message_details.availability and disabled copy reads state.commands.chat_toggle_message_details.disabled_reason."
+L00005536	        },
+L00005537	        {
+L00005538	          "test_id": "wiring.catalog.chat_toggle_message_details.effect",
+L00005539	          "evidence_kind": "receipt_or_event_assertion",
+L00005540	          "requirement": "cmd.chat.toggle_message_details has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005541	        },
+L00005542	        {
+L00005543	          "test_id": "wiring.catalog.chat_toggle_message_details.accessibility",
+L00005544	          "evidence_kind": "accessibility_regression",
+L00005545	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005546	        }
+L00005547	      ],
+L00005548	      "event_test_requirements": [
+L00005549	        "Assert cmd.chat.toggle_message_details records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005550	      ]
+L00005551	    },
+L00005552	    "catalog.chat_web_crawl": {
+L00005553	      "ui_element_id": "catalog.chat_web_crawl",
+L00005554	      "ui_location": "Assistant Chat surface",
+L00005555	      "ui_command_id": "cmd.chat.web.crawl",
+L00005556	      "handler_location": "handlers::chat::web_crawl",
+L00005557	      "expected_event_types": [],
+L00005558	      "acceptance_checks": [
+L00005559	        "cmd.chat.web.crawl must be registered in the UICommand dispatcher with typed args and result contract",
+L00005560	        "cmd.chat.web.crawl must expose projected state selector and disabled reason before dispatch",
+L00005561	        "cmd.chat.web.crawl dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005562	        "cmd.chat.web.crawl must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005563	        "cmd.chat.web.crawl must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00005564	      ],
+L00005565	      "evidence_required": "Production wiring contract for cmd.chat.web.crawl; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005566	      "state_selector": "state.commands.chat_web_crawl.availability",
+L00005567	      "disabled_reason_projection": "state.commands.chat_web_crawl.disabled_reason",
+L00005568	      "effect_contract": {
+L00005569	        "effect_kind": "receipt",
+L00005570	        "description": "cmd.chat.web.crawl has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00005571	        "receipt_or_event_refs": [
+L00005572	          "cmd.chat.web.crawl.dispatch_receipt"
+L00005573	        ]
+L00005574	      },
+L00005575	      "accessibility_contract": {
+L00005576	        "role_or_semantics": "catalog.chat_web_crawl exposes a stable role/name/description matching cmd.chat.web.crawl.",
+L00005577	        "keyboard_access": "catalog.chat_web_crawl is reachable and activatable by keyboard where the control is visible.",
+L00005578	        "focus_management": "catalog.chat_web_crawl preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005579	        "disabled_announcement": "catalog.chat_web_crawl surfaces state.commands.chat_web_crawl.disabled_reason to assistive technology when unavailable."
+L00005580	      },
+L00005581	      "test_evidence": [
+L00005582	        {
+L00005583	          "test_id": "wiring.catalog.chat_web_crawl.dispatcher",
+L00005584	          "evidence_kind": "dispatcher_fixture",
+L00005585	          "requirement": "Dispatching cmd.chat.web.crawl reaches handlers::chat::web_crawl with typed args/result contract."
+L00005586	        },
+L00005587	        {
+L00005588	          "test_id": "wiring.catalog.chat_web_crawl.state_projection",
+L00005589	          "evidence_kind": "state_projection",
+L00005590	          "requirement": "Availability reads state.commands.chat_web_crawl.availability and disabled copy reads state.commands.chat_web_crawl.disabled_reason."
+L00005591	        },
+L00005592	        {
+L00005593	          "test_id": "wiring.catalog.chat_web_crawl.effect",
+L00005594	          "evidence_kind": "receipt_or_event_assertion",
+L00005595	          "requirement": "cmd.chat.web.crawl has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005596	        },
+L00005597	        {
+L00005598	          "test_id": "wiring.catalog.chat_web_crawl.accessibility",
+L00005599	          "evidence_kind": "accessibility_regression",
+L00005600	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005601	        }
+L00005602	      ],
+L00005603	      "event_test_requirements": [
+L00005604	        "Assert cmd.chat.web.crawl records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005605	      ]
+L00005606	    },
+L00005607	    "catalog.chat_web_extract": {
+L00005608	      "ui_element_id": "catalog.chat_web_extract",
+L00005609	      "ui_location": "Assistant Chat surface",
+L00005610	      "ui_command_id": "cmd.chat.web.extract",
+L00005611	      "handler_location": "handlers::chat::web_extract",
+L00005612	      "expected_event_types": [],
+L00005613	      "acceptance_checks": [
+L00005614	        "cmd.chat.web.extract must be registered in the UICommand dispatcher with typed args and result contract",
+L00005615	        "cmd.chat.web.extract must expose projected state selector and disabled reason before dispatch",
+L00005616	        "cmd.chat.web.extract dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005617	        "cmd.chat.web.extract must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005618	        "cmd.chat.web.extract must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00005619	      ],
+L00005620	      "evidence_required": "Production wiring contract for cmd.chat.web.extract; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005621	      "state_selector": "state.commands.chat_web_extract.availability",
+L00005622	      "disabled_reason_projection": "state.commands.chat_web_extract.disabled_reason",
+L00005623	      "effect_contract": {
+L00005624	        "effect_kind": "receipt",
+L00005625	        "description": "cmd.chat.web.extract has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00005626	        "receipt_or_event_refs": [
+L00005627	          "cmd.chat.web.extract.dispatch_receipt"
+L00005628	        ]
+L00005629	      },
+L00005630	      "accessibility_contract": {
+L00005631	        "role_or_semantics": "catalog.chat_web_extract exposes a stable role/name/description matching cmd.chat.web.extract.",
+L00005632	        "keyboard_access": "catalog.chat_web_extract is reachable and activatable by keyboard where the control is visible.",
+L00005633	        "focus_management": "catalog.chat_web_extract preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005634	        "disabled_announcement": "catalog.chat_web_extract surfaces state.commands.chat_web_extract.disabled_reason to assistive technology when unavailable."
+L00005635	      },
+L00005636	      "test_evidence": [
+L00005637	        {
+L00005638	          "test_id": "wiring.catalog.chat_web_extract.dispatcher",
+L00005639	          "evidence_kind": "dispatcher_fixture",
+L00005640	          "requirement": "Dispatching cmd.chat.web.extract reaches handlers::chat::web_extract with typed args/result contract."
+L00005641	        },
+L00005642	        {
+L00005643	          "test_id": "wiring.catalog.chat_web_extract.state_projection",
+L00005644	          "evidence_kind": "state_projection",
+L00005645	          "requirement": "Availability reads state.commands.chat_web_extract.availability and disabled copy reads state.commands.chat_web_extract.disabled_reason."
+L00005646	        },
+L00005647	        {
+L00005648	          "test_id": "wiring.catalog.chat_web_extract.effect",
+L00005649	          "evidence_kind": "receipt_or_event_assertion",
+L00005650	          "requirement": "cmd.chat.web.extract has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005651	        },
+L00005652	        {
+L00005653	          "test_id": "wiring.catalog.chat_web_extract.accessibility",
+L00005654	          "evidence_kind": "accessibility_regression",
+L00005655	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005656	        }
+L00005657	      ],
+L00005658	      "event_test_requirements": [
+L00005659	        "Assert cmd.chat.web.extract records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005660	      ]
+L00005661	    },
+L00005662	    "catalog.chat_web_fetch": {
+L00005663	      "ui_element_id": "catalog.chat_web_fetch",
+L00005664	      "ui_location": "Assistant Chat surface",
+L00005665	      "ui_command_id": "cmd.chat.web.fetch",
+L00005666	      "handler_location": "handlers::chat::web_fetch",
+L00005667	      "expected_event_types": [],
+L00005668	      "acceptance_checks": [
+L00005669	        "cmd.chat.web.fetch must be registered in the UICommand dispatcher with typed args and result contract",
+L00005670	        "cmd.chat.web.fetch must expose projected state selector and disabled reason before dispatch",
+L00005671	        "cmd.chat.web.fetch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005672	        "cmd.chat.web.fetch must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005673	        "cmd.chat.web.fetch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00005674	      ],
+L00005675	      "evidence_required": "Production wiring contract for cmd.chat.web.fetch; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00005676	      "state_selector": "state.commands.chat_web_fetch.availability",
+L00005677	      "disabled_reason_projection": "state.commands.chat_web_fetch.disabled_reason",
+L00005678	      "effect_contract": {
+L00005679	        "effect_kind": "receipt",
+L00005680	        "description": "cmd.chat.web.fetch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00005681	        "receipt_or_event_refs": [
+L00005682	          "cmd.chat.web.fetch.dispatch_receipt"
+L00005683	        ]
+L00005684	      },
+L00005685	      "accessibility_contract": {
+L00005686	        "role_or_semantics": "catalog.chat_web_fetch exposes a stable role/name/description matching cmd.chat.web.fetch.",
+L00005687	        "keyboard_access": "catalog.chat_web_fetch is reachable and activatable by keyboard where the control is visible.",
+L00005688	        "focus_management": "catalog.chat_web_fetch preserves visible focus and returns focus deterministically after dispatch or error.",
+L00005689	        "disabled_announcement": "catalog.chat_web_fetch surfaces state.commands.chat_web_fetch.disabled_reason to assistive technology when unavailable."
+L00005690	      },
+L00005691	      "test_evidence": [
+L00005692	        {
+L00005693	          "test_id": "wiring.catalog.chat_web_fetch.dispatcher",
+L00005694	          "evidence_kind": "dispatcher_fixture",
+L00005695	          "requirement": "Dispatching cmd.chat.web.fetch reaches handlers::chat::web_fetch with typed args/result contract."
+L00005696	        },
+L00005697	        {
+L00005698	          "test_id": "wiring.catalog.chat_web_fetch.state_projection",
+L00005699	          "evidence_kind": "state_projection",
+L00005700	          "requirement": "Availability reads state.commands.chat_web_fetch.availability and disabled copy reads state.commands.chat_web_fetch.disabled_reason."
+L00005701	        },
+L00005702	        {
+L00005703	          "test_id": "wiring.catalog.chat_web_fetch.effect",
+L00005704	          "evidence_kind": "receipt_or_event_assertion",
+L00005705	          "requirement": "cmd.chat.web.fetch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00005706	        },
+L00005707	        {
+L00005708	          "test_id": "wiring.catalog.chat_web_fetch.accessibility",
+L00005709	          "evidence_kind": "accessibility_regression",
+L00005710	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00005711	        }
+L00005712	      ],
+L00005713	      "event_test_requirements": [
+L00005714	        "Assert cmd.chat.web.fetch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00005715	      ]
+L00005716	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=5717-5728 >>>
+L00005717	    "catalog.chat_web_help": {
+L00005718	      "ui_element_id": "catalog.chat_web_help",
+L00005719	      "ui_location": "Assistant Chat surface",
+L00005720	      "ui_command_id": "cmd.chat.web.help",
+L00005721	      "handler_location": "handlers::chat::web_help",
+L00005722	      "expected_event_types": [],
+L00005723	      "acceptance_checks": [
+L00005724	        "cmd.chat.web.help must be registered in the UICommand dispatcher with typed args and result contract",
+L00005725	        "cmd.chat.web.help must expose projected state selector and disabled reason before dispatch",
+L00005726	        "cmd.chat.web.help dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00005727	        "cmd.chat.web.help must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00005728	        "cmd.chat.web.help must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

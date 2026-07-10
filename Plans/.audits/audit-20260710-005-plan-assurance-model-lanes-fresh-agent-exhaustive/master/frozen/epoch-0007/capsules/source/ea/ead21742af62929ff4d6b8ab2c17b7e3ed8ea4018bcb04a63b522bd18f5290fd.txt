@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=351-362 >>>
+L00000351	- Slash-form or dual-format `_` / `/` naming canon is retired outside this owner contract.
+L00000352	compatibility_only_notes: []
+L00000353	stale_retired_dispositions:
+L00000354	- Slash-form or dual-format naming residue is retired outside MCP_Integration.
+L00000355	owner_boundary_notes:
+L00000356	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000357	owner_hints:
+L00000358	- Plans/MCP_Integration.md
+L00000359	preserved_contractrefs: []
+L00000360	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000361	```
+L00000362	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=363-728 >>>
+L00000363	### MI-004 - Friendly Label Join Back Boundary
+L00000364	
+L00000365	```yaml
+L00000366	plan_unit_id: MI-004
+L00000367	unit_type: requirement
+L00000368	status: accepted
+L00000369	owner_doc: Plans/MCP_Integration.md
+L00000370	canonical_text: Consumer surfaces may display friendly MCP tool labels, but they must join back to the canonical {server_slug}_{tool_name} identity and must not preserve append-only packet or stale consumer wording beside the live owner sections.
+L00000371	gui_related: true
+L00000372	gui_classification_reason: The unit defines user-visible GUI, settings, readiness, account, status, or presentation behavior.
+L00000373	split_recommended: true
+L00000374	depends_on: []
+L00000375	unblocks: []
+L00000376	acceptance_criteria:
+L00000377	- The covered source span remains losslessly available for exact-text audit.
+L00000378	- This behavior is addressable through MI-004 instead of broad MI-001 source-preserving coverage.
+L00000379	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000380	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000381	validation_surfaces:
+L00000382	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000383	- python3 scripts/pm-plan-index.py validate
+L00000384	risk_class: mcp_contract_drift
+L00000385	reasoning_tier: standard
+L00000386	context_scope: mcp_integration_standardization
+L00000387	implementation_surfaces:
+L00000388	- Plans/MCP_Integration.md
+L00000389	node_compile_hint:
+L00000390	  mode: friendly_label_join_back_boundary
+L00000391	  create_worknodes: false
+L00000392	source_lineage:
+L00000393	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0002
+L00000394	preserved_exact_tokens:
+L00000395	- consumer surfaces may display friendly labels
+L00000396	- must join back to `{server_slug}_{tool_name}`
+L00000397	- Regeneration must repair or replace those sections in place
+L00000398	- must not keep an append-only file-creation packet
+L00000399	- Credential lifecycle still surfaces
+L00000400	negative_constraints:
+L00000401	- Regeneration must not keep an append-only file-creation packet beside the live owner sections.
+L00000402	compatibility_only_notes: []
+L00000403	stale_retired_dispositions:
+L00000404	- Append-only packet and stale consumer wording are retired.
+L00000405	owner_boundary_notes:
+L00000406	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000407	owner_hints:
+L00000408	- Plans/MCP_Integration.md
+L00000409	preserved_contractrefs: []
+L00000410	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000411	```
+L00000412	
+L00000413	### MI-005 - Requested Effective Availability Enums
+L00000414	
+L00000415	```yaml
+L00000416	plan_unit_id: MI-005
+L00000417	unit_type: requirement
+L00000418	status: accepted
+L00000419	owner_doc: Plans/MCP_Integration.md
+L00000420	canonical_text: Requested and effective MCP availability remain distinct with requested states authenticated, expired, and not_authenticated and effective states connected, disabled, needs_auth, needs_client_registration, and failed.
+L00000421	gui_related: false
+L00000422	gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
+L00000423	split_recommended: true
+L00000424	depends_on: []
+L00000425	unblocks: []
+L00000426	acceptance_criteria:
+L00000427	- The covered source span remains losslessly available for exact-text audit.
+L00000428	- This behavior is addressable through MI-005 instead of broad MI-001 source-preserving coverage.
+L00000429	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000430	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000431	validation_surfaces:
+L00000432	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000433	- python3 scripts/pm-plan-index.py validate
+L00000434	risk_class: mcp_contract_drift
+L00000435	reasoning_tier: standard
+L00000436	context_scope: mcp_integration_standardization
+L00000437	implementation_surfaces:
+L00000438	- Plans/MCP_Integration.md
+L00000439	node_compile_hint:
+L00000440	  mode: requested_effective_availability_enums
+L00000441	  create_worknodes: false
+L00000442	source_lineage:
+L00000443	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0003
+L00000444	preserved_exact_tokens:
+L00000445	- requested and effective MCP availability
+L00000446	- authenticated | expired | not_authenticated
+L00000447	- connected | disabled | needs_auth | needs_client_registration | failed
+L00000448	- auth-state tokens
+L00000449	- effective-state tokens
+L00000450	- enabled flag
+L00000451	- auth state
+L00000452	- server health
+L00000453	- project context
+L00000454	- policy/permission state
+L00000455	negative_constraints: []
+L00000456	compatibility_only_notes: []
+L00000457	stale_retired_dispositions: []
+L00000458	owner_boundary_notes:
+L00000459	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000460	owner_hints:
+L00000461	- Plans/MCP_Integration.md
+L00000462	preserved_contractrefs: []
+L00000463	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000464	```
+L00000465	
+L00000466	### MI-006 - Effective State Disclosure Boundary
+L00000467	
+L00000468	```yaml
+L00000469	plan_unit_id: MI-006
+L00000470	unit_type: requirement
+L00000471	status: accepted
+L00000472	owner_doc: Plans/MCP_Integration.md
+L00000473	canonical_text: The traceability label /effective-state maps to the requested-versus-effective owner section across runtime and GUI surfaces, and consumer-style paraphrases must not replace stored enum values.
+L00000474	gui_related: true
+L00000475	gui_classification_reason: The unit defines user-visible GUI, settings, readiness, account, status, or presentation behavior.
+L00000476	split_recommended: true
+L00000477	depends_on: []
+L00000478	unblocks: []
+L00000479	acceptance_criteria:
+L00000480	- The covered source span remains losslessly available for exact-text audit.
+L00000481	- This behavior is addressable through MI-006 instead of broad MI-001 source-preserving coverage.
+L00000482	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000483	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000484	validation_surfaces:
+L00000485	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000486	- python3 scripts/pm-plan-index.py validate
+L00000487	risk_class: mcp_contract_drift
+L00000488	reasoning_tier: standard
+L00000489	context_scope: mcp_integration_standardization
+L00000490	implementation_surfaces:
+L00000491	- Plans/MCP_Integration.md
+L00000492	node_compile_hint:
+L00000493	  mode: effective_state_disclosure_boundary
+L00000494	  create_worknodes: false
+L00000495	source_lineage:
+L00000496	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0003
+L00000497	preserved_exact_tokens:
+L00000498	- requested vs effective MCP availability
+L00000499	- runtime and GUI surfaces
+L00000500	- Traceability label `/effective-state`
+L00000501	- consumer-style paraphrases must not replace the stored enum values
+L00000502	- requested availability
+L00000503	- effective availability
+L00000504	negative_constraints:
+L00000505	- Consumer-style paraphrases must not replace the stored enum values.
+L00000506	compatibility_only_notes: []
+L00000507	stale_retired_dispositions: []
+L00000508	owner_boundary_notes:
+L00000509	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000510	owner_hints:
+L00000511	- Plans/MCP_Integration.md
+L00000512	preserved_contractrefs: []
+L00000513	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000514	```
+L00000515	
+L00000516	### MI-007 - Credential Binding And Invalidation
+L00000517	
+L00000518	```yaml
+L00000519	plan_unit_id: MI-007
+L00000520	unit_type: requirement
+L00000521	status: accepted
+L00000522	owner_doc: Plans/MCP_Integration.md
+L00000523	canonical_text: MCP credential binding persists tokens securely, binds stored credentials to the effective remote server URL, invalidates credentials when the configured URL changes, surfaces the four auth lifecycle outcomes, and maps /invalidation plus obl-065 to this owner obligation.
+L00000524	gui_related: false
+L00000525	gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
+L00000526	split_recommended: false
+L00000527	depends_on: []
+L00000528	unblocks: []
+L00000529	acceptance_criteria:
+L00000530	- The covered source span remains losslessly available for exact-text audit.
+L00000531	- This behavior is addressable through MI-007 instead of broad MI-001 source-preserving coverage.
+L00000532	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000533	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000534	validation_surfaces:
+L00000535	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000536	- python3 scripts/pm-plan-index.py validate
+L00000537	risk_class: mcp_contract_drift
+L00000538	reasoning_tier: standard
+L00000539	context_scope: mcp_integration_standardization
+L00000540	implementation_surfaces:
+L00000541	- Plans/MCP_Integration.md
+L00000542	node_compile_hint:
+L00000543	  mode: credential_binding_and_invalidation
+L00000544	  create_worknodes: false
+L00000545	source_lineage:
+L00000546	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0004
+L00000547	preserved_exact_tokens:
+L00000548	- credential binding
+L00000549	- invalidation
+L00000550	- persist tokens securely
+L00000551	- effective remote server URL
+L00000552	- configured URL changes
+L00000553	- previously stored credentials become invalid
+L00000554	- LoggedIn | LoggedOut | AuthExpired | AuthFailed
+L00000555	- /invalidation
+L00000556	- obl-065
+L00000557	negative_constraints:
+L00000558	- Changing the configured URL invalidates previously stored credentials for that server binding.
+L00000559	compatibility_only_notes: []
+L00000560	stale_retired_dispositions: []
+L00000561	owner_boundary_notes:
+L00000562	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000563	owner_hints:
+L00000564	- Plans/MCP_Integration.md
+L00000565	preserved_contractrefs: []
+L00000566	```
+L00000567	
+L00000568	### MI-008 - MCP Owner Consumer Boundaries
+L00000569	
+L00000570	```yaml
+L00000571	plan_unit_id: MI-008
+L00000572	unit_type: requirement
+L00000573	status: accepted
+L00000574	owner_doc: Plans/MCP_Integration.md
+L00000575	canonical_text: MCP_Integration defines how Tools, storage-plan, Permissions_System, newtools, interview integration, Prompt_Pipeline, route/event consumers, and provider/account surfaces consume MCP naming, availability, auth, effective-resolution, subject, and trust vocabulary without redefining it.
+L00000576	gui_related: false
+L00000577	gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
+L00000578	split_recommended: true
+L00000579	depends_on: []
+L00000580	unblocks: []
+L00000581	acceptance_criteria:
+L00000582	- The covered source span remains losslessly available for exact-text audit.
+L00000583	- This behavior is addressable through MI-008 instead of broad MI-001 source-preserving coverage.
+L00000584	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000585	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000586	validation_surfaces:
+L00000587	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000588	- python3 scripts/pm-plan-index.py validate
+L00000589	risk_class: mcp_contract_drift
+L00000590	reasoning_tier: standard
+L00000591	context_scope: mcp_integration_standardization
+L00000592	implementation_surfaces:
+L00000593	- Plans/MCP_Integration.md
+L00000594	node_compile_hint:
+L00000595	  mode: mcp_owner_consumer_boundaries
+L00000596	  create_worknodes: false
+L00000597	source_lineage:
+L00000598	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0005
+L00000599	preserved_exact_tokens:
+L00000600	- Plans/Tools.md
+L00000601	- Plans/storage-plan.md
+L00000602	- Plans/Permissions_System.md
+L00000603	- Plans/newtools.md
+L00000604	- GUI summary surfaces
+L00000605	- Plans/interview-subagent-integration.md
+L00000606	- Prompt_Pipeline.md
+L00000607	- TierContext
+L00000608	- canonical `/subject` vocabulary
+L00000609	- blocked-action aliases
+L00000610	negative_constraints:
+L00000611	- MCP integration must not duplicate a thinner subset of Prompt_Pipeline effective-resolution fields directly on TierContext.
+L00000612	compatibility_only_notes: []
+L00000613	stale_retired_dispositions: []
+L00000614	owner_boundary_notes:
+L00000615	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000616	owner_hints:
+L00000617	- Plans/MCP_Integration.md
+L00000618	preserved_contractrefs:
+L00000619	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Models_System.md'
+L00000620	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000621	```
+L00000622	
+L00000623	### MI-009 - Read Only Debug APM Bridge Trust
+L00000624	
+L00000625	```yaml
+L00000626	plan_unit_id: MI-009
+L00000627	unit_type: requirement
+L00000628	status: accepted
+L00000629	owner_doc: Plans/MCP_Integration.md
+L00000630	canonical_text: Observability-first MCP bridges for Debug Mode expose read-only APM logs and metrics connectors for production-like failures while keeping that trust model distinct from local probes and without granting mutation authority.
+L00000631	gui_related: false
+L00000632	gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
+L00000633	split_recommended: true
+L00000634	depends_on: []
+L00000635	unblocks: []
+L00000636	acceptance_criteria:
+L00000637	- The covered source span remains losslessly available for exact-text audit.
+L00000638	- This behavior is addressable through MI-009 instead of broad MI-001 source-preserving coverage.
+L00000639	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000640	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000641	validation_surfaces:
+L00000642	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000643	- python3 scripts/pm-plan-index.py validate
+L00000644	risk_class: mcp_contract_drift
+L00000645	reasoning_tier: standard
+L00000646	context_scope: mcp_integration_standardization
+L00000647	implementation_surfaces:
+L00000648	- Plans/MCP_Integration.md
+L00000649	node_compile_hint:
+L00000650	  mode: read_only_debug_apm_bridge_trust
+L00000651	  create_worknodes: false
+L00000652	source_lineage:
+L00000653	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0005
+L00000654	preserved_exact_tokens:
+L00000655	- Observability-first MCP bridges
+L00000656	- Debug Mode
+L00000657	- read-only APM `/logs/metrics` connectors
+L00000658	- production-like failures
+L00000659	- data-plane trust model
+L00000660	- distinct from local probes
+L00000661	- does not grant mutation authority
+L00000662	negative_constraints:
+L00000663	- Read-only APM/logs/metrics MCP bridges do not grant mutation authority.
+L00000664	compatibility_only_notes: []
+L00000665	stale_retired_dispositions: []
+L00000666	owner_boundary_notes:
+L00000667	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000668	owner_hints:
+L00000669	- Plans/MCP_Integration.md
+L00000670	preserved_contractrefs:
+L00000671	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Models_System.md'
+L00000672	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000673	```
+L00000674	
+L00000675	### MI-010 - Thread Level Provider Account Surfacing
+L00000676	
+L00000677	```yaml
+L00000678	plan_unit_id: MI-010
+L00000679	unit_type: requirement
+L00000680	status: accepted
+L00000681	owner_doc: Plans/MCP_Integration.md
+L00000682	canonical_text: Thread-level MCP surfacing exposes switch, concern trust, and trust state paths in provider/account views so account visibility, persona naming, stage-to-role mapping, and effective provider context remain visible outside Orchestrator pages.
+L00000683	gui_related: true
+L00000684	gui_classification_reason: The unit defines user-visible GUI, settings, readiness, account, status, or presentation behavior.
+L00000685	split_recommended: true
+L00000686	depends_on: []
+L00000687	unblocks: []
+L00000688	acceptance_criteria:
+L00000689	- The covered source span remains losslessly available for exact-text audit.
+L00000690	- This behavior is addressable through MI-010 instead of broad MI-001 source-preserving coverage.
+L00000691	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000692	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000693	validation_surfaces:
+L00000694	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000695	- python3 scripts/pm-plan-index.py validate
+L00000696	risk_class: mcp_contract_drift
+L00000697	reasoning_tier: standard
+L00000698	context_scope: mcp_integration_standardization
+L00000699	implementation_surfaces:
+L00000700	- Plans/MCP_Integration.md
+L00000701	node_compile_hint:
+L00000702	  mode: thread_level_provider_account_surfacing
+L00000703	  create_worknodes: false
+L00000704	source_lineage:
+L00000705	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0005
+L00000706	preserved_exact_tokens:
+L00000707	- thread-level MCP surfacing
+L00000708	- switch
+L00000709	- /concern/trust
+L00000710	- trust state paths
+L00000711	- provider/account views
+L00000712	- MCP account visibility
+L00000713	- canonical persona naming
+L00000714	- stage-to-role mapping
+L00000715	- current role vocabulary
+L00000716	- provider context is effective
+L00000717	negative_constraints: []
+L00000718	compatibility_only_notes: []
+L00000719	stale_retired_dispositions: []
+L00000720	owner_boundary_notes:
+L00000721	- Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
+L00000722	owner_hints:
+L00000723	- Plans/MCP_Integration.md
+L00000724	preserved_contractrefs:
+L00000725	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Models_System.md'
+L00000726	split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00000727	```
+L00000728	
+
+<<< CONTEXT_AFTER canonical_document_lines=729-740 >>>
+L00000729	### MI-011 - MCP Config Fields
+L00000730	
+L00000731	```yaml
+L00000732	plan_unit_id: MI-011
+L00000733	unit_type: requirement
+L00000734	status: accepted
+L00000735	owner_doc: Plans/MCP_Integration.md
+L00000736	canonical_text: Canonical MCP server config includes server_id, enabled, timeout_ms, local launch fields, runtime handoff working_directory, remote launch fields, auth binding fields, per-tool enablement independent of connection state, and the /disable trace label for enablement handling.
+L00000737	gui_related: false
+L00000738	gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
+L00000739	split_recommended: true
+L00000740	depends_on: []

@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=23231-23242 >>>
+L00023231	          "requirement": "cmd.sound.asset.export has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00023232	        },
+L00023233	        {
+L00023234	          "test_id": "wiring.catalog.sound_asset_export.accessibility",
+L00023235	          "evidence_kind": "accessibility_regression",
+L00023236	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023237	        }
+L00023238	      ],
+L00023239	      "event_test_requirements": [
+L00023240	        "Assert cmd.sound.asset.export records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00023241	      ]
+L00023242	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=23243-23627 >>>
+L00023243	    "catalog.sound_asset_restore": {
+L00023244	      "ui_element_id": "catalog.sound_asset_restore",
+L00023245	      "ui_location": "Sound surface > Asset > Restore",
+L00023246	      "ui_command_id": "cmd.sound.asset.restore",
+L00023247	      "handler_location": "handlers::sound::asset_restore",
+L00023248	      "expected_event_types": [],
+L00023249	      "acceptance_checks": [
+L00023250	        "cmd.sound.asset.restore must be registered in the UICommand dispatcher with typed args and result contract",
+L00023251	        "cmd.sound.asset.restore must expose projected state selector and disabled reason before dispatch",
+L00023252	        "cmd.sound.asset.restore dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023253	        "cmd.sound.asset.restore must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023254	        "cmd.sound.asset.restore must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023255	      ],
+L00023256	      "evidence_required": "Production wiring contract for cmd.sound.asset.restore; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023257	      "state_selector": "state.commands.sound_asset_restore.availability",
+L00023258	      "disabled_reason_projection": "state.commands.sound_asset_restore.disabled_reason",
+L00023259	      "effect_contract": {
+L00023260	        "effect_kind": "receipt",
+L00023261	        "description": "cmd.sound.asset.restore has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00023262	        "receipt_or_event_refs": [
+L00023263	          "cmd.sound.asset.restore.dispatch_receipt"
+L00023264	        ]
+L00023265	      },
+L00023266	      "accessibility_contract": {
+L00023267	        "role_or_semantics": "catalog.sound_asset_restore exposes a stable role/name/description matching cmd.sound.asset.restore.",
+L00023268	        "keyboard_access": "catalog.sound_asset_restore is reachable and activatable by keyboard where the control is visible.",
+L00023269	        "focus_management": "catalog.sound_asset_restore preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023270	        "disabled_announcement": "catalog.sound_asset_restore surfaces state.commands.sound_asset_restore.disabled_reason to assistive technology when unavailable."
+L00023271	      },
+L00023272	      "test_evidence": [
+L00023273	        {
+L00023274	          "test_id": "wiring.catalog.sound_asset_restore.dispatcher",
+L00023275	          "evidence_kind": "dispatcher_fixture",
+L00023276	          "requirement": "Dispatching cmd.sound.asset.restore reaches handlers::sound::asset_restore with typed args/result contract."
+L00023277	        },
+L00023278	        {
+L00023279	          "test_id": "wiring.catalog.sound_asset_restore.state_projection",
+L00023280	          "evidence_kind": "state_projection",
+L00023281	          "requirement": "Availability reads state.commands.sound_asset_restore.availability and disabled copy reads state.commands.sound_asset_restore.disabled_reason."
+L00023282	        },
+L00023283	        {
+L00023284	          "test_id": "wiring.catalog.sound_asset_restore.effect",
+L00023285	          "evidence_kind": "receipt_or_event_assertion",
+L00023286	          "requirement": "cmd.sound.asset.restore has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00023287	        },
+L00023288	        {
+L00023289	          "test_id": "wiring.catalog.sound_asset_restore.accessibility",
+L00023290	          "evidence_kind": "accessibility_regression",
+L00023291	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023292	        }
+L00023293	      ],
+L00023294	      "event_test_requirements": [
+L00023295	        "Assert cmd.sound.asset.restore records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00023296	      ]
+L00023297	    },
+L00023298	    "catalog.sound_mapping_set": {
+L00023299	      "ui_element_id": "catalog.sound_mapping_set",
+L00023300	      "ui_location": "Sound surface > Mapping > Set",
+L00023301	      "ui_command_id": "cmd.sound.mapping.set",
+L00023302	      "handler_location": "handlers::sound::mapping_set",
+L00023303	      "expected_event_types": [],
+L00023304	      "acceptance_checks": [
+L00023305	        "cmd.sound.mapping.set must be registered in the UICommand dispatcher with typed args and result contract",
+L00023306	        "cmd.sound.mapping.set must expose projected state selector and disabled reason before dispatch",
+L00023307	        "cmd.sound.mapping.set dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023308	        "cmd.sound.mapping.set must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023309	        "cmd.sound.mapping.set must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023310	      ],
+L00023311	      "evidence_required": "Production wiring contract for cmd.sound.mapping.set; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023312	      "state_selector": "state.commands.sound_mapping_set.availability",
+L00023313	      "disabled_reason_projection": "state.commands.sound_mapping_set.disabled_reason",
+L00023314	      "effect_contract": {
+L00023315	        "effect_kind": "receipt",
+L00023316	        "description": "cmd.sound.mapping.set has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00023317	        "receipt_or_event_refs": [
+L00023318	          "cmd.sound.mapping.set.dispatch_receipt"
+L00023319	        ]
+L00023320	      },
+L00023321	      "accessibility_contract": {
+L00023322	        "role_or_semantics": "catalog.sound_mapping_set exposes a stable role/name/description matching cmd.sound.mapping.set.",
+L00023323	        "keyboard_access": "catalog.sound_mapping_set is reachable and activatable by keyboard where the control is visible.",
+L00023324	        "focus_management": "catalog.sound_mapping_set preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023325	        "disabled_announcement": "catalog.sound_mapping_set surfaces state.commands.sound_mapping_set.disabled_reason to assistive technology when unavailable."
+L00023326	      },
+L00023327	      "test_evidence": [
+L00023328	        {
+L00023329	          "test_id": "wiring.catalog.sound_mapping_set.dispatcher",
+L00023330	          "evidence_kind": "dispatcher_fixture",
+L00023331	          "requirement": "Dispatching cmd.sound.mapping.set reaches handlers::sound::mapping_set with typed args/result contract."
+L00023332	        },
+L00023333	        {
+L00023334	          "test_id": "wiring.catalog.sound_mapping_set.state_projection",
+L00023335	          "evidence_kind": "state_projection",
+L00023336	          "requirement": "Availability reads state.commands.sound_mapping_set.availability and disabled copy reads state.commands.sound_mapping_set.disabled_reason."
+L00023337	        },
+L00023338	        {
+L00023339	          "test_id": "wiring.catalog.sound_mapping_set.effect",
+L00023340	          "evidence_kind": "receipt_or_event_assertion",
+L00023341	          "requirement": "cmd.sound.mapping.set has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00023342	        },
+L00023343	        {
+L00023344	          "test_id": "wiring.catalog.sound_mapping_set.accessibility",
+L00023345	          "evidence_kind": "accessibility_regression",
+L00023346	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023347	        }
+L00023348	      ],
+L00023349	      "event_test_requirements": [
+L00023350	        "Assert cmd.sound.mapping.set records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00023351	      ]
+L00023352	    },
+L00023353	    "catalog.sound_pack_import": {
+L00023354	      "ui_element_id": "catalog.sound_pack_import",
+L00023355	      "ui_location": "Sound surface > Pack > Import",
+L00023356	      "ui_command_id": "cmd.sound.pack.import",
+L00023357	      "handler_location": "handlers::sound::pack_import",
+L00023358	      "expected_event_types": [],
+L00023359	      "acceptance_checks": [
+L00023360	        "cmd.sound.pack.import must be registered in the UICommand dispatcher with typed args and result contract",
+L00023361	        "cmd.sound.pack.import must expose projected state selector and disabled reason before dispatch",
+L00023362	        "cmd.sound.pack.import dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023363	        "cmd.sound.pack.import must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023364	        "cmd.sound.pack.import must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023365	      ],
+L00023366	      "evidence_required": "Production wiring contract for cmd.sound.pack.import; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023367	      "state_selector": "state.commands.sound_pack_import.availability",
+L00023368	      "disabled_reason_projection": "state.commands.sound_pack_import.disabled_reason",
+L00023369	      "effect_contract": {
+L00023370	        "effect_kind": "receipt",
+L00023371	        "description": "cmd.sound.pack.import has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00023372	        "receipt_or_event_refs": [
+L00023373	          "cmd.sound.pack.import.dispatch_receipt"
+L00023374	        ]
+L00023375	      },
+L00023376	      "accessibility_contract": {
+L00023377	        "role_or_semantics": "catalog.sound_pack_import exposes a stable role/name/description matching cmd.sound.pack.import.",
+L00023378	        "keyboard_access": "catalog.sound_pack_import is reachable and activatable by keyboard where the control is visible.",
+L00023379	        "focus_management": "catalog.sound_pack_import preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023380	        "disabled_announcement": "catalog.sound_pack_import surfaces state.commands.sound_pack_import.disabled_reason to assistive technology when unavailable."
+L00023381	      },
+L00023382	      "test_evidence": [
+L00023383	        {
+L00023384	          "test_id": "wiring.catalog.sound_pack_import.dispatcher",
+L00023385	          "evidence_kind": "dispatcher_fixture",
+L00023386	          "requirement": "Dispatching cmd.sound.pack.import reaches handlers::sound::pack_import with typed args/result contract."
+L00023387	        },
+L00023388	        {
+L00023389	          "test_id": "wiring.catalog.sound_pack_import.state_projection",
+L00023390	          "evidence_kind": "state_projection",
+L00023391	          "requirement": "Availability reads state.commands.sound_pack_import.availability and disabled copy reads state.commands.sound_pack_import.disabled_reason."
+L00023392	        },
+L00023393	        {
+L00023394	          "test_id": "wiring.catalog.sound_pack_import.effect",
+L00023395	          "evidence_kind": "receipt_or_event_assertion",
+L00023396	          "requirement": "cmd.sound.pack.import has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00023397	        },
+L00023398	        {
+L00023399	          "test_id": "wiring.catalog.sound_pack_import.accessibility",
+L00023400	          "evidence_kind": "accessibility_regression",
+L00023401	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023402	        }
+L00023403	      ],
+L00023404	      "event_test_requirements": [
+L00023405	        "Assert cmd.sound.pack.import records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00023406	      ]
+L00023407	    },
+L00023408	    "catalog.sound_preview": {
+L00023409	      "ui_element_id": "catalog.sound_preview",
+L00023410	      "ui_location": "Sound surface > Preview",
+L00023411	      "ui_command_id": "cmd.sound.preview",
+L00023412	      "handler_location": "handlers::sound::preview",
+L00023413	      "expected_event_types": [],
+L00023414	      "acceptance_checks": [
+L00023415	        "cmd.sound.preview must be registered in the UICommand dispatcher with typed args and result contract",
+L00023416	        "cmd.sound.preview must expose projected state selector and disabled reason before dispatch",
+L00023417	        "cmd.sound.preview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023418	        "cmd.sound.preview must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023419	        "cmd.sound.preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023420	      ],
+L00023421	      "evidence_required": "Production wiring contract for cmd.sound.preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023422	      "state_selector": "state.commands.sound_preview.availability",
+L00023423	      "disabled_reason_projection": "state.commands.sound_preview.disabled_reason",
+L00023424	      "effect_contract": {
+L00023425	        "effect_kind": "receipt",
+L00023426	        "description": "cmd.sound.preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00023427	        "receipt_or_event_refs": [
+L00023428	          "cmd.sound.preview.dispatch_receipt"
+L00023429	        ]
+L00023430	      },
+L00023431	      "accessibility_contract": {
+L00023432	        "role_or_semantics": "catalog.sound_preview exposes a stable role/name/description matching cmd.sound.preview.",
+L00023433	        "keyboard_access": "catalog.sound_preview is reachable and activatable by keyboard where the control is visible.",
+L00023434	        "focus_management": "catalog.sound_preview preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023435	        "disabled_announcement": "catalog.sound_preview surfaces state.commands.sound_preview.disabled_reason to assistive technology when unavailable."
+L00023436	      },
+L00023437	      "test_evidence": [
+L00023438	        {
+L00023439	          "test_id": "wiring.catalog.sound_preview.dispatcher",
+L00023440	          "evidence_kind": "dispatcher_fixture",
+L00023441	          "requirement": "Dispatching cmd.sound.preview reaches handlers::sound::preview with typed args/result contract."
+L00023442	        },
+L00023443	        {
+L00023444	          "test_id": "wiring.catalog.sound_preview.state_projection",
+L00023445	          "evidence_kind": "state_projection",
+L00023446	          "requirement": "Availability reads state.commands.sound_preview.availability and disabled copy reads state.commands.sound_preview.disabled_reason."
+L00023447	        },
+L00023448	        {
+L00023449	          "test_id": "wiring.catalog.sound_preview.effect",
+L00023450	          "evidence_kind": "receipt_or_event_assertion",
+L00023451	          "requirement": "cmd.sound.preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00023452	        },
+L00023453	        {
+L00023454	          "test_id": "wiring.catalog.sound_preview.accessibility",
+L00023455	          "evidence_kind": "accessibility_regression",
+L00023456	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023457	        }
+L00023458	      ],
+L00023459	      "event_test_requirements": [
+L00023460	        "Assert cmd.sound.preview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00023461	      ]
+L00023462	    },
+L00023463	    "catalog.sound_upload": {
+L00023464	      "ui_element_id": "catalog.sound_upload",
+L00023465	      "ui_location": "Sound surface > Upload",
+L00023466	      "ui_command_id": "cmd.sound.upload",
+L00023467	      "handler_location": "handlers::sound::upload",
+L00023468	      "expected_event_types": [],
+L00023469	      "acceptance_checks": [
+L00023470	        "cmd.sound.upload must be registered in the UICommand dispatcher with typed args and result contract",
+L00023471	        "cmd.sound.upload must expose projected state selector and disabled reason before dispatch",
+L00023472	        "cmd.sound.upload dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023473	        "cmd.sound.upload must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023474	        "cmd.sound.upload must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023475	      ],
+L00023476	      "evidence_required": "Production wiring contract for cmd.sound.upload; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023477	      "state_selector": "state.commands.sound_upload.availability",
+L00023478	      "disabled_reason_projection": "state.commands.sound_upload.disabled_reason",
+L00023479	      "effect_contract": {
+L00023480	        "effect_kind": "receipt",
+L00023481	        "description": "cmd.sound.upload has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00023482	        "receipt_or_event_refs": [
+L00023483	          "cmd.sound.upload.dispatch_receipt"
+L00023484	        ]
+L00023485	      },
+L00023486	      "accessibility_contract": {
+L00023487	        "role_or_semantics": "catalog.sound_upload exposes a stable role/name/description matching cmd.sound.upload.",
+L00023488	        "keyboard_access": "catalog.sound_upload is reachable and activatable by keyboard where the control is visible.",
+L00023489	        "focus_management": "catalog.sound_upload preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023490	        "disabled_announcement": "catalog.sound_upload surfaces state.commands.sound_upload.disabled_reason to assistive technology when unavailable."
+L00023491	      },
+L00023492	      "test_evidence": [
+L00023493	        {
+L00023494	          "test_id": "wiring.catalog.sound_upload.dispatcher",
+L00023495	          "evidence_kind": "dispatcher_fixture",
+L00023496	          "requirement": "Dispatching cmd.sound.upload reaches handlers::sound::upload with typed args/result contract."
+L00023497	        },
+L00023498	        {
+L00023499	          "test_id": "wiring.catalog.sound_upload.state_projection",
+L00023500	          "evidence_kind": "state_projection",
+L00023501	          "requirement": "Availability reads state.commands.sound_upload.availability and disabled copy reads state.commands.sound_upload.disabled_reason."
+L00023502	        },
+L00023503	        {
+L00023504	          "test_id": "wiring.catalog.sound_upload.effect",
+L00023505	          "evidence_kind": "receipt_or_event_assertion",
+L00023506	          "requirement": "cmd.sound.upload has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00023507	        },
+L00023508	        {
+L00023509	          "test_id": "wiring.catalog.sound_upload.accessibility",
+L00023510	          "evidence_kind": "accessibility_regression",
+L00023511	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023512	        }
+L00023513	      ],
+L00023514	      "event_test_requirements": [
+L00023515	        "Assert cmd.sound.upload records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00023516	      ]
+L00023517	    },
+L00023518	    "catalog.source_control_accept_commit_group": {
+L00023519	      "ui_element_id": "catalog.source_control_accept_commit_group",
+L00023520	      "ui_location": "Source Control surface",
+L00023521	      "ui_command_id": "cmd.source_control.accept_commit_group",
+L00023522	      "handler_location": "handlers::source_control::accept_commit_group",
+L00023523	      "expected_event_types": [],
+L00023524	      "acceptance_checks": [
+L00023525	        "cmd.source_control.accept_commit_group must be registered in the UICommand dispatcher with typed args and result contract",
+L00023526	        "cmd.source_control.accept_commit_group must expose projected state selector and disabled reason before dispatch",
+L00023527	        "cmd.source_control.accept_commit_group dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023528	        "cmd.source_control.accept_commit_group must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023529	        "cmd.source_control.accept_commit_group must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023530	      ],
+L00023531	      "evidence_required": "Production wiring contract for cmd.source_control.accept_commit_group; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023532	      "state_selector": "state.commands.source_control_accept_commit_group.availability",
+L00023533	      "disabled_reason_projection": "state.commands.source_control_accept_commit_group.disabled_reason",
+L00023534	      "effect_contract": {
+L00023535	        "effect_kind": "receipt",
+L00023536	        "description": "cmd.source_control.accept_commit_group records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00023537	        "receipt_or_event_refs": [
+L00023538	          "cmd.source_control.accept_commit_group.dispatch_receipt"
+L00023539	        ]
+L00023540	      },
+L00023541	      "accessibility_contract": {
+L00023542	        "role_or_semantics": "catalog.source_control_accept_commit_group exposes a stable role/name/description matching cmd.source_control.accept_commit_group.",
+L00023543	        "keyboard_access": "catalog.source_control_accept_commit_group is reachable and activatable by keyboard where the control is visible.",
+L00023544	        "focus_management": "catalog.source_control_accept_commit_group preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023545	        "disabled_announcement": "catalog.source_control_accept_commit_group surfaces state.commands.source_control_accept_commit_group.disabled_reason to assistive technology when unavailable."
+L00023546	      },
+L00023547	      "test_evidence": [
+L00023548	        {
+L00023549	          "test_id": "wiring.catalog.source_control_accept_commit_group.dispatcher",
+L00023550	          "evidence_kind": "dispatcher_fixture",
+L00023551	          "requirement": "Dispatching cmd.source_control.accept_commit_group reaches handlers::source_control::accept_commit_group with typed args/result contract."
+L00023552	        },
+L00023553	        {
+L00023554	          "test_id": "wiring.catalog.source_control_accept_commit_group.state_projection",
+L00023555	          "evidence_kind": "state_projection",
+L00023556	          "requirement": "Availability reads state.commands.source_control_accept_commit_group.availability and disabled copy reads state.commands.source_control_accept_commit_group.disabled_reason."
+L00023557	        },
+L00023558	        {
+L00023559	          "test_id": "wiring.catalog.source_control_accept_commit_group.effect",
+L00023560	          "evidence_kind": "receipt_or_event_assertion",
+L00023561	          "requirement": "cmd.source_control.accept_commit_group records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00023562	        },
+L00023563	        {
+L00023564	          "test_id": "wiring.catalog.source_control_accept_commit_group.accessibility",
+L00023565	          "evidence_kind": "accessibility_regression",
+L00023566	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023567	        }
+L00023568	      ],
+L00023569	      "event_test_requirements": [
+L00023570	        "Assert cmd.source_control.accept_commit_group records dispatch receipt cmd.source_control.accept_commit_group.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00023571	      ]
+L00023572	    },
+L00023573	    "catalog.source_control_generate_commit_message": {
+L00023574	      "ui_element_id": "catalog.source_control_generate_commit_message",
+L00023575	      "ui_location": "Source Control surface",
+L00023576	      "ui_command_id": "cmd.source_control.generate_commit_message",
+L00023577	      "handler_location": "handlers::source_control::generate_commit_message",
+L00023578	      "expected_event_types": [],
+L00023579	      "acceptance_checks": [
+L00023580	        "cmd.source_control.generate_commit_message must be registered in the UICommand dispatcher with typed args and result contract",
+L00023581	        "cmd.source_control.generate_commit_message must expose projected state selector and disabled reason before dispatch",
+L00023582	        "cmd.source_control.generate_commit_message dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023583	        "cmd.source_control.generate_commit_message must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023584	        "cmd.source_control.generate_commit_message must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00023585	      ],
+L00023586	      "evidence_required": "Production wiring contract for cmd.source_control.generate_commit_message; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00023587	      "state_selector": "state.commands.source_control_generate_commit_message.availability",
+L00023588	      "disabled_reason_projection": "state.commands.source_control_generate_commit_message.disabled_reason",
+L00023589	      "effect_contract": {
+L00023590	        "effect_kind": "receipt",
+L00023591	        "description": "cmd.source_control.generate_commit_message records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00023592	        "receipt_or_event_refs": [
+L00023593	          "cmd.source_control.generate_commit_message.dispatch_receipt"
+L00023594	        ]
+L00023595	      },
+L00023596	      "accessibility_contract": {
+L00023597	        "role_or_semantics": "catalog.source_control_generate_commit_message exposes a stable role/name/description matching cmd.source_control.generate_commit_message.",
+L00023598	        "keyboard_access": "catalog.source_control_generate_commit_message is reachable and activatable by keyboard where the control is visible.",
+L00023599	        "focus_management": "catalog.source_control_generate_commit_message preserves visible focus and returns focus deterministically after dispatch or error.",
+L00023600	        "disabled_announcement": "catalog.source_control_generate_commit_message surfaces state.commands.source_control_generate_commit_message.disabled_reason to assistive technology when unavailable."
+L00023601	      },
+L00023602	      "test_evidence": [
+L00023603	        {
+L00023604	          "test_id": "wiring.catalog.source_control_generate_commit_message.dispatcher",
+L00023605	          "evidence_kind": "dispatcher_fixture",
+L00023606	          "requirement": "Dispatching cmd.source_control.generate_commit_message reaches handlers::source_control::generate_commit_message with typed args/result contract."
+L00023607	        },
+L00023608	        {
+L00023609	          "test_id": "wiring.catalog.source_control_generate_commit_message.state_projection",
+L00023610	          "evidence_kind": "state_projection",
+L00023611	          "requirement": "Availability reads state.commands.source_control_generate_commit_message.availability and disabled copy reads state.commands.source_control_generate_commit_message.disabled_reason."
+L00023612	        },
+L00023613	        {
+L00023614	          "test_id": "wiring.catalog.source_control_generate_commit_message.effect",
+L00023615	          "evidence_kind": "receipt_or_event_assertion",
+L00023616	          "requirement": "cmd.source_control.generate_commit_message records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00023617	        },
+L00023618	        {
+L00023619	          "test_id": "wiring.catalog.source_control_generate_commit_message.accessibility",
+L00023620	          "evidence_kind": "accessibility_regression",
+L00023621	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00023622	        }
+L00023623	      ],
+L00023624	      "event_test_requirements": [
+L00023625	        "Assert cmd.source_control.generate_commit_message records dispatch receipt cmd.source_control.generate_commit_message.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00023626	      ]
+L00023627	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=23628-23639 >>>
+L00023628	    "catalog.source_control_graph_filter": {
+L00023629	      "ui_element_id": "catalog.source_control_graph_filter",
+L00023630	      "ui_location": "Source Control surface",
+L00023631	      "ui_command_id": "cmd.source_control.graph_filter",
+L00023632	      "handler_location": "handlers::source_control::graph_filter",
+L00023633	      "expected_event_types": [],
+L00023634	      "acceptance_checks": [
+L00023635	        "cmd.source_control.graph_filter must be registered in the UICommand dispatcher with typed args and result contract",
+L00023636	        "cmd.source_control.graph_filter must expose projected state selector and disabled reason before dispatch",
+L00023637	        "cmd.source_control.graph_filter dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00023638	        "cmd.source_control.graph_filter must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00023639	        "Compatibility alias only: underscore command normalizes to cmd.source_control.graph.filter and must not remain standalone source-control graph authority.",

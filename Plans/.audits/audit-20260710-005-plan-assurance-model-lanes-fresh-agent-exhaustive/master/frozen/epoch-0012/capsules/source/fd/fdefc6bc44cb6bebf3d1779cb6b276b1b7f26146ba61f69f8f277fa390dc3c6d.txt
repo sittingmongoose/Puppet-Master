@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6804-6815 >>>
+L00006804	negative_constraints:
+L00006805	- "Approval of an action name alone must not approve a changed or under-bound mutable target."
+L00006806	preserved_contractrefs: []
+L00006807	compatibility_only_notes: []
+L00006808	stale_retired_dispositions:
+L00006809	- "Stale-preflight evidence or changed target identity invalidates approval reuse and returns the action to blocked state."
+L00006810	owner_hints:
+L00006811	- "Plans/Permissions_System.md"
+L00006812	- "Plans/GitHub_API_Auth_and_Flows.md"
+L00006813	- "Plans/Containers_Registry_and_Unraid.md"
+L00006814	```
+L00006815	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6816-7206 >>>
+L00006816	### PS-103 - Admin Side Effect Guard Mappings
+L00006817	
+L00006818	```yaml
+L00006819	plan_unit_id: PS-103
+L00006820	unit_type: requirement
+L00006821	status: accepted
+L00006822	owner_doc: Plans/Permissions_System.md
+L00006823	canonical_text: "Source Control, GitHub Actions, Docker Manager, Docker Hub, and Kubernetes admin or hosted side effects use canonical permission and blocked-state guard rules when approval, capability, or auth prerequisites are missing."
+L00006824	gui_related: false
+L00006825	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00006826	split_recommended: false
+L00006827	depends_on:
+L00006828	- PS-084
+L00006829	- PS-088
+L00006830	- PS-089
+L00006831	- PS-102
+L00006832	unblocks: []
+L00006833	acceptance_criteria:
+L00006834	- "PS-103 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00006835	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00006836	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00006837	validation_surfaces:
+L00006838	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006839	- python3 scripts/pm-plan-index.py validate
+L00006840	risk_class: permission_system_drift
+L00006841	reasoning_tier: standard
+L00006842	context_scope: permissions_system_batch_208
+L00006843	implementation_surfaces:
+L00006844	- Plans/Permissions_System.md
+L00006845	node_compile_hint:
+L00006846	  mode: admin_side_effect_guard_mappings
+L00006847	  create_worknodes: false
+L00006848	source_lineage:
+L00006849	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0077
+L00006850	preserved_exact_tokens:
+L00006851	- "Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)"
+L00006852	- "GitHub Actions rerun/cancel/dispatch"
+L00006853	- "admin CRUD"
+L00006854	- "Docker Hub repository creation"
+L00006855	- "image push"
+L00006856	- "managed template-repo create/push"
+L00006857	- "Kubernetes mutating actions"
+L00006858	- "external-side-effect guard model"
+L00006859	negative_constraints:
+L00006860	- "External-side-effect and admin-gated behavior for this packet must use canonical permission and blocked-state rules."
+L00006861	preserved_contractrefs:
+L00006862	- "ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Decision_Policy.md"
+L00006863	compatibility_only_notes: []
+L00006864	stale_retired_dispositions: []
+L00006865	owner_hints:
+L00006866	- "Plans/Permissions_System.md"
+L00006867	- "Plans/GitHub_API_Auth_and_Flows.md"
+L00006868	- "Plans/Containers_Registry_and_Unraid.md"
+L00006869	- "Plans/Decision_Policy.md"
+L00006870	```
+L00006871	
+L00006872	### PS-104 - Partial Auth Requested Effective Disclosure
+L00006873	
+L00006874	```yaml
+L00006875	plan_unit_id: PS-104
+L00006876	unit_type: requirement
+L00006877	status: accepted
+L00006878	owner_doc: Plans/Permissions_System.md
+L00006879	canonical_text: "Requested versus effective capability disclosure remains visible whenever a surface control is disabled by partial auth or policy state."
+L00006880	gui_related: true
+L00006881	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00006882	split_recommended: false
+L00006883	depends_on:
+L00006884	- PS-010
+L00006885	- PS-022
+L00006886	- PS-103
+L00006887	unblocks: []
+L00006888	acceptance_criteria:
+L00006889	- "PS-104 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00006890	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00006891	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00006892	validation_surfaces:
+L00006893	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006894	- python3 scripts/pm-plan-index.py validate
+L00006895	risk_class: permission_system_drift
+L00006896	reasoning_tier: standard
+L00006897	context_scope: permissions_system_batch_208
+L00006898	implementation_surfaces:
+L00006899	- Plans/Permissions_System.md
+L00006900	node_compile_hint:
+L00006901	  mode: partial_auth_requested_effective_disclosure
+L00006902	  create_worknodes: false
+L00006903	source_lineage:
+L00006904	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0077
+L00006905	preserved_exact_tokens:
+L00006906	- "requested vs effective capability disclosure"
+L00006907	- "visible"
+L00006908	- "surface control"
+L00006909	- "disabled"
+L00006910	- "partial auth"
+L00006911	- "policy state"
+L00006912	negative_constraints:
+L00006913	- "Controls disabled by partial auth or policy state must not hide requested versus effective capability disclosure."
+L00006914	preserved_contractrefs:
+L00006915	- "ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Decision_Policy.md"
+L00006916	compatibility_only_notes: []
+L00006917	stale_retired_dispositions: []
+L00006918	owner_hints:
+L00006919	- "Plans/Permissions_System.md"
+L00006920	- "Plans/FinalGUISpec.md"
+L00006921	- "Plans/GitHub_API_Auth_and_Flows.md"
+L00006922	- "Plans/Containers_Registry_and_Unraid.md"
+L00006923	```
+L00006924	
+L00006925	### PS-105 - Provider Exposure Permission Scrub Gate
+L00006926	
+L00006927	```yaml
+L00006928	plan_unit_id: PS-105
+L00006929	unit_type: constraint
+L00006930	status: accepted
+L00006931	owner_doc: Plans/Permissions_System.md
+L00006932	canonical_text: "Provider and LLM exposure rules apply before diffs, hunks, logs, manifests, discovered URLs, screenshots, or equivalent content is sent to provider-backed features; exposure requires explicit permission, /data-class labeling, per-feature opt-in, local-only fallback, and secret-scrub before provider transmission."
+L00006933	gui_related: false
+L00006934	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00006935	split_recommended: false
+L00006936	depends_on:
+L00006937	- PS-022
+L00006938	- PS-076
+L00006939	- PS-103
+L00006940	unblocks: []
+L00006941	acceptance_criteria:
+L00006942	- "PS-105 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00006943	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00006944	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00006945	validation_surfaces:
+L00006946	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006947	- python3 scripts/pm-plan-index.py validate
+L00006948	risk_class: permission_system_drift
+L00006949	reasoning_tier: standard
+L00006950	context_scope: permissions_system_batch_208
+L00006951	implementation_surfaces:
+L00006952	- Plans/Permissions_System.md
+L00006953	node_compile_hint:
+L00006954	  mode: provider_exposure_permission_scrub_gate
+L00006955	  create_worknodes: false
+L00006956	source_lineage:
+L00006957	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+L00006958	preserved_exact_tokens:
+L00006959	- "Provider/LLM exposure"
+L00006960	- "diff"
+L00006961	- "conflict hunk"
+L00006962	- "workflow log"
+L00006963	- "container log"
+L00006964	- "manifest snippet"
+L00006965	- "inspect output"
+L00006966	- "workflow YAML preview"
+L00006967	- "manifest diff"
+L00006968	- "discovered URL"
+L00006969	- "screenshot"
+L00006970	- "explicit permission"
+L00006971	- "/data-class"
+L00006972	- "per-feature opt-in"
+L00006973	- "local-only fallback"
+L00006974	- "secret-scrub"
+L00006975	negative_constraints:
+L00006976	- "Secret scrubbing only before local persistence is insufficient for LLM or other provider features."
+L00006977	preserved_contractrefs: []
+L00006978	compatibility_only_notes: []
+L00006979	stale_retired_dispositions: []
+L00006980	owner_hints:
+L00006981	- "Plans/Permissions_System.md"
+L00006982	- "Plans/Provider_OpenCode.md"
+L00006983	- "Plans/Models_System.md"
+L00006984	```
+L00006985	
+L00006986	### PS-106 - Redaction Profile View Export Evidence
+L00006987	
+L00006988	```yaml
+L00006989	plan_unit_id: PS-106
+L00006990	unit_type: requirement
+L00006991	status: accepted
+L00006992	owner_doc: Plans/Permissions_System.md
+L00006993	canonical_text: "Review, diff, export, evidence/history, and provider features distinguish ephemeral in-memory view, scrubbed persisted blob, and user-exported file; persisted, indexed, screenshotted, exported, or evidence/history records preserve redaction profile, mandatory scrub status, and display-detail hiding rules."
+L00006994	gui_related: true
+L00006995	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00006996	split_recommended: false
+L00006997	depends_on:
+L00006998	- PS-076
+L00006999	- PS-105
+L00007000	unblocks: []
+L00007001	acceptance_criteria:
+L00007002	- "PS-106 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00007003	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00007004	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00007005	validation_surfaces:
+L00007006	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007007	- python3 scripts/pm-plan-index.py validate
+L00007008	risk_class: permission_system_drift
+L00007009	reasoning_tier: standard
+L00007010	context_scope: permissions_system_batch_208
+L00007011	implementation_surfaces:
+L00007012	- Plans/Permissions_System.md
+L00007013	node_compile_hint:
+L00007014	  mode: redaction_profile_view_export_evidence
+L00007015	  create_worknodes: false
+L00007016	source_lineage:
+L00007017	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+L00007018	preserved_exact_tokens:
+L00007019	- "Review"
+L00007020	- "diff"
+L00007021	- "export"
+L00007022	- "/evidence/history"
+L00007023	- "ephemeral in-memory view"
+L00007024	- "scrubbed persisted blob"
+L00007025	- "user-exported file"
+L00007026	- "/screenshots"
+L00007027	- "redaction profile"
+L00007028	- "mandatory scrub"
+L00007029	negative_constraints:
+L00007030	- "Persisted, indexed, screenshotted, exported, or evidence/history content must not omit redaction profile and mandatory scrub metadata."
+L00007031	preserved_contractrefs: []
+L00007032	compatibility_only_notes: []
+L00007033	stale_retired_dispositions: []
+L00007034	owner_hints:
+L00007035	- "Plans/Permissions_System.md"
+L00007036	- "Plans/Project_Output_Artifacts.md"
+L00007037	- "Plans/Runtime_Artifacts_Panel.md"
+L00007038	```
+L00007039	
+L00007040	### PS-107 - Remote Side Effect Receipt Provenance
+L00007041	
+L00007042	```yaml
+L00007043	plan_unit_id: PS-107
+L00007044	unit_type: requirement
+L00007045	status: accepted
+L00007046	owner_doc: Plans/Permissions_System.md
+L00007047	canonical_text: "Remote-side-effect receipts record approval_source, executing_subsystem, effective account, and credential handle for push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent actions."
+L00007048	gui_related: false
+L00007049	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00007050	split_recommended: false
+L00007051	depends_on:
+L00007052	- PS-100
+L00007053	- PS-103
+L00007054	unblocks: []
+L00007055	acceptance_criteria:
+L00007056	- "PS-107 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00007057	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00007058	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00007059	validation_surfaces:
+L00007060	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007061	- python3 scripts/pm-plan-index.py validate
+L00007062	risk_class: permission_system_drift
+L00007063	reasoning_tier: standard
+L00007064	context_scope: permissions_system_batch_208
+L00007065	implementation_surfaces:
+L00007066	- Plans/Permissions_System.md
+L00007067	node_compile_hint:
+L00007068	  mode: remote_side_effect_receipt_provenance
+L00007069	  create_worknodes: false
+L00007070	source_lineage:
+L00007071	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+L00007072	preserved_exact_tokens:
+L00007073	- "Remote-side-effect receipts"
+L00007074	- "approval_source"
+L00007075	- "executing_subsystem"
+L00007076	- "effective account"
+L00007077	- "credential handle"
+L00007078	- "explicit confirm"
+L00007079	- "cached permission"
+L00007080	- "policy auto-allow"
+L00007081	- "browser fallback"
+L00007082	- "git"
+L00007083	- "GitHub API"
+L00007084	- "docker CLI"
+L00007085	- "kubectl"
+L00007086	- "SSH remote"
+L00007087	negative_constraints:
+L00007088	- "Remote-side-effect receipts must not omit provenance for approval source, executing subsystem, effective account, or credential handle."
+L00007089	preserved_contractrefs: []
+L00007090	compatibility_only_notes: []
+L00007091	stale_retired_dispositions: []
+L00007092	owner_hints:
+L00007093	- "Plans/Permissions_System.md"
+L00007094	- "Plans/storage-plan.md"
+L00007095	```
+L00007096	
+L00007097	### PS-108 - Sensitive Metadata Export Masking
+L00007098	
+L00007099	```yaml
+L00007100	plan_unit_id: PS-108
+L00007101	unit_type: constraint
+L00007102	status: accepted
+L00007103	owner_doc: Plans/Permissions_System.md
+L00007104	canonical_text: "Sensitive metadata minimization masks remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace and workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts by default unless the user explicitly chooses a fuller export profile."
+L00007105	gui_related: true
+L00007106	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00007107	split_recommended: false
+L00007108	depends_on:
+L00007109	- PS-105
+L00007110	- PS-106
+L00007111	unblocks: []
+L00007112	acceptance_criteria:
+L00007113	- "PS-108 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00007114	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00007115	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00007116	validation_surfaces:
+L00007117	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007118	- python3 scripts/pm-plan-index.py validate
+L00007119	risk_class: permission_system_drift
+L00007120	reasoning_tier: standard
+L00007121	context_scope: permissions_system_batch_208
+L00007122	implementation_surfaces:
+L00007123	- Plans/Permissions_System.md
+L00007124	node_compile_hint:
+L00007125	  mode: sensitive_metadata_export_masking
+L00007126	  create_worknodes: false
+L00007127	source_lineage:
+L00007128	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+L00007129	preserved_exact_tokens:
+L00007130	- "remote URLs"
+L00007131	- "private repo names"
+L00007132	- "registry namespaces"
+L00007133	- "Docker Hub account identity"
+L00007134	- "kube context names"
+L00007135	- "namespace/workload names"
+L00007136	- "discovered service URLs"
+L00007137	- "port-forward endpoints"
+L00007138	- "screenshots"
+L00007139	- "downloaded scrubbed artifacts"
+L00007140	- "fuller export profile"
+L00007141	negative_constraints:
+L00007142	- "Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile."
+L00007143	preserved_contractrefs: []
+L00007144	compatibility_only_notes: []
+L00007145	stale_retired_dispositions: []
+L00007146	owner_hints:
+L00007147	- "Plans/Permissions_System.md"
+L00007148	- "Plans/Project_Output_Artifacts.md"
+L00007149	- "Plans/FinalGUISpec.md"
+L00007150	```
+L00007151	
+L00007152	### PS-109 - Project Delete Residue Cleanup
+L00007153	
+L00007154	```yaml
+L00007155	plan_unit_id: PS-109
+L00007156	unit_type: requirement
+L00007157	status: accepted
+L00007158	owner_doc: Plans/Permissions_System.md
+L00007159	canonical_text: "/logout/project-delete, unlink, and project-delete cleanup clear or invalidate non-secret residue that can identify the user or project, including validation snapshots, account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts."
+L00007160	gui_related: false
+L00007161	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00007162	split_recommended: false
+L00007163	depends_on:
+L00007164	- PS-055
+L00007165	- PS-076
+L00007166	- PS-107
+L00007167	unblocks: []
+L00007168	acceptance_criteria:
+L00007169	- "PS-109 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00007170	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00007171	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00007172	validation_surfaces:
+L00007173	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007174	- python3 scripts/pm-plan-index.py validate
+L00007175	risk_class: permission_system_drift
+L00007176	reasoning_tier: standard
+L00007177	context_scope: permissions_system_batch_208
+L00007178	implementation_surfaces:
+L00007179	- Plans/Permissions_System.md
+L00007180	node_compile_hint:
+L00007181	  mode: project_delete_residue_cleanup
+L00007182	  create_worknodes: false
+L00007183	source_lineage:
+L00007184	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+L00007185	preserved_exact_tokens:
+L00007186	- "/logout/project-delete"
+L00007187	- "unlink"
+L00007188	- "project-delete cleanup"
+L00007189	- "non-secret residue"
+L00007190	- "validation snapshots"
+L00007191	- "last-used account identity"
+L00007192	- "workflow admin receipts"
+L00007193	- "registry capability snapshots"
+L00007194	- "kube context selections"
+L00007195	- "discovered endpoints"
+L00007196	- "downloaded scrubbed artifacts"
+L00007197	negative_constraints:
+L00007198	- "Project delete cleanup must not retain non-secret residue that can still identify the user or project."
+L00007199	preserved_contractrefs: []
+L00007200	compatibility_only_notes: []
+L00007201	stale_retired_dispositions: []
+L00007202	owner_hints:
+L00007203	- "Plans/Permissions_System.md"
+L00007204	- "Plans/storage-plan.md"
+L00007205	```
+L00007206	
+
+<<< CONTEXT_AFTER canonical_document_lines=7207-7218 >>>
+L00007207	### PS-110 - Privileged Session Metadata Minimization
+L00007208	
+L00007209	```yaml
+L00007210	plan_unit_id: PS-110
+L00007211	unit_type: constraint
+L00007212	status: accepted
+L00007213	owner_doc: Plans/Permissions_System.md
+L00007214	canonical_text: "Session-style privileged operations persist bounded metadata only for actor, target, timestamps, credential realm, transport, local bind address or port when relevant, and requested versus effective state; interactive transcript and stdin are not persisted by default."
+L00007215	gui_related: false
+L00007216	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00007217	split_recommended: false
+L00007218	depends_on:

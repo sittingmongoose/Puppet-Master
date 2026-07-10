@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 7669-7680 >>>
+- "write-scope"
+- "mutation-safety concern"
+negative_constraints:
+- "Stale packet over-coverage and stale packet paths do not expand FileSafe ownership."
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "Packet anchor-staleness and research_packet.json path-level over-scope are guard evidence only, not FileSafe ownership expansion."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 7681-8037 >>>
+### F2-088 - LFA 002 Drift Evidence And Under Targeted Packet Replacement
+
+```yaml
+plan_unit_id: F2-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Drift-risk checks comparing Contracts_V0.md#4.1 AuthState and FileSafe.md#11.1.2a against
+  exact contract identifiers are valid verification inputs, but stale packet over-coverage and
+  under-targeted stale replacement bodies must be removed or replaced before packetization.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend verification evidence handling for LFA-002 drift.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: lfa_002_drift_evidence_and_under_targeted_packet_replacement
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "Contracts_V0.md#4.1 AuthState"
+- "FileSafe.md#11.1.2a Optimistic concurrency for mutable rewrites"
+- "exact contract identifiers"
+- "stale packet over-coverage"
+- "stale replacement bodies"
+- "LFA-002"
+- "/pre-promote"
+- "pre-rename recheck"
+- "read_revision={mtime_ns, content_sha256}"
+- "error.concurrent_edit_conflict"
+- "git status --porcelain"
+- "under-targeted LFA evidence"
+- "before packetization"
+negative_constraints:
+- "Stale packet bodies must be replaced before packetization when they omit required LFA-002 managed-mutation details."
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "Under-targeted stale packet bodies are evidence to replace, not owner text to copy forward."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-089 - Dispatch Gating And Child Runtime Authority Consumption
+
+```yaml
+plan_unit_id: F2-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Dispatch gating consumes Tools policy application order so validate_tool_args, no-dispatch-on-
+  length, compiled-output safety, and FileSafe write-scope checks block before spawn; listener
+  and child-run supervision consume orchestrator task-envelope, child-runtime, and parent-
+  clamped authority without widening child authority beyond parent policy.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend dispatch and child-runtime safety inputs.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: dispatch_gating_and_child_runtime_authority_consumption
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "### 8.2 Policy application order and invocation flow"
+- "validate_tool_args"
+- "no-dispatch-on-length"
+- "compiled-output safety"
+- "FileSafe write-scope checks"
+- "block before spawn"
+- "task-envelope"
+- "child-runtime"
+- "parent-clamped"
+- "/listener"
+- "budget-overrun handling"
+- "similarity-based doom-loop evidence"
+- "without widening child authority beyond parent policy"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Tools.md owns policy application order; orchestrator owns listener and child-run supervision authority."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-090 - Prompt Mode Compiled Context Safety Boundary
+
+```yaml
+plan_unit_id: F2-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe validates the compiled prompt/context safety view, while Run Modes, Prompt Pipeline,
+  and assistant chat own mode effects, context assembly, cache preservation, dynamic shrinking,
+  on-demand retrieval, cachedContent markers, TTL refresh behavior, non-open-ended cache
+  lifetime, and token-savings calculations.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend prompt and mode safety ownership boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: prompt_mode_compiled_context_safety_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "## 0. Scope and SSOT status"
+- "## 7. Mode effects on context management"
+- "## 2. Compaction and pruning"
+- "### 2.1 Context assembly and cache preservation"
+- "### 2.2 Dynamic context shrinking"
+- "/on-demand"
+- "cachedContent"
+- "TTL refresh behavior"
+- "non-open-ended cache lifetime"
+- "token-savings calculations"
+- "/truncatable"
+negative_constraints:
+- "FileSafe treats /truncatable context only as a safety input, not as permission to drop protected evidence."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Run_Modes, Prompt_Pipeline, and assistant-chat-design own mode and context behavior consumed by FileSafe."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-091 - Assistant Chat Context Display Consumer Boundary
+
+```yaml
+plan_unit_id: F2-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Assistant chat owns visible context display and related route references that FileSafe may
+  consume as safety inputs, including context usage display, context-detail, concurrent-thread,
+  and global context markers.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves GUI/user-visible assistant chat context-display ownership references.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: assistant_chat_context_display_consumer_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "## 12. Context usage display"
+- "context-detail"
+- "concurrent-thread"
+- "/global"
+- "### 23.4 Adopted enhancements"
+- "visible context display"
+- "FileSafe safety inputs"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "### 23.4 Adopted enhancements is stale owner-routing evidence when assistant-chat-design owns ## 12. Context usage display."
+owner_boundary_notes:
+- "Plans/assistant-chat-design.md owns context usage display and visible chat context surfaces."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-092 - Storage Usage Auth Billing Input Boundary
+
+```yaml
+plan_unit_id: F2-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Storage, usage, auth, and billing owner contracts supply effective runtime inputs to FileSafe,
+  but FileSafe does not own or authorize auth state, billing state, usage ledgers, budget
+  decisions, or context-compilation state; legacy cost and null-padding examples are display or
+  migration evidence only.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend storage, usage, auth, and billing input boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: storage_usage_auth_billing_input_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "### Naming and migration rules"
+- "app-data-root"
+- "/unsafe-filesystem"
+- "bounded-collections retention"
+- "cost_microdollars: u64"
+- "estimated_cost_usd: f64"
+- "### 4.1 AuthState"
+- "### Billing entity field contract"
+- "billing_entity"
+- "/presence"
+- "/null-padding"
+- "auth_realm = null"
+- "account_id = null"
+- "auth_surface = null"
+- "FileSafe-as-owner wording is invalid"
+negative_constraints:
+- "Legacy estimated_cost_usd and null-padding examples cannot authorize a mutation, budget decision, or usage ledger update."
+- "FileSafe-as-owner wording is invalid for auth state, billing state, or context-compilation state."
+compatibility_only_notes:
+- "estimated_cost_usd: f64 is display or migration evidence only."
+- "Null-padded auth and billing example values are stale examples; effective presence or absence is determined by owner contracts."
+stale_retired_dispositions:
+- "/null-padding, auth_realm = null, account_id = null, and auth_surface = null are stale example values."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-093 - Subagent Scope Credential Cache And Executable Surface Gating
+
+```yaml
+plan_unit_id: F2-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe consumes subagent tool identity, child-run scope, concurrency caps, credential
+  callback modes, TTL-valid tool discovery cache, and explicit approval or signing evidence for
+  executable plugin surfaces as safety inputs without redefining crew scheduling or tool
+  discovery policy.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend subagent, credential, cache, and executable-surface safety inputs.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: subagent_scope_credential_cache_and_executable_surface_gating
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "Plans/orchestrator-subagent-integration.md"
+- "### 4. Subagent -- Backend"
+- "Plans/Tools.md"
+- "### 2.3 Session vs run; subagents"
+- "max_concurrent_agents_per_crew=8"
+- "max_concurrent_crews_per_platform=4"
+- "/ephemeral/manual"
+- "TTL-bound credentials"
+- "clientId"
+- "lazy-load LESSON"
+- "TTL-valid cache"
+- "transient discovery miss"
+- "permanent executable access"
+- "/custom-tool/plugin/executable"
+- "/signing"
+negative_constraints:
+- "A transient tool discovery miss must not become permanent executable access."
+- "Executable plugin surfaces require explicit approval or signing evidence before FileSafe allows execution-modifying behavior."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Subagent scheduling and tool discovery owners define policy; FileSafe consumes effective safety inputs."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 8038-8049 >>>
+### F2-094 - Atomic CAS Restatement And Legacy Audit Evidence Boundary
+
+```yaml
+plan_unit_id: F2-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  S0048 restates atomic replacement and CAS contracts as safety inputs and classifies stale
+  legacy-term audits, escaped legacy fallback wording, EXEC/file-record map concerns, and
+  unresolved symlink TODOs as verification evidence rather than independent FileSafe policy.
+gui_related: false

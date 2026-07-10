@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE 2281-2292 >>>
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+
+<<< AUTHORITATIVE_CORE 2293-2662 >>>
+    {
+      "inventory_id": "pmconcept.l9211.0071",
+      "line": 9211,
+      "tag": "div",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "sc-wt-row",
+      "ui_location": "panel-source",
+      "label": "clean feat/oauth2-pkce thread-subagents Base: main \u00b7 +122 -11 \u00b7 4 files \u00b7 Last commit: 1m ago",
+      "attrs": {
+        "onclick": "this.classList.toggle('expanded')"
+      },
+      "inline_handlers": {
+        "onclick": "this.classList.toggle('expanded')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9221.0072",
+      "line": 9221,
+      "tag": "div",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "sc-wt-row",
+      "ui_location": "panel-source",
+      "label": "1 dirty feat/multi-tenant thread-worktree-merge Base: main \u00b7 +130 -4 \u00b7 3 files \u00b7 Tests: 1 failing",
+      "attrs": {
+        "onclick": "this.classList.toggle('expanded')"
+      },
+      "inline_handlers": {
+        "onclick": "this.classList.toggle('expanded')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9231.0073",
+      "line": 9231,
+      "tag": "div",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "sc-wt-row",
+      "ui_location": "panel-source",
+      "label": "clean perf/analytics-opt thread-escalation Base: main \u00b7 +0 -0 \u00b7 2 files (read-only) \u00b7 Blocked",
+      "attrs": {
+        "onclick": "this.classList.toggle('expanded')"
+      },
+      "inline_handlers": {
+        "onclick": "this.classList.toggle('expanded')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9241.0074",
+      "line": 9241,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "panel-source",
+      "label": "+ New Worktree",
+      "attrs": {
+        "onclick": "showCreateWorktreeModal()"
+      },
+      "inline_handlers": {
+        "onclick": "showCreateWorktreeModal()"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9257.0075",
+      "line": 9257,
+      "tag": "select",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-select",
+      "ui_location": "panel-source",
+      "label": "main feature/gui-update hotfix/auth-bug",
+      "attrs": {
+        "onchange": "toast('Branch: ' + this.value)"
+      },
+      "inline_handlers": {
+        "onchange": "toast('Branch: ' + this.value)"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9265.0076",
+      "line": 9265,
+      "tag": "summary",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": null,
+      "ui_location": "panel-source",
+      "label": "STAGED 1",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9268.0077",
+      "line": 9268,
+      "tag": "span",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": null,
+      "ui_location": "panel-source",
+      "label": "src/config.rs A",
+      "attrs": {
+        "onclick": "toast('cmd.git.open_diff \u2192 src/config.rs (staged)')"
+      },
+      "inline_handlers": {
+        "onclick": "toast('cmd.git.open_diff \u2192 src/config.rs (staged)')"
+      },
+      "command_tokens": [
+        "cmd.git.open_diff"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "production_wiring_required",
+      "canonical_command_id": "cmd.git.diff_open",
+      "wiring_matrix_key": "catalog.git_diff_open",
+      "notes": [
+        "PMConcept alias cmd.git.open_diff normalizes to cmd.git.diff_open."
+      ],
+      "pmconcept_fixture_accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "missing_accessible_name_candidate",
+        "click_handler_without_keyboard_parity"
+      ],
+      "production_accessibility_contract": {
+        "accessible_name": "src/config.rs A",
+        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+      },
+      "production_wiring_contract": {
+        "command_id": "cmd.git.diff_open",
+        "handler_target": "handlers::git::diff_open",
+        "state_selector": "state.cmd_git_diff_open.enabled",
+        "disabled_reason_selector": "state.cmd_git_diff_open.disabled_reason",
+        "receipt_or_event_effect": "source_control.command_applied",
+        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+      }
+    },
+    {
+      "inventory_id": "pmconcept.l9270.0078",
+      "line": 9270,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "panel-source",
+      "label": "\u2212",
+      "attrs": {
+        "onclick": "toast('cmd.git.unstage_hunks \u2192 src/config.rs')",
+        "title": "Unstage"
+      },
+      "inline_handlers": {
+        "onclick": "toast('cmd.git.unstage_hunks \u2192 src/config.rs')"
+      },
+      "command_tokens": [
+        "cmd.git.unstage_hunks"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "production_wiring_required",
+      "canonical_command_id": "cmd.git.unstage_hunks",
+      "wiring_matrix_key": "catalog.git_unstage_hunks",
+      "notes": [],
+      "production_accessibility_contract": {
+        "accessible_name": "\u2212",
+        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+      },
+      "production_wiring_contract": {
+        "command_id": "cmd.git.unstage_hunks",
+        "handler_target": "handlers::git::unstage_hunks",
+        "state_selector": "state.cmd_git_unstage_hunks.enabled",
+        "disabled_reason_selector": "state.cmd_git_unstage_hunks.disabled_reason",
+        "receipt_or_event_effect": "source_control.command_applied",
+        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+      }
+    },
+    {
+      "inventory_id": "pmconcept.l9271.0079",
+      "line": 9271,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "panel-source",
+      "label": "\u2715",
+      "attrs": {
+        "onclick": "toast('cmd.git.discard_hunks \u2192 src/config.rs (confirm?)')",
+        "title": "Discard"
+      },
+      "inline_handlers": {
+        "onclick": "toast('cmd.git.discard_hunks \u2192 src/config.rs (confirm?)')"
+      },
+      "command_tokens": [
+        "cmd.git.discard_hunks"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "production_wiring_required",
+      "canonical_command_id": "cmd.git.discard_hunks",
+      "wiring_matrix_key": "catalog.git_discard_hunks",
+      "notes": [],
+      "production_accessibility_contract": {
+        "accessible_name": "\u2715",
+        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+      },
+      "production_wiring_contract": {
+        "command_id": "cmd.git.discard_hunks",
+        "handler_target": "handlers::git::discard_hunks",
+        "state_selector": "state.cmd_git_discard_hunks.enabled",
+        "disabled_reason_selector": "state.cmd_git_discard_hunks.disabled_reason",
+        "receipt_or_event_effect": "source_control.command_applied",
+        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+      }
+    },
+    {
+      "inventory_id": "pmconcept.l9278.0080",
+      "line": 9278,
+      "tag": "summary",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": null,
+      "ui_location": "panel-source",
+      "label": "UNSTAGED 2",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l9281.0081",
+      "line": 9281,
+      "tag": "span",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": null,
+      "ui_location": "panel-source",
+      "label": "src/app.rs M",
+      "attrs": {
+        "onclick": "toast('cmd.git.open_diff \u2192 src/app.rs (unstaged)')"
+      },
+      "inline_handlers": {
+        "onclick": "toast('cmd.git.open_diff \u2192 src/app.rs (unstaged)')"
+      },
+      "command_tokens": [
+        "cmd.git.open_diff"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "production_wiring_required",
+      "canonical_command_id": "cmd.git.diff_open",
+      "wiring_matrix_key": "catalog.git_diff_open",
+      "notes": [
+        "PMConcept alias cmd.git.open_diff normalizes to cmd.git.diff_open."
+      ],
+      "pmconcept_fixture_accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "missing_accessible_name_candidate",
+        "click_handler_without_keyboard_parity"
+      ],
+      "production_accessibility_contract": {
+        "accessible_name": "src/app.rs M",
+        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+      },
+      "production_wiring_contract": {
+        "command_id": "cmd.git.diff_open",
+        "handler_target": "handlers::git::diff_open",
+        "state_selector": "state.cmd_git_diff_open.enabled",
+        "disabled_reason_selector": "state.cmd_git_diff_open.disabled_reason",
+        "receipt_or_event_effect": "source_control.command_applied",
+        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+      }
+    },
+
+<<< CONTEXT_AFTER 2663-2674 >>>
+    {
+      "inventory_id": "pmconcept.l9283.0082",
+      "line": 9283,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "panel-source",
+      "label": "+",
+      "attrs": {
+        "onclick": "toast('cmd.git.stage_hunks \u2192 src/app.rs')",

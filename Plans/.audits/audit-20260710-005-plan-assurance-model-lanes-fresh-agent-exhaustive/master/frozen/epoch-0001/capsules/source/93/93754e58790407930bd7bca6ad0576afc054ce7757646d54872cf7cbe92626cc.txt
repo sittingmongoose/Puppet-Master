@@ -1,0 +1,363 @@
+<<< CONTEXT_BEFORE 1386-1397 >>>
+  - "chat.thread_created"
+  - "chat.message.submitted"
+  - "^[a-z][a-z0-9_-]{0,48}[a-z0-9]$"
+negative_constraints:
+  - "Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming."
+  - "GPT-era registry audits do not create new event names by observation."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1398-1731 >>>
+### CS-014 - Command File Schema and Frontmatter Fields
+
+```yaml
+plan_unit_id: CS-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  A User Command file consists of YAML frontmatter plus a Markdown template body,
+  with canonical fields for name, description, arguments, persona/model/mode
+  overrides, permissions_profile_override, and override_builtin.
+gui_related: false
+gui_classification_reason: Command schema and frontmatter field definitions are file-format semantics.
+split_recommended: false
+depends_on: [CS-013]
+unblocks: [CS-015, CS-018, CS-020]
+acceptance_criteria:
+  - COMMAND-SCHEMA remains the anchor for User Command file structure.
+  - Frontmatter examples preserve description, persona, mode, model, subtask, permissions_profile_override, and override_builtin.
+  - name is required, must pass validation, and MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes.
+  - description is required and remains a short user-facing description.
+  - arguments remains an optional array<object> for positional argument schema.
+  - persona_override, mode_override, model_override, and permissions_profile_override remain requested overrides subject to their owner systems.
+  - override_builtin remains reserved for future non-chat extension points and MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_schema_drift
+reasoning_tier: standard
+context_scope: command_file_schema
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: command_file_schema_frontmatter
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0018
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0019
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0020
+preserved_exact_tokens:
+  - "COMMAND-SCHEMA"
+  - "YAML frontmatter"
+  - "description"
+  - "persona"
+  - "mode"
+  - "model"
+  - "subtask"
+  - "permissions_profile_override"
+  - "override_builtin"
+negative_constraints:
+  - "name MUST NOT collide with reserved Assistant Chat built-ins or reserved git/GitHub prefixes."
+  - "override_builtin MUST NOT override canonical Assistant Chat built-ins or reserved git/GitHub prefixes."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-015 - Template Body and Placeholder Semantics
+
+```yaml
+plan_unit_id: CS-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The Markdown template body supports placeholders, file includes, and shell
+  output injection; placeholder extraction scans for $ARGUMENTS and $N patterns,
+  stores extracted hints for autocomplete display, and replaces unresolved
+  placeholders with an empty string.
+gui_related: false
+gui_classification_reason: Template body and placeholder expansion are command template processing semantics.
+split_recommended: true
+split_recommendation_reason: Source span S0022 also carries the TEMPLATE-FILE-INCLUDE anchor consumed by CS-016.
+depends_on: [CS-014]
+unblocks: [CS-016, CS-017, CS-024]
+acceptance_criteria:
+  - TEMPLATE-PLACEHOLDERS remains the anchor for placeholder semantics.
+  - The template body supports placeholders, file includes, and shell output injection.
+  - $ARGUMENTS represents all remaining text after the command name.
+  - $1, $2, and $N represent positional arguments from invocation text.
+  - Load-time extraction scans for $ARGUMENTS and $N patterns and stores the extracted list as hints for autocomplete display.
+  - Unresolved placeholders are replaced with empty string.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_template_placeholder_drift
+reasoning_tier: standard
+context_scope: command_template_resolution
+implementation_surfaces:
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: command_template_placeholders
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0021
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0022
+preserved_exact_tokens:
+  - "TEMPLATE-PLACEHOLDERS"
+  - "$ARGUMENTS"
+  - "$1"
+  - "$2"
+  - "$N"
+  - "hints"
+negative_constraints: []
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-016 - File Include Resolution and Read Permission Guard
+
+```yaml
+plan_unit_id: CS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Template file includes use @path and directory listing expansion, then enforce
+  the Permissions System read permission key so denied includes are blocked,
+  ask results show approval UI, and blocked includes substitute an error.
+gui_related: true
+gui_classification_reason: File include permission handling can surface approval UI and visible blocked-include errors.
+split_recommended: true
+split_recommendation_reason: Source spans S0022, S0023, and S0034 share anchors and permission behavior with placeholder and shell-injection units.
+depends_on: [CS-013, CS-015]
+unblocks: [CS-017, CS-024]
+acceptance_criteria:
+  - TEMPLATE-FILE-INCLUDE remains the anchor for file include semantics.
+  - "@path/to/file includes the referenced file contents during template resolution."
+  - "@path/to/dir includes a directory listing."
+  - File inclusion checks the read permission key from Permissions_System section 5.
+  - deny blocks the include and substitutes an error message.
+  - ask shows the approval UI and applies the same ask flow semantics.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_file_include_permission_drift
+reasoning_tier: high
+context_scope: command_template_permission_guards
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: command_file_include_permission_guard
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0022
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0023
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0034
+preserved_exact_tokens:
+  - "TEMPLATE-FILE-INCLUDE"
+  - "@path"
+  - "@path/to/file"
+  - "@path/to/dir"
+  - "read"
+  - "ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys"
+negative_constraints:
+  - "Denied file inclusion must be blocked and substituted with an error message."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/Permissions_System.md
+```
+
+### CS-017 - Shell Injection Resolution and Bash Permission Guard
+
+```yaml
+plan_unit_id: CS-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Template shell output injection uses the !`shell-command` pattern and enforces
+  the Permissions System bash key and ask flow, including actor/lane/run/account
+  scope, blocked-overlay/HITL routing for underspecified context, and unified
+  ask/plan plus external_publish_side_effect approval calculation.
+gui_related: true
+gui_classification_reason: Shell injection permission prompts and blocked overlays are visible approval/HITL UI behavior.
+split_recommended: true
+split_recommendation_reason: Source spans S0023, S0024, S0032, and S0033 share template and permission-section anchors with adjacent units.
+depends_on: [CS-015, CS-016]
+unblocks: [CS-024]
+acceptance_criteria:
+  - TEMPLATE-SHELL-INJECTION remains the anchor for shell output injection.
+  - The pattern !`shell-command` executes the shell command and injects stdout during template resolution.
+  - Shell injection checks the bash permission key from Permissions_System section 5.
+  - deny, once, for session, and always responses follow Permissions_System ask flow semantics.
+  - The shell command string is the invocation context for granular pattern matching.
+  - Command-launched work, template file inclusion, and shell injection pass actor/lane/run/account and /lane/run/account scope.
+  - Underspecified context presents blocked-overlay/HITL routing rather than pretending a global approval or denial is safe.
+  - ask/plan and external_publish_side_effect resolve through one canonical approval calculation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_shell_permission_drift
+reasoning_tier: high
+context_scope: command_template_permission_guards
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: command_shell_injection_permission_guard
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0023
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0024
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0032
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0033
+preserved_exact_tokens:
+  - "TEMPLATE-SHELL-INJECTION"
+  - "!`shell-command`"
+  - "bash"
+  - "once"
+  - "for session"
+  - "always"
+  - "deny"
+  - "actor/lane/run/account"
+  - "/lane/run/account"
+  - "ask/plan"
+  - "external_publish_side_effect"
+negative_constraints:
+  - "A command must not resolve publish, durable mutation, or plan approval through separate command-template text."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/Permissions_System.md
+```
+
+### CS-018 - Command Working Directory Resolution
+
+```yaml
+plan_unit_id: CS-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Command execution resolves the active working directory to the bound worktree
+  root when execution context has is_worktree true and otherwise to the active
+  project root, applying consistently to Assistant Chat, Orchestrator DAE,
+  terminal sessions, and file operations.
+gui_related: false
+gui_classification_reason: Working directory resolution is command execution runtime behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0026 also includes visible path-card and terminal cwd behavior covered by CS-019.
+depends_on: [CS-014]
+unblocks: [CS-019, CS-020]
+acceptance_criteria:
+  - EXECUTION remains the anchor for command execution semantics.
+  - If active context has a bound worktree with is_worktree true, commands use the worktree root path.
+  - Otherwise commands use the active project root.
+  - Assistant Chat, Orchestrator DAE, terminal sessions, and file operations share this resolution rule.
+  - cmd.chat.* commands execute against the worktree root when a thread has a bound worktree, and against project root otherwise.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_working_directory_drift
+reasoning_tier: high
+context_scope: command_execution_context
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: command_working_directory_resolution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0025
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+preserved_exact_tokens:
+  - "EXECUTION"
+  - "is_worktree"
+  - "worktree root path"
+  - "active project root"
+  - "cmd.chat.*"
+negative_constraints: []
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-019 - Assistant Worktree Naming Path Display and Terminal CWD
+
+```yaml
+plan_unit_id: CS-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Assistant worktree commands use thread-derived worktree directory names,
+  append numeric suffixes for collisions, show edit and file-card paths relative
+  to the resolved working_directory, and persist terminal cwd snapshots from
+  the worktree path.
+gui_related: true
+gui_classification_reason: Edit and file-card path display is user-visible, and terminal sessions expose cwd behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0026 mixes backend working-directory resolution with visible path display and terminal session behavior.
+depends_on: [CS-018]
+unblocks: []
+acceptance_criteria:
+  - Assistant thread worktrees use .puppet-master/worktrees/thread-{short_id}, where short_id derives from the bound thread_id.
+  - If thread-{short_id} already exists, command handling appends a numeric suffix such as thread-{short_id}-2.
+  - Existing orchestrator worktrees keep .puppet-master/worktrees/{tier_id} style directory names as compatibility lineage.
+  - Worktree-bound edit and file cards display paths relative to the resolved working_directory.
+  - File cards open by resolving the displayed relative path under working_directory with no special path rewriting layer.
+  - Terminal commands opened from the same thread set terminal cwd to the worktree path and persist cwd_snapshot on terminal_session_record.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: assistant_worktree_command_drift
+reasoning_tier: high
+context_scope: command_execution_context
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: assistant_worktree_command_display_cwd
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0026
+preserved_exact_tokens:
+  - ".puppet-master/worktrees/{tier_id}"
+  - ".puppet-master/worktrees/thread-{short_id}"
+  - "thread-{short_id}-2"
+  - "working_directory"
+  - "cwd_snapshot"
+  - "terminal_session_record"
+negative_constraints:
+  - "Worktree-bound file cards must not use a special path rewriting layer."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< CONTEXT_AFTER 1732-1743 >>>
+### CS-020 - Command Subtask Child-Run Contract
+
+```yaml
+plan_unit_id: CS-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  When subtask: true is set, command execution launches a canonical child run
+  through the shared delegated-run contract with required lineage, storage,
+  permission/capability narrowing, requested-vs-effective runtime evidence, and
+  no silent fallback for unavailable or incompatible runtime surfaces.

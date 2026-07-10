@@ -237,20 +237,19 @@
   position: relative; overflow: hidden;
   display: flex; align-items: center; gap: var(--md);
   padding: var(--md) var(--lg);
-  background: var(--surface-elevated);
-  border: var(--border-width) solid var(--border-light);
-  border-left: 3px solid var(--accent-primary);
+  background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+  border: var(--border-width) solid color-mix(in srgb, var(--accent-primary) 30%, var(--border));
   border-radius: var(--radius-md);
   box-shadow: var(--elev-2);
   animation: pm6-dash-in var(--motion-med) var(--ease-default) both;
   animation-delay: calc(var(--i, 0) * 50ms);
 }
 .pm6-dash-cta[hidden] { display: none; }
-.pm6-dash-cta--hitl { border-left-color: var(--accent-magenta); }
+.pm6-dash-cta--hitl { background: color-mix(in srgb, var(--accent-magenta) 8%, transparent); border-color: color-mix(in srgb, var(--accent-magenta) 30%, var(--border)); }
 .pm6-dash-cta--hitl .pm6-dash-cta-ico { color: var(--accent-magenta); }
-.pm6-dash-cta--warning { border-left-color: var(--accent-warning); }
+.pm6-dash-cta--warning { background: color-mix(in srgb, var(--accent-warning) 8%, transparent); border-color: color-mix(in srgb, var(--accent-warning) 30%, var(--border)); }
 .pm6-dash-cta--warning .pm6-dash-cta-ico { color: var(--accent-warning); }
-.pm6-dash-cta--blocked { border-left-color: var(--accent-error); }
+.pm6-dash-cta--blocked { background: color-mix(in srgb, var(--accent-error) 8%, transparent); border-color: color-mix(in srgb, var(--accent-error) 30%, var(--border)); }
 .pm6-dash-cta--blocked .pm6-dash-cta-ico { color: var(--accent-error); }
 .pm6-dash-cta-ico { font-size: 20px; flex: none; }
 .pm6-dash-cta-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -321,33 +320,44 @@
 /* ============================================================
    Theme accents
    ============================================================ */
-/* friendly: borderless elevation-only cards + inset top-light */
+/* friendly cozy: neutral white-ish cards, soft lavender-gray border,
+   soft cozy shadow (ctas keep the tinted border-color from the base rules) */
+[data-theme^="friendly"] .pm6-dash-card {
+  background: var(--surface-elevated);
+  border-color: var(--border);
+  border-radius: var(--radius-lg);
+}
 [data-theme^="friendly"] .pm6-dash-card,
 [data-theme^="friendly"] .pm6-dash-cta {
-  border-color: transparent;
-  box-shadow: var(--elev-2), inset 0 1px 0 rgba(255,255,255,.04);
+  box-shadow: var(--elev-2);
 }
-[data-theme^="friendly"] .pm6-dash-cta { border-left: 3px solid var(--accent-primary); }
-[data-theme^="friendly"] .pm6-dash-cta--hitl { border-left-color: var(--accent-magenta); }
-[data-theme^="friendly"] .pm6-dash-cta--warning { border-left-color: var(--accent-warning); }
-[data-theme^="friendly"] .pm6-dash-cta--blocked { border-left-color: var(--accent-error); }
 
-/* glass: pre-baked tinted fill (no backdrop-filter — stays inside blur budget) */
+/* glass: steps of the one sheet (no backdrop-filter — stays inside blur budget) */
 [data-theme^="glass"] .pm6-dash-card,
-[data-theme^="glass"] .pm6-dash-cta,
-[data-theme^="glass"] .pm6-dash-catalog-panel {
-  background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+[data-theme^="glass"] .pm6-dash-cta {
+  background: var(--pm6-glass-step-2);
   border-color: var(--glass-hairline);
-  box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-hairline), 0 8px 24px rgba(0,0,0,.28);
+  box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-hairline), 0 8px 24px var(--pm6-glass-pane-shadow2);
+}
+/* catalog slide-over = reading plate */
+[data-theme^="glass"] .pm6-dash-catalog-panel {
+  background: var(--pm6-glass-plate);
+  border-color: var(--glass-hairline);
+  box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-hairline), 0 8px 24px var(--pm6-glass-pane-shadow2);
 }
 [data-theme^="glass"] .pm6-dash-catalog-scrim { background: rgba(0,0,0,.35); }
 [data-theme^="glass"] .pm6-dash-btn,
 [data-theme^="glass"] .pm6-dash-add,
 [data-theme^="glass"] .pm6-dash-catalog-item {
-  background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16));
+  background: var(--pm6-glass-step-2);
   border-color: var(--glass-hairline);
 }
-[data-theme^="glass"] .pm6-dash-btn--primary { background: var(--accent-primary); color: var(--background); }
+[data-theme^="glass"] .pm6-dash-btn--primary {
+  background: var(--pm6-glass-step-3);
+  color: var(--text-primary);
+  border-color: rgba(var(--pm6-glass-a-rgb), .45);
+  box-shadow: inset 0 1px 0 var(--glass-edge);
+}
 
 /* retro: square corners, inner hairlines, hard offset shadow, display font titles */
 [data-theme^="retro"] .pm6-dash-card,

@@ -1,0 +1,94 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4718-4729 >>>
+L00004718	            "source_control_repair",
+L00004719	            "block"
+L00004720	          ]
+L00004721	        },
+L00004722	        "allowed_write_refs": {
+L00004723	          "$ref": "#/$defs/ref_list"
+L00004724	        },
+L00004725	        "rollback_route": {
+L00004726	          "type": "string"
+L00004727	        }
+L00004728	      }
+L00004729	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4730-4794 >>>
+L00004730	    "validator_outcome": {
+L00004731	      "type": "object",
+L00004732	      "additionalProperties": false,
+L00004733	      "required": [
+L00004734	        "validator_id",
+L00004735	        "command",
+L00004736	        "status",
+L00004737	        "evidence_refs"
+L00004738	      ],
+L00004739	      "properties": {
+L00004740	        "validator_id": {
+L00004741	          "type": "string"
+L00004742	        },
+L00004743	        "command": {
+L00004744	          "type": "string"
+L00004745	        },
+L00004746	        "status": {
+L00004747	          "type": "string",
+L00004748	          "enum": [
+L00004749	            "pass",
+L00004750	            "fail",
+L00004751	            "blocked",
+L00004752	            "skipped"
+L00004753	          ]
+L00004754	        },
+L00004755	        "evidence_refs": {
+L00004756	          "$ref": "#/$defs/ref_list"
+L00004757	        }
+L00004758	      }
+L00004759	    },
+L00004760	    "risk_record": {
+L00004761	      "type": "object",
+L00004762	      "additionalProperties": false,
+L00004763	      "required": [
+L00004764	        "risk_id",
+L00004765	        "risk_class",
+L00004766	        "status",
+L00004767	        "mitigation",
+L00004768	        "evidence_refs"
+L00004769	      ],
+L00004770	      "properties": {
+L00004771	        "risk_id": {
+L00004772	          "type": "string"
+L00004773	        },
+L00004774	        "risk_class": {
+L00004775	          "$ref": "#/$defs/risk_class"
+L00004776	        },
+L00004777	        "status": {
+L00004778	          "type": "string",
+L00004779	          "enum": [
+L00004780	            "open",
+L00004781	            "mitigated",
+L00004782	            "accepted",
+L00004783	            "blocked"
+L00004784	          ]
+L00004785	        },
+L00004786	        "mitigation": {
+L00004787	          "type": "string"
+L00004788	        },
+L00004789	        "evidence_refs": {
+L00004790	          "$ref": "#/$defs/ref_list"
+L00004791	        }
+L00004792	      }
+L00004793	    }
+L00004794	  },
+
+<<< CONTEXT_AFTER canonical_document_lines=4795-4806 >>>
+L00004795	  "allOf": [
+L00004796	    {
+L00004797	      "if": {
+L00004798	        "properties": {
+L00004799	          "artifact_kind": {
+L00004800	            "const": "handoff_matrix"
+L00004801	          }
+L00004802	        },
+L00004803	        "required": [
+L00004804	          "artifact_kind"
+L00004805	        ]
+L00004806	      },

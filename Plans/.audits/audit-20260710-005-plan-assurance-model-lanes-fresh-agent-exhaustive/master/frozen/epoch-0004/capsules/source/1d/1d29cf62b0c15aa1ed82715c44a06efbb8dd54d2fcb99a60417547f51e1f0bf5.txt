@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE 12895-12906 >>>
+          "requirement": "cmd.git.diff_search records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_search.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.diff_search records dispatch receipt cmd.git.diff_search.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 12907-13289 >>>
+    "catalog.git_diff_set_compare_target": {
+      "ui_element_id": "catalog.git_diff_set_compare_target",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.diff_set_compare_target",
+      "handler_location": "handlers::git::diff_set_compare_target",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.diff_set_compare_target must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.diff_set_compare_target must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.diff_set_compare_target dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.diff_set_compare_target must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.diff_set_compare_target must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.diff_set_compare_target; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_diff_set_compare_target.availability",
+      "disabled_reason_projection": "state.commands.git_diff_set_compare_target.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.diff_set_compare_target records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.diff_set_compare_target.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_diff_set_compare_target exposes a stable role/name/description matching cmd.git.diff_set_compare_target.",
+        "keyboard_access": "catalog.git_diff_set_compare_target is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_diff_set_compare_target preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_diff_set_compare_target surfaces state.commands.git_diff_set_compare_target.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_diff_set_compare_target.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.diff_set_compare_target reaches handlers::git::diff_set_compare_target with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_set_compare_target.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_diff_set_compare_target.availability and disabled copy reads state.commands.git_diff_set_compare_target.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_set_compare_target.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.diff_set_compare_target records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_set_compare_target.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.diff_set_compare_target records dispatch receipt cmd.git.diff_set_compare_target.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_diff_toggle_mode": {
+      "ui_element_id": "catalog.git_diff_toggle_mode",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.diff_toggle_mode",
+      "handler_location": "handlers::git::diff_toggle_mode",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.diff_toggle_mode must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.diff_toggle_mode must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.diff_toggle_mode dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.diff_toggle_mode must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.diff_toggle_mode must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.diff_toggle_mode; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_diff_toggle_mode.availability",
+      "disabled_reason_projection": "state.commands.git_diff_toggle_mode.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.diff_toggle_mode records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.diff_toggle_mode.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_diff_toggle_mode exposes a stable role/name/description matching cmd.git.diff_toggle_mode.",
+        "keyboard_access": "catalog.git_diff_toggle_mode is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_diff_toggle_mode preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_diff_toggle_mode surfaces state.commands.git_diff_toggle_mode.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_diff_toggle_mode.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.diff_toggle_mode reaches handlers::git::diff_toggle_mode with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_toggle_mode.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_diff_toggle_mode.availability and disabled copy reads state.commands.git_diff_toggle_mode.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_toggle_mode.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.diff_toggle_mode records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_diff_toggle_mode.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.diff_toggle_mode records dispatch receipt cmd.git.diff_toggle_mode.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_discard_hunks": {
+      "ui_element_id": "catalog.git_discard_hunks",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.discard_hunks",
+      "handler_location": "handlers::git::discard_hunks",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.discard_hunks must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.discard_hunks must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.discard_hunks dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.discard_hunks must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.discard_hunks must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.discard_hunks; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_discard_hunks.availability",
+      "disabled_reason_projection": "state.commands.git_discard_hunks.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.discard_hunks records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.discard_hunks.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_discard_hunks exposes a stable role/name/description matching cmd.git.discard_hunks.",
+        "keyboard_access": "catalog.git_discard_hunks is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_discard_hunks preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_discard_hunks surfaces state.commands.git_discard_hunks.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_discard_hunks.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.discard_hunks reaches handlers::git::discard_hunks with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_discard_hunks.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_discard_hunks.availability and disabled copy reads state.commands.git_discard_hunks.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_discard_hunks.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.discard_hunks records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_discard_hunks.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.discard_hunks records dispatch receipt cmd.git.discard_hunks.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_open_diff_alias": {
+      "ui_element_id": "catalog.git_open_diff_alias",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.open_diff",
+      "handler_location": "handlers::git::diff_open",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.open_diff must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.open_diff exposes projected state selector and disabled reason before dispatch",
+        "cmd.git.open_diff dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.open_diff has regression and accessibility evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.open_diff; Compatibility alias normalizes to cmd.git.diff_open and must not create a second diff command language.  Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_open_diff.availability",
+      "disabled_reason_projection": "state.commands.git_open_diff.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.open_diff records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.open_diff.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_open_diff_alias exposes a stable role/name/description matching cmd.git.open_diff.",
+        "keyboard_access": "catalog.git_open_diff_alias is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_open_diff_alias preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_open_diff_alias surfaces state.commands.git_open_diff.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_open_diff_alias.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.open_diff reaches handlers::git::diff_open with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_open_diff_alias.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_open_diff.availability and disabled copy reads state.commands.git_open_diff.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_open_diff_alias.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.open_diff records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_open_diff_alias.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.open_diff records dispatch receipt cmd.git.open_diff.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_show_commit_alias": {
+      "ui_element_id": "catalog.git_show_commit_alias",
+      "ui_location": "Source Control history surface",
+      "ui_command_id": "cmd.git.show_commit",
+      "handler_location": "handlers::source_control::history_open_commit",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.show_commit must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.show_commit exposes projected state selector and disabled reason before dispatch",
+        "cmd.git.show_commit dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.show_commit has regression and accessibility evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.show_commit; Compatibility alias normalizes to cmd.source_control.history_open_commit and must not create a second commit-open language.  Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_show_commit.availability",
+      "disabled_reason_projection": "state.commands.git_show_commit.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.show_commit records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.show_commit.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_show_commit_alias exposes a stable role/name/description matching cmd.git.show_commit.",
+        "keyboard_access": "catalog.git_show_commit_alias is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_show_commit_alias preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_show_commit_alias surfaces state.commands.git_show_commit.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_show_commit_alias.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.show_commit reaches handlers::source_control::history_open_commit with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_show_commit_alias.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_show_commit.availability and disabled copy reads state.commands.git_show_commit.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_show_commit_alias.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.show_commit records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_show_commit_alias.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.show_commit records dispatch receipt cmd.git.show_commit.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_stage_hunks": {
+      "ui_element_id": "catalog.git_stage_hunks",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.stage_hunks",
+      "handler_location": "handlers::git::stage_hunks",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.stage_hunks must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.stage_hunks must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.stage_hunks dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.stage_hunks must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.stage_hunks must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.stage_hunks; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_stage_hunks.availability",
+      "disabled_reason_projection": "state.commands.git_stage_hunks.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.stage_hunks records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.stage_hunks.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_stage_hunks exposes a stable role/name/description matching cmd.git.stage_hunks.",
+        "keyboard_access": "catalog.git_stage_hunks is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_stage_hunks preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_stage_hunks surfaces state.commands.git_stage_hunks.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_stage_hunks.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.stage_hunks reaches handlers::git::stage_hunks with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_stage_hunks.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_stage_hunks.availability and disabled copy reads state.commands.git_stage_hunks.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_stage_hunks.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.stage_hunks records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_stage_hunks.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.stage_hunks records dispatch receipt cmd.git.stage_hunks.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.git_unstage_hunks": {
+      "ui_element_id": "catalog.git_unstage_hunks",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.unstage_hunks",
+      "handler_location": "handlers::git::unstage_hunks",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.unstage_hunks must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.unstage_hunks must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.unstage_hunks dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.unstage_hunks must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.unstage_hunks must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.git.unstage_hunks; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.git_unstage_hunks.availability",
+      "disabled_reason_projection": "state.commands.git_unstage_hunks.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.git.unstage_hunks records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.git.unstage_hunks.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.git_unstage_hunks exposes a stable role/name/description matching cmd.git.unstage_hunks.",
+        "keyboard_access": "catalog.git_unstage_hunks is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.git_unstage_hunks preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.git_unstage_hunks surfaces state.commands.git_unstage_hunks.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.git_unstage_hunks.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.git.unstage_hunks reaches handlers::git::unstage_hunks with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.git_unstage_hunks.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.git_unstage_hunks.availability and disabled copy reads state.commands.git_unstage_hunks.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.git_unstage_hunks.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.git.unstage_hunks records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.git_unstage_hunks.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.git.unstage_hunks records dispatch receipt cmd.git.unstage_hunks.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 13290-13301 >>>
+    "catalog.git_worktree": {
+      "ui_element_id": "catalog.git_worktree",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.git.worktree",
+      "handler_location": "handlers::git::worktree",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.git.worktree must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.git.worktree must expose projected state selector and disabled reason before dispatch",
+        "cmd.git.worktree dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.git.worktree must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.git.worktree must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

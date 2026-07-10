@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3949-3960 >>>
+L00003949	      "properties": {
+L00003950	        "parent_only_writes": {
+L00003951	          "const": true
+L00003952	        },
+L00003953	        "parent_writeback_required": {
+L00003954	          "const": true
+L00003955	        },
+L00003956	        "allowed_write_refs": {
+L00003957	          "$ref": "#/$defs/ref_list"
+L00003958	        }
+L00003959	      }
+L00003960	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3961-4336 >>>
+L00003961	    "compile_parallelism_policy": {
+L00003962	      "type": "object",
+L00003963	      "additionalProperties": false,
+L00003964	      "required": [
+L00003965	        "parallelism_required",
+L00003966	        "minimum_parallel_assignments",
+L00003967	        "assignment_receipt_refs",
+L00003968	        "completion_receipt_refs",
+L00003969	        "certification_rule"
+L00003970	      ],
+L00003971	      "properties": {
+L00003972	        "parallelism_required": {
+L00003973	          "type": "boolean"
+L00003974	        },
+L00003975	        "minimum_parallel_assignments": {
+L00003976	          "type": "integer",
+L00003977	          "minimum": 0
+L00003978	        },
+L00003979	        "assignment_receipt_refs": {
+L00003980	          "$ref": "#/$defs/ref_list"
+L00003981	        },
+L00003982	        "completion_receipt_refs": {
+L00003983	          "$ref": "#/$defs/ref_list"
+L00003984	        },
+L00003985	        "certification_rule": {
+L00003986	          "type": "string",
+L00003987	          "enum": [
+L00003988	            "not_required_for_serial_stage",
+L00003989	            "requires_assignment_and_completion_receipts",
+L00003990	            "blocked_when_required_receipts_absent"
+L00003991	          ]
+L00003992	        }
+L00003993	      },
+L00003994	      "allOf": [
+L00003995	        {
+L00003996	          "if": {
+L00003997	            "properties": {
+L00003998	              "parallelism_required": {
+L00003999	                "const": true
+L00004000	              }
+L00004001	            },
+L00004002	            "required": [
+L00004003	              "parallelism_required"
+L00004004	            ]
+L00004005	          },
+L00004006	          "then": {
+L00004007	            "properties": {
+L00004008	              "minimum_parallel_assignments": {
+L00004009	                "type": "integer",
+L00004010	                "minimum": 2
+L00004011	              },
+L00004012	              "assignment_receipt_refs": {
+L00004013	                "$ref": "#/$defs/non_empty_ref_list"
+L00004014	              },
+L00004015	              "completion_receipt_refs": {
+L00004016	                "$ref": "#/$defs/non_empty_ref_list"
+L00004017	              },
+L00004018	              "certification_rule": {
+L00004019	                "enum": [
+L00004020	                  "requires_assignment_and_completion_receipts",
+L00004021	                  "blocked_when_required_receipts_absent"
+L00004022	                ]
+L00004023	              }
+L00004024	            }
+L00004025	          }
+L00004026	        }
+L00004027	      ]
+L00004028	    },
+L00004029	    "compile_wave_assignment_receipt": {
+L00004030	      "type": "object",
+L00004031	      "additionalProperties": false,
+L00004032	      "required": [
+L00004033	        "receipt_id",
+L00004034	        "stage",
+L00004035	        "wave_id",
+L00004036	        "assignment_id",
+L00004037	        "assigned_agent_role",
+L00004038	        "issued_at_utc",
+L00004039	        "source_item_refs",
+L00004040	        "parent_writeback_required"
+L00004041	      ],
+L00004042	      "properties": {
+L00004043	        "receipt_id": {
+L00004044	          "type": "string",
+L00004045	          "minLength": 1
+L00004046	        },
+L00004047	        "stage": {
+L00004048	          "$ref": "#/$defs/stage_name"
+L00004049	        },
+L00004050	        "wave_id": {
+L00004051	          "type": "string",
+L00004052	          "minLength": 1
+L00004053	        },
+L00004054	        "assignment_id": {
+L00004055	          "type": "string",
+L00004056	          "minLength": 1
+L00004057	        },
+L00004058	        "assigned_agent_role": {
+L00004059	          "type": "string",
+L00004060	          "enum": [
+L00004061	            "parent",
+L00004062	            "subagent",
+L00004063	            "auditor",
+L00004064	            "repairer",
+L00004065	            "reviewer"
+L00004066	          ]
+L00004067	        },
+L00004068	        "issued_at_utc": {
+L00004069	          "type": "string",
+L00004070	          "minLength": 1
+L00004071	        },
+L00004072	        "source_item_refs": {
+L00004073	          "$ref": "#/$defs/non_empty_ref_list"
+L00004074	        },
+L00004075	        "parent_writeback_required": {
+L00004076	          "const": true
+L00004077	        }
+L00004078	      }
+L00004079	    },
+L00004080	    "compile_wave_completion_receipt": {
+L00004081	      "type": "object",
+L00004082	      "additionalProperties": false,
+L00004083	      "required": [
+L00004084	        "receipt_id",
+L00004085	        "stage",
+L00004086	        "wave_id",
+L00004087	        "assignment_id",
+L00004088	        "result_status",
+L00004089	        "completed_at_utc",
+L00004090	        "durable_evidence_refs",
+L00004091	        "parent_writeback_required"
+L00004092	      ],
+L00004093	      "properties": {
+L00004094	        "receipt_id": {
+L00004095	          "type": "string",
+L00004096	          "minLength": 1
+L00004097	        },
+L00004098	        "stage": {
+L00004099	          "$ref": "#/$defs/stage_name"
+L00004100	        },
+L00004101	        "wave_id": {
+L00004102	          "type": "string",
+L00004103	          "minLength": 1
+L00004104	        },
+L00004105	        "assignment_id": {
+L00004106	          "type": "string",
+L00004107	          "minLength": 1
+L00004108	        },
+L00004109	        "result_status": {
+L00004110	          "type": "string",
+L00004111	          "enum": [
+L00004112	            "complete",
+L00004113	            "blocked",
+L00004114	            "failed",
+L00004115	            "cancelled",
+L00004116	            "retry_required"
+L00004117	          ]
+L00004118	        },
+L00004119	        "completed_at_utc": {
+L00004120	          "type": "string",
+L00004121	          "minLength": 1
+L00004122	        },
+L00004123	        "durable_evidence_refs": {
+L00004124	          "$ref": "#/$defs/non_empty_ref_list"
+L00004125	        },
+L00004126	        "parent_writeback_required": {
+L00004127	          "const": true
+L00004128	        }
+L00004129	      }
+L00004130	    },
+L00004131	    "compile_wave_contract": {
+L00004132	      "type": "object",
+L00004133	      "additionalProperties": false,
+L00004134	      "required": [
+L00004135	        "wave_id",
+L00004136	        "assignment_id",
+L00004137	        "stage",
+L00004138	        "assigned_agent_role",
+L00004139	        "source_item_refs",
+L00004140	        "read_set",
+L00004141	        "write_set",
+L00004142	        "forbidden_writes",
+L00004143	        "parent_only_writes",
+L00004144	        "result_status",
+L00004145	        "retry_route",
+L00004146	        "resume_ref",
+L00004147	        "durable_evidence_refs",
+L00004148	        "assignment_receipt",
+L00004149	        "completion_receipt",
+L00004150	        "parent_writeback_required"
+L00004151	      ],
+L00004152	      "properties": {
+L00004153	        "wave_id": {
+L00004154	          "type": "string"
+L00004155	        },
+L00004156	        "assignment_id": {
+L00004157	          "type": "string"
+L00004158	        },
+L00004159	        "stage": {
+L00004160	          "$ref": "#/$defs/stage_name"
+L00004161	        },
+L00004162	        "assigned_agent_role": {
+L00004163	          "type": "string",
+L00004164	          "enum": [
+L00004165	            "parent",
+L00004166	            "subagent",
+L00004167	            "auditor",
+L00004168	            "repairer",
+L00004169	            "reviewer"
+L00004170	          ]
+L00004171	        },
+L00004172	        "source_item_refs": {
+L00004173	          "$ref": "#/$defs/ref_list"
+L00004174	        },
+L00004175	        "read_set": {
+L00004176	          "$ref": "#/$defs/ref_list"
+L00004177	        },
+L00004178	        "write_set": {
+L00004179	          "$ref": "#/$defs/ref_list"
+L00004180	        },
+L00004181	        "forbidden_writes": {
+L00004182	          "$ref": "#/$defs/ref_list"
+L00004183	        },
+L00004184	        "parent_only_writes": {
+L00004185	          "const": true
+L00004186	        },
+L00004187	        "result_status": {
+L00004188	          "$ref": "#/$defs/result_status"
+L00004189	        },
+L00004190	        "retry_route": {
+L00004191	          "$ref": "#/$defs/compile_wave_retry_route"
+L00004192	        },
+L00004193	        "resume_ref": {
+L00004194	          "anyOf": [
+L00004195	            {
+L00004196	              "$ref": "#/$defs/ref"
+L00004197	            },
+L00004198	            {
+L00004199	              "type": "null"
+L00004200	            }
+L00004201	          ]
+L00004202	        },
+L00004203	        "durable_evidence_refs": {
+L00004204	          "$ref": "#/$defs/ref_list"
+L00004205	        },
+L00004206	        "assignment_receipt": {
+L00004207	          "$ref": "#/$defs/compile_wave_assignment_receipt"
+L00004208	        },
+L00004209	        "completion_receipt": {
+L00004210	          "anyOf": [
+L00004211	            {
+L00004212	              "$ref": "#/$defs/compile_wave_completion_receipt"
+L00004213	            },
+L00004214	            {
+L00004215	              "type": "null"
+L00004216	            }
+L00004217	          ]
+L00004218	        },
+L00004219	        "parent_writeback_required": {
+L00004220	          "const": true
+L00004221	        }
+L00004222	      },
+L00004223	      "allOf": [
+L00004224	        {
+L00004225	          "if": {
+L00004226	            "properties": {
+L00004227	              "result_status": {
+L00004228	                "const": "complete"
+L00004229	              }
+L00004230	            },
+L00004231	            "required": [
+L00004232	              "result_status"
+L00004233	            ]
+L00004234	          },
+L00004235	          "then": {
+L00004236	            "properties": {
+L00004237	              "completion_receipt": {
+L00004238	                "$ref": "#/$defs/compile_wave_completion_receipt"
+L00004239	              },
+L00004240	              "durable_evidence_refs": {
+L00004241	                "$ref": "#/$defs/non_empty_ref_list"
+L00004242	              }
+L00004243	            }
+L00004244	          }
+L00004245	        }
+L00004246	      ]
+L00004247	    },
+L00004248	    "compile_worklist_item": {
+L00004249	      "type": "object",
+L00004250	      "additionalProperties": false,
+L00004251	      "required": [
+L00004252	        "item_id",
+L00004253	        "source_refs",
+L00004254	        "status",
+L00004255	        "assigned_wave_ref",
+L00004256	        "evidence_refs"
+L00004257	      ],
+L00004258	      "properties": {
+L00004259	        "item_id": {
+L00004260	          "type": "string"
+L00004261	        },
+L00004262	        "source_refs": {
+L00004263	          "$ref": "#/$defs/ref_list"
+L00004264	        },
+L00004265	        "status": {
+L00004266	          "$ref": "#/$defs/result_status"
+L00004267	        },
+L00004268	        "assigned_wave_ref": {
+L00004269	          "anyOf": [
+L00004270	            {
+L00004271	              "$ref": "#/$defs/ref"
+L00004272	            },
+L00004273	            {
+L00004274	              "type": "null"
+L00004275	            }
+L00004276	          ]
+L00004277	        },
+L00004278	        "evidence_refs": {
+L00004279	          "$ref": "#/$defs/ref_list"
+L00004280	        }
+L00004281	      }
+L00004282	    },
+L00004283	    "workgraph_node": {
+L00004284	      "type": "object",
+L00004285	      "additionalProperties": false,
+L00004286	      "required": [
+L00004287	        "node_ref",
+L00004288	        "source_candidate_refs",
+L00004289	        "status",
+L00004290	        "ordering"
+L00004291	      ],
+L00004292	      "properties": {
+L00004293	        "node_ref": {
+L00004294	          "$ref": "#/$defs/ref"
+L00004295	        },
+L00004296	        "source_candidate_refs": {
+L00004297	          "$ref": "#/$defs/ref_list"
+L00004298	        },
+L00004299	        "status": {
+L00004300	          "type": "string",
+L00004301	          "enum": [
+L00004302	            "draft",
+L00004303	            "review_ready",
+L00004304	            "blocked",
+L00004305	            "approved"
+L00004306	          ]
+L00004307	        },
+L00004308	        "ordering": {
+L00004309	          "$ref": "#/$defs/ordering"
+L00004310	        }
+L00004311	      }
+L00004312	    },
+L00004313	    "dependency_edge": {
+L00004314	      "type": "object",
+L00004315	      "additionalProperties": false,
+L00004316	      "required": [
+L00004317	        "from_ref",
+L00004318	        "to_ref",
+L00004319	        "dependency_type",
+L00004320	        "evidence_refs"
+L00004321	      ],
+L00004322	      "properties": {
+L00004323	        "from_ref": {
+L00004324	          "$ref": "#/$defs/ref"
+L00004325	        },
+L00004326	        "to_ref": {
+L00004327	          "$ref": "#/$defs/ref"
+L00004328	        },
+L00004329	        "dependency_type": {
+L00004330	          "$ref": "#/$defs/dependency_type"
+L00004331	        },
+L00004332	        "evidence_refs": {
+L00004333	          "$ref": "#/$defs/ref_list"
+L00004334	        }
+L00004335	      }
+L00004336	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=4337-4348 >>>
+L00004337	    "scheduler_policy": {
+L00004338	      "type": "object",
+L00004339	      "additionalProperties": false,
+L00004340	      "required": [
+L00004341	        "scheduler_lane",
+L00004342	        "parallelism_policy",
+L00004343	        "ordering"
+L00004344	      ],
+L00004345	      "properties": {
+L00004346	        "scheduler_lane": {
+L00004347	          "$ref": "#/$defs/scheduler_lane"
+L00004348	        },

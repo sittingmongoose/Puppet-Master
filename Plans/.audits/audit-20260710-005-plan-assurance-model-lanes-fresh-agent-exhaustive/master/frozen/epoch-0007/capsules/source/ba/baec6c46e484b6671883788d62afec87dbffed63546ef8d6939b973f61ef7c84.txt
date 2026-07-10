@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=304-315 >>>
+L00000304	
+L00000305	For worktree-bound threads, edit and file cards display paths relative to the resolved `working_directory`; for example, `src/main.rs (+12 −3)` is shown relative to the worktree root and opens by resolving that relative path under `working_directory`, with no special path rewriting layer. Terminal commands opened from the same thread set terminal `cwd` to the worktree path, not the main project root, and persist that worktree path as `cwd_snapshot` on the `terminal_session_record`.
+L00000306	
+L00000307	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md
+L00000308	
+L00000309	### 4.2 Subtask execution
+L00000310	
+L00000311	command-subtask behavior is not a lighter-weight exception to the canonical child-run contract. When `subtask: true` is set, the command launches a canonical child run through the same delegated-run contract used everywhere else.
+L00000312	
+L00000313	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+L00000314	
+L00000315	`subtask: true` is not a lighter-weight interpretation of a normal prompt submission. It creates a child-session / `/delegation` boundary with required parent-child lineage, storage, `/permission/capability`, and runtime evidence.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=316-694 >>>
+L00000316	
+L00000317	Required behavior:
+L00000318	- resolve requested and effective Persona/runtime/model/effort state using the same pipeline as any other child run.
+L00000319	- classify the child dependency as `required` or `/optional`; `required` is the safer default for command subtasks unless the command explicitly declares advisory behavior.
+L00000320	- inherit and then narrow the parent permission ceiling and compatible capability universe, including child capability narrowing before dispatch.
+L00000321	- record the parent-child linkage in canonical event and storage records.
+L00000322	- do not silently fallback when the command explicitly requested a runtime surface that is unavailable or incompatible; this is the command-level `no-silent-fallback` rule.
+L00000323	- record the requested-vs-effective (`/effective`) provider `/runtime` surface when policy, availability, compatibility, or account binding changes the launched child.
+L00000324	- borrow provider child-session/delegation patterns where useful, but never require provider-native `session-tree` semantics on direct providers. PM canonical child-run identity remains the SSOT even when the provider has no native session tree.
+L00000325	- source-code evidence such as OpenCode `task.ts` is upstream evidence only; PM enforces its own `provider-family` / TOS guard for native subagent routing instead of assuming upstream task launch behavior is sufficient.
+L00000326	- permission resolution for command-launched child work defers to `Plans/Permissions_System.md` (`/Permissions_System.md`) for lane, package, `/package/account-bounded`, account-bounded approval scope, and multi-lane orchestrator runs; Commands may request or display the selected approval scope, but must not synthesize a weaker command-local policy.
+L00000327	- generalized projection freshness uses storage and owner vocabulary: `storage-plan.md` and `storage-plan` reserve `trust_tier` for Preview and `/browser` semantics, so Commands uses projection-freshness and `/degraded` state for stale command projections rather than reusing `trust_tier` as a generic trust/degraded label.
+L00000328	
+L00000329	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+L00000330	### 4.3 Persona selection
+L00000331	
+L00000332	Command subtasks follow the canonical child Persona resolution order.
+L00000333	
+L00000334	ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+L00000335	
+L00000336	Rules:
+L00000337	- explicit command Persona override wins.
+L00000338	- otherwise the command-provided task or child type resolves Persona through the normal child Persona pipeline.
+L00000339	- parent Persona is at most a weak hint.
+L00000340	- child Persona does not silently copy the parent Persona.
+L00000341	### 4.4 Mode and model overrides
+L00000342	
+L00000343	Provider, model, account, Persona, and worker-policy overrides, including the `/model/account/worker-policy` family, use the same requested/effective display grammar: command UI shows the requested override, effective result, inheritance source, and policy remap reason instead of deriving it from ad hoc color, disappearance, or current-settings winner state.
+L00000344	
+L00000345	
+L00000346	Command overrides are explicit child requests, not bypasses around the runtime model.
+L00000347	
+L00000348	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000349	
+L00000350	Rules:
+L00000351	- command mode overrides are capped by parent mode authority.
+L00000352	- command model/runtime surface overrides become explicit child requests.
+L00000353	- explicit requests do not silently fallback.
+L00000354	- requested versus effective runtime/model/effort fields remain visible when remaps occur because of compatibility or policy.
+L00000355	
+L00000356	### 4.5 Current Working Set
+L00000357	
+L00000358	Command cards, command-launched child runs, and command-produced blocks remain in the current `working-set` while they are the latest active result in the current branch of work, directly support the next intended action, participate in unresolved comparison `/approval/question/validation` state, or are explicitly focused or `/pinned` by the user. They leave the working set when a newer result supersedes the same purpose, the finding has been carried forward, or execution clearly moves to a different branch of work.
+L00000359	
+L00000360	### 4.6 Template resolution order
+L00000361	
+L00000362	Template resolution proceeds in this order:
+L00000363	1. Parse YAML frontmatter; extract field values.
+L00000364	2. Extract placeholder hints (`$ARGUMENTS`, `$1`, `$2`, ...) from body.
+L00000365	3. Substitute placeholders with invocation arguments.
+L00000366	4. Resolve `@path` file includes (permission-checked).
+L00000367	5. Resolve `` !`command` `` shell injections (permission-checked).
+L00000368	6. The fully resolved body is the prompt submitted to the run.
+L00000369	
+L00000370	ContractRef: ContractName:Plans/Commands_System.md#EXECUTION
+L00000371	
+L00000372	---
+L00000373	
+L00000374	## 5. Permissions integration
+L00000375	
+L00000376	<a id="PERMISSIONS"></a>
+L00000377	
+L00000378	### 5.1 Shell injection permission check
+L00000379	
+L00000380	Shell injection (`` !`command` ``) is evaluated against the `bash` permission key using the resolution algorithm in `Plans/Permissions_System.md` §8. The shell command string is the invocation context for granular pattern matching.
+L00000381	
+L00000382	If the resolution yields `ask`, the approval UI is shown with the full shell command displayed. The user's response follows `Plans/Permissions_System.md` §6 semantics:
+L00000383	- `once`: Execute this injection only.
+L00000384	- `for session`: Insert a session-scoped allow rule for the command pattern.
+L00000385	- `always`: Create the durable allow defined by `Plans/Permissions_System.md` §6.
+L00000386	- `deny`: Block this injection for the current blocked episode.
+L00000387	
+L00000388	Command permission prompts inherit parallel actor scoping. HITL/tool and `/tool` approval semantics normalize onto one blocked-episode model with explicit scope keying, field-family cleanup, and durable provenance. When resolving command-launched work, template file inclusion, or shell injection, the invocation must pass `actor/lane/run/account` and `/lane/run/account` scope so `session-scoped` `always` approvals, `reject-cascade` rules, and doom-loop `three consecutive times` counters are evaluated per actor/lane/run/account instead of across unrelated interleaved concurrent execution. If that context is under-specified, the command must present the blocked-overlay/HITL route instead of pretending a global approval or denial is safe. The legacy headless `ask -> deny unless HITL at current tier boundary` phrase is tier-era shorthand and resolves to normal blocked-overlay routing.
+L00000389	
+L00000390	The same permission algorithm owns `ask/plan` and `external_publish_side_effect` semantics. A command that would publish externally, mutate durable state, or ask the user to approve a plan must resolve both concepts through one canonical approval calculation, not through separate command-template text.
+L00000391	
+L00000392	ContractRef: ContractName:Plans/Permissions_System.md#ASK-FLOW, ContractName:Plans/Permissions_System.md#RESOLUTION
+L00000393	
+L00000394	### 5.2 File inclusion permission check
+L00000395	
+L00000396	File inclusion (`@path`) is evaluated against the `read` permission key. The file path is the invocation context. Same `ask` flow semantics apply.
+L00000397	
+L00000398	ContractRef: ContractName:Plans/Permissions_System.md#5-tool-permission-keys
+L00000399	
+L00000400	### 5.3 `permissions_profile_override`
+L00000401	
+L00000402	If a command specifies `permissions_profile_override`, the named profile is loaded from `~/.config/puppet-master/permission-profiles/<profile_id>.toml` and applied as an additional precedence layer between Persona overrides and project-level rules (effectively replacing the Persona's profile for this command's run).
+L00000403	
+L00000404	ContractRef: ContractName:Plans/Permissions_System.md#PRECEDENCE-LAYERS
+L00000405	
+L00000406	---
+L00000407	
+L00000408	## 6. GUI requirements
+L00000409	### 6.6 Catalog-installed command lifecycle
+L00000410	
+L00000411	Catalog-installed commands are still canonical User Commands after installation.
+L00000412	
+L00000413	Rules:
+L00000414	- installation creates or updates a command in the same canonical command roots described in §2
+L00000415	- updates follow the same validation rules as manual edits
+L00000416	- removal of an installed command is blocked or deferred when the command is actively referenced by an open edit session or another subsystem requires explicit replacement/confirmation
+L00000417	- the GUI must show whether a command is local/manual, catalog-installed, or catalog-installed with local override
+L00000418	- uninstalling a catalog item must not silently delete a user-authored project override that intentionally shadows it
+L00000419	
+L00000420	<a id="GUI-COMMANDS"></a>
+L00000421	
+L00000422	The Commands settings screen is part of the **Rules & Commands** tab in the unified Settings page (`Plans/FinalGUISpec.md` §7.4). All GUI surfaces described here are normative; `Plans/FinalGUISpec.md` references this section as the SSOT for Commands GUI behavior.
+L00000423	
+L00000424	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+L00000425	
+L00000426	### 6.1 Commands management section
+L00000427	
+L00000428	A **Commands** section within Settings > Rules & Commands MUST provide the following.
+L00000429	
+L00000430	ContractRef: ContractName:Plans/Commands_System.md#GUI-COMMANDS
+L00000431	
+L00000432	#### 6.1.1 Scope selector
+L00000433	
+L00000434	
+L00000435	A toggle at the top of the Commands section:
+L00000436	- **Global** — manages commands in `~/.config/puppet-master/commands/`.
+L00000437	- **Project** (visible when a project is active) — manages commands in `<project_root>/.puppet-master/commands/`.
+L00000438	
+L00000439	#### 6.1.2 Command list
+L00000440	
+L00000441	A table listing all resolved commands (project + global, project-local indicated with badge). Columns:
+L00000442	- **Name** (bold, with `/x-` prefix shown)
+L00000443	- **Scope** badge (project / global)
+L00000444	- **Description** (truncated to 1 line)
+L00000445	- **Persona** (if set; otherwise "—")
+L00000446	- **Mode** (if set; otherwise "inherit")
+L00000447	- **Model** (if set; otherwise "inherit")
+L00000448	- **Subtask** indicator (checkbox icon if `true`)
+L00000449	
+L00000450	Sorted alphabetically by name; project-local entries sort before global when names match (indicating override).
+L00000451	
+L00000452	#### 6.1.3 Create
+L00000453	
+L00000454	"New Command" button opens an editor form with:
+L00000455	- **Name** (text input; validated per §2.5; collision check per §2.4)
+L00000456	- **Description** (text input; required; max 200 chars)
+L00000457	- **Persona** (dropdown populated from Persona registry, or null)
+L00000458	- **Mode** (dropdown: inherit / ask / plan / regular / yolo)
+L00000459	- **Model** (dropdown populated from model discovery, or null/inherit)
+L00000460	- **Subtask** (toggle; default off)
+L00000461	- **Permissions profile override** (dropdown populated from permission profiles, or null)
+L00000462	- **Override built-in** (toggle; default off; visible only in Expert mode; reserved Assistant Chat slash commands fail validation even if this toggle is enabled, because `override_builtin` does not apply to canonical reserved chat commands.)
+L00000463	- **Template body** (Markdown editor with syntax highlighting for `$ARGUMENTS`, `$N`, `@path`, `` !`cmd` `` patterns)
+L00000464	
+L00000465	Scope selector: project-local or global.
+L00000466	
+L00000467	#### 6.1.4 Edit
+L00000468	
+L00000469	Row click or edit button opens the same editor pre-populated. Editing a global command while a project is active offers "Save as project override" (creates project-local copy) or "Save globally."
+L00000470	
+L00000471	#### 6.1.5 Delete
+L00000472	
+L00000473	Delete button with confirmation modal. Deleting a project-local command that overrides a global one reveals the global version. Deleting a global command with no project override removes it entirely.
+L00000474	
+L00000475	#### 6.1.6 Schema validation on save
+L00000476	
+L00000477	On every save, validate the command file against the schema (§3). Display inline errors for: reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format. If `override_builtin: true` is set while the command name matches a reserved Assistant Chat slash command, display a validation error explaining that `override_builtin` does not apply to canonical reserved chat commands. Block save until errors are resolved.
+L00000478	
+L00000479	### 6.2 Dry-run preview
+L00000480	
+L00000481	<a id="DRY-RUN"></a>
+L00000482	
+L00000483	A **"Preview"** button in the command editor resolves the template with sample arguments and displays the fully rendered prompt without submitting it. The preview:
+L00000484	- Shows placeholder substitutions highlighted.
+L00000485	- Shows file-include results (or permission-blocked placeholders).
+L00000486	- Shows shell-injection results (or permission-blocked placeholders).
+L00000487	- Uses a read-only rendered Markdown view.
+L00000488	
+L00000489	The preview does NOT execute any run. Shell injections in preview mode execute the shell command (subject to `bash` permission) but do not submit the result to any agent.
+L00000490	
+L00000491	### 6.3 Shortcut binding
+L00000492	
+L00000493	## 7. Reserved built-in slash commands
+L00000494	
+L00000495	This section owns `## 7. Reserved built-in slash commands` as the locked reserved-set contract. The same built-in slash-command family must stay visible here and in consumers: `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/web`, `/skill`, and `/cancel` remain reserved built-ins; `/clear` is removed; `/cancel` is a deprecated alias to `/stop`; and traceability for this reserved command family includes `obl-046` and `obl-047`.
+L00000496	
+L00000497	Packet regeneration treats this owner as a `replace_section` unit: repairs for the reserved-set contract replace `## 7. Reserved built-in slash commands` itself rather than appending raw material after `### 6.3 Shortcut binding`, so stale-residue child/parent packet material cannot survive beside the canonical `/web`, `/skill`, and `/cancel` rules.
+L00000498	
+L00000499	The `/web` family is reserved as one command family, not flattened into independent top-level commands. Bare `/web` has no-default execution behavior: it opens help/autocomplete only, and execution requires a subcommand such as `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, or `/web map`. The stale rule `Bare /web (with query argument) routes to cmd.web.search by default` is retired; `cmd.web.search` is not the implicit destination for bare `/web`.
+L00000500	
+L00000501	The reserved `/web` slash family is one entrypoint into the shared PM WebOperation / BrowserAction dispatcher. Slash, command palette, natural-language user intent, autonomous assistant/subagent initiation, Goal Runtime, PRD Builder, and Planning Wizard requests resolve to the same `cmd.chat.web.search`, `cmd.chat.web.fetch`, `cmd.chat.web.extract`, `cmd.chat.web.research`, `cmd.chat.web.crawl`, or `cmd.chat.web.map` IDs before tool dispatch. Dispatch payloads preserve `invocation_source`, optional `agent_reason`, and source IDs, and reading a URL always normalizes to `webfetch` rather than search.
+L00000502	
+L00000503	This section is the slash-command SSOT for the single canonical set of reserved chat slash commands; consumers mirror these commands rather than defining local variants.
+L00000504	
+L00000505	`override_builtin` is /forbid for every reserved built-in slash command. If `override_builtin` survives for extension design, it is narrowed to non-core command namespaces only and cannot override `/web`, `/skill`, `/cancel`, `/clear`, `/stop`, or other canonical Assistant Chat built-ins.
+L00000506	
+L00000507	Exact reserved-command behavior: bare /web has no default action, bare /skill is discovery or invocation only, /rewind dispatches conversation-only rewind, /revert dispatches file-mutation restore, /share/settings/doctor/help route to their owning surfaces, /cancel remains a deprecated alias to /stop, and /clear stays removed rather than a thread-clear command.
+L00000508	
+L00000509	
+L00000510	This section defines the canonical contract for this surface.
+L00000511	
+L00000512	Core rules:
+L00000513	- The reserved built-in slash-command set is locked and non-overridable; bare /web has no default action, bare /skill is discovery or invocation only, /cancel remains a deprecated alias to /stop, and /clear stays removed.
+L00000514	- The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
+L00000515	
+L00000516	Fields:
+L00000517	- slash prototype
+L00000518	- stable command ID
+L00000519	- subcommand-required parsing
+L00000520	
+L00000521	Labels and values:
+L00000522	- /new
+L00000523	- /model
+L00000524	- /effort
+L00000525	- /mode
+L00000526	- /export
+L00000527	- /compact
+L00000528	- /stop
+L00000529	- /resume
+L00000530	- /rewind
+L00000531	- /revert
+L00000532	- /share
+L00000533	- /settings
+L00000534	- /doctor
+L00000535	- /help
+L00000536	- /web
+L00000537	- /skill
+L00000538	- /cancel
+L00000539	- /goal
+L00000540	- /goal again
+L00000541	- reserved built-ins
+L00000542	
+L00000543	Rules:
+L00000544	- /web search <query>
+L00000545	- /web extract <url>
+L00000546	- /web research <task>
+L00000547	- /web crawl <url>
+L00000548	- /web map <url>
+L00000549	- cmd.chat.web.search
+L00000550	- cmd.chat.web.extract
+L00000551	- cmd.chat.web.research
+L00000552	- /web fetch <url>
+L00000553	- cmd.chat.web.fetch
+L00000554	- cmd.chat.web.crawl
+L00000555	- cmd.chat.web.map
+L00000556	- bare /web shows help/autocomplete only
+L00000557	- do not flatten /web into separate slash families
+L00000558	- subcommand is required for execution
+L00000559	- URL normalization applies
+L00000560	- parse failure shows usage
+L00000561	- /cancel resolves internally to cmd.chat.stop
+L00000562	- /goal resolves internally to cmd.chat.goal.start.
+L00000563	- /goal again resolves internally to cmd.chat.goal.update.
+L00000564	- /rewind dispatches `cmd.chat.rewind` and remains conversation-only
+L00000565	- /revert dispatches `cmd.chat.revert` and remains file-mutation restore, not conversation rewind
+L00000566	- /share, /settings, /doctor, and /help are reserved built-in slash entries that route to their owning thread, settings, health, and help surfaces rather than user-defined commands
+L00000567	- /clear stays removed and must not return as a `thread-clear` command
+L00000568	- Source cleanup shorthand `/de-duplication`, `/research-focused`, `/risky`, and `thread-clear` normalizes to reserved-command alias policy plus ask-gated web permission posture; it does not create extra slash commands.
+L00000569	- /web remains discoverable in catalog
+L00000570	- deprecated aliases shown distinctly from active commands
+L00000571	- reserved commands shown as non-editable in catalog
+L00000572	
+L00000573	Goal Mode reserved slash commands:
+L00000574	- `/goal` starts Goal Mode through `cmd.chat.goal.start`.
+L00000575	- `/goal again` updates the active goal through `cmd.chat.goal.update`.
+L00000576	- These are reserved Assistant Chat built-ins and cannot be overridden by User Commands.
+L00000577	
+L00000578	## 7. UICommand catalog entry
+L00000579	
+L00000580	<a id="UICOMMAND-ENTRY"></a>
+L00000581	
+L00000582	The following UICommand ID is the required dispatch bridge for User Command execution from any invocation surface. Registration remains owned by `Plans/UI_Command_Catalog.md`; this document does not make `cmd.chat.run_user_command` registered by assertion.
+L00000583	
+L00000584	| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+L00000585	|---|---|---|---|
+L00000586	| `cmd.chat.run_user_command` | `{ command_name, arguments? }` | `tool.invoked` when `subtask: true`; otherwise the canonical chat message event registered by the event owner, not `chat.message.submitted` unless that event is explicitly registered | Assistant chat, Command palette |
+L00000587	
+L00000588	Reserved slash-command UICommand IDs (`cmd.chat.new`, `cmd.chat.model`, etc.) are defined in `Plans/UI_Command_Catalog.md` §2.7 and are distinct from User Command execution.
+L00000589	
+L00000590	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#7-uicommand
+L00000591	
+L00000592	### 7.1 Debug Mode dispatch family
+L00000593	
+L00000594	Debug Mode actions use a separate canonical UICommand family, `cmd.debug.*`, for assistant-thread investigation control. These dispatch IDs are internal wiring identifiers, not User Commands, and they let Assistant Chat, the editor, and debug-adjacent surfaces invoke investigation lifecycle actions without overloading the User Command namespace.
+L00000595	
+L00000596	| command_id | label | description | precondition |
+L00000597	|---|---|---|---|
+L00000598	| `cmd.debug.start` | Start Investigation | Begins a new debug investigation in current thread | `chat_active && !investigation_active` |
+L00000599	| `cmd.debug.stop` | End Investigation | Concludes the active investigation | `investigation_active` |
+L00000600	| `cmd.debug.pause` | Pause Investigation | Pauses evidence collection | `investigation_active` |
+L00000601	| `cmd.debug.resume` | Resume Investigation | Resumes paused investigation | `investigation_paused` |
+L00000602	| `cmd.debug.add_breakpoint` | Add Breakpoint | Adds a breakpoint at current editor position | `editor_active && investigation_active` |
+L00000603	| `cmd.debug.remove_breakpoint` | Remove Breakpoint | Removes selected breakpoint | `breakpoint_selected` |
+L00000604	| `cmd.debug.clear_breakpoints` | Clear All Breakpoints | Removes all breakpoints | `investigation_active && has_breakpoints` |
+L00000605	| `cmd.debug.view_evidence` | View Evidence | Opens evidence panel for current investigation | `investigation_active` |
+L00000606	| `cmd.debug.step` | Step Through | Advances to next execution point | `investigation_active && at_breakpoint` |
+L00000607	| `cmd.debug.collect_snapshot` | Collect Snapshot | Captures current state as evidence | `investigation_active` |
+L00000608	
+L00000609	These Debug Mode dispatch IDs complement, rather than replace, the reserved slash-command surface described in `Plans/assistant-chat-design.md` and the broader UI command catalog in `Plans/UI_Command_Catalog.md`.
+L00000610	
+L00000611	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md
+L00000612	
+L00000613	---
+L00000614	
+L00000615	## 8. OpenCode baseline and Puppet Master deltas
+L00000616	
+L00000617	OpenCode command material is external reference input used for ALIGNED/RECONCILED/ADOPTED/REFERENCE categorization only; it does not override Puppet Master command names, dispatch rules, storage paths, or reserved slash-command policy.
+L00000618	
+L00000619	
+L00000620	<a id="BASELINE-DELTAS"></a>
+L00000621	
+L00000622	Per `Plans/OpenCode_Deep_Extraction.md` §7D and §9D:
+L00000623	
+L00000624	### 8.1 Baseline
+L00000625	
+L00000626	OpenCode loads commands from four sources: built-in commands (`init`, `review`), config-defined commands, MCP prompts (converted to commands), and skills (registered as commands if no name collision). Discovery paths: `.opencode/commands/<name>.md` (project) and `~/.config/opencode/commands/<name>.md` (global). Template features: `$ARGUMENTS`, `$1`/`$2` positional args, `` !`shell` `` injection, `@file` inclusion. `subtask: true` runs as a subagent task. `model` override uses `provider_id/model_id` format. Custom commands can override built-in commands by name; when a user-defined command has the same name as a built-in command, the user-defined version takes precedence.
+L00000627	
+L00000628	### 8.2 Puppet Master deltas
+L00000629	
+L00000630	1. **Discovery paths:** Puppet Master uses `.puppet-master/commands/<name>.md` (project) and `~/.config/puppet-master/commands/<name>.md` (global) instead of `.opencode/` paths.
+L00000631	2. **Persona integration:** OpenCode commands specify `agent` (agent name). Puppet Master commands specify `persona` (Persona ID per `Plans/Personas.md`), which is a higher-level role definition decoupled from provider-native agent concepts.
+L00000632	3. **Permissions profile override:** OpenCode commands have no per-command permissions override. Puppet Master adds `permissions_profile_override` for fine-grained control.
+L00000633	4. **No built-in commands:** OpenCode bundles `init` and `review` as built-in commands. Puppet Master does not bundle built-in User Commands; equivalent functionality is provided through reserved slash commands (`Plans/assistant-chat-design.md` §5) and Orchestrator actions.
+L00000634	5. **MCP prompt integration:** OpenCode auto-converts MCP prompts to commands. Puppet Master treats MCP prompts as a separate mechanism; they are not auto-registered as User Commands.
+L00000635	6. **GUI management:** OpenCode has no GUI for command management. Puppet Master provides a full Commands settings screen (§6).
+L00000636	7. **Built-in command override policy:** OpenCode allows custom commands to freely override built-in commands by name. Puppet Master does not allow User Commands to override canonical reserved Assistant Chat slash commands. The `override_builtin` field is reserved for future non-chat extension points and MUST NOT be used to bypass reserved chat-command or reserved git/GitHub prefix rules.
+L00000637	8. **Provider and capability identity limits:** OpenCode final-pass evidence from `OpenCode_Deep_Extraction.md`, `OpenCode_Coverage_Matrix.md`, `Provider_OpenCode`, and `Provider_OpenCode.md` remains external reference input for command behavior only. Puppet Master still requires its own SSE filter discriminator, stable mapping of OpenCode session IDs into provider-native identity fields, requested `/auth` versus `/effective` account identity parity, and command ID registration before adopting OpenCode-specific behavior. Capability discovery such as `capabilities.get` is a live provider/runtime contract, not a command-local cache; `Media_Generation_and_Capabilities.md`, `Media_Generation_and_Capabilities`, `Contracts_V0.md`, and `Contracts_V0` own the frozen orchestrator capability snapshot and event-registration boundaries.
+L00000638	
+L00000639	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000640	
+L00000641	---
+L00000642	
+L00000643	## 9. Acceptance criteria
+L00000644	
+L00000645	<a id="ACCEPTANCE"></a>
+L00000646	
+L00000647	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000648	
+L00000649	ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Progression_Gates.md
+L00000650	
+L00000651	<a id="AC-CMD01"></a>
+L00000652	**AC-CMD01:** Project-local commands MUST override global commands with the same name. Resolution order (§2.3) MUST be deterministic.
+L00000653	
+L00000654	<a id="AC-CMD02"></a>
+L00000655	**AC-CMD02:** User Commands MUST NOT use any reserved slash-command name (§2.4). The runtime MUST reject creation of commands with reserved names.
+L00000656	
+L00000657	<a id="AC-CMD03"></a>
+L00000658	**AC-CMD03:** Template resolution (§4.6) MUST follow the defined order: frontmatter parse → placeholder extraction → placeholder substitution → file includes → shell injection.
+L00000659	
+L00000660	<a id="AC-CMD04"></a>
+L00000661	**AC-CMD04:** Shell injection (`` !`command` ``) MUST be permission-checked against the `bash` key before execution. If denied, the injection MUST be blocked and an error substituted.
+L00000662	
+L00000663	<a id="AC-CMD05"></a>
+L00000664	**AC-CMD05:** File inclusion (`@path`) MUST be permission-checked against the `read` key. If denied, the inclusion MUST be blocked and an error substituted.
+L00000665	
+L00000666	<a id="AC-CMD06"></a>
+L00000667	**AC-CMD06:** When `subtask: true`, the command MUST execute as a child run via the `task` tool, and the parent MUST record the linkage in the event ledger.
+L00000668	
+L00000669	<a id="AC-CMD07"></a>
+L00000670	**AC-CMD07:** The GUI Commands management section (§6) MUST validate command names on save and block saves with validation errors (reserved names, invalid format, missing description).
+L00000671	
+L00000672	<a id="AC-CMD08"></a>
+L00000673	**AC-CMD08:** The dry-run preview (§6.2) MUST render the fully resolved template without submitting it to any agent run.
+L00000674	
+L00000675	<a id="AC-CMD09"></a>
+L00000676	**AC-CMD09:** Every User Command MUST appear in the command palette and the chat slash-command autocomplete unless the command is unresolved.
+L00000677	
+L00000678	<a id="AC-CMD10"></a>
+L00000679	**AC-CMD10:** User Commands MUST NOT override reserved Assistant Chat slash commands. `override_builtin` MUST NOT enable overriding canonical reserved chat commands or reserved git/GitHub prefixes.
+L00000680	
+L00000681	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Commands_System.md#COMMAND-SCHEMA
+L00000682	
+L00000683	---
+L00000684	
+L00000685	*Document created for planning only; no code changes.*
+L00000686	
+L00000687	## Owner / Consumer Map
+L00000688	
+L00000689	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Commands_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000690	
+L00000691	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000692	
+L00000693	## PlanUnits
+L00000694	
+
+<<< CONTEXT_AFTER canonical_document_lines=695-706 >>>
+L00000695	### CS-002 - Command SSOT Authority and Legacy Retirements
+L00000696	
+L00000697	```yaml
+L00000698	plan_unit_id: CS-002
+L00000699	unit_type: requirement
+L00000700	status: accepted
+L00000701	owner_doc: Plans/Commands_System.md
+L00000702	canonical_text: >-
+L00000703	  Commands_System.md is the single canonical source of truth for Puppet Master
+L00000704	  User Commands, and adjacent docs must reference its anchors rather than
+L00000705	  restating command definitions, discovery paths, template syntax, or execution
+L00000706	  semantics; legacy phase_subagents and provider-native command-name assumptions

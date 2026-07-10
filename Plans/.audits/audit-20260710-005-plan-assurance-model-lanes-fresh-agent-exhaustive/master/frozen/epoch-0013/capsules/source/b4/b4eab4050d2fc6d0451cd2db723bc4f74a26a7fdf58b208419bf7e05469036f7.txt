@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14822-14833 >>>
+L00014822	          "requirement": "cmd.github.actions.open_run_diff records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00014823	        },
+L00014824	        {
+L00014825	          "test_id": "wiring.catalog.github_actions_open_run_diff_canonical.accessibility",
+L00014826	          "evidence_kind": "accessibility_regression",
+L00014827	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00014828	        }
+L00014829	      ],
+L00014830	      "event_test_requirements": [
+L00014831	        "Assert cmd.github.actions.open_run_diff records dispatch receipt cmd.github.actions.open_run_diff.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00014832	      ]
+L00014833	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14834-15218 >>>
+L00014834	    "catalog.github_actions_open_run_in_browser": {
+L00014835	      "ui_element_id": "catalog.github_actions_open_run_in_browser",
+L00014836	      "ui_location": "Source Control > GitHub Actions > Actions > Open Run In Browser",
+L00014837	      "ui_command_id": "cmd.github.actions.open_run_in_browser",
+L00014838	      "handler_location": "handlers::github::actions_open_run_in_browser",
+L00014839	      "expected_event_types": [],
+L00014840	      "acceptance_checks": [
+L00014841	        "cmd.github.actions.open_run_in_browser must be registered in the UICommand dispatcher with typed args and result contract",
+L00014842	        "cmd.github.actions.open_run_in_browser must expose projected state selector and disabled reason before dispatch",
+L00014843	        "cmd.github.actions.open_run_in_browser dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00014844	        "cmd.github.actions.open_run_in_browser must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00014845	        "cmd.github.actions.open_run_in_browser must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00014846	      ],
+L00014847	      "evidence_required": "Production wiring contract for cmd.github.actions.open_run_in_browser; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00014848	      "state_selector": "state.commands.github_actions_open_run_in_browser.availability",
+L00014849	      "disabled_reason_projection": "state.commands.github_actions_open_run_in_browser.disabled_reason",
+L00014850	      "effect_contract": {
+L00014851	        "effect_kind": "receipt",
+L00014852	        "description": "cmd.github.actions.open_run_in_browser has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00014853	        "receipt_or_event_refs": [
+L00014854	          "cmd.github.actions.open_run_in_browser.dispatch_receipt"
+L00014855	        ]
+L00014856	      },
+L00014857	      "accessibility_contract": {
+L00014858	        "role_or_semantics": "catalog.github_actions_open_run_in_browser exposes a stable role/name/description matching cmd.github.actions.open_run_in_browser.",
+L00014859	        "keyboard_access": "catalog.github_actions_open_run_in_browser is reachable and activatable by keyboard where the control is visible.",
+L00014860	        "focus_management": "catalog.github_actions_open_run_in_browser preserves visible focus and returns focus deterministically after dispatch or error.",
+L00014861	        "disabled_announcement": "catalog.github_actions_open_run_in_browser surfaces state.commands.github_actions_open_run_in_browser.disabled_reason to assistive technology when unavailable."
+L00014862	      },
+L00014863	      "test_evidence": [
+L00014864	        {
+L00014865	          "test_id": "wiring.catalog.github_actions_open_run_in_browser.dispatcher",
+L00014866	          "evidence_kind": "dispatcher_fixture",
+L00014867	          "requirement": "Dispatching cmd.github.actions.open_run_in_browser reaches handlers::github::actions_open_run_in_browser with typed args/result contract."
+L00014868	        },
+L00014869	        {
+L00014870	          "test_id": "wiring.catalog.github_actions_open_run_in_browser.state_projection",
+L00014871	          "evidence_kind": "state_projection",
+L00014872	          "requirement": "Availability reads state.commands.github_actions_open_run_in_browser.availability and disabled copy reads state.commands.github_actions_open_run_in_browser.disabled_reason."
+L00014873	        },
+L00014874	        {
+L00014875	          "test_id": "wiring.catalog.github_actions_open_run_in_browser.effect",
+L00014876	          "evidence_kind": "receipt_or_event_assertion",
+L00014877	          "requirement": "cmd.github.actions.open_run_in_browser has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00014878	        },
+L00014879	        {
+L00014880	          "test_id": "wiring.catalog.github_actions_open_run_in_browser.accessibility",
+L00014881	          "evidence_kind": "accessibility_regression",
+L00014882	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00014883	        }
+L00014884	      ],
+L00014885	      "event_test_requirements": [
+L00014886	        "Assert cmd.github.actions.open_run_in_browser records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00014887	      ]
+L00014888	    },
+L00014889	    "catalog.github_actions_open_run_log": {
+L00014890	      "ui_element_id": "catalog.github_actions_open_run_log",
+L00014891	      "ui_location": "Github Actions surface > Open Run Log",
+L00014892	      "ui_command_id": "cmd.github_actions.open_run_log",
+L00014893	      "handler_location": "handlers::github_actions::open_run_log",
+L00014894	      "expected_event_types": [],
+L00014895	      "acceptance_checks": [
+L00014896	        "cmd.github_actions.open_run_log must be registered in the UICommand dispatcher with typed args and result contract",
+L00014897	        "cmd.github_actions.open_run_log must expose projected state selector and disabled reason before dispatch",
+L00014898	        "cmd.github_actions.open_run_log dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00014899	        "cmd.github_actions.open_run_log must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00014900	        "cmd.github_actions.open_run_log must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00014901	      ],
+L00014902	      "evidence_required": "Production wiring contract for cmd.github_actions.open_run_log; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00014903	      "state_selector": "state.commands.github_actions_open_run_log.availability",
+L00014904	      "disabled_reason_projection": "state.commands.github_actions_open_run_log.disabled_reason",
+L00014905	      "effect_contract": {
+L00014906	        "effect_kind": "receipt",
+L00014907	        "description": "cmd.github_actions.open_run_log has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00014908	        "receipt_or_event_refs": [
+L00014909	          "cmd.github_actions.open_run_log.dispatch_receipt"
+L00014910	        ]
+L00014911	      },
+L00014912	      "accessibility_contract": {
+L00014913	        "role_or_semantics": "catalog.github_actions_open_run_log exposes a stable role/name/description matching cmd.github_actions.open_run_log.",
+L00014914	        "keyboard_access": "catalog.github_actions_open_run_log is reachable and activatable by keyboard where the control is visible.",
+L00014915	        "focus_management": "catalog.github_actions_open_run_log preserves visible focus and returns focus deterministically after dispatch or error.",
+L00014916	        "disabled_announcement": "catalog.github_actions_open_run_log surfaces state.commands.github_actions_open_run_log.disabled_reason to assistive technology when unavailable."
+L00014917	      },
+L00014918	      "test_evidence": [
+L00014919	        {
+L00014920	          "test_id": "wiring.catalog.github_actions_open_run_log.dispatcher",
+L00014921	          "evidence_kind": "dispatcher_fixture",
+L00014922	          "requirement": "Dispatching cmd.github_actions.open_run_log reaches handlers::github_actions::open_run_log with typed args/result contract."
+L00014923	        },
+L00014924	        {
+L00014925	          "test_id": "wiring.catalog.github_actions_open_run_log.state_projection",
+L00014926	          "evidence_kind": "state_projection",
+L00014927	          "requirement": "Availability reads state.commands.github_actions_open_run_log.availability and disabled copy reads state.commands.github_actions_open_run_log.disabled_reason."
+L00014928	        },
+L00014929	        {
+L00014930	          "test_id": "wiring.catalog.github_actions_open_run_log.effect",
+L00014931	          "evidence_kind": "receipt_or_event_assertion",
+L00014932	          "requirement": "cmd.github_actions.open_run_log has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00014933	        },
+L00014934	        {
+L00014935	          "test_id": "wiring.catalog.github_actions_open_run_log.accessibility",
+L00014936	          "evidence_kind": "accessibility_regression",
+L00014937	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00014938	        }
+L00014939	      ],
+L00014940	      "event_test_requirements": [
+L00014941	        "Assert cmd.github_actions.open_run_log records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00014942	      ]
+L00014943	    },
+L00014944	    "catalog.github_actions_open_step_logs": {
+L00014945	      "ui_element_id": "catalog.github_actions_open_step_logs",
+L00014946	      "ui_location": "Source Control > GitHub Actions > Actions > Open Step Logs",
+L00014947	      "ui_command_id": "cmd.github.actions.open_step_logs",
+L00014948	      "handler_location": "handlers::github::actions_open_step_logs",
+L00014949	      "expected_event_types": [],
+L00014950	      "acceptance_checks": [
+L00014951	        "cmd.github.actions.open_step_logs must be registered in the UICommand dispatcher with typed args and result contract",
+L00014952	        "cmd.github.actions.open_step_logs must expose projected state selector and disabled reason before dispatch",
+L00014953	        "cmd.github.actions.open_step_logs dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00014954	        "cmd.github.actions.open_step_logs must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00014955	        "cmd.github.actions.open_step_logs must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00014956	      ],
+L00014957	      "evidence_required": "Production wiring contract for cmd.github.actions.open_step_logs; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00014958	      "state_selector": "state.commands.github_actions_open_step_logs.availability",
+L00014959	      "disabled_reason_projection": "state.commands.github_actions_open_step_logs.disabled_reason",
+L00014960	      "effect_contract": {
+L00014961	        "effect_kind": "receipt",
+L00014962	        "description": "cmd.github.actions.open_step_logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00014963	        "receipt_or_event_refs": [
+L00014964	          "cmd.github.actions.open_step_logs.dispatch_receipt"
+L00014965	        ]
+L00014966	      },
+L00014967	      "accessibility_contract": {
+L00014968	        "role_or_semantics": "catalog.github_actions_open_step_logs exposes a stable role/name/description matching cmd.github.actions.open_step_logs.",
+L00014969	        "keyboard_access": "catalog.github_actions_open_step_logs is reachable and activatable by keyboard where the control is visible.",
+L00014970	        "focus_management": "catalog.github_actions_open_step_logs preserves visible focus and returns focus deterministically after dispatch or error.",
+L00014971	        "disabled_announcement": "catalog.github_actions_open_step_logs surfaces state.commands.github_actions_open_step_logs.disabled_reason to assistive technology when unavailable."
+L00014972	      },
+L00014973	      "test_evidence": [
+L00014974	        {
+L00014975	          "test_id": "wiring.catalog.github_actions_open_step_logs.dispatcher",
+L00014976	          "evidence_kind": "dispatcher_fixture",
+L00014977	          "requirement": "Dispatching cmd.github.actions.open_step_logs reaches handlers::github::actions_open_step_logs with typed args/result contract."
+L00014978	        },
+L00014979	        {
+L00014980	          "test_id": "wiring.catalog.github_actions_open_step_logs.state_projection",
+L00014981	          "evidence_kind": "state_projection",
+L00014982	          "requirement": "Availability reads state.commands.github_actions_open_step_logs.availability and disabled copy reads state.commands.github_actions_open_step_logs.disabled_reason."
+L00014983	        },
+L00014984	        {
+L00014985	          "test_id": "wiring.catalog.github_actions_open_step_logs.effect",
+L00014986	          "evidence_kind": "receipt_or_event_assertion",
+L00014987	          "requirement": "cmd.github.actions.open_step_logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00014988	        },
+L00014989	        {
+L00014990	          "test_id": "wiring.catalog.github_actions_open_step_logs.accessibility",
+L00014991	          "evidence_kind": "accessibility_regression",
+L00014992	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00014993	        }
+L00014994	      ],
+L00014995	      "event_test_requirements": [
+L00014996	        "Assert cmd.github.actions.open_step_logs records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00014997	      ]
+L00014998	    },
+L00014999	    "catalog.github_actions_pin": {
+L00015000	      "ui_element_id": "catalog.github_actions_pin",
+L00015001	      "ui_location": "Source Control > GitHub Actions > Actions > Pin",
+L00015002	      "ui_command_id": "cmd.github.actions.pin",
+L00015003	      "handler_location": "handlers::github::actions_pin",
+L00015004	      "expected_event_types": [],
+L00015005	      "acceptance_checks": [
+L00015006	        "cmd.github.actions.pin must be registered in the UICommand dispatcher with typed args and result contract",
+L00015007	        "cmd.github.actions.pin must expose projected state selector and disabled reason before dispatch",
+L00015008	        "cmd.github.actions.pin dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00015009	        "cmd.github.actions.pin must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00015010	        "cmd.github.actions.pin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00015011	      ],
+L00015012	      "evidence_required": "Production wiring contract for cmd.github.actions.pin; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00015013	      "state_selector": "state.commands.github_actions_pin.availability",
+L00015014	      "disabled_reason_projection": "state.commands.github_actions_pin.disabled_reason",
+L00015015	      "effect_contract": {
+L00015016	        "effect_kind": "receipt",
+L00015017	        "description": "cmd.github.actions.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00015018	        "receipt_or_event_refs": [
+L00015019	          "cmd.github.actions.pin.dispatch_receipt"
+L00015020	        ]
+L00015021	      },
+L00015022	      "accessibility_contract": {
+L00015023	        "role_or_semantics": "catalog.github_actions_pin exposes a stable role/name/description matching cmd.github.actions.pin.",
+L00015024	        "keyboard_access": "catalog.github_actions_pin is reachable and activatable by keyboard where the control is visible.",
+L00015025	        "focus_management": "catalog.github_actions_pin preserves visible focus and returns focus deterministically after dispatch or error.",
+L00015026	        "disabled_announcement": "catalog.github_actions_pin surfaces state.commands.github_actions_pin.disabled_reason to assistive technology when unavailable."
+L00015027	      },
+L00015028	      "test_evidence": [
+L00015029	        {
+L00015030	          "test_id": "wiring.catalog.github_actions_pin.dispatcher",
+L00015031	          "evidence_kind": "dispatcher_fixture",
+L00015032	          "requirement": "Dispatching cmd.github.actions.pin reaches handlers::github::actions_pin with typed args/result contract."
+L00015033	        },
+L00015034	        {
+L00015035	          "test_id": "wiring.catalog.github_actions_pin.state_projection",
+L00015036	          "evidence_kind": "state_projection",
+L00015037	          "requirement": "Availability reads state.commands.github_actions_pin.availability and disabled copy reads state.commands.github_actions_pin.disabled_reason."
+L00015038	        },
+L00015039	        {
+L00015040	          "test_id": "wiring.catalog.github_actions_pin.effect",
+L00015041	          "evidence_kind": "receipt_or_event_assertion",
+L00015042	          "requirement": "cmd.github.actions.pin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00015043	        },
+L00015044	        {
+L00015045	          "test_id": "wiring.catalog.github_actions_pin.accessibility",
+L00015046	          "evidence_kind": "accessibility_regression",
+L00015047	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00015048	        }
+L00015049	      ],
+L00015050	      "event_test_requirements": [
+L00015051	        "Assert cmd.github.actions.pin records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00015052	      ]
+L00015053	    },
+L00015054	    "catalog.github_actions_pin_workflow": {
+L00015055	      "ui_element_id": "catalog.github_actions_pin_workflow",
+L00015056	      "ui_location": "Github Actions surface > Pin Workflow",
+L00015057	      "ui_command_id": "cmd.github_actions.pin_workflow",
+L00015058	      "handler_location": "handlers::github_actions::pin_workflow",
+L00015059	      "expected_event_types": [],
+L00015060	      "acceptance_checks": [
+L00015061	        "cmd.github_actions.pin_workflow must be registered in the UICommand dispatcher with typed args and result contract",
+L00015062	        "cmd.github_actions.pin_workflow must expose projected state selector and disabled reason before dispatch",
+L00015063	        "cmd.github_actions.pin_workflow dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00015064	        "cmd.github_actions.pin_workflow must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00015065	        "cmd.github_actions.pin_workflow must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00015066	      ],
+L00015067	      "evidence_required": "Production wiring contract for cmd.github_actions.pin_workflow; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00015068	      "state_selector": "state.commands.github_actions_pin_workflow.availability",
+L00015069	      "disabled_reason_projection": "state.commands.github_actions_pin_workflow.disabled_reason",
+L00015070	      "effect_contract": {
+L00015071	        "effect_kind": "receipt",
+L00015072	        "description": "cmd.github_actions.pin_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00015073	        "receipt_or_event_refs": [
+L00015074	          "cmd.github_actions.pin_workflow.dispatch_receipt"
+L00015075	        ]
+L00015076	      },
+L00015077	      "accessibility_contract": {
+L00015078	        "role_or_semantics": "catalog.github_actions_pin_workflow exposes a stable role/name/description matching cmd.github_actions.pin_workflow.",
+L00015079	        "keyboard_access": "catalog.github_actions_pin_workflow is reachable and activatable by keyboard where the control is visible.",
+L00015080	        "focus_management": "catalog.github_actions_pin_workflow preserves visible focus and returns focus deterministically after dispatch or error.",
+L00015081	        "disabled_announcement": "catalog.github_actions_pin_workflow surfaces state.commands.github_actions_pin_workflow.disabled_reason to assistive technology when unavailable."
+L00015082	      },
+L00015083	      "test_evidence": [
+L00015084	        {
+L00015085	          "test_id": "wiring.catalog.github_actions_pin_workflow.dispatcher",
+L00015086	          "evidence_kind": "dispatcher_fixture",
+L00015087	          "requirement": "Dispatching cmd.github_actions.pin_workflow reaches handlers::github_actions::pin_workflow with typed args/result contract."
+L00015088	        },
+L00015089	        {
+L00015090	          "test_id": "wiring.catalog.github_actions_pin_workflow.state_projection",
+L00015091	          "evidence_kind": "state_projection",
+L00015092	          "requirement": "Availability reads state.commands.github_actions_pin_workflow.availability and disabled copy reads state.commands.github_actions_pin_workflow.disabled_reason."
+L00015093	        },
+L00015094	        {
+L00015095	          "test_id": "wiring.catalog.github_actions_pin_workflow.effect",
+L00015096	          "evidence_kind": "receipt_or_event_assertion",
+L00015097	          "requirement": "cmd.github_actions.pin_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00015098	        },
+L00015099	        {
+L00015100	          "test_id": "wiring.catalog.github_actions_pin_workflow.accessibility",
+L00015101	          "evidence_kind": "accessibility_regression",
+L00015102	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00015103	        }
+L00015104	      ],
+L00015105	      "event_test_requirements": [
+L00015106	        "Assert cmd.github_actions.pin_workflow records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00015107	      ]
+L00015108	    },
+L00015109	    "catalog.github_actions_rerun_workflow": {
+L00015110	      "ui_element_id": "catalog.github_actions_rerun_workflow",
+L00015111	      "ui_location": "Github Actions surface > Rerun Workflow",
+L00015112	      "ui_command_id": "cmd.github_actions.rerun_workflow",
+L00015113	      "handler_location": "handlers::github_actions::rerun_workflow",
+L00015114	      "expected_event_types": [],
+L00015115	      "acceptance_checks": [
+L00015116	        "cmd.github_actions.rerun_workflow must be registered in the UICommand dispatcher with typed args and result contract",
+L00015117	        "cmd.github_actions.rerun_workflow must expose projected state selector and disabled reason before dispatch",
+L00015118	        "cmd.github_actions.rerun_workflow dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00015119	        "cmd.github_actions.rerun_workflow must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00015120	        "cmd.github_actions.rerun_workflow must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00015121	      ],
+L00015122	      "evidence_required": "Production wiring contract for cmd.github_actions.rerun_workflow; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00015123	      "state_selector": "state.commands.github_actions_rerun_workflow.availability",
+L00015124	      "disabled_reason_projection": "state.commands.github_actions_rerun_workflow.disabled_reason",
+L00015125	      "effect_contract": {
+L00015126	        "effect_kind": "receipt",
+L00015127	        "description": "cmd.github_actions.rerun_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00015128	        "receipt_or_event_refs": [
+L00015129	          "cmd.github_actions.rerun_workflow.dispatch_receipt"
+L00015130	        ]
+L00015131	      },
+L00015132	      "accessibility_contract": {
+L00015133	        "role_or_semantics": "catalog.github_actions_rerun_workflow exposes a stable role/name/description matching cmd.github_actions.rerun_workflow.",
+L00015134	        "keyboard_access": "catalog.github_actions_rerun_workflow is reachable and activatable by keyboard where the control is visible.",
+L00015135	        "focus_management": "catalog.github_actions_rerun_workflow preserves visible focus and returns focus deterministically after dispatch or error.",
+L00015136	        "disabled_announcement": "catalog.github_actions_rerun_workflow surfaces state.commands.github_actions_rerun_workflow.disabled_reason to assistive technology when unavailable."
+L00015137	      },
+L00015138	      "test_evidence": [
+L00015139	        {
+L00015140	          "test_id": "wiring.catalog.github_actions_rerun_workflow.dispatcher",
+L00015141	          "evidence_kind": "dispatcher_fixture",
+L00015142	          "requirement": "Dispatching cmd.github_actions.rerun_workflow reaches handlers::github_actions::rerun_workflow with typed args/result contract."
+L00015143	        },
+L00015144	        {
+L00015145	          "test_id": "wiring.catalog.github_actions_rerun_workflow.state_projection",
+L00015146	          "evidence_kind": "state_projection",
+L00015147	          "requirement": "Availability reads state.commands.github_actions_rerun_workflow.availability and disabled copy reads state.commands.github_actions_rerun_workflow.disabled_reason."
+L00015148	        },
+L00015149	        {
+L00015150	          "test_id": "wiring.catalog.github_actions_rerun_workflow.effect",
+L00015151	          "evidence_kind": "receipt_or_event_assertion",
+L00015152	          "requirement": "cmd.github_actions.rerun_workflow has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00015153	        },
+L00015154	        {
+L00015155	          "test_id": "wiring.catalog.github_actions_rerun_workflow.accessibility",
+L00015156	          "evidence_kind": "accessibility_regression",
+L00015157	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00015158	        }
+L00015159	      ],
+L00015160	      "event_test_requirements": [
+L00015161	        "Assert cmd.github_actions.rerun_workflow records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00015162	      ]
+L00015163	    },
+L00015164	    "catalog.github_actions_settings_open": {
+L00015165	      "ui_element_id": "catalog.github_actions_settings_open",
+L00015166	      "ui_location": "Source Control > GitHub Actions > Actions > Settings > Open",
+L00015167	      "ui_command_id": "cmd.github.actions.settings.open",
+L00015168	      "handler_location": "handlers::github::actions_settings_open",
+L00015169	      "expected_event_types": [],
+L00015170	      "acceptance_checks": [
+L00015171	        "cmd.github.actions.settings.open must be registered in the UICommand dispatcher with typed args and result contract",
+L00015172	        "cmd.github.actions.settings.open must expose projected state selector and disabled reason before dispatch",
+L00015173	        "cmd.github.actions.settings.open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00015174	        "cmd.github.actions.settings.open must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00015175	        "cmd.github.actions.settings.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00015176	      ],
+L00015177	      "evidence_required": "Production wiring contract for cmd.github.actions.settings.open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00015178	      "state_selector": "state.commands.github_actions_settings_open.availability",
+L00015179	      "disabled_reason_projection": "state.commands.github_actions_settings_open.disabled_reason",
+L00015180	      "effect_contract": {
+L00015181	        "effect_kind": "receipt",
+L00015182	        "description": "cmd.github.actions.settings.open has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00015183	        "receipt_or_event_refs": [
+L00015184	          "cmd.github.actions.settings.open.dispatch_receipt"
+L00015185	        ]
+L00015186	      },
+L00015187	      "accessibility_contract": {
+L00015188	        "role_or_semantics": "catalog.github_actions_settings_open exposes a stable role/name/description matching cmd.github.actions.settings.open.",
+L00015189	        "keyboard_access": "catalog.github_actions_settings_open is reachable and activatable by keyboard where the control is visible.",
+L00015190	        "focus_management": "catalog.github_actions_settings_open preserves visible focus and returns focus deterministically after dispatch or error.",
+L00015191	        "disabled_announcement": "catalog.github_actions_settings_open surfaces state.commands.github_actions_settings_open.disabled_reason to assistive technology when unavailable."
+L00015192	      },
+L00015193	      "test_evidence": [
+L00015194	        {
+L00015195	          "test_id": "wiring.catalog.github_actions_settings_open.dispatcher",
+L00015196	          "evidence_kind": "dispatcher_fixture",
+L00015197	          "requirement": "Dispatching cmd.github.actions.settings.open reaches handlers::github::actions_settings_open with typed args/result contract."
+L00015198	        },
+L00015199	        {
+L00015200	          "test_id": "wiring.catalog.github_actions_settings_open.state_projection",
+L00015201	          "evidence_kind": "state_projection",
+L00015202	          "requirement": "Availability reads state.commands.github_actions_settings_open.availability and disabled copy reads state.commands.github_actions_settings_open.disabled_reason."
+L00015203	        },
+L00015204	        {
+L00015205	          "test_id": "wiring.catalog.github_actions_settings_open.effect",
+L00015206	          "evidence_kind": "receipt_or_event_assertion",
+L00015207	          "requirement": "cmd.github.actions.settings.open has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00015208	        },
+L00015209	        {
+L00015210	          "test_id": "wiring.catalog.github_actions_settings_open.accessibility",
+L00015211	          "evidence_kind": "accessibility_regression",
+L00015212	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00015213	        }
+L00015214	      ],
+L00015215	      "event_test_requirements": [
+L00015216	        "Assert cmd.github.actions.settings.open records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00015217	      ]
+L00015218	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=15219-15230 >>>
+L00015219	    "catalog.github_actions_show": {
+L00015220	      "ui_element_id": "catalog.github_actions_show",
+L00015221	      "ui_location": "Github Actions surface > Show",
+L00015222	      "ui_command_id": "cmd.github_actions.show",
+L00015223	      "handler_location": "handlers::github_actions::show",
+L00015224	      "expected_event_types": [],
+L00015225	      "acceptance_checks": [
+L00015226	        "cmd.github_actions.show must be registered in the UICommand dispatcher with typed args and result contract",
+L00015227	        "cmd.github_actions.show must expose projected state selector and disabled reason before dispatch",
+L00015228	        "cmd.github_actions.show dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00015229	        "cmd.github_actions.show must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00015230	        "cmd.github_actions.show must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 644-655 >>>
+        })
+    }
+}
+```
+
+## Configuration
+
+### Subagent Configuration
+
+The `subagentConfig` block is a compatibility import/export surface. Runtime
+admission reads `SubagentPolicy`; legacy fields remain searchable aliases and
+must not become active execution vocabulary.
+
+<<< AUTHORITATIVE_CORE 656-1050 >>>
+
+```yaml
+subagentConfig:
+  enable_tier_subagents: true
+  persona_override_mode: simple
+  tier_overrides:
+    phase: []
+    task: []
+    subtask: []
+    iteration: []
+  disabled_subagents: []
+  required_subagents: []
+  advanced_raw_registry_controls: false
+  subagentPolicy:
+    schema_id: pm.subagent_policy.v1
+    schema_version: "1.0.0"
+    enabled: true
+    mandatory_when:
+      broad_stage: true
+      high_risk: true
+      audit_or_closure: true
+      owner_conflict: true
+      user_requested: true
+    fanout_thresholds:
+      min_plan_units_for_wave: 8
+      min_owner_docs_for_wave: 3
+      min_independent_lanes_for_wave: 2
+      min_changed_files_for_wave: 6
+      min_risk_class_for_wave: high
+    limits:
+      max_parallel_subagents: 4
+      hard_max_parallel_subagents: 8
+      max_subagents_per_wave: 8
+      hard_max_subagents_per_wave: 12
+      max_waves_per_goal: 3
+      max_estimated_cost_microusd_per_wave: 2000000
+      hard_max_estimated_cost_microusd_per_wave: 10000000
+      max_estimated_tokens_per_wave: 16000
+      hard_max_estimated_tokens_per_wave: 20000
+      max_input_refs_per_subagent: 12
+      hard_max_input_refs_per_subagent: 24
+      max_input_bytes_per_subagent: 200000
+      hard_max_input_bytes_per_subagent: 1000000
+      max_prompt_tokens_per_subagent: 6000
+      hard_max_prompt_tokens_per_subagent: 12000
+      max_result_tokens_per_subagent: 2000
+      hard_max_result_tokens_per_subagent: 4000
+      max_write_targets_per_subagent: 0
+      hard_max_write_targets_per_subagent: 1
+      max_wall_clock_ms_per_child: 900000
+      hard_max_wall_clock_ms_per_child: 3600000
+      max_tool_rounds_per_child: 12
+      hard_max_tool_rounds_per_child: 30
+    retry_policy:
+      max_retry_attempts_per_child: 2
+      max_retry_attempts_per_wave: 1
+      retry_backoff_ms: 30000
+      retryable_reasons:
+        - provider_transient
+        - rate_limit
+        - tool_timeout
+        - coordination_conflict
+      non_retryable_reasons:
+        - permission_denied
+        - filesafe_denied
+        - authority_scope_denied
+        - validation_failed
+        - scope_mismatch
+        - repeated_same_read
+    compatibility_aliases:
+      enable_tier_subagents: enabled
+      subagentConfig: subagentPolicy
+      tier_overrides: scope_overrides
+      tier_overrides.phase: legacy_phase_lane_defaults
+      tier_overrides.task: legacy_package_or_work_type_defaults
+      tier_overrides.subtask: legacy_work_unit_defaults
+      tier_overrides.iteration: legacy_bounded_work_unit_defaults
+```
+
+### SubagentPolicy runtime defaults and compatibility aliases
+
+`SubagentPolicy` with `schema_id = pm.subagent_policy.v1` is the canonical runtime policy record for delegated
+SubagentWave admission. It is evaluated before any child_goal, bounded_work_unit,
+or delegated thread is spawned and is recorded in the parent GoalRun receipt.
+
+Field contract:
+- `schema_id`: string const `pm.subagent_policy.v1`.
+- `schema_version`: string, default `1.0.0`.
+- `enabled`: boolean, default `true`; compatibility alias `enable_tier_subagents`.
+- `mandatory_when`: booleans for `broad_stage`, `high_risk`, `audit_or_closure`, `owner_conflict`, and `user_requested`; all default `true`.
+- `fanout_thresholds`: integer thresholds `min_plan_units_for_wave = 8`, `min_owner_docs_for_wave = 3`, `min_independent_lanes_for_wave = 2`, `min_changed_files_for_wave = 6`, and enum `min_risk_class_for_wave = high`.
+- `limits`: `max_parallel_subagents = 4` with hard limit `8`; `max_subagents_per_wave = 8` with hard limit `12`; `max_waves_per_goal = 3`; `max_estimated_cost_microusd_per_wave = 2000000` with hard limit `10000000`; `max_estimated_tokens_per_wave = 16000` with hard limit `20000`; `max_input_refs_per_subagent = 12` with hard limit `24`; `max_input_bytes_per_subagent = 200000` with hard limit `1000000`; `max_prompt_tokens_per_subagent = 6000` with hard limit `12000`; `max_result_tokens_per_subagent = 2000` with hard limit `4000`; `max_write_targets_per_subagent = 0` for read-only waves with hard limit `1` unless parent write policy explicitly grants more; `max_wall_clock_ms_per_child = 900000` with hard limit `3600000`; `max_tool_rounds_per_child = 12` with hard limit `30`.
+- `parent_budget_ceiling`: every numeric limit must be less than or equal to the parent run envelope from `Plans/Run_Modes.md`; narrower parent remaining budget wins over the defaults above.
+- `retry_policy`: retry only `provider_transient`, `rate_limit`, `tool_timeout`, and `coordination_conflict`; default `max_retry_attempts_per_child = 2`, `max_retry_attempts_per_wave = 1`, and `retry_backoff_ms = 30000`; never retry `permission_denied`, `filesafe_denied`, `authority_scope_denied`, `validation_failed`, `scope_mismatch`, or `repeated_same_read`.
+- `write_policy`: child units default to `read_only` or `proposal_only`; live canonical writes require an explicit parent-owned `leased_writer` or `parent_writer` grant.
+- `compatibility_aliases`: maps `tier_overrides.phase`, `tier_overrides.task`, `tier_overrides.subtask`, and `tier_overrides.iteration` into compatibility import hints only. These aliases can seed lane or role defaults, but active runtime prose and receipts use node/package/seam/lane/phase, WorkNode, capability_lane, agent_role, and bounded_work_unit terms.
+
+SubagentPolicy receipts include the evaluated thresholds, selected child count,
+parallelism cap, cost ceiling, retry budget, assigned capability_lane values,
+write policy, and the exact compatibility aliases consumed, if any.
+
+## Execution unit context and worktree allocation strategy
+
+### Canonical runtime context
+
+- Consume `execution_unit_context` as the Executor-owned canonical runtime-facing context object defined in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`.
+- Demote TierContext to a derived or compatibility-only selection/decomposition helper.
+- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.
+- Orchestrator handoff, spawn, recovery, remediation, coordination, and inspection records MUST NOT redefine required fields, optional fields, enum values, or nullability; they read those rules from the Executor schema.
+- Persisted orchestrator payloads MUST NOT embed `execution_unit_context` without `schema_version`, and the payload must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+- Any remaining `TierContext` or `tier_id` mention in this subsection is compatibility-only and never canonical runtime state.
+
+### Worktree allocation strategy
+
+- Define concrete worktree allocation strategy: each `execution_unit_context` receives a lane-managed worktree lease; package or seam reuse is allowed only when lineage matches the lane assignment and no contamination guard is active.
+- Define contamination, reuse, and cleanup rules for that strategy: contaminated worktrees are quarantined until recovery clears the blocker, reuse requires clean lineage plus no dirty/conflict state, and cleanup waits for archive, receipt, and recovery checks instead of age alone.
+- This subsection stays separate from runtime-context canon language and separate from stale-token retirement language.
+
+### SCM lineage snapshot for Orchestrator consumers
+
+`scm_lineage_snapshot` is a projector-owned Orchestrator consumer snapshot assembled from canonical runtime, storage, and Source Control records for UI inspection, run receipts, blocked `/recovery`, and later `/reconciliation`. It does not replace the owner records. Every run, node, `/tier/attempt`, and attempt consumer must be able to resolve `project_id`, `repo_id`, `repo_root`, `worktree_id`, `worktree_path`, `worktree_status`, `branch_name`, `base_branch`, `upstream_remote`, `upstream_branch`, `head_commit_oid`, `baseline_commit_oid`, `compare_target_ref`, `ahead_count`, `behind_count`, `dirty_file_count`, `conflict_file_count`, `owner_run_id`, `owner_node_id`, compatibility `owner_tier_id`, `owner_attempt_id`, `safe_point_id`, `requires_safe_point_restore`, active git operation, last commit summary, and `pr_ref`.
+
+`worktree_status` uses explicit states: `clean`, `dirty`, `conflict`, `orphaned`, `unknown_ownership`, `locked`, `repairable`, and `prunable`. `Progress > Current Task`, `Progress > Orchestrator Status`, graph/detail views, History rows, blocked cards, and run receipts consume this snapshot as projection data only; mutation authority, safe-point restore rules, compare target calculation, and persisted SCM evidence remain owned by `Plans/WorktreeGitImprovement.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md`.
+
+### Compatibility retirement
+
+- Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon.
+- Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts.
+- Retirement targets are exactly: `TierContext`, `tier_id`, `TierType`, `Tiers`, `allowed_actions[]`, `reason_code`, `recovery_options[]`, `approve_continue`.
+- This subsection is retirement-only; canonical runtime-context rules and worktree-allocation rules remain in sibling subsections.
+
+#### Child effective authority and timeout contract
+
+Child timeout, budget, and `/time` supervision must reuse the corrected `Plans/Run_Modes.md` kill/done `/outcome` taxonomy. The pre-fix mixed `stop.*` / `kill.*` vocabulary is retired for child supervision: pre-dispatch budget denial is `kill.budget_exceeded`, post-response overrun after durable usage recording is `done.budget_exceeded`, and child effective authority must surface the resulting outcome without inventing a local stop-state dialect.
+
+The child timeout envelope carries `timeout_ms`, request identity, `/response` identity, parent remaining-budget snapshot, and the clamped child deadline. `/propagation` is explicit: if a child asks for more time than the parent has remaining, the child timeout is clamped and the response records the clamp. shell-isolation is contract-level behavior, not governance-level guidance; each child execution boundary owns shell scope lifecycle, teardown, and leak prevention.
+
+## Benefits
+
+1. **Dynamic Adaptation:** Automatically selects appropriate subagents based on project context
+2. **Language Awareness:** Never uses Rust engineer for Swift projects
+3. **Domain Expertise:** Matches subagents to task domains (backend/frontend/etc.)
+4. **Error Handling:** Automatically invokes debugger when errors occur
+5. **Specialization:** Uses specialized subagents for focused tasks
+6. **Inheritance:** Subagents flow down the tier hierarchy appropriately
+
+## Implementation Phases
+
+### Implementation note: Phase 1 - Project Context Detection
+- [ ] Implement `ProjectContext` detection
+- [ ] Language detection from codebase files
+- [ ] Framework detection
+- [ ] Domain inference from task descriptions
+
+### Implementation note: Phase 2 - Subagent Selector
+- [ ] Implement `SubagentSelector` with tier-level selection logic
+- [ ] Language-to-subagent mapping
+- [ ] Framework-to-subagent mapping
+- [ ] Domain-to-subagent mapping
+
+### Implementation note: Phase 3 - Orchestrator Integration
+- [ ] Add subagent selection to orchestrator
+- [ ] Build tier context from tier nodes
+- [ ] Invoke subagents via platform runners
+- [ ] Handle subagent responses
+
+### Implementation note: Phase 4 - Error Pattern Detection
+- [ ] Detect error patterns from iteration outputs
+- [ ] Automatically invoke debugger/security-auditor/etc.
+- [ ] Pattern-based subagent selection
+
+### Phase 5: Testing & Refinement
+- [ ] Test with different project types (Rust, Python, JavaScript, Swift)
+- [ ] Verify subagent selection accuracy
+- [ ] Refine selection logic based on results
+- [ ] **Provider connectivity smoke tests**: Run transport-specific smoke checks with minimal subagent-style prompts; CLI smoke for CLI-bridged providers (Cursor, Claude Code), direct API smoke for Direct-provider Gemini, and server-endpoint/tool-handshake smoke for Server-bridged OpenCode; assert success and expected output/response shape; environment-gated or manual where CI has no auth/connectivity.
+- [ ] **Subagent-invocation integration tests**: Build and execute the actual orchestrator CLI command per platform for a given tier + subagent; verify invocation path and run completion.
+- [ ] **Plan mode CLI verification (CLI-bridged only)**: Run real CLIs for CLI-bridged providers (Cursor, Claude Code) with plan mode enabled (e.g. `--mode=plan`, `--permission-mode plan`); assert exit success and that plan-mode flags are applied and honored; environment-gated like other CLI tests.
+
+## Provider Connectivity Smoke Tests & Subagent Invocation Testing
+
+### 1. Provider Connectivity Smoke Tests
+
+**Purpose:** Confirm that each provider's invocation path (CLI for CLI-bridged providers, server endpoint/tool handshake for Server-bridged OpenCode, and API for Direct providers) can be exercised with a subagent-style prompt and returns a successful run with usable output. These tests validate the **invocation path** (binary/server/API, args, env) and **basic behavior**, not full orchestrator logic.
+
+**Scope:** One smoke test per provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini). CLI-bridged providers (Cursor, Claude Code) run their real CLIs; Server-bridged OpenCode is validated via server endpoint/tool handshake (no CLI requirement); Direct providers (Codex, GitHub Copilot, Gemini) use minimal API calls. Each test issues a minimal, non-destructive prompt that triggers subagent behavior (or equivalent) and asserts process/response success and output shape.
+
+**Environment gating:** Tests are transport-specific and require corresponding prerequisites (CLI installed for CLI-bridged providers, reachable/authenticated OpenCode server for Server-bridged, API key/auth for Direct providers). They MUST be gated so they do not fail CI when prerequisites are missing.
+
+ContractRef: PolicyRule:Decision_Policy.md§2
+
+**Implementation:**
+
+- **Gate:** Only run provider connectivity smoke tests when the appropriate env var is set and required transport prerequisites are available. If not set or prerequisite missing, skip with a clear message (for example, "skipped: Cursor CLI not available", "skipped: OpenCode endpoint not configured", or "skipped: Gemini API key missing").
+- **Per-platform commands and assertions:**
+  - **Cursor:** Run `agent -p "/code-reviewer Review the last commit." --output-format json` (or current equivalent from platform_specs). Assert exit code 0 (or documented non-zero for "no changes"). Assert stdout is non-empty and, if JSON, parseable; optionally assert presence of expected top-level keys.
+  - **Claude:** Run `claude -p "As code-reviewer, respond with only: READY" --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token (e.g. READY) or is non-empty.
+  - **OpenCode:** Validate ServerBridge connectivity by performing a minimal server endpoint/tool handshake (for example, list tools or execute a no-op tool call). Assert successful handshake/response and expected response shape.
+  - **Codex:** Codex is a Direct API provider; verify API connectivity with a minimal request. Assert successful response and non-empty, parseable JSON.
+  - **GitHub Copilot:** Copilot is a Direct API provider; verify API connectivity with a minimal request. Assert successful response and non-empty, parseable JSON.
+  - **Gemini:** Gemini is a Direct API provider; verify API connectivity by sending a minimal generation request via the Gemini API. Assert a successful response with non-empty, parseable JSON.
+- **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/cli-smoke-<platform>.log` for debugging; do not assert on exact text, only on success and shape.
+- **Documentation:** In the plan and in code comments, document that these tests are optional/manual in CI and list required env vars (e.g. `RUN_CURSOR_CLI_SMOKE=1`, `RUN_OPENCODE_SERVER_SMOKE=1`, `RUN_GEMINI_API_SMOKE=1`) and that auth/connectivity must be configured for the corresponding provider.
+
+**Test location and naming:**
+
+- **File:** `puppet-master-rs/tests/provider_connectivity_smoke.rs` (or under `puppet-master-rs/tests/integration/`).
+- **Tests:** `cursor_cli_smoke`, `claude_cli_smoke`, `opencode_server_smoke`, `codex_api_smoke`, `copilot_api_smoke`, `gemini_api_smoke`.
+- **Runner:** Use `#[ignore]` by default with a clear reason ("requires provider auth/connectivity prerequisites"); run with `cargo test --ignored` or a dedicated `cargo test provider_connectivity_smoke` when env is set.
+
+**Fleshed-out example (Cursor):**
+
+```rust
+// puppet-master-rs/tests/provider_connectivity_smoke.rs
+
+#[test]
+#[ignore = "Requires Cursor CLI (agent) installed and authenticated; set RUN_CURSOR_CLI_SMOKE=1"]
+fn cursor_cli_smoke() {
+    if std::env::var("RUN_CURSOR_CLI_SMOKE").is_err() {
+        return;
+    }
+    let binary = which_binary("agent").or_else(|| which_binary("cursor-agent"))
+        .expect("Cursor CLI not on PATH");
+    let output = std::process::Command::new(binary)
+        .args(["-p", "/code-reviewer Reply with only: SMOKE_OK", "--output-format", "json"])
+        .output()
+        .expect("Failed to run Cursor CLI");
+    assert!(output.status.success(), "Cursor CLI failed: stderr = {:?}", String::from_utf8_lossy(&output.stderr));
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(!stdout.trim().is_empty(), "Cursor CLI produced empty stdout");
+    if let Ok(json) = serde_json::from_str::<serde_json::Value>(&stdout) {
+        assert!(json.is_object() || json.is_array(), "Expected JSON object or array");
+    }
+}
+```
+
+Other providers follow the same transport-specific pattern: check env gate, run the minimal connectivity probe for that provider transport (CLI, server handshake, or API), and assert success with non-empty/parseable output.
+
+---
+
+### 2. Subagent-Invocation Integration Tests
+
+**Purpose:** Verify that the **exact** command line the orchestrator would use for a given tier and subagent is built correctly and that executing it completes without unexpected failure. This catches regressions in argument construction, subagent naming, and platform-specific flags.
+
+**Scope:** At least one integration test per platform that (1) builds the invocation (command + args + env) as the orchestrator would, (2) runs it against the real CLI (or a script that mimics it), and (3) asserts that the run completes successfully and, where possible, that the invocation path (e.g. subagent name in the prompt) is correct.
+
+**Implementation:**
+
+- **Orchestrator invocation builder:** Use the same code path the orchestrator uses to build the CLI command (e.g. a function that takes `platform`, `tier_type`, `subagent_name`, `prompt`, `model` and returns `Command`). Do not duplicate logic in tests.
+- **Per-platform integration test:**
+  - Build the invocation for a fixed scenario (e.g. tier = Task, subagent = `code-reviewer`, minimal prompt).
+  - Execute it (real CLI or, if documented, a script that echoes the command and returns success for CI without auth).
+  - Assert: process success; optionally that stdout/stderr contain the subagent name or expected token; and that no "unknown subagent" or "invalid flag" style errors appear in stderr.
+- **Environment gating:** Same as smoke tests: skip when CLI is not available or auth is not configured; use env vars (e.g. `RUN_SUBAGENT_INVOCATION_TESTS=1`) and optional `#[ignore]` so CI without CLIs still passes.
+- **Artifacts:** Log the exact command and, if possible, a short excerpt of stdout/stderr to `.puppet-master/evidence/subagent-invocation-<platform>.log` for debugging.
+
+**Test location and naming:**
+
+- **File:** `puppet-master-rs/tests/subagent_invocation_integration.rs` (or under `puppet-master-rs/tests/integration/`).
+- **Tests:** `cursor_subagent_invocation`, `codex_subagent_invocation`, `claude_subagent_invocation`, `gemini_subagent_invocation`, `copilot_subagent_invocation`.
+- **Runner:** Same as smoke tests; run with env set or `cargo test --ignored` / `cargo test subagent_invocation`.
+
+**Fleshed-out example (invocation builder + one platform):**
+
+```rust
+// puppet-master-rs/tests/subagent_invocation_integration.rs
+
+/// Builds the exact Command the orchestrator would use for Cursor + subagent.
+// DRY requirement: must use platform_specs::cli_binary_names() — never hardcode "agent" or "cursor-agent"
+// DRY requirement: must use platform_specs::get_subagent_invocation_format() — never hardcode "/{subagent} {prompt}" format
+fn build_cursor_subagent_command(
+    subagent_name: &str,
+    prompt: &str,
+    model: &str,
+    workspace: &std::path::Path,
+) -> std::process::Command {
+    use std::process::Command;
+    // DRY: Use platform_specs for binary name — DO NOT hardcode "agent"
+    let binary = crate::platforms::platform_specs::cli_binary_names(crate::types::Platform::Cursor)
+        .first()
+        .copied()
+        .unwrap_or("agent");
+    // DRY: Use platform_specs for invocation format — DO NOT hardcode "/{subagent} {prompt}"
+    let invocation_format = platform_specs::get_subagent_invocation_format(Platform::Cursor)
+        .unwrap_or_else(|_| "/{} {}".to_string());
+    let full_prompt = invocation_format
+        .replace("{subagent}", subagent_name)
+        .replace("{task}", prompt);
+    let mut cmd = Command::new(binary);
+    cmd.arg("-p").arg(&full_prompt)
+        .arg("--output-format").arg("json");
+    if !model.is_empty() && model != "auto" {
+        cmd.arg("--model").arg(model);
+    }
+    cmd.current_dir(workspace);
+    cmd
+}
+
+#[tokio::test]
+#[ignore = "Requires Cursor CLI and auth; set RUN_SUBAGENT_INVOCATION_TESTS=1"]
+async fn cursor_subagent_invocation() {
+    if std::env::var("RUN_SUBAGENT_INVOCATION_TESTS").is_err() {
+        return;
+    }
+    let workspace = tempfile::tempdir().unwrap();
+    let cmd = build_cursor_subagent_command(
+        "code-reviewer",
+        "Reply with only: INVOKED",
+        "auto",
+        workspace.path(),
+    );
+    let output = cmd.output().expect("Failed to run Cursor");
+    assert!(output.status.success(), "Invocation failed: {:?}", String::from_utf8_lossy(&output.stderr));
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(stdout.contains("code-reviewer") || stdout.contains("INVOKED") || !stdout.trim().is_empty(),
+            "Expected subagent or echo in output: {}", stdout);
+}
+```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
+**Summary table:**
+
+| Test type | What it runs | What it asserts | When to run |
+|-----------|---------------|-----------------|-------------|
+| Platform CLI smoke | Real CLI + minimal subagent cmd | Exit success, non-empty/parseable output | Env-gated or manual |
+| Subagent-invocation integration | Orchestrator's command/call for tier+subagent | Invocation succeeds; output shape / no "invalid" errors | Env-gated or manual |
+| Plan mode CLI verification | Real CLI + plan mode flags for CLI-bridged providers | Exit success; plan-mode flag present and honored | Env-gated or manual |
+
+Both sections should be referenced from Phase 5 and from any "Testing" or "Verification" summary in the plan so implementers and reviewers know that real CLI and invocation-path verification are in scope.
+
+---
+
+### 3. Plan Mode CLI Verification (Real-CLI Tests)
+
+**Purpose:** Confirm that each CLI-bridged platform accepts and honors plan mode when invoked with the same flags the orchestrator uses for that CLI surface (for example `--mode=plan` or `--permission-mode plan`). This validates plan mode end-to-end in the real CLIs, not just that we pass the right args.
+
+**Scope:** One plan-mode test per CLI-bridged provider (`Cursor CLI`, `Claude Code CLI`). Direct providers (`Gemini`, `Codex`, `GitHub Copilot`) are verified through PM runtime-policy and provider-integration tests rather than through CLI plan-mode commands. Each CLI test runs the real CLI with plan mode enabled and a minimal prompt, then asserts process success and, where possible, that the platform behaved in a plan-like way.
+
+**Environment gating:** Same as other CLI tests: require CLI on PATH and (where applicable) auth; gate with an env var (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`) and use `#[ignore]` so CI without CLIs/auth still passes.
+
+**Implementation:**
+
+- **Gate:** Only run when the appropriate env var is set and the CLI binary is available. Skip with a clear "skipped: plan mode CLI test (set RUN_PLAN_MODE_CLI_TESTS=1)" style message if not set or binary missing.
+- **Per-platform commands (must match runner build_args when plan_mode is true):**
+  - **Cursor:** `agent -p "Reply with only: PLAN_OK" --mode plan --output-format json`. Assert exit code 0 and non-empty stdout; optionally assert `--mode` and `plan` appear in the effective command or in logs.
+  - **Claude:** `claude -p "Reply with only: PLAN_OK" --permission-mode plan --no-session-persistence --output-format text`. Assert exit code 0 and stdout contains expected token or is non-empty.
+- **Assertions:** (1) Process exit success. (2) Stdout non-empty (or parseable JSON where applicable). (3) Optionally: verify that the command line actually contained the plan-mode flag (e.g. by logging the command and asserting the flag string is present, or by using the same builder as the runner and checking args).
+- **Artifacts:** Optionally capture stdout/stderr to `.puppet-master/evidence/plan-mode-cli-<platform>.log` for debugging.
+- **Documentation:** Document in plan and code that these tests are optional/manual in CI; list env var `RUN_PLAN_MODE_CLI_TESTS=1` and that auth must be configured for the corresponding platform.
+
+**Test location and naming:**
+
+- **File:** `puppet-master-rs/tests/plan_mode_cli_verification.rs` (or under `puppet-master-rs/tests/integration/`).
+- **Tests:** `cursor_plan_mode_cli`, `claude_plan_mode_cli`.
+- **Runner:** Use `#[ignore]` by default with reason "requires installed CLI and auth; set RUN_PLAN_MODE_CLI_TESTS=1"; run with `cargo test --ignored` or `cargo test plan_mode_cli` when env is set.
+
+**Fleshed-out example (Cursor plan mode):**
+
+```rust
+// puppet-master-rs/tests/plan_mode_cli_verification.rs
+
+#[test]
+#[ignore = "Requires Cursor CLI and auth; set RUN_PLAN_MODE_CLI_TESTS=1"]
+fn cursor_plan_mode_cli() {
+    if std::env::var("RUN_PLAN_MODE_CLI_TESTS").is_err() {
+        return;
+    }
+    let binary = which_binary("agent").or_else(|| which_binary("cursor-agent"))
+        .expect("Cursor CLI not on PATH");
+    // Same flags as CursorRunner when request.plan_mode == true
+    let output = std::process::Command::new(binary)
+        .args([
+            "-p", "Reply with only: PLAN_OK",
+            "--mode", "plan",
+            "--output-format", "json",
+        ])
+        .output()
+        .expect("Failed to run Cursor CLI");
+    assert!(output.status.success(), "Cursor plan mode CLI failed: stderr = {:?}", String::from_utf8_lossy(&output.stderr));
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(!stdout.trim().is_empty(), "Cursor plan mode produced empty stdout");
+    // Optional: assert --mode plan was honored (e.g. no file writes in stderr for plan mode)
+}
+```
+
+Other platforms follow the same pattern: use the exact plan-mode flags from the corresponding runner's `build_args` when `request.plan_mode` is true, run the CLI, assert success and non-empty/expected output.
+
+**Relationship to other tests:** Plan mode CLI verification complements (1) platform CLI smoke tests (which may run without plan mode) and (2) subagent-invocation tests (which can run with or without plan mode). Plan mode tests focus specifically on "plan mode on" and ensure we fully test it in the real CLIs as we do for subagent and basic smoke.
+
+## Plan Mode Strategy & Defaults
+
+The orchestrator must follow the reconciled PM rule for delegated work in `ask` and `plan`.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+<<< CONTEXT_AFTER 1051-1062 >>>
+
+Canonical decision:
+- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+- required planning dependencies may still be child runs when they remain read-only.
+- parent mode is a hard ceiling.
+- the orchestrator must not silently widen a read-only planning run into execution authority.
+- Planning-flow behavior is PM-native: do not justify `todowrite`, `question`, or other planning tools solely by analogy to OpenCode defaults; Plan remains read-only until execution, clarifying questions are first-class, and the plan plus TODO stay visible artifacts during planning.
+
+The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+## GUI and Backend Scope (All In-Scope Now)

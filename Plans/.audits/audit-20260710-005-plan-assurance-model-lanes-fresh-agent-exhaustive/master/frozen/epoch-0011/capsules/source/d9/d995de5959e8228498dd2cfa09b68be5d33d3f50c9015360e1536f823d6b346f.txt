@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3768-3779 >>>
+L00003768	- Usage or tier config
+L00003769	- current usage
+L00003770	- always-visible
+L00003771	- analytics/cost
+L00003772	negative_constraints: []
+L00003773	preserved_contractrefs: []
+L00003774	compatibility_only_notes: []
+L00003775	stale_retired_dispositions: []
+L00003776	owner_hints:
+L00003777	- Plans/usage-feature.md
+L00003778	```
+L00003779	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3780-4177 >>>
+L00003780	### UF-055 - Widget Composed Usage Page Scope
+L00003781	
+L00003782	```yaml
+L00003783	plan_unit_id: UF-055
+L00003784	unit_type: requirement
+L00003785	status: accepted
+L00003786	owner_doc: Plans/usage-feature.md
+L00003787	canonical_text: The Usage page is a required dedicated top-level page composed entirely of widgets from Widget_System, with no static/fixed content area and user support for move, resize, configure, add, and remove widget operations.
+L00003788	gui_related: true
+L00003789	gui_classification_reason: The unit defines visible widget-composed Usage page layout behavior.
+L00003790	split_recommended: false
+L00003791	depends_on:
+L00003792	- PDS-003
+L00003793	- PDS-004
+L00003794	- PDS-005
+L00003795	- PNC-001
+L00003796	unblocks: []
+L00003797	acceptance_criteria:
+L00003798	- UF-055 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00003799	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003800	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003801	validation_surfaces:
+L00003802	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003803	- python3 scripts/pm-plan-index.py validate
+L00003804	risk_class: usage_feature_drift
+L00003805	reasoning_tier: standard
+L00003806	context_scope: usage_feature_batch_195
+L00003807	implementation_surfaces:
+L00003808	- Plans/usage-feature.md
+L00003809	node_compile_hint:
+L00003810	  mode: widget_composed_usage_page_scope
+L00003811	  create_worknodes: false
+L00003812	source_lineage:
+L00003813	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0090
+L00003814	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0091
+L00003815	preserved_exact_tokens:
+L00003816	- Widget-Composed Page Layout
+L00003817	- required, dedicated top-level page
+L00003818	- Every content area
+L00003819	- widget
+L00003820	- no static/fixed content area
+L00003821	- Move
+L00003822	- Resize
+L00003823	- Configure
+L00003824	- Add
+L00003825	- Remove
+L00003826	negative_constraints: []
+L00003827	preserved_contractrefs:
+L00003828	- 'ContractRef: ContractName:Plans/Widget_System.md'
+L00003829	- 'ContractRef: ContractName:Plans/Widget_System.md#3, ContractName:Plans/Widget_System.md#4'
+L00003830	compatibility_only_notes: []
+L00003831	stale_retired_dispositions: []
+L00003832	owner_hints:
+L00003833	- Plans/usage-feature.md
+L00003834	```
+L00003835	
+L00003836	### UF-056 - Default Usage Layout Non Empty Seed
+L00003837	
+L00003838	```yaml
+L00003839	plan_unit_id: UF-056
+L00003840	unit_type: requirement
+L00003841	status: accepted
+L00003842	owner_doc: Plans/usage-feature.md
+L00003843	canonical_text: The widget-composed Usage page ships with a default 4-column layout, starts non-empty, and allows customization after first load; the detailed table continues in usage-feature-S0093.
+L00003844	gui_related: true
+L00003845	gui_classification_reason: The unit defines visible default Usage layout seed behavior.
+L00003846	split_recommended: true
+L00003847	depends_on:
+L00003848	- PDS-003
+L00003849	- PDS-004
+L00003850	- PDS-005
+L00003851	- PNC-001
+L00003852	unblocks: []
+L00003853	acceptance_criteria:
+L00003854	- UF-056 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00003855	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003856	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003857	validation_surfaces:
+L00003858	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003859	- python3 scripts/pm-plan-index.py validate
+L00003860	risk_class: usage_feature_drift
+L00003861	reasoning_tier: standard
+L00003862	context_scope: usage_feature_batch_195
+L00003863	implementation_surfaces:
+L00003864	- Plans/usage-feature.md
+L00003865	node_compile_hint:
+L00003866	  mode: default_usage_layout_non_empty_seed
+L00003867	  create_worknodes: false
+L00003868	source_lineage:
+L00003869	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0092
+L00003870	preserved_exact_tokens:
+L00003871	- Default Widget Layout (4-column grid)
+L00003872	- ships with this default layout
+L00003873	- No page starts empty
+L00003874	- customize after first load
+L00003875	negative_constraints: []
+L00003876	preserved_contractrefs: []
+L00003877	compatibility_only_notes: []
+L00003878	stale_retired_dispositions: []
+L00003879	owner_hints:
+L00003880	- Plans/usage-feature.md
+L00003881	```
+L00003882	
+L00003883	### UF-057 - Search Acceleration Analytics Signal
+L00003884	
+L00003885	```yaml
+L00003886	plan_unit_id: UF-057
+L00003887	unit_type: requirement
+L00003888	status: accepted
+L00003889	owner_doc: Plans/usage-feature.md
+L00003890	canonical_text: 'Usage analytics consumes `tool.invoked.index_used`: `true` means sparse-n-gram candidate narrowing; `false` means raw ripgrep fallback or another unindexed path.'
+L00003891	gui_related: false
+L00003892	gui_classification_reason: 'The unit defines analytics event semantics rather than GUI layout or visual presentation.'
+L00003893	split_recommended: true
+L00003894	depends_on:
+L00003895	- PDS-003
+L00003896	- PDS-004
+L00003897	- PDS-005
+L00003898	- PNC-001
+L00003899	- UF-010
+L00003900	unblocks: []
+L00003901	acceptance_criteria:
+L00003902	- UF-057 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00003903	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003904	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003905	validation_surfaces:
+L00003906	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003907	- python3 scripts/pm-plan-index.py validate
+L00003908	risk_class: usage_feature_drift
+L00003909	reasoning_tier: standard
+L00003910	context_scope: usage_feature_batch_196
+L00003911	implementation_surfaces:
+L00003912	- Plans/usage-feature.md
+L00003913	node_compile_hint:
+L00003914	  mode: search_acceleration_usage_signal
+L00003915	  create_worknodes: false
+L00003916	source_lineage:
+L00003917	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0093
+L00003918	preserved_exact_tokens:
+L00003919	- 'Analytics signal contract'
+L00003920	- 'tool.invoked.index_used'
+L00003921	- 'true'
+L00003922	- 'false'
+L00003923	- 'sparse-n-gram candidate narrowing'
+L00003924	- 'raw ripgrep fallback'
+L00003925	- 'another unindexed path'
+L00003926	negative_constraints: []
+L00003927	preserved_contractrefs: []
+L00003928	compatibility_only_notes: []
+L00003929	stale_retired_dispositions: []
+L00003930	owner_hints:
+L00003931	- 'Plans/usage-feature.md'
+L00003932	- 'Plans/Tools.md'
+L00003933	- 'Plans/storage-plan.md'
+L00003934	split_recommendation_reason: 'The source span mixes backend analytics signal semantics with the visible default widget table.'
+L00003935	```
+L00003936	
+L00003937	### UF-058 - Default Usage Widget Layout Table
+L00003938	
+L00003939	```yaml
+L00003940	plan_unit_id: UF-058
+L00003941	unit_type: requirement
+L00003942	status: accepted
+L00003943	owner_doc: Plans/usage-feature.md
+L00003944	canonical_text: 'The non-empty default Usage layout preserves the source Col/Row/Size table for `widget.quota_summary`, `widget.alert_thresholds`, `widget.analytics_chart`, `widget.budget_donuts`, `widget.tool_usage`, `widget.multi_account`, and `widget.ledger_table`.'
+L00003945	gui_related: true
+L00003946	gui_classification_reason: 'The unit defines user-visible Usage widget layout and default placement.'
+L00003947	split_recommended: true
+L00003948	depends_on:
+L00003949	- PDS-003
+L00003950	- PDS-004
+L00003951	- PDS-005
+L00003952	- PNC-001
+L00003953	- UF-056
+L00003954	unblocks: []
+L00003955	acceptance_criteria:
+L00003956	- UF-058 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00003957	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003958	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003959	validation_surfaces:
+L00003960	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003961	- python3 scripts/pm-plan-index.py validate
+L00003962	risk_class: usage_feature_drift
+L00003963	reasoning_tier: standard
+L00003964	context_scope: usage_feature_batch_196
+L00003965	implementation_surfaces:
+L00003966	- Plans/usage-feature.md
+L00003967	node_compile_hint:
+L00003968	  mode: default_usage_widget_layout_table
+L00003969	  create_worknodes: false
+L00003970	source_lineage:
+L00003971	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0093
+L00003972	preserved_exact_tokens:
+L00003973	- 'Default Widget Layout (4-column grid)'
+L00003974	- 'No page starts empty'
+L00003975	- 'Col'
+L00003976	- 'Row'
+L00003977	- 'Widget ID'
+L00003978	- 'Size'
+L00003979	- 'What It Shows'
+L00003980	- 'widget.quota_summary'
+L00003981	- 'widget.alert_thresholds'
+L00003982	- 'widget.analytics_chart'
+L00003983	- 'widget.budget_donuts'
+L00003984	- 'widget.tool_usage'
+L00003985	- 'grep/Search `index_used` fallback mix'
+L00003986	- 'widget.multi_account'
+L00003987	- 'widget.ledger_table'
+L00003988	- '2x1'
+L00003989	- '2x2'
+L00003990	- '4x3'
+L00003991	negative_constraints: []
+L00003992	preserved_contractrefs: []
+L00003993	compatibility_only_notes: []
+L00003994	stale_retired_dispositions: []
+L00003995	owner_hints:
+L00003996	- 'Plans/usage-feature.md'
+L00003997	- 'Plans/Widget_System.md'
+L00003998	- 'Plans/FinalGUISpec.md'
+L00003999	split_recommendation_reason: 'The source span mixes backend analytics signal semantics with the visible default widget table.'
+L00004000	```
+L00004001	
+L00004002	### UF-059 - Usage Widget Responsive Grid Resizing
+L00004003	
+L00004004	```yaml
+L00004005	plan_unit_id: UF-059
+L00004006	unit_type: requirement
+L00004007	status: accepted
+L00004008	owner_doc: Plans/usage-feature.md
+L00004009	canonical_text: 'Usage widgets use the Widget_System grid system with responsive 2, 3, and 4 column counts, independent min/max grid constraints, and resize-dependent data density such as more chart granularity or more ledger rows.'
+L00004010	gui_related: true
+L00004011	gui_classification_reason: 'The unit defines visible widget grid resizing and responsive layout behavior.'
+L00004012	split_recommended: false
+L00004013	depends_on:
+L00004014	- PDS-003
+L00004015	- PDS-004
+L00004016	- PDS-005
+L00004017	- PNC-001
+L00004018	- UF-055
+L00004019	unblocks: []
+L00004020	acceptance_criteria:
+L00004021	- UF-059 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004022	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004023	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004024	validation_surfaces:
+L00004025	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004026	- python3 scripts/pm-plan-index.py validate
+L00004027	risk_class: usage_feature_drift
+L00004028	reasoning_tier: standard
+L00004029	context_scope: usage_feature_batch_196
+L00004030	implementation_surfaces:
+L00004031	- Plans/usage-feature.md
+L00004032	node_compile_hint:
+L00004033	  mode: usage_widget_responsive_grid_resizing
+L00004034	  create_worknodes: false
+L00004035	source_lineage:
+L00004036	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0094
+L00004037	preserved_exact_tokens:
+L00004038	- 'Grid-Based Resizing'
+L00004039	- '2 columns (<1200px)'
+L00004040	- '3 columns (1200-1600px)'
+L00004041	- '4 columns (>1600px)'
+L00004042	- 'min/max grid constraints'
+L00004043	- 'widget.analytics_chart'
+L00004044	- 'widget.ledger_table'
+L00004045	negative_constraints: []
+L00004046	preserved_contractrefs:
+L00004047	- 'ContractRef: ContractName:Plans/Widget_System.md#3, ContractName:Plans/FinalGUISpec.md#12.3'
+L00004048	compatibility_only_notes: []
+L00004049	stale_retired_dispositions: []
+L00004050	owner_hints:
+L00004051	- 'Plans/usage-feature.md'
+L00004052	- 'Plans/Widget_System.md'
+L00004053	- 'Plans/FinalGUISpec.md'
+L00004054	```
+L00004055	
+L00004056	### UF-060 - Usage Widget Configuration And Persistence
+L00004057	
+L00004058	```yaml
+L00004059	plan_unit_id: UF-060
+L00004060	unit_type: requirement
+L00004061	status: accepted
+L00004062	owner_doc: Plans/usage-feature.md
+L00004063	canonical_text: 'Each Usage widget has a gear icon for per-widget configuration of windows, filters, chart type, sort, columns, page size, and cooldown timers, and that configuration persists alongside the widget layout.'
+L00004064	gui_related: true
+L00004065	gui_classification_reason: 'The unit defines user-visible per-widget configuration controls and persistence behavior.'
+L00004066	split_recommended: false
+L00004067	depends_on:
+L00004068	- PDS-003
+L00004069	- PDS-004
+L00004070	- PDS-005
+L00004071	- PNC-001
+L00004072	- UF-055
+L00004073	unblocks: []
+L00004074	acceptance_criteria:
+L00004075	- UF-060 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004076	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004077	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004078	validation_surfaces:
+L00004079	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004080	- python3 scripts/pm-plan-index.py validate
+L00004081	risk_class: usage_feature_drift
+L00004082	reasoning_tier: standard
+L00004083	context_scope: usage_feature_batch_196
+L00004084	implementation_surfaces:
+L00004085	- Plans/usage-feature.md
+L00004086	node_compile_hint:
+L00004087	  mode: usage_widget_configuration_persistence
+L00004088	  create_worknodes: false
+L00004089	source_lineage:
+L00004090	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0095
+L00004091	preserved_exact_tokens:
+L00004092	- 'Per-Widget Configuration'
+L00004093	- 'gear icon'
+L00004094	- 'Time window (5h/7d)'
+L00004095	- 'chart type (bar/line/area)'
+L00004096	- 'sort by (count/latency/errors/index_used fallback rate)'
+L00004097	- 'Visible columns'
+L00004098	- 'page size'
+L00004099	- 'show cooldown timers (on/off)'
+L00004100	- 'persisted alongside the widget layout'
+L00004101	negative_constraints: []
+L00004102	preserved_contractrefs:
+L00004103	- 'ContractRef: ContractName:Plans/Widget_System.md#5'
+L00004104	compatibility_only_notes: []
+L00004105	stale_retired_dispositions: []
+L00004106	owner_hints:
+L00004107	- 'Plans/usage-feature.md'
+L00004108	- 'Plans/Widget_System.md'
+L00004109	- 'Plans/storage-plan.md'
+L00004110	```
+L00004111	
+L00004112	### UF-061 - Multi Account Widget Observability Boundary
+L00004113	
+L00004114	```yaml
+L00004115	plan_unit_id: UF-061
+L00004116	unit_type: requirement
+L00004117	status: accepted
+L00004118	owner_doc: Plans/usage-feature.md
+L00004119	canonical_text: '`widget.multi_account` is a first-class catalog entry for status and observability, not the canonical setup surface; it shows provider or server-profile rows, active/effective status, Working or concrete reason text, pressure/cooldown, stale/source-confidence labels, and Agent-Config repair links.'
+L00004120	gui_related: true
+L00004121	gui_classification_reason: 'The unit defines user-visible multi-account widget content and boundaries.'
+L00004122	split_recommended: false
+L00004123	depends_on:
+L00004124	- PDS-003
+L00004125	- PDS-004
+L00004126	- PDS-005
+L00004127	- PNC-001
+L00004128	unblocks: []
+L00004129	acceptance_criteria:
+L00004130	- UF-061 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004131	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004132	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004133	validation_surfaces:
+L00004134	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004135	- python3 scripts/pm-plan-index.py validate
+L00004136	risk_class: usage_feature_drift
+L00004137	reasoning_tier: standard
+L00004138	context_scope: usage_feature_batch_196
+L00004139	implementation_surfaces:
+L00004140	- Plans/usage-feature.md
+L00004141	node_compile_hint:
+L00004142	  mode: multi_account_widget_observability_boundary
+L00004143	  create_worknodes: false
+L00004144	source_lineage:
+L00004145	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0096
+L00004146	preserved_exact_tokens:
+L00004147	- 'Multi-Account Widget as First-Class Catalog Entry'
+L00004148	- 'status and observability widget'
+L00004149	- 'canonical setup surface'
+L00004150	- 'provider entry or server-profile row label'
+L00004151	- 'active/effective marker'
+L00004152	- 'Working'
+L00004153	- 'Operational'
+L00004154	- 'pressure/cooldown summary'
+L00004155	- 'source-confidence / stale label'
+L00004156	- 'Agent-Config'
+L00004157	- 'one GitHub Copilot auth-backed row'
+L00004158	- 'OpenCode server profiles'
+L00004159	- 'profile-mode labels'
+L00004160	negative_constraints:
+L00004161	- 'The widget does not replace Agent-Config for account management, billing/entity selection, instruction control, skills, or MCP setup.'
+L00004162	- 'The widget must not imply that every provider row has literal installed-local-state semantics; some rows are account-backed, some are server-profile-backed.'
+L00004163	preserved_contractrefs:
+L00004164	- 'ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md'
+L00004165	- 'ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md'
+L00004166	compatibility_only_notes: []
+L00004167	stale_retired_dispositions:
+L00004168	- 'source-confidence / stale label where needed'
+L00004169	owner_hints:
+L00004170	- 'Plans/usage-feature.md'
+L00004171	- 'Plans/Widget_System.md'
+L00004172	- 'Plans/Multi-Account.md'
+L00004173	- 'Plans/FinalGUISpec.md'
+L00004174	- 'Plans/Provider_OpenCode.md'
+L00004175	- 'Plans/storage-plan.md'
+L00004176	```
+L00004177	
+
+<<< CONTEXT_AFTER canonical_document_lines=4178-4189 >>>
+L00004178	### UF-062 - Dashboard Add Widget Reuse For Usage Widgets
+L00004179	
+L00004180	```yaml
+L00004181	plan_unit_id: UF-062
+L00004182	unit_type: requirement
+L00004183	status: accepted
+L00004184	owner_doc: Plans/usage-feature.md
+L00004185	canonical_text: 'All Usage widgets are also Dashboard-hostable through the add-widget flow: Add Widget opens a catalog overlay, selecting and adding a Usage widget places it on the Dashboard grid at its default size, and the user can then configure and resize it.'
+L00004186	gui_related: true
+L00004187	gui_classification_reason: 'The unit defines user-visible Dashboard add-widget reuse for Usage widgets.'
+L00004188	split_recommended: false
+L00004189	depends_on:

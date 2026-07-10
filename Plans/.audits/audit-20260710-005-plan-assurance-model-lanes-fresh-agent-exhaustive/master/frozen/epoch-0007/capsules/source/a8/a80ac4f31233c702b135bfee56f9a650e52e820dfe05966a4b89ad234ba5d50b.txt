@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE canonical_document_lines=873-884 >>>
+L00000873	
+L00000874	Fields:
+L00000875	- stable command IDs
+L00000876	- terminal_session_id
+L00000877	- Open in Terminal
+L00000878	- Show Terminal
+L00000879	- Rerun in Terminal
+L00000880	- Detach/Pop-Out
+L00000881	- Command ID
+L00000882	- Payload
+L00000883	- Domain event(s)
+L00000884	- UI surface(s)
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=885-1248 >>>
+L00000885	
+L00000886	Rules:
+L00000887	- Shell owns interactive state; chat owns preview+audit
+L00000888	- Commands requiring stdin/TTY start Terminal immediately
+L00000889	- Background/watch/server actions create terminal-owned session
+L00000890	- One-shot commands remain chat-inline by default
+L00000891	- Terminal shortcut metadata records interaction-mode eligibility, focus context, suppressed binding disclosure, and whether the action preempts shell/TUI input; unsafe `terminal-search` entries must be unavailable instead of stealing TUI keystrokes.
+L00000892	- Every promoted command card binds to stable terminal session identity
+L00000893	- Command-card terminal affordances include command-output and copy-output actions, reliable `/copy/paste` in output and input areas, mouse-driven selection/copy/paste support, keyboard-selection, wrapped-line input navigation, TUI capture guidance, remote-context and shell/profile diagnostics, and automation `/focus/reuse` hooks for opening, focusing, reusing, interrupting, resizing, and capturing structured terminal state.
+L00000894	- Large payloads store full data behind refs/blobs
+L00000895	- non-interactive work may promote if it becomes long-running
+L00000896	- attach failure recovery differs for live process, ended process, and inline-only completed command
+L00000897	- `Open in Terminal` and `Show Terminal` must focus the same live session
+L00000898	- Reuse precedence is exact `terminal_session_id`, then explicit `/pane/session`, then workflow-bound `/thread/tool` or dev-session binding, then workspace-bound most-recent terminal context only for `Show Terminal`; commands that imply same-session continuity must not fall back to a fresh shell silently.
+L00000899	- `/moving/detaching/reattaching` terminal UI is layout presentation over the same underlying session; focusing or moving a terminal must preserve `/tab/pane/session` identity unless the command explicitly asks for a new terminal.
+L00000900	- Agent follow-up actions for shell-like work continue targeting the same bound session; if no appropriate binding exists, PM creates a clearly scoped new session, records the binding, and later follow-up actions use it. An exited-session or `/exited` session may be revealed for review, copy-output, or `/restart/replace` rather than being treated as a live shell.
+L00000901	- Chat-owned terminal command cards distinguish compact-audit ownership from live-terminal ownership: `/assistant-chat-design.md` consumers may render bounded audit previews, but any live PTY intervention, takeover, or same-session reveal routes through `Open in Terminal` or `Show Terminal`.
+L00000902	- Inline terminal cards keep `/collapse` and expand controls local to the chat preview; `/background` moves long-running work into terminal-owned session state without changing the owning `terminal_session_id`.
+L00000903	- after promotion, chat stops owning the full transcript
+L00000904	- inline cards persist across thread reload and re-render from persisted metadata
+L00000905	- search and diff do not stream progressively
+L00000906	- distinct terminal actions must keep owned command-table rows
+L00000907	- do not collapse terminal actions into one normalized target
+L00000908	#### Dev-session commands
+L00000909	| Command ID | Payload | Domain event(s) | UI surface(s) |
+L00000910	|---|---|---|---|
+L00000911	| `cmd.dev.start_session` | `{ project_id, workspace_tab_id, mode, target? }` | `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+L00000912	| `cmd.dev.stop_session` | `{ dev_session_id }` | `dev.session.stopping`, `dev.session.stopped` | Toolbar, Chat, Ports, Terminal |
+L00000913	| `cmd.dev.restart_session` | `{ dev_session_id }` | `dev.session.restarting`, `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+L00000914	| `cmd.dev.show_output` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Output |
+L00000915	| `cmd.dev.show_problems` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Problems |
+L00000916	| `cmd.dev.show_ports` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Ports |
+L00000917	
+L00000918	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+L00000919	
+L00000920	#### Catalog lifecycle commands
+L00000921	
+L00000922	Rules:
+L00000923	- Missing referenced commands must become concrete catalog rows or explicit compatibility/retirement notes.
+L00000924	- Wrapper-style open/focus commands may remain user-facing wrappers when they normalize to shared route/open contracts; avoid too many public `cmd.nav.*` commands when existing wrappers preserve clearer UX.
+L00000925	
+L00000926	| Command ID | Payload | Domain event(s) | UI surface(s) |
+L00000927	|---|---|---|---|
+L00000928	| `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
+L00000929	| `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
+L00000930	| `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+L00000931	
+L00000932	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+L00000933	
+L00000934	Rules:
+L00000935	- `cmd.terminal.clear_scrollback` preserves runtime identity
+L00000936	- close commands are layout actions unless `termination_policy` requests runtime shutdown
+L00000937	- `cmd.dev.show_output`, `cmd.dev.show_problems`, and `cmd.dev.show_ports` reveal surfaces linked to the owning `dev_session_id`
+L00000938	- Debug recovery or rerun commands for a linked `dev_session_id` degrade to `attention_required` when no canonical rerun command exists, the failure depends on local hardware `/device/manual` interaction, or the environment is too flaky to classify automatically.
+L00000939	- Command catalog updates alone are not complete until corresponding `Plans/Wiring_Matrix.md` and `/Wiring_Matrix.md` rows bind stable command IDs to handlers, UI surfaces, and acceptance checks; otherwise terminal reveal and handoff coverage is a false positive.
+L00000940	
+L00000941	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+L00000942	
+L00000943	#### 2.6B Chat message action commands
+L00000944	
+L00000945	| Command ID | Parameters | Behavior |
+L00000946	|---|---|---|
+L00000947	| `cmd.chat.copy_message` | `{ thread_id, message_id }` | Copy the rendered message content. |
+L00000948	| `cmd.chat.retry_message` | `{ thread_id, message_id }` | Re-run the selected failed/cancelled assistant turn. |
+L00000949	| `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only (`conversation-only`); does not restore files. |
+L00000950	| `cmd.chat.revert` | `{ thread_id, target_message_id? }` | Restore persisted file mutations from one assistant turn; omitted `target_message_id` resolves to the latest assistant turn in the thread with persisted file mutations. |
+L00000951	| `cmd.chat.add_file_reference` | `{ project_id, thread_id?, path, line_range? }` | Insert a visible file reference chip into the composer. File-only in MVP; folder references are out of scope. |
+L00000952	
+L00000953	Canonical signature lock: `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }`.
+L00000954	
+L00000955	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md
+L00000956	
+L00000957	Message-level availability and code-block actions:
+L00000958	
+L00000959	| Command ID | Label | Description | Preconditions |
+L00000960	|---|---|---|---|
+L00000961	| `cmd.chat.edit_last_user_message` | Edit Last Message | Opens the last user message for editing | `chat_active && has_user_messages` |
+L00000962	| `cmd.chat.resend_last_user_message` | Resend Last Message | Resends the last user message (triggers new response) | `chat_active && has_user_messages` |
+L00000963	| `cmd.chat.copy_message` | Copy Message | Copies selected message content to clipboard | `chat_active && message_selected` |
+L00000964	| `cmd.chat.copy_code_block` | Copy Code Block | Copies a specific code block from a message | `chat_active && code_block_selected` |
+L00000965	| `cmd.chat.insert_code_block` | Insert at Cursor | Inserts code block content at editor cursor position | `chat_active && code_block_selected && editor_active` |
+L00000966	| `cmd.chat.apply_code_block` | Apply to File | Applies code block as an edit to the relevant file | `chat_active && code_block_selected` |
+L00000967	| `cmd.chat.toggle_message_details` | Toggle Details | Shows/hides message metadata (model, tokens, timing) | `chat_active && message_selected` |
+L00000968	
+L00000969	Revert rules:
+L00000970	- when the resolved assistant turn touched multiple files, `cmd.chat.revert` reverts the whole turn across all affected files
+L00000971	- `cmd.chat.revert` routes through the canonical FileSafe file-restore pipeline and uses the absolute file paths recorded in the assistant turn's file mutation log; it must not reinterpret relative paths through the current `working_directory`
+L00000972	- after a successful revert, affected editors refresh from the canonical mutation pipeline
+L00000973	- `cmd.chat.rewind` MUST NOT be used as a file-restore alias
+L00000974	- `cmd.chat.resend_last_user_message` is distinct from `cmd.chat.retry_message`; resend replays the latest user-authored input, while retry re-runs a failed or cancelled assistant turn
+L00000975	- `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body
+L00000976	- Stop/edit/delete message availability is exposed through existing stop, edit/resend, rewind/revert, and retention-policy surfaces; `/edit/delete` is an availability shorthand and not a new delete-message command ID.
+L00000977	- GUI question surfaces support multiple-choice and multi-choice interactions with a freeform `Other` path, while logging and activity metadata remain sliceable across `/agent/tool/model/persona/subagent/token` dimensions.
+L00000978	
+L00000979	ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00000980	
+L00000981	### 2.6.5 Debug Mode UICommand bridge
+L00000982	
+L00000983	Debug Mode uses the canonical `cmd.debug.*` UICommand family owned by `Plans/Commands_System.md`; these are internal wiring IDs, not User Commands. The catalog bridge preserves the concrete IDs `cmd.debug.start`, `cmd.debug.stop`, `cmd.debug.pause`, `cmd.debug.resume`, `cmd.debug.add_breakpoint`, `cmd.debug.remove_breakpoint`, `cmd.debug.clear_breakpoints`, `cmd.debug.view_evidence`, `cmd.debug.step`, and `cmd.debug.collect_snapshot`, while leaving investigation lifecycle semantics, preconditions, and evidence behavior in `Commands_System.md`.
+L00000984	
+L00000985	ContractRef: ContractName:Plans/Commands_System.md#5.2.8-debug-mode-uicommand-family
+L00000986	
+L00000987	### 2.7 Chat slash commands (reserved)
+L00000988	
+L00000989	This section consumes the linked owner contract and stays aligned with it.
+L00000990	
+L00000991	Core rules:
+L00000992	- The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
+L00000993	- Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
+L00000994	- Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
+L00000995	- Exact named obligations that must survive in this reserved family are the six-tool web family, reserved slash-command set, Agent Config and Skills ownership, and the question, TODO, and visualizer terms.
+L00000996	- `/skill use`, `/skill list`, and `/skill show` are not MVP subcommands. Bare `/skill` lists available skills, while `/skill <skill_name> [args]`, the Skills panel, and natural language all invoke the same `invoke_skill` contract.
+L00000997	- Web command GUI help/autocomplete exposes `/web` sub-operations as one reserved built-in family: `/web search <query>`, `/web fetch <url>`, `/web extract <url>`, `/web research <task-or-question>`, `/web crawl <url>`, and `/web map <url>`. Bare `/web` dispatches `cmd.chat.web.help` as a non-executing help entry; it does not default to top-level `/search` or `/crawl`.
+L00000998	- Legacy top-level tool-name spellings such as `/webfetch` and `/webresearch` are compatibility/tool-key lineage, not active slash-command prototypes; user-facing slash input stays under `/web fetch <url>` and `/web research <task>`.
+L00000999	- Web intent taxonomy is shared by slash, palette, natural language, and agent/subagent initiation: current/latest/docs/issues/PR questions route to `cmd.chat.web.search` followed by read-backed `webfetch` when claims require evidence; "read this URL" and pasted URLs route to `cmd.chat.web.fetch` / `webfetch`; structured page pulls route to `cmd.chat.web.extract`; site traversal routes to `cmd.chat.web.crawl`; site topology routes to `cmd.chat.web.map`; compare, investigate, research, and deep-research requests route to `cmd.chat.web.research` with `research_mode`; visual, dynamic-page, iframe, console, network, screenshot, or PDF evidence needs route through BrowserAction / Site Reader under the same dispatcher. All routes persist `invocation_source` and optional `agent_reason`.
+L00001000	- The `/web` family is a surface-bound reserved-command family; `/provisional` or catch-all entries remain help/autocomplete affordances until promoted into concrete subcommand IDs.
+L00001001	- Web `/activity` and history rows use assistant-chat-design-style operation cards: top-level requested/effective runtime snapshot fields plus web-operation child payloads, with large `sources_ref`, `content_ref`, and `map_ref` material dereferenced on demand from refs/blobs or `/blob` storage rather than loaded eagerly.
+L00001002	- Web-source transparency is first-class for cited-web-search and agent-web-research: cards and history expose `/sources`, source counts, `Web search: {query}`, and the six distinct labels (LOCKED) `Searching Web: <query>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, `Mapping Site: <root_url>`, and `Reading Site: <url>`, with `Reading Site: <url>` reserved for the PM-native Site Reader path.
+L00001003	- Final answers prefer `/extract-backed` or read-backed provenance over bare snippets.
+L00001004	- Reserved built-in slash commands are non-overridable in the override-policy; user commands remain under `/x-...` or another custom namespace, and `/web <subop>` IDs stay stable for multi-operation/provider behavior.
+L00001005	- Legacy `/reconciliation` references are process-only and must not become user-facing command IDs.
+L00001006	- Provider option visibility in `/web` help and settings includes support-tier, provider health, fallback disclosure, `/credit` usage, pay-as-you-go warnings, and advanced controls such as `search_depth`, `max_results`, `include_domains`, `exclude_domains`, `time_range`, `start_date`, `end_date`, `include_images`, conservative `include_raw_content`, `/summarization`, `chunks_per_source`, `ultra-fast`, `fast`, `basic`, and `advanced`; best-practices text favors concise queries, sub-queries for complex asks, and a two-step Searching Web then Reading Site flow.
+L00001007	- Provider category help may expose `categories?: string[]` with options `"github"`, `"research"`, and `"pdf"` when the effective web provider supports category filters.
+L00001008	- Do-not-overfit rules apply to command-catalog imports and reference `/baselines`: `/catalog/import`, preview-safe visual-module contracts, and in-chat rendering stay PM-native and must not inherit plugin-specific, `/MCP/container-specific`, xeditor-specific, or external baseline implementation nouns as user-visible command language.
+L00001009	- Web approval cards use operation-specific scope wording: `search` and `research` use the `*` wildcard because the host is not known upfront, while `extract`, `crawl`, `map`, and `read` are `host-scoped` to `https://host.example/*`; scheme-relative input such as `//host.example/` is normalized to an explicit scheme before permission-scope evaluation.
+L00001010	- Web command help and operation-card previews may show lightweight result-shape hints: `query_preview` for search, `url` and `content_format` for fetch/extract, and `task_preview` for research. For crawl help, `/web crawl <url>` parses `url: string` and previews `crawl results + traversed refs`; detailed crawl limits, dedup, and filtering stay owned by `Plans/Tools.md`.
+L00001011	- Extract-format help may describe `links` as `Array<{ url, text?, rel? }>` and `images` as `Array<{ url, alt?, dimensions? }>` when those extraction formats are requested; the command catalog owns the visible help/prototype text while the tool contract owns payload validation.
+L00001012	
+L00001013	Fields:
+L00001014	- slash prototype
+L00001015	- stable command ID
+L00001016	- subcommand-required parsing
+L00001017	- intent phrase
+L00001018	- resolved tool key
+L00001019	- /skill <skill_name> [args]
+L00001020	- /skill with no args lists available skills
+L00001021	- invoke_skill
+L00001022	- No subcommand family for MVP
+L00001023	- Skills panel
+L00001024	- Natural language
+L00001025	
+L00001026	Labels and values:
+L00001027	- /new
+L00001028	- /model
+L00001029	- /effort
+L00001030	- /mode
+L00001031	- /export
+L00001032	- /compact
+L00001033	- /stop
+L00001034	- /resume
+L00001035	- /rewind
+L00001036	- /revert
+L00001037	- /share
+L00001038	- /settings
+L00001039	- /doctor
+L00001040	- /help
+L00001041	- /web
+L00001042	- /skill
+L00001043	- /cancel
+L00001044	- /goal
+L00001045	- /goal again
+L00001046	- reserved built-ins
+L00001047	
+L00001048	Rules:
+L00001049	- /web search <query>
+L00001050	- /web extract <url>
+L00001051	- /web research <task>
+L00001052	- /web crawl <url>
+L00001053	- /web map <url>
+L00001054	- cmd.chat.web.search
+L00001055	- cmd.chat.web.extract
+L00001056	- cmd.chat.web.research
+L00001057	- /web fetch <url>
+L00001058	- cmd.chat.web.fetch
+L00001059	- cmd.chat.web.crawl
+L00001060	- cmd.chat.web.map
+L00001061	- NL intents and slash commands hit the same dispatcher
+L00001062	- "search the web for X" → `websearch`
+L00001063	- "extract this page" → `webextract`
+L00001064	- "read this URL" → `webfetch`
+L00001065	- "research topic" → `webresearch`
+L00001066	- Reading intents MUST resolve to `webfetch`, not `websearch`
+L00001067	ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash commands, ContractName:Plans/assistant-chat-design.md#5.2 `/web` and `/skill`, ContractName:Plans/Tools.md#12. Web tool routing algorithm
+L00001068	- bare /web shows help/autocomplete only
+L00001069	- do not flatten /web into separate slash families
+L00001070	- subcommand is required for execution
+L00001071	- URL normalization applies
+L00001072	- parse failure shows usage
+L00001073	- site/page reading is not search
+L00001074	- dispatcher parity applies to slash and NL paths
+L00001075	- command tables and routing docs must mirror the same mappings
+L00001076	- /cancel resolves internally to cmd.chat.stop
+L00001077	- /goal dispatches `cmd.chat.goal.start` for Goal button/chip/icon, slash command, and natural-language Goal Mode activation.
+L00001078	- /goal again dispatches `cmd.chat.goal.update` for active-goal updates, natural-language update requests, and the small update icon beside Goal status.
+L00001079	- /rewind dispatches `cmd.chat.rewind` and remains conversation-only
+L00001080	- /revert dispatches `cmd.chat.revert` and remains file-mutation restore, not conversation rewind
+L00001081	- /share, /settings, /doctor, and /help are reserved built-in slash entries that route to their owning thread, settings, health, and help surfaces rather than user-defined commands
+L00001082	- /clear stays removed and must not return as a `thread-clear` command
+L00001083	- Source cleanup shorthand `/de-duplication`, `/research-focused`, `/risky`, and `thread-clear` normalizes to reserved-command alias policy plus ask-gated web permission posture; it does not create extra slash commands.
+L00001084	- /web remains discoverable in catalog
+L00001085	- deprecated aliases shown distinctly from active commands
+L00001086	- reserved commands shown as non-editable in catalog
+L00001087	
+L00001088	#### 2.7.1 Goal Mode slash command rows
+L00001089	
+L00001090	| Command ID | Payload | Domain event(s) | UI surface(s) |
+L00001091	|---|---|---|---|
+L00001092	| `cmd.chat.goal.start` | `{ thread_id, goal_prompt?, source: slash|button|chip|icon|natural_language }` | Goal Runtime event envelope; concrete Goal event names and payload schemas remain owned by Goal_Runtime_System, Contracts_V0, and storage-plan registration. | Assistant Chat composer, Goal chip, command palette |
+L00001093	| `cmd.chat.goal.update` | `{ thread_id, update_text?, source: slash|natural_language|status_icon }` | Goal Runtime event envelope; concrete Goal event names and payload schemas remain owned by Goal_Runtime_System, Contracts_V0, and storage-plan registration. | Assistant Chat composer, Goal status/menu |
+L00001094	
+L00001095	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
+L00001096	
+L00001097	### 2.8 Assistant memory (Gist Review) commands
+L00001098	These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
+L00001099	
+L00001100	| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+L00001101	|---|---|---|---|
+L00001102	| `cmd.chat.memory.verify` | `{ project_id, gist_id }` | `memory.gist.verification_requested`, `memory.gist.verified` or `memory.gist.verification_failed` | Assistant chat Gist Review panel |
+L00001103	| `cmd.chat.memory.edit` | `{ project_id, gist_id, patch }` | `memory.gist.updated` | Assistant chat Gist Review panel |
+L00001104	| `cmd.chat.memory.pin` | `{ project_id, gist_id, pinned }` | `memory.gist.pinned` or `memory.gist.unpinned` | Assistant chat Gist Review panel |
+L00001105	| `cmd.chat.memory.discard` | `{ project_id, gist_id }` | `memory.gist.discarded` | Assistant chat Gist Review panel |
+L00001106	| `cmd.chat.memory.toggle_auto_save_unverified` | `{ project_id, enabled }` | `settings.updated` | Assistant chat Gist Review panel |
+L00001107	| `cmd.chat.memory.preview_capsule` | `{ project_id, thread_id? }` | no persisted domain event (preview computation only) | Assistant chat Gist Review panel |
+L00001108	| `cmd.chat.memory.rebuild_lexical_index` | `{ project_id }` | `memory.index.lexical.rebuild.started`, `memory.index.lexical.rebuild.completed` | Assistant chat Gist Review panel |
+L00001109	| `cmd.chat.memory.rebuild_semantic_index` | `{ project_id }` | `memory.index.semantic.rebuild.started`, `memory.index.semantic.rebuild.completed` | Assistant chat Gist Review panel |
+L00001110	| `cmd.chat.memory.verification_sweep` | `{ project_id }` | `memory.verification_sweep.started`, `memory.verification_sweep.completed` | Assistant chat Gist Review panel |
+L00001111	| `cmd.chat.memory.dedup_sweep` | `{ project_id }` | `memory.dedup_sweep.started`, `memory.dedup_sweep.completed` | Assistant chat Gist Review panel |
+L00001112	| `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
+L00001113	| `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
+L00001114	
+L00001115	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
+L00001116	
+L00001117	---
+L00001118	### 2.8A Side-panel and artifacts navigation commands
+L00001119	
+L00001120	| Command ID | Payload | Behavior |
+L00001121	|---|---|---|
+L00001122	| `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/usage subject using object-first route/open identity; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available. |
+L00001123	| `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, usage event, or run context using shared route/open identity. |
+L00001124	
+L00001125	
+L00001126	### Search Command Catalog
+L00001127	
+L00001128	#### Search commands
+L00001129	
+L00001130	| Command ID | Parameters | Behavior |
+L00001131	| --- | --- | --- |
+L00001132	| `cmd.search.show` | `{ project_id, focus? }` | Reveal or focus the Search side panel. |
+L00001133	| `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or rerun find-in-files in the Search panel. |
+L00001134	| `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview or apply flow in the Search panel. |
+L00001135	| `cmd.search.open_result` | `{ project_id, query_session_id, subject_id, disposition? }` | Open a Search result through `route_target` and the canonical file-open path. |
+L00001136	| `cmd.search.replace_selected` | `{ project_id, query_session_id, subject_id }` | Apply replacement to one selected result identified by canonical subject identity. |
+L00001137	| `cmd.search.replace_all` | `{ project_id, query_session_id, replacement }` | Apply the replacement across the entire preserved query session after the Search owner validates the current result snapshot and mutation path. |
+L00001138	| `cmd.search.rebuild_index` | `{ project_id }` | Triggers Search-owned index rebuild while preserving `/replacement` routing for replace-in-files state. |
+L00001139	| `cmd.search.evict_remote_cache` | `{ project_id, remote_cache_id? }` | Opens confirmed remote cache eviction for `/eviction/search` without bypassing FinalGUISpec indexing settings copy. |
+L00001140	
+L00001141	Rules:
+L00001142	- Search command routing resolves through `route_target`.
+L00001143	- Search commands remain side-panel scoped and preserve run-aware search scope, query-session state, and open-disposition / reuse policy through `disposition?` and route/open owner resolution.
+L00001144	- The source command shape `cmd.search.replace_all { query_session_id, replacement }` is the required query-session payload core; `project_id` scopes dispatch in the canonical table row.
+L00001145	- Search routing policy is owned by `Plans/Orchestrator_Page.md#search-routing-and-action-policy`.
+L00001146	## References
+L00001147	- `Plans/Contracts_V0.md#7-uicommand`
+L00001148	- `Plans/GitHub_API_Auth_and_Flows.md`
+L00001149	- `Plans/LSPSupport.md`
+L00001150	- `Plans/Widget_System.md`
+L00001151	- `Plans/Run_Graph_View.md`
+L00001152	- `Plans/Orchestrator_Page.md`
+L00001153	- `Plans/assistant-chat-design.md`
+L00001154	- `Plans/UI_Wiring_Rules.md`
+L00001155	- `Plans/Wiring_Matrix.schema.json`
+L00001156	- `Plans/Wiring_Matrix.md`
+L00001157	
+L00001158	Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy recovery command namespaces are deprecated aliases only.
+L00001159	
+L00001160	| `allowed_action_id` | canonical command id | minimum args |
+L00001161	| --- | --- | --- |
+L00001162	| `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+L00001163	| `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+L00001164	| `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id, repo_id?, worktree_id?, baseline_target? }` |
+L00001165	| `resume_after_prerequisite` | `cmd.runtime.resume_after_prerequisite` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
+L00001166	| `restore_safe_point_then_retry` | `cmd.runtime.restore_safe_point_then_retry` | `{ run_id, node_id, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target }` |
+L00001167	| `start_fresh_attempt` | `cmd.runtime.start_fresh_attempt` | `{ run_id, node_id, attempt_id?, repo_id?, worktree_id?, baseline_target? }` |
+L00001168	| `replan` | `cmd.runtime.replan` | `{ run_id, node_id, attempt_id? }` |
+L00001169	| `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
+L00001170	| `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
+L00001171	| `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
+L00001172	
+L00001173	SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is the closed candidate enum `safe_point | historical_commit | worktree_head`. When a recovery command carries `repo_id`, `worktree_id`, or `baseline_target`, runtime dispatch must validate the targeted worktree and baseline exactly and must reject the command rather than silently substitute another worktree or baseline.
+L00001174	
+L00001175	### Navigation commands
+L00001176	- `cmd.runtime.open_queue_analysis` -> `{ run_id, scheduler_pass_id }`
+L00001177	- `cmd.runtime.open_remediation_lineage` -> `{ run_id, remediation_root_id }`
+L00001178	- `cmd.runtime.open_safe_point_history` -> `{ run_id, safe_point_id? }`
+L00001179	- These runtime navigation commands are route identity examples owned by the catalog and the shared route contract; `cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` must not be treated as local graph shortcuts whose route identities are implied but unregistered.
+L00001180	
+L00001181	### Pre-attempt blocked rule
+L00001182	When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.
+L00001183	
+L00001184	ContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)
+L00001185	
+L00001186	### Recovery command definitions
+L00001187	
+L00001188	Recovery verb semantics are canonical command copy:
+L00001189	- `Retry` repeats the already resolved operation target and parameters under the current validation rules.
+L00001190	- `Resume` continues an existing blocked, paused, or waiting episode after its prerequisite, approval, or recovery condition is satisfied.
+L00001191	- `Recover` invokes a canonical remediation flow advertised by `allowed_action_ids[]`; it does not imply a full rerun.
+L00001192	- `Restore` applies an explicit restore point or preserved state and must disclose the target state before mutation.
+L00001193	
+L00001194	Surfaces may add context qualifiers, but they must not use these verbs interchangeably across worktrees, GitHub Actions, Docker publish, Kubernetes, `/Unraid`, or Orchestrator recovery flows.
+L00001195	
+L00001196	
+L00001197	All blocked-state recovery buttons and menu entries in GUI, chat, graph, and orchestrator surfaces MUST map from `allowed_action_ids[]` to one of the canonical runtime commands above.
+L00001198	
+L00001199	No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.
+L00001200	
+L00001201	ContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), ContractName:Plans/Wiring_Matrix.md#UI command handler rule
+L00001202	
+L00001203	Required command metadata:
+L00001204	- `command_kind`
+L00001205	- `normalization.kind`
+L00001206	- `normalizes_to_contract`
+L00001207	- `alias_of_command_id`
+L00001208	- `approval_scope_key`
+L00001209	- `allowed_action_ids[]`
+L00001210	- `route_target`
+L00001211	- `open_subject?`
+L00001212	- `ref_family?`
+L00001213	
+L00001214	Canonical terms and values:
+L00001215	- command_kind
+L00001216	- normalization
+L00001217	- approval_scope_key
+L00001218	- route_target
+L00001219	- ref_family
+L00001220	
+L00001221	Labels:
+L00001222	- Approve
+L00001223	- Decline
+L00001224	- Resume after prerequisite
+L00001225	- Blocked
+L00001226	- Retry
+L00001227	- Review
+L00001228	- Resolve
+L00001229	
+L00001230	Behavioral rules:
+L00001231	- blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands
+L00001232	- no surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics
+L00001233	- recovery commands must bind to blocked-episode identity rather than request-level surrogates
+L00001234	- normalization metadata must survive for wrappers and deprecated aliases
+L00001235	- selector precedence and scoped resolver behavior follow the canonical route payload rules above
+L00001236	- timestamp/run/thread fallback is compatibility-only when stronger route identity is unavailable
+L00001237	
+L00001238	Permission carry-through:
+L00001239	- ordered `allowed_action_ids[]`
+L00001240	
+L00001241	## Owner / Consumer Map
+L00001242	
+L00001243	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/UI_Command_Catalog.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001244	
+L00001245	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001246	
+L00001247	## PlanUnits
+L00001248	
+
+<<< CONTEXT_AFTER canonical_document_lines=1249-1260 >>>
+L00001249	### UCC-002 - Command Catalog Owner Identity
+L00001250	
+L00001251	```yaml
+L00001252	plan_unit_id: UCC-002
+L00001253	unit_type: requirement
+L00001254	status: accepted
+L00001255	owner_doc: Plans/UI_Command_Catalog.md
+L00001256	canonical_text: UI_Command_Catalog.md is the canonical owner document for stable UI command catalog requirements and preserves product, runtime, storage, UI, and governance details in owner-section form.
+L00001257	gui_related: true
+L00001258	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00001259	split_recommended: false
+L00001260	depends_on:

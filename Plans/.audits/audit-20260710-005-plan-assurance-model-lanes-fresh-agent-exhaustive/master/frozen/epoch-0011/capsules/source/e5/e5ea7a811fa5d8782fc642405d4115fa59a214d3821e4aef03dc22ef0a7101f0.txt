@@ -1,0 +1,371 @@
+<<< CONTEXT_BEFORE canonical_document_lines=374-385 >>>
+L00000374	| pldg-20260617-001-plans-to-code-handoff:atom-0031 | ATS-004 |
+L00000375	| pldg-20260617-001-plans-to-code-handoff:atom-0032 | ATS-003 |
+L00000376	| pldg-20260617-001-plans-to-code-handoff:atom-0033 | ATS-003 |
+L00000377	| pldg-20260617-001-plans-to-code-handoff:atom-0034 | ATS-004 |
+L00000378	
+L00000379	ContractRef: ContractName:Plans/Automated_Testing_System.md
+L00000380	
+L00000381	
+L00000382	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00000383	
+L00000384	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00000385	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=386-727 >>>
+L00000386	### ATS-005 - Testing Defaults And Scoped Overrides
+L00000387	
+L00000388	```yaml
+L00000389	plan_unit_id: ATS-005
+L00000390	unit_type: requirement
+L00000391	status: accepted
+L00000392	owner_doc: Plans/Automated_Testing_System.md
+L00000393	canonical_text: 'Automated testing and evidence collection are platform defaults for planned and executed work; Planning Wizard conversations refine requirements and constraints but do not casually disable the automated testing system. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, approver_ref, approved_at_utc, evidence_refs, redaction_profile_ref, and expiration or reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be represented as an automated test pass or full certification. Visible or headed-session verification cannot pass without interaction evidence, artifact evidence, and redaction disposition.'
+L00000394	gui_related: false
+L00000395	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00000396	depends_on: []
+L00000397	unblocks: []
+L00000398	acceptance_criteria:
+L00000399	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000400	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000401	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000402	- Testing Off or restricted testing records approver, scope, risk, evidence, redaction profile, expiration or reopen condition, and truthful exception result.
+L00000403	validation_surfaces:
+L00000404	- python3 scripts/pm-plan-index.py validate
+L00000405	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000406	risk_class: owner_drift
+L00000407	reasoning_tier: standard
+L00000408	context_scope: ledger_to_plans_compile
+L00000409	implementation_surfaces:
+L00000410	- Plans/Automated_Testing_System.md
+L00000411	- Plans/Planning_Wizard.md
+L00000412	- Plans/Contracts_V0.md
+L00000413	- Plans/human-in-the-loop.md
+L00000414	- Plans/Executor_Protocol.md
+L00000415	node_compile_hint:
+L00000416	  mode: canonical_planunit_from_bootstrap_ledger
+L00000417	  create_worknodes: false
+L00000418	  create_nodeseeds: false
+L00000419	source_lineage:
+L00000420	- pldg-20260618-001-prd-planning-wizard:atom-0080
+L00000421	- pldg-20260618-001-prd-planning-wizard:atom-0081
+L00000422	- pldg-20260618-001-prd-planning-wizard:atom-0082
+L00000423	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00000424	source_atom_ids:
+L00000425	- atom-0080
+L00000426	- atom-0081
+L00000427	- atom-0082
+L00000428	decision_refs:
+L00000429	- dec-0016
+L00000430	correction_refs:
+L00000431	- corr-0007
+L00000432	preserved_exact_tokens:
+L00000433	- automated testing is enabled by default
+L00000434	- testing_policy_override
+L00000435	- completed_with_approved_verification_exception
+L00000436	- approver_ref
+L00000437	- evidence_refs
+L00000438	- redaction_profile_ref
+L00000439	negative_constraints:
+L00000440	- Do not ask whether testing should exist as though no testing were the ordinary default.
+L00000441	- Do not infer an opt-out from casual conversation or a capability setting being unavailable.
+L00000442	- Do not convert an approved testing exception into test_passed or certified.
+L00000443	- Do not allow visible-session pass without evidence and redaction disposition.
+L00000444	owner_hints:
+L00000445	- Plans/Automated_Testing_System.md
+L00000446	- Plans/Planning_Wizard.md
+L00000447	- Plans/Contracts_V0.md
+L00000448	- Plans/human-in-the-loop.md
+L00000449	- Plans/Executor_Protocol.md
+L00000450	```
+L00000451	
+L00000452	### ATS-006 - Official-Source Testing Research And Provenance
+L00000453	
+L00000454	```yaml
+L00000455	plan_unit_id: ATS-006
+L00000456	unit_type: requirement
+L00000457	status: accepted
+L00000458	owner_doc: Plans/Automated_Testing_System.md
+L00000459	canonical_text: 'Plan Compile performs project-level discovery of existing runners, commands, harnesses, frameworks, environments, services, emulators, browsers, devices, credentials, and evidence surfaces before finalizing WorkNode-specific test bindings. Test Capability Discovery searches current official and primary sources for appropriate live testing, hot reload, live preview, browser automation, GUI automation, simulator, emulator, device, cloud, accessibility, performance, security, and project-native testing methods relevant to the technology stack. Online capability research records source URL or provider reference, publication or update time when available, retrieval time, tool and version, supported platform, license, cost, credential needs, installation scope, freshness, confidence, and selection rationale.'
+L00000460	gui_related: false
+L00000461	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00000462	depends_on: []
+L00000463	unblocks: []
+L00000464	acceptance_criteria:
+L00000465	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000466	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000467	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000468	validation_surfaces:
+L00000469	- python3 scripts/pm-plan-index.py validate
+L00000470	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000471	risk_class: owner_drift
+L00000472	reasoning_tier: standard
+L00000473	context_scope: ledger_to_plans_compile
+L00000474	implementation_surfaces:
+L00000475	- Plans/Automated_Testing_System.md
+L00000476	- Plans/Plan_To_Node_Compilation.md
+L00000477	- Plans/Tools.md
+L00000478	- Plans/Permissions_System.md
+L00000479	- Plans/Project_Output_Artifacts.md
+L00000480	node_compile_hint:
+L00000481	  mode: canonical_planunit_from_bootstrap_ledger
+L00000482	  create_worknodes: false
+L00000483	  create_nodeseeds: false
+L00000484	source_lineage:
+L00000485	- pldg-20260618-001-prd-planning-wizard:atom-0083
+L00000486	- pldg-20260618-001-prd-planning-wizard:atom-0084
+L00000487	- pldg-20260618-001-prd-planning-wizard:atom-0085
+L00000488	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00000489	source_atom_ids:
+L00000490	- atom-0083
+L00000491	- atom-0084
+L00000492	- atom-0085
+L00000493	decision_refs:
+L00000494	- dec-0017
+L00000495	correction_refs:
+L00000496	- corr-0013
+L00000497	preserved_exact_tokens:
+L00000498	- Test Capability Discovery
+L00000499	- project-level discovery
+L00000500	- official sources
+L00000501	- live testing
+L00000502	- hot reload
+L00000503	- live preview
+L00000504	- research provenance
+L00000505	- retrieval time
+L00000506	- selection rationale
+L00000507	negative_constraints:
+L00000508	- Do not rely solely on stale internal model knowledge for current tools, versions, setup methods, or platform availability.
+L00000509	owner_hints:
+L00000510	- Plans/Automated_Testing_System.md
+L00000511	- Plans/Plan_To_Node_Compilation.md
+L00000512	- Plans/Tools.md
+L00000513	- Plans/Permissions_System.md
+L00000514	- Plans/Project_Output_Artifacts.md
+L00000515	```
+L00000516	
+L00000517	### ATS-007 - Authorized Test Tool Installation And Rollback
+L00000518	
+L00000519	```yaml
+L00000520	plan_unit_id: ATS-007
+L00000521	unit_type: requirement
+L00000522	status: accepted
+L00000523	owner_doc: Plans/Automated_Testing_System.md
+L00000524	canonical_text: 'When an appropriate test, live-preview, hot-reload, browser, simulator, emulator, or support method is missing, the system may install or configure it within project-local or pre-authorized policy and must record commands, changes, receipts, rollback, and currentness. Global or privileged installation, paid services, license acceptance, account creation, credential use, device enrollment, or material external effects require applicable authority and may become a typed blocker rather than an unsafe silent install. Testing-tool installation and configuration writes use FileSafe/source-control safe points, bounded write surfaces, receipts, revalidation, and rollback so discovery cannot damage the user''s project or environment.'
+L00000525	gui_related: false
+L00000526	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00000527	depends_on: []
+L00000528	unblocks: []
+L00000529	acceptance_criteria:
+L00000530	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000531	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000532	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000533	validation_surfaces:
+L00000534	- python3 scripts/pm-plan-index.py validate
+L00000535	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000536	risk_class: owner_drift
+L00000537	reasoning_tier: standard
+L00000538	context_scope: ledger_to_plans_compile
+L00000539	implementation_surfaces:
+L00000540	- Plans/Automated_Testing_System.md
+L00000541	- Plans/Executor_Protocol.md
+L00000542	- Plans/FileSafe.md
+L00000543	- Plans/Permissions_System.md
+L00000544	- Plans/human-in-the-loop.md
+L00000545	- Plans/WorktreeGitImprovement.md
+L00000546	node_compile_hint:
+L00000547	  mode: canonical_planunit_from_bootstrap_ledger
+L00000548	  create_worknodes: false
+L00000549	  create_nodeseeds: false
+L00000550	source_lineage:
+L00000551	- pldg-20260618-001-prd-planning-wizard:atom-0086
+L00000552	- pldg-20260618-001-prd-planning-wizard:atom-0087
+L00000553	- pldg-20260618-001-prd-planning-wizard:atom-0088
+L00000554	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00000555	source_atom_ids:
+L00000556	- atom-0086
+L00000557	- atom-0087
+L00000558	- atom-0088
+L00000559	decision_refs:
+L00000560	- dec-0017
+L00000561	correction_refs:
+L00000562	- corr-0013
+L00000563	preserved_exact_tokens:
+L00000564	- install
+L00000565	- configure
+L00000566	- rollback
+L00000567	- privileged installation
+L00000568	- paid service
+L00000569	- license acceptance
+L00000570	- safe point
+L00000571	negative_constraints: []
+L00000572	owner_hints:
+L00000573	- Plans/Automated_Testing_System.md
+L00000574	- Plans/Executor_Protocol.md
+L00000575	- Plans/FileSafe.md
+L00000576	- Plans/Permissions_System.md
+L00000577	- Plans/human-in-the-loop.md
+L00000578	- Plans/WorktreeGitImprovement.md
+L00000579	```
+L00000580	
+L00000581	### ATS-008 - Testing Capability Settings Model
+L00000582	
+L00000583	```yaml
+L00000584	plan_unit_id: ATS-008
+L00000585	unit_type: requirement
+L00000586	status: accepted
+L00000587	owner_doc: Plans/Automated_Testing_System.md
+L00000588	canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator. Each testing capability family supports Auto, On, and Off: Auto discovers and selects or installs within authority; On is required and blocks or asks for authority when unavailable; Off prohibits use and installation for that capability without implying a pass. Settings cover online capability research, automated installation, built-in browser, headed browser, visible browser automation, hot reload, live preview, desktop GUI testing, simulator or emulator, physical device, screenshot or visual comparison, accessibility, API or contract, database, console or network, performance, and security testing.'
+L00000589	gui_related: true
+L00000590	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000591	depends_on: []
+L00000592	unblocks: []
+L00000593	acceptance_criteria:
+L00000594	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000595	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000596	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000597	validation_surfaces:
+L00000598	- python3 scripts/pm-plan-index.py validate
+L00000599	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000600	risk_class: owner_drift
+L00000601	reasoning_tier: standard
+L00000602	context_scope: ledger_to_plans_compile
+L00000603	implementation_surfaces:
+L00000604	- Plans/Automated_Testing_System.md
+L00000605	- Plans/FinalGUISpec.md
+L00000606	- Plans/Multi-Account.md
+L00000607	- Plans/Contracts_V0.md
+L00000608	node_compile_hint:
+L00000609	  mode: canonical_planunit_from_bootstrap_ledger
+L00000610	  create_worknodes: false
+L00000611	  create_nodeseeds: false
+L00000612	source_lineage:
+L00000613	- pldg-20260618-001-prd-planning-wizard:atom-0089
+L00000614	- pldg-20260618-001-prd-planning-wizard:atom-0090
+L00000615	- pldg-20260618-001-prd-planning-wizard:atom-0091
+L00000616	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00000617	source_atom_ids:
+L00000618	- atom-0089
+L00000619	- atom-0090
+L00000620	- atom-0091
+L00000621	decision_refs:
+L00000622	- dec-0018
+L00000623	correction_refs:
+L00000624	- corr-0015
+L00000625	preserved_exact_tokens:
+L00000626	- global settings
+L00000627	- per-project settings
+L00000628	- effective policy snapshot
+L00000629	- Auto
+L00000630	- 'On'
+L00000631	- 'Off'
+L00000632	- built-in browser
+L00000633	- visible browser automation
+L00000634	- hot reload
+L00000635	- simulator
+L00000636	- accessibility
+L00000637	- performance
+L00000638	- security
+L00000639	negative_constraints:
+L00000640	- Do not treat Off as successful verification.
+L00000641	owner_hints:
+L00000642	- Plans/Automated_Testing_System.md
+L00000643	- Plans/FinalGUISpec.md
+L00000644	- Plans/Multi-Account.md
+L00000645	- Plans/Contracts_V0.md
+L00000646	```
+L00000647	
+L00000648	### ATS-009 - Visible Verification Sessions And Redaction
+L00000649	
+L00000650	```yaml
+L00000651	plan_unit_id: ATS-009
+L00000652	unit_type: requirement
+L00000653	status: accepted
+L00000654	owner_doc: Plans/Automated_Testing_System.md
+L00000655	canonical_text: 'The default testing visibility policy is show_when_possible: when a meaningful headed or visual surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. Users may collapse, detach, background, or leave a visible test session while automation continues; the system preserves session state and does not require the user to watch every action. When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video
+L00000656	  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. Visible testing, screenshots, video, logs, console, network traces, and artifacts apply secret and sensitive-data redaction before display or persistence.'
+L00000657	gui_related: true
+L00000658	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000659	depends_on: []
+L00000660	unblocks: []
+L00000661	acceptance_criteria:
+L00000662	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000663	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000664	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000665	validation_surfaces:
+L00000666	- python3 scripts/pm-plan-index.py validate
+L00000667	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000668	risk_class: owner_drift
+L00000669	reasoning_tier: high
+L00000670	context_scope: ledger_to_plans_compile
+L00000671	implementation_surfaces:
+L00000672	- Plans/Automated_Testing_System.md
+L00000673	- Plans/Orchestrator_Page.md
+L00000674	- Plans/FinalGUISpec.md
+L00000675	- Plans/Runtime_Artifacts_Panel.md
+L00000676	- Plans/Permissions_System.md
+L00000677	node_compile_hint:
+L00000678	  mode: canonical_planunit_from_bootstrap_ledger
+L00000679	  create_worknodes: false
+L00000680	  create_nodeseeds: false
+L00000681	source_lineage:
+L00000682	- pldg-20260618-001-prd-planning-wizard:atom-0092
+L00000683	- pldg-20260618-001-prd-planning-wizard:atom-0093
+L00000684	- pldg-20260618-001-prd-planning-wizard:atom-0094
+L00000685	- pldg-20260618-001-prd-planning-wizard:atom-0095
+L00000686	- pldg-20260618-001-prd-planning-wizard:atom-0096
+L00000687	- pldg-20260618-001-prd-planning-wizard:atom-0097
+L00000688	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00000689	source_atom_ids:
+L00000690	- atom-0092
+L00000691	- atom-0093
+L00000692	- atom-0094
+L00000693	- atom-0095
+L00000694	- atom-0096
+L00000695	- atom-0097
+L00000696	decision_refs:
+L00000697	- dec-0019
+L00000698	correction_refs:
+L00000699	- corr-0014
+L00000700	preserved_exact_tokens:
+L00000701	- show_when_possible
+L00000702	- built-in browser
+L00000703	- clicks
+L00000704	- form input
+L00000705	- assertions
+L00000706	- Swift
+L00000707	- live preview
+L00000708	- simulator
+L00000709	- emulator
+L00000710	- device stream
+L00000711	- collapse
+L00000712	- detach
+L00000713	- automation continues
+L00000714	- Open
+L00000715	- Watch
+L00000716	- interaction timeline
+L00000717	- redaction
+L00000718	negative_constraints:
+L00000719	- Do not expose credentials, tokens, personal data, or protected project content through visible testing.
+L00000720	owner_hints:
+L00000721	- Plans/Automated_Testing_System.md
+L00000722	- Plans/Orchestrator_Page.md
+L00000723	- Plans/FinalGUISpec.md
+L00000724	- Plans/Runtime_Artifacts_Panel.md
+L00000725	- Plans/Permissions_System.md
+L00000726	```
+L00000727	
+
+<<< CONTEXT_AFTER canonical_document_lines=728-739 >>>
+L00000728	### ATS-010 - Test Capability, Session Receipts, And Revalidation
+L00000729	
+L00000730	```yaml
+L00000731	plan_unit_id: ATS-010
+L00000732	unit_type: requirement
+L00000733	status: accepted
+L00000734	owner_doc: Plans/Automated_Testing_System.md
+L00000735	canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,
+L00000736	  optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
+L00000737	gui_related: false
+L00000738	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00000739	depends_on: []

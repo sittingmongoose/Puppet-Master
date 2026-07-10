@@ -1,0 +1,364 @@
+<<< CONTEXT_BEFORE 1024-1035 >>>
+  ambiguity, failure/degraded states, cache invalidation, and artifact lineage.
+- Do not let validator success stand in for testing user-visible image bridge workflows.
+- Do not omit tests that prove non-vision models do not guess after bridge failure.
+owner_hints:
+- Plans/Automated_Testing_System.md
+- Plans/Tools.md
+- Plans/FinalGUISpec.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Permissions_System.md
+- Plans/Media_Generation_and_Capabilities.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1036-1370 >>>
+### ATS-014 - Teach Teacher End To End Acceptance Tests
+
+```yaml
+plan_unit_id: ATS-014
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: Teach/Teacher tests cover help icon launching a new Teacher thread with current-surface context,
+  /teach and natural-language summon/disambiguation, low-end model default and GUI setting states, requested/effective
+  model disclosure, PM knowledge source disclosure, missing coverage callout, guided overlay happy path and degraded
+  states, mutation confirmation, activity cards, memory capture save/cancel/scope/conflict/revoke/unlock, Teacher
+  handoff, responsive/overflow/keyboard/screen-reader behavior, Teach Help/Glossary coverage, and a PM knowledge
+  pressure test over PM concepts, workflows, settings, models, capabilities, permissions, history, artifacts, Personas,
+  skills/plugins, Orchestrator behavior, and Teach memory.
+gui_related: true
+gui_classification_reason: Validates GUI/thread/help/source/model/memory/handoff behavior across Teach surfaces.
+depends_on:
+- ACD-426
+- P-055
+- MS-117
+- PP-056
+- F3-403
+- G-026
+- UCC-102
+unblocks: []
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: teach_validation_gap
+reasoning_tier: high
+context_scope: teach_teacher_acceptance_tests
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- future Teach/Teacher tests
+node_compile_hint:
+  mode: teach_teacher_acceptance_tests
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0101
+- pldg-20260626-001-feature-name:atom-0110
+- pldg-20260626-001-feature-name:atom-0118
+- pldg-20260626-001-feature-name:atom-0133
+- pldg-20260626-001-feature-name:atom-0135
+- pldg-20260626-001-feature-name:atom-0148
+- pldg-20260626-001-feature-name:atom-0149
+- chat:teacher-feature-initial-framing
+- chat:teach-teacher-correction
+- Plans/assistant-chat-design.md#6-Teach
+- Plans/Personas.md#P-040---Teacher-Core-Persona
+- chat:teach-visual-specificity-challenge
+- chat:teach-help-glossary-rest-request
+- Plans/Glossary.md
+- chat:teach-gap-fill-correction
+- q-0028
+- chat:teach-bundle-accepted-pmconcept-reference
+- chat:work-through-teach-gaps
+- chat:collaboration-style-correction
+- Plans/Personas.md#P-040-teacher-core-persona
+source_atom_ids:
+- atom-0101
+- atom-0110
+- atom-0118
+- atom-0133
+- atom-0135
+- atom-0148
+- atom-0149
+decision_refs:
+- dec-0018
+- dec-0019
+- dec-0020
+- dec-0021
+- dec-0022
+- dec-0023
+- dec-0024
+correction_refs:
+- corr-0002
+- corr-0003
+preserved_exact_tokens:
+- acceptance tests
+- default to a low end model
+- setting too in the gui
+- variety of phrases
+- help icon
+- new thread
+- control the Gui
+- PM documentation coverage
+- tooltip
+- new Teacher thread
+- Sources used
+- guided overlay
+- activity cards
+- desktop and mobile
+- Teach help entries exist
+- related-concept links resolve
+- inline/context/full help
+- Teacher cites
+- missing-help callouts
+- source-owner refs
+- does not rename canonical terms
+- coverage matrix
+- one row per Teach entry
+- inline help
+- context help
+- canonical help page
+- Teacher citation
+- owner source refs
+- related concepts
+- GUI surface(s)
+- missing-state behavior
+- no-help-needed
+- ok lets work through all those
+- all those
+- gap map
+- filled
+- drafted
+- open
+- decision-needed
+- implementation-ready
+- help icon launch
+- natural-language summon
+- disambiguation
+- Teach model Settings states
+- requested/effective model disclosure
+- source disclosure
+- missing coverage callout
+- mutation confirmation
+- memory capture
+- Teacher handoff
+- responsive/accessibility
+- PM knowledge pressure test
+- PM concepts
+- workflows
+- settings
+- models
+- capabilities
+- permissions
+- history
+- artifacts
+- Personas
+- skills/plugins
+- Orchestrator behavior
+- Teach memory
+- missing coverage
+- avoid guessing
+- handoff
+negative_constraints:
+- Do not call Teach implementation-ready without tests for model default/settings, invocation routing, help-icon
+  launch, knowledge substrate behavior, GUI control safety, and activity transparency.
+- Do not rely only on Persona existence or Teach memory-capture tests to validate the whole Teach feature.
+- Do not mark Teach visually implementation-ready without testing the actual help icon, Teacher thread, source disclosure,
+  overlay, activity cards, and model setting states.
+- Do not skip responsive/overflow checks for Teacher captions, cards, chips, or settings labels.
+- Do not mark Help/Glossary support complete without concrete Teach help-entry coverage tests.
+- Do not allow Teacher to cite missing or broken help-entry links as valid sources.
+- Do not rely on a freeform list with no coverage matrix.
+- Do not mark MVP complete with missing required Teach help rows.
+- Do not accept no-help-needed dispositions without owner evidence.
+- Do not claim Teach is ready from the Help/Glossary content pack alone.
+- Do not treat a gap as closed until its behavior, UI state, source owner, failure mode, and validation are specified
+  or explicitly dispositioned.
+- Do not mark Teach implementation-ready without exercising the full path across chat, settings, help, guided GUI,
+  memory, and handoff.
+- Do not skip responsive, overflow, keyboard, or screen-reader checks for the guided overlay and Teacher thread.
+- Do not certify Teacher on a small happy-path chat only.
+- Do not let Teacher answer capability or settings questions without live/source-backed state.
+- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+owner_hints:
+- Plans/Automated_Testing_System.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Models_System.md
+- Plans/Personas.md
+- Plans/Tools.md
+- Plans/Glossary.md
+- Plans/Plan_Document_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/Runtime_Artifacts_Panel.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Automated Testing owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### ATS-015 - Inline Visualizer V2 Acceptance Tests
+
+```yaml
+plan_unit_id: ATS-015
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Inline visualizer v2 acceptance tests cover marker parsing for `visualize(title=...)`, `@@@VIZ-START`, and
+  `@@@VIZ-END`; false-positive exclusion for tool_calls, reasoning, code_execution, Markdown code fences, and
+  marker-like literal content; progressive render and zero-flicker finalization; serialized script execution;
+  CV-300 bridge envelopes, return/error shapes, origin_nonce validation, bridge aliases `copyText`, `toast`,
+  `saveState`, and `loadState`; question-flow omission of sendPrompt; Rust + Slint webview adapter mapping; sandbox
+  denial for allow-same-origin, parent.document, parent localStorage, CDN, dynamic import, and unvetted network;
+  PM visual token/accessibility states; pinned library allowlist behavior; reload/export; no secret leak; and
+  localized feedback with audio off by default.
+gui_related: true
+gui_classification_reason: Validates visible inline visualizer rendering, feedback, accessibility, and degraded states.
+depends_on: [ACD-427, CV-300, F3-404, SP-221, PS-123, RAP-037]
+unblocks: []
+acceptance_criteria:
+  - Tests prove visual markers do not route from tool/reasoning/code execution or code-fence content.
+  - Tests prove finalization avoids flicker/remount and preserves script-populated containers.
+  - Tests prove bridge envelope origin/nonce, method schema, return/error, save/load quota, and native webview adapter mapping behavior.
+  - Tests prove sandbox/network/library denials produce visible fallback states without leaks.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future inline visualizer v2 fixture suite
+risk_class: inline_visualizer_validation_gap
+reasoning_tier: high
+context_scope: inline_visualizer_v2_acceptance
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - future inline visualizer tests
+node_compile_hint:
+  mode: inline_visualizer_v2_acceptance_tests
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-automated-tests
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+source_atom_ids: [atom-0088]
+preserved_exact_tokens:
+  - "visualize(title=...)"
+  - "@@@VIZ-START"
+  - "@@@VIZ-END"
+  - "tool_calls"
+  - "reasoning"
+  - "code_execution"
+  - "copyText"
+  - "toast"
+  - "saveState"
+  - "loadState"
+  - "bridge_call_id"
+  - "origin_nonce"
+  - "Rust + Slint"
+  - "webview"
+  - "allow-same-origin"
+  - "parent.document"
+  - "parent localStorage"
+negative_constraints:
+  - Do not call inline visualizer v2 implementation-ready without sandbox, stream, bridge, fallback, reload, export, and no-leak tests.
+  - Do not treat a happy-path static HTML render as sufficient visualizer coverage.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Permissions_System.md
+```
+
+### ATS-016 - Notification Sound Delivery Acceptance Tests
+
+```yaml
+plan_unit_id: ATS-016
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Notification and sound acceptance tests cover Settings > General > Notifications & Sounds rendering, destination
+  CRUD/toggle/test, Slack, Discord, generic webhook, ntfy, Pushover, Telegram mocks, payload redaction, missing auth,
+  provider error, 408/429/5xx/network retry behavior, malformed/revoked/missing/forbidden permanent failures, rate-limit
+  mocks, idempotency, mention-policy denial, provider-specific profile validation, success receipt mocks, no-secret
+  logs/receipts/exports, built-in sound catalog source/license/default-mapping checks, custom sound upload validation,
+  sound preview local-only, explicit live test-send gating, PeonPing/OpenPeon import compatibility mapping, unknown
+  manifest review, unsupported format rejection, and accessibility where sound is not the only carrier.
+gui_related: true
+gui_classification_reason: Validates visible settings, sound controls, preview/test-send, and notification copy behavior.
+depends_on: [ACD-428, CV-298, F3-405, SP-222, PS-124, RAP-039, UCC-103, WM-039]
+unblocks: []
+acceptance_criteria:
+  - Automated delivery tests use mocks by default; live sends require explicit user action and enabled destination.
+  - Provider-specific Slack, Discord, generic webhook, ntfy, Pushover, and Telegram profile fields are validated through fixtures.
+  - Built-in normal notification sound fixtures prove source/license/version/hash/default mapping metadata is present.
+  - Secret material never appears in logs, receipts, screenshots, exports, or GUI previews.
+  - Sound upload and imported pack tests enforce format, size, duration, path, decode, license, and compatibility boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future notification and sound delivery fixture suite
+risk_class: notification_validation_gap
+reasoning_tier: high
+context_scope: notifications_sounds_acceptance
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - future notification and sound tests
+node_compile_hint:
+  mode: notifications_sounds_acceptance_tests
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-delivery-validation-no-secret-evidence
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:preview-test-send-accessibility
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0070
+source_atom_ids: [atom-0069, atom-0070]
+preserved_exact_tokens:
+  - "Slack"
+  - "Discord"
+  - "generic webhook"
+  - "ntfy"
+  - "Pushover"
+  - "Telegram"
+  - "408"
+  - "429"
+  - "5xx"
+  - "PeonPing"
+  - "OpenPeon"
+  - "test-send"
+  - "preview local only"
+  - "event_category"
+  - "idempotency"
+  - "source/license"
+negative_constraints:
+  - Do not use live external sends in automated tests unless explicitly enabled by user action.
+  - Do not allow sound-only notification assertions for critical states.
+  - Do not accept secret-bearing logs, receipts, screenshots, or exports as passing evidence.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+
+<<< CONTEXT_AFTER 1371-1382 >>>
+### ATS-017 - Compact Now And Manual Compaction Acceptance Tests
+
+```yaml
+plan_unit_id: ATS-017
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Compaction acceptance tests cover the chat context circle hover display for Usage, Tokens, Cost, and More Details;
+  click reveal/selection of Compact Now before dispatch to `cmd.chat.compact_context`; `/compact` parity;
+  context.compaction.started, context.compaction.completed, and context.compaction.failed or equivalent visible
+  failure/degraded state; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,

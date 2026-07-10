@@ -1,0 +1,407 @@
+<<< CONTEXT_BEFORE 4765-4776 >>>
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md'
+- 'ContractRef: ToolID:capabilities.get'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+
+<<< AUTHORITATIVE_CORE 4777-5154 >>>
+### MGAC-068 - AC-MED02 Disabled Reason Enum Integrity
+
+```yaml
+plan_unit_id: MGAC-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED02 requires disabled_reason values to be exactly the six canonical values from section 1.3 with no ad-hoc reason strings.
+gui_related: false
+gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-006
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med02_disabled_reason_enum_integrity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED02
+- disabled_reason
+- six canonical values
+- §1.3
+- No ad-hoc reason strings
+negative_constraints:
+- No ad-hoc reason strings are permitted.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-069 - AC-MED03 Cursor Without Gemini
+
+```yaml
+plan_unit_id: MGAC-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED03 requires Cursor without a verified Cursor generated-media route to keep generated-media output disabled or capability-gated; image-input proof alone must not enable media.image, and unsupported Cursor media kinds use BACKEND_UNSUPPORTED or a route-specific unavailable state.
+gui_related: false
+gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-019
+- MGAC-061
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med03_cursor_without_generated_media_route
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED03
+- Cursor
+- media.image
+- Cursor-native generation
+- media.video
+- media.tts
+- media.music
+- BACKEND_UNSUPPORTED
+negative_constraints: []
+compatibility_only_notes:
+- The old "Cursor without eligible Gemini configuration" criterion is retired source-lineage.
+stale_retired_dispositions:
+- Gemini configuration no longer governs Cursor generated-media availability.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-070 - AC-MED03A Cursor With Gemini Configured
+
+```yaml
+plan_unit_id: MGAC-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED03A requires Cursor generated-media availability to depend on Cursor's own verified generated-media route. Valid Gemini Direct or other provider credentials do not make Cursor a generated-media backend; requested/effective routing must disclose any switch to the actual media provider.
+gui_related: false
+gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-019
+- MGAC-061
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med03a_cursor_with_other_provider_configured
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED03A
+- valid Gemini API key
+- Gemini OAuth account
+- image MUST remain enabled via Cursor-native generation
+- video
+- tts
+- music
+- BACKEND_UNSUPPORTED
+negative_constraints: []
+compatibility_only_notes:
+- The old "Cursor with valid Gemini API key and/or OAuth account" criterion is retired source-lineage.
+stale_retired_dispositions:
+- Gemini credentials no longer enable Cursor-native image generation.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-071 - AC-MED04 Non Cursor Eligible Gemini
+
+```yaml
+plan_unit_id: MGAC-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED04 requires non-Cursor media capabilities to be eligible only for media kinds declared by the resolved provider/model generated_media_routes[] entry, subject to Settings > Media toggles, route/model availability, and provider-specific support states. An eligible account alone does not guarantee all media kinds are enabled.
+gui_related: false
+gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-020
+- MGAC-021
+- MGAC-022
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med04_non_cursor_eligible_generated_media_route
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED04
+- non-Cursor
+- eligible Gemini account
+- per-capability Settings > Media toggle
+- ADMIN_DISABLED
+- MODEL_UNAVAILABLE
+- An eligible account alone does NOT guarantee all four are enabled.
+negative_constraints:
+- An eligible account alone does NOT guarantee all four are enabled.
+compatibility_only_notes:
+- The old "eligible Gemini account" criterion is retained only as source-lineage.
+stale_retired_dispositions:
+- Gemini-default non-Cursor media routing is retired.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-072 - AC-MED05 Non Cursor Missing Generated Media Route
+
+```yaml
+plan_unit_id: MGAC-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED05 requires generated-media capabilities to be disabled with NOT_CONFIGURED, UNSUPPORTED, CAPABILITY_GATED, or the more specific provider/account state when the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy.
+gui_related: false
+gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-020
+- MGAC-022
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med05_non_cursor_missing_generated_media_route
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED05
+- non-Cursor
+- no eligible Gemini account
+- resolved request/policy
+- NOT_CONFIGURED
+negative_constraints:
+- No eligible provider/model generated-media route must not be reported as zero-cost success or generic Gemini setup.
+compatibility_only_notes:
+- The old "no eligible Gemini account" criterion is retained only as source-lineage.
+stale_retired_dispositions:
+- Gemini-default non-Cursor NOT_CONFIGURED behavior is retired.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-073 - AC-MED06 Model Override Acceptance
+
+```yaml
+plan_unit_id: MGAC-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED06 requires model_override to resolve by alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE and not change persistent Settings.
+gui_related: false
+gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-043
+- MGAC-044
+- MGAC-063
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med06_model_override_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED06
+- model_override
+- alias -> exact model id -> exact displayName -> else MODEL_UNAVAILABLE
+- MUST NOT change the persistent model in Settings
+negative_constraints:
+- The override MUST NOT change the persistent model in Settings.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-074 - AC-MED07 Disabled Picker Display Acceptance
+
+```yaml
+plan_unit_id: MGAC-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED07 requires the capability picker to display disabled capabilities as greyed-out items with the appropriate section 5.2 disabled-reason tooltip.
+gui_related: true
+gui_classification_reason: The unit defines a testable GUI-facing capability picker, UI copy, accessibility, or account-plan presentation criterion.
+split_recommended: true
+depends_on:
+- MGAC-058
+- MGAC-066
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_acceptance_criteria_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: ac_med07_disabled_picker_display_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- AC-MED07
+- capability picker dropdown
+- disabled capabilities
+- greyed-out items
+- tooltip
+- §5.2
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, Invariant:INV-003'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+
+<<< CONTEXT_AFTER 5155-5166 >>>
+### MGAC-075 - AC-MED08 Capability Click Prompt Acceptance
+
+```yaml
+plan_unit_id: MGAC-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: AC-MED08 requires clicking an enabled capability in the picker to insert the corresponding verbatim prompt from section 5.1 into the chat composer.
+gui_related: true
+gui_classification_reason: The unit defines a testable GUI-facing capability picker, UI copy, accessibility, or account-plan presentation criterion.
+split_recommended: true
+depends_on:

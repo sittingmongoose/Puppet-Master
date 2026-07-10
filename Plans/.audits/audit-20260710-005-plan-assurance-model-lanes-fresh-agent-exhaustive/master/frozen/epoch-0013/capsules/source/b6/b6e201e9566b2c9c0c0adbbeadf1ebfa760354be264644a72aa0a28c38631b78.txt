@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9171-9182 >>>
+L00009171	          "requirement": "cmd.docker.container.open has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009172	        },
+L00009173	        {
+L00009174	          "test_id": "wiring.catalog.docker_container_open.accessibility",
+L00009175	          "evidence_kind": "accessibility_regression",
+L00009176	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009177	        }
+L00009178	      ],
+L00009179	      "event_test_requirements": [
+L00009180	        "Assert cmd.docker.container.open records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009181	      ]
+L00009182	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9183-9567 >>>
+L00009183	    "catalog.docker_container_restart": {
+L00009184	      "ui_element_id": "catalog.docker_container_restart",
+L00009185	      "ui_location": "Docker Manager > Container > Restart",
+L00009186	      "ui_command_id": "cmd.docker.container.restart",
+L00009187	      "handler_location": "handlers::docker::container_restart",
+L00009188	      "expected_event_types": [],
+L00009189	      "acceptance_checks": [
+L00009190	        "cmd.docker.container.restart must be registered in the UICommand dispatcher with typed args and result contract",
+L00009191	        "cmd.docker.container.restart must expose projected state selector and disabled reason before dispatch",
+L00009192	        "cmd.docker.container.restart dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009193	        "cmd.docker.container.restart must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009194	        "cmd.docker.container.restart must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009195	      ],
+L00009196	      "evidence_required": "Production wiring contract for cmd.docker.container.restart; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009197	      "state_selector": "state.commands.docker_container_restart.availability",
+L00009198	      "disabled_reason_projection": "state.commands.docker_container_restart.disabled_reason",
+L00009199	      "effect_contract": {
+L00009200	        "effect_kind": "receipt",
+L00009201	        "description": "cmd.docker.container.restart has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009202	        "receipt_or_event_refs": [
+L00009203	          "cmd.docker.container.restart.dispatch_receipt"
+L00009204	        ]
+L00009205	      },
+L00009206	      "accessibility_contract": {
+L00009207	        "role_or_semantics": "catalog.docker_container_restart exposes a stable role/name/description matching cmd.docker.container.restart.",
+L00009208	        "keyboard_access": "catalog.docker_container_restart is reachable and activatable by keyboard where the control is visible.",
+L00009209	        "focus_management": "catalog.docker_container_restart preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009210	        "disabled_announcement": "catalog.docker_container_restart surfaces state.commands.docker_container_restart.disabled_reason to assistive technology when unavailable."
+L00009211	      },
+L00009212	      "test_evidence": [
+L00009213	        {
+L00009214	          "test_id": "wiring.catalog.docker_container_restart.dispatcher",
+L00009215	          "evidence_kind": "dispatcher_fixture",
+L00009216	          "requirement": "Dispatching cmd.docker.container.restart reaches handlers::docker::container_restart with typed args/result contract."
+L00009217	        },
+L00009218	        {
+L00009219	          "test_id": "wiring.catalog.docker_container_restart.state_projection",
+L00009220	          "evidence_kind": "state_projection",
+L00009221	          "requirement": "Availability reads state.commands.docker_container_restart.availability and disabled copy reads state.commands.docker_container_restart.disabled_reason."
+L00009222	        },
+L00009223	        {
+L00009224	          "test_id": "wiring.catalog.docker_container_restart.effect",
+L00009225	          "evidence_kind": "receipt_or_event_assertion",
+L00009226	          "requirement": "cmd.docker.container.restart has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009227	        },
+L00009228	        {
+L00009229	          "test_id": "wiring.catalog.docker_container_restart.accessibility",
+L00009230	          "evidence_kind": "accessibility_regression",
+L00009231	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009232	        }
+L00009233	      ],
+L00009234	      "event_test_requirements": [
+L00009235	        "Assert cmd.docker.container.restart records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009236	      ]
+L00009237	    },
+L00009238	    "catalog.docker_container_stats": {
+L00009239	      "ui_element_id": "catalog.docker_container_stats",
+L00009240	      "ui_location": "Docker Manager > Container > Stats",
+L00009241	      "ui_command_id": "cmd.docker.container.stats",
+L00009242	      "handler_location": "handlers::docker::container_stats",
+L00009243	      "expected_event_types": [],
+L00009244	      "acceptance_checks": [
+L00009245	        "cmd.docker.container.stats must be registered in the UICommand dispatcher with typed args and result contract",
+L00009246	        "cmd.docker.container.stats must expose projected state selector and disabled reason before dispatch",
+L00009247	        "cmd.docker.container.stats dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009248	        "cmd.docker.container.stats must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009249	        "cmd.docker.container.stats must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009250	      ],
+L00009251	      "evidence_required": "Production wiring contract for cmd.docker.container.stats; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009252	      "state_selector": "state.commands.docker_container_stats.availability",
+L00009253	      "disabled_reason_projection": "state.commands.docker_container_stats.disabled_reason",
+L00009254	      "effect_contract": {
+L00009255	        "effect_kind": "receipt",
+L00009256	        "description": "cmd.docker.container.stats has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009257	        "receipt_or_event_refs": [
+L00009258	          "cmd.docker.container.stats.dispatch_receipt"
+L00009259	        ]
+L00009260	      },
+L00009261	      "accessibility_contract": {
+L00009262	        "role_or_semantics": "catalog.docker_container_stats exposes a stable role/name/description matching cmd.docker.container.stats.",
+L00009263	        "keyboard_access": "catalog.docker_container_stats is reachable and activatable by keyboard where the control is visible.",
+L00009264	        "focus_management": "catalog.docker_container_stats preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009265	        "disabled_announcement": "catalog.docker_container_stats surfaces state.commands.docker_container_stats.disabled_reason to assistive technology when unavailable."
+L00009266	      },
+L00009267	      "test_evidence": [
+L00009268	        {
+L00009269	          "test_id": "wiring.catalog.docker_container_stats.dispatcher",
+L00009270	          "evidence_kind": "dispatcher_fixture",
+L00009271	          "requirement": "Dispatching cmd.docker.container.stats reaches handlers::docker::container_stats with typed args/result contract."
+L00009272	        },
+L00009273	        {
+L00009274	          "test_id": "wiring.catalog.docker_container_stats.state_projection",
+L00009275	          "evidence_kind": "state_projection",
+L00009276	          "requirement": "Availability reads state.commands.docker_container_stats.availability and disabled copy reads state.commands.docker_container_stats.disabled_reason."
+L00009277	        },
+L00009278	        {
+L00009279	          "test_id": "wiring.catalog.docker_container_stats.effect",
+L00009280	          "evidence_kind": "receipt_or_event_assertion",
+L00009281	          "requirement": "cmd.docker.container.stats has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009282	        },
+L00009283	        {
+L00009284	          "test_id": "wiring.catalog.docker_container_stats.accessibility",
+L00009285	          "evidence_kind": "accessibility_regression",
+L00009286	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009287	        }
+L00009288	      ],
+L00009289	      "event_test_requirements": [
+L00009290	        "Assert cmd.docker.container.stats records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009291	      ]
+L00009292	    },
+L00009293	    "catalog.docker_container_stop": {
+L00009294	      "ui_element_id": "catalog.docker_container_stop",
+L00009295	      "ui_location": "Docker Manager > Container > Stop",
+L00009296	      "ui_command_id": "cmd.docker.container.stop",
+L00009297	      "handler_location": "handlers::docker::container_stop",
+L00009298	      "expected_event_types": [],
+L00009299	      "acceptance_checks": [
+L00009300	        "cmd.docker.container.stop must be registered in the UICommand dispatcher with typed args and result contract",
+L00009301	        "cmd.docker.container.stop must expose projected state selector and disabled reason before dispatch",
+L00009302	        "cmd.docker.container.stop dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009303	        "cmd.docker.container.stop must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009304	        "cmd.docker.container.stop must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009305	      ],
+L00009306	      "evidence_required": "Production wiring contract for cmd.docker.container.stop; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009307	      "state_selector": "state.commands.docker_container_stop.availability",
+L00009308	      "disabled_reason_projection": "state.commands.docker_container_stop.disabled_reason",
+L00009309	      "effect_contract": {
+L00009310	        "effect_kind": "receipt",
+L00009311	        "description": "cmd.docker.container.stop has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009312	        "receipt_or_event_refs": [
+L00009313	          "cmd.docker.container.stop.dispatch_receipt"
+L00009314	        ]
+L00009315	      },
+L00009316	      "accessibility_contract": {
+L00009317	        "role_or_semantics": "catalog.docker_container_stop exposes a stable role/name/description matching cmd.docker.container.stop.",
+L00009318	        "keyboard_access": "catalog.docker_container_stop is reachable and activatable by keyboard where the control is visible.",
+L00009319	        "focus_management": "catalog.docker_container_stop preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009320	        "disabled_announcement": "catalog.docker_container_stop surfaces state.commands.docker_container_stop.disabled_reason to assistive technology when unavailable."
+L00009321	      },
+L00009322	      "test_evidence": [
+L00009323	        {
+L00009324	          "test_id": "wiring.catalog.docker_container_stop.dispatcher",
+L00009325	          "evidence_kind": "dispatcher_fixture",
+L00009326	          "requirement": "Dispatching cmd.docker.container.stop reaches handlers::docker::container_stop with typed args/result contract."
+L00009327	        },
+L00009328	        {
+L00009329	          "test_id": "wiring.catalog.docker_container_stop.state_projection",
+L00009330	          "evidence_kind": "state_projection",
+L00009331	          "requirement": "Availability reads state.commands.docker_container_stop.availability and disabled copy reads state.commands.docker_container_stop.disabled_reason."
+L00009332	        },
+L00009333	        {
+L00009334	          "test_id": "wiring.catalog.docker_container_stop.effect",
+L00009335	          "evidence_kind": "receipt_or_event_assertion",
+L00009336	          "requirement": "cmd.docker.container.stop has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009337	        },
+L00009338	        {
+L00009339	          "test_id": "wiring.catalog.docker_container_stop.accessibility",
+L00009340	          "evidence_kind": "accessibility_regression",
+L00009341	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009342	        }
+L00009343	      ],
+L00009344	      "event_test_requirements": [
+L00009345	        "Assert cmd.docker.container.stop records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009346	      ]
+L00009347	    },
+L00009348	    "catalog.docker_container_view_logs": {
+L00009349	      "ui_element_id": "catalog.docker_container_view_logs",
+L00009350	      "ui_location": "Docker Manager > Container > View Logs",
+L00009351	      "ui_command_id": "cmd.docker.container.view_logs",
+L00009352	      "handler_location": "handlers::docker::container_view_logs",
+L00009353	      "expected_event_types": [],
+L00009354	      "acceptance_checks": [
+L00009355	        "cmd.docker.container.view_logs must be registered in the UICommand dispatcher with typed args and result contract",
+L00009356	        "cmd.docker.container.view_logs must expose projected state selector and disabled reason before dispatch",
+L00009357	        "cmd.docker.container.view_logs dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009358	        "cmd.docker.container.view_logs must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009359	        "cmd.docker.container.view_logs must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009360	      ],
+L00009361	      "evidence_required": "Production wiring contract for cmd.docker.container.view_logs; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009362	      "state_selector": "state.commands.docker_container_view_logs.availability",
+L00009363	      "disabled_reason_projection": "state.commands.docker_container_view_logs.disabled_reason",
+L00009364	      "effect_contract": {
+L00009365	        "effect_kind": "receipt",
+L00009366	        "description": "cmd.docker.container.view_logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009367	        "receipt_or_event_refs": [
+L00009368	          "cmd.docker.container.view_logs.dispatch_receipt"
+L00009369	        ]
+L00009370	      },
+L00009371	      "accessibility_contract": {
+L00009372	        "role_or_semantics": "catalog.docker_container_view_logs exposes a stable role/name/description matching cmd.docker.container.view_logs.",
+L00009373	        "keyboard_access": "catalog.docker_container_view_logs is reachable and activatable by keyboard where the control is visible.",
+L00009374	        "focus_management": "catalog.docker_container_view_logs preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009375	        "disabled_announcement": "catalog.docker_container_view_logs surfaces state.commands.docker_container_view_logs.disabled_reason to assistive technology when unavailable."
+L00009376	      },
+L00009377	      "test_evidence": [
+L00009378	        {
+L00009379	          "test_id": "wiring.catalog.docker_container_view_logs.dispatcher",
+L00009380	          "evidence_kind": "dispatcher_fixture",
+L00009381	          "requirement": "Dispatching cmd.docker.container.view_logs reaches handlers::docker::container_view_logs with typed args/result contract."
+L00009382	        },
+L00009383	        {
+L00009384	          "test_id": "wiring.catalog.docker_container_view_logs.state_projection",
+L00009385	          "evidence_kind": "state_projection",
+L00009386	          "requirement": "Availability reads state.commands.docker_container_view_logs.availability and disabled copy reads state.commands.docker_container_view_logs.disabled_reason."
+L00009387	        },
+L00009388	        {
+L00009389	          "test_id": "wiring.catalog.docker_container_view_logs.effect",
+L00009390	          "evidence_kind": "receipt_or_event_assertion",
+L00009391	          "requirement": "cmd.docker.container.view_logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009392	        },
+L00009393	        {
+L00009394	          "test_id": "wiring.catalog.docker_container_view_logs.accessibility",
+L00009395	          "evidence_kind": "accessibility_regression",
+L00009396	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009397	        }
+L00009398	      ],
+L00009399	      "event_test_requirements": [
+L00009400	        "Assert cmd.docker.container.view_logs records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009401	      ]
+L00009402	    },
+L00009403	    "catalog.docker_context": {
+L00009404	      "ui_element_id": "catalog.docker_context",
+L00009405	      "ui_location": "Docker Manager > Context",
+L00009406	      "ui_command_id": "cmd.docker.context",
+L00009407	      "handler_location": "handlers::docker::context",
+L00009408	      "expected_event_types": [],
+L00009409	      "acceptance_checks": [
+L00009410	        "cmd.docker.context must be registered in the UICommand dispatcher with typed args and result contract",
+L00009411	        "cmd.docker.context must expose projected state selector and disabled reason before dispatch",
+L00009412	        "cmd.docker.context dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009413	        "cmd.docker.context must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009414	        "cmd.docker.context must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009415	      ],
+L00009416	      "evidence_required": "Production wiring contract for cmd.docker.context; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009417	      "state_selector": "state.commands.docker_context.availability",
+L00009418	      "disabled_reason_projection": "state.commands.docker_context.disabled_reason",
+L00009419	      "effect_contract": {
+L00009420	        "effect_kind": "receipt",
+L00009421	        "description": "cmd.docker.context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009422	        "receipt_or_event_refs": [
+L00009423	          "cmd.docker.context.dispatch_receipt"
+L00009424	        ]
+L00009425	      },
+L00009426	      "accessibility_contract": {
+L00009427	        "role_or_semantics": "catalog.docker_context exposes a stable role/name/description matching cmd.docker.context.",
+L00009428	        "keyboard_access": "catalog.docker_context is reachable and activatable by keyboard where the control is visible.",
+L00009429	        "focus_management": "catalog.docker_context preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009430	        "disabled_announcement": "catalog.docker_context surfaces state.commands.docker_context.disabled_reason to assistive technology when unavailable."
+L00009431	      },
+L00009432	      "test_evidence": [
+L00009433	        {
+L00009434	          "test_id": "wiring.catalog.docker_context.dispatcher",
+L00009435	          "evidence_kind": "dispatcher_fixture",
+L00009436	          "requirement": "Dispatching cmd.docker.context reaches handlers::docker::context with typed args/result contract."
+L00009437	        },
+L00009438	        {
+L00009439	          "test_id": "wiring.catalog.docker_context.state_projection",
+L00009440	          "evidence_kind": "state_projection",
+L00009441	          "requirement": "Availability reads state.commands.docker_context.availability and disabled copy reads state.commands.docker_context.disabled_reason."
+L00009442	        },
+L00009443	        {
+L00009444	          "test_id": "wiring.catalog.docker_context.effect",
+L00009445	          "evidence_kind": "receipt_or_event_assertion",
+L00009446	          "requirement": "cmd.docker.context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009447	        },
+L00009448	        {
+L00009449	          "test_id": "wiring.catalog.docker_context.accessibility",
+L00009450	          "evidence_kind": "accessibility_regression",
+L00009451	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009452	        }
+L00009453	      ],
+L00009454	      "event_test_requirements": [
+L00009455	        "Assert cmd.docker.context records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009456	      ]
+L00009457	    },
+L00009458	    "catalog.docker_context_select": {
+L00009459	      "ui_element_id": "catalog.docker_context_select",
+L00009460	      "ui_location": "Docker Manager > Context > Select",
+L00009461	      "ui_command_id": "cmd.docker.context.select",
+L00009462	      "handler_location": "handlers::docker::context_select",
+L00009463	      "expected_event_types": [],
+L00009464	      "acceptance_checks": [
+L00009465	        "cmd.docker.context.select must be registered in the UICommand dispatcher with typed args and result contract",
+L00009466	        "cmd.docker.context.select must expose projected state selector and disabled reason before dispatch",
+L00009467	        "cmd.docker.context.select dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009468	        "cmd.docker.context.select must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009469	        "cmd.docker.context.select must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009470	      ],
+L00009471	      "evidence_required": "Production wiring contract for cmd.docker.context.select; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009472	      "state_selector": "state.commands.docker_context_select.availability",
+L00009473	      "disabled_reason_projection": "state.commands.docker_context_select.disabled_reason",
+L00009474	      "effect_contract": {
+L00009475	        "effect_kind": "receipt",
+L00009476	        "description": "cmd.docker.context.select has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009477	        "receipt_or_event_refs": [
+L00009478	          "cmd.docker.context.select.dispatch_receipt"
+L00009479	        ]
+L00009480	      },
+L00009481	      "accessibility_contract": {
+L00009482	        "role_or_semantics": "catalog.docker_context_select exposes a stable role/name/description matching cmd.docker.context.select.",
+L00009483	        "keyboard_access": "catalog.docker_context_select is reachable and activatable by keyboard where the control is visible.",
+L00009484	        "focus_management": "catalog.docker_context_select preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009485	        "disabled_announcement": "catalog.docker_context_select surfaces state.commands.docker_context_select.disabled_reason to assistive technology when unavailable."
+L00009486	      },
+L00009487	      "test_evidence": [
+L00009488	        {
+L00009489	          "test_id": "wiring.catalog.docker_context_select.dispatcher",
+L00009490	          "evidence_kind": "dispatcher_fixture",
+L00009491	          "requirement": "Dispatching cmd.docker.context.select reaches handlers::docker::context_select with typed args/result contract."
+L00009492	        },
+L00009493	        {
+L00009494	          "test_id": "wiring.catalog.docker_context_select.state_projection",
+L00009495	          "evidence_kind": "state_projection",
+L00009496	          "requirement": "Availability reads state.commands.docker_context_select.availability and disabled copy reads state.commands.docker_context_select.disabled_reason."
+L00009497	        },
+L00009498	        {
+L00009499	          "test_id": "wiring.catalog.docker_context_select.effect",
+L00009500	          "evidence_kind": "receipt_or_event_assertion",
+L00009501	          "requirement": "cmd.docker.context.select has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009502	        },
+L00009503	        {
+L00009504	          "test_id": "wiring.catalog.docker_context_select.accessibility",
+L00009505	          "evidence_kind": "accessibility_regression",
+L00009506	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009507	        }
+L00009508	      ],
+L00009509	      "event_test_requirements": [
+L00009510	        "Assert cmd.docker.context.select records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009511	      ]
+L00009512	    },
+L00009513	    "catalog.docker_create_repository": {
+L00009514	      "ui_element_id": "catalog.docker_create_repository",
+L00009515	      "ui_location": "Docker Manager > Create Repository",
+L00009516	      "ui_command_id": "cmd.docker.create_repository",
+L00009517	      "handler_location": "handlers::docker::create_repository",
+L00009518	      "expected_event_types": [],
+L00009519	      "acceptance_checks": [
+L00009520	        "cmd.docker.create_repository must be registered in the UICommand dispatcher with typed args and result contract",
+L00009521	        "cmd.docker.create_repository must expose projected state selector and disabled reason before dispatch",
+L00009522	        "cmd.docker.create_repository dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009523	        "cmd.docker.create_repository must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009524	        "cmd.docker.create_repository must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00009525	      ],
+L00009526	      "evidence_required": "Production wiring contract for cmd.docker.create_repository; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009527	      "state_selector": "state.commands.docker_create_repository.availability",
+L00009528	      "disabled_reason_projection": "state.commands.docker_create_repository.disabled_reason",
+L00009529	      "effect_contract": {
+L00009530	        "effect_kind": "receipt",
+L00009531	        "description": "cmd.docker.create_repository has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00009532	        "receipt_or_event_refs": [
+L00009533	          "cmd.docker.create_repository.dispatch_receipt"
+L00009534	        ]
+L00009535	      },
+L00009536	      "accessibility_contract": {
+L00009537	        "role_or_semantics": "catalog.docker_create_repository exposes a stable role/name/description matching cmd.docker.create_repository.",
+L00009538	        "keyboard_access": "catalog.docker_create_repository is reachable and activatable by keyboard where the control is visible.",
+L00009539	        "focus_management": "catalog.docker_create_repository preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009540	        "disabled_announcement": "catalog.docker_create_repository surfaces state.commands.docker_create_repository.disabled_reason to assistive technology when unavailable."
+L00009541	      },
+L00009542	      "test_evidence": [
+L00009543	        {
+L00009544	          "test_id": "wiring.catalog.docker_create_repository.dispatcher",
+L00009545	          "evidence_kind": "dispatcher_fixture",
+L00009546	          "requirement": "Dispatching cmd.docker.create_repository reaches handlers::docker::create_repository with typed args/result contract."
+L00009547	        },
+L00009548	        {
+L00009549	          "test_id": "wiring.catalog.docker_create_repository.state_projection",
+L00009550	          "evidence_kind": "state_projection",
+L00009551	          "requirement": "Availability reads state.commands.docker_create_repository.availability and disabled copy reads state.commands.docker_create_repository.disabled_reason."
+L00009552	        },
+L00009553	        {
+L00009554	          "test_id": "wiring.catalog.docker_create_repository.effect",
+L00009555	          "evidence_kind": "receipt_or_event_assertion",
+L00009556	          "requirement": "cmd.docker.create_repository has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00009557	        },
+L00009558	        {
+L00009559	          "test_id": "wiring.catalog.docker_create_repository.accessibility",
+L00009560	          "evidence_kind": "accessibility_regression",
+L00009561	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009562	        }
+L00009563	      ],
+L00009564	      "event_test_requirements": [
+L00009565	        "Assert cmd.docker.create_repository records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00009566	      ]
+L00009567	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=9568-9579 >>>
+L00009568	    "catalog.docker_create_repository_cancel": {
+L00009569	      "ui_element_id": "catalog.docker_create_repository_cancel",
+L00009570	      "ui_location": "Docker Manager > Create Repository > Cancel",
+L00009571	      "ui_command_id": "cmd.docker.create_repository.cancel",
+L00009572	      "handler_location": "handlers::docker::create_repository_cancel",
+L00009573	      "expected_event_types": [],
+L00009574	      "acceptance_checks": [
+L00009575	        "cmd.docker.create_repository.cancel must be registered in the UICommand dispatcher with typed args and result contract",
+L00009576	        "cmd.docker.create_repository.cancel must expose projected state selector and disabled reason before dispatch",
+L00009577	        "cmd.docker.create_repository.cancel dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009578	        "cmd.docker.create_repository.cancel must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00009579	        "cmd.docker.create_repository.cancel must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

@@ -1,0 +1,357 @@
+<<< CONTEXT_BEFORE 3003-3014 >>>
+preserved_exact_tokens:
+  - "Runtime Evidence and Degradation Artifact Addendum (2026-03-08)"
+  - "Runtime evidence projections"
+  - "downstream consumers"
+  - "storage-owned receipt packet"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+  - "Plans/storage-plan.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3015-3342 >>>
+### POA-045 - Validation Artifact Lineage Required Fields
+
+```yaml
+plan_unit_id: POA-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Validation artifact lineage requires auditor_cycle_report, workflow_run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref, and any legacy validation_pass_report mirror to carry compatibility_only true plus cycle_report_ref; validation lineage stays concrete and inspectable, and report records remain upstream artifacts rather than local replacement identifiers.
+gui_related: false
+gui_classification_reason: This unit preserves source lineage, runtime evidence, or validation artifact lineage rather than GUI implementation or visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-029"
+  - "POA-031"
+  - "POA-038"
+unblocks: []
+acceptance_criteria:
+  - "Validation Artifact Lineage Required Fields remains addressable as a fine-grained Project Output Artifacts PlanUnit or disposition."
+  - "ContractRefs, anchors, exact tokens, negative constraints, owner/consumer boundaries, and source lineage remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: validation_artifact_lineage_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0049
+preserved_exact_tokens:
+  - "validation_pass_report"
+  - "workflow_run_id"
+  - "pass_verdict"
+  - "phase_plan_ref"
+  - "requirements_quality_report_ref"
+  - "Validation lineage stays concrete and inspectable."
+  - "Pass reports remain upstream artifacts rather than local replacement identifiers."
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-001 - Project Output Artifacts Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: POA-001
+unit_type: compatibility_disposition
+status: retired
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  POA-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 152. Project_Output_Artifacts-S0001 through Project_Output_Artifacts-S0046 are covered by POA-002 through POA-042, Project_Output_Artifacts-S0047 through Project_Output_Artifacts-S0049 are covered by POA-043 through POA-045, S0050/S0051/S0053 are generated structural/audit dispositions, and S0052 is retired bridge lineage. POA-001 must not re-own or override implementation-facing PlanUnits and must not use source_preserving_planunit compile mode.
+gui_related: false
+gui_classification_reason: The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map.
+split_recommended: false
+depends_on:
+  - "POA-002"
+  - "POA-003"
+  - "POA-004"
+  - "POA-005"
+  - "POA-006"
+  - "POA-007"
+  - "POA-008"
+  - "POA-009"
+  - "POA-010"
+  - "POA-011"
+  - "POA-012"
+  - "POA-013"
+  - "POA-014"
+  - "POA-015"
+  - "POA-016"
+  - "POA-017"
+  - "POA-018"
+  - "POA-019"
+  - "POA-020"
+  - "POA-021"
+  - "POA-022"
+  - "POA-023"
+  - "POA-024"
+  - "POA-025"
+  - "POA-026"
+  - "POA-027"
+  - "POA-028"
+  - "POA-029"
+  - "POA-030"
+  - "POA-031"
+  - "POA-032"
+  - "POA-033"
+  - "POA-034"
+  - "POA-035"
+  - "POA-036"
+  - "POA-037"
+  - "POA-038"
+  - "POA-039"
+  - "POA-040"
+  - "POA-041"
+  - "POA-042"
+  - "POA-043"
+  - "POA-044"
+  - "POA-045"
+unblocks: []
+acceptance_criteria:
+  - "POA-001 does not override POA-002 through POA-045 for Project_Output_Artifacts-S0001 through Project_Output_Artifacts-S0049."
+  - "Generated Owner / Consumer Map, PlanUnits heading, retired bridge, and Migration Coverage spans remain available for exact-text audit."
+  - "Plans/Project_Output_Artifacts.md has no residual source_preserving_planunit product coverage after this bridge retirement."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: residual_bridge_overreach
+reasoning_tier: standard
+context_scope: project_output_artifacts_residual_bridge
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: retired_source_preserving_bridge
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0052
+preserved_exact_tokens:
+  - "POA-001"
+  - "Project Output Artifacts Residual Source-Preserving Bridge"
+  - "Project Output Artifacts Retired Source-Preserving Bridge"
+  - "source_preserving_planunit"
+  - "retired_source_preserving_bridge"
+  - "source_preserving_bridge_retired"
+  - "Owner / Consumer Map"
+  - "PlanUnits"
+  - "Migration Coverage"
+  - "POA-002"
+  - "POA-045"
+  - "Project_Output_Artifacts-S0052"
+negative_constraints:
+  - "POA-001 must not be used as implementation-ready product coverage for spans now mapped to POA-002 through POA-045."
+  - "Do not remap Project_Output_Artifacts-S0001 through Project_Output_Artifacts-S0049 product coverage back to POA-001."
+  - "POA-001 must not re-enter source_preserving_planunit mode after phase2b-152."
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+## Migration Coverage
+
+Original hash: `873ad4ab0fac4327e921959abc15ad6271f04bd544a04c7ca7ff4dc01ef5ac80`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+Original spans from `Project_Output_Artifacts-S0001` through `Project_Output_Artifacts-S0046` are preserved in place and atomized into fine-grained PlanUnits `POA-002` through `POA-042`; `Project_Output_Artifacts-S0047` through `Project_Output_Artifacts-S0049` are covered by `POA-043` through `POA-045`. Generated structural/audit spans `Project_Output_Artifacts-S0050` through `Project_Output_Artifacts-S0053` are explicitly dispositioned; `POA-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Project_Output_Artifacts.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### POA-046 - Project Artifact Open By Identity Consumer Boundary
+
+```yaml
+plan_unit_id: POA-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Project output artifact opens consume the shared artifact identity/index contract without re-owning
+  runtime artifact indexing. The storage-owned runtime artifact row key family remains
+  `artifacts_index.v1:{project_id}:{artifact_id}`; project output artifacts may reference resolved
+  artifact identity but must not redefine that index or collapse it to a project-only key. A project
+  artifact open request must carry artifact identity, project owner/output family, storage ref,
+  trust/freshness state, permissions/visibility boundary, lifecycle/integrity context, and desired
+  open mode; FileManager handles file-backed realization only after the artifact identity boundary
+  resolves whether the target is a workspace file, generated object, record-backed preview, or
+  owner-surface route.
+gui_related: true
+gui_classification_reason: Opening project artifacts and routing to FileManager or preview surfaces is user-visible artifact behavior.
+depends_on: [RAP-026]
+unblocks: []
+acceptance_criteria:
+  - Project output artifacts do not redefine `artifacts_index.v1:{project_id}:{artifact_id}` or the older `artifacts_index:v1:{project_id}` source shorthand.
+  - FileManager open actions receive resolved target type and trust/freshness state, not only a path-like string.
+  - Runtime artifact identity and project output ownership remain distinct.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: project_artifact_open_boundary_drift
+reasoning_tier: standard
+context_scope: project_artifact_open_by_identity
+implementation_surfaces: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/FileManager.md]
+node_compile_hint: {mode: project_artifact_identity_consumer, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0040
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0051
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0097
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0098
+preserved_exact_tokens: ["Project_Output_Artifacts.md:50", "artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_index:v1:{project_id}", "open-by-artifact-identity", "FileManager", "artifact identity", "permissions/visibility boundary", "lifecycle status", "integrity/version data", "FileManager open-by-artifact-identity resolution semantics"]
+compatibility_only_notes:
+  - "`artifacts_index:v1:{project_id}` is source-lineage shorthand only; the storage-owned row key family remains `artifacts_index.v1:{project_id}:{artifact_id}`."
+negative_constraints:
+  - Do not collapse runtime artifact identity into project output ownership.
+  - Do not pass unresolved artifact identity to FileManager as if it were a workspace path.
+  - Do not drop artifact_id row identity or re-own runtime artifact indexing from Project_Output_Artifacts.
+owner_hints: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/FileManager.md]
+```
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### POA-047 - Plans-To-Code Receipt Artifact Families
+
+```yaml
+plan_unit_id: POA-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Project_Output_Artifacts owns packaged output references for plans-to-code receipt families: PlanCompile receipt, ExecutorIntakeReport, worknode_dispatch_receipt, source_control_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_cycle_report, auditor_verification_receipt, repair_attempt_receipt, legacy validation_pass_report compatibility mirrors, merge_or_promotion_receipt, worknode_completion_receipt, source-control finalization receipt, model resolution receipt, and GoalCompletionReceipt. Artifact records preserve source artifact, destination artifact, owner, validator, receipt, schema payload, retry route, rollback route, user escalation condition, evidence refs, changed artifacts, test artifacts, source-control refs, model receipts, Auditor cycle refs, and final certification status without becoming the runtime source of truth.
+  Receipt artifact families preserve canonical evidence as a separate truth layer and include source_artifact, destination_artifact, retry_route, rollback_route, and source-control context refs for handoff rows. Source-control receipt packaging preserves repo/worktree/branch/baseline/head/safe-point/changed-files/conflicts/rollback context through preflight, safe point, change, promotion, finalization, and completion certification.
+gui_related: false
+gui_classification_reason: Receipt artifact packaging and references are evidence/artifact contracts, not visual presentation.
+depends_on: [POA-046, EP-103, PNC-014]
+unblocks: [POA-048, RAP-029, CV-289]
+acceptance_criteria:
+  - Receipt artifact families are named and discoverable in project output packages.
+  - Artifacts preserve handoff, evidence, test, source-control, model, and final certification refs.
+  - Legacy validation_pass_report rows are compatibility mirrors of auditor_cycle_report, carry compatibility_only true and cycle_report_ref, and are not active fixed Pass 1 / Pass 2 / Pass 3 process stages.
+  - Project output artifacts package receipt references without replacing runtime, storage, or contract authority.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+risk_class: missing_completion_evidence
+reasoning_tier: high
+context_scope: plans_to_code_receipt_artifacts
+implementation_surfaces: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: plans_to_code_receipt_artifacts, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0039
+  - pldg-20260617-001-plans-to-code-handoff:atom-0040
+  - pldg-20260617-001-plans-to-code-handoff:atom-0041
+  - pldg-20260617-001-plans-to-code-handoff:atom-0055
+  - pldg-20260617-001-plans-to-code-handoff:dec-0016
+  - pldg-20260617-001-plans-to-code-handoff:dec-0017
+preserved_exact_tokens:
+  - "source_control_preflight_receipt"
+  - "source_control_receipt"
+  - "safe_point_receipt"
+  - "worknode_change_receipt"
+  - "merge_or_promotion_receipt"
+  - "worknode_dispatch_receipt"
+  - "test_run_receipt"
+  - "auditor_cycle_report"
+  - "auditor_verification_receipt"
+  - "repair_attempt_receipt"
+  - "worknode_completion_receipt"
+  - "validation_pass_report"
+  - "source evidence"
+  - "canonical evidence"
+  - "process evidence"
+  - "governance evidence"
+  - "test evidence"
+  - "source-control evidence"
+  - "branch/head state"
+  - "changed-files"
+  - "conflicts"
+  - "rollback"
+negative_constraints:
+  - Do not make project output artifacts the runtime source of truth for receipt state.
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Executor_Protocol.md
+```
+
+### POA-048 - GoalCompletionReceipt Artifact Contract
+
+```yaml
+plan_unit_id: POA-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+    GoalCompletionReceipt package entries must prove all_worknodes_terminal, all_tests_passed_or_dispositioned, source_control_receipts_valid, no_active_blockers, rollback and safe-point requirements satisfied, Auditor passed, no stale Plan/WorkGraph/currentness mismatch, final source state clean or intentionally preserved, final summary/evidence written, and final certifier decision. The receipt links to child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, evidence refs, unresolved risks, source-control receipts, test receipts, model resolution receipts, source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, completion receipts, and final source-control context refs.
+    GoalCompletionReceipt packages preserve all WorkNodes terminal, all automated tests passed or dispositioned, rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, canonical evidence, and final certification evidence as explicit fields.
+gui_related: false
+gui_classification_reason: Completion receipt package fields are evidence contracts, not visual presentation.
+depends_on: [POA-047, GRS-030, EP-103]
+unblocks: [RAP-029, CV-289]
+acceptance_criteria:
+  - GoalCompletionReceipt fields are sufficient to prove code-complete criteria.
+  - Worker prose cannot substitute for missing receipts, test dispositions, source-control validity, or Auditor pass.
+  - Completion receipt references preserve separate evidence truth layers.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+risk_class: false_completion
+reasoning_tier: high
+context_scope: goal_completion_artifact
+implementation_surfaces: [Plans/Project_Output_Artifacts.md, Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: goal_completion_receipt_artifact, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0043
+  - pldg-20260617-001-plans-to-code-handoff:atom-0055
+  - pldg-20260617-001-plans-to-code-handoff:dec-0018
+  - pldg-20260617-001-plans-to-code-handoff:dec-0023
+preserved_exact_tokens:
+  - "GoalCompletionReceipt"
+  - "all WorkNodes terminal"
+  - "all automated tests passed"
+  - "canonical evidence"
+  - "source-control context"
+  - "no active blockers"
+  - "final certification"
+negative_constraints:
+  - Do not accept worker says done as code completion.
+owner_hints:
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Executor_Protocol.md
+```
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< CONTEXT_AFTER 3343-3354 >>>
+### POA-049 - Planning Packs, Source Manifests, And Testing Evidence Artifacts
+
+```yaml
+plan_unit_id: POA-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: 'Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. PRD Builder preserves original uploaded artifacts byte-for-byte with stable source IDs, hashes, MIME/type metadata, and extraction status before semantic processing. Create deterministic text, heading, page, table, image, and offset projections plus a source manifest recording coverage, extraction warnings, skipped content, and parser versions. Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status. Online capability research records source URL or provider reference,
+  publication or update time when available, retrieval time, tool and version, supported platform, license, cost, credential needs, installation scope, freshness, confidence, and selection rationale. Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []

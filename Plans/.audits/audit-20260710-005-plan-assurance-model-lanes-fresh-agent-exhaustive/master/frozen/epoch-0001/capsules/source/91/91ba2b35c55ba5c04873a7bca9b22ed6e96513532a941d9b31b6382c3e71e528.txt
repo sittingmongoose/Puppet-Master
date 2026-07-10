@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 4632-4643 >>>
+- "Invalid patterns stop loading (fail-fast)"
+- "Invalid regex pattern"
+- "No patterns loaded"
+negative_constraints:
+- "Invalid regex patterns must fail fast rather than being silently ignored."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 4644-5029 >>>
+### F2-034 - Default And Local Pattern Merge Behavior
+
+```yaml
+plan_unit_id: F2-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  load_patterns_with_merge loads default bundled patterns first, optionally loads and appends
+  local patterns when a local file exists, keeps duplicate patterns without deduplication, and
+  reports local-pattern loading failures.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines default/local pattern merge behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: default_and_local_pattern_merge_behavior
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0016"
+preserved_exact_tokens:
+- "DRY:FN:load_patterns_with_merge"
+- "default_file"
+- "local_file"
+- "Loads default patterns first"
+- "local file exists"
+- "appends local patterns"
+- "Duplicate patterns are kept (no deduplication)"
+- "Failed to load local patterns"
+- "Merged {} local patterns"
+negative_constraints: []
+compatibility_only_notes:
+- "The next FileSafe configuration span contains additive-only config behavior for missing or unreadable custom paths, so this helper’s local-file error semantics require reconciliation there."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-035 - Backward Compatible FileSafe Config Keys And GUI Labels
+
+```yaml
+plan_unit_id: F2-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe configuration keeps internal bash_guard and file_guard keys for compatibility while GUI
+  labels expose Command blocklist, Write scope, and Security filter, and approved_commands are
+  commands approved from Assistant chat that users can add or remove in settings.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves GUI labels and settings-surface vocabulary for FileSafe configuration.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: backward_compatible_filesafe_config_keys_and_gui_labels
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0017"
+preserved_exact_tokens:
+- "bash_guard"
+- "file_guard"
+- "Command blocklist"
+- "Write scope"
+- "Security filter"
+- "approved_commands"
+- "Commands approved from Assistant chat"
+- "user can add/remove in settings"
+- "Config keys remain `bash_guard` / `file_guard` for backward compatibility"
+negative_constraints: []
+compatibility_only_notes:
+- "Config keys remain bash_guard / file_guard for backward compatibility while GUI labels use Command blocklist, Write scope, and Security filter."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FileSafe owns guard config semantics; visual settings rendering remains a GUI consumer boundary."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-036 - FileSafe Config Defaults And Strict Guard Baselines
+
+```yaml
+plan_unit_id: F2-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafeConfig contains BashGuardConfig, FileGuardConfig, SecurityFilterConfig, and
+  approved_commands; defaults keep guards enabled, destructive_override_requested false,
+  destructive_override_receipt_ref absent, file guard strict_mode true, and security filter
+  allow_during_interview false.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend configuration defaults and strict guard baselines.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_config_defaults_and_strict_guard_baselines
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0017"
+preserved_exact_tokens:
+- "FileSafeConfig"
+- "BashGuardConfig"
+- "FileGuardConfig"
+- "SecurityFilterConfig"
+- "enabled: true"
+- "destructive_override_requested: false"
+- "destructive_override_receipt_ref: None"
+- "strict_mode: true"
+- "allow_during_interview: false"
+- "default_true"
+- "Default: block, not warn"
+- "Default: strict even during interview"
+negative_constraints:
+- "The default FileGuard mode is block, not warn-only."
+- "The default SecurityFilter posture is strict even during interview unless explicitly configured."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-037 - GuiConfig To PuppetMasterConfig Runtime Bridge
+
+```yaml
+plan_unit_id: F2-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The orchestrator reads PuppetMasterConfig YAML rather than GuiConfig and follows the
+  WorktreeGitImprovement Option B pattern by building run config from GuiConfig::filesafe into
+  PuppetMasterConfig::filesafe and passing FileSafe config to BaseRunner::new via orchestrator
+  context.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines runtime config transfer rather than GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: guiconfig_to_puppetmasterconfig_runtime_bridge
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0017"
+preserved_exact_tokens:
+- "PuppetMasterConfig"
+- "YAML"
+- "GuiConfig"
+- "Option B -- Build run config from GUI"
+- "GuiConfig::filesafe"
+- "PuppetMasterConfig::filesafe"
+- "BaseRunner::new()"
+- "puppet-master-rs/src/config/gui_config.rs"
+- "puppet-master-rs/src/types/config.rs"
+negative_constraints: []
+compatibility_only_notes:
+- "puppet-master-rs code paths are legacy/path references that must be validated against the Rust + Slint rebuild before implementation."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-038 - FileSafe YAML Keys And Additive Custom Patterns Path
+
+```yaml
+plan_unit_id: F2-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe YAML uses bashGuard, fileGuard, securityFilter, and approvedCommands keys;
+  customPatternsPath is additive-only, so missing or unreadable custom pattern files are ignored
+  when bundled patterns remain available and must not disable FileSafe.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines config file and guard behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_yaml_keys_and_additive_custom_patterns_path
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0017"
+preserved_exact_tokens:
+- "bashGuard"
+- "fileGuard"
+- "securityFilter"
+- "approvedCommands"
+- "customPatternsPath"
+- ".puppet-master/destructive-commands.local.txt"
+- "additive-only"
+- "missing/unreadable"
+- "bundled patterns"
+- "do not disable FileSafe"
+- "PolicyRule:Plans/Decision_Policy.md§2"
+negative_constraints:
+- "Optional custom patterns may be ignored only when bundled baseline remains available; missing or unreadable custom paths must not disable FileSafe."
+compatibility_only_notes:
+- "Reconcile additive-only customPatternsPath behavior with F2-034 local-pattern failure semantics."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-039 - BaseRunner Guard Attachment And Scope Placeholders
+
+```yaml
+plan_unit_id: F2-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  BaseRunner attaches BashGuard, initializes it from project-specific destructive-command patterns
+  when present, and also initializes write-scope and security-filter placeholders for per-request
+  population.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend runner guard attachment behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: baserunner_guard_attachment_and_scope_placeholders
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0019"
+preserved_exact_tokens:
+- "use crate::filesafe::BashGuard"
+- "bash_guard: Arc<BashGuard>"
+- ".puppet-master/destructive-commands.local.txt"
+- "FileGuard::new(HashSet::new(), true)"
+- "SecurityFilter::new()"
+- "Pattern file resolution: try project-specific, then bundled"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit adds later example details and does not replace F2-021 pre-spawn authority or F2-023 runtime guard construction."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-040 - Initialization Failure Disabled Fallback Compatibility Boundary
+
+```yaml
+plan_unit_id: F2-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The BaseRunner example includes disabled fallbacks for failed bash guard and security filter
+  initialization, but that disabled-on-init-failure behavior is preserved only as source lineage
+  and must not override the fail-closed canon or deliberate config-off-only disabled state.
+gui_related: false
+gui_classification_reason: >-
+  This unit records compatibility/stale source behavior for initialization failure fallbacks.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Any preserved BashGuard::disabled() or SecurityFilter::disabled() snippet is fenced as retired source-lineage and cannot be copied as implementation guidance."
+- "Active initialization failure paths emit filesafe.guard_init_failed and block guarded execution."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: initialization_failure_disabled_fallback_compatibility_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0019"
+preserved_exact_tokens:
+- "Failed to initialize bash guard"
+- "Guard disabled"
+- "BashGuard::disabled()"
+- "Failed to initialize security filter"
+- "Filter disabled"
+- "SecurityFilter::disabled()"
+negative_constraints:
+- "Do not use disabled guard fallback for initialization failure in conflict with fail-closed FileSafe canon."
+compatibility_only_notes:
+- "The disabled-fallback code identifiers are preserved only as retired source-lineage evidence and are not active implementation guidance."
+stale_retired_dispositions:
+- "Disabled-on-initialization-failure is source-lineage only and must not override F2-024 fail-closed canon or F2-030 deliberate config-off-only disabled state."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 5030-5041 >>>
+### F2-041 - BaseRunner Command String Check And Blocked Command Logging
+
+```yaml
+plan_unit_id: F2-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  BaseRunner builds the full command string, checks BashGuard before spawning, logs blocked
+  destructive commands, records filesafe.command_denied before returning, and returns a
+  destructive-command-blocked error that points to authenticated scoped override receipt flow.
+gui_related: false

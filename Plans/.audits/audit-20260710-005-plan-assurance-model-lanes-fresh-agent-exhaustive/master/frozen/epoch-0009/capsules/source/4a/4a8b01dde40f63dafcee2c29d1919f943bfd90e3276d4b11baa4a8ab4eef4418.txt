@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3037-3048 >>>
+L00003037	- "/routing"
+L00003038	negative_constraints:
+L00003039	- "Storage migration is prose-rule driven and forward-only."
+L00003040	- "New docs/producers must prefer canonical route-target forms."
+L00003041	preserved_contractrefs: []
+L00003042	compatibility_only_notes: []
+L00003043	stale_retired_dispositions: []
+L00003044	owner_hints:
+L00003045	- "Plans/storage-plan.md"
+L00003046	- "Plans/Project_Output_Artifacts.md"
+L00003047	```
+L00003048	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3049-3429 >>>
+L00003049	### SP-013 - Multi-Store Summary And Navigation Shell
+L00003050	
+L00003051	```yaml
+L00003052	plan_unit_id: SP-013
+L00003053	unit_type: requirement
+L00003054	status: accepted
+L00003055	owner_doc: Plans/storage-plan.md
+L00003056	canonical_text: "The storage summary states the multi-store design with seglog as canonical event stream, redb for durable KV state, Tantivy for full-text search, and projectors/analytics maintaining read models; the table of contents remains navigation structure."
+L00003057	gui_related: false
+L00003058	gui_classification_reason: "This unit preserves backend storage architecture summary and document navigation rather than visual presentation."
+L00003059	split_recommended: false
+L00003060	depends_on:
+L00003061	- "PDS-003"
+L00003062	- "PDS-004"
+L00003063	- "PDS-005"
+L00003064	- "PNC-001"
+L00003065	unblocks: []
+L00003066	acceptance_criteria:
+L00003067	- "SP-013 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00003068	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003069	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003070	validation_surfaces:
+L00003071	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003072	- "python3 scripts/pm-plan-index.py validate"
+L00003073	risk_class: storage_plan_drift
+L00003074	reasoning_tier: standard
+L00003075	context_scope: storage_plan
+L00003076	implementation_surfaces:
+L00003077	- "Plans/storage-plan.md"
+L00003078	node_compile_hint:
+L00003079	  mode: multi_store_summary_navigation_shell
+L00003080	  create_worknodes: false
+L00003081	source_lineage:
+L00003082	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0028"
+L00003083	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0029"
+L00003084	preserved_exact_tokens:
+L00003085	- "SQLite remains off the table"
+L00003086	- "seglog"
+L00003087	- "redb"
+L00003088	- "Tantivy"
+L00003089	- "Projectors"
+L00003090	- "JSONL mirror"
+L00003091	- "analytics scan jobs"
+L00003092	- "Implementation checklist + detailed design"
+L00003093	- "Table of Contents"
+L00003094	- "Implementation order and testing"
+L00003095	negative_constraints: []
+L00003096	preserved_contractrefs: []
+L00003097	compatibility_only_notes: []
+L00003098	stale_retired_dispositions: []
+L00003099	owner_hints:
+L00003100	- "Plans/storage-plan.md"
+L00003101	```
+L00003102	
+L00003103	### SP-014 - Promoted Shell Runtime Identity Storage
+L00003104	
+L00003105	```yaml
+L00003106	plan_unit_id: SP-014
+L00003107	unit_type: requirement
+L00003108	status: accepted
+L00003109	owner_doc: Plans/storage-plan.md
+L00003110	canonical_text: "Storage treats promoted shell/runtime IDs as first-class identities, including workspace, window, browser, preview, terminal section/tab/pane/session, dev session, branch lineage, detached scope, and subordinate command-block identity."
+L00003111	gui_related: true
+L00003112	gui_classification_reason: "This unit preserves user-visible workspace, browser, terminal, preview, and branch continuity identity."
+L00003113	split_recommended: false
+L00003114	depends_on:
+L00003115	- "PDS-003"
+L00003116	- "PDS-004"
+L00003117	- "PDS-005"
+L00003118	- "PNC-001"
+L00003119	- "CV-001"
+L00003120	- "F3-001"
+L00003121	unblocks: []
+L00003122	acceptance_criteria:
+L00003123	- "SP-014 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00003124	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003125	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003126	validation_surfaces:
+L00003127	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003128	- "python3 scripts/pm-plan-index.py validate"
+L00003129	risk_class: storage_plan_drift
+L00003130	reasoning_tier: standard
+L00003131	context_scope: storage_plan
+L00003132	implementation_surfaces:
+L00003133	- "Plans/storage-plan.md"
+L00003134	node_compile_hint:
+L00003135	  mode: promoted_shell_runtime_identity_storage
+L00003136	  create_worknodes: false
+L00003137	source_lineage:
+L00003138	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0030"
+L00003139	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0031"
+L00003140	preserved_exact_tokens:
+L00003141	- "workspace_tab_id"
+L00003142	- "window_id"
+L00003143	- "browser_tab_id"
+L00003144	- "preview_session_id"
+L00003145	- "terminal_section_id"
+L00003146	- "terminal_tab_id"
+L00003147	- "terminal_pane_id"
+L00003148	- "terminal_session_id"
+L00003149	- "dev_session_id"
+L00003150	- "branch_id"
+L00003151	- "project_id"
+L00003152	- "raw path is not the canonical identity"
+L00003153	- "detached windows"
+L00003154	- "ephemeral automation/auth sessions"
+L00003155	- "command-block identity"
+L00003156	negative_constraints:
+L00003157	- "dev_session_id owns higher-level dev workflow continuity and MUST NOT replace terminal_session_id when exact shell reuse is required."
+L00003158	preserved_contractrefs:
+L00003159	- "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md"
+L00003160	- "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md"
+L00003161	- "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md"
+L00003162	- "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md"
+L00003163	compatibility_only_notes: []
+L00003164	stale_retired_dispositions: []
+L00003165	owner_hints:
+L00003166	- "Plans/storage-plan.md"
+L00003167	- "Plans/Section15_MVP_Promoted_Features_Spec.md"
+L00003168	- "Plans/FinalGUISpec.md"
+L00003169	- "Plans/Contracts_V0.md"
+L00003170	```
+L00003171	
+L00003172	### SP-015 - App Data Root And Core Store Layout
+L00003173	
+L00003174	```yaml
+L00003175	plan_unit_id: SP-015
+L00003176	unit_type: requirement
+L00003177	status: accepted
+L00003178	owner_doc: Plans/storage-plan.md
+L00003179	canonical_text: "Storage uses one app data root for core stores and records project-scoped runtime state under managed .puppet-master state when inherently project-local."
+L00003180	gui_related: false
+L00003181	gui_classification_reason: "This unit preserves backend file layout and storage root requirements."
+L00003182	split_recommended: false
+L00003183	depends_on:
+L00003184	- "PDS-003"
+L00003185	- "PDS-004"
+L00003186	- "PDS-005"
+L00003187	- "PNC-001"
+L00003188	unblocks: []
+L00003189	acceptance_criteria:
+L00003190	- "SP-015 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00003191	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003192	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003193	validation_surfaces:
+L00003194	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003195	- "python3 scripts/pm-plan-index.py validate"
+L00003196	risk_class: storage_plan_drift
+L00003197	reasoning_tier: standard
+L00003198	context_scope: storage_plan
+L00003199	implementation_surfaces:
+L00003200	- "Plans/storage-plan.md"
+L00003201	node_compile_hint:
+L00003202	  mode: app_data_root_core_store_layout
+L00003203	  create_worknodes: false
+L00003204	source_lineage:
+L00003205	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0032"
+L00003206	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033"
+L00003207	preserved_exact_tokens:
+L00003208	- "~/.puppet-master/"
+L00003209	- "$XDG_DATA_HOME/puppet-master/"
+L00003210	- "%APPDATA%/puppet-master"
+L00003211	- "~/Library/Application Support/puppet-master"
+L00003212	- ".puppet-master/"
+L00003213	- "storage/seglog/"
+L00003214	- "storage/redb/"
+L00003215	- "storage/jsonl/"
+L00003216	- "storage/tantivy/projects/{project_id}/"
+L00003217	- "storage/blobs/"
+L00003218	- "storage/backups/"
+L00003219	negative_constraints: []
+L00003220	preserved_contractrefs:
+L00003221	- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md"
+L00003222	- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+L00003223	compatibility_only_notes: []
+L00003224	stale_retired_dispositions: []
+L00003225	owner_hints:
+L00003226	- "Plans/storage-plan.md"
+L00003227	```
+L00003228	
+L00003229	### SP-016 - Deterministic Regex Index Algorithm And Metadata
+L00003230	
+L00003231	```yaml
+L00003232	plan_unit_id: SP-016
+L00003233	unit_type: requirement
+L00003234	status: accepted
+L00003235	owner_doc: Plans/storage-plan.md
+L00003236	canonical_text: "Regex-index storage rejects probabilistic Blackbird-style masks, uses deterministic sparse n-gram postings plus ripgrep verification, and records dependencies, xxh3 hashing, Roaring posting lists, and index_meta.json metadata."
+L00003237	gui_related: false
+L00003238	gui_classification_reason: "This unit preserves backend regex index algorithm and metadata requirements."
+L00003239	split_recommended: false
+L00003240	depends_on:
+L00003241	- "PDS-003"
+L00003242	- "PDS-004"
+L00003243	- "PDS-005"
+L00003244	- "PNC-001"
+L00003245	- "T-001"
+L00003246	unblocks: []
+L00003247	acceptance_criteria:
+L00003248	- "SP-016 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00003249	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003250	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003251	validation_surfaces:
+L00003252	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003253	- "python3 scripts/pm-plan-index.py validate"
+L00003254	risk_class: storage_plan_drift
+L00003255	reasoning_tier: standard
+L00003256	context_scope: storage_plan
+L00003257	implementation_surfaces:
+L00003258	- "Plans/storage-plan.md"
+L00003259	node_compile_hint:
+L00003260	  mode: deterministic_regex_index_algorithm_metadata
+L00003261	  create_worknodes: false
+L00003262	source_lineage:
+L00003263	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033"
+L00003264	preserved_exact_tokens:
+L00003265	- "regex_index/"
+L00003266	- "FILE_ATTRIBUTE_NOT_CONTENT_INDEXED"
+L00003267	- ".metadata_never_index"
+L00003268	- "Blackbird-style"
+L00003269	- "nextMask"
+L00003270	- "locMask"
+L00003271	- "deterministic sparse n-gram postings"
+L00003272	- "ripgrep verification"
+L00003273	- "regex-syntax"
+L00003274	- "roaring"
+L00003275	- "memmap2"
+L00003276	- "xxhash-rust"
+L00003277	- "arc-swap"
+L00003278	- "thread-priority"
+L00003279	- "xxh3"
+L00003280	- "Roaring Bitmap"
+L00003281	- "index_meta.json"
+L00003282	- "anchor_sha"
+L00003283	- "build_timestamp_utc"
+L00003284	- "schema_version"
+L00003285	- "file_count"
+L00003286	- "generation"
+L00003287	- "case_sensitive_fs"
+L00003288	- "roaring_format: \"portable\""
+L00003289	negative_constraints:
+L00003290	- "PM does not adopt probabilistic Blackbird-style posting augmentation as canonical storage."
+L00003291	preserved_contractrefs:
+L00003292	- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md"
+L00003293	- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+L00003294	compatibility_only_notes: []
+L00003295	stale_retired_dispositions: []
+L00003296	owner_hints:
+L00003297	- "Plans/storage-plan.md"
+L00003298	- "Plans/Tools.md"
+L00003299	- "Plans/GitHub_Integration.md"
+L00003300	```
+L00003301	
+L00003302	### SP-017 - Remote Git Regex Cache Submodules Verification And Dirty Locality
+L00003303	
+L00003304	```yaml
+L00003305	plan_unit_id: SP-017
+L00003306	unit_type: requirement
+L00003307	status: accepted
+L00003308	owner_doc: Plans/storage-plan.md
+L00003309	canonical_text: "Remote Git regex storage keeps local bare-clone cache and dirty staging, handles submodules explicitly, builds with git cat-file, verifies with git show plus ripgrep, and preserves near-zero SSH grep with documented dirty-file fallback."
+L00003310	gui_related: false
+L00003311	gui_classification_reason: "This unit preserves backend remote Git cache, verification, and dirty-file storage requirements."
+L00003312	split_recommended: false
+L00003313	depends_on:
+L00003314	- "PDS-003"
+L00003315	- "PDS-004"
+L00003316	- "PDS-005"
+L00003317	- "PNC-001"
+L00003318	- "GI-001"
+L00003319	- "T-001"
+L00003320	unblocks: []
+L00003321	acceptance_criteria:
+L00003322	- "SP-017 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00003323	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003324	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003325	validation_surfaces:
+L00003326	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003327	- "python3 scripts/pm-plan-index.py validate"
+L00003328	risk_class: storage_plan_drift
+L00003329	reasoning_tier: standard
+L00003330	context_scope: storage_plan
+L00003331	implementation_surfaces:
+L00003332	- "Plans/storage-plan.md"
+L00003333	node_compile_hint:
+L00003334	  mode: remote_git_regex_cache_submodules_verification_dirty_locality
+L00003335	  create_worknodes: false
+L00003336	source_lineage:
+L00003337	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033"
+L00003338	preserved_exact_tokens:
+L00003339	- ".puppet-master/cache/r/{hash8}/git/"
+L00003340	- "--shallow/partial"
+L00003341	- "--bare"
+L00003342	- "git clone --bare"
+L00003343	- "core.sshCommand"
+L00003344	- "git bundle"
+L00003345	- "git cat-file --batch"
+L00003346	- "--recurse-submodules"
+L00003347	- "git/modules/{submodule_path}/"
+L00003348	- "git show {anchor_sha}:{path}"
+L00003349	- "case-collisions"
+L00003350	- "dirty/{relative_path}"
+L00003351	- "1 MB"
+L00003352	- "near-zero-SSH-during-grep"
+L00003353	- "SUPERSEDES any absolute zero-SSH claim"
+L00003354	negative_constraints:
+L00003355	- "Remote project storage split does not re-own remote-search behavior, remote-only settings, or /admin controls."
+L00003356	preserved_contractrefs:
+L00003357	- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md"
+L00003358	- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+L00003359	compatibility_only_notes: []
+L00003360	stale_retired_dispositions: []
+L00003361	owner_hints:
+L00003362	- "Plans/storage-plan.md"
+L00003363	- "Plans/GitHub_Integration.md"
+L00003364	- "Plans/Tools.md"
+L00003365	```
+L00003366	
+L00003367	### SP-018 - Dirty Layer Generation And Snapshot Publication Safety
+L00003368	
+L00003369	```yaml
+L00003370	plan_unit_id: SP-018
+L00003371	unit_type: requirement
+L00003372	status: accepted
+L00003373	owner_doc: Plans/storage-plan.md
+L00003374	canonical_text: "Dirty-layer and regex-index publication use generation-based clearing, RwLock dirty entries, ArcSwap snapshot publication, sync_all durability, anchor reachability invalidation, and bounded memory guidance."
+L00003375	gui_related: false
+L00003376	gui_classification_reason: "This unit preserves backend concurrency, publication, durability, and rebuild safety requirements."
+L00003377	split_recommended: false
+L00003378	depends_on:
+L00003379	- "PDS-003"
+L00003380	- "PDS-004"
+L00003381	- "PDS-005"
+L00003382	- "PNC-001"
+L00003383	- "AI-001"
+L00003384	unblocks: []
+L00003385	acceptance_criteria:
+L00003386	- "SP-018 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00003387	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003388	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003389	validation_surfaces:
+L00003390	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003391	- "python3 scripts/pm-plan-index.py validate"
+L00003392	risk_class: storage_plan_drift
+L00003393	reasoning_tier: standard
+L00003394	context_scope: storage_plan
+L00003395	implementation_surfaces:
+L00003396	- "Plans/storage-plan.md"
+L00003397	node_compile_hint:
+L00003398	  mode: dirty_layer_generation_snapshot_publication_safety
+L00003399	  create_worknodes: false
+L00003400	source_lineage:
+L00003401	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0033"
+L00003402	preserved_exact_tokens:
+L00003403	- "generation <= build_generation"
+L00003404	- "generation ≤ build_generation"
+L00003405	- "RwLock<HashMap<PathBuf, DirtyEntry>>"
+L00003406	- "DirtyEntry"
+L00003407	- "deleted flag"
+L00003408	- "ArcSwap<Arc<IndexSnapshot>>"
+L00003409	- "gen-{N+1}/"
+L00003410	- "File::sync_all()"
+L00003411	- "sync_all"
+L00003412	- "git cat-file -t {sha}"
+L00003413	- "anchor_sha"
+L00003414	- "full rebuild"
+L00003415	- "500 MB"
+L00003416	- "O(index_size) RAM"
+L00003417	- "1.5x index size"
+L00003418	negative_constraints:
+L00003419	- "Entries added during the build must survive so a long-running build cannot lose files dirtied during that build."
+L00003420	preserved_contractrefs:
+L00003421	- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md"
+L00003422	- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+L00003423	compatibility_only_notes: []
+L00003424	stale_retired_dispositions: []
+L00003425	owner_hints:
+L00003426	- "Plans/storage-plan.md"
+L00003427	- "Plans/Architecture_Invariants.md"
+L00003428	```
+L00003429	
+
+<<< CONTEXT_AFTER canonical_document_lines=3430-3441 >>>
+L00003430	### SP-019 - Local And Remote Regex Index Layouts And Windows Path Compatibility
+L00003431	
+L00003432	```yaml
+L00003433	plan_unit_id: SP-019
+L00003434	unit_type: requirement
+L00003435	status: accepted
+L00003436	owner_doc: Plans/storage-plan.md
+L00003437	canonical_text: "Local, remote Git, and remote non-Git regex-index layouts preserve generation snapshot paths, remote cache roots, manifest mappings, hash8 short paths, and Windows longPathAware mitigation."
+L00003438	gui_related: false
+L00003439	gui_classification_reason: "This unit preserves backend cache layout and platform compatibility requirements."
+L00003440	split_recommended: false
+L00003441	depends_on:

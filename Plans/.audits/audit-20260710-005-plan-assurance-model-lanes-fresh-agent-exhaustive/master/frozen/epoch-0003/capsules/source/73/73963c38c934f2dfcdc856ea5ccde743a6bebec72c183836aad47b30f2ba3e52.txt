@@ -1,0 +1,271 @@
+<<< CONTEXT_BEFORE 2127-2138 >>>
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Project_Output_Artifacts.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Permissions_System.md
+- Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2139-2394 >>>
+### OP-027 - History Actions Deep Compare Export Rebuild
+
+```yaml
+plan_unit_id: OP-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: History rows expose authority-gated actions without mutating immutable history in place. Document
+  rows support Open, Compare versions, Duplicate as draft, Reopen in Wizard, Export, and Send forward when currentness
+  allows; run rows support viewing, filtering, artifact/evidence opening, resume/retry where valid, clone-as-new-run,
+  export, and raw/ledger inspection. Compare versions is deep in MVP with rendered output, package/source-lineage
+  metadata, source ledger atom lineage where applicable, and manifest identity. Export actions support selected
+  rows, multi-select bundles, filtered views, zip/archive, JSON, rendered Markdown, rendered HTML, rendered PDF,
+  and explicit evidence/redaction profiles. When projection state is stale, compare/export/reopen/send-forward remain
+  blocked until Rebuild succeeds.
+gui_related: true
+gui_classification_reason: Defines user-visible row actions, compare/export controls, rebuild affordance, and blocked
+  states.
+depends_on:
+- OP-026
+- SP-219
+- CV-295
+unblocks:
+- UCC-100
+- POA-051
+- ATS-012
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: history_action_authority_drift
+reasoning_tier: high
+context_scope: orchestrator_history_actions
+implementation_surfaces:
+- Plans/Orchestrator_Page.md
+- future History row action menus
+node_compile_hint:
+  mode: history_action_surface
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0017
+- pldg-20260626-001-feature-name:atom-0018
+- pldg-20260626-001-feature-name:atom-0026
+- pldg-20260626-001-feature-name:atom-0027
+- pldg-20260626-001-feature-name:atom-0034
+- pldg-20260626-001-feature-name:atom-0035
+- pldg-20260626-001-feature-name:atom-0038
+- pldg-20260626-001-feature-name:atom-0041
+- pldg-20260626-001-feature-name:atom-0043
+- pldg-20260626-001-feature-name:atom-0057
+- pldg-20260626-001-feature-name:atom-0058
+- pldg-20260626-001-feature-name:atom-0059
+- pldg-20260626-001-feature-name:atom-0062
+- chat:history-defaults-answers
+- chat:history-scope-retention-actions-answers
+- chat:history-columns-toggle-deep-compare-answers
+- chat:history-export-granularity-answer
+- chat:history-export-compare-archive-answers
+- chat:history-degraded-mode-answer
+- chat:history-pressure-test-request
+- chat:history-pressure-test-defaults-answer
+source_atom_ids:
+- atom-0017
+- atom-0018
+- atom-0026
+- atom-0027
+- atom-0034
+- atom-0035
+- atom-0038
+- atom-0041
+- atom-0043
+- atom-0057
+- atom-0058
+- atom-0059
+- atom-0062
+decision_refs:
+- dec-0003
+- dec-0004
+- dec-0005
+- dec-0006
+- dec-0007
+- dec-0010
+- dec-0011
+- dec-0012
+preserved_exact_tokens:
+- All of that.
+- status/date/project search
+- opening artifacts/evidence
+- resuming/retrying
+- cloning as a new run
+- exporting
+- viewing what happened
+- historical orchestrator runs
+- document-specific actions
+- Duplicate as draft
+- Reopen in Wizard
+- Compare versions
+- Export
+- Send forward when currentness allows
+- 'Yes'
+- currentness allows
+- deeper is mvp
+- rendered document diff
+- package/source-lineage metadata
+- ledger-atom diff
+- immutable historical records
+- all of thodse
+- selected-row export
+- multi-select bundle export
+- whole filtered-view export
+- manifest
+- yes, and yes.
+- zip+manifest
+- JSON
+- rendered Markdown/HTML/PDF
+- 'yes'
+- side-by-side rendered diff
+- metadata/source-lineage pane
+- atom/manifest change table
+- sounds good
+- Rebuild
+- immutable source records
+- block compare/export/reopen/send-forward until rebuild succeeds
+- until rebuild succeeds
+- currentness
+- authority
+- permissions/redaction profile details
+- raw records/evidence
+- explicit evidence/redaction profile
+negative_constraints:
+- Do not reduce historical runs to read-only summaries when the user needs action routes.
+- Do not omit evidence/artifact/Ledger pivots from historical run rows.
+- Do not mutate immutable historical run/document identity in place.
+- Do not resume or retry a stale historical run without currentness and authority checks.
+- Do not treat clone-as-new-run as the same identity as the original historical run.
+- Do not expose run-only actions such as retry or clone-as-new-run directly on document rows unless they route through
+  a document-appropriate currentness/authority action.
+- Do not send a historical document forward without currentness checks.
+- Do not launch Plan Compile, Orchestrator execution, or mutable wizard state directly from stale historical documents
+  without currentness checks.
+- Do not mutate immutable approved packs or historical document records in place.
+- Do not ship compare versions as rendered-text-only in MVP.
+- Do not hide source-lineage or package identity changes when comparing historical wizard documents.
+- Do not compare by path or title alone when canonical document/package IDs exist.
+- Do not let comparison mutate or merge historical records.
+- Do not limit MVP export to selected-row-only.
+- Do not make whole filtered-view export omit the active filter context.
+- Do not collapse export into only one opaque archive format.
+- Do not omit the manifest from archive/zip exports.
+- Do not make deep comparison a single raw JSON or text-only diff.
+- Do not hide metadata/source-lineage or atom/manifest changes behind unrelated developer-only tooling.
+- Do not make rebuild available only as hidden developer tooling.
+- Do not rebuild by mutating immutable source records.
+- Do not allow compare/export/reopen/send-forward from stale projection state.
+- Do not bypass currentness/authority checks just because rebuild is requested.
+- Do not treat successful rebuild as automatic permission to bypass currentness or authority checks.
+- Do not mutate immutable historical records after rebuild.
+- Do not silently include raw records or evidence in ordinary exports.
+- Do not export secrets, unauthorized provider/account details, or evidence outside the user's permissions.
+- Do not omit a manifest of redactions/omissions when evidence export is requested.
+owner_hints:
+- Plans/Orchestrator_Page.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/UI_Command_Catalog.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Permissions_System.md
+- Plans/Planning_Wizard.md
+- Plans/PRD_Builder.md
+- Plans/FinalGUISpec.md
+- Plans/Project_Output_Artifacts.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime Orchestrator page rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-4ac2b9911ffce6c6ae062b08`: safe-point retry UI shows action `cmd.orchestrator.safe_point_retry` with fields `run_id`, `safe_point_id`, `retry_scope`, and `permission_snapshot_id?`. Confirmation copy must name the safe point and affected node/run. Disabled reasons are `safe_point_missing`, `state_changed`, `permission_denied`, and `operation_in_progress`.
+- Repairs `sfk-20d70c6eed1de1a86055e838`: Plan Compile launch waits for `PlanApproved` publication for `60000` ms by default. On expiry it enters `plan_compile_launch_expired` with actions `retry_wait`, `open_plan_approval`, and `cancel_launch`.
+- Repairs `sfk-e9a741e787bc73207fc9b89a`: core DAG GUI commands are `cmd.run_graph.pan`, `cmd.run_graph.zoom`, `cmd.run_graph.drag_node`, `cmd.run_graph.open_minimap_target`, `cmd.run_graph.open_context_menu`, `cmd.run_graph.keyboard_navigate`, and `cmd.run_graph.set_selection`. Enabled state requires graph data loaded and no modal capture; drag additionally requires editable layout mode.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+
+These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 365` (explicitly_deferred; source line 1227; `sfk-e9a741e787bc73207fc9b89a`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: core DAG interactions (pan, zoom, drag, minimap click, right-click, keyboard nav, multi-select) are narrative "should" statements only zero command IDs or enabled/disabled logic anywhere; confirms Orchestrator_Page.md does not close this gap either (chec
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds Orchestrator usage/cost rows and actions to UsageRecord identity. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### OP-029 - Orchestrator Usage Drill-Through Contract
+
+```yaml
+plan_unit_id: OP-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Orchestrator usage, cost, ledger, evidence, history, and receipt rows are consumers of UsageRecord projection packets. They display source_class, source_confidence, source_authority, settlement_status, cost_status, quota_state, projection_freshness, projection_health, hidden/background contribution, and dedupe/parent-child refs when usage appears in a row or detail panel. `View in Usage`, `Show in Usage`, and `Show in Ledger` actions route through object_kind = usage_event and object_id from usage_event_ref whenever present, preserving usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id as correlation/context fields.
+gui_related: true
+gui_classification_reason: Orchestrator usage rows and drill-through actions are user-visible GUI.
+depends_on: [OP-026, OP-027, UF-087, UF-088, CV-316, RAP-044, RGV-016]
+unblocks: []
+acceptance_criteria:
+  - Orchestrator usage/cost rows render unknown, estimated, disabled, not_exposed, hidden_byok, hidden_subscription, streaming_partial, adjusted, failed, stale, and provider-reported zero as distinct states.
+  - Drill-through actions preserve UsageRecord refs and normalize to object_kind = usage_event when usage_event_ref is present.
+  - Hidden/background usage contribution is attributed through parent_usage_record_id or child usage refs rather than silently folded into parent-only totals.
+  - Orchestrator fixtures fail if Ledger/Usage pivots use timestamp/run/thread/tier as the primary key when usage_event_ref is available.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Orchestrator Usage drill-through fixture suite
+risk_class: orchestrator_usage_drillthrough_identity_drift
+reasoning_tier: high
+context_scope: orchestrator_usage_projection
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - Plans/usage-feature.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: orchestrator_usage_drillthrough_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Orchestrator_Page.md:231-247"
+  - "Plans/Run_Graph_View.md:491-535"
+  - "Plans/usage-feature.md:5412-5605"
+  - "Plans/Runtime_Artifacts_Panel.md:281-316"
+preserved_exact_tokens:
+  - View in Usage
+  - Show in Usage
+  - Show in Ledger
+  - usage_event_ref
+  - provider_attempt_ref
+  - hidden/background
+  - parent_usage_record_id
+negative_constraints:
+  - Do not let Orchestrator mint usage, billing, quota, or pricing authority.
+  - Do not route usage/cost actions by timestamp, run-only, thread-only, or tier-only keys when usage_event_ref exists.
+  - Do not hide background or subagent usage contribution behind a parent total without drill-through refs.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/usage-feature.md
+  - Plans/Runtime_Artifacts_Panel.md
+```

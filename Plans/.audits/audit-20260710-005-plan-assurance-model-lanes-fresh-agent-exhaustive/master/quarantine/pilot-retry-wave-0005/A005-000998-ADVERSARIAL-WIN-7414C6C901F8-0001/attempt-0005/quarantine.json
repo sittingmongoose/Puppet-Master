@@ -1,0 +1,15 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "pilot-retry-wave-0005",
+  "assignment_id": "A005-000998-ADVERSARIAL-WIN-7414C6C901F8-0001",
+  "attempt_id": "attempt-0005",
+  "status": "quarantined_zero_credit",
+  "reason": "fresh Sol child task ended with systemError before writing result.json or terminal_seal.json",
+  "task_thread_id": "/root/a005_000998_attempt_0005_sol_xhigh_linebound_terminal",
+  "thread_runtime_status": "systemError",
+  "result_present": false,
+  "terminal_seal_present": false,
+  "preserve_artifacts": true,
+  "retry_requires_fresh_identity": true,
+  "coverage_credit": 0
+}

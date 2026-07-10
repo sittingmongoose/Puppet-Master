@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE canonical_document_lines=362-373 >>>
+L00000362	- Show in ...
+L00000363	negative_constraints:
+L00000364	- Search and command-palette navigation must not restore a watered-down approximation.
+L00000365	- Deep links generally do not preserve non-stable UI layout state.
+L00000366	owner_hints:
+L00000367	- Plans/Run_Graph_View.md
+L00000368	- Plans/UI_Command_Catalog.md
+L00000369	- Plans/Contracts_V0.md
+L00000370	```
+L00000371	
+L00000372	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+L00000373	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=374-760 >>>
+L00000374	### RGV-004 - Graph Layout, Scale, And Generation Visibility
+L00000375	
+L00000376	```yaml
+L00000377	plan_unit_id: RGV-004
+L00000378	unit_type: requirement
+L00000379	status: accepted
+L00000380	owner_doc: Plans/Run_Graph_View.md
+L00000381	canonical_text: The Run Graph layout has a run/generation/trust header, a main graph canvas with minimap, search, and overlays, and a right-side inspector/table region. It keeps historical and superseded branches available through generation-aware controls, culling, caching, virtualization, level-of-detail reduction, and density-aware overlays.
+L00000382	gui_related: true
+L00000383	gui_classification_reason: This unit defines visible layout regions, graph canvas behavior, overlays, minimap, zoom, pan, and inspector placement.
+L00000384	depends_on: [RGV-001]
+L00000385	unblocks: [RGV-005]
+L00000386	acceptance_criteria:
+L00000387	- Current generation is emphasized by default without hiding historical truth.
+L00000388	- Superseded and historical branches remain visible and clickable.
+L00000389	- Large graphs use virtualization, culling, caching, throttled updates, level-of-detail reduction, and lineage-focused defaults.
+L00000390	- Canonical layouts include package-group swimlanes, seam boundaries, and parallel lane visualization rather than phase-only grouping.
+L00000391	validation_surfaces:
+L00000392	- Manual Run Graph layout review.
+L00000393	- Large-graph interaction and projection review.
+L00000394	- python3 scripts/pm-plan-index.py validate
+L00000395	risk_class: large_graph_usability
+L00000396	reasoning_tier: high
+L00000397	context_scope: run_graph_layout
+L00000398	implementation_surfaces:
+L00000399	- Plans/Run_Graph_View.md
+L00000400	- Plans/FinalGUISpec.md
+L00000401	- future Run Graph canvas
+L00000402	node_compile_hint:
+L00000403	  mode: gui_surface_requirement
+L00000404	  create_worknodes: false
+L00000405	source_lineage:
+L00000406	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000407	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0007
+L00000408	- Plans/Run_Graph_View.md:38-39
+L00000409	- Plans/Run_Graph_View.md:44
+L00000410	- Plans/Run_Graph_View.md:79-80
+L00000411	- Plans/Run_Graph_View.md:97-110
+L00000412	preserved_exact_tokens:
+L00000413	- minimap
+L00000414	- overlays
+L00000415	- throttled-update
+L00000416	- density-aware
+L00000417	- package-group swimlanes
+L00000418	- seam boundaries
+L00000419	- parallel lane visualization
+L00000420	compatibility_only_notes:
+L00000421	- by-phase grouping is a compatibility layout only.
+L00000422	owner_hints:
+L00000423	- Plans/Run_Graph_View.md
+L00000424	- Plans/FinalGUISpec.md
+L00000425	```
+L00000426	
+L00000427	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+L00000428	
+L00000429	### RGV-005 - Node Detail Inspector Content And Actions
+L00000430	
+L00000431	```yaml
+L00000432	plan_unit_id: RGV-005
+L00000433	unit_type: requirement
+L00000434	status: accepted
+L00000435	owner_doc: Plans/Run_Graph_View.md
+L00000436	canonical_text: Node detail exposes requested/effective provider, model, effort, persona, account, usage, cost, worker policy, retry/review/promotion state, lane, worktree, snapshot, linked evidence, artifacts, review refs, corroboration refs, graph patch refs, recovery refs, blocked episode refs, and promotion refs. Evidence and artifact links deep-link to Evidence with target selection or filtering applied.
+L00000437	gui_related: true
+L00000438	gui_classification_reason: This unit defines the visible right-side detail inspector, diff cards, action affordances, and Evidence pivots.
+L00000439	depends_on: [RGV-001, RGV-002, RGV-003, RGV-004]
+L00000440	unblocks: [RGV-010]
+L00000441	acceptance_criteria:
+L00000442	- Node click opens detail with runtime identity, usage/cost, worker policy, retry/review/promotion, lane/worktree/snapshot, and evidence/artifact linkage.
+L00000443	- Diff previews cap at 50 lines and expose a View Full Diff action targeting diff_review.
+L00000444	- SCM recovery and lineage actions use exact UI Command Catalog pivots and stable route context after restart.
+L00000445	- Missing lineage is labeled partial rather than synthesized.
+L00000446	validation_surfaces:
+L00000447	- Manual node detail and action payload review.
+L00000448	- UI Command Catalog cross-check.
+L00000449	- python3 scripts/pm-plan-index.py validate
+L00000450	risk_class: inspector_fidelity
+L00000451	reasoning_tier: standard
+L00000452	context_scope: node_detail_surface
+L00000453	implementation_surfaces:
+L00000454	- Plans/Run_Graph_View.md
+L00000455	- Plans/UI_Command_Catalog.md
+L00000456	- Plans/FileManager.md
+L00000457	- future Run Graph inspector
+L00000458	node_compile_hint:
+L00000459	  mode: gui_surface_requirement
+L00000460	  create_worknodes: false
+L00000461	source_lineage:
+L00000462	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000463	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0008
+L00000464	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0009
+L00000465	- Plans/Run_Graph_View.md:48-50
+L00000466	- Plans/Run_Graph_View.md:94
+L00000467	- Plans/Run_Graph_View.md:112-123
+L00000468	preserved_exact_tokens:
+L00000469	- requested/effective provider/model/effort/persona/account
+L00000470	- View Full Diff
+L00000471	- cmd.orchestrator.restore_safe_point_then_retry
+L00000472	- review_refs
+L00000473	- blocked_episode_refs
+L00000474	negative_constraints:
+L00000475	- restore_safe_point_then_retry must carry exact worktree/baseline targeting rather than implied reuse.
+L00000476	owner_hints:
+L00000477	- Plans/Run_Graph_View.md
+L00000478	- Plans/UI_Command_Catalog.md
+L00000479	- Plans/FileManager.md
+L00000480	```
+L00000481	
+L00000482	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md
+L00000483	
+L00000484	### RGV-006 - Data Model Identity Modernization
+L00000485	
+L00000486	```yaml
+L00000487	plan_unit_id: RGV-006
+L00000488	unit_type: requirement
+L00000489	status: accepted
+L00000490	owner_doc: Plans/Run_Graph_View.md
+L00000491	canonical_text: Run Graph data-source joins retarget away from tier_id and toward node_id, attempt_id, blocked episode, generation, lane, artifact, and provider platform identity. Field-name modernization is insufficient unless scope is also modernized to the runtime identities that own execution truth.
+L00000492	gui_related: false
+L00000493	gui_classification_reason: This unit defines runtime/data identity and join semantics rather than visual presentation.
+L00000494	depends_on: [RGV-001]
+L00000495	unblocks: [RGV-007, RGV-010]
+L00000496	acceptance_criteria:
+L00000497	- Usage, evidence, terminal, and output routing no longer rely on tier-keyed joins once attempts, blocked episodes, and graph generations are first-class.
+L00000498	- provider_entry, provider_family, requested_platform, and effective_platform map back to Orchestrator vocabulary.
+L00000499	- provider_family_id remains additive grouping metadata and never replaces concrete platform identity.
+L00000500	- effective_provider_identity, provider_identity, and effective_project_id are not used to encode actor role or side-effect target identity.
+L00000501	validation_surfaces:
+L00000502	- Manual data-model identity review.
+L00000503	- Cross-check against Contracts, Executor Protocol, storage, and usage docs.
+L00000504	- python3 scripts/pm-plan-index.py validate
+L00000505	risk_class: identity_model_drift
+L00000506	reasoning_tier: high
+L00000507	context_scope: run_graph_data_model
+L00000508	implementation_surfaces:
+L00000509	- Plans/Run_Graph_View.md
+L00000510	- Plans/Contracts_V0.md
+L00000511	- Plans/Executor_Protocol.md
+L00000512	- Plans/storage-plan.md
+L00000513	- Plans/usage-feature.md
+L00000514	node_compile_hint:
+L00000515	  mode: runtime_identity_requirement
+L00000516	  create_worknodes: false
+L00000517	source_lineage:
+L00000518	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000519	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0010
+L00000520	- Plans/Run_Graph_View.md:33-34
+L00000521	- Plans/Run_Graph_View.md:40
+L00000522	- Plans/Run_Graph_View.md:78
+L00000523	- Plans/Run_Graph_View.md:87
+L00000524	- Plans/Run_Graph_View.md:125-127
+L00000525	preserved_exact_tokens:
+L00000526	- tier_id
+L00000527	- node_id
+L00000528	- attempt_id
+L00000529	- blocked-episode
+L00000530	- provider_entry
+L00000531	- provider_family
+L00000532	- requested_platform
+L00000533	- effective_platform
+L00000534	negative_constraints:
+L00000535	- Evidence, terminal, usage, and output routing must not remain tier-keyed once attempts, blocked episodes, and graph generations are first-class routing objects.
+L00000536	owner_hints:
+L00000537	- Plans/Run_Graph_View.md
+L00000538	- Plans/Contracts_V0.md
+L00000539	- Plans/Executor_Protocol.md
+L00000540	- Plans/storage-plan.md
+L00000541	```
+L00000542	
+L00000543	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+L00000544	
+L00000545	### RGV-007 - Tier-Era And HITL Compatibility Disposition
+L00000546	
+L00000547	```yaml
+L00000548	plan_unit_id: RGV-007
+L00000549	unit_type: compatibility_disposition
+L00000550	status: accepted
+L00000551	owner_doc: Plans/Run_Graph_View.md
+L00000552	canonical_text: Tiers are demoted from primary Orchestrator tab/page authority in favor of Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger. Tier labels may survive only as derived presentation context or compatibility lineage. request_id and hitl_request_id are not durable graph action identity; blocked runtime approval identity, blocked_sequence, and allowed_action_ids-backed runtime actions own that role.
+L00000553	gui_related: true
+L00000554	gui_classification_reason: This disposition retires or constrains user-visible Tiers tab/page assumptions and graph layout vocabulary.
+L00000555	depends_on: [RGV-001, RGV-006]
+L00000556	unblocks: [RGV-010]
+L00000557	acceptance_criteria:
+L00000558	- GUI navigation demotes Tiers from primary Orchestrator tab/page authority.
+L00000559	- Plan Compile, Node Graph, Seams, Evidence, History, and Ledger use the rewrite tab model; Run Graph does not own Plan Compile scope.
+L00000560	- hitl_request_id and request_id remain compatibility lineage only where they appear.
+L00000561	- Graph command payloads use blocked/runtime approval identity and allowed_action_ids-backed runtime command targets.
+L00000562	validation_surfaces:
+L00000563	- Manual stale tier/HITL cleanup review.
+L00000564	- UI Command Catalog payload review.
+L00000565	- python3 scripts/pm-plan-index.py validate
+L00000566	risk_class: stale_tier_cleanup
+L00000567	reasoning_tier: standard
+L00000568	context_scope: compatibility_and_stale_disposition
+L00000569	implementation_surfaces:
+L00000570	- Plans/Run_Graph_View.md
+L00000571	- Plans/Orchestrator_Page.md
+L00000572	- Plans/UI_Command_Catalog.md
+L00000573	- Plans/Contracts_V0.md
+L00000574	node_compile_hint:
+L00000575	  mode: compatibility_disposition
+L00000576	  create_worknodes: false
+L00000577	source_lineage:
+L00000578	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000579	- Plans/Run_Graph_View.md:28
+L00000580	- Plans/Run_Graph_View.md:41
+L00000581	- Plans/Run_Graph_View.md:47
+L00000582	- Plans/Run_Graph_View.md:49
+L00000583	- Plans/Run_Graph_View.md:55
+L00000584	- Plans/Run_Graph_View.md:57
+L00000585	- Plans/Run_Graph_View.md:66-67
+L00000586	- Plans/Run_Graph_View.md:73
+L00000587	- Plans/Run_Graph_View.md:86
+L00000588	- Plans/Run_Graph_View.md:89-90
+L00000589	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+L00000590	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+L00000591	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+L00000592	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+L00000593	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
+L00000594	preserved_exact_tokens:
+L00000595	- Tiers
+L00000596	- Node Graph
+L00000597	- Progress/Seams/Node Graph/Evidence/History/Ledger
+L00000598	- hitl_request_id
+L00000599	- request_id
+L00000600	- blocked_sequence
+L00000601	- allowed_action_ids[]
+L00000602	- cmd.graph.approve_hitl/deny_hitl
+L00000603	- request_id vs blocked_sequence
+L00000604	- allowed_action_ids[] → cmd.runtime.*
+L00000605	negative_constraints:
+L00000606	- The graph view-model MUST NOT keep hitl_request_id as the durable action identity once the blocked/recovery model moves to blocked-episode identity.
+L00000607	- Graph and Orchestrator command payloads must not keep request_id as the primary action target.
+L00000608	compatibility_only_notes:
+L00000609	- Tier labels survive only as derived view context.
+L00000610	- Legacy HITL/request fields are compatibility lineage only.
+L00000611	stale_retired_dispositions:
+L00000612	- Tier-keyed usage/evidence correlation and legacy PuppetMasterEvent source tables are cleanup inputs, not active implementation targets.
+L00000613	owner_hints:
+L00000614	- Plans/Run_Graph_View.md
+L00000615	- Plans/Orchestrator_Page.md
+L00000616	- Plans/UI_Command_Catalog.md
+L00000617	- Plans/Contracts_V0.md
+L00000618	```
+L00000619	
+L00000620	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+L00000621	
+L00000622	### RGV-008 - Projection Trust, Concern Identity, And Action Gating
+L00000623	
+L00000624	```yaml
+L00000625	plan_unit_id: RGV-008
+L00000626	unit_type: constraint
+L00000627	status: accepted
+L00000628	owner_doc: Plans/Run_Graph_View.md
+L00000629	canonical_text: Run Graph discloses stale or degraded projection trust before showing live claims, treats projection-trust failures and weak-integration findings as distinct concern categories, and gates actions that depend on current promotion, blocker, graph-generation, remote-side-effect truth, or cross-surface mutation payloads.
+L00000630	gui_related: false
+L00000631	gui_classification_reason: The unit primarily defines runtime trust, concern identity, and action-gating policy.
+L00000632	depends_on: [RGV-001, RGV-006]
+L00000633	unblocks: [RGV-010]
+L00000634	acceptance_criteria:
+L00000635	- Live-status tables consume canonical runtime records and projections first.
+L00000636	- Stale or degraded projection trust is disclosed before live claims or live action affordances.
+L00000637	- Concern merge, split, and supersession consume contract-level concern and governance-record identity rather than local Run Graph state.
+L00000638	- Concerns have durable identity, lineage, source links, status, resolution_kind, and rationale fields rather than only badges or notes.
+L00000639	- Graph patch application that changes canonical graph generation consumes `CV-315` graph_patch state transitions and `SP-233` durable storage keys, and remains hard-gated or runtime-controlled.
+L00000640	- Mutating Run Graph commands carry projection-trust payloads and route through allowed_action_ids-backed runtime actions when blocked/recovery action identity is involved.
+L00000641	validation_surfaces:
+L00000642	- Projection trust/manual action-gating review.
+L00000643	- Concern schema owner review.
+L00000644	- python3 scripts/pm-plan-index.py validate
+L00000645	risk_class: projection_trust
+L00000646	reasoning_tier: high
+L00000647	context_scope: projection_trust_and_concerns
+L00000648	implementation_surfaces:
+L00000649	- Plans/Run_Graph_View.md
+L00000650	- Plans/Contracts_V0.md
+L00000651	- Plans/Executor_Protocol.md
+L00000652	- future concern identity contract
+L00000653	node_compile_hint:
+L00000654	  mode: trust_and_gate_constraint
+L00000655	  create_worknodes: false
+L00000656	source_lineage:
+L00000657	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0003
+L00000658	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000659	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0009
+L00000660	- Plans/Run_Graph_View.md:36-37
+L00000661	- Plans/Run_Graph_View.md:42
+L00000662	- Plans/Run_Graph_View.md:53
+L00000663	- Plans/Run_Graph_View.md:62-64
+L00000664	- Plans/Run_Graph_View.md:77
+L00000665	- Plans/Run_Graph_View.md:83-85
+L00000666	- Plans/Run_Graph_View.md:93
+L00000667	- Plans/Run_Graph_View.md:121-123
+L00000668	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+L00000669	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
+L00000670	preserved_exact_tokens:
+L00000671	- projection-trust
+L00000672	- projection-trust payload
+L00000673	- weak-integration
+L00000674	- hard_gate
+L00000675	- concern_id
+L00000676	- resolution_kind
+L00000677	- blocked_episode_refs
+L00000678	- allowed_action_ids[] → cmd.runtime.*
+L00000679	negative_constraints:
+L00000680	- Run Graph may link candidate concern operations but must not invent canonical merge authority.
+L00000681	owner_hints:
+L00000682	- Plans/Run_Graph_View.md
+L00000683	- Plans/Contracts_V0.md
+L00000684	- Plans/Executor_Protocol.md
+L00000685	owner_adjudication:
+L00000686	  candidate_owners: [Plans/Run_Graph_View.md, Plans/Contracts_V0.md, Plans/Executor_Protocol.md]
+L00000687	  evidence: Concern identity and graph projection trust are consumed by Run Graph, while governance record schemas and projection-trust state machines are owned by Contracts_V0 CV-315 and storage-plan SP-233.
+L00000688	```
+L00000689	
+L00000690	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000691	
+L00000692	### RGV-009 - Adjacent Owner Gaps And Non-Local Decisions
+L00000693	
+L00000694	```yaml
+L00000695	plan_unit_id: RGV-009
+L00000696	unit_type: constraint
+L00000697	status: accepted
+L00000698	owner_doc: Plans/Run_Graph_View.md
+L00000699	canonical_text: Run Graph records adjacent owner gaps without claiming non-local authority. Durable account switch history is already owned through account_switch_event and account_pressure_episode, while role enums, provider account policy references, acceptance/evidence/coverage schema extensions, and runtime scheduler ordering belong to their owner docs before Run Graph consumes them.
+L00000700	gui_related: false
+L00000701	gui_classification_reason: This unit is owner-routing and schema-boundary metadata, not GUI implementation work.
+L00000702	depends_on: [RGV-001, RGV-006, RGV-008]
+L00000703	unblocks: [RGV-010]
+L00000704	acceptance_criteria:
+L00000705	- Multi-account switch history consumes account_switch_event and account_pressure_episode rather than the stale no-durable-family claim.
+L00000706	- Schema contradictions are tracked as active owner-doc gaps rather than solved locally in Run Graph.
+L00000707	- Concern, corroboration, promotion, graph-patch, lane, package, and account object families are preserved as node-relevant hints without becoming final WorkNodes.
+L00000708	validation_surfaces:
+L00000709	- Owner adjudication review.
+L00000710	- DRY Rules/ContractRef review.
+L00000711	- python3 scripts/pm-plan-index.py validate
+L00000712	risk_class: owner_adjudication
+L00000713	reasoning_tier: high
+L00000714	context_scope: cross_owner_routing
+L00000715	implementation_surfaces:
+L00000716	- Plans/Run_Graph_View.md
+L00000717	- Plans/Multi-Account.md
+L00000718	- Plans/Contracts_V0.md
+L00000719	- Plans/Executor_Protocol.md
+L00000720	- Plans/usage-feature.md
+L00000721	node_compile_hint:
+L00000722	  mode: owner_route_metadata
+L00000723	  create_worknodes: false
+L00000724	source_lineage:
+L00000725	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000726	- Plans/Run_Graph_View.md:51
+L00000727	- Plans/Run_Graph_View.md:68
+L00000728	- Plans/Run_Graph_View.md:72
+L00000729	- Plans/Run_Graph_View.md:78
+L00000730	- Plans/Run_Graph_View.md:86-87
+L00000731	- Plans/Run_Graph_View.md:91-92
+L00000732	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:9
+L00000733	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:15
+L00000734	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:16
+L00000735	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
+L00000736	preserved_exact_tokens:
+L00000737	- account.switched
+L00000738	- account_switch_event
+L00000739	- Contracts_V0 now defines account_switch_event
+L00000740	- policy_hash
+L00000741	- actor_kind
+L00000742	- execution_role
+L00000743	- Schema-level contradictions are active, not hypothetical.
+L00000744	- lexicographic ordering
+L00000745	- scored ready-set
+L00000746	negative_constraints:
+L00000747	- Run Graph must not encode actor role or side-effect target identity into effective_provider_identity, provider_identity, or effective_project_id.
+L00000748	owner_hints:
+L00000749	- Plans/Run_Graph_View.md
+L00000750	- Plans/Multi-Account.md
+L00000751	- Plans/Contracts_V0.md
+L00000752	- Plans/Executor_Protocol.md
+L00000753	- Plans/usage-feature.md
+L00000754	owner_adjudication:
+L00000755	  candidate_owners: [Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Executor_Protocol.md, Plans/usage-feature.md, Plans/Run_Graph_View.md]
+L00000756	  evidence: The source spans explicitly name missing account, role, schema, usage, and runtime scheduler authority that Run Graph can consume only after owner-doc repair.
+L00000757	```
+L00000758	
+L00000759	ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000760	
+
+<<< CONTEXT_AFTER canonical_document_lines=761-772 >>>
+L00000761	### RGV-010 - Run Graph Validation And Coverage
+L00000762	
+L00000763	```yaml
+L00000764	plan_unit_id: RGV-010
+L00000765	unit_type: validation_rule
+L00000766	status: accepted
+L00000767	owner_doc: Plans/Run_Graph_View.md
+L00000768	canonical_text: Run Graph validation checks payload fidelity, owner routing, missing context, projection trust disclosure, stale tier cleanup, focused-run coherence, and command-catalog alignment. Phase 2A coverage keeps original spans mapped without creating WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000769	gui_related: false
+L00000770	gui_classification_reason: This unit defines validation and migration proof rules rather than GUI implementation work.
+L00000771	depends_on: [RGV-002, RGV-003, RGV-004, RGV-005, RGV-006, RGV-007, RGV-008, RGV-009]
+L00000772	unblocks: []

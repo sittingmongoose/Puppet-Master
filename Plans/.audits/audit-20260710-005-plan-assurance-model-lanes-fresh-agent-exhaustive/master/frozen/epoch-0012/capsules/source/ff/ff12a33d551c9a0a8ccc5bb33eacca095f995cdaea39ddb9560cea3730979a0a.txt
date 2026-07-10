@@ -1,0 +1,343 @@
+<<< CONTEXT_BEFORE canonical_document_lines=706-717 >>>
+L00000706	        },
+L00000707	        {
+L00000708	          "$ref": "#/$defs/WebExtractInput"
+L00000709	        },
+L00000710	        {
+L00000711	          "$ref": "#/$defs/WebResearchInput"
+L00000712	        },
+L00000713	        {
+L00000714	          "$ref": "#/$defs/WebTraversalInput"
+L00000715	        }
+L00000716	      ]
+L00000717	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=718-1045 >>>
+L00000718	    "ApiWebCallPayload": {
+L00000719	      "type": "object",
+L00000720	      "additionalProperties": false,
+L00000721	      "allOf": [
+L00000722	        {
+L00000723	          "anyOf": [
+L00000724	            {
+L00000725	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000726	              "properties": {
+L00000727	                "web_operation": {"const": "search"},
+L00000728	                "tool_id": {"const": "websearch"},
+L00000729	                "operation_input": {"$ref": "#/$defs/WebSearchInput"}
+L00000730	              }
+L00000731	            },
+L00000732	            {
+L00000733	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000734	              "properties": {
+L00000735	                "web_operation": {"const": "read"},
+L00000736	                "tool_id": {"const": "webfetch"},
+L00000737	                "operation_input": {"$ref": "#/$defs/WebFetchInput"}
+L00000738	              }
+L00000739	            },
+L00000740	            {
+L00000741	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000742	              "properties": {
+L00000743	                "web_operation": {"const": "extract"},
+L00000744	                "tool_id": {"const": "webextract"},
+L00000745	                "operation_input": {"$ref": "#/$defs/WebExtractInput"}
+L00000746	              }
+L00000747	            },
+L00000748	            {
+L00000749	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000750	              "properties": {
+L00000751	                "web_operation": {"const": "research"},
+L00000752	                "tool_id": {"const": "webresearch"},
+L00000753	                "operation_input": {
+L00000754	                  "allOf": [
+L00000755	                    {"$ref": "#/$defs/WebResearchInput"},
+L00000756	                    {"properties": {"web_operation": {"const": "research"}, "research_mode": {"enum": ["standard"]}}}
+L00000757	                  ]
+L00000758	                }
+L00000759	              }
+L00000760	            },
+L00000761	            {
+L00000762	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000763	              "properties": {
+L00000764	                "web_operation": {"const": "deep_research"},
+L00000765	                "tool_id": {"const": "webresearch"},
+L00000766	                "operation_input": {
+L00000767	                  "allOf": [
+L00000768	                    {"$ref": "#/$defs/WebResearchInput"},
+L00000769	                    {"properties": {"web_operation": {"const": "deep_research"}, "research_mode": {"const": "deep"}}}
+L00000770	                  ]
+L00000771	                }
+L00000772	              }
+L00000773	            },
+L00000774	            {
+L00000775	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000776	              "properties": {
+L00000777	                "web_operation": {"const": "crawl"},
+L00000778	                "tool_id": {"const": "webcrawl"},
+L00000779	                "operation_input": {
+L00000780	                  "allOf": [
+L00000781	                    {"$ref": "#/$defs/WebTraversalInput"},
+L00000782	                    {"properties": {"web_operation": {"const": "crawl"}, "tool_id": {"const": "webcrawl"}}}
+L00000783	                  ]
+L00000784	                }
+L00000785	              }
+L00000786	            },
+L00000787	            {
+L00000788	              "required": ["web_operation", "tool_id", "operation_input"],
+L00000789	              "properties": {
+L00000790	                "web_operation": {"const": "map"},
+L00000791	                "tool_id": {"const": "webmap"},
+L00000792	                "operation_input": {
+L00000793	                  "allOf": [
+L00000794	                    {"$ref": "#/$defs/WebTraversalInput"},
+L00000795	                    {"properties": {"web_operation": {"const": "map"}, "tool_id": {"const": "webmap"}}}
+L00000796	                  ]
+L00000797	                }
+L00000798	              }
+L00000799	            }
+L00000800	          ]
+L00000801	        },
+L00000802	        {
+L00000803	          "if": {
+L00000804	            "properties": {
+L00000805	              "success": {"const": true},
+L00000806	              "web_operation": {"const": "read"}
+L00000807	            },
+L00000808	            "required": ["success", "web_operation"]
+L00000809	          },
+L00000810	          "then": {"required": ["content_ref", "read_receipt_refs"]}
+L00000811	        },
+L00000812	        {
+L00000813	          "if": {
+L00000814	            "properties": {
+L00000815	              "success": {"const": true},
+L00000816	              "web_operation": {"const": "extract"}
+L00000817	            },
+L00000818	            "required": ["success", "web_operation"]
+L00000819	          },
+L00000820	          "then": {"required": ["content_ref", "citation_refs"]}
+L00000821	        },
+L00000822	        {
+L00000823	          "if": {
+L00000824	            "properties": {
+L00000825	              "success": {"const": true},
+L00000826	              "web_operation": {"enum": ["research", "deep_research"]}
+L00000827	            },
+L00000828	            "required": ["success", "web_operation"]
+L00000829	          },
+L00000830	          "then": {
+L00000831	            "required": ["sources_ref", "answer_summary_ref"],
+L00000832	            "anyOf": [
+L00000833	              {"required": ["research_run_ref"]},
+L00000834	              {"required": ["read_receipt_refs", "citation_refs"]}
+L00000835	            ]
+L00000836	          }
+L00000837	        },
+L00000838	        {
+L00000839	          "if": {
+L00000840	            "properties": {
+L00000841	              "invocation": {
+L00000842	                "properties": {
+L00000843	                  "invocation_source": {
+L00000844	                    "enum": ["prd", "planning_wizard"]
+L00000845	                  }
+L00000846	                },
+L00000847	                "required": ["invocation_source"]
+L00000848	              }
+L00000849	            },
+L00000850	            "required": ["invocation"]
+L00000851	          },
+L00000852	          "then": {
+L00000853	            "anyOf": [
+L00000854	              {"required": ["ledger_source_evidence_ref"]},
+L00000855	              {"required": ["plan_source_evidence_ref"]}
+L00000856	            ]
+L00000857	          }
+L00000858	        }
+L00000859	      ],
+L00000860	      "required": [
+L00000861	        "source_system",
+L00000862	        "redacted_request_ref",
+L00000863	        "redacted_response_ref",
+L00000864	        "web_operation",
+L00000865	        "tool_id",
+L00000866	        "operation_input",
+L00000867	        "invocation",
+L00000868	        "success",
+L00000869	        "provider_fallback_occurred"
+L00000870	      ],
+L00000871	      "properties": {
+L00000872	        "source_system": {
+L00000873	          "type": "string",
+L00000874	          "minLength": 1
+L00000875	        },
+L00000876	        "redacted_request_ref": {
+L00000877	          "type": "string",
+L00000878	          "minLength": 1
+L00000879	        },
+L00000880	        "redacted_response_ref": {
+L00000881	          "type": "string",
+L00000882	          "minLength": 1
+L00000883	        },
+L00000884	        "web_operation": {
+L00000885	          "type": "string",
+L00000886	          "enum": [
+L00000887	            "search",
+L00000888	            "read",
+L00000889	            "extract",
+L00000890	            "research",
+L00000891	            "deep_research",
+L00000892	            "crawl",
+L00000893	            "map"
+L00000894	          ]
+L00000895	        },
+L00000896	        "tool_id": {
+L00000897	          "type": "string",
+L00000898	          "enum": [
+L00000899	            "websearch",
+L00000900	            "webfetch",
+L00000901	            "webextract",
+L00000902	            "webresearch",
+L00000903	            "webcrawl",
+L00000904	            "webmap"
+L00000905	          ]
+L00000906	        },
+L00000907	        "operation_input": {
+L00000908	          "$ref": "#/$defs/WebActionInput"
+L00000909	        },
+L00000910	        "invocation": {
+L00000911	          "$ref": "#/$defs/InvocationProvenance"
+L00000912	        },
+L00000913	        "success": {
+L00000914	          "type": "boolean"
+L00000915	        },
+L00000916	        "support_tier": {
+L00000917	          "$ref": "#/$defs/ProviderSupportTier"
+L00000918	        },
+L00000919	        "execution_path": {
+L00000920	          "type": "string"
+L00000921	        },
+L00000922	        "requested_adapter_id": {
+L00000923	          "type": "string"
+L00000924	        },
+L00000925	        "effective_adapter_id": {
+L00000926	          "type": "string"
+L00000927	        },
+L00000928	        "adapter_selection_reason": {
+L00000929	          "type": "string"
+L00000930	        },
+L00000931	        "provider_fallback_occurred": {
+L00000932	          "type": "boolean"
+L00000933	        },
+L00000934	        "provider_fallback_summary": {
+L00000935	          "type": "string"
+L00000936	        },
+L00000937	        "source_count": {
+L00000938	          "type": "integer",
+L00000939	          "minimum": 0
+L00000940	        },
+L00000941	        "sources_ref": {
+L00000942	          "type": "string"
+L00000943	        },
+L00000944	        "answer_summary_ref": {
+L00000945	          "type": "string"
+L00000946	        },
+L00000947	        "research_run_ref": {
+L00000948	          "type": "string"
+L00000949	        },
+L00000950	        "ledger_source_evidence_ref": {
+L00000951	          "type": "string"
+L00000952	        },
+L00000953	        "plan_source_evidence_ref": {
+L00000954	          "type": "string"
+L00000955	        },
+L00000956	        "evidence_refs": {
+L00000957	          "type": "array",
+L00000958	          "items": {
+L00000959	            "type": "string",
+L00000960	            "minLength": 1
+L00000961	          }
+L00000962	        },
+L00000963	        "content_ref": {
+L00000964	          "type": "string"
+L00000965	        },
+L00000966	        "map_ref": {
+L00000967	          "type": "string"
+L00000968	        },
+L00000969	        "scope_summary": {
+L00000970	          "type": "string"
+L00000971	        },
+L00000972	        "pages_visited_count": {
+L00000973	          "type": "integer",
+L00000974	          "minimum": 0
+L00000975	        },
+L00000976	        "pages_returned_count": {
+L00000977	          "type": "integer",
+L00000978	          "minimum": 0
+L00000979	        },
+L00000980	        "nodes_count": {
+L00000981	          "type": "integer",
+L00000982	          "minimum": 0
+L00000983	        },
+L00000984	        "edges_count": {
+L00000985	          "type": "integer",
+L00000986	          "minimum": 0
+L00000987	        },
+L00000988	        "sitemap_used": {
+L00000989	          "type": "boolean"
+L00000990	        },
+L00000991	        "page_representation_ref": {
+L00000992	          "type": "string"
+L00000993	        },
+L00000994	        "browser_session_id": {
+L00000995	          "type": "string"
+L00000996	        },
+L00000997	        "cache_state": {
+L00000998	          "type": "string",
+L00000999	          "enum": [
+L00001000	            "hit",
+L00001001	            "miss",
+L00001002	            "bypassed",
+L00001003	            "stored",
+L00001004	            "not_stored"
+L00001005	          ]
+L00001006	        },
+L00001007	        "read_receipt_refs": {
+L00001008	          "type": "array",
+L00001009	          "items": {
+L00001010	            "type": "string",
+L00001011	            "minLength": 1
+L00001012	          }
+L00001013	        },
+L00001014	        "citation_refs": {
+L00001015	          "type": "array",
+L00001016	          "items": {
+L00001017	            "type": "string",
+L00001018	            "minLength": 1
+L00001019	          }
+L00001020	        },
+L00001021	        "denial_reason_code": {
+L00001022	          "type": "string"
+L00001023	        },
+L00001024	        "job_ref": {
+L00001025	          "type": "string"
+L00001026	        },
+L00001027	        "job": {
+L00001028	          "$ref": "#/$defs/WebOperationJob"
+L00001029	        },
+L00001030	        "warnings": {
+L00001031	          "type": "array",
+L00001032	          "items": {
+L00001033	            "type": "string"
+L00001034	          }
+L00001035	        },
+L00001036	        "error_code": {
+L00001037	          "type": "string"
+L00001038	        },
+L00001039	        "error_message": {
+L00001040	          "type": "string"
+L00001041	        }
+L00001042	      }
+L00001043	    }
+L00001044	  }
+L00001045	}

@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 7404-7415 >>>
+- bounded, user-visible attach model
+negative_constraints:
+- If a target requires authentication and no valid automation session exists, Debug moves to attention_required rather than silently reusing an unrelated user profile.
+- External Playwright or Browser MCP tooling remains orthogonal unless a product surface explicitly bridges it.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 7416-7813 >>>
+### N2-132 - Enterprise Host Trust Preflight
+
+```yaml
+plan_unit_id: N2-132
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Debug, MCP, custom-plugin, networked-tool, /shell/debugger, and /tunnel/browser actions run through shared /trust/proxy/governance preflight. Every /custom/plugin/networked tool profile declares contacted hosts and /domains before dispatch; undeclared hosts, domains, proxy targets, or remote authorities return blocked_preflight. Governance denials preserve deny-code families, and restart-persistent host/trust decisions must be explicit /durable permission or trust records rather than inferred from transient debug runs.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: enterprise_host_trust_preflight
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: enterprise_host_trust_preflight
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0070
+preserved_exact_tokens:
+- /trust/proxy/governance
+- /shell/debugger
+- /tunnel/browser
+- /custom/plugin/networked
+- /domains
+- blocked_preflight
+- deny-code
+- /durable
+negative_constraints:
+- Undeclared host, domain, proxy target, or remote authority expansion returns blocked_preflight rather than silently broadening session permission.
+- Host/trust decisions that survive restart must be explicit /durable permission or trust records, not inferred from transient debug runs.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-133 - Debug Instrumentation Scope Taxonomy
+
+```yaml
+plan_unit_id: N2-133
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The Debug automation profile classifies temporary instrumentation scope exactly as env_config_activation, ephemeral_tool_install, wrapper_launcher, temporary_source_patch, and debugger_or_profiler_attach. Each scope records temporary/durable status, cleanup path, sensitive-runtime impact, and cleanup-failure recovery; wrapper_launcher and debugger_or_profiler_attach are stricter than read-only inspection, temporary_source_patch requires a revert path, and ephemeral_tool_install requires install location, provenance, and cleanup path before dispatch.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_instrumentation_scope_taxonomy
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: debug_instrumentation_scope_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0071
+preserved_exact_tokens:
+- env_config_activation
+- ephemeral_tool_install
+- wrapper_launcher
+- temporary_source_patch
+- debugger_or_profiler_attach
+- cleanup path
+- sensitive-runtime impact
+- revert path
+- install location
+- provenance
+negative_constraints:
+- temporary_source_patch requires a revert path before execution.
+- ephemeral_tool_install requires an install location, provenance, and cleanup path before dispatch.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md'
+```
+
+### N2-134 - Debug Discovery Outputs
+
+```yaml
+plan_unit_id: N2-134
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Required Debug discovery outputs include preferred local or remote dev/test runner, browser automation stack and visibility mode support, structured log and trace collectors, source-map or symbolization support, DAP adapter availability, temporary instrumentation install/rollback path, and target discovery/environment preparation capability for dev session, browser session, debugger attach, imported bundle intake, and policy-selected tracing/debug tooling.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_discovery_outputs
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: debug_discovery_outputs
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0071
+preserved_exact_tokens:
+- preferred local or remote dev/test runner
+- browser automation stack and visibility mode support
+- structured log and trace collectors
+- source-map or symbolization support
+- DAP adapter availability
+- temporary instrumentation install / rollback path
+- target discovery / environment preparation capability
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md'
+```
+
+### N2-135 - Debug Selection And Cleanup Escalation Order
+
+```yaml
+plan_unit_id: N2-135
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Debug selection order uses project-native or repo-declared tooling first, already-installed environment tooling second, temporary investigation-scoped tooling /install only when cleanup path and policy allow it, and imported evidence bundles/manual attach as fallback inputs. Escalation proceeds through non-invasive capture, permitted non-invasive tracers or debugger attachments, temporary instrumentation patches only after lower tiers are insufficient, tentative durable fix, automated verification, instrumentation removal, and cleanup-recovery before any new mutation-capable loop starts.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_selection_cleanup_escalation_order
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: debug_selection_cleanup_escalation_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0071
+preserved_exact_tokens:
+- project-native or repo-declared tooling first
+- already-installed environment tooling second
+- temporary, investigation-scoped tooling /install
+- cleanup path
+- imported evidence bundles
+- manual attach
+- non-invasive readback/capture
+- temporary instrumentation patches
+- cleanup-recovery
+- mutation-capable loop
+negative_constraints:
+- Temporary investigation-scoped tooling /install is allowed only when a cleanup path exists and policy allows it.
+- Unresolved cleanup enters explicit cleanup-recovery before any new mutation-capable loop starts.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md'
+```
+
+### N2-136 - Debug Mode Doctor Checks
+
+```yaml
+plan_unit_id: N2-136
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Debug Mode doctor checks preserve doctor.debug.browser-runtime, doctor.debug.dap-adapter, doctor.debug.log-trace-pipeline, doctor.debug.instrumentation-scope, and doctor.debug.remote-host with their hide, degrade, block, fallback, and remediation behaviors.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_mode_doctor_checks
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: debug_mode_doctor_checks
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0071
+preserved_exact_tokens:
+- doctor.debug.browser-runtime
+- doctor.debug.dap-adapter
+- doctor.debug.log-trace-pipeline
+- doctor.debug.instrumentation-scope
+- doctor.debug.remote-host
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md'
+```
+
+### N2-137 - Docker Unraid Side-Effect Gate Matrix
+
+```yaml
+plan_unit_id: N2-137
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: 'The Docker/Unraid validation matrix gates side effects by action scope: Docker engine, compose, buildx, and DockerHub auth block local Docker build/publish entry points when failing; dockerhub repo access blocks remote image push; Unraid template-repo and ca-profile checks block only managed template-repo follow-on stages or auto-push while preserving local Docker image push results and visible remediation.'
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_unraid_side_effect_gate_matrix
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: docker_unraid_side_effect_gate_matrix
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0074
+preserved_exact_tokens:
+- doctor.docker.engine
+- doctor.docker.compose
+- doctor.docker.buildx
+- doctor.dockerhub.auth.capability
+- doctor.dockerhub.repo.access
+- doctor.unraid.template-repo
+- doctor.unraid.ca-profile
+- needs_review
+- local Docker image push
+- auto-push
+- visible remediation
+negative_constraints:
+- doctor.unraid.template-repo does not block local Docker image push.
+- doctor.unraid.ca-profile in needs_review state does not block local Docker image push.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-138 - After-Build Push And Blocked Outcome Semantics
+
+```yaml
+plan_unit_id: N2-138
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: push_policy = after_build dispatches cmd.orchestrator.push_image as a separate remote side-effect step only after a successful local build result exists. Permission-guard or confirmation blocks resolve to *.blocked outcomes rather than *.failed so intentional non-execution remains distinct from runtime failure.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: after_build_push_blocked_outcome_semantics
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: after_build_push_blocked_outcome_semantics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0074
+preserved_exact_tokens:
+- push_policy = after_build
+- cmd.orchestrator.push_image
+- separate remote side-effect step
+- successful local build result
+- '*.blocked'
+- '*.failed'
+negative_constraints:
+- Permission-guard or confirmation blocks MUST resolve to *.blocked outcomes, not *.failed.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-139 - DockerHub Auth Mode Resolution
+
+```yaml
+plan_unit_id: N2-139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Where section 14.7 reads like a PAT-only contract, requested_auth_mode supports at least browser and pat. Validation MUST resolve requested auth into effective_auth_provider_state, effective_capabilities[], validated account identity, and degraded reason when capability is partial.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dockerhub_auth_mode_resolution
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: dockerhub_auth_mode_resolution
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0075
+preserved_exact_tokens:
+- requested_auth_mode
+- browser
+- pat
+- Validation MUST resolve
+- effective_auth_provider_state
+- effective_capabilities[]
+- validated account identity
+- degraded reason
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 7814-7825 >>>
+### N2-140 - Effective Capability Repository Creation Guard
+
+```yaml
+plan_unit_id: N2-140
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access. If publish is requested and the target repository does not exist, repository creation is guarded by an explicit confirmation showing namespace, repository, and privacy; this confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: true
+depends_on: []

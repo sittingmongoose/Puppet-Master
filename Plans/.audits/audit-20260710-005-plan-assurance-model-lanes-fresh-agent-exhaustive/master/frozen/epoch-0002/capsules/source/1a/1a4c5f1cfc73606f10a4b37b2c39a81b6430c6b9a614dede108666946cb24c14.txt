@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE 12634-12645 >>>
+- "scoped-identity resolver rules"
+- "family-specific top-level route fields"
+negative_constraints:
+- "Scoped-identity route families must not create family-specific top-level route fields."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Contracts_V0.md owns the scoped-identity resolver rules."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 12646-13008 >>>
+### F3-170 - Reversible Editor Undo Scope
+
+```yaml
+plan_unit_id: F3-170
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  `Ctrl+Z` / `Cmd+Z` is supported only where the owning surface allows reversible edits,
+  including safe file operations, text editing, and message editing; git-native history
+  actions and external side effects are not labeled as editor undo.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines keyboard undo behavior in user-visible editor and message surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: reversible_editor_undo_scope
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0110"
+preserved_exact_tokens:
+- "Ctrl+Z"
+- "Cmd+Z"
+- "file operations"
+- "text editing"
+- "message editing"
+- "Git-native history actions"
+- "external side effects"
+- "editor undo"
+negative_constraints:
+- "Git-native history actions and external side effects are not mislabeled as editor undo."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-171 - Source Control Restore And Diff Boundary
+
+```yaml
+plan_unit_id: F3-171
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Git/source-control discard, compare, and stage actions are not editor undo; restore points,
+  rollback, and revert-last-agent-edit stay explicit restore-history commands, and the File
+  Editor exposes diff heat-map, change-marker, and scrollbar change-marker state while routing
+  revert to the owning Source Control or FileSafe command.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains visible source-control, restore-history, and File Editor review
+  affordances.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: source_control_restore_and_diff_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0110"
+preserved_exact_tokens:
+- "discard"
+- "compare"
+- "stage"
+- "restore points"
+- "rollback"
+- "revert-last-agent-edit"
+- "diff heat-map/change-marker"
+- "scrollbar change-marker"
+- "Source Control"
+- "FileSafe command"
+negative_constraints:
+- "Restore-history commands must not be buried behind git-panel affordances."
+- "The File Editor must route revert operations to the owning Source Control or FileSafe command."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Source Control and FileSafe own the actual revert commands."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-172 - Loading States And Stale Labels
+
+```yaml
+plan_unit_id: F3-172
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Panel and page loads use skeleton screens, discrete actions use inline spinners or progress
+  indicators, and prior validated content remains visible during refresh with stale or
+  degraded labels.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible loading indicators and stale/degraded display labels.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: loading_states_and_stale_labels
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0111"
+preserved_exact_tokens:
+- "skeleton screens"
+- "inline spinners"
+- "progress indicators"
+- "prior validated content"
+- "stale/degraded labels"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "The `stale/degraded` labels are live loading-state vocabulary, not retired wording."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-173 - Error Display Severity Surfaces
+
+```yaml
+plan_unit_id: F3-173
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Field validation failures render as inline errors, transient non-blocking failures render as
+  toast notifications, and failures that block progress or risk destructive ambiguity render
+  as blocking dialogs.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible error presentation surfaces despite the source inference
+  being false.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: error_display_severity_surfaces
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0112"
+preserved_exact_tokens:
+- "inline errors"
+- "field validation"
+- "toast notifications"
+- "transient non-blocking failures"
+- "blocking dialogs"
+- "destructive ambiguity"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-174 - Empty State Onboarding And Shortcuts
+
+```yaml
+plan_unit_id: F3-174
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Empty panels show helpful onboarding content, clear next actions, and contextual shortcuts
+  instead of blank chrome.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible empty-panel content despite the source inference being false.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: empty_state_onboarding_and_shortcuts
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0113"
+preserved_exact_tokens:
+- "Empty panels"
+- "onboarding content"
+- "next actions"
+- "contextual shortcuts"
+- "blank chrome"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-175 - Blocked And Recovery Surface Distinction
+
+```yaml
+plan_unit_id: F3-175
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Blocked state, retry, remediation, and recovery affordances use the canonical
+  blocked/recovery contract and remain visually distinct from ordinary paused or idle states.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible blocked, retry, remediation, and recovery states despite the
+  source inference being false.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: blocked_and_recovery_surface_distinction
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0114"
+preserved_exact_tokens:
+- "Blocked state"
+- "retry"
+- "remediation"
+- "recovery affordances"
+- "canonical blocked/recovery contract"
+- "paused"
+- "idle"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The canonical blocked/recovery contract owns blocked and recovery semantics."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-176 - Event Driven Refresh Canon
+
+```yaml
+plan_unit_id: F3-176
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Event-driven updates are canonical: UI state refreshes on relevant runtime, filesystem, or
+  provider events rather than generic timers.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI refresh behavior driven by runtime, filesystem, and provider events.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: event_driven_refresh_canon
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0115"
+preserved_exact_tokens:
+- "Event-driven updates"
+- "UI state refresh"
+- "runtime"
+- "filesystem"
+- "provider events"
+- "generic timers"
+negative_constraints:
+- "Generic timers must not become the normal correctness model for shell refresh."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 13009-13020 >>>
+### F3-177 - Polling Freshness Exception
+
+```yaml
+plan_unit_id: F3-177
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Polling is allowed only for external systems that do not provide push updates, such as
+  GitHub Actions status checks; those intervals are freshness aids and must not become the
+  correctness model for the rest of the shell.
+gui_related: true

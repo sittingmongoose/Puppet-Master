@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 8016-8027 >>>
+          "requirement": "cmd.docker.build has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.build records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 8028-8412 >>>
+    "catalog.docker_build_bake": {
+      "ui_element_id": "catalog.docker_build_bake",
+      "ui_location": "Docker Manager > Build > Bake",
+      "ui_command_id": "cmd.docker.build.bake",
+      "handler_location": "handlers::docker::build_bake",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.build.bake must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.build.bake must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.build.bake dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.build.bake must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.build.bake must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.build.bake; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_build_bake.availability",
+      "disabled_reason_projection": "state.commands.docker_build_bake.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.build.bake has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.build.bake.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_build_bake exposes a stable role/name/description matching cmd.docker.build.bake.",
+        "keyboard_access": "catalog.docker_build_bake is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_build_bake preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_build_bake surfaces state.commands.docker_build_bake.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_build_bake.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.build.bake reaches handlers::docker::build_bake with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_bake.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_build_bake.availability and disabled copy reads state.commands.docker_build_bake.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_bake.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.build.bake has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_bake.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.build.bake records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_build_compose": {
+      "ui_element_id": "catalog.docker_build_compose",
+      "ui_location": "Docker Manager > Build > Compose",
+      "ui_command_id": "cmd.docker.build.compose",
+      "handler_location": "handlers::docker::build_compose",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.build.compose must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.build.compose must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.build.compose dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.build.compose must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.build.compose must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.build.compose; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_build_compose.availability",
+      "disabled_reason_projection": "state.commands.docker_build_compose.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.build.compose has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.build.compose.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_build_compose exposes a stable role/name/description matching cmd.docker.build.compose.",
+        "keyboard_access": "catalog.docker_build_compose is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_build_compose preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_build_compose surfaces state.commands.docker_build_compose.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_build_compose.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.build.compose reaches handlers::docker::build_compose with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_compose.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_build_compose.availability and disabled copy reads state.commands.docker_build_compose.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_compose.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.build.compose has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_compose.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.build.compose records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_build_image": {
+      "ui_element_id": "catalog.docker_build_image",
+      "ui_location": "Docker Manager > Build > Image",
+      "ui_command_id": "cmd.docker.build.image",
+      "handler_location": "handlers::docker::build_image",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.build.image must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.build.image must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.build.image dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.build.image must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.build.image must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.build.image; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_build_image.availability",
+      "disabled_reason_projection": "state.commands.docker_build_image.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.build.image has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.build.image.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_build_image exposes a stable role/name/description matching cmd.docker.build.image.",
+        "keyboard_access": "catalog.docker_build_image is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_build_image preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_build_image surfaces state.commands.docker_build_image.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_build_image.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.build.image reaches handlers::docker::build_image with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_image.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_build_image.availability and disabled copy reads state.commands.docker_build_image.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_image.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.build.image has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_image.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.build.image records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_build_run": {
+      "ui_element_id": "catalog.docker_build_run",
+      "ui_location": "Docker Manager > Build > Run",
+      "ui_command_id": "cmd.docker.build.run",
+      "handler_location": "handlers::docker::build_run",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.build.run must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.build.run must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.build.run dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.build.run must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.build.run must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.build.run; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_build_run.availability",
+      "disabled_reason_projection": "state.commands.docker_build_run.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.build.run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.build.run.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_build_run exposes a stable role/name/description matching cmd.docker.build.run.",
+        "keyboard_access": "catalog.docker_build_run is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_build_run preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_build_run surfaces state.commands.docker_build_run.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_build_run.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.build.run reaches handlers::docker::build_run with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_run.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_build_run.availability and disabled copy reads state.commands.docker_build_run.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_run.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.build.run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_run.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.build.run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_build_select_target": {
+      "ui_element_id": "catalog.docker_build_select_target",
+      "ui_location": "Docker Manager > Build > Select Target",
+      "ui_command_id": "cmd.docker.build.select_target",
+      "handler_location": "handlers::docker::build_select_target",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.build.select_target must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.build.select_target must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.build.select_target dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.build.select_target must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.build.select_target must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.build.select_target; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_build_select_target.availability",
+      "disabled_reason_projection": "state.commands.docker_build_select_target.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.build.select_target has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.build.select_target.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_build_select_target exposes a stable role/name/description matching cmd.docker.build.select_target.",
+        "keyboard_access": "catalog.docker_build_select_target is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_build_select_target preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_build_select_target surfaces state.commands.docker_build_select_target.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_build_select_target.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.build.select_target reaches handlers::docker::build_select_target with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_select_target.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_build_select_target.availability and disabled copy reads state.commands.docker_build_select_target.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_select_target.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.build.select_target has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_build_select_target.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.build.select_target records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_cleanup_prune": {
+      "ui_element_id": "catalog.docker_cleanup_prune",
+      "ui_location": "Docker Manager > Cleanup > Prune",
+      "ui_command_id": "cmd.docker.cleanup.prune",
+      "handler_location": "handlers::docker::cleanup_prune",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.cleanup.prune must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.cleanup.prune must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.cleanup.prune dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.cleanup.prune must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.cleanup.prune must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.cleanup.prune; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_cleanup_prune.availability",
+      "disabled_reason_projection": "state.commands.docker_cleanup_prune.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.cleanup.prune has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.cleanup.prune.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_cleanup_prune exposes a stable role/name/description matching cmd.docker.cleanup.prune.",
+        "keyboard_access": "catalog.docker_cleanup_prune is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_cleanup_prune preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_cleanup_prune surfaces state.commands.docker_cleanup_prune.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_cleanup_prune.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.cleanup.prune reaches handlers::docker::cleanup_prune with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_cleanup_prune.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_cleanup_prune.availability and disabled copy reads state.commands.docker_cleanup_prune.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_cleanup_prune.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.cleanup.prune has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_cleanup_prune.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.cleanup.prune records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_cleanup_scan": {
+      "ui_element_id": "catalog.docker_cleanup_scan",
+      "ui_location": "Docker Manager > Cleanup > Scan",
+      "ui_command_id": "cmd.docker.cleanup.scan",
+      "handler_location": "handlers::docker::cleanup_scan",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.cleanup.scan must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.cleanup.scan must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.cleanup.scan dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.cleanup.scan must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.cleanup.scan must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.cleanup.scan; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_cleanup_scan.availability",
+      "disabled_reason_projection": "state.commands.docker_cleanup_scan.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.cleanup.scan has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.cleanup.scan.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_cleanup_scan exposes a stable role/name/description matching cmd.docker.cleanup.scan.",
+        "keyboard_access": "catalog.docker_cleanup_scan is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_cleanup_scan preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_cleanup_scan surfaces state.commands.docker_cleanup_scan.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_cleanup_scan.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.cleanup.scan reaches handlers::docker::cleanup_scan with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_cleanup_scan.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_cleanup_scan.availability and disabled copy reads state.commands.docker_cleanup_scan.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_cleanup_scan.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.cleanup.scan has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_cleanup_scan.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.cleanup.scan records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 8413-8424 >>>
+    "catalog.docker_compose": {
+      "ui_element_id": "catalog.docker_compose",
+      "ui_location": "Docker Manager > Compose",
+      "ui_command_id": "cmd.docker.compose",
+      "handler_location": "handlers::docker::compose",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.compose must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.compose must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.compose dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.compose must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.compose must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

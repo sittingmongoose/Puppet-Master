@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE 1860-1871 >>>
+- Existing Playwright-only flow
+- no regression
+negative_constraints:
+- Existing Playwright-only flow and existing test strategy behavior remain unchanged when no new options are selected.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 1872-2234 >>>
+### N2-014 - Interview And Orchestrator Integration
+
+```yaml
+plan_unit_id: N2-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: newtools extends interview and test strategy without replacing them. New settings wire through InterviewOrchestratorConfig, gui_config.interview, interview completion, test strategy generation, and orchestrator-loaded node criteria.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: interview_orchestrator_integration
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: interview_orchestrator_integration
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0009
+preserved_exact_tokens:
+- InterviewOrchestratorConfig
+- gui_config.interview
+- test strategy
+- node criteria
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/interview-subagent-integration.md'
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md'
+```
+
+### N2-015 - Worktree Config Cleanup Boundary
+
+```yaml
+plan_unit_id: N2-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Interview toggles live in the Interview tab and gui_config.interview, use the same Option B run-config build, keep worktree evidence under the run workspace, preserve .puppet-master/evidence/ cleanup allowlisting, and add no run_with_cleanup call sites.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_config_cleanup_boundary
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: worktree_config_cleanup_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0009
+preserved_exact_tokens:
+- Option B run-config
+- .puppet-master/evidence/
+- run_with_cleanup
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/WorktreeGitImprovement.md'
+- 'ContractRef: ContractName:Plans/MiscPlan.md'
+```
+
+### N2-016 - Non-Web GUI Testing Gap
+
+```yaml
+plan_unit_id: N2-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The current Playwright-as-default interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification, and does not yet treat PM built-in browser automation as the primary native web test path.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: non_web_gui_testing_gap
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: non_web_gui_testing_gap
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0010
+preserved_exact_tokens:
+- Playwright
+- Native/framework GUIs
+- smoke tests
+- GUI-level verification
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-017 - Discovery And Choice Goals
+
+```yaml
+plan_unit_id: N2-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Goals preserve one-catalog discovery of framework tools and user options to select existing tools, custom headless tool planning/building, or both.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: discovery_choice_goals
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: discovery_choice_goals
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0011
+preserved_exact_tokens:
+- Discover existing tools
+- Offer options to the user
+- framework tools
+- custom headless
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+- 'ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation'
+```
+
+### N2-018 - Custom Headless Evidence Goal
+
+```yaml
+plan_unit_id: N2-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: When chosen, execution plans include a project-specific tool that supports headless GUI navigation and emits a full debug log after runs so agents can verify behavior and debug failures.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: custom_headless_evidence_goal
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: custom_headless_evidence_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0011
+preserved_exact_tokens:
+- Custom headless tool option
+- headless GUI navigation
+- full debug log
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md'
+```
+
+### N2-019 - Testing And DRY Integration Goal
+
+```yaml
+plan_unit_id: N2-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Selected tools and custom headless instructions appear in test strategy, PRD/execution plan language, and agent instructions while framework/tool data stays in one catalog and existing interview, generator, and prompt/context flows are reused.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: testing_dry_integration_goal
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: testing_dry_integration_goal
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0011
+preserved_exact_tokens:
+- Integrate into testing
+- DRY
+- test strategy
+- PRD
+- agents use the tools
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation'
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading'
+```
+
+### N2-020 - Design Flow
+
+```yaml
+plan_unit_id: N2-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The design flow derives GUI type/framework, looks up available tools in the catalog, presents Testing-phase options, persists choices, and writes setup/build/testing instructions at interview completion.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: design_flow
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: design_flow
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0012
+preserved_exact_tokens:
+- GUI type
+- framework
+- Lookup
+- Testing phase
+- Persist user choices
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring'
+```
+
+### N2-021 - Interview Persistence And Completion Outputs
+
+```yaml
+plan_unit_id: N2-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Interview state/config persists use_playwright (the optional/fallback/project-native web test path, not the primary web path), use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: interview_persistence_completion_outputs
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: interview_persistence_completion_outputs
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0012
+preserved_exact_tokens:
+- use_playwright
+- use_framework_tools
+- plan_custom_headless_tool
+- selected_framework_tools
+- debug log
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 2235-2246 >>>
+### N2-022 - Catalog Location And Base Data
+
+```yaml
+plan_unit_id: N2-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The required GuiToolCatalog location is puppet-master-rs/src/interview/gui_tool_catalog.rs and it is tagged as // DRY:DATA:GuiToolCatalog.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []

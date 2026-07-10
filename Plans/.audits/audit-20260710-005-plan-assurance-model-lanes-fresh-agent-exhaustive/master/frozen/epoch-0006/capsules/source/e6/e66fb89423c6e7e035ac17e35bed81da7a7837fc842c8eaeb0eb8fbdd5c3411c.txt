@@ -1,0 +1,381 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-366 >>>
+L00000001	# Widget System -- Cross-Cutting Specification
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	Owner-section marker list:
+L00000009	- Progress-only widget hostability
+L00000010	
+L00000011	
+L00000012	## 1. Scope and non-scope
+L00000013	Widget composition remains important, but it is no longer a blanket page-model for every major surface.
+L00000014	
+L00000015	In scope:
+L00000016	- Dashboard widgets
+L00000017	- Usage widgets
+L00000018	- Orchestrator `Progress` widgets
+L00000019	
+L00000020	Not in scope:
+L00000021	- `Seams` as a widget canvas
+L00000022	- `Node Graph` as a widget canvas
+L00000023	- `Evidence` as a widget canvas
+L00000024	- `History` as a widget canvas
+L00000025	- `Ledger` as a widget canvas
+L00000026	
+L00000027	ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+L00000028	
+L00000029	<a id="ws-progress-only-widget-hostability"></a>
+L00000030	## 2. Hostability and data contracts
+L00000031	Widgets consume stable projections and canonical records. They do not define page semantics.
+L00000032	
+L00000033	Rules:
+L00000034	- widget config changes presentation, local filtering, and layout only
+L00000035	- widget-level filters inherit page/project/focused-run context and do not invent independent run scope
+L00000036	- Route vocabulary is cross-cutting, not page-local; widget reconciliation starts from owner docs before surface docs so widgets consume the route/open contract instead of recreating route terms locally.
+L00000037	- `tab-level` filters live in tab scope, `widget-level` filters are safe subfilters, and `page-native` actions stay with route/open or page owner docs; `/package` hostability consumes package/seam projections without turning widgets into page owners.
+L00000038	- a widget action routes through canonical commands and route/open contracts rather than bypassing them
+L00000039	- widget surfaces consume cross-cutting `/state` and `/runtime` owner contracts rather than reopening already-locked seams: SSH retry-budget/reconnect behavior is owned by GitHub Integration, and stale cross-references must point to the owning contract before widget drill-downs are implementation-ready
+L00000040	- Widget_System consumes, but does not own, the FinalGUISpec anchors `#### 7.4.4 Settings (Unified) panel specification`, `#### 7.4.7 Agent-Config panel specification`, and `## 15. Promoted widget catalog (web tools, planning, question, operation cards)`: those anchors own provider class/settings disclosure, web/plan/question/approval widget ownership, and the inline visual/web-tool rendering split.
+L00000041	- Widget hostability treats `/settings/widget`, `/plan/question/approval`, and `/web-tool` as routed GUI consumer paths over FinalGUISpec and UI command owners; Widget_System owns only whether those widgets can be hosted by Dashboard, Usage, or Orchestrator `Progress`, plus layout and projection inheritance.
+L00000042	- Stale or incomplete widget summaries are `/retire` or `/incomplete` instead of being reintroduced as live catalog entries; the older source shorthand `### 15.1` through `### 15.9` is source-lineage only, with active promoted widget sections resolved by named FinalGUISpec headings rather than by minting a missing `### 15.9` section.
+L00000043	- Legacy Orchestrator widget inputs such as `/Tiers`, `Orch/Tiers`, `widget.tier_tree`, `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, and `TierChanged` are compatibility evidence only. Live hostability does not restore `Dashboard, Usage, Orchestrator widget tabs`; non-Progress Orchestrator surfaces use native views, while `Progress` may host widgets over canonical projections.
+L00000044	- Layout migration SSOT keeps `dashboard_layout:v1` only as an import source or rollback backup; canonical Dashboard writes go to `widget_layout:v1:dashboard`, and the legacy `dashboard_layout` / `dashboard_layout:v1` keys are not updated or retained as peer layout state after migration completes. Retired Orchestrator layout namespaces `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` remain compatibility-only import evidence, not live widget layout targets.
+L00000045	- `Plans/GUI_Rebuild_Requirements_Checklist.md` / `/GUI_Rebuild_Requirements_Checklist.md` is a follower, not a source. Any `PASS` for `/open`, cross-cutting widget coverage, or `Tiers` is valid only after current owner docs pass the Progress-only, route/open, and runtime-recovery model.
+L00000046	- `Plans/Widget_System.md` / `/Widget_System.md` removal remains lightweight and locally undoable, but canonical concern actions and `/governance` records do not inherit Widget_System / `Widget_System.md` removal policy.
+L00000047	- Settings scope follows this hierarchy: `App / Global` owns broad product defaults and `/catalogs/capabilities`; `Project` owns primary execution policy; `Seam` carries meaningful feature-level overrides; `Package` carries local `/recovery` overrides; `Node` is rare and targeted; `Actor / Role` covers cross-cutting `/account/persona/worker` policy; `Runtime only` is computed truth, not user configuration.
+L00000048	- The older six-tab `Progress / Tiers / Node Graph / Evidence / History / Ledger` page list, plus `tier_id`, tier-scoped data-source rows, and `/task/subtask` framing, is compatibility lineage that omitted `Plan Compile`. Widget_System consumes `Orchestrator_Page` / `Orchestrator_Page.md` for the active `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger` page model and does not treat `Tiers` as a live widget tab.
+L00000049	- Orchestrator `/Widget` hostability gaps such as missing `TOC` sections, split `widget.terminal_output` versus `widget.agent_terminal`, `/partition` and owner run/tier row metadata, under-owned project-heavy surfaces, `/page` and `/tier` filters, `/Evidence/History/Ledger` legacy layout claims, and implicit global layouts resolve through project-scoped layout keys and owner-doc routes.
+L00000050	- Performance and fallback rules cover `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`, Progress widgets, and cross-tab inspectors. A projection-derived inspector falls back to `Ledger` / `History` or an exact record view via `detail_ref`.
+L00000051	- The Progress widget catalog keeps `/core` candidates visible while allowing users to `/hide` optional widgets; candidate families include run status, current activity, blockers, seam health, package activity, promotion queue, worktree lanes, account pressure, recent major events, overseer activity, corroboration queue, recovery state, and throughput/capacity.
+L00000052	- Widgets consume stable orchestrator projections and canonical record `/query` contracts. They must not define meaning by subscribing directly to legacy event names or tier-specific objects, and `Progress` remains the only widget-composed Orchestrator tab.
+L00000053	- `historical-run` rendering follows the active `/page` route context: `Progress` widgets render against the current `focused_run_id`, and moving between live and historical mode must not require per-widget manual retargeting or preserve stale per-widget scope.
+L00000054	- Canonical Orchestrator route vocabulary uses lower-case object names: `progress`, `plan_compile`, `seams`, `node_graph`, `evidence`, `history`, and `ledger`. These are high-value route targets and do not make Widget_System / `Widget_System.md` a tier-era Orchestrator owner.
+L00000055	- Widget data contracts retire `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, `PuppetMasterEvent::UserInteractionRequired`, `TierChanged`, `UserInteractionRequired`, tier-targeted filters, and PTY filtering as live data roots; widgets consume canonical runtime and attention projections instead.
+L00000056	- `Plans/Orchestrator_Page.md` / `/Orchestrator_Page.md` and `Plans/Widget_System.md` / `/Widget_System.md` share the 13-widget Progress catalog and its default drill-target mappings. Widget_System owns hostability and layout, not the target page behavior behind each drill action.
+L00000057	- `/tab` filters stay separate from `page/tab filters` and `widget presentation config`: widget config may adjust presentation and local emphasis only, and it cannot diverge from the tab's canonical projection rules.
+L00000058	- The native-tab versus widget-heavy boundary is explicit: `Progress` is widget-heavy, while `Plan Compile`, `Seams`, `Evidence`, `History`, `Ledger`, and `Node Graph` remain native-tab surfaces owned with `Orchestrator_Page` / `Orchestrator_Page.md`.
+L00000059	- Widget scope has three layers: `router/page scope` carries `project_id`, `focused_run_id`, `/live` or historical mode, `/scope`, and deep-link targets; `tab scope` owns tab-native filters and pivots; `widget config` owns presentation settings, safe subfilters, and widget-local `/filter` state only.
+L00000060	- Widget trust chrome uses shared projection-trust `/freshness` semantics. Individual widgets must not invent stale-state copy or local stale-state categories outside the common projection-trust model.
+L00000061	- The GUI widget appendix must follow the same boundary: `Progress` is widget-composed, while `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native views; broad Orchestrator widget tabs in GUI prose are compatibility signals only.
+L00000062	- Progress widgets are reconciled away from active-tier-first semantics and bind to active work objects, `/attention` items, lane `/worktree` state, and record-backed summaries.
+L00000063	- `widget.tier_tree` is retired as a first-class Orchestrator widget in favor of native `Seams` and native graph `/history/evidence/ledger` tabs.
+L00000064	- Widget shell data-contract fields are widget identity `/type`, scope, filter `/sort/display` config, and projection ref; widgets consume shared projections instead of raw event streams or bespoke queries.
+L00000065	- `Dashboard` may host a curated subset of `Progress` widgets and some `Usage` widgets, while deep inspection surfaces remain non-hostable native tabs.
+L00000066	- As a cross-cutting owner, Widget_System must prevent stale hostability drift into `/Usage`, `FinalGUISpec.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` reconciliation.
+L00000067	- `Source Control` is a constrained side-panel and `/small` surface, not a broad widget canvas; widget usage stays focused on wider surfaces such as `Dashboard` and `Orchestrator / Progress`.
+L00000068	- `Progress` widgets consume compact projections rather than live-scan huge record sets per widget, and dense detail uses a deep-link to the native tab.
+L00000069	- GUI deep-link compatibility treats `resume_url`, `Tiers`, `/tab`, and broad Orchestrator widget tabs as legacy navigation inputs; active behavior routes through `Progress` and current route/deep-link contracts.
+L00000070	- Tier-era operator surfaces in Widget_System / `Widget_System.md`, Orchestrator_Page / `Orchestrator_Page.md`, and Run_Graph_View / `Run_Graph_View.md` must not preserve multi-tab widget composition, weak hostability, or missing `/effective` governance-object identity as live canon.
+L00000071	
+L00000072	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+L00000073	
+L00000074	## 3. Layout persistence
+L00000075	Layout persistence uses app-default with project override.
+L00000076	
+L00000077	Rules:
+L00000078	- the default layout key remains stable per page/surface
+L00000079	- project-specific overrides may diverge from the app default
+L00000080	- run-level layout persistence is not canonical for Orchestrator `Progress`
+L00000081	- migration from legacy `dashboard_layout:v1` must retire stale orchestration-hostability assumptions rather than preserve them as peer canon
+L00000082	
+L00000083	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Orchestrator_Page.md
+L00000084	
+L00000085	## 4. Orchestrator Progress widget scope and catalog linkage
+L00000086	
+L00000087	
+L00000088	### Progress-only widget hostability
+L00000089	
+L00000090	Only the Orchestrator `Progress` surface is widget-composed. `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views, and no other Orchestrator tab may opt into widget composition.
+L00000091	
+L00000092	Tier-first widget catalog assumptions are compatibility-only; Widget_System hostability follows the Orchestrator Progress-only rule and must not broaden widgetization across native Orchestrator tabs.
+L00000093	
+L00000094	The Orchestrator UI composes exactly one consumer widget: the `Progress` widget with ID `widget-orchestrator-progress`. This widget occupies a dedicated layout space within the Orchestrator UI and receives orchestrator-native runtime events, progress markers, and node-level state.
+L00000095	
+L00000096	`orchestrator:progress` persists in its own layout namespace and does not share layout keys with Dashboard or Usage. Layout resets, imports, and overrides for Dashboard or Usage do not rewrite Orchestrator Progress placement.
+L00000097	
+L00000098	### Catalog source and drill linkage
+L00000099	
+L00000100	The Progress widget ID (`widget-orchestrator-progress`) is defined in the current promoted widget catalog in `Plans/FinalGUISpec.md` Appendix C (§ C.2, § C.4). Widget_System consumes that named catalog source directly and does not invent an independent catalog or additional widget cards.
+L00000101	
+L00000102	The full 13-widget Progress catalog and default drill targets are:
+L00000103	1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`
+L00000104	2. `progress.current-task` → Node inspector for the active execution unit
+L00000105	3. `progress.lane-health` → Lane row filtered to the selected lane or worktree
+L00000106	4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes
+L00000107	5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`
+L00000108	6. `progress.approval-queue` → Concern inspector showing pending approvals
+L00000109	7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode
+L00000110	8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts
+L00000111	9. `progress.worktree-state` → Source Control worktree row with lane, package, and run refs
+L00000112	10. `progress.account-pressure` → Historical `account_pressure_episode` list
+L00000113	11. `progress.account-switches` → Historical `account_switch_event` list
+L00000114	12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder
+L00000115	13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list
+L00000116	
+L00000117	Drill-through and linkage semantics (`progress` → node, `progress` → lane, `progress` → evidence) are owned by the Orchestrator UI and by the FinalGUISpec consumer contract, not by Widget_System hostability rules.
+L00000118	
+L00000119	Transferred Progress labels and taxonomy:
+L00000120	- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`
+L00000121	- Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`
+L00000122	- Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`
+L00000123	- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`
+L00000124	- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet
+L00000125	
+L00000126	## Owner / Consumer Map
+L00000127	
+L00000128	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Widget_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000129	
+L00000130	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000131	
+L00000132	## PlanUnits
+L00000133	
+L00000134	### WS-002 - Widget Hostability Scope
+L00000135	
+L00000136	```yaml
+L00000137	plan_unit_id: WS-002
+L00000138	unit_type: requirement
+L00000139	status: accepted
+L00000140	owner_doc: Plans/Widget_System.md
+L00000141	canonical_text: 'Widget composition is in scope only for Dashboard widgets, Usage widgets, and Orchestrator Progress widgets. Plan Compile, Seams, Node Graph, Evidence, History, and Ledger are not widget canvases.'
+L00000142	gui_related: true
+L00000143	gui_classification_reason: 'The unit defines user-visible widget hostability by surface.'
+L00000144	split_recommended: false
+L00000145	depends_on:
+L00000146	- PDS-003
+L00000147	- PDS-004
+L00000148	- PDS-005
+L00000149	- PNC-001
+L00000150	unblocks: []
+L00000151	acceptance_criteria:
+L00000152	- WS-002 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000153	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000154	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000155	validation_surfaces:
+L00000156	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000157	- python3 scripts/pm-plan-index.py validate
+L00000158	risk_class: widget_system_drift
+L00000159	reasoning_tier: standard
+L00000160	context_scope: widget_system_batch_198
+L00000161	implementation_surfaces:
+L00000162	- Plans/Widget_System.md
+L00000163	node_compile_hint:
+L00000164	  mode: surface_scope
+L00000165	  create_worknodes: false
+L00000166	source_lineage:
+L00000167	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0001
+L00000168	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0004
+L00000169	preserved_exact_tokens:
+L00000170	- 'Widget System -- Cross-Cutting Specification'
+L00000171	- 'Dashboard widgets'
+L00000172	- 'Usage widgets'
+L00000173	- 'Orchestrator `Progress` widgets'
+L00000174	- 'Seams as a widget canvas'
+L00000175	- 'Node Graph as a widget canvas'
+L00000176	- 'Evidence as a widget canvas'
+L00000177	- 'History as a widget canvas'
+L00000178	- 'Ledger as a widget canvas'
+L00000179	negative_constraints: []
+L00000180	preserved_contractrefs:
+L00000181	- 'ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md'
+L00000182	compatibility_only_notes: []
+L00000183	stale_retired_dispositions: []
+L00000184	owner_hints:
+L00000185	- 'Plans/Widget_System.md'
+L00000186	- 'Plans/Orchestrator_Page.md'
+L00000187	- 'Plans/FinalGUISpec.md'
+L00000188	- 'Plans/Crosswalk.md'
+L00000189	- 'Plans/usage-feature.md'
+L00000190	```
+L00000191	
+L00000192	### WS-003 - Widget Owner Consumer Boundary
+L00000193	
+L00000194	```yaml
+L00000195	plan_unit_id: WS-003
+L00000196	unit_type: constraint
+L00000197	status: accepted
+L00000198	owner_doc: Plans/Widget_System.md
+L00000199	canonical_text: 'Widget_System owns widget hostability, layout, and projection inheritance for Dashboard, Usage, and Orchestrator Progress; widgets consume stable projections and canonical records and do not define page semantics.'
+L00000200	gui_related: true
+L00000201	gui_classification_reason: 'The unit defines GUI widget owner/consumer boundaries and route ownership.'
+L00000202	split_recommended: false
+L00000203	depends_on:
+L00000204	- PDS-003
+L00000205	- PDS-004
+L00000206	- PDS-005
+L00000207	- PNC-001
+L00000208	- PDS-004
+L00000209	- BPM-004
+L00000210	unblocks: []
+L00000211	acceptance_criteria:
+L00000212	- WS-003 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000213	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000214	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000215	validation_surfaces:
+L00000216	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000217	- python3 scripts/pm-plan-index.py validate
+L00000218	risk_class: widget_system_drift
+L00000219	reasoning_tier: standard
+L00000220	context_scope: widget_system_batch_198
+L00000221	implementation_surfaces:
+L00000222	- Plans/Widget_System.md
+L00000223	node_compile_hint:
+L00000224	  mode: owner_route_metadata
+L00000225	  create_worknodes: false
+L00000226	source_lineage:
+L00000227	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0002
+L00000228	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000229	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0010
+L00000230	preserved_exact_tokens:
+L00000231	- 'Canonical owner-section requirements'
+L00000232	- 'canonical live specification text'
+L00000233	- 'Widgets consume stable projections and canonical records'
+L00000234	- 'They do not define page semantics'
+L00000235	- 'Route vocabulary is cross-cutting, not page-local'
+L00000236	- 'Widget_System owns only whether those widgets can be hosted by Dashboard, Usage, or Orchestrator `Progress`'
+L00000237	- 'owner doc'
+L00000238	- 'cross-doc ownership'
+L00000239	negative_constraints: []
+L00000240	preserved_contractrefs:
+L00000241	- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+L00000242	compatibility_only_notes: []
+L00000243	stale_retired_dispositions: []
+L00000244	owner_hints:
+L00000245	- 'Plans/Widget_System.md'
+L00000246	- 'Plans/FinalGUISpec.md'
+L00000247	- 'Plans/UI_Command_Catalog.md'
+L00000248	- 'Plans/Orchestrator_Page.md'
+L00000249	- 'Plans/usage-feature.md'
+L00000250	```
+L00000251	
+L00000252	### WS-004 - Widget Configuration Scope And Filters
+L00000253	
+L00000254	```yaml
+L00000255	plan_unit_id: WS-004
+L00000256	unit_type: requirement
+L00000257	status: accepted
+L00000258	owner_doc: Plans/Widget_System.md
+L00000259	canonical_text: 'Widget config changes presentation, local filtering, and layout only. Widget-level filters inherit page, project, and focused-run context; `/tab` filters, page/tab filters, and widget presentation config remain separate.'
+L00000260	gui_related: true
+L00000261	gui_classification_reason: 'The unit defines user-visible widget configuration and filter behavior.'
+L00000262	split_recommended: false
+L00000263	depends_on:
+L00000264	- PDS-003
+L00000265	- PDS-004
+L00000266	- PDS-005
+L00000267	- PNC-001
+L00000268	- WS-002
+L00000269	- WS-003
+L00000270	unblocks: []
+L00000271	acceptance_criteria:
+L00000272	- WS-004 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000273	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000274	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000275	validation_surfaces:
+L00000276	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000277	- python3 scripts/pm-plan-index.py validate
+L00000278	risk_class: widget_system_drift
+L00000279	reasoning_tier: standard
+L00000280	context_scope: widget_system_batch_198
+L00000281	implementation_surfaces:
+L00000282	- Plans/Widget_System.md
+L00000283	node_compile_hint:
+L00000284	  mode: gui_surface_config
+L00000285	  create_worknodes: false
+L00000286	source_lineage:
+L00000287	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000288	preserved_exact_tokens:
+L00000289	- 'widget config changes presentation, local filtering, and layout only'
+L00000290	- 'widget-level filters inherit page/project/focused-run context'
+L00000291	- 'tab-level'
+L00000292	- 'widget-level'
+L00000293	- 'page-native'
+L00000294	- '/tab filters'
+L00000295	- 'page/tab filters'
+L00000296	- 'widget presentation config'
+L00000297	- 'router/page scope'
+L00000298	- 'tab scope'
+L00000299	- 'widget config'
+L00000300	- 'widget-local `/filter` state'
+L00000301	negative_constraints: []
+L00000302	preserved_contractrefs: []
+L00000303	compatibility_only_notes: []
+L00000304	stale_retired_dispositions: []
+L00000305	owner_hints:
+L00000306	- 'Plans/Widget_System.md'
+L00000307	- 'Plans/Orchestrator_Page.md'
+L00000308	- 'Plans/usage-feature.md'
+L00000309	```
+L00000310	
+L00000311	### WS-005 - Command Routing And Routed GUI Consumer Paths
+L00000312	
+L00000313	```yaml
+L00000314	plan_unit_id: WS-005
+L00000315	unit_type: constraint
+L00000316	status: accepted
+L00000317	owner_doc: Plans/Widget_System.md
+L00000318	canonical_text: 'Widget actions route through canonical commands and route/open contracts. `/settings/widget`, `/plan/question/approval`, `/web-tool`, and `/package` hostability are routed GUI consumer paths, not local widget-owned route definitions.'
+L00000319	gui_related: true
+L00000320	gui_classification_reason: 'The unit defines GUI command routing and routed consumer paths for widgets.'
+L00000321	split_recommended: false
+L00000322	depends_on:
+L00000323	- PDS-003
+L00000324	- PDS-004
+L00000325	- PDS-005
+L00000326	- PNC-001
+L00000327	- WS-003
+L00000328	unblocks: []
+L00000329	acceptance_criteria:
+L00000330	- WS-005 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000331	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000332	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000333	validation_surfaces:
+L00000334	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000335	- python3 scripts/pm-plan-index.py validate
+L00000336	risk_class: widget_system_drift
+L00000337	reasoning_tier: standard
+L00000338	context_scope: widget_system_batch_198
+L00000339	implementation_surfaces:
+L00000340	- Plans/Widget_System.md
+L00000341	node_compile_hint:
+L00000342	  mode: route_open_consumer
+L00000343	  create_worknodes: false
+L00000344	source_lineage:
+L00000345	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000346	preserved_exact_tokens:
+L00000347	- 'widget action routes through canonical commands'
+L00000348	- 'route/open contracts'
+L00000349	- '/settings/widget'
+L00000350	- '/plan/question/approval'
+L00000351	- '/web-tool'
+L00000352	- '/package'
+L00000353	- 'routed GUI consumer paths'
+L00000354	- 'page-native actions stay with route/open or page owner docs'
+L00000355	negative_constraints: []
+L00000356	preserved_contractrefs:
+L00000357	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md'
+L00000358	compatibility_only_notes: []
+L00000359	stale_retired_dispositions: []
+L00000360	owner_hints:
+L00000361	- 'Plans/Widget_System.md'
+L00000362	- 'Plans/UI_Command_Catalog.md'
+L00000363	- 'Plans/Contracts_V0.md'
+L00000364	- 'Plans/FinalGUISpec.md'
+L00000365	```
+L00000366	
+
+<<< CONTEXT_AFTER canonical_document_lines=367-378 >>>
+L00000367	### WS-006 - Stable Projection Data Contract
+L00000368	
+L00000369	```yaml
+L00000370	plan_unit_id: WS-006
+L00000371	unit_type: requirement
+L00000372	status: accepted
+L00000373	owner_doc: Plans/Widget_System.md
+L00000374	canonical_text: 'Widgets consume stable orchestrator projections, canonical record `/query` contracts, widget identity `/type`, scope, filter `/sort/display` config, and projection refs; they do not subscribe to raw event streams or bespoke queries.'
+L00000375	gui_related: false
+L00000376	gui_classification_reason: 'The unit defines backend projection and data-contract semantics consumed by widgets rather than visual presentation.'
+L00000377	split_recommended: false
+L00000378	depends_on:

@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE 3502-3513 >>>
+- partial updates must not invent final totals before the platform reports them
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/usage-feature.md
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3514-3900 >>>
+### SMPFS-049 - Streaming Context Usage UI
+
+```yaml
+plan_unit_id: SMPFS-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Context and usage indicators may update during streaming with stable updating/streaming states, and final per-thread context and usage lands in the canonical Context Detail Pane used outside streaming.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-008
+- UF-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-049 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: streaming_usage_ui_drift
+reasoning_tier: standard
+context_scope: streaming_usage_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: streaming_context_usage_ui
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0032
+preserved_exact_tokens:
+- context and usage indicators
+- updating
+- streaming
+- Context Detail Pane
+- outside streaming
+negative_constraints:
+- The user sees stable in-progress states such as updating or streaming rather than flickering totals.
+- partial updates must not invent final totals before the platform reports them
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/usage-feature.md
+- Plans/storage-plan.md
+```
+
+### SMPFS-050 - Workspace Tab Window Identity
+
+```yaml
+plan_unit_id: SMPFS-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Workspace tabs are first-class identities that persist order, active tab, per-tab project identity, and local shell state across supported windows.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-050 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: workspace_tab_identity_drift
+reasoning_tier: standard
+context_scope: workspace_tabs
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: workspace_tab_window_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0033
+preserved_exact_tokens:
+- workspace tabs
+- persist order
+- active tab
+- per-tab project identity
+- local shell state
+- windows
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/storage-plan.md
+- Plans/UI_Command_Catalog.md
+```
+
+### SMPFS-051 - Multi-Window Close Fallback Behavior
+
+```yaml
+plan_unit_id: SMPFS-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Multi-window behavior defines deterministic drag/fallback behavior and close handling for dirty editors, running dev sessions, active terminals, and detached children.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+- WM-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-051 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: multiwindow_close_ui_drift
+reasoning_tier: standard
+context_scope: multiwindow_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: multi_window_close_fallback_behavior
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0033
+preserved_exact_tokens:
+- drag-between-window support
+- fallback behavior
+- close behavior
+- dirty editors
+- running dev sessions
+- active terminals
+- detached children
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+- Plans/storage-plan.md
+```
+
+### SMPFS-052 - Virtualized Conversation Log Lists
+
+```yaml
+plan_unit_id: SMPFS-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Long chat and runtime lists use virtualization while preserving keyboard navigation, focus recovery, anchor-to-message behavior, sticky status elements, selection, and search result navigation.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-008
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-052 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: virtualized_list_drift
+reasoning_tier: standard
+context_scope: virtualized_lists_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: virtualized_conversation_log_lists
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0034
+preserved_exact_tokens:
+- Virtualized Conversation or Log List
+- keyboard navigation
+- focus recovery
+- anchor-to-message
+- sticky status elements
+- selection
+- search results navigation
+negative_constraints:
+- Virtualization cannot break sticky status elements, selection, or search results navigation.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+```
+
+### SMPFS-053 - Normalized Usage Contract
+
+```yaml
+plan_unit_id: SMPFS-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: App-wide Usage and the thread-scoped Context Detail Pane share one normalized usage contract, and cost_usage artifacts deep-link into canonical Usage/Ledger surfaces rather than artifact-local models.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UF-001
+- ACD-008
+- RAP-024
+unblocks: []
+acceptance_criteria:
+- SMPFS-053 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_contract_drift
+reasoning_tier: standard
+context_scope: usage_contract
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: normalized_usage_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0035
+preserved_exact_tokens:
+- Know Where Your Tokens Go
+- Usage
+- Context Detail Pane
+- normalized usage contract
+- cost_usage
+- Usage/Ledger surfaces
+- artifact-local model
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/usage-feature.md
+- Plans/assistant-chat-design.md
+- Plans/Runtime_Artifacts_Panel.md
+```
+
+### SMPFS-054 - Token Cost Attribution Framing
+
+```yaml
+plan_unit_id: SMPFS-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Token and cost framing makes per-thread, per-run, and per-model attribution explainable without duplicating data sources.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UF-001
+- ACD-008
+unblocks: []
+acceptance_criteria:
+- SMPFS-054 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_framing_ui_drift
+reasoning_tier: standard
+context_scope: usage_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: token_cost_attribution_framing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0035
+preserved_exact_tokens:
+- token and cost framing
+- per-thread
+- per-run
+- per-model attribution
+- duplicating data sources
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/usage-feature.md
+- Plans/assistant-chat-design.md
+```
+
+### SMPFS-055 - Catalog Lifecycle Semantics
+
+```yaml
+plan_unit_id: SMPFS-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Catalog install, update, and remove flows are lifecycle-aware for commands, skills, plugins/hooks, themes, and MCP configs, with update/remove behavior explicit for active or referenced items.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-055 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: catalog_lifecycle_drift
+reasoning_tier: standard
+context_scope: catalog_lifecycle
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: catalog_lifecycle_semantics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0036
+preserved_exact_tokens:
+- One-Click Install
+- commands
+- agents
+- hooks
+- skills
+- plugins/hooks
+- themes
+- MCP configs
+- blocked
+- deferred-until-next-load
+- immediate effect
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+```
+
+
+<<< CONTEXT_AFTER 3901-3912 >>>
+### SMPFS-056 - Catalog Management UI
+
+```yaml
+plan_unit_id: SMPFS-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The catalog is not install-only; steady-state management, apply-later behavior, and active/referenced item outcomes are part of MVP UI behavior.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:

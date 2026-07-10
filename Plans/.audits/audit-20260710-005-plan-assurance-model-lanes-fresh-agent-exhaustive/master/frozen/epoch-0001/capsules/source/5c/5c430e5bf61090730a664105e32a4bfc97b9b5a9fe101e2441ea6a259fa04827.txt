@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE 6031-6042 >>>
+  - "owner_kind"
+  - "owner_ref"
+  - "created_by_kind"
+  - "created_by_ref"
+  - "concern resolver"
+negative_constraints:
+  - "Concern resolver must not be treated as the same role as concern owner or source."
+  - "Concern ownership reassignment must not change concern identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6043-6433 >>>
+### CV-067 - Concern Layers Heuristics And Attention Fields
+
+```yaml
+plan_unit_id: CV-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  concern_source_event_ref, concern_record, and concern_projection are separate
+  structural layers; repeated-sighting decisions use source/scope/category and
+  lineage-aware heuristics; concern-family contracts include visibility_level,
+  attention_level, chatworthy, and blocking_effect?, with blocking_effect
+  separate from severity.
+gui_related: false
+gui_classification_reason: This unit defines concern structural layers and attention fields rather than visual presentation.
+split_recommended: true
+depends_on: [CV-062, CV-066]
+unblocks: []
+acceptance_criteria:
+  - concern_source_event_ref, concern_record, and concern_projection remain separate structural layers.
+  - Repeated sightings use source/scope/category/lineage-aware heuristics to decide update versus new concern.
+  - visibility_level, attention_level, chatworthy, and blocking_effect? are present in the concern-family contract.
+  - blocking_effect remains explicitly separate from severity.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: concern_projection_attention_field_loss
+reasoning_tier: high
+context_scope: concern_layers_heuristics_attention
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: concern_attention_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0028
+preserved_exact_tokens:
+  - "concern_source_event_ref"
+  - "concern_record"
+  - "concern_projection"
+  - "`visibility_level`"
+  - "`attention_level`"
+  - "`chatworthy`"
+  - "`blocking_effect?`"
+negative_constraints:
+  - "blocking_effect must stay explicitly separate from severity."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-068 - Promotion Classes And Gate Evidence
+
+```yaml
+plan_unit_id: CV-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  lane_to_package, package_to_seam_available, and seam_complete promotions are
+  explicit promotion classes, each with exact gate and evidence expectations.
+gui_related: false
+gui_classification_reason: This unit defines promotion class contracts and evidence requirements.
+split_recommended: true
+depends_on: [CV-025, CV-043]
+unblocks: []
+acceptance_criteria:
+  - lane_to_package, package_to_seam_available, and seam_complete are defined promotion classes.
+  - Each promotion class carries exact gate expectations.
+  - Each promotion class carries exact evidence expectations.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: promotion_gate_evidence_ambiguity
+reasoning_tier: standard
+context_scope: promotion_classes_gate_evidence
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: promotion_gate_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0029
+preserved_exact_tokens:
+  - "lane_to_package"
+  - "package_to_seam_available"
+  - "seam_complete"
+  - "gate/evidence expectations"
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-069 - Route Open Shared Payload Owner Boundary
+
+```yaml
+plan_unit_id: CV-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Search, palette, widgets, recovery links, and cross-surface pivots use one
+  shared routing/deep-link payload; resume_url is serialized transport of that
+  route payload; Contracts_V0 owns canonical route_target and OpenSubject while
+  Crosswalk remains limited to primitive boundary ownership and FileManager
+  OpenFile remains narrow and path-based.
+gui_related: false
+gui_classification_reason: This unit defines route/open owner boundaries and payload contracts.
+split_recommended: true
+depends_on: [CV-031, CV-046, CV-055, CV-057]
+unblocks: [CV-070]
+acceptance_criteria:
+  - One shared routing/deep-link payload is used for search, palette, widgets, recovery links, and cross-surface pivots.
+  - resume_url is treated as serialized transport of the route payload.
+  - Contracts_V0 owns canonical route_target and OpenSubject.
+  - Crosswalk and FileManager remain within their narrower primitive/OpenFile boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_open_owner_boundary_drift
+reasoning_tier: high
+context_scope: route_open_shared_payload_owner_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+  - Plans/FileManager.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: route_open_owner_boundary_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0029
+preserved_exact_tokens:
+  - "route_target"
+  - "OpenSubject"
+  - "resume_url"
+  - "Primitive:RouteTarget/OpenSubject"
+  - "FileManager OpenFile"
+negative_constraints:
+  - "Crosswalk must stay limited to primitive boundary ownership."
+  - "FileManager OpenFile must stay narrow and path-based."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-070 - Route Selector And Ref-Family Normalization
+
+```yaml
+plan_unit_id: CV-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Route/open normalization preserves selector precedence, reject rules, closed
+  tab_id vocabulary, scoped resolver rules, route examples, ref-family split,
+  resume_url demotion, and wrapper/canonical normalization, while
+  timestamp/run/thread fallback logic remains compatibility-only.
+gui_related: false
+gui_classification_reason: This unit defines route selector and normalization rules.
+split_recommended: true
+depends_on: [CV-054, CV-056, CV-069]
+unblocks: []
+acceptance_criteria:
+  - Selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, and route examples are preserved.
+  - Ref-family split remains explicit through route/open normalization transfer.
+  - Wrapper/canonical normalization is carried into crosswalk and wiring docs.
+  - Timestamp/run/thread fallback logic is marked compatibility-only.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_selector_fallback_drift
+reasoning_tier: high
+context_scope: route_selector_ref_family_normalization
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: route_selector_normalization_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0029
+preserved_exact_tokens:
+  - "selector precedence"
+  - "reject rules"
+  - "closed tab_id vocabulary"
+  - "scoped resolver rules"
+  - "ref-family split"
+  - "wrapper/canonical normalization"
+compatibility_only_notes:
+  - "Timestamp/run/thread fallback logic is compatibility-only inside route/open contracts."
+negative_constraints:
+  - "Timestamp/run/thread fallback logic must not become primary route/open identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-071 - Blocked Runtime Owner Transfer Set
+
+```yaml
+plan_unit_id: CV-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  execution_role, requested_account_id, operational_identity, account-switch and
+  pressure ownership, blocked_sequence minting, startup recovery handshake, and
+  DAE jail/approval policy transfer into their owner and consumer docs, with
+  usage switch-history and usage execution-role follow-through preserved.
+gui_related: false
+gui_classification_reason: This unit defines runtime identity and blocked-state owner transfer requirements.
+split_recommended: true
+depends_on: [CV-016, CV-019, CV-029, CV-053]
+unblocks: [CV-072]
+acceptance_criteria:
+  - execution_role, requested_account_id, and operational_identity transfer into owner and consumer docs.
+  - Account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy are preserved.
+  - Usage switch-history and usage execution-role follow-through are carried forward.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_runtime_owner_transfer_loss
+reasoning_tier: high
+context_scope: blocked_runtime_owner_transfer
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/human-in-the-loop.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: blocked_runtime_owner_transfer_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0030
+preserved_exact_tokens:
+  - "execution_role"
+  - "requested_account_id"
+  - "operational_identity"
+  - "blocked_sequence"
+  - "DAE jail/approval policy"
+  - "usage switch-history"
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-072 - Blocked Episode Approval Scope Boundary
+
+```yaml
+plan_unit_id: CV-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Blocked-episode approval scope is separate from session-wide policy scope,
+  and approval lineage stays keyed to blocked-episode identity fields run_id,
+  node_id, blocked_sequence, and attempt_id? rather than inferred from
+  session-wide policy state.
+gui_related: false
+gui_classification_reason: This unit defines approval scope and lineage keys.
+split_recommended: true
+depends_on: [CV-029, CV-071]
+unblocks: [CV-073]
+acceptance_criteria:
+  - Blocked-episode approval scope is separate from session-wide policy scope.
+  - Approval lineage is keyed to run_id, node_id, blocked_sequence, and attempt_id?.
+  - Session-wide policy state is not used to infer blocked-episode approval lineage.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: approval_scope_lineage_collapse
+reasoning_tier: high
+context_scope: blocked_episode_approval_scope
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/human-in-the-loop.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: approval_scope_boundary_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0030
+preserved_exact_tokens:
+  - "`run_id`"
+  - "`node_id`"
+  - "`blocked_sequence`"
+  - "`attempt_id?`"
+negative_constraints:
+  - "Approval lineage must not be inferred from session-wide policy state."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-073 - Durable Approver Identity Events
+
+```yaml
+plan_unit_id: CV-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Approval and rejection records/events persist durable approver identity fields,
+  and /events, /history, and /rejection audit views read those records so they
+  can explain who approved or declined rather than only that approval state
+  changed.
+gui_related: true
+gui_classification_reason: This unit affects user-visible audit views for approval and rejection history.
+split_recommended: true
+depends_on: [CV-029, CV-072]
+unblocks: [CV-082]
+acceptance_criteria:
+  - Approval and rejection records/events persist durable approver identity fields.
+  - /events, /history, and /rejection audit views read durable approver identity.
+  - Audit views explain who approved or declined rather than only that approval state changed.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: durable_approver_identity_loss
+reasoning_tier: high
+context_scope: durable_approver_identity_events
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/human-in-the-loop.md
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: approver_identity_event_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0030
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+preserved_exact_tokens:
+  - "approver identity fields"
+  - "`/events`"
+  - "`/history`"
+  - "`/rejection`"
+negative_constraints:
+  - "Audit views must not only report that an approval state changed when durable approver identity is available."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-074 - Lifecycle Reason Code Fields
+
+```yaml
+plan_unit_id: CV-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Debug and investigation lifecycle events that affect stop, retry, resume, or
+  user-attention state carry stop_reason_code, attention_required_reason_code,
+  and budget_kind fields when applicable so storage, UI, exported bundles, and
+  prompt assembly preserve the same machine-readable reason without parsing
+  prose.
+gui_related: true
+gui_classification_reason: This unit affects UI-visible lifecycle reasons and exported/prompt-facing user-attention state.
+split_recommended: true
+depends_on: [CV-026, CV-044]
+unblocks: []
+acceptance_criteria:
+  - Lifecycle events affecting stop, retry, resume, or user-attention state carry machine-readable reason fields when applicable.
+  - stop_reason_code, attention_required_reason_code, and budget_kind are preserved for storage, UI, exported bundles, and prompt assembly.
+  - Consumers do not need to parse prose to recover lifecycle reasons.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: lifecycle_reason_prose_parsing
+reasoning_tier: high
+context_scope: lifecycle_reason_code_fields
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: lifecycle_reason_code_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0031
+preserved_exact_tokens:
+  - "`stop_reason_code`"
+  - "`attention_required_reason_code`"
+  - "`budget_kind`"
+negative_constraints:
+  - "Lifecycle reason recovery must not depend on parsing prose."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 6434-6445 >>>
+### CV-075 - Task Lifecycle Durability Over Projections
+
+```yaml
+plan_unit_id: CV-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Task lifecycle events persist in thread history and storage through the
+  canonical event stream; task cards and thread projections may render
+  subagent/task progress, HITL, plan/TODO transitions, and completion or blocked
+  outcomes, but those projections do not replace durable event records.

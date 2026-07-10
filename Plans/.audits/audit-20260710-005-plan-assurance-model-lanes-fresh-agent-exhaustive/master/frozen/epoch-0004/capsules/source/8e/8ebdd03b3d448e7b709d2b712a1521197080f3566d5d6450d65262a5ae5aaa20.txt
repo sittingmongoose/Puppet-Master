@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 730-741 >>>
+          "requirement": "cmd.alert.open_source records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event."
+        },
+        {
+          "test_id": "wiring.catalog.alert_open_source.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.alert.open_source records dispatch receipt cmd.alert.open_source.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 742-1103 >>>
+    "catalog.alert_snooze": {
+      "ui_element_id": "catalog.alert_snooze",
+      "ui_location": "Attention Center > Alerts > Snooze",
+      "ui_command_id": "cmd.alert.snooze",
+      "handler_location": "handlers::alert::snooze",
+      "expected_event_types": [
+        "alert.snoozed"
+      ],
+      "acceptance_checks": [
+        "cmd.alert.snooze is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.alert.snooze exposes state selector and disabled reason before dispatch.",
+        "cmd.alert.snooze dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.alert.snooze uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.alert.snooze. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.alert_snooze.availability",
+      "disabled_reason_projection": "state.commands.alert_snooze.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.alert.snooze emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "alert.snoozed"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.alert_snooze exposes a stable role/name/description matching cmd.alert.snooze.",
+        "keyboard_access": "catalog.alert_snooze is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.alert_snooze preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.alert_snooze surfaces state.commands.alert_snooze.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.alert_snooze.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.alert.snooze reaches handlers::alert::snooze with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.alert_snooze.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.alert_snooze.availability and disabled copy reads state.commands.alert_snooze.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.alert_snooze.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.alert.snooze emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.alert_snooze.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.alert_snooze.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.alert.snooze emits alert.snoozed with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.alert.snooze emits alert.snoozed with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.artifacts_show_in_ledger": {
+      "ui_element_id": "catalog.artifacts_show_in_ledger",
+      "ui_location": "Artifacts panel > Routed artifact actions > Show In Ledger",
+      "ui_command_id": "cmd.artifacts.show_in_ledger",
+      "handler_location": "handlers::artifacts::show_in_ledger",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.artifacts.show_in_ledger must be registered in the UICommand dispatcher with typed route_target and OpenSubject args/result contract",
+        "cmd.artifacts.show_in_ledger must expose projected state selector and disabled reason before dispatch",
+        "cmd.artifacts.show_in_ledger dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
+        "cmd.artifacts.show_in_ledger must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+        "cmd.artifacts.show_in_ledger must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id"
+      ],
+      "evidence_required": "Production route/open wiring contract for cmd.artifacts.show_in_ledger; certification requires render/control evidence, dispatcher fixture, typed route_target/OpenSubject payload assertion, usage_event object-kind proof, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.artifacts_show_in_ledger.availability",
+      "disabled_reason_projection": "state.commands.artifacts_show_in_ledger.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "route_open",
+        "description": "cmd.artifacts.show_in_ledger opens or focuses a Usage/Ledger subject through canonical route/open identity; when usage_event_ref is present, route_target.object_kind is usage_event and route_target.object_id is the canonical usage event id.",
+        "receipt_or_event_refs": [
+          "cmd.artifacts.show_in_ledger.route_open_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.artifacts_show_in_ledger exposes a stable role/name/description matching cmd.artifacts.show_in_ledger.",
+        "keyboard_access": "catalog.artifacts_show_in_ledger is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.artifacts_show_in_ledger preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.artifacts_show_in_ledger surfaces state.commands.artifacts_show_in_ledger.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.artifacts.show_in_ledger reaches handlers::artifacts::show_in_ledger with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.artifacts_show_in_ledger.availability and disabled copy reads state.commands.artifacts_show_in_ledger.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.route_open",
+          "evidence_kind": "route_open_fixture",
+          "requirement": "Dispatching cmd.artifacts.show_in_ledger with usage_event_ref yields route_target.object_kind=usage_event, stable object_id, OpenSubject, and full UsageRecord/provider/runtime correlation passthrough."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.artifacts.show_in_ledger records route/open receipt cmd.artifacts.show_in_ledger.route_open_receipt and emits no fabricated domain event."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.artifacts.show_in_ledger records route/open receipt cmd.artifacts.show_in_ledger.route_open_receipt and preserves route_target/OpenSubject plus UsageRecord correlation fields.",
+        "Assert cmd.artifacts.show_in_ledger rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id."
+      ],
+      "route_contract": {
+        "route_target_required": true,
+        "open_subject_required": true,
+        "route_target_object_kind_when_usage_event_ref": "usage_event",
+        "correlation_passthrough": [
+          "usage_event_ref",
+          "usage_record_id",
+          "provider_attempt_ref",
+          "attempt_id",
+          "node_id",
+          "tool_call_id",
+          "trace_ref",
+          "receipt_ref",
+          "receipt_refs",
+          "raw_payload_ref",
+          "artifact_id",
+          "run_id",
+          "thread_id",
+          "source_class",
+          "source_confidence",
+          "source_authority",
+          "settlement_status",
+          "projection_freshness",
+          "projection_health"
+        ]
+      }
+    },
+    "catalog.artifacts_show_in_usage": {
+      "ui_element_id": "catalog.artifacts_show_in_usage",
+      "ui_location": "Artifacts panel > Routed artifact actions > Show In Usage",
+      "ui_command_id": "cmd.artifacts.show_in_usage",
+      "handler_location": "handlers::artifacts::show_in_usage",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.artifacts.show_in_usage must be registered in the UICommand dispatcher with typed route_target and OpenSubject args/result contract",
+        "cmd.artifacts.show_in_usage must expose projected state selector and disabled reason before dispatch",
+        "cmd.artifacts.show_in_usage dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
+        "cmd.artifacts.show_in_usage must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+        "cmd.artifacts.show_in_usage must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id"
+      ],
+      "evidence_required": "Production route/open wiring contract for cmd.artifacts.show_in_usage; certification requires render/control evidence, dispatcher fixture, typed route_target/OpenSubject payload assertion, usage_event object-kind proof, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.artifacts_show_in_usage.availability",
+      "disabled_reason_projection": "state.commands.artifacts_show_in_usage.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "route_open",
+        "description": "cmd.artifacts.show_in_usage opens or focuses a Usage/Ledger subject through canonical route/open identity; when usage_event_ref is present, route_target.object_kind is usage_event and route_target.object_id is the canonical usage event id.",
+        "receipt_or_event_refs": [
+          "cmd.artifacts.show_in_usage.route_open_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.artifacts_show_in_usage exposes a stable role/name/description matching cmd.artifacts.show_in_usage.",
+        "keyboard_access": "catalog.artifacts_show_in_usage is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.artifacts_show_in_usage preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.artifacts_show_in_usage surfaces state.commands.artifacts_show_in_usage.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.artifacts.show_in_usage reaches handlers::artifacts::show_in_usage with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.artifacts_show_in_usage.availability and disabled copy reads state.commands.artifacts_show_in_usage.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.route_open",
+          "evidence_kind": "route_open_fixture",
+          "requirement": "Dispatching cmd.artifacts.show_in_usage with usage_event_ref yields route_target.object_kind=usage_event, stable object_id, OpenSubject, and full UsageRecord/provider/runtime correlation passthrough."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.artifacts.show_in_usage records route/open receipt cmd.artifacts.show_in_usage.route_open_receipt and emits no fabricated domain event."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.artifacts.show_in_usage records route/open receipt cmd.artifacts.show_in_usage.route_open_receipt and preserves route_target/OpenSubject plus UsageRecord correlation fields.",
+        "Assert cmd.artifacts.show_in_usage rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id."
+      ],
+      "route_contract": {
+        "route_target_required": true,
+        "open_subject_required": true,
+        "route_target_object_kind_when_usage_event_ref": "usage_event",
+        "correlation_passthrough": [
+          "usage_event_ref",
+          "usage_record_id",
+          "provider_attempt_ref",
+          "attempt_id",
+          "node_id",
+          "tool_call_id",
+          "trace_ref",
+          "receipt_ref",
+          "receipt_refs",
+          "raw_payload_ref",
+          "artifact_id",
+          "run_id",
+          "thread_id",
+          "source_class",
+          "source_confidence",
+          "source_authority",
+          "settlement_status",
+          "projection_freshness",
+          "projection_health"
+        ]
+      }
+    },
+    "catalog.browser_add_full_screenshot_to_chat": {
+      "ui_element_id": "catalog.browser_add_full_screenshot_to_chat",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.add_full_screenshot_to_chat",
+      "handler_location": "handlers::browser::add_full_screenshot_to_chat",
+      "expected_event_types": [
+        "runtime_artifact.created"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.add_full_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.add_full_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.add_full_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.add_full_screenshot_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_full_screenshot_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.add_full_screenshot_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_add_full_screenshot_to_chat.availability",
+      "disabled_reason_projection": "state.commands.browser_add_full_screenshot_to_chat.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.add_full_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "runtime_artifact.created",
+          "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_add_full_screenshot_to_chat exposes a stable role/name/description matching cmd.browser.add_full_screenshot_to_chat.",
+        "keyboard_access": "catalog.browser_add_full_screenshot_to_chat is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_add_full_screenshot_to_chat preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_add_full_screenshot_to_chat surfaces state.commands.browser_add_full_screenshot_to_chat.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.add_full_screenshot_to_chat reaches handlers::browser::add_full_screenshot_to_chat with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_add_full_screenshot_to_chat.availability and disabled copy reads state.commands.browser_add_full_screenshot_to_chat.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.add_full_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_full_screenshot_to_chat emits expected event(s): runtime_artifact.created."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.add_full_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+    "catalog.browser_add_screenshot_to_chat": {
+      "ui_element_id": "catalog.browser_add_screenshot_to_chat",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.add_screenshot_to_chat",
+      "handler_location": "handlers::browser::add_screenshot_to_chat",
+      "expected_event_types": [
+        "runtime_artifact.created"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.add_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.add_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.add_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.add_screenshot_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_screenshot_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.add_screenshot_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_add_screenshot_to_chat.availability",
+      "disabled_reason_projection": "state.commands.browser_add_screenshot_to_chat.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.add_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "runtime_artifact.created",
+          "cmd.browser.add_screenshot_to_chat.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_add_screenshot_to_chat exposes a stable role/name/description matching cmd.browser.add_screenshot_to_chat.",
+        "keyboard_access": "catalog.browser_add_screenshot_to_chat is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_add_screenshot_to_chat preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_add_screenshot_to_chat surfaces state.commands.browser_add_screenshot_to_chat.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_add_screenshot_to_chat.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.add_screenshot_to_chat reaches handlers::browser::add_screenshot_to_chat with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_screenshot_to_chat.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_add_screenshot_to_chat.availability and disabled copy reads state.commands.browser_add_screenshot_to_chat.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_screenshot_to_chat.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.add_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_screenshot_to_chat.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_screenshot_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_screenshot_to_chat emits expected event(s): runtime_artifact.created."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.add_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+
+<<< CONTEXT_AFTER 1104-1115 >>>
+    "catalog.browser_add_selection_full_screenshot_to_chat": {
+      "ui_element_id": "catalog.browser_add_selection_full_screenshot_to_chat",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.add_selection_full_screenshot_to_chat",
+      "handler_location": "handlers::browser::add_selection_full_screenshot_to_chat",
+      "expected_event_types": [
+        "browser.context_captured",
+        "runtime_artifact.created"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.add_selection_full_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.add_selection_full_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",

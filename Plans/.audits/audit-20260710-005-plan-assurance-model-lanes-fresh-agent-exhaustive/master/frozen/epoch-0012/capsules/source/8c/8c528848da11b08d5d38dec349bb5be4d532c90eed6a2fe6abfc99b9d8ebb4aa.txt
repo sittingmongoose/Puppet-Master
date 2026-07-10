@@ -1,0 +1,333 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14519-14530 >>>
+L00014519	- competing schema copy
+L00014520	negative_constraints:
+L00014521	- projector/query fields MUST NOT redefine the nested snapshot schema locally.
+L00014522	- storage-plan MUST reference the owner-doc schema instead of embedding a competing schema copy.
+L00014523	preserved_contractrefs:
+L00014524	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md'
+L00014525	compatibility_only_notes: []
+L00014526	stale_retired_dispositions: []
+L00014527	owner_hints:
+L00014528	- Plans/storage-plan.md
+L00014529	```
+L00014530	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14531-14834 >>>
+L00014531	### SP-207 - Safe-Point Restore-Point Namespace Separation
+L00014532	
+L00014533	```yaml
+L00014534	plan_unit_id: SP-207
+L00014535	unit_type: requirement
+L00014536	status: accepted
+L00014537	owner_doc: Plans/storage-plan.md
+L00014538	canonical_text: Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap.
+L00014539	gui_related: false
+L00014540	gui_classification_reason: This unit preserves backend safe-point versus restore-point namespace separation.
+L00014541	split_recommended: false
+L00014542	depends_on:
+L00014543	- PDS-003
+L00014544	- PDS-004
+L00014545	- PDS-005
+L00014546	- PNC-001
+L00014547	unblocks: []
+L00014548	acceptance_criteria:
+L00014549	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014550	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014551	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014552	validation_surfaces:
+L00014553	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014554	- python3 scripts/pm-plan-index.py validate
+L00014555	risk_class: storage_plan_drift
+L00014556	reasoning_tier: standard
+L00014557	context_scope: storage_batch_179_body_tail
+L00014558	implementation_surfaces:
+L00014559	- Plans/storage-plan.md
+L00014560	node_compile_hint:
+L00014561	  mode: safe_point_restore_point_namespace_separation
+L00014562	  create_worknodes: false
+L00014563	source_lineage:
+L00014564	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0124
+L00014565	preserved_exact_tokens:
+L00014566	- Safe-point vs restore-point namespace separation
+L00014567	- Safe point
+L00014568	- sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}
+L00014569	- Runtime-internal
+L00014570	- run/node/attempt
+L00014571	- Restore point
+L00014572	- rp:{project_id}:{restore_point_id}
+L00014573	- User-facing
+L00014574	- project
+L00014575	- MUST NOT overlap
+L00014576	- 'sp: prefix'
+L00014577	- 'rp: prefix'
+L00014578	negative_constraints:
+L00014579	- Safe-point and restore-point namespaces MUST NOT overlap.
+L00014580	- 'Queries for safe points MUST use sp: and queries for restore points MUST use rp:.'
+L00014581	preserved_contractrefs:
+L00014582	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/newfeatures.md, ContractName:Plans/Contracts_V0.md'
+L00014583	compatibility_only_notes: []
+L00014584	stale_retired_dispositions: []
+L00014585	owner_hints:
+L00014586	- Plans/storage-plan.md
+L00014587	```
+L00014588	
+L00014589	### SP-208 - Assistant Worktree Binding Owner Boundary
+L00014590	
+L00014591	```yaml
+L00014592	plan_unit_id: SP-208
+L00014593	unit_type: requirement
+L00014594	status: accepted
+L00014595	owner_doc: Plans/storage-plan.md
+L00014596	canonical_text: Assistant worktree binding storage preserves Source Control as the Git/worktree owner, references the live Orchestrator_Page Source Control boundary instead of a stale numbered anchor, and keeps worktree-binding persistence worktree-first when handing off to Source Control.
+L00014597	gui_related: false
+L00014598	gui_classification_reason: This unit preserves backend Source Control owner boundary and stale-anchor disposition.
+L00014599	split_recommended: false
+L00014600	depends_on:
+L00014601	- PDS-003
+L00014602	- PDS-004
+L00014603	- PDS-005
+L00014604	- PNC-001
+L00014605	unblocks: []
+L00014606	acceptance_criteria:
+L00014607	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014608	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014609	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014610	validation_surfaces:
+L00014611	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014612	- python3 scripts/pm-plan-index.py validate
+L00014613	risk_class: storage_plan_drift
+L00014614	reasoning_tier: standard
+L00014615	context_scope: storage_batch_179_body_tail
+L00014616	implementation_surfaces:
+L00014617	- Plans/storage-plan.md
+L00014618	node_compile_hint:
+L00014619	  mode: assistant_worktree_binding_owner_boundary
+L00014620	  create_worknodes: false
+L00014621	source_lineage:
+L00014622	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0125
+L00014623	preserved_exact_tokens:
+L00014624	- Assistant Worktree Binding Storage Addendum
+L00014625	- Source Control remains the Git/worktree owner surface
+L00014626	- Plans/Orchestrator_Page.md#Source Control boundary
+L00014627	- stale numbered anchor
+L00014628	- Worktree-binding persistence
+L00014629	- worktree-first
+L00014630	- hands off to Source Control
+L00014631	negative_constraints: []
+L00014632	preserved_contractrefs: []
+L00014633	compatibility_only_notes: []
+L00014634	stale_retired_dispositions:
+L00014635	- Storage projections reference the live Plans/Orchestrator_Page.md#Source Control boundary rather than the stale numbered anchor.
+L00014636	owner_hints:
+L00014637	- Plans/storage-plan.md
+L00014638	```
+L00014639	
+L00014640	### SP-209 - Web Cache Owner Contract And Core Routing
+L00014641	
+L00014642	```yaml
+L00014643	plan_unit_id: SP-209
+L00014644	unit_type: requirement
+L00014645	status: accepted
+L00014646	owner_doc: Plans/storage-plan.md
+L00014647	canonical_text: Web content cache persistence consumes the linked owner contract, preserving two-phase lookup, state vocabulary, per-project 500 MB cache sizing, action skip/read-time behavior, PM-cache precedence, Firecrawl latency-only role, and diff-reuse audit states.
+L00014648	gui_related: true
+L00014649	gui_classification_reason: This unit preserves user-visible web cache routing/cache-state behavior.
+L00014650	split_recommended: true
+L00014651	depends_on:
+L00014652	- PDS-003
+L00014653	- PDS-004
+L00014654	- PDS-005
+L00014655	- PNC-001
+L00014656	unblocks: []
+L00014657	acceptance_criteria:
+L00014658	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014659	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014660	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014661	validation_surfaces:
+L00014662	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014663	- python3 scripts/pm-plan-index.py validate
+L00014664	risk_class: storage_plan_drift
+L00014665	reasoning_tier: standard
+L00014666	context_scope: storage_batch_179_body_tail
+L00014667	implementation_surfaces:
+L00014668	- Plans/storage-plan.md
+L00014669	node_compile_hint:
+L00014670	  mode: web_cache_owner_contract_and_core_routing
+L00014671	  create_worknodes: false
+L00014672	source_lineage:
+L00014673	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+L00014674	preserved_exact_tokens:
+L00014675	- Web content caching persistence
+L00014676	- linked owner contract
+L00014677	- PM-owned web cache contract
+L00014678	- two-phase lookup
+L00014679	- state vocabulary
+L00014680	- per-project cache sizing
+L00014681	- requests with actions
+L00014682	- post-action result
+L00014683	- PM-cache precedence
+L00014684	- Firecrawl cache
+L00014685	- diff-reuse audit states
+L00014686	- per-project
+L00014687	- 500 MB
+L00014688	- per-operation TTL defaults
+L00014689	- LRU eviction
+L00014690	- bounded storage
+L00014691	- stable cache key ordering
+L00014692	- change_tracking
+L00014693	negative_constraints:
+L00014694	- Cache routing must skip read-time cache for requests with actions.
+L00014695	preserved_contractrefs: []
+L00014696	compatibility_only_notes: []
+L00014697	stale_retired_dispositions: []
+L00014698	owner_hints:
+L00014699	- Plans/storage-plan.md
+L00014700	```
+L00014701	
+L00014702	### SP-210 - Web Cache Entry Schema Budget Eviction
+L00014703	
+L00014704	```yaml
+L00014705	plan_unit_id: SP-210
+L00014706	unit_type: requirement
+L00014707	status: accepted
+L00014708	owner_doc: Plans/storage-plan.md
+L00014709	canonical_text: Web cache entries store cache_key, normalized URL, formats, adapter_id, content hash/ref pointer, metadata, fetched/expires/access fields, 500 MB budget, TTL, LRU, per-project/per-operation scope, cache key ordering, and change detection persistence without inlining cached content.
+L00014710	gui_related: false
+L00014711	gui_classification_reason: This unit preserves backend web cache entry schema, budget, and eviction fields.
+L00014712	split_recommended: true
+L00014713	depends_on:
+L00014714	- PDS-003
+L00014715	- PDS-004
+L00014716	- PDS-005
+L00014717	- PNC-001
+L00014718	unblocks: []
+L00014719	acceptance_criteria:
+L00014720	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014721	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014722	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014723	validation_surfaces:
+L00014724	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014725	- python3 scripts/pm-plan-index.py validate
+L00014726	risk_class: storage_plan_drift
+L00014727	reasoning_tier: standard
+L00014728	context_scope: storage_batch_179_body_tail
+L00014729	implementation_surfaces:
+L00014730	- Plans/storage-plan.md
+L00014731	node_compile_hint:
+L00014732	  mode: web_cache_entry_schema_budget_eviction
+L00014733	  create_worknodes: false
+L00014734	source_lineage:
+L00014735	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+L00014736	preserved_exact_tokens:
+L00014737	- 'cache_key: string'
+L00014738	- hash of (url, formats, adapter_id)
+L00014739	- 'url: string'
+L00014740	- normalized URL
+L00014741	- 'formats_requested: string[]'
+L00014742	- adapter_id
+L00014743	- content_hash
+L00014744	- 'content_ref: string'
+L00014745	- pointer to cached content (not inline)
+L00014746	- metadata
+L00014747	- title?
+L00014748	- status_code
+L00014749	- content_type
+L00014750	- content_length
+L00014751	- fetched_at
+L00014752	- ISO time
+L00014753	- expires_at
+L00014754	- TTL
+L00014755	- access_count
+L00014756	- last_accessed_at
+L00014757	- 500 MB
+L00014758	- LRU
+L00014759	- per-project
+L00014760	- per-operation
+L00014761	- cache key ordering
+L00014762	- change detection persistence
+L00014763	negative_constraints:
+L00014764	- content_ref is a pointer to cached content and not inline content.
+L00014765	preserved_contractrefs: []
+L00014766	compatibility_only_notes: []
+L00014767	stale_retired_dispositions: []
+L00014768	owner_hints:
+L00014769	- Plans/storage-plan.md
+L00014770	```
+L00014771	
+L00014772	### SP-211 - Web Cache Lookup Bypass Hit Rules
+L00014773	
+L00014774	```yaml
+L00014775	plan_unit_id: SP-211
+L00014776	unit_type: requirement
+L00014777	status: accepted
+L00014778	owner_doc: Plans/storage-plan.md
+L00014779	canonical_text: Web cache lookup is adapter-agnostic and action-free at read time, validates adapter_id after provider selection, always fresh-executes requests with actions while still allowing post-action store, records bypass when max_age_seconds is 0 or store is false, serves hit only within TTL and absent actions/adapter mismatch, and preserves exact cache_state enum values.
+L00014780	gui_related: true
+L00014781	gui_classification_reason: This unit preserves user-visible cache hit/bypass state and backend lookup rules.
+L00014782	split_recommended: true
+L00014783	depends_on:
+L00014784	- PDS-003
+L00014785	- PDS-004
+L00014786	- PDS-005
+L00014787	- PNC-001
+L00014788	unblocks: []
+L00014789	acceptance_criteria:
+L00014790	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014791	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014792	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014793	validation_surfaces:
+L00014794	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014795	- python3 scripts/pm-plan-index.py validate
+L00014796	risk_class: storage_plan_drift
+L00014797	reasoning_tier: standard
+L00014798	context_scope: storage_batch_179_body_tail
+L00014799	implementation_surfaces:
+L00014800	- Plans/storage-plan.md
+L00014801	node_compile_hint:
+L00014802	  mode: web_cache_lookup_bypass_hit_rules
+L00014803	  create_worknodes: false
+L00014804	source_lineage:
+L00014805	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0126
+L00014806	preserved_exact_tokens:
+L00014807	- Cache lookup
+L00014808	- adapter-agnostic
+L00014809	- action-free at read time
+L00014810	- (url, formats_hash)
+L00014811	- adapter_id
+L00014812	- actions
+L00014813	- always fresh-execute
+L00014814	- Cache STORE
+L00014815	- post-action content
+L00014816	- 'cache_policy.max_age_seconds: 0'
+L00014817	- 'cache_policy.store: false'
+L00014818	- 'cache_state: "bypassed"'
+L00014819	- 'cache_state: "hit"'
+L00014820	- skip provider execution
+L00014821	- post-selection adapter_id validation fails
+L00014822	- PM cache takes precedence
+L00014823	- Firecrawl cache serves as provider-side /latency optimization only
+L00014824	- 'cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"'
+L00014825	negative_constraints:
+L00014826	- Cache lookup only applies to action-free requests.
+L00014827	- Firecrawl cache is provider-side latency optimization only.
+L00014828	preserved_contractrefs: []
+L00014829	compatibility_only_notes: []
+L00014830	stale_retired_dispositions: []
+L00014831	owner_hints:
+L00014832	- Plans/storage-plan.md
+L00014833	```
+L00014834	
+
+<<< CONTEXT_AFTER canonical_document_lines=14835-14846 >>>
+L00014835	### SP-212 - Storage Batch Owner Consumer Boundary Map
+L00014836	
+L00014837	```yaml
+L00014838	plan_unit_id: SP-212
+L00014839	unit_type: requirement
+L00014840	status: accepted
+L00014841	owner_doc: Plans/storage-plan.md
+L00014842	canonical_text: The owner/consumer map keeps storage-plan as the owner doc for preserved behavior while cross-doc ownership follows ContractRefs and boundary notes from original text and the Plan Document System/Bootstrap Planning Migration contracts.
+L00014843	gui_related: false
+L00014844	gui_classification_reason: This unit preserves backend plan ownership and migration boundary metadata.
+L00014845	split_recommended: false
+L00014846	depends_on:

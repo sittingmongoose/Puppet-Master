@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3003-3014 >>>
+L00003003	- "default off"
+L00003004	- "warning label"
+L00003005	negative_constraints:
+L00003006	- "allow_tool_override must remain default off and visibly warned when enabled."
+L00003007	preserved_contractrefs: []
+L00003008	compatibility_only_notes: []
+L00003009	stale_retired_dispositions: []
+L00003010	owner_hints:
+L00003011	- "Plans/Plugins_System.md"
+L00003012	- "Plans/FinalGUISpec.md"
+L00003013	```
+L00003014	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3015-3405 >>>
+L00003015	### PLUG-047 - Plugin UI Interaction Mode Copy
+L00003016	
+L00003017	```yaml
+L00003018	plan_unit_id: PLUG-047
+L00003019	unit_type: requirement
+L00003020	status: accepted
+L00003021	owner_doc: Plans/Plugins_System.md
+L00003022	canonical_text: "Plugin UI elements follow the app-level Expert/ELI5 Interaction Mode toggle using tooltip.plugins.* keys, with ELI5 showing only the plugin list and enable/disable toggles while Expert exposes hook details, tool collision config, and timeout settings."
+L00003023	gui_related: true
+L00003024	gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+L00003025	split_recommended: false
+L00003026	depends_on:
+L00003027	- PLUG-043
+L00003028	- PLUG-044
+L00003029	- PLUG-046
+L00003030	unblocks: []
+L00003031	acceptance_criteria:
+L00003032	- "PLUG-047 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003033	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003034	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003035	validation_surfaces:
+L00003036	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003037	- python3 scripts/pm-plan-index.py validate
+L00003038	risk_class: plugins_system_drift
+L00003039	reasoning_tier: standard
+L00003040	context_scope: plugins_system_batch_210
+L00003041	implementation_surfaces:
+L00003042	- Plans/Plugins_System.md
+L00003043	node_compile_hint:
+L00003044	  mode: interaction_mode_copy
+L00003045	  create_worknodes: false
+L00003046	source_lineage:
+L00003047	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0054
+L00003048	preserved_exact_tokens:
+L00003049	- "9.2 ELI5/Expert copy"
+L00003050	- "Interaction Mode"
+L00003051	- "Expert/ELI5"
+L00003052	- "tooltip.plugins.*"
+L00003053	- "ELI5"
+L00003054	- "plugin list"
+L00003055	- "enable/disable toggles"
+L00003056	- "Hook details"
+L00003057	- "tool collision config"
+L00003058	- "timeout settings"
+L00003059	- "Expert"
+L00003060	negative_constraints:
+L00003061	- "ELI5 mode hides hook details, tool collision config, and timeout settings."
+L00003062	preserved_contractrefs: []
+L00003063	compatibility_only_notes: []
+L00003064	stale_retired_dispositions: []
+L00003065	owner_hints:
+L00003066	- "Plans/Plugins_System.md"
+L00003067	- "Plans/FinalGUISpec.md"
+L00003068	```
+L00003069	
+L00003070	### PLUG-048 - Catalog Plugin Lifecycle State Surfacing
+L00003071	
+L00003072	```yaml
+L00003073	plan_unit_id: PLUG-048
+L00003074	unit_type: requirement
+L00003075	status: accepted
+L00003076	owner_doc: Plans/Plugins_System.md
+L00003077	canonical_text: "Catalog-installed plugin, hook, and MCP config bundle lifecycle actions surface whether targets are enabled, loaded, or referenced by Persona settings, distinguish catalog-installed plugins from manual or local ones, and expose reload, deferred apply, or disable-before-remove state when required."
+L00003078	gui_related: true
+L00003079	gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+L00003080	split_recommended: false
+L00003081	depends_on:
+L00003082	- PLUG-043
+L00003083	- PLUG-038
+L00003084	- PLUG-040
+L00003085	unblocks: []
+L00003086	acceptance_criteria:
+L00003087	- "PLUG-048 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003088	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003089	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003090	validation_surfaces:
+L00003091	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003092	- python3 scripts/pm-plan-index.py validate
+L00003093	risk_class: plugins_system_drift
+L00003094	reasoning_tier: standard
+L00003095	context_scope: plugins_system_batch_210
+L00003096	implementation_surfaces:
+L00003097	- Plans/Plugins_System.md
+L00003098	node_compile_hint:
+L00003099	  mode: catalog_plugin_lifecycle_surface
+L00003100	  create_worknodes: false
+L00003101	source_lineage:
+L00003102	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0055
+L00003103	preserved_exact_tokens:
+L00003104	- "9.3 Catalog-installed plugin and hook lifecycle"
+L00003105	- "explicit lifecycle semantics"
+L00003106	- "install/update/remove actions"
+L00003107	- "enabled"
+L00003108	- "loaded"
+L00003109	- "referenced by Persona settings"
+L00003110	- "reload"
+L00003111	- "deferred apply"
+L00003112	- "disable-before-remove"
+L00003113	- "catalog-installed plugins"
+L00003114	- "manual/local ones"
+L00003115	negative_constraints:
+L00003116	- "Catalog lifecycle actions must not hide enabled, loaded, Persona reference, reload, deferred, or disable-before-remove state."
+L00003117	preserved_contractrefs: []
+L00003118	compatibility_only_notes: []
+L00003119	stale_retired_dispositions: []
+L00003120	owner_hints:
+L00003121	- "Plans/Plugins_System.md"
+L00003122	- "Plans/FinalGUISpec.md"
+L00003123	- "Plans/Skills_System.md"
+L00003124	```
+L00003125	
+L00003126	### PLUG-049 - Catalog Uninstall Ownership Boundary
+L00003127	
+L00003128	```yaml
+L00003129	plan_unit_id: PLUG-049
+L00003130	unit_type: constraint
+L00003131	status: accepted
+L00003132	owner_doc: Plans/Plugins_System.md
+L00003133	canonical_text: "Uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name."
+L00003134	gui_related: false
+L00003135	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00003136	split_recommended: false
+L00003137	depends_on:
+L00003138	- PLUG-010
+L00003139	- PLUG-037
+L00003140	- PLUG-048
+L00003141	unblocks: []
+L00003142	acceptance_criteria:
+L00003143	- "PLUG-049 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003144	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003145	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003146	validation_surfaces:
+L00003147	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003148	- python3 scripts/pm-plan-index.py validate
+L00003149	risk_class: plugins_system_drift
+L00003150	reasoning_tier: standard
+L00003151	context_scope: plugins_system_batch_210
+L00003152	implementation_surfaces:
+L00003153	- Plans/Plugins_System.md
+L00003154	node_compile_hint:
+L00003155	  mode: catalog_uninstall_boundary
+L00003156	  create_worknodes: false
+L00003157	source_lineage:
+L00003158	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0055
+L00003159	preserved_exact_tokens:
+L00003160	- "uninstalling a catalog plugin"
+L00003161	- "must not silently delete"
+L00003162	- "unrelated local overrides"
+L00003163	- "config-sourced plugins"
+L00003164	- "same display name"
+L00003165	negative_constraints:
+L00003166	- "Uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name."
+L00003167	preserved_contractrefs: []
+L00003168	compatibility_only_notes: []
+L00003169	stale_retired_dispositions: []
+L00003170	owner_hints:
+L00003171	- "Plans/Plugins_System.md"
+L00003172	- "Plans/FinalGUISpec.md"
+L00003173	```
+L00003174	
+L00003175	### PLUG-050 - OpenCode Plugin Baseline Reference
+L00003176	
+L00003177	```yaml
+L00003178	plan_unit_id: PLUG-050
+L00003179	unit_type: compatibility_disposition
+L00003180	status: accepted
+L00003181	owner_doc: Plans/Plugins_System.md
+L00003182	canonical_text: "The OpenCode plugin baseline is preserved as compatibility reference: JavaScript/TypeScript modules loaded through import(), internal, built-in npm, and config sources, PluginInput with SDK client, project metadata, Bun shell, named Hooks, and plugin tools overriding built-ins on collision."
+L00003183	gui_related: false
+L00003184	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00003185	split_recommended: false
+L00003186	depends_on:
+L00003187	- PLUG-002
+L00003188	- PLUG-003
+L00003189	unblocks: []
+L00003190	acceptance_criteria:
+L00003191	- "PLUG-050 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003192	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003193	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003194	validation_surfaces:
+L00003195	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003196	- python3 scripts/pm-plan-index.py validate
+L00003197	risk_class: plugins_system_drift
+L00003198	reasoning_tier: standard
+L00003199	context_scope: plugins_system_batch_210
+L00003200	implementation_surfaces:
+L00003201	- Plans/Plugins_System.md
+L00003202	node_compile_hint:
+L00003203	  mode: opencode_plugin_baseline
+L00003204	  create_worknodes: false
+L00003205	source_lineage:
+L00003206	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0056
+L00003207	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0057
+L00003208	preserved_exact_tokens:
+L00003209	- "BASELINE-DELTAS"
+L00003210	- "10. OpenCode baseline and Puppet Master deltas"
+L00003211	- "10.1 Baseline"
+L00003212	- "OpenCode plugins"
+L00003213	- "JavaScript/TypeScript modules"
+L00003214	- "import()"
+L00003215	- "built-in npm packages"
+L00003216	- "config-specified packages/paths"
+L00003217	- "PluginInput"
+L00003218	- "SDK client"
+L00003219	- "project metadata"
+L00003220	- "Bun shell"
+L00003221	- "Hooks interface"
+L00003222	- "~15 named hooks"
+L00003223	- "experimental.session.compacting"
+L00003224	- "tool property"
+L00003225	- "plugin tools override built-ins"
+L00003226	negative_constraints:
+L00003227	- "The OpenCode baseline is compatibility reference and does not override Puppet Master deltas."
+L00003228	preserved_contractrefs: []
+L00003229	compatibility_only_notes:
+L00003230	- "OpenCode baseline behavior is preserved as compatibility/source lineage only."
+L00003231	stale_retired_dispositions: []
+L00003232	owner_hints:
+L00003233	- "Plans/Plugins_System.md"
+L00003234	- "Plans/OpenCode_Deep_Extraction.md"
+L00003235	```
+L00003236	
+L00003237	### PLUG-051 - Platform-Agnostic Plugin Runtime Delta
+L00003238	
+L00003239	```yaml
+L00003240	plan_unit_id: PLUG-051
+L00003241	unit_type: constraint
+L00003242	status: accepted
+L00003243	owner_doc: Plans/Plugins_System.md
+L00003244	canonical_text: "Puppet Master uses a platform-agnostic plugin API through WASM modules, subprocess-based entries, or dynamic libraries defined by plugin.json entry, with no JavaScript runtime dependency."
+L00003245	gui_related: false
+L00003246	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00003247	split_recommended: false
+L00003248	depends_on:
+L00003249	- PLUG-009
+L00003250	- PLUG-016
+L00003251	- PLUG-050
+L00003252	unblocks: []
+L00003253	acceptance_criteria:
+L00003254	- "PLUG-051 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003255	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003256	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003257	validation_surfaces:
+L00003258	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003259	- python3 scripts/pm-plan-index.py validate
+L00003260	risk_class: plugins_system_drift
+L00003261	reasoning_tier: standard
+L00003262	context_scope: plugins_system_batch_210
+L00003263	implementation_surfaces:
+L00003264	- Plans/Plugins_System.md
+L00003265	node_compile_hint:
+L00003266	  mode: platform_agnostic_runtime_delta
+L00003267	  create_worknodes: false
+L00003268	source_lineage:
+L00003269	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0058
+L00003270	preserved_exact_tokens:
+L00003271	- "Plugin runtime"
+L00003272	- "OpenCode uses JS import() with Bun"
+L00003273	- "Puppet Master uses a platform-agnostic plugin API"
+L00003274	- "WASM modules"
+L00003275	- "subprocess-based"
+L00003276	- "dynamic libraries"
+L00003277	- "plugin.json"
+L00003278	- "entry"
+L00003279	- "No JavaScript runtime dependency"
+L00003280	negative_constraints:
+L00003281	- "Puppet Master plugin runtime must not require a JavaScript runtime dependency."
+L00003282	preserved_contractrefs:
+L00003283	- "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md"
+L00003284	compatibility_only_notes: []
+L00003285	stale_retired_dispositions: []
+L00003286	owner_hints:
+L00003287	- "Plans/Plugins_System.md"
+L00003288	- "Plans/OpenCode_Deep_Extraction.md"
+L00003289	```
+L00003290	
+L00003291	### PLUG-052 - Baseline Delta Alignment Set
+L00003292	
+L00003293	```yaml
+L00003294	plan_unit_id: PLUG-052
+L00003295	unit_type: compatibility_disposition
+L00003296	status: accepted
+L00003297	owner_doc: Plans/Plugins_System.md
+L00003298	canonical_text: "Puppet Master deltas preserve namespaced aliasing for tool collisions by default, strict priority and lexicographic deterministic load order, typed structured logging, and per-Persona plugin controls as the canonical divergences from the OpenCode baseline."
+L00003299	gui_related: false
+L00003300	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00003301	split_recommended: false
+L00003302	depends_on:
+L00003303	- PLUG-013
+L00003304	- PLUG-031
+L00003305	- PLUG-041
+L00003306	- PLUG-040
+L00003307	- PLUG-050
+L00003308	unblocks: []
+L00003309	acceptance_criteria:
+L00003310	- "PLUG-052 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003311	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003312	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003313	validation_surfaces:
+L00003314	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003315	- python3 scripts/pm-plan-index.py validate
+L00003316	risk_class: plugins_system_drift
+L00003317	reasoning_tier: standard
+L00003318	context_scope: plugins_system_batch_210
+L00003319	implementation_surfaces:
+L00003320	- Plans/Plugins_System.md
+L00003321	node_compile_hint:
+L00003322	  mode: baseline_delta_alignment
+L00003323	  create_worknodes: false
+L00003324	source_lineage:
+L00003325	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0058
+L00003326	preserved_exact_tokens:
+L00003327	- "Tool collision policy"
+L00003328	- "namespaced aliasing"
+L00003329	- "built-in wins"
+L00003330	- "allow_tool_override"
+L00003331	- "Deterministic load order"
+L00003332	- "priority-ordered discovery"
+L00003333	- "lexicographic tiebreaking"
+L00003334	- "Structured logging"
+L00003335	- "typed ledger events"
+L00003336	- "Per-Persona overrides"
+L00003337	- "disabled_plugins"
+L00003338	negative_constraints:
+L00003339	- "OpenCode tool override defaults must not replace Puppet Master namespaced aliasing defaults."
+L00003340	preserved_contractrefs:
+L00003341	- "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md"
+L00003342	compatibility_only_notes:
+L00003343	- "OpenCode deltas are preserved without re-owning existing fine-grained units."
+L00003344	stale_retired_dispositions: []
+L00003345	owner_hints:
+L00003346	- "Plans/Plugins_System.md"
+L00003347	- "Plans/OpenCode_Deep_Extraction.md"
+L00003348	```
+L00003349	
+L00003350	### PLUG-053 - Compaction Hook Alias Compatibility
+L00003351	
+L00003352	```yaml
+L00003353	plan_unit_id: PLUG-053
+L00003354	unit_type: compatibility_disposition
+L00003355	status: accepted
+L00003356	owner_doc: Plans/Plugins_System.md
+L00003357	canonical_text: "OpenCode-era experimental.session.compacting subscriptions map to Puppet Master canonical session.compacting at registration time as an alias, with InjectContext versus ReplacePrompt return semantics and first-wins conflict resolution for ReplacePrompt."
+L00003358	gui_related: false
+L00003359	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00003360	split_recommended: false
+L00003361	depends_on:
+L00003362	- PLUG-026
+L00003363	- PLUG-050
+L00003364	unblocks: []
+L00003365	acceptance_criteria:
+L00003366	- "PLUG-053 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+L00003367	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003368	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003369	validation_surfaces:
+L00003370	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003371	- python3 scripts/pm-plan-index.py validate
+L00003372	risk_class: plugins_system_drift
+L00003373	reasoning_tier: standard
+L00003374	context_scope: plugins_system_batch_210
+L00003375	implementation_surfaces:
+L00003376	- Plans/Plugins_System.md
+L00003377	node_compile_hint:
+L00003378	  mode: compaction_alias_compatibility
+L00003379	  create_worknodes: false
+L00003380	source_lineage:
+L00003381	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0058
+L00003382	preserved_exact_tokens:
+L00003383	- "Compaction hook naming and semantics"
+L00003384	- "experimental.session.compacting"
+L00003385	- "session.compacting"
+L00003386	- "dropping the experimental. prefix"
+L00003387	- "backward compatibility"
+L00003388	- "mapped to the canonical session.compacting hook at registration time"
+L00003389	- "alias"
+L00003390	- "InjectContext"
+L00003391	- "ReplacePrompt"
+L00003392	- "first-wins conflict resolution"
+L00003393	negative_constraints:
+L00003394	- "No runtime distinction exists between experimental.session.compacting alias subscribers and canonical session.compacting subscribers after registration."
+L00003395	preserved_contractrefs:
+L00003396	- "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md"
+L00003397	compatibility_only_notes:
+L00003398	- "experimental.session.compacting is compatibility alias only."
+L00003399	stale_retired_dispositions:
+L00003400	- "experimental.session.compacting is mapped to canonical session.compacting at registration time."
+L00003401	owner_hints:
+L00003402	- "Plans/Plugins_System.md"
+L00003403	- "Plans/OpenCode_Deep_Extraction.md"
+L00003404	```
+L00003405	
+
+<<< CONTEXT_AFTER canonical_document_lines=3406-3417 >>>
+L00003406	### PLUG-054 - CLI-Backed Provider Plugin Capability Evidence
+L00003407	
+L00003408	```yaml
+L00003409	plan_unit_id: PLUG-054
+L00003410	unit_type: requirement
+L00003411	status: accepted
+L00003412	owner_doc: Plans/Plugins_System.md
+L00003413	canonical_text: "When the claude local binary is used as a CLI-bridged provider, Puppet Master records observed provider-protocol capability evidence for native agents, effort and model selection, fallback models, MCP, plugins, settings injection, and headless JSON or stream-json output; plugin support remains capability-scoped and does not imply every provider account can load Puppet Master plugins."
+L00003414	gui_related: false
+L00003415	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00003416	split_recommended: false
+L00003417	depends_on:

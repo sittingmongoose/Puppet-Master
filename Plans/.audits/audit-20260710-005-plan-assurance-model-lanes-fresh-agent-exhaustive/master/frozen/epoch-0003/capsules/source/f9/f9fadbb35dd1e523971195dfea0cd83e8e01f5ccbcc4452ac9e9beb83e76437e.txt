@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 13887-13898 >>>
+- Interview phase
+- >-
+  document completeness, decision clarity, unresolved-clarification handling, output readiness for downstream plan generation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 13899-14271 >>>
+### OSI-133 - Reviewer Participation Required
+
+```yaml
+plan_unit_id: OSI-133
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The reviewer/quality path is mandatory at the end of every tier completion path, on retry paths after a failed tier is re-attempted,
+  and when a quality gate failure feeds remediation back into the same tier.
+gui_related: false
+gui_classification_reason: This unit covers required verification participation rather than GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-116
+- OSI-124
+- OSI-125
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: reviewer_participation_required
+node_compile_hint:
+  mode: reviewer_participation_required
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0104
+preserved_exact_tokens:
+- Reviewer participation
+- reviewer/quality path is not optional
+- end of every tier completion path
+- retry paths
+- quality gate fails
+- remediation loop feeds back into the same tier
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-134 - Failure Warning Category Invariant
+
+```yaml
+plan_unit_id: OSI-134
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Verification failure policy requires execution-affecting mismatches and missing required upstream dependencies to fail,
+  permits only non-execution-affecting display/observability/deferred mismatches to warn, and forbids performance concerns
+  from weakening verification categories.
+gui_related: false
+gui_classification_reason: This unit defines backend verification outcome policy rather than GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-130
+- OSI-131
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: failure_warning_category_invariant
+node_compile_hint:
+  mode: failure_warning_category_invariant
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0105
+preserved_exact_tokens:
+- Failure vs warning policy
+- required execution-affecting mismatches fail verification
+- missing or inconsistent upstream dependencies required for the declared tier objective fail verification
+- display-only, observability-only, or deferred non-execution-affecting mismatches may warn
+- performance concerns MUST NOT weaken the verification categories
+- may not silently skip categories
+negative_constraints:
+- >-
+  Performance concerns MUST NOT weaken the verification categories; implementation may scope work to changed artifacts, but
+  may not silently skip categories.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- >-
+  Self PolicyRule anchor #verification-category-invariant is preserved as ContractRef text from source; no governance anchor
+  generation occurs in this batch.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: PolicyRule:Plans/orchestrator-subagent-integration.md#verification-category-invariant'
+```
+
+### OSI-135 - Interview Phase Lifecycle Mirror
+
+```yaml
+plan_unit_id: OSI-135
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Interview phases mirror the same lifecycle as other tiers: start uses wiring, readiness, and sequence checks; end uses wiring
+  re-check, acceptance, and quality checks; interview-subagent-integration.md owns phase-specific quality criteria and UI/runtime
+  consequences without inventing an alternate lifecycle.
+gui_related: true
+gui_classification_reason: The unit preserves interview UI/runtime consequences and cross-doc lifecycle behavior.
+split_recommended: true
+depends_on:
+- OSI-099
+- OSI-130
+- OSI-131
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: interview_phase_lifecycle_mirror
+node_compile_hint:
+  mode: interview_phase_lifecycle_mirror
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0106
+preserved_exact_tokens:
+- Interview-phase mirror
+- start = wiring + readiness + sequence
+- end = wiring re-check + acceptance + quality
+- interview-subagent-integration.md
+- UI/runtime consequences
+- MUST mirror this contract
+- invent an alternate lifecycle
+negative_constraints:
+- Interview phases MUST mirror this contract rather than invent an alternate lifecycle.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/interview-subagent-integration.md'
+```
+
+### OSI-136 - Unrelated Failure Escalation Policy
+
+```yaml
+plan_unit_id: OSI-136
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  When a tier fails because of issues outside its intended scope, the orchestrator retries once with the same config, then
+  raises an Assistant chat CTA with review, skip, retry, and abort options; modal escalation is reserved for P0 risk such
+  as possible data loss or workspace corruption, and unrelated failures must not be silently bypassed.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Assistant chat CTA and modal escalation behavior.
+split_recommended: false
+depends_on:
+- OSI-098
+- OSI-121
+- OSI-127
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: unrelated_failure_escalation_policy
+node_compile_hint:
+  mode: unrelated_failure_escalation_policy
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0107
+preserved_exact_tokens:
+- Unrelated-failure escalation
+- retry once automatically using the same config
+- Assistant chat CTA
+- review, skip, retry, and abort options
+- modal
+- P0 risk
+- possible data loss
+- workspace corruption
+- do not silently bypass unrelated failures
+negative_constraints:
+- Do not silently bypass unrelated failures.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-137 - Structured Verification Feedback Loop
+
+```yaml
+plan_unit_id: OSI-137
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Verification failures produce structured feedback identifying the failing criterion, affected artifact or file when known,
+  and expected next action, while rework loops reuse the existing incomplete-task/remediation flow rather than a separate
+  ad hoc channel.
+gui_related: true
+gui_classification_reason: Structured feedback and remediation loops are user/operator-visible workflow behavior.
+split_recommended: true
+depends_on:
+- OSI-121
+- OSI-136
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: structured_verification_feedback_loop
+node_compile_hint:
+  mode: structured_verification_feedback_loop
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0108
+preserved_exact_tokens:
+- Feedback loop
+- failing criterion
+- affected artifact or file
+- expected next action
+- incomplete-task / remediation flow
+- separate ad hoc channel
+negative_constraints:
+- >-
+  Rework loops reuse the existing incomplete-task / remediation flow rather than inventing a separate ad hoc channel.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- >-
+  ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md,
+  ContractName:Plans/FinalGUISpec.md
+```
+
+### OSI-138 - BeforeUnit/AfterUnit Middleware Boundary
+
+```yaml
+plan_unit_id: OSI-138
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Puppet Master supports BeforeUnit and AfterUnit hooks that run automatically at Phase, Task, Subtask, and Iteration execution
+  unit boundaries, separating lifecycle concerns such as tracking, state management, and validation from execution logic.
+gui_related: false
+gui_classification_reason: This unit defines backend lifecycle middleware boundaries rather than GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-107
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: beforeunit_afterunit_middleware_boundary
+node_compile_hint:
+  mode: beforeunit_afterunit_middleware_boundary
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0109
+preserved_exact_tokens:
+- Hook-Based Lifecycle Middleware
+- BeforeUnit
+- AfterUnit
+- execution unit boundaries
+- Phase
+- Task
+- Subtask
+- Iteration
+- tracking
+- state management
+- validation
+- separately from execution logic
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 14272-14283 >>>
+### OSI-139 - Platform Hook Registration Policy
+
+```yaml
+plan_unit_id: OSI-139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Platform hook registration uses orchestrator-level hooks as primary middleware while optionally integrating native platform
+  hooks: Cursor hook files and events, Codex and Copilot CLI lifecycle outputs, Claude settings hooks with blocking/context
+  behavior, and Gemini orchestrator-level Direct API hooks without native config files.
+gui_related: false

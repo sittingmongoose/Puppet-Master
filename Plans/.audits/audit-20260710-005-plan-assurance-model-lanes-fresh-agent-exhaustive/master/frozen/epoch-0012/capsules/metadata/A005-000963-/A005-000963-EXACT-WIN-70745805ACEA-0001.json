@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-000963-EXACT-WIN-70745805ACEA-0001",
+  "attempt_id": "attempt-0012",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      353,
+      364
+    ]
+  ],
+  "core_range": [
+    1,
+    352
+  ],
+  "core_sha256": "459529b67c74743b7bff549d5bbc8977cc1a6c151568bf3f13c70ecd6764d4f7",
+  "document_path": "Plans/Planning_Wizard.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/13/13a5790e166b05859e774be4395cd52bfb71345ace5557e33b4a9a8d4156ee4e.txt",
+  "source_excerpt_sha256": "13a5790e166b05859e774be4395cd52bfb71345ace5557e33b4a9a8d4156ee4e",
+  "source_sha256": "a4f61959f82a4fcde5872a40f7d92b8172fd609257017496f8c3945dcc992686",
+  "window_id": "WIN-70745805ACEA-0001"
+}

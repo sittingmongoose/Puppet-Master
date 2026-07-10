@@ -1,0 +1,1564 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000887-EXACT-WIN-6690C379876B-0001",
+  "attempt_id": "attempt-0002",
+  "task_thread_id": "019f4d38-6858-7861-a6d3-81521124ba33",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/usage-feature.md",
+    "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1",
+    "core_sha256": "02592b0113d53a529d03a0f12c8fd89fc844582877a5305c3222fe75fc85329f",
+    "core_range": [
+      1,
+      297
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "EXACT-001",
+      "item_type": "contract",
+      "title": "Usage is a plan-level, implementation-agnostic GUI contract",
+      "statement": "The owner text defines Usage as a first-class app/GUI area and intentionally specifies product behavior without binding the feature to a current implementation stack.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 23,
+          "line_end": 23,
+          "exact_quote": "**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document:",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 27,
+          "line_end": 27,
+          "exact_quote": "- Remains implementation-agnostic so it stays valid across tech stack changes",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-002",
+      "item_type": "contract",
+      "title": "Canonical usage numbers are projections over the event ledger",
+      "statement": "5h/7d and dashboard values are redb rollups produced by analytics scans over seglog, and the Usage view must query those rollups instead of scanning the ledger on demand.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 31,
+          "line_end": 31,
+          "exact_quote": "The rewrite described in \u0060Plans/rewrite-tie-in-memo.md\u0060 reinforces this plan's intent: Usage should be implemented as **projections/rollups** over the canonical event ledger (seglog), with durable KV state in redb and fast search in Tantivy--without changing the UX requirements in this document. 5h/7d and dashboard numbers are served from **redb rollups** produced by **analytics scan jobs** that aggregate over the seglog (and any JSONL mirror); the Usage view reads these rollups rather than scanning the ledger on demand.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc \u0060usage.jsonl\u0060 scans. \u0060usage.jsonl\u0060 may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-003",
+      "item_type": "contract",
+      "title": "Storage components have distinct usage responsibilities",
+      "statement": "Seglog owns event truth, redb owns durable state and rollups, projectors produce mirrors and indexes, and analytics jobs compute counters and persist fast-query rollups.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 41,
+          "line_end": 41,
+          "exact_quote": "| **Seglog** (canonical event stream) | All usage-relevant events (tokens, requests, errors, platform, tier, session) are appended here; single source of truth for analytics. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 42,
+          "line_end": 42,
+          "exact_quote": "| **redb** (settings / sessions / runs / checkpoints) | Durable KV for app state; also stores **analytics rollups** (5h/7d counters, tool latency distributions, error rates) that the Usage view and dashboard query. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 44,
+          "line_end": 44,
+          "exact_quote": "| **Analytics scan jobs** | Scan seglog (or JSONL mirror) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in redb for fast dashboard/Usage queries. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-004",
+      "item_type": "acceptance_oracle",
+      "title": "Usage rollups are gated on storage implementation prerequisites",
+      "statement": "The plan requires the seglog writer, redb schema and migrations, projector pipeline and checkpoints, and analytics scans before Usage can depend on redb rollups.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 46,
+          "line_end": 46,
+          "exact_quote": "**Implementation checklist** (from Plans/storage-plan.md; complete before Usage can rely on redb rollups):",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 54,
+          "line_end": 54,
+          "exact_quote": "- [ ] Implement \"analytics scan\" jobs:",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-005",
+      "item_type": "authority",
+      "title": "Usage owns product shape while storage and shell documents retain their authorities",
+      "statement": "Usage owns the quota, alerts, analytics, usage-tracking, runtime-event, and GUI product contract; storage and FinalGUISpec retain persistence and shell presentation ownership, and Executor Protocol retains blocked and recovery authority.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 64,
+          "line_end": 64,
+          "exact_quote": "- Usage owns the cross-surface \u0060/quota/alerts/analytics/product-shape\u0060, usage-tracking, and \u0060/runtime/event/GUI\u0060 product contract while storage and FinalGUISpec continue to own the persistence stack and shell presentation rules.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 79,
+          "line_end": 79,
+          "exact_quote": "- \u0060Plans/Executor_Protocol.md\u0060 and \u0060/Executor_Protocol.md\u0060 own blocked/runtime recovery mint/ownership rules; Usage consumes those \u0060/runtime\u0060 ownership outcomes without inventing a separate blocked or recovery authority.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-006",
+      "item_type": "contract",
+      "title": "Usage navigation is object-first and route-target based",
+      "statement": "Canonical navigation resolves usage and runtime objects through usage_event_ref, UsageRecord identity, runtime object identity, and shared route targets; domain-specific commands are wrappers rather than independent argument families.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 67,
+          "line_end": 67,
+          "exact_quote": "- GUI deep-links no longer use \u0060run_id/thread_id/timestamp\u0060, \u0060/thread_id/timestamp\u0060, \u0060usage_event_seq\u0060, broad timestamp filters, or tier-based \u0060usage.jsonl\u0060 rollups as canonical navigation. They resolve object-first pivots through \u0060usage_event_ref\u0060, UsageRecord identity, runtime object identity, and Ledger/Usage route targets.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 92,
+          "line_end": 92,
+          "exact_quote": "- \u0060cmd.nav.open_usage_subject\u0060 resolves canonical Usage/Ledger identity from \u0060usage_event_ref\u0060 or an equivalent usage target; domain-specific usage commands are wrappers over the shared route/subject model, not independent argument families.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-007",
+      "item_type": "contract",
+      "title": "Attempt, provider, usage, receipt, and tool trace joins have explicit bridge fields",
+      "statement": "attempt_id is the local runtime anchor, provider_attempt_ref is the provider trace handle, usage_event_ref is the Usage bridge, receipt refs preserve side-effect lineage, and provider-backed tool traces carry the provider handle when it exists.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 74,
+          "line_end": 74,
+          "exact_quote": "- Bridge-field precedence is explicit: \u0060attempt_id\u0060 stays the local runtime anchor; \u0060provider_attempt_ref?\u0060 appears on the \u0060attempt_record\u0060 as the provider/runtime execution trace handle; \u0060usage_event_ref\u0060 is the Usage bridge; and receipt refs remain external side-effect lineage. \u0060opaque-but-real\u0060 provider continuity fields must have a legal bridged-provider schema slot so reconnect/replay semantics are not under-specified before account-switch history is joined.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 84,
+          "line_end": 84,
+          "exact_quote": "- \u0060tool_llm_trace\u0060 records carry \u0060attempt_id?\u0060, \u0060provider_attempt_ref?\u0060, and \u0060execution_role?\u0060 so tool, runtime, and Usage projections can join the same execution identity without local argument guessing.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-008",
+      "item_type": "contract",
+      "title": "Record, bundle, and view exports remain distinct",
+      "statement": "Record exports preserve canonical record envelopes, bundle exports package records and attachments with manifests, and view exports produce user-facing filtered representations without becoming canonical truth.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 69,
+          "line_end": 69,
+          "exact_quote": "- Usage export semantics stay distinct: record export returns exact \u0060/records\u0060 with stable ids, canonical ids, \u0060/refs\u0060, metadata, and schema-aware payloads; bundle export packages records, Evidence items, attached \u0060/blobs/files\u0060, thread export/share payloads, selected-object bundles, \u0060.pm-bundle\u0060 configuration manifests, JSONL/JSON run-history artifacts, and a manifest; view export produces user-facing filtered table/list/chart output, CSV/JSON summaries, search results, analytics views, and graph \u0060/render\u0060 convenience output without becoming canonical record truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 77,
+          "line_end": 77,
+          "exact_quote": "- Usage follows graph-scale guidance across Seams, Evidence, History, and Ledger: filtered CSV is a view export rather than canonical history, JSON summaries are not record exports unless they preserve the exact record envelope, monolithic plan-graph export stays derived, and JSONL mirror export is projection-derived rather than a replacement for seglog ownership. \u0060Orchestrator_Page.md\u0060 CSV/JSON exports and \u0060/evidence/history/record-bundle\u0060 bundles must preserve the same record/bundle/view distinction.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-009",
+      "item_type": "contract",
+      "title": "Account switch and pressure history is durable and shared",
+      "statement": "Actor-scoped snapshots and first-class account-switch and pressure-episode records replace attempt-only hints, and append-only history is consumed across Usage, History, Ledger, Orchestrator, Dashboard, and pressure projections.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 68,
+          "line_end": 68,
+          "exact_quote": "- Usage and storage are attempt-centric for runtime attribution and preserve tier-centric labels only as compatibility vocabulary. Durable switch and pressure history uses actor-scoped snapshots plus first-class account-switch and pressure-episode records instead of only per-attempt \u0060recent_switch_reason\u0060 or \u0060account_switch_reason\u0060 fields.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 70,
+          "line_end": 70,
+          "exact_quote": "- \u0060runtime-story\u0060 and audit surfaces consume append-only \u0060account_switch_event\u0060 and \u0060account_pressure_episode\u0060 history so Usage, History, Ledger, Orchestrator, Dashboard, and Account/Usage Pressure projections share the same durable facts; switch-history is an owned event family, not an under-owned view-only hint.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-010",
+      "item_type": "contract",
+      "title": "Embedded widgets inherit page scope and layout migration precedence",
+      "statement": "Usage-linked Progress widgets inherit focused run and page trust state, permit presentation-only configuration that cannot escape page scope, and use widget_layout:v1:dashboard with explicit legacy backup reads and active-family precedence.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 78,
+          "line_end": 78,
+          "exact_quote": "- Orchestrator \u0060Progress\u0060 widgets embedded or linked from Usage inherit \u0060focused_run_id\u0060 and page trust state automatically; widget config is limited to local presentation such as collapsed sections, chart style, sort, density, visible columns, or safe subset filters that cannot escape page scope.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 80,
+          "line_end": 80,
+          "exact_quote": "- Usage follows \u0060Plans/FinalGUISpec.md\u0060 and \u0060/FinalGUISpec.md\u0060 appendix C.5 for backup-preserving dashboard widget layout migration: \u0060dashboard_layout:v1\u0060 and \u0060dashboard_layout\u0060 remain backup/migration reads, future reads use \u0060widget_layout:v1:dashboard\u0060, and the active \u0060widget_layout\u0060 family takes precedence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-011",
+      "item_type": "gui_truth",
+      "title": "Pressure values must disclose uncertainty",
+      "statement": "Usage may combine runtime, provider, heuristic, and explicit pressure signals, but must label incomplete live-API availability and must not present inferred pressure as exact quota truth.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 81,
+          "line_end": 81,
+          "exact_quote": "- Quota and pressure detection accept mixed signal sources: runtime outcomes, provider capabilities, heuristic \u0060/log-derived\u0060 hints, and explicit \u0060/pressure\u0060 evidence. Usage labels incomplete live-API availability rather than presenting inferred pressure as exact provider quota truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-012",
+      "item_type": "gui_truth",
+      "title": "Freshness and quiet suppression preserve user trust",
+      "statement": "Stale values must show Last updated and Refresh, while quiet windows may suppress advisory resurfacing but cannot suppress canonical blocked or approval-wait rows and their owner/reason metadata.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 89,
+          "line_end": 89,
+          "exact_quote": "- Usage freshness is a user-trust requirement: stale values must be visibly marked with \u0060Last updated\u0060 and an explicit \u0060Refresh\u0060 action so old numbers are never presented as current.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 83,
+          "line_end": 83,
+          "exact_quote": "- Quiet suppression only affects advisory resurfacing. Attention center and project badges must preserve canonical blocked and \u0060/approval-wait\u0060 rows with precise owner and reason metadata, even when a quiet window is active.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-013",
+      "item_type": "state_transition",
+      "title": "Cleanup requires explicit owner eligibility and no retention reason",
+      "statement": "Usage may consume cleanup state only after owner records mark stale package, lane, or worktree backing cleanup_eligible, and only after completion, supersession, reopened flow, or recovery leaves no retention reason.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 90,
+          "line_end": 90,
+          "exact_quote": "- Usage consumes \u0060/package\u0060 and \u0060/worktree\u0060 cleanup state only after owner records mark stale lanes or worktrees \u0060cleanup_eligible\u0060: lane/package completion, graph-patch supersession, revoked/reopened flow via \u0060/reopened\u0060, and completed recovery may make old backing removable only when no retention reason remains.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-014",
+      "item_type": "authority",
+      "title": "Concept demos are not active Usage authority",
+      "statement": "PMConcept6 artifacts and demo contracts are illustrative source lineage only; promoted details must be restated in live owner documents and controls require production wiring evidence.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 94,
+          "line_end": 94,
+          "exact_quote": "- \u0060Concepts/pm6-build/**\u0060, including PMConcept6 Usage page parts, internal contracts, manifest owners, embedded demo data, and working/assembled HTML, is illustrative source-lineage only. It does not define active Usage UX, UsageRecord fields, source classes, cost authority, provider quota truth, refresh/retention intervals, widget IDs, commands, runtime events, receipts, WorkNodes, NodeSeeds, queues, or wiring. Any promoted detail must be restated in live owner docs and, for controls/actions, production wiring evidence; otherwise Usage follows this document's normalized UsageRecord/value-state contracts and \u0060Plans/FinalGUISpec.md\u0060 presentation constraints.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-015",
+      "item_type": "capability",
+      "title": "Primary Usage capability combines quotas, consumption, ledger, analytics, and warnings",
+      "statement": "The Usage section provides persistent platform quota and consumption visibility, 5h/7d and plan data where available, event-level usage, optional analytics, and warnings that support switching or pausing.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 98,
+          "line_end": 98,
+          "exact_quote": "The app will expose a **Usage** section that gives users clear, persistent visibility into platform quota and consumption. Goals: show 5h/7d usage and plan type where available, surface event-level usage (ledger) and optional analytics, and warn when approaching limits so users can switch platform or pause. The feature builds on existing usage tracking and plan detection; the plan focuses on **what** the Usage area should do and **where** it fits in the GUI, not the current tech stack.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-016",
+      "item_type": "gui_truth",
+      "title": "Quota and plan values are persistent platform-facing GUI information",
+      "statement": "The GUI shows current 5h and 7d usage against limits per supporting platform, exposes detected or configured plan type, and keeps limits visible without requiring a manual usage command.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 134,
+          "line_end": 134,
+          "exact_quote": "- **5h and 7d windows:** Show current usage vs limit (e.g. \"5h: X / Y\", \"7d: X / Y\") per platform where the platform or org API provides it.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 135,
+          "line_end": 135,
+          "exact_quote": "- **Plan type:** Show detected or configured plan (e.g. Pro, Team) where available (see AGENTS.md plan detection).",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 138,
+          "line_end": 138,
+          "exact_quote": "- **Always-visible limits:** Match UX expectations set by tools like [yume](https://aofp.github.io/yume/) -- 5h and 7d usage always visible so users don't need a manual \"usage\" command.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-017",
+      "item_type": "gap",
+      "title": "The mandatory always-visible surface is not selected",
+      "statement": "The requirement allows dashboard, header, or a dedicated Usage page and only requires one of them, so builders can choose materially different persistent placement and cross-page visibility behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "gui_placement_under_specified",
+      "impact": "Implementations can satisfy the sentence while producing different always-visible scope, navigation reach, and tier-selection context.",
+      "builder_discretion": "Select which surface is mandatory, whether visibility is app-global or page-local, and how duplicate surfaces synchronize.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 136,
+          "line_end": 136,
+          "exact_quote": "- **Placement:** Always visible in at least one of: dashboard, header, or a dedicated **Usage** page. Tier config / setup should show current usage when selecting a platform so users can avoid platforms near limit.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-018",
+      "item_type": "gap",
+      "title": "Background refresh cadence and failure behavior are unspecified",
+      "statement": "The plan requires nonblocking background refresh and live-versus-after-run documentation but gives examples rather than a required cadence, staleness threshold, timeout, retry, backoff, or refresh failure state.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "refresh_operations_under_specified",
+      "impact": "Quota freshness, provider load, offline behavior, and the meaning of Last updated can vary substantially between implementations.",
+      "builder_discretion": "Choose triggers, intervals, concurrency, retry/backoff, timeout, stale cutoff, and error presentation.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 137,
+          "line_end": 137,
+          "exact_quote": "- **Refresh:** Background refresh (e.g. periodic or after runs) so numbers stay up to date without blocking the UI. Document which platforms support \"live\" vs \"after-run\" stats.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 89,
+          "line_end": 89,
+          "exact_quote": "- Usage freshness is a user-trust requirement: stale values must be visibly marked with \u0060Last updated\u0060 and an explicit \u0060Refresh\u0060 action so old numbers are never presented as current.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-019",
+      "item_type": "gap",
+      "title": "Alert enablement, threshold, and recovery action are discretionary",
+      "statement": "Approaching-limit warnings are optional with an example threshold, and rate-limit recovery suggestions are required only where possible; no default threshold, hysteresis, deduplication, or action-availability rule is fixed.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "alert_policy_under_specified",
+      "impact": "Users may receive different warning timing and recovery guidance for the same pressure state, including alert churn near a threshold.",
+      "builder_discretion": "Choose whether warnings are enabled, the default threshold, reset/hysteresis behavior, delivery surfaces, and when retry or switch actions are considered possible.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 142,
+          "line_end": 142,
+          "exact_quote": "- **Approaching limit:** Optional warning when usage is near limit (e.g. 80% of 5h window) so the user can switch tier or pause.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 143,
+          "line_end": 143,
+          "exact_quote": "- **Rate limit hit:** When a run hits quota/rate limit, surface a clear message and, where possible, suggested action (e.g. \"Try again after X\" or \"Switch platform\"); link to the Usage view.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-020",
+      "item_type": "capability",
+      "title": "Event-level inspection, filtering, and export remain Usage capabilities",
+      "statement": "Users can inspect platform, operation, tokens, cost, tier, and session at request level and filter or export the event ledger whether it remains a Ledger page or moves under Usage.",
+      "severity": "none",
+      "confidence": "high",
+      "builder_discretion": "The owner text explicitly permits either the existing Ledger page or a tab/section under a unified Usage area.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 148,
+          "line_end": 148,
+          "exact_quote": "- **Event-level log:** Keep the existing concept of an event ledger (platform, operation, tokens in/out, cost, tier/session) so users can inspect per-request usage. This may remain the current \"Ledger\" page or be presented as a tab/section under a unified **Usage** area.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 149,
+          "line_end": 149,
+          "exact_quote": "- **Filtering and export:** Retain filtering (e.g. by type, tier, session) and export (e.g. JSON) as part of the Usage feature.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-021",
+      "item_type": "capability",
+      "title": "Analytics aggregates usage and cost across shared dimensions",
+      "statement": "The optional analytics layer can aggregate usage by time, platform, project, or tier and show available cost breakdowns by model, project, and date.",
+      "severity": "none",
+      "confidence": "high",
+      "builder_discretion": "Analytics may be a separate page or a section under Usage.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 153,
+          "line_end": 153,
+          "exact_quote": "- **Aggregated view:** Over time, support an analytics view that aggregates usage by time window, platform, project, or tier (as in newfeatures §7). Can be a separate page or a section under Usage.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 154,
+          "line_end": 154,
+          "exact_quote": "- **Cost tracking and attribution:** Where data is available (from platform APIs), show cost breakdowns by model, project, and date (see [openclaudecto](https://github.com/josharsh/openclaudecto), [yume analytics](https://aofp.github.io/yume/)).",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-022",
+      "item_type": "gap",
+      "title": "Usage data retention has no concrete policy",
+      "statement": "The owner requires a retention policy but supplies only example storage forms and no duration, size bound, pruning order, legal hold, export-before-delete, or per-record-class rule.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "retention_policy_missing",
+      "impact": "Disk bounds, historical completeness, privacy exposure, and 5h/7d correctness across pruning can differ across implementations.",
+      "builder_discretion": "Define retention duration and size limits, pruning and compaction behavior, retention exemptions, deletion auditability, and interactions with rollups and exports.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 155,
+          "line_end": 155,
+          "exact_quote": "- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-023",
+      "item_type": "behavior",
+      "title": "The context circle is a split inspect/action affordance",
+      "statement": "Hover shows lightweight usage status, click reveals Compact Now, Compact Now dispatches the thread compaction command, and More Details opens or focuses the thread Context Detail Pane in an editor tab without replacing app-wide Usage.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 165,
+          "line_end": 165,
+          "exact_quote": "Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 169,
+          "line_end": 169,
+          "exact_quote": "- hover opens a lightweight status module showing \u0060Usage\u0060, \u0060Tokens\u0060, estimated \u0060Cost\u0060, and \u0060More Details\u0060",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 170,
+          "line_end": 170,
+          "exact_quote": "- click reveals the \u0060Compact Now\u0060 action instead of immediately opening the detail surface",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 171,
+          "line_end": 171,
+          "exact_quote": "- selecting \u0060Compact Now\u0060 dispatches the canonical compaction command for that thread",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 172,
+          "line_end": 172,
+          "exact_quote": "- selecting \u0060More Details\u0060 opens or focuses the thread-scoped Context Detail Pane in an editor tab",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 173,
+          "line_end": 173,
+          "exact_quote": "- app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-024",
+      "item_type": "capability",
+      "title": "Context Detail supports curated and raw inspection",
+      "statement": "The pane exposes curated thread/runtime/token/cost summaries, grouped breakdowns, human-readable per-message inspection, raw thread and message payload toggles, and runtime-dimension drill-downs when available.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 178,
+          "line_end": 178,
+          "exact_quote": "The Context Detail Pane must support both curated inspection and raw payload inspection.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 181,
+          "line_end": 181,
+          "exact_quote": "- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 184,
+          "line_end": 184,
+          "exact_quote": "- raw payload toggles for the full thread and for individual messages",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 185,
+          "line_end": 185,
+          "exact_quote": "- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-025",
+      "item_type": "state_transition",
+      "title": "Mid-stream values remain explicitly in progress",
+      "statement": "Usage may update during execution, but it cannot present intermediate values as final totals before final usage is known.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 174,
+          "line_end": 174,
+          "exact_quote": "- mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-026",
+      "item_type": "contract",
+      "title": "Per-thread cost and token displays preserve source and counting semantics",
+      "statement": "Canonical UsageRecord projections are the first cost source; fallback normalization is display-only and explicitly estimated, provider token categories appear only under mapper counting semantics, and raw/debug paths retain source confidence, settlement, freshness, and redaction state.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 190,
+          "line_end": 190,
+          "exact_quote": "- per-thread chat cost consumes canonical UsageRecord projections first",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 191,
+          "line_end": 191,
+          "exact_quote": "- OpenCode-style normalization is a display fallback only when the UsageRecord marks the value \u0060pricing_estimated\u0060 or otherwise non-authoritative",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 192,
+          "line_end": 192,
+          "exact_quote": "- reasoning/thoughts, cache read, cache write, cache_write_1h/TTL, output_visible, provider_total, and context_estimate display only under the provider mapper's inclusive/exclusive \u0060counting_semantics\u0060",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 193,
+          "line_end": 193,
+          "exact_quote": "- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-027",
+      "item_type": "gap",
+      "title": "Raw payload inspection lacks an explicit security and privacy gate",
+      "statement": "The plan mandates full-thread and per-message raw payload toggles and disclosure of redaction state, but this window does not specify authorization, secret scrubbing, default redaction, audit logging, copy/export restrictions, or behavior when redaction metadata is missing.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "raw_payload_security_privacy_under_specified",
+      "impact": "Raw messages and provider payloads may contain secrets, personal data, system prompts, credentials, or tool outputs that should not be exposed uniformly.",
+      "builder_discretion": "Decide who may inspect raw payloads, what is removed or masked, how missing redaction state fails, and whether raw data may be copied or exported.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 184,
+          "line_end": 184,
+          "exact_quote": "- raw payload toggles for the full thread and for individual messages",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 193,
+          "line_end": 193,
+          "exact_quote": "- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-028",
+      "item_type": "contract",
+      "title": "Cursor usage truth is source-qualified and never fabricates remaining requests",
+      "statement": "Cursor supports enumerated provider, team-admin, runtime-inferred, and editor-refusal source classes; plan totals, allotments, and refusal evidence cannot be transformed into a fake universal remaining-request counter.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 201,
+          "line_end": 201,
+          "exact_quote": "Canonical usage-source classes for Cursor are:",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 209,
+          "line_end": 209,
+          "exact_quote": "- PM must not invent a fake universal remaining-request counter when Cursor exposes only plan totals, team allotments, or runtime/editor refusal signals.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 216,
+          "line_end": 216,
+          "exact_quote": "- Usage UI must disclose whether the data comes from provider-reported plan data, team-admin data, inferred-from-runtime evidence, or editor-refusal evidence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-029",
+      "item_type": "authority",
+      "title": "Cursor agent owns runtime evidence while the API augments account and plan data",
+      "statement": "Cursor API use is limited to account and plan augmentation, cursor-agent is the execution and account-validation target, monthly allotments retain plan-cycle semantics, and CURSOR_API_KEY remains an advanced setup path.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 197,
+          "line_end": 197,
+          "exact_quote": "Cursor usage is account and plan augmentation only. PM does not use a Cursor API for model invocation.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 214,
+          "line_end": 214,
+          "exact_quote": "- \u0060cursor-agent\u0060 remains the runtime target for execution and account validation.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 213,
+          "line_end": 213,
+          "exact_quote": "- monthly included usage or request-allotment semantics are shown honestly as plan-cycle data rather than forced into a short rolling-window countdown.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 215,
+          "line_end": 215,
+          "exact_quote": "- \u0060CURSOR_API_KEY\u0060 is an advanced/non-default setup path and does not change the CLI runtime ownership model.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-030",
+      "item_type": "contract",
+      "title": "Cursor instruction artifacts have a primary and deprecated lineage",
+      "statement": "The GUI label is Cursor Rules, .cursor/rules/*.mdc is generated first, compatibility projections remain tracked, and .cursorrules forms are deprecated compatibility rather than primary artifacts.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 217,
+          "line_end": 217,
+          "exact_quote": "- Cursor instruction-sync status uses \u0060Cursor Rules\u0060 as the user-facing label. PM generates \u0060.cursor/rules/*.mdc\u0060 first, tracks compatibility projections such as \u0060cursor/rules/*.mdc\u0060 under \u0060/rules/\u0060, and treats \u0060.cursorrules\u0060 / \u0060cursorrules\u0060 as \u0060/deprecated\u0060 compatibility rather than the primary managed artifact.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-031",
+      "item_type": "contract",
+      "title": "Codex plan-backed and API-billed usage are separate buckets",
+      "statement": "ChatGPT-backed and API-key-backed Codex accounts cannot share pressure or cooldown pools, and GUI rows must plainly identify plan-backed versus API-billed semantics.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 225,
+          "line_end": 225,
+          "exact_quote": "Codex is a direct provider in PM and supports multiple accounts across two distinct auth families:",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 232,
+          "line_end": 232,
+          "exact_quote": "- ChatGPT-backed Codex usage and API-key-backed Codex usage are distinct entitlement buckets.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 233,
+          "line_end": 233,
+          "exact_quote": "- PM MUST NOT merge those buckets into one shared pressure or cooldown pool, even when they belong to the same human owner.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 237,
+          "line_end": 237,
+          "exact_quote": "- Usage rows must label the bucket plainly, for example \u0060Plan: ChatGPT Pro\u0060 or \u0060Usage Bucket: API billed\u0060.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-032",
+      "item_type": "authority",
+      "title": "Codex setup status and runtime statistics are not quota evidence",
+      "statement": "codex login status proves only logged-in setup state, while runtime token statistics and provider rate-limit hints must be parsed separately so quantity does not masquerade as pressure.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 240,
+          "line_end": 240,
+          "exact_quote": "- \u0060codex login status\u0060 is an allowed local probe for direct Codex login state and reports whether the account is logged-in. PM records that as setup/status evidence, not as usage quantity or quota evidence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 241,
+          "line_end": 241,
+          "exact_quote": "- Codex ChatGPT \u0060/browser\u0060 accounts may expose strong local \u0060/runtime\u0060 stats, but provider/runtime rate-limit hints must be parsed separately from token statistics so a row does not confuse token usage with quota or rate-limit pressure.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-033",
+      "item_type": "state_transition",
+      "title": "Copilot exhaustion and policy states remain distinct",
+      "statement": "Premium-request exhaustion may leave included models eligible, while paid-overage policy, billing entity, entitlement, organization policy, and runtime-side failures remain separate blocked or setup states with explicit reason tokens and user copy.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 253,
+          "line_end": 253,
+          "exact_quote": "- if the user exhausts premium requests, Copilot can still fall back to included models for the rest of the month, but premium-request-backed behavior is subject to explicit block \u0060/rate-limit/policy\u0060 state.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 255,
+          "line_end": 255,
+          "exact_quote": "- blocked reasons should remain explicit, including \u0060billing_entity_required\u0060, \u0060included_premium_exhausted\u0060, \u0060paid_overage_disallowed\u0060, \u0060copilot_entitlement_missing\u0060, and \u0060copilot_org_policy_blocked\u0060.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 256,
+          "line_end": 256,
+          "exact_quote": "- The default plain-language mapping for \u0060included_premium_exhausted\u0060 is status \u0060Premium requests exhausted\u0060, subtext \u0060Premium-request-backed features are unavailable until reset or policy change\u0060, and secondary note \u0060Included models may still be available\u0060 when included-model usage remains eligible.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 257,
+          "line_end": 257,
+          "exact_quote": "- if multiple billing entities are available, the account may be \u0060Logged in\u0060 but still \u0060Needs setup\u0060 until the user chooses the effective billing entity.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-034",
+      "item_type": "authority",
+      "title": "Copilot hard-block truth requires explicit evidence",
+      "statement": "Metrics may inform pressure but cannot establish a hard block or per-account remaining-request truth without explicit provider entitlement, policy, endpoint, or runtime refusal evidence; billing and enterprise context stays separate from account truth.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 259,
+          "line_end": 259,
+          "exact_quote": "- org/account metrics may strongly inform pressure, but exact hard-block semantics require explicit Copilot entitlement, policy, or runtime refusal evidence rather than inference from metrics alone.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 260,
+          "line_end": 260,
+          "exact_quote": "- Team admin APIs such as \u0060/metrics/spending\u0060 may inform Copilot pressure, but PM must not promise a simple per-account \u0060remaining-requests\u0060 endpoint as account-row truth unless the provider exposes one.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 261,
+          "line_end": 261,
+          "exact_quote": "- Team/enterprise request allotments, usage-based pricing controls, and admin \u0060/dashboard/API\u0060 reporting are team-level augmentation surfaces; PM must keep \u0060/enterprise\u0060 policy and billing context separate from per-account remaining-request truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-035",
+      "item_type": "contract",
+      "title": "UsageRecord extensions are additive and attribution-limited",
+      "statement": "Only fields required to attribute the runtime surface that executed a call belong in UsageRecord by default; scheduler-internal IDs remain scheduler evidence, while four effective-runtime fields may be added when attribution requires them.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 265,
+          "line_end": 265,
+          "exact_quote": "- \u0060usage-record\u0060 / \u0060usage_record\u0060 fields contain only attribution-relevant additive fields needed for usage owner attribution; \u0060bridge-visible\u0060 fields are the subset needed to prove the runtime surface that actually executed the call, while scheduler-internal IDs remain scheduler/effective-resolution evidence and must not be inserted into \u0060usage_record\u0060 by default.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 266,
+          "line_end": 266,
+          "exact_quote": "- \u0060usage-record\u0060 / \u0060usage_record\u0060 extensions may include \u0060effective_provider_family_id?\u0060, \u0060effective_transport_kind?\u0060, \u0060effective_connection_profile_id?\u0060, and \u0060effective_runtime_platform_id?\u0060 when those fields are required to attribute usage to the runtime surface that actually executed the call.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-036",
+      "item_type": "contract",
+      "title": "Claude source authority differs by account family",
+      "statement": "Admin API and stream-json supply different organization and per-session inputs; API-backed accounts can support stronger cost and rate-limit states, while subscriber data must not inherit organization hard-limit semantics and exhaustion requires an explicit provider or runtime hard-block signal.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 271,
+          "line_end": 271,
+          "exact_quote": "- **Availability:** Anthropic **Admin API** (\u0060/v1/organizations/usage_report/claude_code\u0060); env: \u0060ANTHROPIC_API_KEY\u0060. Already documented in AGENTS.md.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 273,
+          "line_end": 273,
+          "exact_quote": "- **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 277,
+          "line_end": 277,
+          "exact_quote": "- Claude Code CLI subscription \u0060/stats\u0060 visibility generally informs pressure; PM records \u0060/exhaustion\u0060 only when the runtime or provider explicitly signals a hard block or exhausted state.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 278,
+          "line_end": 278,
+          "exact_quote": "- API / Console / organization-backed Claude Code limits are org-level and may include monthly spend limits plus shorter-window rate limits such as \u0060RPM\u0060 and \u0060/TPM\u0060; subscriber-backed rows must not reuse those hard limit semantics without provider evidence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-037",
+      "item_type": "authority",
+      "title": "Gemini routes are distinct and Gemini CLI is retired",
+      "statement": "Gemini Direct remains route-specific, Antigravity is the active verified Google-owned CLI runtime, and Usage must not revive Gemini CLI as an active provider row.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 281,
+          "line_end": 281,
+          "exact_quote": "Gemini Direct usage must stay route-specific, and Antigravity CLI usage must be modeled as its own active CLI-runtime route where verified. Gemini CLI usage is retired/source-lineage only. Stale-canon wording that reduces Gemini to local counters, a single \u0060mixed-account\u0060 provider, or a generic API-key \u0060key-exception\u0060 is not sufficient for Usage.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 283,
+          "line_end": 283,
+          "exact_quote": "The provider-doc reconciliation keeps \u0060Plans/CLI_Bridged_Providers.md\u0060 as the owner for active CLI-runtime transport. Usage must not revive Gemini CLI as a live provider row; active Google-owned CLI-runtime evidence belongs to Antigravity.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-038",
+      "item_type": "contract",
+      "title": "Direct Gemini is key-only and uncertainty-qualified",
+      "statement": "Direct Gemini account rows use API keys, may depend on effective Google project context, use the canonical Use API Key setup path, and show estimated or unknown wording when authoritative quota cannot be proved.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 287,
+          "line_end": 287,
+          "exact_quote": "\u0060Gemini\u0060 is the direct key-only, API-key-backed provider entry.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 291,
+          "line_end": 291,
+          "exact_quote": "- quota identity may depend on effective Google project context as well as the key itself.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 293,
+          "line_end": 293,
+          "exact_quote": "- For direct Gemini setup, \u0060Use API Key\u0060 is the canonical setup path; optional future import of existing key material is not required for the core model.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 294,
+          "line_end": 294,
+          "exact_quote": "- when PM cannot prove authoritative remaining \u0060/quota\u0060, the UI must show \u0060estimated\u0060, \u0060/unknown\u0060, or equivalent source-qualified wording rather than pretending the numbers are definitive.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-039",
+      "item_type": "gap",
+      "title": "Mixed pressure sources lack a general conflict-resolution precedence",
+      "statement": "The plan enumerates accepted signal classes and provider-specific bars against overclaiming, but it does not define a deterministic general precedence or merge rule when explicit provider data, runtime refusal, capability metadata, heuristics, and admin metrics disagree.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "pressure_signal_conflict_precedence_missing",
+      "impact": "The same evidence set can yield different pressure states, block status, and alerts across provider mappers.",
+      "builder_discretion": "Choose source ordering, conflict detection, downgrade rules, time/freshness precedence, and whether hard refusal overrides stale provider data.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 81,
+          "line_end": 81,
+          "exact_quote": "- Quota and pressure detection accept mixed signal sources: runtime outcomes, provider capabilities, heuristic \u0060/log-derived\u0060 hints, and explicit \u0060/pressure\u0060 evidence. Usage labels incomplete live-API availability rather than presenting inferred pressure as exact provider quota truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 259,
+          "line_end": 259,
+          "exact_quote": "- org/account metrics may strongly inform pressure, but exact hard-block semantics require explicit Copilot entitlement, policy, or runtime refusal evidence rather than inference from metrics alone.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-040",
+      "item_type": "gap",
+      "title": "Storage gates do not provide UI-level acceptance oracles",
+      "statement": "The excerpt points to deterministic storage verifier gates and lists interaction rules, but it supplies no executable or observable acceptance oracle for the Usage placement, alerts, context-circle split action, pane contents, source labels, freshness, or provider bucket presentation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "ui_acceptance_oracles_missing",
+      "impact": "A builder can implement the named controls and states without a deterministic way to certify interaction sequence, visible copy, source qualification, or cross-surface consistency.",
+      "builder_discretion": "Define test fixtures, expected rendered states, command-dispatch receipts, accessibility interactions, and pass/fail assertions for each normative GUI rule.",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 111,
+          "line_end": 111,
+          "exact_quote": "| **Plans/Progression_Gates.md + Plans/evidence.schema.json** | Validation contract for the storage stack (seglog + redb + Tantivy + projectors + analytics scan) through deterministic verifier gates and evidence requirements. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 168,
+          "line_end": 168,
+          "exact_quote": "- the chat header context circle is always the entrypoint for per-thread context state",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-041",
+      "item_type": "gui_truth",
+      "title": "Usage help and tooltip copy requires Expert and ELI5 variants",
+      "statement": "Authored explanatory copy in Usage must provide both Expert and ELI5 variants and follow the referenced FinalGUISpec checklist.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 33,
+          "line_end": 33,
+          "exact_quote": "**ELI5/Expert copy alignment:** Authored usage tooltip/help text in this plan (for example context-circle hover copy and explanatory hints) must provide both Expert and ELI5 variants and follow the authoritative checklist in \u0060Plans/FinalGUISpec.md\u0060 §7.4.0.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-042",
+      "item_type": "contract",
+      "title": "Artifact and command routing use shared canonical subjects",
+      "statement": "Usage consumes artifacts through a seglog-first, staging-second model, and UI command wrappers normalize artifact, thread, panel, and orchestrator actions into shared route/subject payloads.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 85,
+          "line_end": 85,
+          "exact_quote": "- Usage consumes \u0060Project_Output_Artifacts.md\u0060 and \u0060Project_Output_Artifacts\u0060 through a seglog-first / staging-second artifact model that aligns subject-open routing with canonical record identity before staging views become user-facing.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 86,
+          "line_end": 86,
+          "exact_quote": "- \u0060UI_Command_Catalog.md\u0060 and \u0060UI_Command_Catalog\u0060 wrappers must normalize artifact actions, thread usage actions, panel switches, and Orchestrator pivots into shared route/subject payloads rather than preserving separate local arg sets.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-043",
+      "item_type": "contract",
+      "title": "Compatibility paths cannot replace canonical identity or rollup truth",
+      "statement": "Legacy usage.jsonl, tier/workspace layouts, old route identifiers, and dashboard layout keys remain bounded migration inputs or backup reads while canonical rollups, project/run/package/lane identity, object-first routing, and widget_layout take precedence.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc \u0060usage.jsonl\u0060 scans. \u0060usage.jsonl\u0060 may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 63,
+          "line_end": 63,
+          "exact_quote": "- Usage \u0060/runtime/storage\u0060 paths and artifacts are scoped per-project, per-run, per-package, and per-lane; old tier/workspace-only layouts remain migration inputs and must not replace canonical project/run/package/lane identity.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 80,
+          "line_end": 80,
+          "exact_quote": "- Usage follows \u0060Plans/FinalGUISpec.md\u0060 and \u0060/FinalGUISpec.md\u0060 appendix C.5 for backup-preserving dashboard widget layout migration: \u0060dashboard_layout:v1\u0060 and \u0060dashboard_layout\u0060 remain backup/migration reads, future reads use \u0060widget_layout:v1:dashboard\u0060, and the active \u0060widget_layout\u0060 family takes precedence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-044",
+      "item_type": "contract",
+      "title": "Execution identity includes account scope, actor kind, and role",
+      "statement": "Shared runtime and bridged-provider envelopes carry requested and effective account identity, execution scope, actor kind, and execution role so Usage can attribute activity without taking provider ownership.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 71,
+          "line_end": 71,
+          "exact_quote": "- Shared runtime identity and bridged-provider envelopes expose \u0060requested_account_id?\u0060, \u0060effective_account_id?\u0060, execution-scope fields, \u0060actor_kind\u0060, and \u0060execution_role\u0060 so Usage can attribute account and actor context without duplicating provider ownership.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-045",
+      "item_type": "consumer",
+      "title": "History, Ledger, Orchestrator, and prompt surfaces consume Usage runtime detail",
+      "statement": "Prompt Pipeline and FinalGUISpec consume account-switch, pressure, execution-role, and route-target disclosure, while runtime-story, audit, History, Ledger, Orchestrator, Dashboard, and pressure projections consume the same durable event facts.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 73,
+          "line_end": 73,
+          "exact_quote": "- \u0060Plans/Prompt_Pipeline.md\u0060 and \u0060Plans/FinalGUISpec.md\u0060 consume Usage runtime details for History, Ledger, and Orchestrator views, including account-switch, pressure, execution-role, and route-target disclosure.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 70,
+          "line_end": 70,
+          "exact_quote": "- \u0060runtime-story\u0060 and audit surfaces consume append-only \u0060account_switch_event\u0060 and \u0060account_pressure_episode\u0060 history so Usage, History, Ledger, Orchestrator, Dashboard, and Account/Usage Pressure projections share the same durable facts; switch-history is an owned event family, not an under-owned view-only hint.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-046",
+      "item_type": "failure_recovery",
+      "title": "Blocked and recovery outcomes retain owner, severity, persistence, and follow-through",
+      "statement": "Usage must preserve the owning system's blocked, startup-recovery, alert, and policy outcomes rather than flattening them into loose warnings, and compatibility resume URLs do not replace shared route targets.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 65,
+          "line_end": 65,
+          "exact_quote": "- Settings and help surfaces such as \u0060/help/project-status\u0060, \u0060/event/alert\u0060, blocked-sequence, startup-recovery, and DAE policy outcomes must preserve ownership, severity, persistence, and follow-through rather than becoming loose usage warnings.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 66,
+          "line_end": 66,
+          "exact_quote": "- \u0060thread_blocked_notice\u0060 and \u0060wizard_runtime_state\u0060 may preserve \u0060resume_url?\u0060 only as compatibility recovery data; Usage opens blocked and wizard subjects through shared route-target payloads rather than storage-plan special-casing.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-047",
+      "item_type": "explicit_non_gap",
+      "title": "External products are references rather than Usage authority",
+      "statement": "OpenCode is explicitly non-binding for implementation details, while PM's richer per-message inspection remains the canonical target; these references do not override the normative Usage rules.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 159,
+          "line_end": 159,
+          "exact_quote": "OpenCode Desktop implementation reference (non-binding):",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 163,
+          "line_end": 163,
+          "exact_quote": "- OpenCode message UI is a reference for hover-revealed icon actions and metadata rows on messages, but it does not satisfy PM's richer per-message info popover requirement; PM keeps the curated inspection and raw payload requirements below as the canonical target.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    },
+    {
+      "item_id": "EXACT-048",
+      "item_type": "explicit_non_gap",
+      "title": "Legacy current-state data is contextual rather than canonical rollup authority",
+      "statement": "The owner identifies usage.jsonl-backed Ledger, budget Dashboard, and existing UsageTracker/QuotaManager behavior as current-app context, while separately constraining usage.jsonl to mirror or migration input under the canonical projection pipeline.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 114,
+          "line_end": 114,
+          "exact_quote": "- **Ledger** page: Event-level log from \u0060.puppet-master/usage/usage.jsonl\u0060 (platform, tokens in/out, cost per request). No 5h/7d quota view.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 117,
+          "line_end": 117,
+          "exact_quote": "- **Backend**: \u0060UsageTracker\u0060, \u0060QuotaManager\u0060, \u0060UsageRecord\u0060 persisted to \u0060usage.jsonl\u0060; orchestrator records usage; platform runners report token usage.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc \u0060usage.jsonl\u0060 scans. \u0060usage.jsonl\u0060 may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "The core specifies rollup reads, quota display, event inspection, context-circle interactions, compaction dispatch, detail opening, refresh affordances, provider-specific presentation, and cleanup consumption behavior.",
+      "evidence_item_ids": [
+        "EXACT-002",
+        "EXACT-012",
+        "EXACT-015",
+        "EXACT-020",
+        "EXACT-023",
+        "EXACT-025",
+        "EXACT-033"
+      ]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Quota, plan, ledger, filtering, export, analytics, cost, context inspection, provider attribution, and warnings are explicitly present.",
+      "evidence_item_ids": [
+        "EXACT-015",
+        "EXACT-016",
+        "EXACT-020",
+        "EXACT-021",
+        "EXACT-024"
+      ]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "addressed",
+      "summary": "Inputs include seglog events, redb rollups, provider/admin APIs, runtime streams and refusals, and account/runtime identity; outputs include Usage rows, alerts, records, bundles, views, JSON/JSONL/CSV, widgets, and context-detail payloads.",
+      "evidence_item_ids": [
+        "EXACT-003",
+        "EXACT-008",
+        "EXACT-024",
+        "EXACT-028",
+        "EXACT-036",
+        "EXACT-038"
+      ]
+    },
+    {
+      "dimension": "contracts",
+      "status": "addressed",
+      "summary": "The text binds canonical storage, route targets, bridge fields, export envelopes, UsageRecord additions, provider bucket semantics, and referenced owner contracts.",
+      "evidence_item_ids": [
+        "EXACT-002",
+        "EXACT-005",
+        "EXACT-006",
+        "EXACT-007",
+        "EXACT-008",
+        "EXACT-026",
+        "EXACT-035",
+        "EXACT-043"
+      ]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "addressed",
+      "summary": "Specified states include in-progress to final usage, logged-in to needs-setup, premium exhaustion with included-model fallback, distinct block causes, stale/live values, cleanup eligibility, and pressure/exhaustion distinctions.",
+      "evidence_item_ids": [
+        "EXACT-012",
+        "EXACT-013",
+        "EXACT-025",
+        "EXACT-033",
+        "EXACT-036"
+      ]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Seglog, redb rollups, provider evidence, storage, FinalGUISpec, Executor Protocol, CLI transport, and Usage product ownership are separated explicitly.",
+      "evidence_item_ids": [
+        "EXACT-002",
+        "EXACT-003",
+        "EXACT-005",
+        "EXACT-014",
+        "EXACT-029",
+        "EXACT-032",
+        "EXACT-034",
+        "EXACT-036",
+        "EXACT-037"
+      ]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Usage, storage, FinalGUISpec, Executor Protocol, provider transport, widget, artifact, and runtime owners have explicit boundaries.",
+      "evidence_item_ids": [
+        "EXACT-005",
+        "EXACT-009",
+        "EXACT-010",
+        "EXACT-037",
+        "EXACT-042",
+        "EXACT-044",
+        "EXACT-046"
+      ]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Usage view, Dashboard, History, Ledger, Orchestrator, Prompt Pipeline, audit/runtime-story, widgets, account pressure projections, and chat context surfaces are named consumers.",
+      "evidence_item_ids": [
+        "EXACT-003",
+        "EXACT-009",
+        "EXACT-010",
+        "EXACT-023",
+        "EXACT-045"
+      ]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "gap_found",
+      "summary": "The text specifies visible values, source labels, copy, stale markers, context interactions, and provider buckets, but the mandatory persistent surface remains under-specified.",
+      "evidence_item_ids": [
+        "EXACT-011",
+        "EXACT-012",
+        "EXACT-016",
+        "EXACT-017",
+        "EXACT-023",
+        "EXACT-028",
+        "EXACT-031",
+        "EXACT-041"
+      ]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Blocked ownership, explicit provider failure states, recovery routing, retry/switch suggestions, and cleanup-after-recovery are present, but alert and refresh failure policies are not deterministic.",
+      "evidence_item_ids": [
+        "EXACT-013",
+        "EXACT-018",
+        "EXACT-019",
+        "EXACT-033",
+        "EXACT-036",
+        "EXACT-046"
+      ]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Page-scope filtering and visible redaction state provide partial safeguards, but raw payload authorization, scrubbing, and failure-closed behavior are not specified.",
+      "evidence_item_ids": [
+        "EXACT-010",
+        "EXACT-026",
+        "EXACT-027"
+      ]
+    },
+    {
+      "dimension": "propagation",
+      "status": "addressed",
+      "summary": "Attempt, provider, account, actor, usage, receipt, tool, artifact, and switch/pressure identities propagate through shared envelopes and projections to all named consumers.",
+      "evidence_item_ids": [
+        "EXACT-006",
+        "EXACT-007",
+        "EXACT-009",
+        "EXACT-035",
+        "EXACT-042",
+        "EXACT-044",
+        "EXACT-045"
+      ]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Analytics jobs, projector checkpoints, migrations, background refresh, Last updated, manual Refresh, and cleanup eligibility are operationally named, but cadence, retries, timeouts, and failure behavior are not fixed.",
+      "evidence_item_ids": [
+        "EXACT-003",
+        "EXACT-004",
+        "EXACT-012",
+        "EXACT-013",
+        "EXACT-018"
+      ]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "addressed",
+      "summary": "The feature avoids on-demand ledger scans by using seglog-derived redb rollups, optional Tantivy search, checkpoints, and bounded retention intent.",
+      "evidence_item_ids": [
+        "EXACT-002",
+        "EXACT-003",
+        "EXACT-022"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "addressed",
+      "summary": "Legacy usage.jsonl, layouts, route identifiers, tier vocabulary, resume URLs, instruction files, and retired providers have explicit bounded compatibility or lineage treatment.",
+      "evidence_item_ids": [
+        "EXACT-002",
+        "EXACT-010",
+        "EXACT-030",
+        "EXACT-037",
+        "EXACT-043",
+        "EXACT-046",
+        "EXACT-048"
+      ]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "Storage implementation prerequisites and deterministic storage gates exist, but the normative GUI and provider presentation behaviors lack explicit executable acceptance oracles in this window.",
+      "evidence_item_ids": [
+        "EXACT-004",
+        "EXACT-040"
+      ]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains for persistent placement, refresh operations, alerts, retention, analytics organization, ledger placement, raw-data protection, mixed-signal precedence, and UI certification.",
+      "evidence_item_ids": [
+        "EXACT-017",
+        "EXACT-018",
+        "EXACT-019",
+        "EXACT-020",
+        "EXACT-021",
+        "EXACT-022",
+        "EXACT-027",
+        "EXACT-039",
+        "EXACT-040"
+      ]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Where available, where possible, optional, example thresholds, and alternative page placements preserve honest uncertainty but leave several product and runtime decisions unresolved.",
+      "evidence_item_ids": [
+        "EXACT-017",
+        "EXACT-018",
+        "EXACT-019",
+        "EXACT-021",
+        "EXACT-022",
+        "EXACT-027",
+        "EXACT-039",
+        "EXACT-040"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1570-1581 >>>
+L00001570	                    file: file_path.to_path_buf(),
+L00001571	                    pattern: pattern.as_str().to_string(),
+L00001572	                });
+L00001573	            }
+L00001574	        }
+L00001575	        
+L00001576	        Ok(())
+L00001577	    }
+L00001578	}
+L00001579	```
+L00001580	
+L00001581	**Sensitive patterns (default set):** Implement as a fixed list of regex patterns, compiled once in `SecurityFilter::new()`. Use case-insensitive path matching. Suggested default patterns (one per line, converted to regex; escape literal dots):
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1582-1973 >>>
+L00001582	
+L00001583	- `\.env` (and common variants: `.env.local`, `.env.*`) -- pattern: `\.env(\..*)?$` or `\.env`
+L00001584	- `.*secret.*`, `.*key.*`, `.*credential.*` (path contains segment)
+L00001585	- `\.(pem|key|p12|pfx)$` (key/cert files)
+L00001586	- `id_rsa`, `id_ed25519`, `\.pub$` (SSH keys)
+L00001587	- `config/secrets\.`, `secrets/` (secrets dir or config secrets files)
+L00001588	
+L00001589	**Implementation:** In the FileSafe validation layer, define `fn default_sensitive_patterns() -> Vec<Regex>` that returns the compiled list; allow optional project override file (e.g. `.puppet-master/security-filter.local.txt`) for additive patterns only. Document in AGENTS.md.
+L00001590	
+L00001591	### 11.3 Prompt Content Checking & Context Compilation
+L00001592	
+L00001593	**Problem:** Agents may include destructive commands in their prompts, not just CLI args. Additionally, context files may contain destructive commands that get compiled into the final prompt.
+L00001594	
+L00001595	**Context Compilation Flow:**
+L00001596	
+L00001597	1. **Initial Prompt:** `ExecutionRequest.prompt` contains the base instruction
+L00001598	2. **Context Files:** `ExecutionRequest.context_files` contains file paths to include
+L00001599	3. **Context Compilation:** Platform runners call `append_prompt_attachments()` to merge context files into prompt
+L00001600	4. **Final Prompt:** The compiled prompt (with context) is sent to platform CLI
+L00001601	
+L00001602	**Current Implementation (`src/platforms/context_files.rs`):**
+L00001603	```rust
+L00001604	// DRY:FN:append_prompt_attachments — Compile context files into prompt
+L00001605	pub fn append_prompt_attachments(
+L00001606	    prompt: &str,
+L00001607	    context_files: &[PathBuf],
+L00001608	    token_prefix: &str,  // "" for Cursor, "@" for Gemini/Copilot
+L00001609	) -> String {
+L00001610	    let attachments = format_prompt_attachments(context_files, token_prefix);
+L00001611	    if attachments.is_empty() {
+L00001612	        prompt.to_string()
+L00001613	    } else {
+L00001614	        format!("{}{}", prompt, attachments)
+L00001615	    }
+L00001616	}
+L00001617	
+L00001618	// Example output for Gemini/Copilot:
+L00001619	// "Original prompt\n\nReference attachments:\n- @/path/to/file1.rs\n- @/path/to/file2.md"
+L00001620	```
+L00001621	
+L00001622	**Platform-Specific Context Compilation:**
+L00001623	
+L00001624	| Platform | Token Prefix | Context Format | Example |
+L00001625	|----------|--------------|----------------|---------|
+L00001626	| **Cursor** | `""` (empty) | File paths appended as text | `"\n\nReference attachments:\n- /path/to/file.rs"` |
+L00001627	| **Gemini** | `"@"` | `@path` tokens (CLI interprets as attachments) | `"\n\nReference attachments:\n- @/path/to/file.rs"` |
+L00001628	| **Copilot** | `"@"` | `@path` tokens | `"\n\nReference attachments:\n- @/path/to/file.rs"` |
+L00001629	| **Codex** | `""` (empty) | File paths appended as text (do not rely on `--add-dir` for prompt attachment semantics) | `"\n\nReference attachments:\n- /path/to/file.rs"` |
+L00001630	| **Claude** | `""` (empty) | File paths appended as text (use `--append-system-prompt-file` only as an implementation detail when needed) | `"\n\nReference attachments:\n- /path/to/file.rs"` |
+L00001631	
+L00001632	**FileSafe integration point:**
+L00001633	
+L00001634	FileSafe must check the **compiled prompt** (after context compilation), not just the original prompt. This ensures:
+L00001635	- Destructive commands in context files are caught
+L00001636	- File paths in context attachments are validated
+L00001637	- The final prompt sent to the platform is safe
+L00001638	
+L00001639	**Solution:** Check prompt content for destructive patterns **after** context compilation, before sending to platform CLI.
+L00001640	
+L00001641	This check is defense-in-depth. It can block suspicious compiled prompt content, but prompt/free-text extraction is not authoritative command identity. The final structured tool invocation, normalized command segment, permission snapshot, and resolved path scope must still be checked before dispatch. A parser miss or ambiguous prose extraction never authorizes execution.
+L00001642	
+L00001643	```rust
+L00001644	impl BashGuard {
+L00001645	    // DRY:FN:check_prompt — Check prompt content for destructive commands
+L00001646	    pub fn check_prompt(&self, prompt: &str) -> Result<(), GuardError> {
+L00001647	        // Extract potential advisory commands from prompt.
+L00001648	        // Common patterns: code blocks, shell commands, SQL statements.
+L00001649	        // This is not the sole Layer-1 enforcement boundary.
+L00001650	        let command_patterns = extract_commands_from_prompt(prompt);
+L00001651	
+L00001652	        for cmd in command_patterns {
+L00001653	            self.check_command(&cmd)?;
+L00001654	        }
+L00001655	        
+L00001656	        Ok(())
+L00001657	    }
+L00001658	    
+L00001659	    // DRY:HELPER:extract_commands_from_prompt — Extract shell commands from prompt text
+L00001660	    /// Extract potential shell commands from prompt content
+L00001661	    ///
+L00001662	    /// Looks for:
+L00001663	    /// 1. Code blocks with bash/shell language tags: ```bash ... ``` or ```sh ... ```
+L00001664	    /// 2. Shell prompt lines: lines starting with `$ ` or `> ` (common in documentation)
+L00001665	    /// 3. SQL statements: DROP, TRUNCATE, DELETE without WHERE, etc.
+L00001666	    /// 4. Direct command mentions in text (less reliable, may have false positives)
+L00001667	    ///
+L00001668	    /// Returns vector of command strings to check against patterns.
+L00001669	    fn extract_commands_from_prompt(prompt: &str) -> Vec<String> {
+L00001670	        use regex::Regex;
+L00001671	        let mut commands = Vec::new();
+L00001672	        
+L00001673	        // 1. Extract code blocks with bash/shell language tags
+L00001674	        let code_block_re = Regex::new(r"(?s)```(?:bash|sh|shell|sql)\s*\n(.*?)```").unwrap();
+L00001675	        for cap in code_block_re.captures_iter(prompt) {
+L00001676	            let code_content = &cap[1];
+L00001677	            // Extract individual lines that look like commands
+L00001678	            for line in code_content.lines() {
+L00001679	                let line = line.trim();
+L00001680	                // Skip comments and empty lines
+L00001681	                if line.is_empty() || line.starts_with('#') {
+L00001682	                    continue;
+L00001683	                }
+L00001684	                // Skip variable assignments (e.g., VAR=value)
+L00001685	                if line.contains('=') && !line.contains("==") && !line.contains("!=") {
+L00001686	                    continue;
+L00001687	                }
+L00001688	                commands.push(line.to_string());
+L00001689	            }
+L00001690	        }
+L00001691	        
+L00001692	        // 2. Extract shell prompt lines ($ command or > command)
+L00001693	        let shell_prompt_re = Regex::new(r"(?m)^\s*[$>]\s+(.+)$").unwrap();
+L00001694	        for cap in shell_prompt_re.captures_iter(prompt) {
+L00001695	            let cmd = cap[1].trim();
+L00001696	            if !cmd.is_empty() && !cmd.starts_with('#') {
+L00001697	                commands.push(cmd.to_string());
+L00001698	            }
+L00001699	        }
+L00001700	        
+L00001701	        // 3. Extract SQL statements (DROP, TRUNCATE, DELETE without WHERE)
+L00001702	        let sql_re = Regex::new(r"(?i)\b(DROP\s+(?:DATABASE|TABLE|SCHEMA)\s+\w+|TRUNCATE\s+TABLE\s+\w+|DELETE\s+FROM\s+\w+(?:\s+WHERE\s+.+)?)").unwrap();
+L00001703	        for cap in sql_re.captures_iter(prompt) {
+L00001704	            commands.push(cap[1].trim().to_string());
+L00001705	        }
+L00001706	        
+L00001707	        // 4. Extract common destructive command patterns in text
+L00001708	        // This is less reliable but catches commands mentioned in prose
+L00001709	        let destructive_mentions = vec![
+L00001710	            r"(?i)\bmigrate[:.]fresh\b",
+L00001711	            r"(?i)\bdb[:.]drop\b",
+L00001712	            r"(?i)\breset\s+--hard\b",
+L00001713	        ];
+L00001714	        
+L00001715	        for pattern_str in destructive_mentions {
+L00001716	            if let Ok(pattern_re) = Regex::new(pattern_str) {
+L00001717	                for cap in pattern_re.captures_iter(prompt) {
+L00001718	                    // Extract surrounding context (up to 50 chars before/after)
+L00001719	                    let start = cap.get(0).unwrap().start().saturating_sub(50);
+L00001720	                    let end = (cap.get(0).unwrap().end() + 50).min(prompt.len());
+L00001721	                    let context = &prompt[start..end];
+L00001722	                    // Try to extract the full command
+L00001723	                    if let Some(cmd_match) = Regex::new(r"(\S+(?:\s+\S+)*)").unwrap().find(context) {
+L00001724	                        commands.push(cmd_match.as_str().to_string());
+L00001725	                    }
+L00001726	                }
+L00001727	            }
+L00001728	        }
+L00001729	        
+L00001730	        // Deduplicate and return
+L00001731	        commands.sort();
+L00001732	        commands.dedup();
+L00001733	        commands
+L00001734	    }
+L00001735	}
+L00001736	```
+L00001737	
+L00001738	**Integration with Context Compilation:**
+L00001739	
+L00001740	FileSafe must check the **compiled prompt** (after context files are merged), not the original prompt. This requires checking at the right point in the execution flow:
+L00001741	
+L00001742	```rust
+L00001743	// In platform runner (e.g., CursorRunner::execute()):
+L00001744	async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
+L00001745	    // 1. Compile context files into prompt
+L00001746	    let mut effective_request = request.clone();
+L00001747	    effective_request.prompt = append_prompt_attachments(
+L00001748	        &request.prompt,
+L00001749	        &request.context_files,
+L00001750	        "",  // Token prefix (platform-specific)
+L00001751	    );
+L00001752	    
+L00001753	    // 2. CHECK COMPILED PROMPT HERE (before building args)
+L00001754	    if let Err(e) = self.base.bash_guard.check_prompt(&effective_request.prompt) {
+L00001755	        // Check if verification gate operation (allow destructive during QA)
+L00001756	        if self.base.is_verification_gate_operation(request) {
+L00001757	            warn!("Destructive command in compiled prompt allowed during verification gate: {}", e);
+L00001758	        } else {
+L00001759	            return Err(anyhow!("Destructive command in prompt blocked: {}", e));
+L00001760	        }
+L00001761	    }
+L00001762	    
+L00001763	    // 3. Check context files themselves (security filter)
+L00001764	    for context_file in &request.context_files {
+L00001765	        if let Err(e) = self.base.security_filter.check_file_access(context_file) {
+L00001766	            // Allow during interview if configured
+L00001767	            if self.base.is_interview_operation(request) 
+L00001768	                && self.base.security_filter.allow_during_interview {
+L00001769	                warn!("Sensitive context file allowed during interview: {}", e);
+L00001770	            } else {
+L00001771	                return Err(anyhow!("Sensitive context file blocked: {}", e));
+L00001772	            }
+L00001773	        }
+L00001774	    }
+L00001775	    
+L00001776	    // 4. Build args and continue with execution
+L00001777	    let args = self.build_args(&effective_request);
+L00001778	    // ... rest of execution
+L00001779	}
+L00001780	```
+L00001781	
+L00001782	**Key Points:**
+L00001783	- Check **compiled prompt** (after `append_prompt_attachments()`)
+L00001784	- Check **context files** separately (security filter)
+L00001785	- Check **before** building CLI args (early failure)
+L00001786	- Respect verification gate and interview operation type (`PUPPET_MASTER_OPERATION_TYPE`)
+L00001787	
+L00001788	### 11.3A Structured chat attachments and forwarded document selections
+L00001789	
+L00001790	
+L00001791	FileSafe applies to structured chat attachments, not just freeform prompt text and context-file paths.
+L00001792	
+L00001793	Rules:
+L00001794	- FileSafe must inspect the compiled prompt plus structured attachments together before platform send.
+L00001795	- `document_selection_context` attachments must pass the same mandatory secret-scrub pipeline before seglog/redb/index/blob persistence.
+L00001796	- Path-based sensitive sources such as `.env`, key/cert paths, credential files, and equivalent secret-bearing locations are not eligible for selection forwarding.
+L00001797	- If attachment forwarding is blocked, the runtime must emit an explicit block result and visible reason code; it must not pretend the context was sent successfully.
+L00001798	
+L00001799	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+L00001800	
+L00001801	Default handling:
+L00001802	- Heuristic secret-ish redaction remains off by default.
+L00001803	- Mandatory secret scrubbing remains on for all structured attachments before persistence.
+L00001804	- Search/indexing stores bounded summaries and provenance only, not unbounded raw selected text.
+L00001805	- `/sensitive-storage` boundaries apply before any `send-to-chat` chip or structured-revision prompt is persisted.
+L00001806	- Heuristic `secret-ish` redaction stays OFF by default; blocked forwarding uses explicit FileSafe signals and visible block reasons instead of guessed redaction.
+L00001807	
+L00001808	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
+L00001809	
+L00001810	### 11.4 Integration with Verification Gates
+L00001811	
+L00001812	**Problem:** FileSafe operates independently of verification gates, potentially blocking valid operations.
+L00001813	
+L00001814	**Solution:** Coordinate guards with verification gates through scoped gate override grants. Verification-gate context can request a narrower baseline or test-fixture allowance, but it does not bypass FileSafe. Destructive commands still require an authenticated operator grant, bounded gate/run scope, reason, expiry, and FileSafe override event/receipt.
+L00001815	
+L00001816	Attachment gating remains active even when verification gates run: `/sensitive-storage` boundaries apply before any `send-to-chat` chip or structured-revision prompt is persisted, and heuristic `secret-ish` redaction stays OFF by default unless a concrete FileSafe signal blocks forwarding with a visible reason.
+L00001817	
+L00001818	Pending selection chips that cannot be restored safely because the source is missing, sensitivity is blocked, or the target thread was deleted must restore as explicit blocked or `/expired` chips instead of disappearing. Searchable records are `/searchable` only as bounded summaries plus `/provenance`; unbounded raw selected text is never stored for search. Path-based sensitive sources include `.env`, key or `/cert` material, credential files, and equivalent secret-bearing paths, and secret scrubbing must run before any seglog, `/redb/index/blob`, search, or attachment persistence. If forwarding is blocked, the UI records a visible reason code and `/audit` event; it must not silently redact the intended text into a misleading successful send.
+L00001819	
+L00001820	```rust
+L00001821	// In BaseRunner::execute_command()
+L00001822	// Check guards BEFORE verification gates
+L00001823	if let Err(e) = self.bash_guard.check_command(&full_command) {
+L00001824	    // Check if this is a verification gate operation
+L00001825	    if self.is_verification_gate_operation(&request)
+L00001826	        && self.has_current_gate_override_receipt(&request, &full_command) {
+L00001827	        // Gate override is scoped and auditable; env vars or operation type alone are insufficient.
+L00001828	        self.log_destructive_override_granted(&request, &full_command).await?;
+L00001829	    } else {
+L00001830	        return Err(anyhow!("Destructive command blocked: {}", e));
+L00001831	    }
+L00001832	}
+L00001833	```
+L00001834	
+L00001835	**Verification gate detection:** Check request operation type via `PUPPET_MASTER_OPERATION_TYPE == "verification_gate"`. (ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE)
+L00001836	
+L00001837	### 11.5 Event Logging Integration
+L00001838	
+L00001839	**Problem:** Blocked commands are logged separately from other events, making debugging difficult.
+L00001840	
+L00001841	**Solution:** Integrate with existing event logging system.
+L00001842	
+L00001843	```rust
+L00001844	// Use existing event logging infrastructure
+L00001845	use crate::logging::EventLogger;
+L00001846	
+L00001847	impl BashGuard {
+L00001848	    async fn log_blocked_command(
+L00001849	        &self,
+L00001850	        command: &str,
+L00001851	        error: &GuardError,
+L00001852	        event_logger: &EventLogger,
+L00001853	    ) {
+L00001854	        let event = FileSafeEvent {
+L00001855	            event_type: "filesafe.command_denied".to_string(),
+L00001856	            guard_type: "bash_guard".to_string(),
+L00001857	            decision: "denied".to_string(),
+L00001858	            denial_code: Some("destructive_pattern_match".to_string()),
+L00001859	            command_preview: Some(command.chars().take(100).collect()),
+L00001860	            normalized_command_identity: Some(normalize_command_identity(command)),
+L00001861	            pattern_matched: match error {
+L00001862	                GuardError::DestructiveCommand { pattern, .. } => Some(pattern.clone()),
+L00001863	                _ => None,
+L00001864	            },
+L00001865	            agent: None, // Will be populated from ExecutionRequest if available
+L00001866	            timestamp: Utc::now(),
+L00001867	            allowed: false,
+L00001868	        };
+L00001869	        
+L00001870	        event_logger.log_filesafe_event(event).await;
+L00001871	    }
+L00001872	}
+L00001873	```
+L00001874	
+L00001875	---
+L00001876	
+L00001877	## 12. Gaps and Potential Issues
+L00001878	
+L00001879	
+L00001880	### 12.1 Pattern Matching Accuracy
+L00001881	
+L00001882	**Issue:** Regex patterns may be too broad (blocking safe commands) or too narrow (missing variants).
+L00001883	
+L00001884	**Mitigation:**
+L00001885	- Test all patterns against real-world command variations
+L00001886	- Use word boundaries (`\b`) where appropriate
+L00001887	- Document pattern rationale in comments
+L00001888	- Allow project-specific overrides via local patterns file
+L00001889	
+L00001890	### 12.2 False Positives
+L00001891	
+L00001892	**Issue:** Legitimate commands may match destructive patterns (e.g., `migrate:fresh` in documentation).
+L00001893	
+L00001894	**Mitigation:**
+L00001895	- Check prompt context (code block vs documentation)
+L00001896	- Allow override via environment variable
+L00001897	- Log all blocks for review
+L00001898	- Provide clear error messages with override instructions
+L00001899	
+L00001900	### 12.3 Performance Impact
+L00001901	
+L00001902	
+L00001903	**Issue:** Pattern matching on every command may add latency.
+L00001904	
+L00001905	**Mitigation:**
+L00001906	- Compile regex patterns once at initialization
+L00001907	- Use efficient regex engine (Rust's `regex` crate is fast)
+L00001908	- Cache pattern compilation results
+L00001909	- Benchmark and optimize hot paths
+L00001910	
+L00001911	### 12.4 Multi-Platform Prompt Checking
+L00001912	
+L00001913	**Issue:** Different platforms format prompts differently, making extraction difficult.
+L00001914	
+L00001915	**Mitigation:**
+L00001916	- Platform-specific prompt parsers
+L00001917	- Fallback to simple pattern matching
+L00001918	- Document platform-specific behavior
+L00001919	- Test across all providers
+L00001920	
+L00001921	### 12.5 Write-scope plan integration
+L00001922	
+L00001923	**Issue:** Plans may not always specify exact file paths, making write-scope enforcement too restrictive.
+L00001924	
+L00001925	**Mitigation:**
+L00001926	- Prefer directory-level permissions in the allowed list; wildcard patterns are a future enhancement (not MVP)
+L00001927	- Allow directory-level permissions
+L00001928	- Provide clear error messages when writes are blocked
+L00001929	- Allow override for exploratory phases
+L00001930	
+L00001931	### 12.6 Implementation-Ready Clarifications (resolved)
+L00001932	
+L00001933	AutoDecision: Request metadata uses `ExecutionRequest.env_vars` only; do not add a `tags` field.  
+L00001934	ContractRef: CodePath:puppet-master-rs/src/types/execution.rs, EnvVar:PUPPET_MASTER_OPERATION_TYPE, EnvVar:PUPPET_MASTER_ALLOWED_FILES
+L00001935	
+L00001936	AutoDecision: `PUPPET_MASTER_OPERATION_TYPE` values are fixed: `normal` (default), `verification_gate`, `interview`. Guards MAY loosen only for `verification_gate` (never for `normal`).
+L00001937	ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE
+L00001938	
+L00001939	AutoDecision: Allowed write scope is supplied via `PUPPET_MASTER_ALLOWED_FILES` (JSON array of repo-relative paths and/or explicit directories). If missing or empty and `file_guard.enabled == true`: treat as empty allowlist and block fail-closed regardless of `strict_mode`. `strict_mode=false` may soften only non-authoritative advisory findings after a valid baseline/allowlist already exists; it cannot permit writes when the authoritative allowlist is absent.
+L00001940	ContractRef: EnvVar:PUPPET_MASTER_ALLOWED_FILES, ConfigKey:filesafe.fileGuard.strictMode
+L00001941	
+L00001942	AutoDecision: Owner for allowed-files derivation is `puppet-master-rs/src/core/orchestrator.rs`; orchestrator builds `PUPPET_MASTER_ALLOWED_FILES` when constructing each `ExecutionRequest` (primary source: current subtask's declared file list; context files are implicitly allowed via `request.context_files`).  
+L00001943	ContractRef: CodePath:puppet-master-rs/src/core/orchestrator.rs, CodePath:puppet-master-rs/src/platforms/context_files.rs
+L00001944	
+L00001945	AutoDecision: Missing/unreadable custom pattern file is ignored (bundled patterns still apply). If bundled patterns are unavailable at runtime, fall back to an embedded minimal default list and log a warning; do not disable FileSafe.  
+L00001946	ContractRef: ConfigKey:filesafe.bashGuard.customPatternsPath
+L00001947	
+L00001948	AutoDecision: `approved_commands` matching is **exact** after normalization (`trim` + collapse whitespace). Do not use prefix/substring matching.  
+L00001949	ContractRef: ConfigKey:filesafe.approvedCommands
+L00001950	
+L00001951	AutoDecision: For multi-line or chained commands (`\n`, `&&`, `;`, `||`, `|`), check each segment independently; if any segment is blocked, block the whole invocation.  
+L00001952	ContractRef: CodePath:puppet-master-rs/src/platforms/runner.rs#BaseRunner::execute_command
+L00001953	
+L00001954	---
+L00001955	
+L00001956	## 13. Enhancements
+L00001957	
+L00001958	### 13.1 Git Destructive Commands Guard
+L00001959	
+L00001960	Extend bash guard to block destructive git commands:
+L00001961	
+L00001962	```rust
+L00001963	// Add to destructive-commands.txt
+L00001964	git\s+reset\s+--hard
+L00001965	git\s+push\s+.*--force
+L00001966	git\s+push\s+.*-f
+L00001967	git\s+branch\s+-D
+L00001968	git\s+clean\s+-fd
+L00001969	```
+L00001970	
+L00001971	### 13.2 SQL Injection Pattern Detection
+L00001972	
+L00001973	Detect SQL injection attempts in prompts:
+
+<<< CONTEXT_AFTER canonical_document_lines=1974-1985 >>>
+L00001974	
+L00001975	```rust
+L00001976	// DRY:FN:check_sql_injection — Detect SQL injection patterns
+L00001977	pub fn check_sql_injection(prompt: &str) -> Result<(), GuardError> {
+L00001978	    // Check for common SQL injection patterns
+L00001979	    // UNION SELECT, DROP TABLE, etc.
+L00001980	}
+L00001981	```
+L00001982	
+L00001983	### 13.3 Rate Limiting for Blocked Commands
+L00001984	
+L00001985	**Enhancement:** If an agent repeatedly tries destructive commands, temporarily increase guard strictness or block the agent.

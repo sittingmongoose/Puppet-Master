@@ -1,0 +1,197 @@
+{
+  "aggregate_assignment_count": 24,
+  "aggregate_assignment_ids": [
+    "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+    "A005-001030-ADVERSARIAL-WIN-7414C6C901F8-0017",
+    "A005-001031-EXACT-WIN-7414C6C901F8-0018",
+    "A005-001032-ADVERSARIAL-WIN-7414C6C901F8-0018",
+    "A005-001033-EXACT-WIN-7414C6C901F8-0019",
+    "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+    "A005-001035-EXACT-WIN-749F06E4B796-0001",
+    "A005-001036-ADVERSARIAL-WIN-749F06E4B796-0001",
+    "A005-001037-EXACT-WIN-749F06E4B796-0002",
+    "A005-001038-ADVERSARIAL-WIN-749F06E4B796-0002",
+    "A005-001039-EXACT-WIN-749F06E4B796-0003",
+    "A005-001040-ADVERSARIAL-WIN-749F06E4B796-0003",
+    "A005-001041-EXACT-WIN-749F06E4B796-0004",
+    "A005-001042-ADVERSARIAL-WIN-749F06E4B796-0004",
+    "A005-001043-EXACT-WIN-749F06E4B796-0005",
+    "A005-001044-ADVERSARIAL-WIN-749F06E4B796-0005",
+    "A005-001045-EXACT-WIN-749F06E4B796-0006",
+    "A005-001046-ADVERSARIAL-WIN-749F06E4B796-0006",
+    "A005-001047-EXACT-WIN-74C788D8A63C-0001",
+    "A005-001048-ADVERSARIAL-WIN-74C788D8A63C-0001",
+    "A005-001049-EXACT-WIN-74C788D8A63C-0002",
+    "A005-001050-ADVERSARIAL-WIN-74C788D8A63C-0002",
+    "A005-001051-EXACT-WIN-74C788D8A63C-0003",
+    "A005-001052-ADVERSARIAL-WIN-74C788D8A63C-0003"
+  ],
+  "aggregate_assignment_ids_digest": "a346249af5c782cced41d9b82bf6a5a06c6f5b21111ebb938ec44fa0330c2f12",
+  "aggregate_checker_sha256": "317075def550acd80bb45e470cf137f85a56b3bb307d31fa81e19a06d9e00ccc",
+  "attempt_id": "attempt-0011",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "canonical_plan_writes_authorized": false,
+  "cohort_checkpoint_independent": true,
+  "cohort_wave_size": 8,
+  "cohorts": [
+    {
+      "assignment_count": 8,
+      "assignment_ids": [
+        "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+        "A005-001030-ADVERSARIAL-WIN-7414C6C901F8-0017",
+        "A005-001031-EXACT-WIN-7414C6C901F8-0018",
+        "A005-001032-ADVERSARIAL-WIN-7414C6C901F8-0018",
+        "A005-001033-EXACT-WIN-7414C6C901F8-0019",
+        "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+        "A005-001035-EXACT-WIN-749F06E4B796-0001",
+        "A005-001036-ADVERSARIAL-WIN-749F06E4B796-0001"
+      ],
+      "cohort_index": 1,
+      "document_paths": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "prepare_report": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+          "A005-001030-ADVERSARIAL-WIN-7414C6C901F8-0017",
+          "A005-001031-EXACT-WIN-7414C6C901F8-0018",
+          "A005-001032-ADVERSARIAL-WIN-7414C6C901F8-0018",
+          "A005-001033-EXACT-WIN-7414C6C901F8-0019",
+          "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+          "A005-001035-EXACT-WIN-749F06E4B796-0001",
+          "A005-001036-ADVERSARIAL-WIN-749F06E4B796-0001"
+        ],
+        "attempt_id": "attempt-0011",
+        "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+        "coverage_floor": 38,
+        "document_focus": null,
+        "epoch_id": "epoch-0011",
+        "generator": "prepare_wave_v1",
+        "status": "prepared_unbound_zero_credit",
+        "wave_authority_sha256": "fcf566e3d4ba01144aed1ce680673f6bcf8d984ff509481b0bc0fea1cbbb418b",
+        "wave_id": "blind-wave-0004-a",
+        "wave_manifest_sha256": "ac78b0bd5412ebe71eb7858550b67fc6fb4910e60a3e3cf68ef888a49356d79c"
+      },
+      "wave_authority_ref": "master/waves/blind-wave-0004-a/wave_authority.json",
+      "wave_authority_sha256": "fcf566e3d4ba01144aed1ce680673f6bcf8d984ff509481b0bc0fea1cbbb418b",
+      "wave_id": "blind-wave-0004-a",
+      "wave_manifest_ref": "master/waves/blind-wave-0004-a/wave_assignment_manifest.jsonl",
+      "wave_manifest_sha256": "ac78b0bd5412ebe71eb7858550b67fc6fb4910e60a3e3cf68ef888a49356d79c"
+    },
+    {
+      "assignment_count": 8,
+      "assignment_ids": [
+        "A005-001037-EXACT-WIN-749F06E4B796-0002",
+        "A005-001038-ADVERSARIAL-WIN-749F06E4B796-0002",
+        "A005-001039-EXACT-WIN-749F06E4B796-0003",
+        "A005-001040-ADVERSARIAL-WIN-749F06E4B796-0003",
+        "A005-001041-EXACT-WIN-749F06E4B796-0004",
+        "A005-001042-ADVERSARIAL-WIN-749F06E4B796-0004",
+        "A005-001043-EXACT-WIN-749F06E4B796-0005",
+        "A005-001044-ADVERSARIAL-WIN-749F06E4B796-0005"
+      ],
+      "cohort_index": 2,
+      "document_paths": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "prepare_report": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005-001037-EXACT-WIN-749F06E4B796-0002",
+          "A005-001038-ADVERSARIAL-WIN-749F06E4B796-0002",
+          "A005-001039-EXACT-WIN-749F06E4B796-0003",
+          "A005-001040-ADVERSARIAL-WIN-749F06E4B796-0003",
+          "A005-001041-EXACT-WIN-749F06E4B796-0004",
+          "A005-001042-ADVERSARIAL-WIN-749F06E4B796-0004",
+          "A005-001043-EXACT-WIN-749F06E4B796-0005",
+          "A005-001044-ADVERSARIAL-WIN-749F06E4B796-0005"
+        ],
+        "attempt_id": "attempt-0011",
+        "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+        "coverage_floor": 38,
+        "document_focus": "Plans/Automated_Testing_System.md",
+        "epoch_id": "epoch-0011",
+        "generator": "prepare_wave_v1",
+        "status": "prepared_unbound_zero_credit",
+        "wave_authority_sha256": "ac3a70e4675bcc7e123bbb53bdc62bb36d5b5d60f71678da86e0f1762bf99d75",
+        "wave_id": "blind-wave-0004-b",
+        "wave_manifest_sha256": "b0c77b832d36e81cf96e75168023ca142025a87b71f85139368630c2eca7be4a"
+      },
+      "wave_authority_ref": "master/waves/blind-wave-0004-b/wave_authority.json",
+      "wave_authority_sha256": "ac3a70e4675bcc7e123bbb53bdc62bb36d5b5d60f71678da86e0f1762bf99d75",
+      "wave_id": "blind-wave-0004-b",
+      "wave_manifest_ref": "master/waves/blind-wave-0004-b/wave_assignment_manifest.jsonl",
+      "wave_manifest_sha256": "b0c77b832d36e81cf96e75168023ca142025a87b71f85139368630c2eca7be4a"
+    },
+    {
+      "assignment_count": 8,
+      "assignment_ids": [
+        "A005-001045-EXACT-WIN-749F06E4B796-0006",
+        "A005-001046-ADVERSARIAL-WIN-749F06E4B796-0006",
+        "A005-001047-EXACT-WIN-74C788D8A63C-0001",
+        "A005-001048-ADVERSARIAL-WIN-74C788D8A63C-0001",
+        "A005-001049-EXACT-WIN-74C788D8A63C-0002",
+        "A005-001050-ADVERSARIAL-WIN-74C788D8A63C-0002",
+        "A005-001051-EXACT-WIN-74C788D8A63C-0003",
+        "A005-001052-ADVERSARIAL-WIN-74C788D8A63C-0003"
+      ],
+      "cohort_index": 3,
+      "document_paths": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Tools.md"
+      ],
+      "prepare_report": {
+        "assignment_count": 8,
+        "assignment_ids": [
+          "A005-001045-EXACT-WIN-749F06E4B796-0006",
+          "A005-001046-ADVERSARIAL-WIN-749F06E4B796-0006",
+          "A005-001047-EXACT-WIN-74C788D8A63C-0001",
+          "A005-001048-ADVERSARIAL-WIN-74C788D8A63C-0001",
+          "A005-001049-EXACT-WIN-74C788D8A63C-0002",
+          "A005-001050-ADVERSARIAL-WIN-74C788D8A63C-0002",
+          "A005-001051-EXACT-WIN-74C788D8A63C-0003",
+          "A005-001052-ADVERSARIAL-WIN-74C788D8A63C-0003"
+        ],
+        "attempt_id": "attempt-0011",
+        "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+        "coverage_floor": 38,
+        "document_focus": null,
+        "epoch_id": "epoch-0011",
+        "generator": "prepare_wave_v1",
+        "status": "prepared_unbound_zero_credit",
+        "wave_authority_sha256": "9069081a6c4495b632a2025fe3586cce910d5c95e34209786c4d81076fe2178f",
+        "wave_id": "blind-wave-0004-c",
+        "wave_manifest_sha256": "d33253d59440f75b7d965de7cf8578b2c7676c1b56e93fb52f7559deb647b869"
+      },
+      "wave_authority_ref": "master/waves/blind-wave-0004-c/wave_authority.json",
+      "wave_authority_sha256": "9069081a6c4495b632a2025fe3586cce910d5c95e34209786c4d81076fe2178f",
+      "wave_id": "blind-wave-0004-c",
+      "wave_manifest_ref": "master/waves/blind-wave-0004-c/wave_assignment_manifest.jsonl",
+      "wave_manifest_sha256": "d33253d59440f75b7d965de7cf8578b2c7676c1b56e93fb52f7559deb647b869"
+    }
+  ],
+  "concurrent_cohort_count": 3,
+  "controller_lane_thread_id": "019f4d26-0708-7c12-aa17-a4b124fab923",
+  "coverage_credit_before_validation": 0,
+  "coverage_floor": 38,
+  "credited_assignment_ids_digest": "9ef3812b7f93fd5174305c19f9d02f4203c2fdeaf34d5d9ba2fd08423f0574cc",
+  "cross_cohort_assignment_overlap_forbidden": true,
+  "document_focus": "Plans/LSPSupport.md",
+  "document_paths": [
+    "Plans/Automated_Testing_System.md",
+    "Plans/LSPSupport.md",
+    "Plans/Tools.md"
+  ],
+  "epoch_id": "epoch-0011",
+  "fresh_cohort_dispatcher_required_per_cohort": true,
+  "fresh_leaf_subagent_required_per_assignment": true,
+  "global_semantic_concurrency_max": 24,
+  "preparer_sha256": "79d7703dbaab8c3032a7189d528b6b04d50b3ebb9587ecc354bcda3ce8a15583",
+  "priority_document_assignment_count": 6,
+  "schema_version": "concurrent-superwave-v1",
+  "spillover_assignment_count": 18,
+  "status": "PREPARED_UNBOUND_ZERO_CREDIT",
+  "superwave_id": "blind-superwave-0004"
+}

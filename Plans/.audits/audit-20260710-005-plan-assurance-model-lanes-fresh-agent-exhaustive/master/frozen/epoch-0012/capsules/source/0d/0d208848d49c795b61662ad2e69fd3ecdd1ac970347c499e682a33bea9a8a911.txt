@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE canonical_document_lines=392-403 >>>
+L00000392	                    "type": "string"
+L00000393	                  },
+L00000394	                  "description": {
+L00000395	                    "type": "string"
+L00000396	                  }
+L00000397	                }
+L00000398	              }
+L00000399	            }
+L00000400	          }
+L00000401	        }
+L00000402	      }
+L00000403	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=404-800 >>>
+L00000404	    "runtime_route_action_evidence": {
+L00000405	      "type": "object",
+L00000406	      "additionalProperties": false,
+L00000407	      "description": "Optional route/action evidence for Run Graph, widget, workspace isolation, HITL, gate/audit, confirmation, and manual natural-language surfaces.",
+L00000408	      "properties": {
+L00000409	        "hitl_action_args": {
+L00000410	          "type": "object",
+L00000411	          "additionalProperties": false,
+L00000412	          "description": "Run Graph HITL actions consume Plans/Run_Graph_View.md and /Run_Graph_View.md command evidence: cmd.graph.approve_hitl and cmd.graph.deny_hitl use { node_id: string, rationale: string }.",
+L00000413	          "properties": {
+L00000414	            "node_id": {"type": "string"},
+L00000415	            "rationale": {"type": "string"}
+L00000416	          }
+L00000417	        },
+L00000418	        "widget_route_args": {
+L00000419	          "type": "object",
+L00000420	          "additionalProperties": false,
+L00000421	          "description": "cmd.widget and cmd.widget.* must migrate away from generic page: string routing when native-surface vocabulary is available.",
+L00000422	          "properties": {
+L00000423	            "page": {"type": "string", "description": "page: string compatibility field"},
+L00000424	            "native_surface": {"type": "string", "description": "native-surface target name"}
+L00000425	          }
+L00000426	        },
+L00000427	        "workspace_isolation": {
+L00000428	          "type": "object",
+L00000429	          "additionalProperties": false,
+L00000430	          "description": "Workspace isolation evidence preserves lane_id, worktree_id, workspace_ref, and snapshot_ref.",
+L00000431	          "properties": {
+L00000432	            "lane_id": {"type": "string"},
+L00000433	            "worktree_id": {"type": "string"},
+L00000434	            "workspace_ref": {"type": "string"},
+L00000435	            "snapshot_ref": {"type": "string"}
+L00000436	          }
+L00000437	        },
+L00000438	        "runtime_native_hitl": {
+L00000439	          "type": "object",
+L00000440	          "additionalProperties": false,
+L00000441	          "description": "Slint GraphNodeUI evidence must retire tier_type UI assumptions and hitl_action(node_id, action, rationale) callbacks in favor of runtime-native blocked action targets.",
+L00000442	          "properties": {
+L00000443	            "node_id": {"type": "string"},
+L00000444	            "tier_type": {"type": "string"},
+L00000445	            "hitl_action": {"type": "string", "description": "hitl_action(node_id, action, rationale) compatibility callback"}
+L00000446	          }
+L00000447	        },
+L00000448	        "shared_payload_fields": {
+L00000449	          "type": "object",
+L00000450	          "additionalProperties": false,
+L00000451	          "description": "Shared payload fields include /surface, project_id, focused_run_id, /gate, /audit, trace-through, /artifacts/history, light and strong confirmation, /manual user-driven natural-language request evidence.",
+L00000452	          "properties": {
+L00000453	            "project_id": {"type": "string"},
+L00000454	            "focused_run_id": {"type": "string"},
+L00000455	            "surface": {"type": "string"},
+L00000456	            "confirmation_strength": {"type": "string", "enum": ["light", "strong"]},
+L00000457	            "manual_request": {"type": "boolean", "description": "/manual user-driven natural-language request"}
+L00000458	          }
+L00000459	        }
+L00000460	      }
+L00000461	    },
+L00000462	    "evidence_id": {
+L00000463	      "type": "string",
+L00000464	      "minLength": 1
+L00000465	    },
+L00000466	    "created_at_utc": {
+L00000467	      "type": "string",
+L00000468	      "minLength": 1
+L00000469	    },
+L00000470	    "node": {
+L00000471	      "type": "object",
+L00000472	      "additionalProperties": false,
+L00000473	      "required": [
+L00000474	        "node_id"
+L00000475	      ],
+L00000476	      "properties": {
+L00000477	        "node_id": {
+L00000478	          "type": "string",
+L00000479	          "minLength": 1
+L00000480	        },
+L00000481	        "graph_id": {
+L00000482	          "type": "string"
+L00000483	        },
+L00000484	        "graph_scope": {
+L00000485	          "type": "string"
+L00000486	        }
+L00000487	      }
+L00000488	    },
+L00000489	    "summary": {
+L00000490	      "type": "string",
+L00000491	      "minLength": 1
+L00000492	    },
+L00000493	    "commands_run": {
+L00000494	      "type": "array",
+L00000495	      "items": {
+L00000496	        "type": "object",
+L00000497	        "additionalProperties": false,
+L00000498	        "required": [
+L00000499	          "cmd",
+L00000500	          "exit_code"
+L00000501	        ],
+L00000502	        "properties": {
+L00000503	          "cmd": {
+L00000504	            "type": "string"
+L00000505	          },
+L00000506	          "exit_code": {
+L00000507	            "type": "integer"
+L00000508	          },
+L00000509	          "stdout_excerpt": {
+L00000510	            "type": "string"
+L00000511	          },
+L00000512	          "stderr_excerpt": {
+L00000513	            "type": "string"
+L00000514	          }
+L00000515	        }
+L00000516	      }
+L00000517	    },
+L00000518	    "tool_calls": {
+L00000519	      "type": "array",
+L00000520	      "items": {
+L00000521	        "type": "object",
+L00000522	        "additionalProperties": false,
+L00000523	        "required": [
+L00000524	          "tool_id",
+L00000525	          "count"
+L00000526	        ],
+L00000527	        "properties": {
+L00000528	          "tool_id": {
+L00000529	            "type": "string",
+L00000530	            "minLength": 1
+L00000531	          },
+L00000532	          "count": {
+L00000533	            "type": "integer",
+L00000534	            "minimum": 0
+L00000535	          },
+L00000536	          "denied_count": {
+L00000537	            "type": "integer",
+L00000538	            "minimum": 0
+L00000539	          },
+L00000540	          "error_count": {
+L00000541	            "type": "integer",
+L00000542	            "minimum": 0
+L00000543	          },
+L00000544	          "note": {
+L00000545	            "type": "string"
+L00000546	          }
+L00000547	        }
+L00000548	      }
+L00000549	    },
+L00000550	    "events": {
+L00000551	      "type": "object",
+L00000552	      "additionalProperties": false,
+L00000553	      "required": [
+L00000554	        "event_refs"
+L00000555	      ],
+L00000556	      "properties": {
+L00000557	        "event_refs": {
+L00000558	          "type": "array",
+L00000559	          "minItems": 1,
+L00000560	          "items": {
+L00000561	            "type": "object",
+L00000562	            "additionalProperties": false,
+L00000563	            "required": [
+L00000564	              "source",
+L00000565	              "ref"
+L00000566	            ],
+L00000567	            "properties": {
+L00000568	              "source": {
+L00000569	                "type": "string",
+L00000570	                "enum": [
+L00000571	                  "seglog",
+L00000572	                  "jsonl",
+L00000573	                  "other"
+L00000574	                ]
+L00000575	              },
+L00000576	              "ref": {
+L00000577	                "type": "string",
+L00000578	                "minLength": 1
+L00000579	              },
+L00000580	              "note": {
+L00000581	                "type": "string"
+L00000582	              }
+L00000583	            }
+L00000584	          }
+L00000585	        }
+L00000586	      }
+L00000587	    },
+L00000588	    "files_changed": {
+L00000589	      "type": "array",
+L00000590	      "items": {
+L00000591	        "type": "object",
+L00000592	        "additionalProperties": false,
+L00000593	        "required": [
+L00000594	          "path",
+L00000595	          "change_type"
+L00000596	        ],
+L00000597	        "properties": {
+L00000598	          "path": {
+L00000599	            "type": "string",
+L00000600	            "minLength": 1
+L00000601	          },
+L00000602	          "change_type": {
+L00000603	            "type": "string",
+L00000604	            "enum": [
+L00000605	              "added",
+L00000606	              "modified",
+L00000607	              "deleted",
+L00000608	              "renamed"
+L00000609	            ]
+L00000610	          },
+L00000611	          "additions": {
+L00000612	            "type": "integer",
+L00000613	            "minimum": 0
+L00000614	          },
+L00000615	          "deletions": {
+L00000616	            "type": "integer",
+L00000617	            "minimum": 0
+L00000618	          },
+L00000619	          "note": {
+L00000620	            "type": "string"
+L00000621	          }
+L00000622	        }
+L00000623	      }
+L00000624	    },
+L00000625	    "contract_refs_satisfied": {
+L00000626	      "type": "array",
+L00000627	      "items": {
+L00000628	        "type": "string",
+L00000629	        "minLength": 1
+L00000630	      }
+L00000631	    },
+L00000632	    "reproducibility": {
+L00000633	      "type": "object",
+L00000634	      "additionalProperties": false,
+L00000635	      "required": [
+L00000636	        "snapshot_ref"
+L00000637	      ],
+L00000638	      "properties": {
+L00000639	        "snapshot_ref": {
+L00000640	          "type": "string",
+L00000641	          "minLength": 1
+L00000642	        },
+L00000643	        "note": {
+L00000644	          "type": "string"
+L00000645	        }
+L00000646	      }
+L00000647	    },
+L00000648	    "artifacts": {
+L00000649	      "type": "array",
+L00000650	      "items": {
+L00000651	        "type": "object",
+L00000652	        "additionalProperties": false,
+L00000653	        "required": [
+L00000654	          "path"
+L00000655	        ],
+L00000656	        "properties": {
+L00000657	          "path": {
+L00000658	            "type": "string"
+L00000659	          },
+L00000660	          "sha256": {
+L00000661	            "type": "string"
+L00000662	          },
+L00000663	          "note": {
+L00000664	            "type": "string"
+L00000665	          }
+L00000666	        }
+L00000667	      }
+L00000668	    },
+L00000669	    "checks": {
+L00000670	      "type": "array",
+L00000671	      "items": {
+L00000672	        "type": "object",
+L00000673	        "additionalProperties": false,
+L00000674	        "required": [
+L00000675	          "name",
+L00000676	          "result"
+L00000677	        ],
+L00000678	        "properties": {
+L00000679	          "name": {
+L00000680	            "type": "string"
+L00000681	          },
+L00000682	          "result": {
+L00000683	            "type": "string",
+L00000684	            "enum": [
+L00000685	              "PASS",
+L00000686	              "FAIL"
+L00000687	            ]
+L00000688	          },
+L00000689	          "details": {
+L00000690	            "type": "string"
+L00000691	          },
+L00000692	          "contract_refs": {
+L00000693	            "type": "array",
+L00000694	            "items": {
+L00000695	              "type": "string"
+L00000696	            }
+L00000697	          }
+L00000698	        }
+L00000699	      }
+L00000700	    },
+L00000701	    "route_aware_verification": {
+L00000702	      "type": "object",
+L00000703	      "additionalProperties": false,
+L00000704	      "required": [
+L00000705	        "gate_id",
+L00000706	        "result",
+L00000707	        "wiring_matrix_ref",
+L00000708	        "route_args_verified",
+L00000709	        "wrapper_normalization_verified",
+L00000710	        "stale_revalidation_verified",
+L00000711	        "admissibility_verified",
+L00000712	        "correlation_passthrough_verified",
+L00000713	        "details"
+L00000714	      ],
+L00000715	      "properties": {
+L00000716	        "gate_id": {
+L00000717	          "type": "string",
+L00000718	          "const": "GATE-010"
+L00000719	        },
+L00000720	        "result": {
+L00000721	          "type": "string",
+L00000722	          "enum": [
+L00000723	            "PASS",
+L00000724	            "FAIL"
+L00000725	          ]
+L00000726	        },
+L00000727	        "wiring_matrix_ref": {
+L00000728	          "type": "string",
+L00000729	          "minLength": 1
+L00000730	        },
+L00000731	        "route_args_verified": {
+L00000732	          "type": "boolean"
+L00000733	        },
+L00000734	        "wrapper_normalization_verified": {
+L00000735	          "type": "boolean"
+L00000736	        },
+L00000737	        "stale_revalidation_verified": {
+L00000738	          "type": "boolean"
+L00000739	        },
+L00000740	        "admissibility_verified": {
+L00000741	          "type": "boolean"
+L00000742	        },
+L00000743	        "correlation_passthrough_verified": {
+L00000744	          "type": "boolean"
+L00000745	        },
+L00000746	        "details": {
+L00000747	          "type": "object",
+L00000748	          "additionalProperties": false,
+L00000749	          "required": [
+L00000750	            "route_args",
+L00000751	            "wrapper_normalization",
+L00000752	            "stale_revalidation",
+L00000753	            "admissibility",
+L00000754	            "correlation_passthrough"
+L00000755	          ],
+L00000756	          "properties": {
+L00000757	            "route_args": {
+L00000758	              "type": "array",
+L00000759	              "items": {
+L00000760	                "type": "string"
+L00000761	              }
+L00000762	            },
+L00000763	            "wrapper_normalization": {
+L00000764	              "type": "array",
+L00000765	              "items": {
+L00000766	                "type": "string"
+L00000767	              }
+L00000768	            },
+L00000769	            "stale_revalidation": {
+L00000770	              "type": "array",
+L00000771	              "items": {
+L00000772	                "type": "string"
+L00000773	              }
+L00000774	            },
+L00000775	            "admissibility": {
+L00000776	              "type": "array",
+L00000777	              "items": {
+L00000778	                "type": "string"
+L00000779	              }
+L00000780	            },
+L00000781	            "correlation_passthrough": {
+L00000782	              "type": "array",
+L00000783	              "items": {
+L00000784	                "type": "string"
+L00000785	              }
+L00000786	            },
+L00000787	            "notes": {
+L00000788	              "type": "string"
+L00000789	            },
+L00000790	            "contract_refs": {
+L00000791	              "type": "array",
+L00000792	              "items": {
+L00000793	                "type": "string"
+L00000794	              }
+L00000795	            }
+L00000796	          }
+L00000797	        }
+L00000798	      }
+L00000799	    }
+L00000800	  },
+
+<<< CONTEXT_AFTER canonical_document_lines=801-812 >>>
+L00000801	  "$defs": {
+L00000802	    "InvocationProvenance": {
+L00000803	      "type": "object",
+L00000804	      "additionalProperties": false,
+L00000805	      "allOf": [
+L00000806	        {
+L00000807	          "if": {
+L00000808	            "properties": {
+L00000809	              "invocation_source": {
+L00000810	                "enum": [
+L00000811	                  "agent_initiated",
+L00000812	                  "goal",

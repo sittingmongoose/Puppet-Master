@@ -1,0 +1,470 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000013-EXACT-WIN-0A77977E441D-0004",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_b_capacity_dispatcher_epoch_0013/a005_000013_exact_0013",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage_value_registry.json",
+    "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "core_sha256": "cd9b50ee847108d14d5f24141faab18f6e0952cd61dde27d2aad72db08625417",
+    "core_range": [1121, 1486]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "EX-001",
+      "item_type": "contract",
+      "title": "Executor intake report persistence identity",
+      "statement": "The executor intake report is a materialized, launch-critical redb value keyed by project, request, and intake identifiers and encoded as canonical MessagePack under schema version 1.0.0.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1123, "line_end": 1123, "exact_quote": "      \"storage_kind\": \"redb\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1126, "line_end": 1126, "exact_quote": "      \"key_shape\": \"executor_intake_report.v1:{project_id}:{request_id}:{intake_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1139, "line_end": 1139, "exact_quote": "      \"encoding\": \"messagepack_canonical\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-002",
+      "item_type": "capability",
+      "title": "Executor intake preflight report payload",
+      "statement": "The preflight writer must persist project/request/intake identity, intake status, seven domain result objects, creation time, and redaction profile; four reason, acceptance-time, and execution-context fields are optional and nullable.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1131, "line_end": 1131, "exact_quote": "        \"Executor intake preflight\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1146, "line_end": 1146, "exact_quote": "        \"intake_status\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1153, "line_end": 1153, "exact_quote": "        \"scheduler_metadata_result\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1163, "line_end": 1163, "exact_quote": "      \"nullable_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-003",
+      "item_type": "state_transition",
+      "title": "Executor intake terminal classification",
+      "statement": "An intake report classifies intake_status as exactly accepted, rejected, or blocked.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1216, "line_end": 1216, "exact_quote": "              \"accepted\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1217, "line_end": 1217, "exact_quote": "              \"rejected\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1218, "line_end": 1218, "exact_quote": "              \"blocked\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-004",
+      "item_type": "behavior",
+      "title": "Intake replay is explanatory and non-activating",
+      "statement": "Replay uses the report to explain all three intake outcomes and must not launch activation while runtime is disabled.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1169, "line_end": 1169, "exact_quote": "      \"replay_behavior\": \"Replay uses the report to explain accepted/rejected/blocked intake without launching activation when runtime is disabled.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-005",
+      "item_type": "failure_recovery",
+      "title": "Legacy intake reports fail replay validation",
+      "statement": "An intake report lacking schema_version or per-domain result objects is invalid for Executor intake replay.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1170, "line_end": 1170, "exact_quote": "      \"migration\": \"Reports lacking schema_version or per-domain result objects are invalid for Executor intake replay.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-006",
+      "item_type": "contract",
+      "title": "Intake retention and secret-exclusion contract",
+      "statement": "The report is retained with its parent WorkNodeRequest and citing blocked/goal receipts, while preflight details are limited to result references and status objects and exclude repository secrets, tokens, and local credentials.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1171, "line_end": 1171, "exact_quote": "      \"retention_compaction\": \"Retain with the parent WorkNodeRequest and any blocked/goal receipts that cite the intake id.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1172, "line_end": 1172, "exact_quote": "      \"redaction_no_secret_rule\": \"Preflight details are result refs and status objects; no repository secret, auth token, or local credential is stored.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-007",
+      "item_type": "consumer",
+      "title": "Intake report producer, owner reference, and consumers",
+      "statement": "Executor intake preflight produces the value; EP-099 is its owner document; PlanCompile handoff, blocked projection, and Goal Runtime certification consume it.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1129, "line_end": 1129, "exact_quote": "      \"owner_doc\": \"Plans/Executor_Protocol.md#EP-099\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1131, "line_end": 1131, "exact_quote": "        \"Executor intake preflight\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1136, "line_end": 1136, "exact_quote": "        \"Goal Runtime certification\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-008",
+      "item_type": "gap",
+      "title": "Intake domain result objects are structurally unconstrained",
+      "statement": "Each required domain result is only constrained to be an object; no nested fields, schema identifiers, status vocabulary, or result-reference shape is specified here, so producers and consumers can serialize incompatible domain results that still validate.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "under_specified_nested_contract",
+      "impact": "Cross-component intake validation and replay can disagree while accepting the same outer value.",
+      "builder_discretion": "Builders must invent the nested domain result models and compatibility rules.",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1221, "line_end": 1221, "exact_quote": "          \"graph_integrity_result\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1222, "line_end": 1222, "exact_quote": "            \"type\": \"object\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1239, "line_end": 1239, "exact_quote": "          \"scheduler_metadata_result\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1240, "line_end": 1240, "exact_quote": "            \"type\": \"object\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-009",
+      "item_type": "gap",
+      "title": "Intake outcome fields lack conditional invariants",
+      "statement": "The outcome-specific reason codes and accepted timestamp are all optional and nullable, but no rule binds their presence, absence, or mutual exclusion to accepted, rejected, or blocked status.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_status_conditionals",
+      "impact": "Contradictory reports such as accepted intake with a rejected reason or rejected intake without a reason can satisfy the schema.",
+      "builder_discretion": "Builders must decide the valid status-to-reason/timestamp matrix.",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1157, "line_end": 1157, "exact_quote": "      \"optional_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1164, "line_end": 1164, "exact_quote": "        \"blocked_reason_code\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1166, "line_end": 1166, "exact_quote": "        \"accepted_at_utc\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-010",
+      "item_type": "gap",
+      "title": "Intake key-to-value identity binding is not specified",
+      "statement": "The key embeds project_id, request_id, and intake_id and the value requires the same fields, but this window provides no equality, collision, or uniqueness oracle tying key components to payload values.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_key_value_invariant",
+      "impact": "A record can be stored under one identity tuple while carrying another unless the implementation invents an external check.",
+      "builder_discretion": "Builders must define key construction and mismatch rejection behavior.",
+      "feature_keys": ["executor_intake_report"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1126, "line_end": 1126, "exact_quote": "      \"key_shape\": \"executor_intake_report.v1:{project_id}:{request_id}:{intake_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1180, "line_end": 1180, "exact_quote": "          \"project_id\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1182, "line_end": 1182, "exact_quote": "          \"intake_id\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-011",
+      "item_type": "contract",
+      "title": "Attempt receipt persistence and evidence payload",
+      "statement": "A launch-critical attempt receipt is keyed by project, attempt, and receipt identifiers and requires execution identity, kind, summary, status, execution context, source/destination artifacts, retry/rollback routes, evidence, validators, creation time, and redaction profile.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1286, "line_end": 1286, "exact_quote": "      \"key_shape\": \"attempt_receipt.v1:{project_id}:{attempt_id}:{receipt_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1311, "line_end": 1311, "exact_quote": "        \"execution_unit_context_ref\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1316, "line_end": 1316, "exact_quote": "        \"evidence_refs\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1317, "line_end": 1317, "exact_quote": "        \"validator_refs\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-012",
+      "item_type": "state_transition",
+      "title": "Attempt receipt status vocabulary",
+      "statement": "A receipt status is exactly one of completed, failed, blocked, cancelled, or superseded.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1400, "line_end": 1400, "exact_quote": "              \"completed\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1404, "line_end": 1404, "exact_quote": "              \"superseded\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-013",
+      "item_type": "behavior",
+      "title": "Attempt receipt replay cannot prove activation",
+      "statement": "Replay joins receipts by project, attempt, and receipt and must never treat receipt summaries as executable activation proof.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1334, "line_end": 1334, "exact_quote": "      \"replay_behavior\": \"Replay joins attempt receipts by project/attempt/receipt and never treats receipt summaries as executable activation proof.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-014",
+      "item_type": "failure_recovery",
+      "title": "Attempt receipt migration and compaction behavior",
+      "statement": "Older aliases migrate to attempt_receipt with schema version, source references, and redaction profile; canonical receipts and evidence references remain retained, while only derived summaries may be compacted after source receipts remain reachable.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1335, "line_end": 1335, "exact_quote": "      \"migration\": \"Older receipt aliases migrate into attempt_receipt with explicit schema_version, source refs, and redaction profile.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1336, "line_end": 1336, "exact_quote": "      \"retention_compaction\": \"Retain canonical receipts and evidence refs; compact only derived summaries once source receipts remain reachable.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-015",
+      "item_type": "contract",
+      "title": "Attempt receipt secret boundary",
+      "statement": "Receipts store artifact/evidence references and redacted summaries only and must not store raw provider output or credentials; redaction_profile is restricted to no_secrets or redacted_refs_only.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1337, "line_end": 1337, "exact_quote": "      \"redaction_no_secret_rule\": \"Receipt stores artifact/evidence refs and redacted summaries only, not raw provider output or credentials.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1450, "line_end": 1450, "exact_quote": "              \"no_secrets\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1451, "line_end": 1451, "exact_quote": "              \"redacted_refs_only\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-016",
+      "item_type": "gui_truth",
+      "title": "Runtime Artifacts panel consumes attempt receipts",
+      "statement": "The Runtime Artifacts panel is explicitly a consumer of attempt receipts, alongside Goal Runtime certification and the audit evidence projector.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1294, "line_end": 1294, "exact_quote": "        \"Runtime Artifacts panel\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1296, "line_end": 1296, "exact_quote": "        \"audit evidence projector\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-017",
+      "item_type": "gap",
+      "title": "Receipt kind and result summary lack semantic schemas",
+      "statement": "receipt_kind is any non-empty string and result_summary is an unconstrained object; the window does not define kind vocabulary, kind-specific summary schemas, versioning, or compatibility behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "under_specified_receipt_payload",
+      "impact": "Writers can emit incompatible receipt kinds and summaries that pass validation but cannot be interpreted consistently by GUI, certification, or audit consumers.",
+      "builder_discretion": "Builders must invent receipt kinds and every result-summary payload contract.",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1390, "line_end": 1390, "exact_quote": "          \"receipt_kind\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1392, "line_end": 1392, "exact_quote": "            \"minLength\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1394, "line_end": 1394, "exact_quote": "          \"result_summary\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1395, "line_end": 1395, "exact_quote": "            \"type\": \"object\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-018",
+      "item_type": "gap",
+      "title": "Artifact, evidence, validator, and route contracts are weakly typed",
+      "statement": "Required reference arrays accept arbitrary strings and may be empty, while retry_route and rollback_route accept any non-empty string; no URI/ref grammar, uniqueness, cardinality, resolution, route vocabulary, or target validation is defined here.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "under_specified_references_and_routes",
+      "impact": "Required evidence and recovery fields can be present yet unusable, unresolvable, duplicated, or semantically inconsistent.",
+      "builder_discretion": "Builders must define reference namespaces, resolvers, route vocabularies, and empty-list semantics.",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1411, "line_end": 1411, "exact_quote": "          \"source_artifact_refs\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1414, "line_end": 1414, "exact_quote": "              \"type\": \"string\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1423, "line_end": 1423, "exact_quote": "          \"retry_route\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1425, "line_end": 1425, "exact_quote": "            \"minLength\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1437, "line_end": 1437, "exact_quote": "          \"validator_refs\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-019",
+      "item_type": "gap",
+      "title": "Receipt lifecycle transitions are absent",
+      "statement": "The schema enumerates terminal-looking status labels but defines no permitted transitions, transition authority, supersession linkage, cancellation race behavior, retry effects, or idempotency rule.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_state_machine",
+      "impact": "Independent writers can produce contradictory lifecycle histories and consumers cannot deterministically reconstruct the authoritative attempt state.",
+      "builder_discretion": "Builders must invent the receipt state machine and concurrency semantics.",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1397, "line_end": 1397, "exact_quote": "          \"status\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1403, "line_end": 1403, "exact_quote": "              \"cancelled\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1404, "line_end": 1404, "exact_quote": "              \"superseded\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-020",
+      "item_type": "gap",
+      "title": "Runtime write authority and ownership enforcement are unspecified",
+      "statement": "The records identify owner documents and named producers, but this window does not define an authoritative writer identity, authorization check, mutation ownership, or conflict-resolution rule for either family.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_runtime_authority",
+      "impact": "Implementations cannot determine which competing write is authoritative or how unauthorized writes are rejected.",
+      "builder_discretion": "Builders must map documentation ownership and producer labels to runtime permissions and conflict policy.",
+      "feature_keys": ["executor_intake_report", "attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1129, "line_end": 1129, "exact_quote": "      \"owner_doc\": \"Plans/Executor_Protocol.md#EP-099\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1130, "line_end": 1130, "exact_quote": "      \"producer\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1289, "line_end": 1289, "exact_quote": "      \"owner_doc\": \"Plans/Executor_Protocol.md#EP-103\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1291, "line_end": 1291, "exact_quote": "        \"Executor receipt writer\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-021",
+      "item_type": "gap",
+      "title": "Operational and scale behavior is not bounded",
+      "statement": "Both values are launch-critical redb records with canonical encoding, but this window defines no maximum record/array/object size, write atomicity, concurrency control, throughput/latency target, backpressure, corruption recovery, or storage-failure behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_operational_bounds",
+      "impact": "Launch-critical persistence behavior under load, contention, oversized payloads, or storage failure remains implementation-dependent.",
+      "builder_discretion": "Builders must choose all capacity, atomicity, concurrency, and failure limits.",
+      "feature_keys": ["executor_intake_report", "attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1125, "line_end": 1125, "exact_quote": "      \"tier\": \"tier_0_launch_critical\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1283, "line_end": 1283, "exact_quote": "      \"storage_kind\": \"redb\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1299, "line_end": 1299, "exact_quote": "      \"encoding\": \"messagepack_canonical\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-022",
+      "item_type": "gap",
+      "title": "Migration mappings and failure handling are incomplete",
+      "statement": "The migration prose declares invalid older intake reports and alias migration for receipts, but gives no source-version inventory, deterministic field mapping, collision strategy, rollback, partial-failure handling, or post-migration verification oracle.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "under_specified_migration",
+      "impact": "Different migrators can transform or reject legacy data differently and cannot prove equivalent outcomes.",
+      "builder_discretion": "Builders must invent migration algorithms, error handling, and verification.",
+      "feature_keys": ["executor_intake_report", "attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1170, "line_end": 1170, "exact_quote": "      \"migration\": \"Reports lacking schema_version or per-domain result objects are invalid for Executor intake replay.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1335, "line_end": 1335, "exact_quote": "      \"migration\": \"Older receipt aliases migrate into attempt_receipt with explicit schema_version, source refs, and redaction profile.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-023",
+      "item_type": "gap",
+      "title": "Validation oracles stop at shallow schema conformance",
+      "statement": "The outer schemas reject additional properties and constrain identifiers, timestamps, enums, and primitive types, but they provide no semantic oracle for result meaning, reference reachability, evidence sufficiency, route validity, or secret scanning.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "incomplete_acceptance_oracles",
+      "impact": "A syntactically valid persisted value may still be semantically unusable, unsafe, or non-certifying.",
+      "builder_discretion": "Builders must define semantic validators beyond JSON-schema acceptance.",
+      "feature_keys": ["executor_intake_report", "attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1176, "line_end": 1176, "exact_quote": "        \"additionalProperties\": false,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1244, "line_end": 1244, "exact_quote": "            \"format\": \"date-time\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1341, "line_end": 1341, "exact_quote": "        \"additionalProperties\": false,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1434, "line_end": 1434, "exact_quote": "              \"type\": \"string\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-024",
+      "item_type": "gap",
+      "title": "Security claim is not enforced by payload shape",
+      "statement": "The receipt forbids raw provider output and credentials, yet result_summary is an unconstrained object and the schema exposes only a declarative redaction_profile enum; no field-level classification, redaction procedure, scanner, or rejection behavior enforces the no-secret rule.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unenforced_security_invariant",
+      "impact": "Sensitive provider output or credentials can be embedded in a structurally valid summary despite the normative prohibition.",
+      "builder_discretion": "Builders must define and enforce redaction and secret-detection behavior.",
+      "feature_keys": ["attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1337, "line_end": 1337, "exact_quote": "      \"redaction_no_secret_rule\": \"Receipt stores artifact/evidence refs and redacted summaries only, not raw provider output or credentials.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1395, "line_end": 1395, "exact_quote": "            \"type\": \"object\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1448, "line_end": 1448, "exact_quote": "            \"type\": \"string\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-025",
+      "item_type": "gap",
+      "title": "Consumer propagation and GUI presentation are unspecified",
+      "statement": "The records name downstream consumers, including a GUI panel, but define no delivery trigger, projection ordering, consistency level, stale-data behavior, acknowledgement, retry, or GUI presentation/error-state contract.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_propagation_and_gui_contract",
+      "impact": "Consumers can observe divergent or stale projections, and the Runtime Artifacts panel has no deterministic display or failure behavior from this contract.",
+      "builder_discretion": "Builders must invent propagation semantics and all receipt-to-GUI mapping behavior.",
+      "feature_keys": ["executor_intake_report", "attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1133, "line_end": 1133, "exact_quote": "      \"consumers\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1135, "line_end": 1135, "exact_quote": "        \"blocked projection projector\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1293, "line_end": 1293, "exact_quote": "      \"consumers\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1294, "line_end": 1294, "exact_quote": "        \"Runtime Artifacts panel\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "EX-026",
+      "item_type": "gap",
+      "title": "Retention timing and reachability criteria are ambiguous",
+      "statement": "Retention prose states relationship-based retention and reachability-gated compaction but does not define retention duration, deletion authority, reachability algorithm, tombstones, compaction atomicity, or how broken references are recovered.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "under_specified_retention",
+      "impact": "Operators cannot predict storage lifetime or safely determine when derived data may be removed.",
+      "builder_discretion": "Builders must define lifecycle timing, reachability, deletion, and recovery policy.",
+      "feature_keys": ["executor_intake_report", "attempt_receipt"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 1171, "line_end": 1171, "exact_quote": "      \"retention_compaction\": \"Retain with the parent WorkNodeRequest and any blocked/goal receipts that cite the intake id.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 1336, "line_end": 1336, "exact_quote": "      \"retention_compaction\": \"Retain canonical receipts and evidence refs; compact only derived summaries once source receipts remain reachable.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Replay behavior is explicit for both report families, including non-activation/non-proof constraints.", "evidence_item_ids": ["EX-004", "EX-013"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "The two families materially persist intake preflight outcomes and cross-surface attempt receipts.", "evidence_item_ids": ["EX-002", "EX-011"]},
+    {"dimension": "inputs_outputs", "status": "addressed", "summary": "Required, optional, and nullable payload fields are enumerated, though nested semantics remain incomplete.", "evidence_item_ids": ["EX-002", "EX-011", "EX-008", "EX-017"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Outer schemas are concrete, but nested results, status conditionals, refs, routes, key/value binding, and summary semantics are underspecified.", "evidence_item_ids": ["EX-001", "EX-008", "EX-009", "EX-010", "EX-017", "EX-018"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Status vocabularies exist, but outcome invariants and the attempt receipt state machine do not.", "evidence_item_ids": ["EX-003", "EX-009", "EX-012", "EX-019"]},
+    {"dimension": "authority", "status": "gap_found", "summary": "Named producers and owner documents do not define runtime authorization or conflict authority.", "evidence_item_ids": ["EX-007", "EX-020"]},
+    {"dimension": "ownership", "status": "gap_found", "summary": "Documentation ownership is named, but mutation ownership and competing-writer resolution are absent.", "evidence_item_ids": ["EX-007", "EX-020"]},
+    {"dimension": "consumers", "status": "addressed", "summary": "PlanCompile, projection, Goal Runtime, GUI, certification, and audit consumers are explicitly named.", "evidence_item_ids": ["EX-007", "EX-016"]},
+    {"dimension": "gui_truth", "status": "gap_found", "summary": "The Runtime Artifacts panel is a named consumer, but display mapping, states, errors, staleness, and presentation rules are absent.", "evidence_item_ids": ["EX-016", "EX-025"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Replay invalidation, retry/rollback fields, and compaction rules exist, but recovery routing semantics, storage failures, transition races, and broken-reference recovery are not defined.", "evidence_item_ids": ["EX-005", "EX-014", "EX-018", "EX-019", "EX-021", "EX-026"]},
+    {"dimension": "security_privacy", "status": "gap_found", "summary": "No-secret and redaction-profile requirements are explicit, but unconstrained summaries leave the prohibition unenforced.", "evidence_item_ids": ["EX-006", "EX-015", "EX-024"]},
+    {"dimension": "propagation", "status": "gap_found", "summary": "Consumers are listed without delivery, ordering, consistency, retry, acknowledgement, or staleness semantics.", "evidence_item_ids": ["EX-007", "EX-016", "EX-025"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "Retention and encoding are stated, but persistence failure, concurrency, atomicity, lifecycle timing, and recovery operations are unbounded.", "evidence_item_ids": ["EX-006", "EX-014", "EX-021", "EX-026"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "No payload limits, throughput/latency targets, backpressure, or capacity behavior is specified for launch-critical records.", "evidence_item_ids": ["EX-021"]},
+    {"dimension": "compatibility_migration", "status": "gap_found", "summary": "Migration intent is present without deterministic mappings, source-version inventory, rollback, partial-failure handling, or verification.", "evidence_item_ids": ["EX-005", "EX-014", "EX-022"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "Shallow schema constraints are testable, but semantic validity, reachability, evidence sufficiency, route validity, and redaction enforcement lack oracles.", "evidence_item_ids": ["EX-003", "EX-012", "EX-023"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Builders must choose nested result models, status invariants, ref/route grammars, state machines, authority, migration, operational bounds, propagation, GUI mapping, retention, and security enforcement.", "evidence_item_ids": ["EX-008", "EX-009", "EX-010", "EX-017", "EX-018", "EX-019", "EX-020", "EX-021", "EX-022", "EX-024", "EX-025", "EX-026"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Consequential unknowns remain in payload semantics, lifecycle, authority, operational behavior, migration, propagation, GUI behavior, and retention.", "evidence_item_ids": ["EX-008", "EX-009", "EX-017", "EX-018", "EX-019", "EX-020", "EX-021", "EX-022", "EX-025", "EX-026"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

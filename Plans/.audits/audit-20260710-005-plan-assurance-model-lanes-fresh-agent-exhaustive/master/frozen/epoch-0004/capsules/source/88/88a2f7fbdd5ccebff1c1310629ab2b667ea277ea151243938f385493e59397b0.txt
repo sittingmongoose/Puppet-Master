@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE 5919-5930 >>>
+  SDK adapters.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+
+<<< AUTHORITATIVE_CORE 5931-6311 >>>
+### MS-082 - Talkativeness Derived Persona Control
+
+```yaml
+plan_unit_id: MS-082
+unit_type: derived_control_policy
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: talkativeness is a Persona instruction-layer control with a 1-5 user-visible scale, default balanced value
+  3, mode overlays, and explicit per-thread override ordering; it does not require a transport matrix row.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: talkativeness_derived_persona_control
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: talkativeness_derived_persona_control
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0057
+preserved_exact_tokens:
+- talkativeness
+- '1'
+- '2'
+- '3'
+- '4'
+- '5'
+- balanced
+- plan mode
+- ask mode
+- agent mode
+- persona_talkativeness
+- instruction layer
+- not through provider-native temperature/top-p semantics
+negative_constraints:
+- talkativeness is not a transport sampling knob and does not require its own transport matrix row.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-083 - Canonical Capability Snapshot Resolver Contract
+
+```yaml
+plan_unit_id: MS-083
+unit_type: data_contract
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token limits,
+  fallback-chain eligibility, provenance, and requested/effective model identity from one canonical machine-readable
+  capability snapshot produced by the shared capability resolver and provider/model metadata inputs.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- MS-079
+unblocks: []
+acceptance_criteria:
+- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
+- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: canonical_capability_snapshot_resolver_contract
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: canonical_capability_snapshot_resolver_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0058
+preserved_exact_tokens:
+- canonical machine-readable snapshot contract
+- provider_id
+- transport
+- model_id
+- variant
+- controls
+- context_window_tokens
+- max_input_tokens
+- max_output_tokens
+- effective_context_window_tokens
+- fallback_chain
+- capability_snapshot_id
+- source_refs[]
+- verification_state
+- staleness_state
+- persona_prompt_body
+- persona_reasoning_effort
+- documented
+- empirical
+- inferred
+- resolved_capability_deltas[]
+- pool_scope
+- provider_entry
+- cache is derivative
+- no ad hoc UI-only logic
+negative_constraints:
+- Every control disclosure shown to the user must be derivable from the snapshot without ad hoc UI-only logic.
+- Do not source snapshot fields from legacy platform_specs or platform_specs.rs.
+- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque capability states.
+compatibility_only_notes:
+- platform_specs and platform_specs.rs are retired source-lineage only.
+stale_retired_dispositions:
+- Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at, and selectable_unit_ids
+  so boot-time refresh and stale catalog state remain inspectable.
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-084 - Account Routing Capability Metadata Snapshot
+
+```yaml
+plan_unit_id: MS-084
+unit_type: data_contract
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Account-routing capability fields are part of the canonical snapshot when provider paths participate in multi-account
+  selection, switching, or pressure routing, and unsupported or opaque facts remain explicitly disclosed.
+gui_related: false
+gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
+  semantics rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- MS-083
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: account_routing_capability_metadata_snapshot
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: account_routing_capability_metadata_snapshot
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0058
+preserved_exact_tokens:
+- supports_multi_account
+- account_identity_kind
+- quota_signal_sources[]
+- quota_signal_confidence
+- supports_threshold_switch
+- supports_hard_exhaustion_detection
+- supports_rate_limit_detection
+- supports_reset_countdown
+- supports_manual_set_active
+- supports_cooldown
+- supports_retry_budget
+- supports_role_scoped_account_pools
+- switch_boundary
+- provider_limit_notes?
+- signal_source_kinds[]
+- signal_confidence
+- retry_budget?
+- cooldown_until?
+- reset_at?
+- unsupported
+- opaque
+- inferred
+- stale
+negative_constraints:
+- Providers lacking cooldown, retry-budget, or reset countdown support must not pretend the provider account pool is safely
+  switchable.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-085 - Talkativeness Snapshot Bridge And GUI Gating Rule
+
+```yaml
+plan_unit_id: MS-085
+unit_type: runtime_disclosure
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: talkativeness appears in the snapshot only when prompt-construction policy records the effective value, derives
+  from persona_prompt_body support, and uses the same skipped disclosure and GUI/runtime gating source as other Persona controls.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.
+split_recommended: false
+depends_on:
+- MS-082
+- MS-083
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: talkativeness_snapshot_bridge_gui_gating
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: talkativeness_snapshot_bridge_gui_gating
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0058
+preserved_exact_tokens:
+- persona_prompt_body
+- skipped
+- GUI gating
+- runtime disclosure
+- second inconsistent source
+negative_constraints:
+- GUI gating and runtime disclosure must not invent a second inconsistent source for talkativeness.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-086 - Unsupported Persona Control Skip Disclosure
+
+```yaml
+plan_unit_id: MS-086
+unit_type: runtime_disclosure
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Unsupported requested Persona controls are not silently ignored or shown as applied; they are recorded in
+  skipped_persona_controls with reason and provider and exposed in UI.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.
+split_recommended: false
+depends_on:
+- MS-083
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: unsupported_persona_control_skip_disclosure
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: unsupported_persona_control_skip_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0059
+preserved_exact_tokens:
+- do not silently ignore it
+- do not show it as applied
+- skipped_persona_controls[]
+- reason and provider
+- expose that status in UI
+- temperature
+- top_p
+- reasoning_effort
+- unsupported by Claude Code transport
+- unsupported by Cursor CLI transport
+- provider does not expose effort knob
+negative_constraints:
+- Unsupported Persona controls must not be silently ignored or shown as applied.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+### MS-087 - Persona Control GUI Support States
+
+```yaml
+plan_unit_id: MS-087
+unit_type: gui_contract
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Persona-related model/runtime controls in GUI reflect provider support states as supported, partially_supported
+  with warning badge and tooltip, or unsupported with explanatory disabled text.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.
+split_recommended: false
+depends_on:
+- MS-086
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: persona_control_gui_support_states
+reasoning_tier: standard
+context_scope: models_system_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: persona_control_gui_support_states
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0060
+preserved_exact_tokens:
+- supported
+- partially_supported
+- unsupported
+- warning badge
+- explanatory tooltip
+- disabled with explanatory text
+- Reasoning effort
+- Cursor CLI
+- Temperature
+- Claude Code
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+
+<<< CONTEXT_AFTER 6312-6323 >>>
+### MS-088 - Runtime Surface Effective Choice Display
+
+```yaml
+plan_unit_id: MS-088
+unit_type: gui_contract
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: Run surfaces display effective runtime choices and skipped controls, including Persona name, selection reason,
+  effective platform/model/variant/effort, and provider-support status examples.
+gui_related: true
+gui_classification_reason: The unit covers user-visible model/runtime display, editor gating, picker/recommendation, UI/artifact,
+  or settings behavior.

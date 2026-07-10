@@ -1,0 +1,673 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001050-ADVERSARIAL-WIN-74C788D8A63C-0002",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001050_attempt_0012",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Tools.md",
+    "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+    "core_sha256": "ac98ba8b96325bc9e84e85da3aa1c0cf7f8f3ad7236cc54463a7845e0160eb47",
+    "core_range": [398, 620]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001050-G01",
+      "item_type": "gap",
+      "title": "Truncated grep results are not represented in the output contract",
+      "statement": "The grep error table says an over-limit match set is truncated, but the successful envelope and all three match shapes contain no truncation flag, cap, continuation token, total count, or terminal error field. A caller can therefore mistake an incomplete result for an exhaustive search.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure_gui_truth_observability",
+      "impact": "Planning, code search, and support consumers can make false absence claims or render misleading complete-state UI from a capped response.",
+      "builder_discretion": "Define one machine-readable incomplete-result state and continuation/limit semantics shared by every output_mode.",
+      "feature_keys": ["grep", "result_limits"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 432,
+          "line_end": 432,
+          "exact_quote": "| `result_limit_exceeded` | Match set exceeded the capped response window and was truncated. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G02",
+      "item_type": "gap",
+      "title": "Untrusted grep patterns lack resource and engine constraints",
+      "statement": "The contract accepts regex or literal input and exposes multiline/context modifiers, but does not specify pattern-size, context-size, regex-engine, catastrophic-backtracking, binary-file, encoding, or per-file safeguards. A timeout limits wall time but does not define prevention, resource reclamation, or deterministic rejection.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_input_scale",
+      "impact": "Hostile or accidental expressions can consume CPU or memory, destabilize concurrent tool work, and produce backend-dependent results.",
+      "builder_discretion": "Lock bounded input sizes and safe regex/runtime behavior with explicit validation errors.",
+      "feature_keys": ["grep", "regex"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 408,
+          "line_end": 408,
+          "exact_quote": "| `pattern` | string | yes | Regex or literal search expression. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 412,
+          "line_end": 412,
+          "exact_quote": "| `flags` | object | no | Search modifiers such as `case_insensitive`, `multiline`, `line_numbers`, `before_context`, `after_context`, or `head_limit`. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G03",
+      "item_type": "gap",
+      "title": "Verified partial grep timeout has no result semantics",
+      "statement": "A runtime may return partial verified hits on timeout, but the contract does not place partial/status/error in the successful envelope, define ordering or completeness boundaries, or say whether count and files modes may be partial. Consumers cannot reliably distinguish verified-prefix, arbitrary-subset, or complete results.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure_observability",
+      "impact": "Retries, deduplication, UI messaging, and automated absence checks can behave inconsistently after timeout.",
+      "builder_discretion": "Specify a single timeout-partial envelope including mode, status, completeness boundary, stable ordering, and retry cursor.",
+      "feature_keys": ["grep", "timeout"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 438,
+          "line_end": 438,
+          "exact_quote": "- On timeout, return `{ pattern, path, status: \"timed_out\", error: { code: \"timeout\" } }`. Implementations may include `partial: true` only when the runtime can prove returned hits were fully verified.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G04",
+      "item_type": "gap",
+      "title": "Glob has no scale or incomplete-enumeration contract",
+      "statement": "Glob promises a deterministic paths array but defines no maximum, pagination, continuation, truncation/error state, memory bound, or partial timeout behavior. Large workspaces either exceed transport limits or silently depend on implementation-specific caps.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_partial_failure",
+      "impact": "Large repositories cannot obtain exhaustive, reproducible path sets or know that enumeration was incomplete.",
+      "builder_discretion": "Lock array limits and continuation semantics, or require an explicit result_limit_exceeded state with no silent truncation.",
+      "feature_keys": ["glob", "scale"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 451,
+          "line_end": 451,
+          "exact_quote": "`{ pattern, path, paths: string[] }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G05",
+      "item_type": "gap",
+      "title": "Path normalization and traversal semantics are underspecified",
+      "statement": "The contracts invoke normalized paths, root scope, ignore filtering, and FileSafe, but do not define separators, Unicode normalization, case sensitivity, symlink traversal, junctions, cycles, dot paths, ignore precedence, or whether returned paths are workspace-relative. Deterministic ordering is not enough to make cross-platform behavior deterministic.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_untrusted_input_localization",
+      "impact": "Cross-platform callers can see different results, while symlink or normalization edge cases can escape intended scopes or create duplicate identities.",
+      "builder_discretion": "Define canonical path identity, root containment after link resolution, ignore precedence, and Unicode/case ordering.",
+      "feature_keys": ["grep", "glob", "write", "paths"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 453,
+          "line_end": 453,
+          "exact_quote": "The returned `paths` array contains normalized file paths in deterministic order after ignore-rule filtering.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G06",
+      "item_type": "gap",
+      "title": "Canonical write permits unguarded overwrite races",
+      "statement": "The write path can overwrite an existing file, yet the input has no expected hash/version, create-only/overwrite mode, idempotency key, confirmation token, lock behavior, or conflict result. Two authorized callers can overwrite each other after stale reads, and a mistaken caller can destructively replace content without a compare-and-swap boundary.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "concurrency_destructive_authority",
+      "impact": "Lost updates and silent destructive replacement can corrupt canonical or user-owned files while still returning success.",
+      "builder_discretion": "Require explicit overwrite intent and support conditional writes using a prior content/version binding; define conflict behavior.",
+      "feature_keys": ["write", "concurrency"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 478,
+          "line_end": 478,
+          "exact_quote": "| `path` | string | yes | Target file path to create or overwrite, subject to write-scope policy. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 485,
+          "line_end": 485,
+          "exact_quote": "`created = true` when the path did not previously exist; `false` when the tool overwrote an existing file under an allowed policy.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G07",
+      "item_type": "gap",
+      "title": "Write atomicity is promised only for timeout and lacks crash recovery",
+      "statement": "The timeout branch requires atomic failure, but ordinary io_error, process crash, disk-full, permission change, or cancellation behavior is undefined. The contract does not state whether replacement preserves the original, whether bytes are durable, whether parent metadata is synchronized, or how abandoned temporary files are recovered.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "partial_failure_recovery_rollback",
+      "impact": "A failed or interrupted write can leave partial content, lose the previous file, or report ambiguous durability with no rollback path.",
+      "builder_discretion": "Define the atomic replacement/durability boundary for every terminal outcome and specify recovery cleanup.",
+      "feature_keys": ["write", "recovery"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 502,
+          "line_end": 502,
+          "exact_quote": "- On timeout, the write must fail atomically and return `{ status: \"timed_out\", path, error: { code: \"timeout\" } }`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G08",
+      "item_type": "unknown",
+      "title": "Skill runtime envelope is not independently implementable from this contract",
+      "statement": "The skill section lists fields and delegates richer resource references and behavior to linked ownership, but gives no field types, requiredness, status/error union, versioning, maximum sizes, invocation identity, cancellation behavior, or compatibility rules. Because the owner contract is outside the authorized window, whether those gaps are resolved is unknown here.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_contract_unknown",
+      "impact": "Tool-registry, Agent Config, and skill-runtime consumers can serialize incompatible envelopes or disagree on readiness and failure behavior.",
+      "builder_discretion": "Expose a versioned executable schema or a precise ContractRef with conformance tests at this boundary.",
+      "feature_keys": ["skill-runtime"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 506,
+          "line_end": 506,
+          "exact_quote": "Canonical skill-runtime boundary: the tool registry may expose `skill-runtime` metadata only as a consumer-facing pointer back to `Plans/Skills_System.md`; richer runtime resource refs stay resolved through the shared tool-contract boundary rather than ad hoc skill-local schemas.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G09",
+      "item_type": "gap",
+      "title": "Skill resource metadata lacks privacy and lifecycle rules",
+      "statement": "The envelope exposes content, context, a resource base directory, sampled resource entries, and metadata while only broadly naming FileSafe. It does not specify redaction, secret classification, provenance, retention, cache invalidation, deletion, telemetry, maximum payloads, or whether resource samples may cross model/provider boundaries.",
+      "severity": "high",
+      "confidence": "medium",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive local resource names or content can persist or be disclosed through runtime envelopes and logs without an auditable lifecycle.",
+      "builder_discretion": "Bind each resource-bearing field to classification, access, redaction, retention, and egress rules.",
+      "feature_keys": ["skill-runtime", "privacy"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 512,
+          "line_end": 512,
+          "exact_quote": "- Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 520,
+          "line_end": 522,
+          "exact_quote": "- resource_base_dir?\n- resource_entries_sample?\n- metadata?",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G10",
+      "item_type": "gap",
+      "title": "Question answer source has conflicting structural placement",
+      "statement": "The rules lock source as an optional field on each answer and the long-form output embeds it inside each answer object, but the summarized Fields block defines answers without source and lists source as a separate field. An implementation can validly infer top-level source or omit per-answer provenance.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "schema_contradiction_compatibility",
+      "impact": "Multi-question answers can lose per-answer provenance, breaking compatibility normalization, audits, and UI distinction between selected and freeform values.",
+      "builder_discretion": "Remove the standalone ambiguity and publish one canonical answer object schema with source nested per answer.",
+      "feature_keys": ["question", "answer_source"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 548,
+          "line_end": 550,
+          "exact_quote": "- answers: Array<{question_id, values: string[]}>\n- answer_text?\n- source?: \"option\" | \"other\" | \"freeform\"",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G11",
+      "item_type": "gap",
+      "title": "Question lifecycle and resumed-draft transitions are incomplete",
+      "statement": "The flow names answered, submitted, dismissed, timed_out, unavailable, draft, pause, and required-item gating, but does not define the transition graph, distinction between answered and submitted, resume identity after dismissal, timeout retention, cancellation, duplicate submission, late-answer handling, or retry idempotency.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_state_transition_recovery",
+      "impact": "Storage and GUI can disagree about completion, resurrect stale drafts, accept duplicate answers, or strand a paused flow.",
+      "builder_discretion": "Specify a versioned state machine with legal transitions, retry/duplicate rules, and persisted resume keys.",
+      "feature_keys": ["question", "state_machine"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 535,
+          "line_end": 535,
+          "exact_quote": "- Implementation-readiness for the shared question-flow / multi-question-flow requires question-card behavior to stay aligned across Assistant, Interviewer, and document-builder / visual-module flows: required-by-default items keep the flow incomplete until answered, dismiss-to-pause returns an explicit dismissed/paused status, and `Other` remains the freeform path rather than a fabricated option answer.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G12",
+      "item_type": "gap",
+      "title": "Persisted answers and drafts have no data lifecycle",
+      "statement": "The question contract requires storage to persist draft, submitted, and source metadata, but gives no retention, deletion, redaction, encryption, secret/PII classification, history/version policy, export behavior, or telemetry restrictions. The word bounded does not identify a time, size, or revision bound.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive freeform answers may outlive their purpose, propagate to durable projections, and remain undiscoverable to deletion or support tooling.",
+      "builder_discretion": "Define explicit size/revision/time bounds and privacy lifecycle requirements for draft and submitted answer payloads.",
+      "feature_keys": ["question", "storage", "privacy"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 534,
+          "line_end": 534,
+          "exact_quote": "- Question and questionnaire flows preserve bounded draft `/answer` state, submitted answer state, and answer-source metadata as tool payloads that storage persists; Tools owns the tool envelope while `Plans/storage-plan.md` owns the durable `chat.plan_todo_updated` and questionnaire projections.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G13",
+      "item_type": "gap",
+      "title": "Question-card accessibility and localization behavior is absent",
+      "statement": "The same question card must span several GUI flows and supports required, multi-select, freeform, validation, defaults, and descriptions, yet no contract covers keyboard navigation, focus restoration on pause/resume, screen-reader grouping, error announcements, accessible names, minimum target behavior, localized labels, RTL layout, collation, or locale-aware validation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility_localization",
+      "impact": "Required questioning may be impossible or misleading for assistive-technology users and can diverge across locales and host surfaces.",
+      "builder_discretion": "Add cross-surface accessibility and localization acceptance criteria to the shared question-flow contract.",
+      "feature_keys": ["question", "gui", "accessibility", "localization"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 536,
+          "line_end": 536,
+          "exact_quote": "- The v1 input envelope accepts `mode?: \"single_question\" | \"questionnaire\"`, `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, `allow_other?: boolean` as a legacy alias for `allow_freeform`, and `allow_multi_select?: boolean` as a legacy alias for `multi_select`; each `QuestionItem` carries at minimum `question_id`, canonical display `question`, legacy alias `text: string`, optional `description?: string`, `options?: Array<{ id, label, description? }>`, `required?` default true, `multi_select?` default false, `allow_freeform?` default true, `allow_other?` as the freeform legacy alias, `placeholder?`, `default_values?`, and response constraints. Legacy `answer: string` output is normalized into the canonical answer array.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G14",
+      "item_type": "gap",
+      "title": "TODO item status and plan revision state are conflated",
+      "statement": "The field list names one status, then lists item-like states pending through skipped plus superseded, followed by draft, approved, executing, completed, and blocked without identifying a separate plan/revision field. Completed and blocked occur in both sets. The exact schema/status set is therefore not reconstructable without guessing namespaces.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "schema_state_ambiguity",
+      "impact": "Storage, UI badges, execution gates, and legacy migration can serialize plan states as item states or reject valid transitions inconsistently.",
+      "builder_discretion": "Name and enumerate separate todo_item.status and plan_revision.status fields, including whether superseded belongs to either or both.",
+      "feature_keys": ["todo", "planning", "state"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 590,
+          "line_end": 602,
+          "exact_quote": "- status\n- dependencies[]\n- owner_hint\n- verification_hint\n- order_index?\n- notes?\n- pending | in_progress | completed | blocked | skipped\n- superseded\n- draft\n- approved\n- executing\n- completed\n- blocked",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G15",
+      "item_type": "gap",
+      "title": "Shared TODO SSOT lacks concurrency and mutation authority",
+      "statement": "Single-agent, crew, and subagent executions share one TODO state, and todowrite may create, reorder, update statuses, and notes, but the contract gives no expected revision, transaction boundary, conflict/merge policy, owner capability, lease for in-progress work, or rule preventing a subagent from modifying another owner's item.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "concurrency_authority",
+      "impact": "Concurrent runners can lose updates, double-execute work, reorder approved plans, or falsely complete items owned by another actor.",
+      "builder_discretion": "Require revision-bound atomic mutations and an explicit per-operation authority/ownership matrix.",
+      "feature_keys": ["todowrite", "crew", "subagent", "concurrency"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 583,
+          "line_end": 583,
+          "exact_quote": "- TODO is the SSOT for plan execution state across single-agent, crew, and subagent runs. `/revise` creates an explicit new draft/revision instead of mutating approved history invisibly; sticky-panel-vs-inline-progress is a UI division, not a second TODO state model. The sticky-card / execution-tracker surface owns the full TODO list, status badges, focused item behavior, delegated owner display, and post-approval edit restrictions, while inline-progress chat messages stay compact and link back to the sticky panel.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 607,
+          "line_end": 610,
+          "exact_quote": "- todowrite can create, reorder, update statuses/notes\n- todoread returns current normalized list for active thread/run\n- `todowrite` / `todoread` use the same normalized TODO schema as planning outputs.\n- Crew/subagent execution consumes the same TODO contract without translation.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G16",
+      "item_type": "gap",
+      "title": "Deep Plan resync has no atomic execution gate or recovery",
+      "statement": "The contract requires edited Deep Plan markdown to update TODO before execution, but it does not say that execution and resync share a transaction, what result proves projection freshness, how failure blocks execution, or how a crash between artifact and TODO mutation is repaired.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "partial_failure_recovery_state_transition",
+      "impact": "Execution can begin against a stale TODO projection even while each component independently appears valid.",
+      "builder_discretion": "Bind execution to a matching artifact/TODO revision hash and define repair for interrupted resync.",
+      "feature_keys": ["deep-plan", "todo", "resync"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 612,
+          "line_end": 612,
+          "exact_quote": "- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G17",
+      "item_type": "gap",
+      "title": "Durable TODO mutation event seam is not closed",
+      "statement": "The contract requires chat.plan_todo_updated and delegates durable ownership to storage and another ContractRef, but provides no event payload, revision/idempotency key, ordering, transaction relation to current state, replay behavior, or projection failure state in this boundary.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_observability_partial_failure",
+      "impact": "Event consumers can double-apply, reorder, or miss TODO mutations, while support tooling cannot prove whether persisted state and projected UI agree.",
+      "builder_discretion": "Lock the event schema and atomic append/projection/replay semantics through an executable ContractRef.",
+      "feature_keys": ["todo", "storage", "events"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 582,
+          "line_end": 582,
+          "exact_quote": "- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 613,
+          "line_end": 613,
+          "exact_quote": "ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G18",
+      "item_type": "gap",
+      "title": "Offline, restart, and disconnected-client reconciliation are unspecified",
+      "statement": "Question drafts, durable answers, sticky TODO state, inline progress, crew/subagent updates, and approval prompts all span persistence or multiple surfaces, but no contract states behavior during network loss, client disconnect, app restart, delayed approval, replay, or conflicting offline edits.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "offline_network_loss_recovery",
+      "impact": "Users can see stale approvals or progress, lose drafts, submit into an obsolete revision, or resume execution from inconsistent state.",
+      "builder_discretion": "Define authoritative revision handshakes and explicit offline/stale/reconnect states for question and TODO consumers.",
+      "feature_keys": ["question", "todo", "offline"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 581,
+          "line_end": 581,
+          "exact_quote": "- `todowrite` auto-use on-trigger behavior is explicit: when the auto-use heuristic fires, the agent emits a `todowrite` tool call with proposed TODO items. If auto-approved by the resolved permission preset, the tool creates items silently; if ask-mode, the tool is held behind an approval prompt that lists the proposed TODO items before creation.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-G19",
+      "item_type": "gap",
+      "title": "Critical promises lack falsifiable acceptance oracles",
+      "statement": "The core uses normative claims for verified grep partials, deterministic glob ordering, atomic timeout writes, cross-surface question alignment, durable projections, and pre-execution TODO resync, but does not define conformance fixtures, crash/race tests, observable hashes, or pass/fail receipts for any of them.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Implementations can claim compliance while differing on the exact failure, ordering, recovery, and propagation behaviors that matter most.",
+      "builder_discretion": "Attach executable conformance cases and observable receipts to each normative cross-component guarantee.",
+      "feature_keys": ["conformance", "testing"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 579,
+          "line_end": 579,
+          "exact_quote": "- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-N01",
+      "item_type": "explicit_non_gap",
+      "title": "Read timeout has explicit non-fabrication behavior",
+      "statement": "The preceding read contract's timeout behavior is explicit: it returns a structured timed_out result and forbids fabricating missing lines.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["read", "timeout"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 400,
+          "line_end": 400,
+          "exact_quote": "- On timeout, return `{ path, status: \"timed_out\", error: { code: \"timeout\" } }`; do not fabricate missing lines.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-N02",
+      "item_type": "explicit_non_gap",
+      "title": "Write scope and FileSafe denial states are explicit",
+      "statement": "The write contract explicitly subjects targets to write-scope policy and names distinct policy and FileSafe denial errors, preventing a generic success/failure surface from erasing the authority boundary.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["write", "authority"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 492,
+          "line_end": 493,
+          "exact_quote": "| `permission_denied` | `write` / `create` denied by tool policy. |\n| `filesafe_blocked` | Write path rejected by FileSafe or out of allowed scope. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-N03",
+      "item_type": "explicit_non_gap",
+      "title": "Question authority and headless terminal behavior are bounded",
+      "statement": "Top-level orchestration owns user questioning, subagent access is denied by default, and headless execution returns unavailable without offering an impossible GUI recovery action.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["question", "authority", "headless"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 551,
+          "line_end": 553,
+          "exact_quote": "- Headless/HITL-unavailable returns `headless_unavailable` with `status: \"unavailable\", reason: \"headless\"` and no GUI-only recovery action.\n- headless_unavailable\n- Subagent question tool access is DENIED by default",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001050-N04",
+      "item_type": "explicit_non_gap",
+      "title": "Approved TODO history is protected from invisible structural edits",
+      "statement": "The contract explicitly requires structural-edit gating, bounded revision history, and a new draft/revision for revise rather than invisible mutation of approved history.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["todo", "revision", "destructive_actions"],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 578,
+          "line_end": 578,
+          "exact_quote": "- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Grep truncation/partial consumers, skill-runtime consumers, and durable TODO event consumers lack closed behavior for the envelopes they receive.",
+      "evidence_item_ids": ["A005-001050-G01", "A005-001050-G03", "A005-001050-G08", "A005-001050-G17"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Question lifecycle and TODO item-versus-plan states do not define an unambiguous legal transition model.",
+      "evidence_item_ids": ["A005-001050-G10", "A005-001050-G11", "A005-001050-G14", "A005-001050-G16"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Write overwrite and multi-run TODO mutation lack revision-bound conflict semantics.",
+      "evidence_item_ids": ["A005-001050-G06", "A005-001050-G15", "A005-001050-G16"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Truncated/partial searches, interrupted writes, projection resync, and durable events lack complete terminal semantics.",
+      "evidence_item_ids": ["A005-001050-G01", "A005-001050-G03", "A005-001050-G04", "A005-001050-G07", "A005-001050-G16", "A005-001050-G17"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Crash-safe write rollback, question resume/retry, Deep Plan projection repair, and reconnect reconciliation are not specified.",
+      "evidence_item_ids": ["A005-001050-G07", "A005-001050-G11", "A005-001050-G16", "A005-001050-G18"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "File writes and question invocation have useful policy boundaries, but shared TODO mutation authority and conditional destructive overwrite remain unresolved.",
+      "evidence_item_ids": ["A005-001050-G06", "A005-001050-G15", "A005-001050-N02", "A005-001050-N03"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Skill resources and persisted question drafts/answers lack classification, retention, deletion, redaction, and egress rules.",
+      "evidence_item_ids": ["A005-001050-G09", "A005-001050-G12"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Regex resource hazards, link/path normalization, and overwrite targeting are not fully bounded despite validation and FileSafe errors.",
+      "evidence_item_ids": ["A005-001050-G02", "A005-001050-G05", "A005-001050-G06", "A005-001050-N02"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Search completeness, question provenance/lifecycle, TODO state namespaces, and reconnect freshness can all be presented as settled when they are not.",
+      "evidence_item_ids": ["A005-001050-G01", "A005-001050-G03", "A005-001050-G10", "A005-001050-G11", "A005-001050-G14", "A005-001050-G18"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "No stale-revision, disconnect, restart, replay, or conflicting offline edit contract exists for persistent question/TODO flows.",
+      "evidence_item_ids": ["A005-001050-G18"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Grep patterns/context, glob enumeration, skill metadata, and persistent answer/revision histories lack usable explicit bounds.",
+      "evidence_item_ids": ["A005-001050-G02", "A005-001050-G04", "A005-001050-G09", "A005-001050-G12"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "The required shared question-card behavior has no assistive technology, keyboard, focus, or error-announcement contract.",
+      "evidence_item_ids": ["A005-001050-G13"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Question labels/validation and canonical path ordering do not specify locale, RTL, Unicode normalization, or case behavior.",
+      "evidence_item_ids": ["A005-001050-G05", "A005-001050-G13"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Legacy question aliases have an answer-source shape contradiction, path behavior is platform-dependent, skill schemas are versionless here, and TODO state namespaces are ambiguous.",
+      "evidence_item_ids": ["A005-001050-G05", "A005-001050-G08", "A005-001050-G10", "A005-001050-G14"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Completeness, partial search boundaries, write durability, projection revision, and event replay receipts are not observable enough for support diagnosis.",
+      "evidence_item_ids": ["A005-001050-G01", "A005-001050-G03", "A005-001050-G07", "A005-001050-G16", "A005-001050-G17", "A005-001050-G19"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Write overwrite is destructive without compare-and-swap or recovery; TODO revision gating is an explicit protection but its concurrent enforcement remains unspecified.",
+      "evidence_item_ids": ["A005-001050-G06", "A005-001050-G07", "A005-001050-G15", "A005-001050-N04"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Skill ownership and TODO storage/event ContractRefs are delegated without executable versioned boundary schemas in this window.",
+      "evidence_item_ids": ["A005-001050-G08", "A005-001050-G09", "A005-001050-G12", "A005-001050-G17"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Normative atomicity, ordering, alignment, persistence, and resync claims lack conformance or crash/race acceptance oracles.",
+      "evidence_item_ids": ["A005-001050-G19"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "The inaccessible linked skill and storage owner contracts may resolve or contradict boundary details; within the closed window those residuals remain unknown.",
+      "evidence_item_ids": ["A005-001050-G08", "A005-001050-G09", "A005-001050-G17"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1369-1380 >>>
+L00001369	
+L00001370	### 9. Required vs disabled subagents conflict
+L00001371	
+L00001372	- **Issue:** User could add the same name to both "required" and "disabled." Backend behavior could be ambiguous.
+L00001373	- **Mitigation:** **Rule: required wins.** When building the final subagent list: (1) Start from selected list or override list. (2) Add all names in `required_subagents`. (3) Remove any name in `disabled_subagents` unless it is in `required_subagents`. Document this in code and in the Config UI tooltip. In the UI, optionally grey out or hide in the disabled list any name that appears in required.
+L00001374	
+L00001375	### 10. Meaning of empty override list
+L00001376	
+L00001377	- **Issue:** If `tier_overrides.phase = []`, does that mean "no subagents for phase" or "no override; use auto-selected list"?
+L00001378	- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier "use no subagents" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides.
+L00001379	
+L00001380	### 11. Persistence and dirty state
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1381-1777 >>>
+L00001381	
+L00001382	- **Issue:** User toggles global plan mode or subagent settings and switches tab or closes before save. Changes could be lost or only partially written.
+L00001383	- **Mitigation:** Follow existing Config save behavior: save on explicit Save action and/or mark dirty and prompt on leave. Ensure `use_plan_mode_all_tiers`, `last_per_tier_plan_mode` (if used), and the full `subagent` block (SubagentGuiConfig) are part of the same `GuiConfig` struct and are written in the same `gui_config::save_config()` call from the Config view so we never persist only tier config without plan-mode global or subagent settings. When the user clicks Save on any Config tab, the entire `gui_config` (including these fields) is serialized to the same YAML file.
+L00001384	
+L00001385	### 12. Start/end verification overhead and quality definition
+L00001386	
+L00001387	- **Issue:** Start and end verification at every Phase/Task/Subtask (wiring, readiness, acceptance, quality) adds latency and requires a clear definition of "quality" and who addresses unrelated failures.
+L00001388	- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.
+L00001389	
+L00001390	### 13. Platform-specific hook integration and parser reliability
+L00001391	
+L00001392	- **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
+L00001393	- **Mitigation:** (1) **Hooks:** For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate to platform hooks where possible; for others (Codex, Copilot), use orchestrator-level middleware. Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior: JSON parsers handle missing fields gracefully; JSONL parser aggregates events safely (last event wins, accumulate findings); text parser uses multiple patterns and validates extracted sections. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
+L00001394	
+L00001395	### 14. Subagent persona overrides (token budget and scope)
+L00001396	
+L00001397	- **Issue:** Custom instruction snippets in persona overrides could be long; injecting them into every subagent prompt may consume token budget or conflict with platform limits.
+L00001398	- **Mitigation:** (1) Persona edits apply to any subagent name that exists in the current list (imported from provider-native seed files or user-created in Puppet Master storage). The canonical content lives in Puppet Master Persona storage; do not maintain a second runtime source in config. (2) Optionally cap length of editable Persona instruction/description content in UI and storage workflows (e.g. 500-1000 chars for inline override affordances) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (canonical Puppet Master Persona content, with optional re-import/trim refresh) in both orchestrator and interview.
+L00001399	
+L00001400	---
+L00001401	
+L00001402	## Interviewer Enhancements and Config Wiring
+L00001403	
+L00001404	This section addresses **interview-specific** config that is built in the GUI and/or config types but not yet wired into the interview execution path, and defines **min/max questions per phase** behavior plus process and validation to avoid "built but not wired" across the app.
+L00001405	
+L00001406	### Current state: interview config wiring gap
+L00001407	
+L00001408	The Config tab (Interview tab) and `InterviewGuiConfig` / `PuppetMasterConfig.interview` (`InterviewConfig`) define several settings. The **interview orchestrator** is built with `InterviewOrchestratorConfig` in `app.rs` (from `gui_config.interview`). Only a subset of GUI/config fields are passed into `InterviewOrchestratorConfig` and used in `interview/` (orchestrator, phase_manager, prompt_templates, completion_validator).
+L00001409	
+L00001410	**Audit result -- interview settings:**
+L00001411	
+L00001412	| Field | In GUI / InterviewConfig | In InterviewOrchestratorConfig | Used in interview/ | Status |
+L00001413	|-------|--------------------------|--------------------------------|-------------------|--------|
+L00001414	| `platform`, `model`, `backup_platforms` | Yes | Yes (primary_platform, backup_platforms) | Yes | Wired |
+L00001415	| `output_dir` | Yes | Yes (output_dir) | Yes | Wired |
+L00001416	| `reasoning_level` | Yes | Via request.reasoning_effort | Yes | Wired |
+L00001417	| `first_principles` | Yes | Yes | Yes | Wired |
+L00001418	| `generate_playwright_requirements`, `generate_initial_agents_md` | Yes | Yes | Yes | Wired |
+L00001419	| **`max_questions_per_phase`** | Yes | **No** | **No** (PhaseManager uses hardcoded 3/8) | **Not wired** |
+L00001420	| **`require_architecture_confirmation`** | Yes | **No** | **No** | **Not wired** |
+L00001421	| **`vision_provider`** | Yes | **No** | **No** | **Not wired** |
+L00001422	
+L00001423	So three interview settings are currently **built but not wired**. Users who change them in Config see no effect on interview behavior.
+L00001424	
+L00001425	### Interview question limits (min / max per phase)
+L00001426	
+L00001427	**Planned change:**
+L00001428	
+L00001429	1. **Replace** the single "Max questions per phase" with:
+L00001430	   - **Minimum questions per phase** (e.g. `min_questions_per_phase: u32`, default 3).
+L00001431	   - **Max questions per phase** with an **Unlimited** option (e.g. `max_questions_per_phase: Option<u32>`; `None` = unlimited).
+L00001432	
+L00001433	2. **Dynamic behavior:** The interview agent may signal phase completion (e.g. `<<<PM_PHASE_COMPLETE>>>`). The orchestrator should:
+L00001434	   - **Accept** phase complete only when the current phase's question count is **≥** `min_questions_per_phase`.
+L00001435	   - If `max_questions_per_phase` is `None` (unlimited), no upper bound check.
+L00001436	
+L00001437	**Max Questions Per Phase — Soft Cap (Resolved):**
+L00001438	When `max_questions_per_phase` is configured:
+L00001439	- **Soft cap with grace:** Accept phase completion when the agent signals complete and question count ≤ `max + 1` (one grace question for wrap-up).
+L00001440	- **Force-complete:** If question count exceeds `max + 1` without the agent signaling complete, force-complete the phase:
+L00001441	  - Emit a `phase.force_completed` seglog event with `reason: "max_questions_exceeded"`.
+L00001442	  - Use the answers collected so far as the phase output.
+L00001443	  - Log a warning: "Phase [X] force-completed after [N] questions (max: [max])."
+L00001444	- **No reject:** Never reject a phase that has already collected valid answers. The cap prevents runaway agent loops, not data loss.
+L00001445	- Config: `interview.phases.{phase_name}.max_questions` (per-phase), `interview.max_questions_per_phase` (global default).
+L00001446	
+L00001447	3. **Wiring (full path):**
+L00001448	   - **Types:** Add to `InterviewGuiConfig` and `InterviewConfig`: `min_questions_per_phase: u32`, `max_questions_per_phase: Option<u32>` (and remove or repurpose the old single `max_questions_per_phase`).
+L00001449	   - **Execution config:** Add the same two fields to `InterviewOrchestratorConfig` (`interview/orchestrator.rs`).
+L00001450	   - **Construction:** In `app.rs`, when building `InterviewOrchestratorConfig` from `gui_config.interview`, set `min_questions_per_phase` and `max_questions_per_phase` from `gui_config.interview`.
+L00001451	   - **Phase manager:** Pass these into phase definitions or into `PhaseManager` (e.g. in `default_phases()` / `add_dynamic_phase()`), so each phase has min/max available.
+L00001452	   - **Orchestrator logic:** In `process_ai_turn` (or equivalent), when `parsed.is_phase_complete`, compute current phase question count; if count < min, reject (e.g. send back "Ask at least N questions"); if max is `Some(m)` and count > m, either reject or accept depending on product rule; otherwise accept.
+L00001453	   - **Prompts:** In `prompt_templates.rs` (or equivalent), inject the configured min (and max if set) into the instructions, e.g. "Ask at least {min} questions..." and "Do not exceed {max} questions..." when max is set.
+L00001454	   - **GUI:** Interview tab: replace single max control with Min (number input) and Max (number input + "Unlimited" option). Use existing DRY widgets and tooltips.
+L00001455	   - **Docs:** AGENTS.md or interview doc: document min/max and Unlimited; tooltips in Config.
+L00001456	   - **Tests:** Unit tests for min/max logic (accept/reject at boundaries); integration test that builds config from `gui_config` and runs one phase; env-gated smoke if needed.
+L00001457	
+L00001458	### Other unwired interview settings -- resolution
+L00001459	
+L00001460	- **`require_architecture_confirmation`**
+L00001461	  **Intended behavior:** Before leaving certain phases (e.g. architecture/tech stack), the interview requires explicit user or agent confirmation of architecture/tech choices.
+L00001462	  **Wiring:** Add `require_architecture_confirmation: bool` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. In the interview flow, add a step or phase gate that, when this is true, waits for or prompts for explicit confirmation (e.g. a dedicated phase or a prompt line) before allowing phase complete. Document in interview prompts and in AGENTS.md.
+L00001463	
+L00001464	- **`vision_provider`**
+L00001465	  **Intended behavior:** When the interview or follow-up uses image/vision (e.g. screenshots, diagrams), this setting selects the preferred platform for vision-capable requests.
+L00001466	  **Wiring:** Add `vision_provider: String` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`. When building requests that include images, use this platform (filtered by platform_specs vision capability). If no image flow exists yet, wire the field and leave the behavior as "use when implementing image/vision flows"; document that in the plan or code.
+L00001467	
+L00001468	### Main-run config source note
+L00001469	
+L00001470	The **main orchestrator** (run loop) gets config via `ConfigManager::discover()` and `get_config()` (i.e. from disk as `PuppetMasterConfig`). The Config tab saves `GuiConfig` to the same path. Ensure the saved YAML shape is compatible with `PuppetMasterConfig` for all execution-affecting fields (tiers, orchestrator, interview, etc.) so that saving from the Config tab does not drop or default values that the run expects. If the run uses a project hint (e.g. current project path), prefer `ConfigManager::discover_with_hint(project_path)` so the run uses the same file the user edited.
+L00001471	
+L00001472	---
+L00001473	
+L00001474	## Avoiding "Built but Not Wired"
+L00001475	
+L00001476	To prevent users from hitting settings that exist in the UI and requirements but never affect execution, this plan adopts **two complementary approaches**: (A) **process and explicit wiring steps**, and (B) **tier-level config-wiring validation** at Phase, Task, Subtask, and Iteration.
+L00001477	
+L00001478	### Approach A: Process -- explicit wiring steps and checklist
+L00001479	
+L00001480	**Rule:** For every new config or feature that **affects execution** (interview limits, tier plan_mode, subagent toggles, etc.), the implementation **must** include explicit wiring steps. This applies to both the orchestrator/subagent work and to other flows (e.g. interview, start-chain, Doctor).
+L00001481	
+L00001482	**Wiring checklist (per feature/setting):**
+L00001483	
+L00001484	1. **Execution config type:** Add the field to the **runtime config** used by the component that executes (e.g. `InterviewOrchestratorConfig`, or the `PuppetMasterConfig` / tier config used by the main orchestrator). Do not only add it to GUI or file-only config.
+L00001485	2. **Construction / load:** When building that runtime config from GUI or from file (e.g. in `app.rs` when starting the interview, or when the run loads config), **set** the field from the source of truth (e.g. `gui_config.interview.*`, or `config.tiers.phase.*`).
+L00001486	3. **Runtime use:** In the execution path (orchestrator, phase manager, prompt builder, runner), **read** the field and use it to decide behavior (e.g. min/max question checks, plan_mode, subagent list). No "dead" fields in the execution config.
+L00001487	
+L00001488	**Where to document:**
+L00001489	
+L00001490	- **This plan:** The "Interviewer Enhancements and Config Wiring" and "Avoiding Built but Not Wired" sections are the canonical description. New features that add execution-affecting config should reference this checklist in their implementation notes.
+L00001491	- **AGENTS.md:** Add a short subsection (e.g. under "DO" or "Pre-Completion Verification Checklist") that says: for any new execution-affecting config, follow the three-step wiring checklist (add to execution config, set at construction, use in runtime). Link to this plan or to REQUIREMENTS.md if a more detailed wiring policy is written there.
+L00001492	- **REQUIREMENTS.md (optional):** If the project keeps a requirements doc, add a line under non-functional or process requirements: "All execution-affecting configuration must be wired: present in execution config, set when building from GUI/file, and used in the execution path."
+L00001493	
+L00001494	**Who does it:** Implementers and reviewers. Code review should verify that new settings that appear in the Config UI or config file have a corresponding execution-config field and usage in the right module (interview, core/orchestrator, etc.).
+L00001495	
+L00001496	**UI wiring enforcement (GUI projects):** For user projects that include a GUI, the wiring matrix (`.puppet-master/project/ui/wiring_matrix.json`) and command catalog (`.puppet-master/project/ui/ui_command_catalog.json`) serve as the mechanical enforcement of "built but not wired" for the UI layer. Every interactive element must appear in the wiring matrix with a bound command and handler; orphan elements and orphan commands are both validation failures. This complements the config-wiring validation (Approach B) by extending "no unwired features" to the UI surface of the user project. The orchestrator's tier-boundary validation (§Start and End Verification) includes a UI wiring check for nodes with UI scope.
+L00001497	
+L00001498	### Approach B: Tier-level config-wiring validation (Phase / Task / Subtask / Iteration)
+L00001499	
+L00001500	**Rule:** The orchestrator (or a shared validation layer) runs a **config-wiring check at each tier boundary** -- when entering a Phase, when entering a Task, when entering a Subtask, and when entering an Iteration. The check verifies that the config that **should** affect execution at that tier is **present and actually used** (e.g. tier config exists, plan_mode is read from config, interview limits are present in interview config when in interview flow). This catches "built but not wired" even when the checklist is missed.
+L00001501	
+L00001502	**Rationale for "at each tier":** A single run-start check can miss tier-specific wiring (e.g. task-tier plan_mode not applied for a task). Checking at Phase, Task, Subtask, and Iteration ensures that the config in effect for that tier is the one the code path uses, and that no tier is accidentally running with defaults or stale values.
+L00001503	
+L00001504	**What to validate (by tier):**
+L00001505	
+L00001506	- **Phase (start of phase):**
+L00001507	  - Tier config for phase is present (platform, model, plan_mode, etc.).
+L00001508	  - If global plan-mode is used, it is reflected in phase tier config (or explicitly overridden).
+L00001509	  - If this run is an **interview** run: interview execution config (e.g. `InterviewOrchestratorConfig`) includes min/max questions and any other execution-affecting interview fields that the interview flow is supposed to use; if any are missing, validation fails or warns (see below).
+L00001510	- **Task (start of task):**
+L00001511	  - Tier config for task is present and matches config source (e.g. from run config).
+L00001512	  - Subagent config (if subagents enabled) is present and applied (e.g. overrides, disabled, required lists are read from config).
+L00001513	- **Subtask (start of subtask):**
+L00001514	  - Tier config for subtask is present.
+L00001515	  - Subagent list for this subtask is derived from config (selector + overrides) and not hardcoded.
+L00001516	- **Iteration (start of iteration):**
+L00001517	  - Tier config for iteration is present (platform, model, plan_mode).
+L00001518	  - Iteration request (e.g. `ExecutionRequest`) is built using that tier config (plan_mode, platform, model), not defaults.
+L00001519	
+L00001520	**How to implement:**
+L00001521	
+L00001522	- **Single validation entry point:** Introduce a function or small module, e.g. `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>`. It receives the current tier type (Phase/Task/Subtask/Iteration), the config (or the relevant slice: tier config, interview config, subagent config), and optional context (e.g. "interview run" vs "main run"). It checks the items above for that tier and returns Ok or an error listing what is missing or unused.
+L00001523	- **Where to call:** In the main orchestrator, at the point where execution **enters** a new Phase, Task, Subtask, or Iteration (e.g. immediately before building the execution context or spawning the agent for that tier), call this validator. For the **interview** orchestrator, call an interview-specific validator at phase start (and at any sub-tier if the interview has task/subtask-like boundaries) that checks `InterviewOrchestratorConfig` for min/max, require_architecture_confirmation, vision_provider.
+L00001524	- **Fail-fast vs warn:** **Recommendation:** Fail fast (return error, log, and surface to user) when a **required** execution-affecting field is missing from the execution config (e.g. tier config for that tier is absent). **Warn** (log and optionally toast) when a field exists in GUI/file config but is not present in the execution config (classic "built but not wired"). This keeps runs from proceeding with wrong config while highlighting wiring gaps without blocking if the product chooses to allow default behavior for optional fields.
+L00001525	- **Tests:** Add unit tests that build config from `gui_config` (or from a minimal `PuppetMasterConfig`), then call the validator for each tier type; assert that when a known execution-affecting field is missing from the execution config, the validator fails or warns as specified. Integration test: start a run (or interview) and trigger one phase and one task; assert validation ran (e.g. via log or a test double).
+L00001526	
+L00001527	**Summary table -- where validation runs:**
+L00001528	
+L00001529	| Tier      | When                    | What is checked                                                                 |
+L00001530	|-----------|-------------------------|----------------------------------------------------------------------------------|
+L00001531	| Phase     | Start of phase          | Phase tier config present; plan_mode/orchestrator flags; interview config (if interview run). |
+L00001532	| Task      | Start of task           | Task tier config present; subagent config present and applied.                   |
+L00001533	| Subtask   | Start of subtask        | Subtask tier config present; subagent list from config.                          |
+L00001534	| Iteration | Start of iteration      | Iteration tier config present; request built from tier config.                   |
+L00001535	
+L00001536	### Combining A and B
+L00001537	
+L00001538	- **Process (A)** reduces wiring omissions by making the checklist mandatory for new features.
+L00001539	- **Validation (B)** at each Phase/Task/Subtask/Iteration catches remaining omissions and ensures that the config in effect at that tier is the one the code uses. Together, they keep "built but not wired" from reaching users.
+L00001540	
+L00001541	---
+L00001542	
+L00001543	## Start and End Verification at Phase, Task, and Subtask
+L00001544	
+L00001545	Beyond config-wiring validation (which runs at **start** of each tier), this section defines a **broader start verification** (wiring + readiness) and an **end verification** (wiring again + **quality review**) at Phase, Task, and Subtask boundaries. The goal is to catch things that need to be wired, confirm GUI/backend are in sync, validate that steps make sense, and at the end not only pass acceptance criteria but ensure the work was done well via actual code review. **Human-in-the-Loop (HITL):** Optional pause for human approval at these same boundaries is specified in **Plans/human-in-the-loop.md** (runs after end verification, before advancing to the next tier).
+L00001546	
+L00001547	Canonical lifecycle alignment:
+L00001548	- Verification results are persisted as seglog/redb events and projections (`config.validation.*`, `run.qa_cycle_*`, HITL events), not as authoritative ad hoc JSON files.
+L00001549	- Executor node `status` remains governed by `Plans/Executor_Protocol.md`; labels such as `waiting_approval`, `needs_review`, and warning states are overlays/projections, not replacement node statuses.
+L00001550	- Start verification blocks before any provider spawn. End verification runs before promotion and before any HITL pause for the same tier.
+L00001551	
+L00001552	### Start-of-phase / start-of-task / start-of-subtask verification
+L00001553	
+L00001554	When the orchestrator **enters** a Phase, Task, or Subtask, run the following **before** building execution context or spawning the agent:
+L00001555	
+L00001556	1. **Config-wiring check (existing):** Run `validate_config_wiring_for_tier` (or equivalent) for this tier -- tier config present, plan_mode/subagent/interview fields wired. See **Approach B** above.
+L00001557	2. **Wiring and readiness checklist (new):**
+L00001558	   - **Does the GUI need to be updated?** For any execution-affecting setting that this tier uses: is there a corresponding control or display in the Config (or Wizard) so the user can see and change it? If a new setting was added to the backend and is used at this tier, the GUI should expose it (or document why it is internal-only).
+L00001559	   - **Does the backend need to be updated?** For any control or config field that the user can set in the GUI: is it read and applied in the execution path for this tier? If the GUI has a setting that should affect this tier but the backend does not use it, treat as "built but not wired" and fail or warn per policy.
+L00001560	   - **Do these steps make sense?** For this tier, is the sequence of operations (load config → select subagents → build request → run) consistent with the plan and with the config schema? For example: if subagents are enabled for this tier, is the subagent list actually derived from config and not hardcoded?
+L00001561	   - **Gaps or potential issues:** Are there known gaps (e.g. missing persistence, missing validation, platform-specific limitations) that could affect this tier? Optionally run a lightweight "gap check" (e.g. list of known gaps per tier type) and log or warn so operators see them.
+L00001562	   - **UI wiring check (GUI projects):** If `.puppet-master/project/ui/` exists and the current tier node's scope involves UI work, verify that the node's `contract_refs` include at least one wiring matrix entry or command catalog ID. At end-of-tier, re-run the "no unbound UI actions" check against the current state of `ui/wiring_matrix.json` to ensure new interactive elements added during execution are wired.
+L00001563	
+L00001564	**BeforeTierStart verification responsibilities:**
+L00001565	
+L00001566	- **Load tier config:** Load tier configuration from `PuppetMasterConfig` (or equivalent) for this tier type
+L00001567	- **Validate config wiring:** Call `validate_config_wiring_for_tier(tier_type, config)` to check tier config present, plan_mode/subagent/interview fields wired
+L00001568	- **Check GUI-backend mapping:** Load GUI-backend mapping (from `config_wiring.rs` or static list) and verify all execution-affecting settings have GUI controls
+L00001569	- **Check backend-GUI mapping:** Verify all GUI controls are read and applied in execution path for this tier
+L00001570	- **Validate operation sequence:** Check that operation sequence (load config → select subagents → build request → run) is consistent with config schema
+L00001571	- **Run gap check:** Load known gaps per tier type and log/warn if any affect this tier
+L00001572	- **Build verification result:** Create `StartVerificationResult` with pass/fail status and detailed findings
+L00001573	
+L00001574	**DuringTierStart verification responsibilities:**
+L00001575	
+L00001576	- **Log verification results:** Log verification results to `.puppet-master/logs/verification.log`
+L00001577	- **Handle failures:** If verification fails, either fail fast (per policy) or warn and continue (per policy)
+L00001578	- **Update state:** Update orchestrator state with verification results
+L00001579	
+L00001580	**AfterTierStart verification responsibilities:**
+L00001581	
+L00001582	- **Persist verification results:** Emit canonical `config.validation.passed|warning|failed` events and update redb projections for this tier/runtime snapshot
+L00001583	- **Track verification history:** Add verification entry to verification history for this tier
+L00001584	
+L00001585	**Implementation:** Create `src/verification/tier_start.rs` with `verify_tier_start()` function. Integrate with orchestrator tier entry point.
+L00001586	
+L00001587	**Integration with orchestrator:**
+L00001588	
+L00001589	In `src/core/orchestrator.rs`, extend tier entry logic:
+L00001590	
+L00001591	```rust
+L00001592	use crate::verification::tier_start::{verify_tier_start, StartVerificationError, StartVerificationResult};
+L00001593	
+L00001594	impl Orchestrator {
+L00001595	    pub async fn execute_tier(
+L00001596	        &self,
+L00001597	        tier_node: &TierNode,
+L00001598	        context: &OrchestratorContext,
+L00001599	    ) -> Result<()> {
+L00001600	        // Run start verification BEFORE building execution context
+L00001601	        let verification_result = verify_tier_start(
+L00001602	            tier_node.tier_type,
+L00001603	            &self.config,
+L00001604	            context,
+L00001605	        ).await?;
+L00001606	
+L00001607	        // Handle verification failures
+L00001608	        match verification_result.status {
+L00001609	            VerificationStatus::Pass => {
+L00001610	                // Continue with tier execution
+L00001611	            }
+L00001612	            VerificationStatus::Fail => {
+L00001613	                match self.config.verification_policy {
+L00001614	                    VerificationPolicy::FailFast => {
+L00001615	                        return Err(anyhow!("Tier start verification failed: {:?}", verification_result.findings));
+L00001616	                    }
+L00001617	                    VerificationPolicy::WarnAndContinue => {
+L00001618	                        tracing::warn!("Tier start verification failed: {:?}", verification_result.findings);
+L00001619	                        // Continue with tier execution
+L00001620	                    }
+L00001621	                }
+L00001622	            }
+L00001623	            VerificationStatus::Warning => {
+L00001624	                tracing::warn!("Tier start verification warnings: {:?}", verification_result.findings);
+L00001625	                // Continue with tier execution
+L00001626	            }
+L00001627	        }
+L00001628	
+L00001629	        // Log verification results
+L00001630	        self.log_verification_result(&tier_node.id, &verification_result).await?;
+L00001631	
+L00001632	        // Persist verification results
+L00001633	        self.persist_verification_result(&tier_node.id, &verification_result).await?;
+L00001634	
+L00001635	        // Build execution context (only if verification passed or warn-and-continue)
+L00001636	        let execution_context = self.build_execution_context(tier_node, context)?;
+L00001637	
+L00001638	        // Continue with tier execution...
+L00001639	        Ok(())
+L00001640	    }
+L00001641	}
+L00001642	```
+L00001643	
+L00001644	**Verification function implementation:**
+L00001645	
+L00001646	```rust
+L00001647	// src/verification/tier_start.rs
+L00001648	
+L00001649	use crate::types::{TierType, Platform};
+L00001650	use crate::config::PuppetMasterConfig;
+L00001651	use crate::core::OrchestratorContext;
+L00001652	use anyhow::{Result, Context};
+L00001653	use serde::{Deserialize, Serialize};
+L00001654	
+L00001655	#[derive(Debug, Clone, Serialize, Deserialize)]
+L00001656	pub struct StartVerificationResult {
+L00001657	    pub tier_type: TierType,
+L00001658	    pub node_id: String,
+L00001659	    pub status: VerificationStatus,
+L00001660	    pub findings: Vec<VerificationFinding>,
+L00001661	    pub timestamp: chrono::DateTime<Utc>,
+L00001662	}
+L00001663	
+L00001664	#[derive(Debug, Clone, Serialize, Deserialize)]
+L00001665	pub enum VerificationStatus {
+L00001666	    Pass,
+L00001667	    Fail,
+L00001668	    Warning,
+L00001669	}
+L00001670	
+L00001671	#[derive(Debug, Clone, Serialize, Deserialize)]
+L00001672	pub struct VerificationFinding {
+L00001673	    pub category: FindingCategory,
+L00001674	    pub severity: FindingSeverity,
+L00001675	    pub message: String,
+L00001676	    pub suggestion: Option<String>,
+L00001677	}
+L00001678	
+L00001679	#[derive(Debug, Clone, Serialize, Deserialize)]
+L00001680	pub enum FindingCategory {
+L00001681	    ConfigWiring,
+L00001682	    GuiBackendMapping,
+L00001683	    BackendGuiMapping,
+L00001684	    OperationSequence,
+L00001685	    KnownGaps,
+L00001686	}
+L00001687	
+L00001688	#[derive(Debug, Clone, Serialize, Deserialize)]
+L00001689	pub enum FindingSeverity {
+L00001690	    Critical,
+L00001691	    Major,
+L00001692	    Minor,
+L00001693	    Info,
+L00001694	}
+L00001695	
+L00001696	// DRY:FN:verify_tier_start — Verify tier readiness before execution
+L00001697	pub async fn verify_tier_start(
+L00001698	    tier_type: TierType,
+L00001699	    config: &PuppetMasterConfig,
+L00001700	    context: &OrchestratorContext,
+L00001701	) -> Result<StartVerificationResult> {
+L00001702	    let mut findings = Vec::new();
+L00001703	
+L00001704	    // 1. Config-wiring check
+L00001705	    let config_wiring_result = validate_config_wiring_for_tier(tier_type, config)?;
+L00001706	    if !config_wiring_result.passed {
+L00001707	        findings.extend(config_wiring_result.findings.into_iter().map(|f| VerificationFinding {
+L00001708	            category: FindingCategory::ConfigWiring,
+L00001709	            severity: FindingSeverity::Critical,
+L00001710	            message: f,
+L00001711	            suggestion: Some("Ensure tier config is present and all required fields are wired".to_string()),
+L00001712	        }));
+L00001713	    }
+L00001714	
+L00001715	    // 2. GUI-backend mapping check
+L00001716	    let gui_backend_result = check_gui_backend_mapping(tier_type, config)?;
+L00001717	    if !gui_backend_result.passed {
+L00001718	        findings.extend(gui_backend_result.findings.into_iter().map(|f| VerificationFinding {
+L00001719	            category: FindingCategory::GuiBackendMapping,
+L00001720	            severity: FindingSeverity::Major,
+L00001721	            message: f,
+L00001722	            suggestion: Some("Add GUI control for this backend setting or document why it is internal-only".to_string()),
+L00001723	        }));
+L00001724	    }
+L00001725	
+L00001726	    // 3. Backend-GUI mapping check
+L00001727	    let backend_gui_result = check_backend_gui_mapping(tier_type, config)?;
+L00001728	    if !backend_gui_result.passed {
+L00001729	        findings.extend(backend_gui_result.findings.into_iter().map(|f| VerificationFinding {
+L00001730	            category: FindingCategory::BackendGuiMapping,
+L00001731	            severity: FindingSeverity::Major,
+L00001732	            message: f,
+L00001733	            suggestion: Some("Read and apply this GUI setting in the execution path for this tier".to_string()),
+L00001734	        }));
+L00001735	    }
+L00001736	
+L00001737	    // 4. Operation sequence validation
+L00001738	    let sequence_result = validate_operation_sequence(tier_type, config)?;
+L00001739	    if !sequence_result.passed {
+L00001740	        findings.extend(sequence_result.findings.into_iter().map(|f| VerificationFinding {
+L00001741	            category: FindingCategory::OperationSequence,
+L00001742	            severity: FindingSeverity::Major,
+L00001743	            message: f,
+L00001744	            suggestion: Some("Ensure operation sequence matches config schema and plan".to_string()),
+L00001745	        }));
+L00001746	    }
+L00001747	
+L00001748	    // 5. Gap check
+L00001749	    let gap_result = check_known_gaps(tier_type)?;
+L00001750	    if !gap_result.gaps.is_empty() {
+L00001751	        for gap in gap_result.gaps {
+L00001752	            findings.push(VerificationFinding {
+L00001753	                category: FindingCategory::KnownGaps,
+L00001754	                severity: FindingSeverity::Info,
+L00001755	                message: gap.description,
+L00001756	                suggestion: gap.mitigation,
+L00001757	            });
+L00001758	        }
+L00001759	    }
+L00001760	
+L00001761	    // Determine overall status
+L00001762	    let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
+L00001763	        VerificationStatus::Fail
+L00001764	    } else if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Major)) {
+L00001765	        VerificationStatus::Warning
+L00001766	    } else {
+L00001767	        VerificationStatus::Pass
+L00001768	    };
+L00001769	
+L00001770	    Ok(StartVerificationResult {
+L00001771	        tier_type,
+L00001772	        node_id: context.node_id.clone(),
+L00001773	        status,
+L00001774	        findings,
+L00001775	        timestamp: Utc::now(),
+L00001776	    })
+L00001777	}
+
+<<< CONTEXT_AFTER canonical_document_lines=1778-1789 >>>
+L00001778	
+L00001779	fn validate_config_wiring_for_tier(
+L00001780	    tier_type: TierType,
+L00001781	    config: &PuppetMasterConfig,
+L00001782	) -> Result<ConfigWiringResult> {
+L00001783	    // Implementation: check tier config present, plan_mode/subagent/interview fields wired
+L00001784	    // ...
+L00001785	}
+L00001786	
+L00001787	fn check_gui_backend_mapping(
+L00001788	    tier_type: TierType,
+L00001789	    config: &PuppetMasterConfig,

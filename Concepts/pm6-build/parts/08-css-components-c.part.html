@@ -449,7 +449,7 @@
     }
     .orch-evidence-row { cursor: pointer; }
     .orch-evidence-row:hover { background: var(--surface-elevated); }
-    .orch-evidence-row.selected { background: var(--surface-elevated); border-left: 3px solid var(--accent-lime); }
+    .orch-evidence-row.selected { background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
     .orch-history-row { cursor: pointer; }
     .orch-history-row:hover { background: var(--surface-elevated); }
     .orch-history-toolbar span, .orch-ledger-toolbar span { font-size: 12px; color: var(--text-secondary); }
@@ -659,7 +659,7 @@
     .orch-rungraph-table th, .orch-rungraph-table td { padding: var(--xs) var(--sm); }
     .orch-rungraph-row { cursor: pointer; }
     .orch-rungraph-row:hover { background: var(--surface-elevated); }
-    .orch-rungraph-row.selected { background: var(--surface-elevated); border-left: 3px solid var(--accent-lime); }
+    .orch-rungraph-row.selected { background: color-mix(in srgb, var(--accent-primary) 10%, transparent); }
     .orch-rungraph-detail {
       flex: 1;
       min-height: 0;
@@ -732,22 +732,6 @@
       gap: var(--lg);
       overflow-y: auto;
       padding-bottom: var(--xl);
-    }
-    .page-projects .projects-breadcrumb {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: var(--xs);
-    }
-    .page-projects .projects-breadcrumb a {
-      color: var(--text-secondary);
-      text-decoration: none;
-    }
-    .page-projects .projects-breadcrumb a:hover {
-      color: var(--text-primary);
-    }
-    .page-projects .projects-breadcrumb .current {
-      color: var(--text-primary);
-      font-weight: 600;
     }
     .page-projects .projects-header-bento {
       display: flex;
@@ -886,12 +870,10 @@
     }
 
     .project-card-bento.current {
-      border-left: 6px solid var(--accent-lime);
       background: linear-gradient(to right, rgba(0, 255, 65, 0.05), transparent);
     }
     [data-theme="basic-light"] .project-card-bento.current,
     [data-theme="basic-dark"] .project-card-bento.current {
-      border-left-color: var(--accent-blue);
       background: linear-gradient(to right, rgba(0, 71, 171, 0.05), transparent);
     }
 
@@ -1335,7 +1317,7 @@
       font-size: 13px;
       color: var(--text-secondary);
       text-decoration: none;
-      border-left: 3px solid transparent;
+      border-radius: var(--radius-sm);
       cursor: pointer;
     }
     .settings-tab:hover {
@@ -1343,14 +1325,8 @@
       background: var(--surface-elevated);
     }
     .settings-tab.active {
-      color: var(--text-primary);
-      border-left-color: var(--accent-lime);
-      background: rgba(0, 255, 65, 0.05);
-    }
-    [data-theme="basic-light"] .settings-tab.active,
-    [data-theme="basic-dark"] .settings-tab.active {
-      border-left-color: var(--accent-blue);
-      background: rgba(21, 101, 192, 0.05);
+      color: var(--accent-primary);
+      background: var(--accent-soft);
     }
     /* (reaped W2: old settings prototype .settings-content rule deleted — zero references) */
         .bento-grid {
@@ -1495,9 +1471,7 @@
       background: var(--surface);
       border: 1px solid var(--border-light);
       color: var(--text-primary);
-      border-left: 3px solid var(--accent-blue);
     }
-    [data-theme^="retro"] .msg-ai { border-left-color: var(--accent-lime); }
     .msg-user {
       align-self: flex-end;
       background: var(--accent-blue);

@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7269-7280 >>>
+L00007269	- "outside this rewrite path"
+L00007270	- "error.concurrent_edit_conflict"
+L00007271	- "ordinary append durability"
+L00007272	negative_constraints: []
+L00007273	compatibility_only_notes: []
+L00007274	stale_retired_dispositions: []
+L00007275	owner_boundary_notes:
+L00007276	- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md"
+L00007277	owner_hints:
+L00007278	- "Plans/FileSafe.md"
+L00007279	```
+L00007280	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7281-7680 >>>
+L00007281	### F2-081 - Snapshot And Undo Lineage Isolation
+L00007282	
+L00007283	```yaml
+L00007284	plan_unit_id: F2-081
+L00007285	unit_type: requirement
+L00007286	status: accepted
+L00007287	owner_doc: Plans/FileSafe.md
+L00007288	canonical_text: >-
+L00007289	  Snapshot indexes and safe points are scoped to active run/session lineage, restore must not
+L00007290	  invalidate or delete snapshots preserved for other sessions or legal-hold reasons, identifiers
+L00007291	  are unique across retained snapshots, and restore paths cannot assume a single global scratch
+L00007292	  snapshot directory.
+L00007293	gui_related: false
+L00007294	gui_classification_reason: >-
+L00007295	  This unit defines backend snapshot and undo isolation behavior.
+L00007296	split_recommended: false
+L00007297	depends_on: []
+L00007298	unblocks: []
+L00007299	acceptance_criteria:
+L00007300	- "The covered source span remains losslessly available for exact-text audit."
+L00007301	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007302	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007303	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007304	validation_surfaces:
+L00007305	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007306	- "python3 scripts/pm-plan-index.py validate"
+L00007307	risk_class: filesafe_drift
+L00007308	reasoning_tier: standard
+L00007309	context_scope: filesafe_standardization
+L00007310	implementation_surfaces:
+L00007311	- "Plans/FileSafe.md"
+L00007312	node_compile_hint:
+L00007313	  mode: snapshot_and_undo_lineage_isolation
+L00007314	  create_worknodes: false
+L00007315	source_lineage:
+L00007316	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0046"
+L00007317	preserved_exact_tokens:
+L00007318	- "Snapshot and undo isolation"
+L00007319	- "active run/session lineage"
+L00007320	- "Restoring one safe point"
+L00007321	- "different sessions"
+L00007322	- "legal-hold reasons"
+L00007323	- "Snapshot identifiers"
+L00007324	- "unique across the retained set"
+L00007325	- "single global scratch snapshot directory"
+L00007326	- "reversible checkpoint"
+L00007327	- "metadata"
+L00007328	negative_constraints:
+L00007329	- "Restoring one safe point must never invalidate or delete other snapshots preserved for different sessions or legal-hold reasons."
+L00007330	- "No restore path may assume a single global scratch snapshot directory."
+L00007331	compatibility_only_notes: []
+L00007332	stale_retired_dispositions: []
+L00007333	owner_boundary_notes: []
+L00007334	owner_hints:
+L00007335	- "Plans/FileSafe.md"
+L00007336	```
+L00007337	
+L00007338	### F2-082 - Git Snapshot Subprocess Integrity And Reversibility Claims
+L00007339	
+L00007340	```yaml
+L00007341	plan_unit_id: F2-082
+L00007342	unit_type: requirement
+L00007343	status: accepted
+L00007344	owner_doc: Plans/FileSafe.md
+L00007345	canonical_text: >-
+L00007346	  Git or shell subprocesses used for reversible checkpoints treat non-zero exits from mutation-
+L00007347	  sensitive commands as hard errors, verify staged state with git status --porcelain after git
+L00007348	  add, and never downgrade real staging, stash, or checkout failures into success-shaped state;
+L00007349	  any path claiming reversibility must satisfy the full contract.
+L00007350	gui_related: false
+L00007351	gui_classification_reason: >-
+L00007352	  This unit defines backend git checkpoint integrity and reversibility claims.
+L00007353	split_recommended: false
+L00007354	depends_on: []
+L00007355	unblocks: []
+L00007356	acceptance_criteria:
+L00007357	- "The covered source span remains losslessly available for exact-text audit."
+L00007358	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007359	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007360	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007361	validation_surfaces:
+L00007362	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007363	- "python3 scripts/pm-plan-index.py validate"
+L00007364	risk_class: filesafe_drift
+L00007365	reasoning_tier: standard
+L00007366	context_scope: filesafe_standardization
+L00007367	implementation_surfaces:
+L00007368	- "Plans/FileSafe.md"
+L00007369	node_compile_hint:
+L00007370	  mode: git_snapshot_subprocess_integrity_and_reversibility_claims
+L00007371	  create_worknodes: false
+L00007372	source_lineage:
+L00007373	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0046"
+L00007374	preserved_exact_tokens:
+L00007375	- "Git subprocess integrity for snapshot materialization"
+L00007376	- "git add"
+L00007377	- "git commit"
+L00007378	- "git stash"
+L00007379	- "git checkout"
+L00007380	- "hard errors"
+L00007381	- "git status --porcelain"
+L00007382	- "nothing to commit"
+L00007383	- "success-shaped state"
+L00007384	- "local and remote-mode project mutations"
+L00007385	- "claims reversibility"
+L00007386	- "full contract"
+L00007387	negative_constraints:
+L00007388	- "The nothing to commit case must not downgrade real staging, stash, or checkout failures into success-shaped state."
+L00007389	- "Any path that claims reversibility must satisfy the full snapshot and undo contract."
+L00007390	compatibility_only_notes: []
+L00007391	stale_retired_dispositions: []
+L00007392	owner_boundary_notes:
+L00007393	- "ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md"
+L00007394	owner_hints:
+L00007395	- "Plans/FileSafe.md"
+L00007396	```
+L00007397	
+L00007398	### F2-083 - Filesystem Case Sensitivity Probe And Session Cache
+L00007399	
+L00007400	```yaml
+L00007401	plan_unit_id: F2-083
+L00007402	unit_type: requirement
+L00007403	status: accepted
+L00007404	owner_doc: Plans/FileSafe.md
+L00007405	canonical_text: >-
+L00007406	  At project or worktree root initialization, PM probes filesystem case sensitivity with a
+L00007407	  temporary .pm_case_probe file, checks whether .PM_CASE_PROBE resolves to the same inode,
+L00007408	  defaults to case-sensitive mode if the probe cannot be created, and caches the detected flag
+L00007409	  per project root for FileSafe and permission comparisons within the session.
+L00007410	gui_related: false
+L00007411	gui_classification_reason: >-
+L00007412	  This unit defines backend filesystem case-sensitivity detection.
+L00007413	split_recommended: false
+L00007414	depends_on: []
+L00007415	unblocks: []
+L00007416	acceptance_criteria:
+L00007417	- "The covered source span remains losslessly available for exact-text audit."
+L00007418	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007419	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007420	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007421	validation_surfaces:
+L00007422	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007423	- "python3 scripts/pm-plan-index.py validate"
+L00007424	risk_class: filesafe_drift
+L00007425	reasoning_tier: standard
+L00007426	context_scope: filesafe_standardization
+L00007427	implementation_surfaces:
+L00007428	- "Plans/FileSafe.md"
+L00007429	node_compile_hint:
+L00007430	  mode: filesystem_case_sensitivity_probe_and_session_cache
+L00007431	  create_worknodes: false
+L00007432	source_lineage:
+L00007433	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0047"
+L00007434	preserved_exact_tokens:
+L00007435	- "Case-sensitivity detection contract"
+L00007436	- ".pm_case_probe"
+L00007437	- ".PM_CASE_PROBE"
+L00007438	- "same inode"
+L00007439	- "case-insensitive"
+L00007440	- "read-only filesystem"
+L00007441	- "permission error"
+L00007442	- "defaults to case-sensitive mode"
+L00007443	- "cached per project root"
+L00007444	- "project session"
+L00007445	negative_constraints:
+L00007446	- "If the case-sensitivity probe cannot be created, PM defaults to case-sensitive mode."
+L00007447	compatibility_only_notes: []
+L00007448	stale_retired_dispositions: []
+L00007449	owner_boundary_notes:
+L00007450	- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"
+L00007451	owner_hints:
+L00007452	- "Plans/FileSafe.md"
+L00007453	```
+L00007454	
+L00007455	### F2-084 - Shared NFC Case Fold Path Comparison Contract
+L00007456	
+L00007457	```yaml
+L00007458	plan_unit_id: F2-084
+L00007459	unit_type: requirement
+L00007460	status: accepted
+L00007461	owner_doc: Plans/FileSafe.md
+L00007462	canonical_text: >-
+L00007463	  FileSafe write-scope checks and Permissions_System path-pattern matching use identical
+L00007464	  filesystem-aware normalization: Unicode NFC plus locale-independent lowercasing on case-
+L00007465	  insensitive filesystems, and byte-for-byte comparison after NFC only on case-sensitive
+L00007466	  filesystems.
+L00007467	gui_related: false
+L00007468	gui_classification_reason: >-
+L00007469	  This unit defines backend shared path normalization requirements.
+L00007470	split_recommended: false
+L00007471	depends_on: []
+L00007472	unblocks: []
+L00007473	acceptance_criteria:
+L00007474	- "The covered source span remains losslessly available for exact-text audit."
+L00007475	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007476	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007477	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007478	validation_surfaces:
+L00007479	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007480	- "python3 scripts/pm-plan-index.py validate"
+L00007481	risk_class: filesafe_drift
+L00007482	reasoning_tier: standard
+L00007483	context_scope: filesafe_standardization
+L00007484	implementation_surfaces:
+L00007485	- "Plans/FileSafe.md"
+L00007486	node_compile_hint:
+L00007487	  mode: shared_nfc_case_fold_path_comparison_contract
+L00007488	  create_worknodes: false
+L00007489	source_lineage:
+L00007490	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0047"
+L00007491	preserved_exact_tokens:
+L00007492	- "Unicode NFC normalization"
+L00007493	- "locale-independent lowercasing"
+L00007494	- "case-insensitive filesystems"
+L00007495	- "case-sensitive filesystems"
+L00007496	- "byte-for-byte"
+L00007497	- "NFC normalization only"
+L00007498	- "identical in FileSafe write-scope checks and Permissions_System path-pattern matching"
+L00007499	- "Divergence between the two is a security defect"
+L00007500	negative_constraints:
+L00007501	- "Divergence between FileSafe and Permissions_System path normalization is a security defect."
+L00007502	compatibility_only_notes: []
+L00007503	stale_retired_dispositions: []
+L00007504	owner_boundary_notes:
+L00007505	- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md"
+L00007506	owner_hints:
+L00007507	- "Plans/FileSafe.md"
+L00007508	```
+L00007509	
+L00007510	### F2-085 - File Record LRU Cap And Event State Rebuild
+L00007511	
+L00007512	```yaml
+L00007513	plan_unit_id: F2-085
+L00007514	unit_type: requirement
+L00007515	status: accepted
+L00007516	owner_doc: Plans/FileSafe.md
+L00007517	canonical_text: >-
+L00007518	  In-memory file records are bounded by an LRU cap of 10,000 entries, and eviction rebuilds from
+L00007519	  canonical event state on next access without silently losing guard correctness.
+L00007520	gui_related: false
+L00007521	gui_classification_reason: >-
+L00007522	  This unit defines backend file-record lifecycle behavior.
+L00007523	split_recommended: false
+L00007524	depends_on: []
+L00007525	unblocks: []
+L00007526	acceptance_criteria:
+L00007527	- "The covered source span remains losslessly available for exact-text audit."
+L00007528	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007529	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007530	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007531	validation_surfaces:
+L00007532	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007533	- "python3 scripts/pm-plan-index.py validate"
+L00007534	risk_class: filesafe_drift
+L00007535	reasoning_tier: standard
+L00007536	context_scope: filesafe_standardization
+L00007537	implementation_surfaces:
+L00007538	- "Plans/FileSafe.md"
+L00007539	node_compile_hint:
+L00007540	  mode: file_record_lru_cap_and_event_state_rebuild
+L00007541	  create_worknodes: false
+L00007542	source_lineage:
+L00007543	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0047"
+L00007544	preserved_exact_tokens:
+L00007545	- "In-memory file records"
+L00007546	- "LRU cap of 10,000 entries"
+L00007547	- "Eviction rebuilds"
+L00007548	- "canonical event state"
+L00007549	- "next access"
+L00007550	- "does not silently lose guard correctness"
+L00007551	negative_constraints:
+L00007552	- "LRU eviction must not silently lose guard correctness."
+L00007553	compatibility_only_notes: []
+L00007554	stale_retired_dispositions: []
+L00007555	owner_boundary_notes:
+L00007556	- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"
+L00007557	owner_hints:
+L00007558	- "Plans/FileSafe.md"
+L00007559	```
+L00007560	
+L00007561	### F2-086 - FileSafe Mutation Owner Boundary And Checklist Anchor Authority
+L00007562	
+L00007563	```yaml
+L00007564	plan_unit_id: F2-086
+L00007565	unit_type: requirement
+L00007566	status: accepted
+L00007567	owner_doc: Plans/FileSafe.md
+L00007568	canonical_text: >-
+L00007569	  FileSafe 11.1.x mutation-integrity rules consume adjacent runtime, prompt, storage, usage,
+L00007570	  auth, permission, and orchestrator contracts; FileSafe owns whether a mutation may proceed,
+L00007571	  not those owners full policy surfaces, and historical ### 15.12 Integration Checklist lineage
+L00007572	  is superseded by live ## 9. Implementation Checklist authority.
+L00007573	gui_related: false
+L00007574	gui_classification_reason: >-
+L00007575	  This unit defines backend owner-boundary and checklist-anchor authority.
+L00007576	split_recommended: false
+L00007577	depends_on: []
+L00007578	unblocks: []
+L00007579	acceptance_criteria:
+L00007580	- "The covered source span remains losslessly available for exact-text audit."
+L00007581	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007582	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007583	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007584	validation_surfaces:
+L00007585	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007586	- "python3 scripts/pm-plan-index.py validate"
+L00007587	risk_class: filesafe_drift
+L00007588	reasoning_tier: standard
+L00007589	context_scope: filesafe_standardization
+L00007590	implementation_surfaces:
+L00007591	- "Plans/FileSafe.md"
+L00007592	node_compile_hint:
+L00007593	  mode: filesafe_mutation_owner_boundary_and_checklist_anchor_authority
+L00007594	  create_worknodes: false
+L00007595	source_lineage:
+L00007596	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+L00007597	preserved_exact_tokens:
+L00007598	- "11.1.x mutation-integrity rules"
+L00007599	- "consumers of adjacent runtime, prompt, storage, usage, auth, permission, and orchestrator contracts"
+L00007600	- "FileSafe owns whether a mutation may proceed"
+L00007601	- "not the full policy surface"
+L00007602	- "non-canonical"
+L00007603	- "### 15.12 Integration Checklist"
+L00007604	- "historical checklist lineage only"
+L00007605	- "## 9. Implementation Checklist"
+L00007606	negative_constraints: []
+L00007607	compatibility_only_notes: []
+L00007608	stale_retired_dispositions:
+L00007609	- "### 15.12 Integration Checklist is historical checklist lineage only; the live checklist anchor is ## 9. Implementation Checklist."
+L00007610	owner_boundary_notes: []
+L00007611	owner_hints:
+L00007612	- "Plans/FileSafe.md"
+L00007613	```
+L00007614	
+L00007615	### F2-087 - Packet Over Scope And Adjacent Owner Routing Dispositions
+L00007616	
+L00007617	```yaml
+L00007618	plan_unit_id: F2-087
+L00007619	unit_type: requirement
+L00007620	status: accepted
+L00007621	owner_doc: Plans/FileSafe.md
+L00007622	canonical_text: >-
+L00007623	  Packet anchor-staleness and research_packet.json path-level over-scope are guard evidence
+L00007624	  only, not FileSafe ownership expansion; adjacent owner routing stays outside FileSafe and
+L00007625	  stale extra packet paths such as Plans/MCP_Integration.md do not expand FileSafe ownership
+L00007626	  unless they create a concrete compiled-prompt, executable-surface, write-scope, or mutation-
+L00007627	  safety concern.
+L00007628	gui_related: false
+L00007629	gui_classification_reason: >-
+L00007630	  This unit defines backend owner-routing and stale packet disposition.
+L00007631	split_recommended: false
+L00007632	depends_on: []
+L00007633	unblocks: []
+L00007634	acceptance_criteria:
+L00007635	- "The covered source span remains losslessly available for exact-text audit."
+L00007636	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00007637	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00007638	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00007639	validation_surfaces:
+L00007640	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00007641	- "python3 scripts/pm-plan-index.py validate"
+L00007642	risk_class: filesafe_drift
+L00007643	reasoning_tier: standard
+L00007644	context_scope: filesafe_standardization
+L00007645	implementation_surfaces:
+L00007646	- "Plans/FileSafe.md"
+L00007647	node_compile_hint:
+L00007648	  mode: packet_over_scope_and_adjacent_owner_routing_dispositions
+L00007649	  create_worknodes: false
+L00007650	source_lineage:
+L00007651	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+L00007652	preserved_exact_tokens:
+L00007653	- "Packet anchor-staleness"
+L00007654	- "guard evidence"
+L00007655	- "FileSafe ownership expansion"
+L00007656	- "Gap #45"
+L00007657	- "child-runtime"
+L00007658	- "crew-summary"
+L00007659	- "Plans/CLI_Bridged_Providers.md"
+L00007660	- "Plans/Run_Modes.md"
+L00007661	- "Plans/storage-plan.md"
+L00007662	- "Plans/Prompt_Pipeline.md"
+L00007663	- "Plans/assistant-chat-design.md"
+L00007664	- "research_packet.json"
+L00007665	- "Plans/MCP_Integration.md"
+L00007666	- "/MCP_Integration.md"
+L00007667	- "compiled-prompt"
+L00007668	- "executable-surface"
+L00007669	- "write-scope"
+L00007670	- "mutation-safety concern"
+L00007671	negative_constraints:
+L00007672	- "Stale packet over-coverage and stale packet paths do not expand FileSafe ownership."
+L00007673	compatibility_only_notes: []
+L00007674	stale_retired_dispositions:
+L00007675	- "Packet anchor-staleness and research_packet.json path-level over-scope are guard evidence only, not FileSafe ownership expansion."
+L00007676	owner_boundary_notes: []
+L00007677	owner_hints:
+L00007678	- "Plans/FileSafe.md"
+L00007679	```
+L00007680	
+
+<<< CONTEXT_AFTER canonical_document_lines=7681-7692 >>>
+L00007681	### F2-088 - LFA 002 Drift Evidence And Under Targeted Packet Replacement
+L00007682	
+L00007683	```yaml
+L00007684	plan_unit_id: F2-088
+L00007685	unit_type: requirement
+L00007686	status: accepted
+L00007687	owner_doc: Plans/FileSafe.md
+L00007688	canonical_text: >-
+L00007689	  Drift-risk checks comparing Contracts_V0.md#4.1 AuthState and FileSafe.md#11.1.2a against
+L00007690	  exact contract identifiers are valid verification inputs, but stale packet over-coverage and
+L00007691	  under-targeted stale replacement bodies must be removed or replaced before packetization.
+L00007692	gui_related: false

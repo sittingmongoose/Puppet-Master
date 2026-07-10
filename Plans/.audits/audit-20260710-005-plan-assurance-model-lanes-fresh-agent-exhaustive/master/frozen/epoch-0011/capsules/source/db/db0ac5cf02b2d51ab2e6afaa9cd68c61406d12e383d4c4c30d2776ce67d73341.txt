@@ -1,0 +1,397 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8771-8782 >>>
+L00008771	- "misleading successful send"
+L00008772	negative_constraints:
+L00008773	- "The UI must not silently redact intended text into a misleading successful send."
+L00008774	- "Unbounded raw selected text is never stored for search."
+L00008775	compatibility_only_notes: []
+L00008776	stale_retired_dispositions: []
+L00008777	owner_boundary_notes:
+L00008778	- "FileSafe owns block signals; chat/GUI own chip rendering and visible reasons; storage owns persisted records."
+L00008779	owner_hints:
+L00008780	- "Plans/FileSafe.md"
+L00008781	```
+L00008782	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8783-9150 >>>
+L00008783	### F2-107 - Blocked Command Event Logging Helper
+L00008784	
+L00008785	```yaml
+L00008786	plan_unit_id: F2-107
+L00008787	unit_type: requirement
+L00008788	status: accepted
+L00008789	owner_doc: Plans/FileSafe.md
+L00008790	canonical_text: >-
+L00008791	  The BashGuard event logging helper logs blocked commands through EventLogger by building a
+L00008792	  FileSafeEvent with bash_guard_block event type, a 40-character command preview, matched
+L00008793	  pattern, optional agent, timestamp, and asynchronous log_filesafe_event call.
+L00008794	gui_related: false
+L00008795	gui_classification_reason: >-
+L00008796	  This unit preserves backend blocked-command logging helper behavior.
+L00008797	split_recommended: false
+L00008798	depends_on: []
+L00008799	unblocks: []
+L00008800	acceptance_criteria:
+L00008801	- "The covered source span remains losslessly available for exact-text audit."
+L00008802	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00008803	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008804	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008805	validation_surfaces:
+L00008806	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008807	- "python3 scripts/pm-plan-index.py validate"
+L00008808	risk_class: filesafe_drift
+L00008809	reasoning_tier: standard
+L00008810	context_scope: filesafe_standardization
+L00008811	implementation_surfaces:
+L00008812	- "Plans/FileSafe.md"
+L00008813	node_compile_hint:
+L00008814	  mode: blocked_command_event_logging_helper
+L00008815	  create_worknodes: false
+L00008816	source_lineage:
+L00008817	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0053"
+L00008818	preserved_exact_tokens:
+L00008819	- "EventLogger"
+L00008820	- "log_blocked_command"
+L00008821	- "FileSafeEvent"
+L00008822	- "\"bash_guard_block\""
+L00008823	- "command_preview: command.chars().take(40).collect()"
+L00008824	- "GuardError::DestructiveCommand"
+L00008825	- "pattern_matched"
+L00008826	- "agent: None"
+L00008827	- "Utc::now()"
+L00008828	- "event_logger.log_filesafe_event(event).await"
+L00008829	negative_constraints: []
+L00008830	compatibility_only_notes: []
+L00008831	stale_retired_dispositions: []
+L00008832	owner_boundary_notes:
+L00008833	- "This helper is lineage only; event stream authority remains F2-055 through F2-057."
+L00008834	owner_hints:
+L00008835	- "Plans/FileSafe.md"
+L00008836	```
+L00008837	
+L00008838	### F2-108 - Pattern Matching Accuracy Risk
+L00008839	
+L00008840	```yaml
+L00008841	plan_unit_id: F2-108
+L00008842	unit_type: requirement
+L00008843	status: accepted
+L00008844	owner_doc: Plans/FileSafe.md
+L00008845	canonical_text: >-
+L00008846	  FileSafe pattern matching accuracy risks include regexes being too broad or too narrow,
+L00008847	  mitigated by testing patterns against real-world command variations, using word boundaries
+L00008848	  where appropriate, documenting pattern rationale in comments, and allowing project-specific
+L00008849	  overrides via local patterns files.
+L00008850	gui_related: false
+L00008851	gui_classification_reason: >-
+L00008852	  This unit captures backend pattern accuracy risk and mitigation.
+L00008853	split_recommended: false
+L00008854	depends_on: []
+L00008855	unblocks: []
+L00008856	acceptance_criteria:
+L00008857	- "The covered source span remains losslessly available for exact-text audit."
+L00008858	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00008859	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008860	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008861	validation_surfaces:
+L00008862	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008863	- "python3 scripts/pm-plan-index.py validate"
+L00008864	risk_class: filesafe_drift
+L00008865	reasoning_tier: standard
+L00008866	context_scope: filesafe_standardization
+L00008867	implementation_surfaces:
+L00008868	- "Plans/FileSafe.md"
+L00008869	node_compile_hint:
+L00008870	  mode: pattern_matching_accuracy_risk
+L00008871	  create_worknodes: false
+L00008872	source_lineage:
+L00008873	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0055"
+L00008874	preserved_exact_tokens:
+L00008875	- "Pattern Matching Accuracy"
+L00008876	- "too broad"
+L00008877	- "too narrow"
+L00008878	- "real-world command variations"
+L00008879	- "word boundaries"
+L00008880	- "\\b"
+L00008881	- "pattern rationale"
+L00008882	- "project-specific overrides"
+L00008883	- "local patterns file"
+L00008884	negative_constraints: []
+L00008885	compatibility_only_notes: []
+L00008886	stale_retired_dispositions: []
+L00008887	owner_boundary_notes: []
+L00008888	owner_hints:
+L00008889	- "Plans/FileSafe.md"
+L00008890	```
+L00008891	
+L00008892	### F2-109 - False Positive Review
+L00008893	
+L00008894	```yaml
+L00008895	plan_unit_id: F2-109
+L00008896	unit_type: requirement
+L00008897	status: accepted
+L00008898	owner_doc: Plans/FileSafe.md
+L00008899	canonical_text: >-
+L00008900	  False-positive risk covers legitimate commands or documentation examples such as migrate:fresh
+L00008901	  matching destructive patterns, mitigated through prompt context checks, environment override,
+L00008902	  block logging, and clear override instructions.
+L00008903	gui_related: false
+L00008904	gui_classification_reason: >-
+L00008905	  This unit captures backend false-positive risk and user-facing error mitigation.
+L00008906	split_recommended: false
+L00008907	depends_on: []
+L00008908	unblocks: []
+L00008909	acceptance_criteria:
+L00008910	- "The covered source span remains losslessly available for exact-text audit."
+L00008911	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00008912	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008913	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008914	validation_surfaces:
+L00008915	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008916	- "python3 scripts/pm-plan-index.py validate"
+L00008917	risk_class: filesafe_drift
+L00008918	reasoning_tier: standard
+L00008919	context_scope: filesafe_standardization
+L00008920	implementation_surfaces:
+L00008921	- "Plans/FileSafe.md"
+L00008922	node_compile_hint:
+L00008923	  mode: false_positive_review
+L00008924	  create_worknodes: false
+L00008925	source_lineage:
+L00008926	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0056"
+L00008927	preserved_exact_tokens:
+L00008928	- "False Positives"
+L00008929	- "migrate:fresh"
+L00008930	- "documentation"
+L00008931	- "Check prompt context"
+L00008932	- "environment variable"
+L00008933	- "Log all blocks for review"
+L00008934	- "clear error messages"
+L00008935	- "override instructions"
+L00008936	negative_constraints: []
+L00008937	compatibility_only_notes: []
+L00008938	stale_retired_dispositions: []
+L00008939	owner_boundary_notes: []
+L00008940	owner_hints:
+L00008941	- "Plans/FileSafe.md"
+L00008942	```
+L00008943	
+L00008944	### F2-110 - Pattern Performance Mitigation
+L00008945	
+L00008946	```yaml
+L00008947	plan_unit_id: F2-110
+L00008948	unit_type: requirement
+L00008949	status: accepted
+L00008950	owner_doc: Plans/FileSafe.md
+L00008951	canonical_text: >-
+L00008952	  Pattern matching on every command may add latency, so regex patterns are compiled once at
+L00008953	  initialization, Rust regex is used as the efficient engine, compilation results are cached,
+L00008954	  and hot paths are benchmarked and optimized.
+L00008955	gui_related: false
+L00008956	gui_classification_reason: >-
+L00008957	  This unit captures backend performance risk and mitigation.
+L00008958	split_recommended: false
+L00008959	depends_on: []
+L00008960	unblocks: []
+L00008961	acceptance_criteria:
+L00008962	- "The covered source span remains losslessly available for exact-text audit."
+L00008963	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00008964	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008965	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008966	validation_surfaces:
+L00008967	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008968	- "python3 scripts/pm-plan-index.py validate"
+L00008969	risk_class: filesafe_drift
+L00008970	reasoning_tier: standard
+L00008971	context_scope: filesafe_standardization
+L00008972	implementation_surfaces:
+L00008973	- "Plans/FileSafe.md"
+L00008974	node_compile_hint:
+L00008975	  mode: pattern_performance_mitigation
+L00008976	  create_worknodes: false
+L00008977	source_lineage:
+L00008978	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0057"
+L00008979	preserved_exact_tokens:
+L00008980	- "Performance Impact"
+L00008981	- "latency"
+L00008982	- "Compile regex patterns once at initialization"
+L00008983	- "Rust's regex crate"
+L00008984	- "Cache pattern compilation results"
+L00008985	- "Benchmark and optimize hot paths"
+L00008986	negative_constraints: []
+L00008987	compatibility_only_notes: []
+L00008988	stale_retired_dispositions: []
+L00008989	owner_boundary_notes: []
+L00008990	owner_hints:
+L00008991	- "Plans/FileSafe.md"
+L00008992	```
+L00008993	
+L00008994	### F2-111 - Multi Platform Prompt Parser Risk
+L00008995	
+L00008996	```yaml
+L00008997	plan_unit_id: F2-111
+L00008998	unit_type: requirement
+L00008999	status: accepted
+L00009000	owner_doc: Plans/FileSafe.md
+L00009001	canonical_text: >-
+L00009002	  Different platforms format prompts differently, so FileSafe prompt checking uses platform-
+L00009003	  specific prompt parsers where needed, falls back to simple pattern matching, documents
+L00009004	  platform-specific behavior, and tests across all providers.
+L00009005	gui_related: false
+L00009006	gui_classification_reason: >-
+L00009007	  This unit captures backend multi-platform prompt parsing risk.
+L00009008	split_recommended: false
+L00009009	depends_on: []
+L00009010	unblocks: []
+L00009011	acceptance_criteria:
+L00009012	- "The covered source span remains losslessly available for exact-text audit."
+L00009013	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00009014	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009015	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009016	validation_surfaces:
+L00009017	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009018	- "python3 scripts/pm-plan-index.py validate"
+L00009019	risk_class: filesafe_drift
+L00009020	reasoning_tier: standard
+L00009021	context_scope: filesafe_standardization
+L00009022	implementation_surfaces:
+L00009023	- "Plans/FileSafe.md"
+L00009024	node_compile_hint:
+L00009025	  mode: multi_platform_prompt_parser_risk
+L00009026	  create_worknodes: false
+L00009027	source_lineage:
+L00009028	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0058"
+L00009029	preserved_exact_tokens:
+L00009030	- "Multi-Platform Prompt Checking"
+L00009031	- "Different platforms format prompts differently"
+L00009032	- "Platform-specific prompt parsers"
+L00009033	- "Fallback to simple pattern matching"
+L00009034	- "Document platform-specific behavior"
+L00009035	- "Test across all providers"
+L00009036	negative_constraints: []
+L00009037	compatibility_only_notes: []
+L00009038	stale_retired_dispositions: []
+L00009039	owner_boundary_notes: []
+L00009040	owner_hints:
+L00009041	- "Plans/FileSafe.md"
+L00009042	```
+L00009043	
+L00009044	### F2-112 - Write Scope Plan Integration Risk
+L00009045	
+L00009046	```yaml
+L00009047	plan_unit_id: F2-112
+L00009048	unit_type: requirement
+L00009049	status: accepted
+L00009050	owner_doc: Plans/FileSafe.md
+L00009051	canonical_text: >-
+L00009052	  Write-scope enforcement can be too restrictive when plans do not specify exact file paths, so
+L00009053	  MVP mitigation prefers directory-level permissions, keeps wildcard patterns as a future
+L00009054	  enhancement, gives clear blocked-write messages, and allows override for exploratory phases.
+L00009055	gui_related: false
+L00009056	gui_classification_reason: >-
+L00009057	  This unit captures backend write-scope planning risk.
+L00009058	split_recommended: false
+L00009059	depends_on: []
+L00009060	unblocks: []
+L00009061	acceptance_criteria:
+L00009062	- "The covered source span remains losslessly available for exact-text audit."
+L00009063	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00009064	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009065	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009066	validation_surfaces:
+L00009067	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009068	- "python3 scripts/pm-plan-index.py validate"
+L00009069	risk_class: filesafe_drift
+L00009070	reasoning_tier: standard
+L00009071	context_scope: filesafe_standardization
+L00009072	implementation_surfaces:
+L00009073	- "Plans/FileSafe.md"
+L00009074	node_compile_hint:
+L00009075	  mode: write_scope_plan_integration_risk
+L00009076	  create_worknodes: false
+L00009077	source_lineage:
+L00009078	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0059"
+L00009079	preserved_exact_tokens:
+L00009080	- "Write-scope plan integration"
+L00009081	- "exact file paths"
+L00009082	- "directory-level permissions"
+L00009083	- "wildcard patterns are a future enhancement (not MVP)"
+L00009084	- "clear error messages"
+L00009085	- "exploratory phases"
+L00009086	negative_constraints: []
+L00009087	compatibility_only_notes: []
+L00009088	stale_retired_dispositions: []
+L00009089	owner_boundary_notes: []
+L00009090	owner_hints:
+L00009091	- "Plans/FileSafe.md"
+L00009092	```
+L00009093	
+L00009094	### F2-113 - Execution Request Operation Metadata Boundary
+L00009095	
+L00009096	```yaml
+L00009097	plan_unit_id: F2-113
+L00009098	unit_type: requirement
+L00009099	status: accepted
+L00009100	owner_doc: Plans/FileSafe.md
+L00009101	canonical_text: >-
+L00009102	  Resolved FileSafe request metadata uses ExecutionRequest.env_vars only, does not add a tags
+L00009103	  field, and PUPPET_MASTER_OPERATION_TYPE values are fixed to normal by default,
+L00009104	  verification_gate, and interview, with guard loosening allowed only for verification_gate and
+L00009105	  never for normal.
+L00009106	gui_related: false
+L00009107	gui_classification_reason: >-
+L00009108	  This unit defines backend request metadata and operation type constraints.
+L00009109	split_recommended: false
+L00009110	depends_on: []
+L00009111	unblocks: []
+L00009112	acceptance_criteria:
+L00009113	- "The covered source span remains losslessly available for exact-text audit."
+L00009114	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00009115	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009116	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009117	validation_surfaces:
+L00009118	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009119	- "python3 scripts/pm-plan-index.py validate"
+L00009120	risk_class: filesafe_drift
+L00009121	reasoning_tier: standard
+L00009122	context_scope: filesafe_standardization
+L00009123	implementation_surfaces:
+L00009124	- "Plans/FileSafe.md"
+L00009125	node_compile_hint:
+L00009126	  mode: execution_request_operation_metadata_boundary
+L00009127	  create_worknodes: false
+L00009128	source_lineage:
+L00009129	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0060"
+L00009130	preserved_exact_tokens:
+L00009131	- "ExecutionRequest.env_vars"
+L00009132	- "do not add a `tags` field"
+L00009133	- "PUPPET_MASTER_OPERATION_TYPE"
+L00009134	- "normal"
+L00009135	- "verification_gate"
+L00009136	- "interview"
+L00009137	- "never for `normal`"
+L00009138	- "puppet-master-rs/src/types/execution.rs"
+L00009139	negative_constraints:
+L00009140	- "Do not add a tags field to ExecutionRequest metadata."
+L00009141	- "Guards may loosen only for verification_gate and never for normal."
+L00009142	compatibility_only_notes: []
+L00009143	stale_retired_dispositions: []
+L00009144	owner_boundary_notes:
+L00009145	- "ContractRef: CodePath:puppet-master-rs/src/types/execution.rs, EnvVar:PUPPET_MASTER_OPERATION_TYPE, EnvVar:PUPPET_MASTER_ALLOWED_FILES"
+L00009146	- "ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE"
+L00009147	owner_hints:
+L00009148	- "Plans/FileSafe.md"
+L00009149	```
+L00009150	
+
+<<< CONTEXT_AFTER canonical_document_lines=9151-9162 >>>
+L00009151	### F2-114 - Allowed Files Env Scope Derivation And Fail Closed Strictness
+L00009152	
+L00009153	```yaml
+L00009154	plan_unit_id: F2-114
+L00009155	unit_type: requirement
+L00009156	status: accepted
+L00009157	owner_doc: Plans/FileSafe.md
+L00009158	canonical_text: >-
+L00009159	  Allowed write scope is supplied via PUPPET_MASTER_ALLOWED_FILES as a JSON array of repo-
+L00009160	  relative paths and explicit directories; if missing or empty while file_guard.enabled is true,
+L00009161	  FileSafe treats it as an empty allowlist and blocks fail-closed regardless of strict_mode, while
+L00009162	  orchestrator derives the env value from current subtask declared files and implicit context_files.

@@ -1,0 +1,411 @@
+<<< CONTEXT_BEFORE canonical_document_lines=657-668 >>>
+L00000657	        "research": "egress:web.public_http_only",
+L00000658	        "deep_research": "egress:web.public_http_only"
+L00000659	      },
+L00000660	      "secrets_policy": "secret_refs_only",
+L00000661	      "last_health_check_ref": "health:web.google",
+L00000662	      "capability_source_refs": [
+L00000663	        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+L00000664	        "FINDINGS_MATRIX_V3.json",
+L00000665	        "Plans/web_capability_source_packet_receipt.json"
+L00000666	      ],
+L00000667	      "capability_claim_state": "source_packet_seed_pending_live_health"
+L00000668	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=669-1050 >>>
+L00000669	    {
+L00000670	      "registry_id": "webreg.jina.direct_api.v1",
+L00000671	      "adapter_id": "jina.direct_api",
+L00000672	      "provider_id": "jina",
+L00000673	      "display_name": "Jina",
+L00000674	      "adapter_kind": "direct_api",
+L00000675	      "credential_ref": "secret_ref:provider.jina.default",
+L00000676	      "capabilities": [
+L00000677	        {
+L00000678	          "operation": "search",
+L00000679	          "support_tier": "native",
+L00000680	          "enabled_state": "unconfigured",
+L00000681	          "health_state": "unknown",
+L00000682	          "cost_policy_ref": "cost:web.jina.default",
+L00000683	          "cache_policy": {
+L00000684	            "max_age_seconds": 3600,
+L00000685	            "store": true
+L00000686	          },
+L00000687	          "fallback_rank": 35,
+L00000688	          "robots_supported": false,
+L00000689	          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+L00000690	        },
+L00000691	        {
+L00000692	          "operation": "read",
+L00000693	          "support_tier": "native",
+L00000694	          "enabled_state": "unconfigured",
+L00000695	          "health_state": "unknown",
+L00000696	          "cost_policy_ref": "cost:web.jina.default",
+L00000697	          "cache_policy": {
+L00000698	            "max_age_seconds": 14400,
+L00000699	            "store": true
+L00000700	          },
+L00000701	          "fallback_rank": 35,
+L00000702	          "robots_supported": false,
+L00000703	          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+L00000704	        },
+L00000705	        {
+L00000706	          "operation": "extract",
+L00000707	          "support_tier": "near_native",
+L00000708	          "enabled_state": "unconfigured",
+L00000709	          "health_state": "unknown",
+L00000710	          "cost_policy_ref": "cost:web.jina.default",
+L00000711	          "cache_policy": {
+L00000712	            "max_age_seconds": 14400,
+L00000713	            "store": true
+L00000714	          },
+L00000715	          "fallback_rank": 35,
+L00000716	          "robots_supported": false,
+L00000717	          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+L00000718	        },
+L00000719	        {
+L00000720	          "operation": "research",
+L00000721	          "support_tier": "pm_composed",
+L00000722	          "enabled_state": "unconfigured",
+L00000723	          "health_state": "unknown",
+L00000724	          "cost_policy_ref": "cost:web.jina.default",
+L00000725	          "cache_policy": {
+L00000726	            "max_age_seconds": 3600,
+L00000727	            "store": true
+L00000728	          },
+L00000729	          "fallback_rank": 35,
+L00000730	          "robots_supported": false,
+L00000731	          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+L00000732	        },
+L00000733	        {
+L00000734	          "operation": "deep_research",
+L00000735	          "support_tier": "pm_composed",
+L00000736	          "enabled_state": "unconfigured",
+L00000737	          "health_state": "unknown",
+L00000738	          "cost_policy_ref": "cost:web.jina.default",
+L00000739	          "cache_policy": {
+L00000740	            "max_age_seconds": 3600,
+L00000741	            "store": true
+L00000742	          },
+L00000743	          "fallback_rank": 35,
+L00000744	          "robots_supported": false,
+L00000745	          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+L00000746	        }
+L00000747	      ],
+L00000748	      "projection_state": "not_projected",
+L00000749	      "mcp_projection_ref": "mcp_projection.jina.cursor",
+L00000750	      "egress_policy": {
+L00000751	        "policy_id": "egress:web.provider_public_only",
+L00000752	        "ssrf_private_host_policy": "deny_private_hosts",
+L00000753	        "robots_policy": "not_applicable",
+L00000754	        "redirect_policy": "public_http_only",
+L00000755	        "dns_rebind_check": true,
+L00000756	        "fanout_limit": 25,
+L00000757	        "max_depth": 2,
+L00000758	        "secret_redaction_required": true
+L00000759	      },
+L00000760	      "secrets_policy": "secret_refs_only",
+L00000761	      "last_health_check_ref": "health:web.jina",
+L00000762	      "capability_source_refs": [
+L00000763	        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+L00000764	        "FINDINGS_MATRIX_V3.json",
+L00000765	        "Plans/web_capability_source_packet_receipt.json"
+L00000766	      ],
+L00000767	      "capability_claim_state": "source_packet_seed_pending_live_health"
+L00000768	    },
+L00000769	    {
+L00000770	      "registry_id": "webreg.openai.model_native.v1",
+L00000771	      "adapter_id": "openai.model_native_search",
+L00000772	      "provider_id": "openai",
+L00000773	      "display_name": "OpenAI model-native search",
+L00000774	      "adapter_kind": "model_native",
+L00000775	      "account_ref": "provider_account:openai.selected",
+L00000776	      "capabilities": [
+L00000777	        {
+L00000778	          "operation": "search",
+L00000779	          "support_tier": "model_native",
+L00000780	          "enabled_state": "configured",
+L00000781	          "health_state": "unknown",
+L00000782	          "cost_policy_ref": "cost:web.model_native.default",
+L00000783	          "cache_policy": {
+L00000784	            "max_age_seconds": 3600,
+L00000785	            "store": true
+L00000786	          },
+L00000787	          "fallback_rank": 30,
+L00000788	          "robots_supported": false,
+L00000789	          "ssrf_private_host_policy_ref": "egress:web.model_native"
+L00000790	        }
+L00000791	      ],
+L00000792	      "projection_state": "external_not_managed",
+L00000793	      "egress_policy": {
+L00000794	        "policy_id": "egress:web.model_native",
+L00000795	        "ssrf_private_host_policy": "allow_for_configured_provider_endpoint",
+L00000796	        "robots_policy": "not_applicable",
+L00000797	        "redirect_policy": "explicit_approval_required",
+L00000798	        "dns_rebind_check": true,
+L00000799	        "fanout_limit": 8,
+L00000800	        "max_depth": 0,
+L00000801	        "secret_redaction_required": true
+L00000802	      },
+L00000803	      "secrets_policy": "external_managed",
+L00000804	      "last_health_check_ref": "health:web.openai_model_native",
+L00000805	      "capability_source_refs": [
+L00000806	        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+L00000807	        "FINDINGS_MATRIX_V3.json",
+L00000808	        "Plans/web_capability_source_packet_receipt.json"
+L00000809	      ],
+L00000810	      "capability_claim_state": "source_packet_seed_pending_live_health"
+L00000811	    },
+L00000812	    {
+L00000813	      "registry_id": "webreg.anthropic.model_native.v1",
+L00000814	      "adapter_id": "anthropic.model_native_search",
+L00000815	      "provider_id": "anthropic",
+L00000816	      "display_name": "Anthropic model-native search",
+L00000817	      "adapter_kind": "model_native",
+L00000818	      "account_ref": "provider_account:anthropic.selected",
+L00000819	      "capabilities": [
+L00000820	        {
+L00000821	          "operation": "search",
+L00000822	          "support_tier": "model_native",
+L00000823	          "enabled_state": "configured",
+L00000824	          "health_state": "unknown",
+L00000825	          "cost_policy_ref": "cost:web.model_native.default",
+L00000826	          "cache_policy": {
+L00000827	            "max_age_seconds": 3600,
+L00000828	            "store": true
+L00000829	          },
+L00000830	          "fallback_rank": 30,
+L00000831	          "robots_supported": false,
+L00000832	          "ssrf_private_host_policy_ref": "egress:web.model_native"
+L00000833	        }
+L00000834	      ],
+L00000835	      "projection_state": "external_not_managed",
+L00000836	      "egress_policy": {
+L00000837	        "policy_id": "egress:web.model_native",
+L00000838	        "ssrf_private_host_policy": "allow_for_configured_provider_endpoint",
+L00000839	        "robots_policy": "not_applicable",
+L00000840	        "redirect_policy": "explicit_approval_required",
+L00000841	        "dns_rebind_check": true,
+L00000842	        "fanout_limit": 8,
+L00000843	        "max_depth": 0,
+L00000844	        "secret_redaction_required": true
+L00000845	      },
+L00000846	      "secrets_policy": "external_managed",
+L00000847	      "last_health_check_ref": "health:web.anthropic_model_native",
+L00000848	      "capability_source_refs": [
+L00000849	        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+L00000850	        "FINDINGS_MATRIX_V3.json",
+L00000851	        "Plans/web_capability_source_packet_receipt.json"
+L00000852	      ],
+L00000853	      "capability_claim_state": "source_packet_seed_pending_live_health"
+L00000854	    },
+L00000855	    {
+L00000856	      "registry_id": "webreg.zai_coding_plan.directapi_projection.v1",
+L00000857	      "adapter_id": "zai_coding_plan.directapi_pm_native",
+L00000858	      "provider_id": "zai_coding_plan",
+L00000859	      "display_name": "Z.AI Coding Plan",
+L00000860	      "adapter_kind": "direct_api",
+L00000861	      "account_ref": "provider_account:zai_coding_plan.selected",
+L00000862	      "capabilities": [
+L00000863	        {
+L00000864	          "operation": "search",
+L00000865	          "support_tier": "pm_composed",
+L00000866	          "enabled_state": "unconfigured",
+L00000867	          "health_state": "unknown",
+L00000868	          "cost_policy_ref": "cost:web.directapi_coding.default",
+L00000869	          "cache_policy": {
+L00000870	            "max_age_seconds": 3600,
+L00000871	            "store": true
+L00000872	          },
+L00000873	          "fallback_rank": 80,
+L00000874	          "robots_supported": true,
+L00000875	          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+L00000876	        },
+L00000877	        {
+L00000878	          "operation": "read",
+L00000879	          "support_tier": "pm_composed",
+L00000880	          "enabled_state": "unconfigured",
+L00000881	          "health_state": "unknown",
+L00000882	          "cost_policy_ref": "cost:web.directapi_coding.default",
+L00000883	          "cache_policy": {
+L00000884	            "max_age_seconds": 14400,
+L00000885	            "store": true
+L00000886	          },
+L00000887	          "fallback_rank": 80,
+L00000888	          "robots_supported": true,
+L00000889	          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+L00000890	        },
+L00000891	        {
+L00000892	          "operation": "research",
+L00000893	          "support_tier": "pm_composed",
+L00000894	          "enabled_state": "unconfigured",
+L00000895	          "health_state": "unknown",
+L00000896	          "cost_policy_ref": "cost:web.directapi_coding.default",
+L00000897	          "cache_policy": {
+L00000898	            "max_age_seconds": 3600,
+L00000899	            "store": true
+L00000900	          },
+L00000901	          "fallback_rank": 80,
+L00000902	          "robots_supported": true,
+L00000903	          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+L00000904	        },
+L00000905	        {
+L00000906	          "operation": "deep_research",
+L00000907	          "support_tier": "pm_composed",
+L00000908	          "enabled_state": "unconfigured",
+L00000909	          "health_state": "unknown",
+L00000910	          "cost_policy_ref": "cost:web.directapi_coding.default",
+L00000911	          "cache_policy": {
+L00000912	            "max_age_seconds": 3600,
+L00000913	            "store": true
+L00000914	          },
+L00000915	          "fallback_rank": 80,
+L00000916	          "robots_supported": true,
+L00000917	          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+L00000918	        }
+L00000919	      ],
+L00000920	      "projection_state": "external_not_managed",
+L00000921	      "egress_policy": {
+L00000922	        "policy_id": "egress:web.public_http_only",
+L00000923	        "ssrf_private_host_policy": "deny_private_hosts",
+L00000924	        "robots_policy": "respect",
+L00000925	        "redirect_policy": "public_http_only",
+L00000926	        "dns_rebind_check": true,
+L00000927	        "fanout_limit": 25,
+L00000928	        "max_depth": 2,
+L00000929	        "secret_redaction_required": true
+L00000930	      },
+L00000931	      "secrets_policy": "external_managed",
+L00000932	      "last_health_check_ref": "health:web.zai_coding_plan",
+L00000933	      "capability_source_refs": [
+L00000934	        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+L00000935	        "FINDINGS_MATRIX_V3.json",
+L00000936	        "Plans/web_capability_source_packet_receipt.json"
+L00000937	      ],
+L00000938	      "capability_claim_state": "source_packet_seed_pending_live_health"
+L00000939	    }
+L00000940	  ],
+L00000941	  "mcp_projection_examples": [
+L00000942	    {
+L00000943	      "projection_id": "mcp_projection.firecrawl.claude",
+L00000944	      "mcp_server_id": "firecrawl",
+L00000945	      "target_runtime": "claude_code_cli",
+L00000946	      "projection_state": "external_not_managed",
+L00000947	      "provider_config_ref": "projection-template:.claude/mcp.json#mcpServers.firecrawl",
+L00000948	      "capability_refs": [
+L00000949	        "webreg.firecrawl.direct_api.v1"
+L00000950	      ],
+L00000951	      "no_secret_serialization": true,
+L00000952	      "health_ref": "health:web.firecrawl"
+L00000953	    },
+L00000954	    {
+L00000955	      "projection_id": "mcp_projection.exa.claude",
+L00000956	      "mcp_server_id": "exa",
+L00000957	      "target_runtime": "claude_code_cli",
+L00000958	      "projection_state": "external_not_managed",
+L00000959	      "provider_config_ref": "projection-template:.claude/mcp.json#mcpServers.exa",
+L00000960	      "capability_refs": [
+L00000961	        "webreg.exa.direct_api.v1"
+L00000962	      ],
+L00000963	      "no_secret_serialization": true,
+L00000964	      "health_ref": "health:web.exa"
+L00000965	    },
+L00000966	    {
+L00000967	      "projection_id": "mcp_projection.tavily.claude",
+L00000968	      "mcp_server_id": "tavily",
+L00000969	      "target_runtime": "claude_code_cli",
+L00000970	      "projection_state": "external_not_managed",
+L00000971	      "provider_config_ref": "projection-template:.claude/mcp.json#mcpServers.tavily",
+L00000972	      "capability_refs": [
+L00000973	        "webreg.tavily.direct_api.v1"
+L00000974	      ],
+L00000975	      "no_secret_serialization": true,
+L00000976	      "health_ref": "health:web.tavily"
+L00000977	    },
+L00000978	    {
+L00000979	      "projection_id": "mcp_projection.jina.claude",
+L00000980	      "mcp_server_id": "jina",
+L00000981	      "target_runtime": "claude_code_cli",
+L00000982	      "projection_state": "external_not_managed",
+L00000983	      "provider_config_ref": "projection-template:.claude/mcp.json#mcpServers.jina",
+L00000984	      "capability_refs": [
+L00000985	        "webreg.jina.direct_api.v1"
+L00000986	      ],
+L00000987	      "no_secret_serialization": true,
+L00000988	      "health_ref": "health:web.jina"
+L00000989	    },
+L00000990	    {
+L00000991	      "projection_id": "mcp_projection.firecrawl.cursor",
+L00000992	      "mcp_server_id": "firecrawl",
+L00000993	      "target_runtime": "cursor_cli",
+L00000994	      "projection_state": "external_not_managed",
+L00000995	      "provider_config_ref": "projection-template:.cursor/mcp.json#mcpServers.firecrawl",
+L00000996	      "capability_refs": [
+L00000997	        "webreg.firecrawl.direct_api.v1"
+L00000998	      ],
+L00000999	      "no_secret_serialization": true,
+L00001000	      "health_ref": "health:web.firecrawl"
+L00001001	    },
+L00001002	    {
+L00001003	      "projection_id": "mcp_projection.exa.cursor",
+L00001004	      "mcp_server_id": "exa",
+L00001005	      "target_runtime": "cursor_cli",
+L00001006	      "projection_state": "external_not_managed",
+L00001007	      "provider_config_ref": "projection-template:.cursor/mcp.json#mcpServers.exa",
+L00001008	      "capability_refs": [
+L00001009	        "webreg.exa.direct_api.v1"
+L00001010	      ],
+L00001011	      "no_secret_serialization": true,
+L00001012	      "health_ref": "health:web.exa"
+L00001013	    },
+L00001014	    {
+L00001015	      "projection_id": "mcp_projection.tavily.cursor",
+L00001016	      "mcp_server_id": "tavily",
+L00001017	      "target_runtime": "cursor_cli",
+L00001018	      "projection_state": "external_not_managed",
+L00001019	      "provider_config_ref": "projection-template:.cursor/mcp.json#mcpServers.tavily",
+L00001020	      "capability_refs": [
+L00001021	        "webreg.tavily.direct_api.v1"
+L00001022	      ],
+L00001023	      "no_secret_serialization": true,
+L00001024	      "health_ref": "health:web.tavily"
+L00001025	    },
+L00001026	    {
+L00001027	      "projection_id": "mcp_projection.jina.cursor",
+L00001028	      "mcp_server_id": "jina",
+L00001029	      "target_runtime": "cursor_cli",
+L00001030	      "projection_state": "external_not_managed",
+L00001031	      "provider_config_ref": "projection-template:.cursor/mcp.json#mcpServers.jina",
+L00001032	      "capability_refs": [
+L00001033	        "webreg.jina.direct_api.v1"
+L00001034	      ],
+L00001035	      "no_secret_serialization": true,
+L00001036	      "health_ref": "health:web.jina"
+L00001037	    },
+L00001038	    {
+L00001039	      "projection_id": "mcp_projection.pm_site_reader.codex",
+L00001040	      "mcp_server_id": "pm_site_reader",
+L00001041	      "target_runtime": "codex",
+L00001042	      "projection_state": "not_required",
+L00001043	      "provider_config_ref": "projection-template:.codex/config.toml#pm_native_web",
+L00001044	      "capability_refs": [
+L00001045	        "webreg.pm_site_reader.v1"
+L00001046	      ],
+L00001047	      "no_secret_serialization": true,
+L00001048	      "health_ref": "health:web.pm_site_reader"
+L00001049	    }
+L00001050	  ],
+
+<<< CONTEXT_AFTER canonical_document_lines=1051-1062 >>>
+L00001051	  "coding_agent_projection_examples": [
+L00001052	    {
+L00001053	      "target_runtime": "claude_code_cli",
+L00001054	      "projection_kind": "mcp_projection_consumer",
+L00001055	      "provider_ids": [
+L00001056	        "firecrawl",
+L00001057	        "exa",
+L00001058	        "tavily",
+L00001059	        "jina"
+L00001060	      ],
+L00001061	      "capability_source": "PM WebProviderAdapterRegistry",
+L00001062	      "secret_policy": "secret_refs_only"

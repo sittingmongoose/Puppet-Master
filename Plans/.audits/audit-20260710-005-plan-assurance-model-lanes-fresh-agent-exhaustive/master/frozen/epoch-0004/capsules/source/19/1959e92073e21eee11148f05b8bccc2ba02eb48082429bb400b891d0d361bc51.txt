@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 387-398 >>>
+
+## 7. Plugin configuration
+
+<a id="PLUGIN-CONFIG"></a>
+
+### 7.1 Config shape
+
+```toml
+[plugins]
+hook_timeout_ms = 5000
+allow_tool_override = false
+
+
+<<< AUTHORITATIVE_CORE 399-757 >>>
+# Package list (config-sourced plugins)
+packages = [
+  "puppet-master-lint-hook@0.1.0",
+  "file:///home/user/my-local-plugin",
+]
+
+# Per-plugin enable/disable
+[plugins.disabled]
+"noisy-plugin" = true
+```
+
+### 7.2 Enable/disable
+
+Individual plugins can be disabled via `config.plugins.disabled.<plugin_id> = true`. Disabled plugins are not loaded. This persists across sessions.
+
+### 7.3 Per-Persona plugin overrides
+
+### 7.4 Child-run plugin and MCP inheritance
+
+Plugin and MCP effects for child runs are inherited as an effective compatible subset, not as a blind copy of the parent environment.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+
+Rules:
+- child-visible plugin behavior exists only when the child runtime path supports it and the parent effectively allowed it.
+- plugin behavior must not function as a backdoor that widens child permissions or tool authority.
+- MCP availability follows the same parent-ceiling and compatibility-subset rule.
+- requested versus effective dropped capability details should remain visible for debugging.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+A Persona MAY list plugins to disable for runs using that Persona, via the `disabled_plugins` field in the PERSONA.md frontmatter (defined in `Plans/Personas.md` §3.2):
+
+```yaml
+disabled_plugins: ["noisy-plugin"]
+```
+
+When a Persona is active, any plugin whose `id` appears in `disabled_plugins` is skipped during hook dispatch (not unloaded, just silenced).
+
+ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
+
+---
+
+## 8. Structured plugin logging
+
+<a id="PLUGIN-LOGGING"></a>
+
+All plugin activity is logged to the Puppet Master event ledger (`Plans/Contracts_V0.md#EventRecord`).
+
+### 8.1 Event types
+
+| Event type | When emitted |
+|------------|-------------|
+| `plugin.loaded` | Plugin successfully initialized. |
+| `plugin.load_failed` | Plugin failed to load (invalid manifest, entry error). |
+| `plugin.hook.invoked` | A hook was called (includes plugin_id, event name, duration_ms). |
+| `plugin.hook.error` | A hook raised an error or timed out. |
+| `plugin.hook.blocked` | A hook returned `Block` (includes reason). |
+| `plugin.permission.override` | A plugin overrode a permission decision (§4.2). |
+| `plugin.tool.registered` | A custom tool was registered (includes tool name, plugin_id). |
+| `plugin.tool.collision` | A tool name collision was detected (includes resolution). |
+
+### 8.2 Log format
+
+Plugin log entries are persisted through the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord`; this document owns only plugin event semantics and plugin-owned payload content. Plugin writers set the EventRecord `event_type` to the applicable `plugin.*` value above, while plugin-specific details such as `plugin_id`, hook names, durations, resolution details, and structured plugin payload fields live under the registered payload schema or canonical actor/source refs rather than redefining the EventRecord envelope.
+
+Legacy/source-lineage tuple notation such as `timestamp`, `plugin_id`, `event_type`, `payload`, and `source: "plugin:<plugin_id>"` is compatibility shorthand for older notes only; it is not normative EventRecord field canon.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
+
+---
+
+## 9. GUI requirements
+
+<a id="GUI-PLUGINS"></a>
+
+The Plugins settings screen is a tab in the unified Settings page (`Plans/FinalGUISpec.md` §7.4).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+
+### 9.1 Plugins tab
+
+A dedicated **Plugins** tab in Settings MUST provide:
+
+1. **Plugin list:** Table of all discovered plugins (internal, project, global, config). Columns: Name, ID, Version, Source (internal/project/global/config), Status (active/disabled/error), Hook count, Tool count. Internal plugins shown with a locked badge (cannot be disabled).
+
+2. **Enable/disable toggle:** Per-plugin toggle (except internal). Persisted to `config.plugins.disabled`.
+
+3. **Plugin detail:** Expanding a row shows: full description, list of hooks subscribed, list of custom tools registered, entry path, and plugin data directory path.
+
+4. **Add plugin:** "Add plugin" button supporting:
+   - "Install from package" — enter a package specifier (e.g., `puppet-master-lint-hook@0.1.0`).
+   - "Add local" — file picker selecting a directory containing `plugin.json`.
+   Adds to `config.plugins.packages` and triggers reload.
+
+5. **Remove plugin:** Remove button per config-sourced plugin. Project/global plugins show "Delete from disk" with confirmation.
+
+6. **Config overrides:** Collapsible card for `hook_timeout_ms` (spinner, range 1000–30000, default 5000) and `allow_tool_override` (toggle, default off, warning label when enabled).
+
+### 9.2 ELI5/Expert copy
+
+Plugin UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.plugins.*` prefix.
+
+- **ELI5:** Simplified view showing only plugin list with enable/disable toggles. Hook details, tool collision config, and timeout settings are hidden.
+- **Expert:** Full view with all sections visible.
+
+### 9.3 Catalog-installed plugin and hook lifecycle
+
+Catalog-installed plugins, hooks, and MCP config bundles use explicit lifecycle semantics.
+
+Rules:
+- install/update/remove actions must surface whether the target plugin is currently enabled, loaded, or referenced by Persona settings
+- active plugin updates may require reload, deferred apply, or explicit disable-before-remove behavior depending on the plugin state
+- the GUI must distinguish catalog-installed plugins from manual/local ones
+- uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name
+
+---
+
+## 10. OpenCode baseline and Puppet Master deltas
+
+<a id="BASELINE-DELTAS"></a>
+
+Per `Plans/OpenCode_Deep_Extraction.md` §7G and §9G:
+
+### 10.1 Baseline
+
+OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Plugin sources: internal (compiled), built-in npm packages, and config-specified packages/paths. Plugins receive a `PluginInput` with SDK client, project metadata, and Bun shell. The `Hooks` interface defines ~15 named hooks including `tool.execute.before/after`, `permission.ask`, `experimental.session.compacting`, `chat.message`, `chat.params`, `shell.env`, and system/message transforms. Custom tools are registered via the `tool` property; plugin tools override built-ins on name collision.
+
+### 10.2 Puppet Master deltas
+
+1. **Plugin runtime:** OpenCode uses JS `import()` with Bun. Puppet Master uses a platform-agnostic plugin API (WASM modules, subprocess-based, or dynamic libraries — entry format defined by `plugin.json` `entry` field). No JavaScript runtime dependency.
+2. **Tool collision policy:** OpenCode allows plugin tools to override built-ins by default. Puppet Master defaults to **namespaced aliasing** (built-in wins); override requires explicit opt-in via `allow_tool_override`.
+3. **Compaction hook naming and semantics:** OpenCode uses `experimental.session.compacting` as the hook key. Puppet Master canonicalizes this as `session.compacting` (dropping the `experimental.` prefix). For backward compatibility, plugins subscribing to `experimental.session.compacting` are mapped to the canonical `session.compacting` hook at registration time as an alias. Puppet Master additionally formalizes the return semantics with `InjectContext` vs `ReplacePrompt` return types and first-wins conflict resolution for `ReplacePrompt`.
+4. **Deterministic load order:** OpenCode deduplicates by function identity. Puppet Master defines strict priority-ordered discovery with lexicographic tiebreaking and documents the order for reproducibility.
+5. **Structured logging:** OpenCode plugin errors are logged but not structured. Puppet Master emits typed ledger events (`plugin.loaded`, `plugin.hook.invoked`, etc.) for auditability.
+6. **Per-Persona overrides:** OpenCode has no per-agent plugin controls. Puppet Master allows Personas to disable specific plugins via `disabled_plugins`.
+7. **CLI-backed provider plugin capability evidence:** When the `claude` local binary is used as a CLI-bridged provider, PM records native agents, effort selection, model selection, fallback model support, MCP, plugins, settings injection, and headless JSON/stream-json output as observed provider-protocol capability evidence; plugin support remains capability-scoped and does not imply every provider account can load PM plugins.
+
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+
+---
+
+## 11. Acceptance criteria
+
+<a id="ACCEPTANCE"></a>
+
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-PL01"></a>
+**AC-PL01:** Plugin discovery MUST follow the priority order in §2.1. First-discovered plugin with a given `id` wins; later duplicates MUST be skipped with a warning.
+
+<a id="AC-PL02"></a>
+**AC-PL02:** Plugin load order MUST be deterministic (§3.1). Given the same plugins on disk and in config, the load order MUST be identical across runs.
+
+<a id="AC-PL03"></a>
+**AC-PL03:** Hook execution order MUST follow plugin load order (§3.3). Internal plugins execute first.
+
+<a id="AC-PL04"></a>
+**AC-PL04:** A `tool.execute.before` hook returning `Block(reason)` MUST prevent the tool from executing and return the reason to the agent.
+
+<a id="AC-PL05"></a>
+**AC-PL05:** Custom tools registered by plugins MUST route through the central tool registry and permission policy engine.
+
+<a id="AC-PL06"></a>
+**AC-PL06:** By default, plugin tools MUST NOT override built-in tools. Collisions MUST be resolved by namespaced aliasing unless `allow_tool_override` is `true`.
+
+<a id="AC-PL07"></a>
+**AC-PL07:** Plugin hook invocations, errors, blocks, and permission overrides MUST be logged as typed events in the event ledger.
+
+<a id="AC-PL08"></a>
+**AC-PL08:** Hooks that timeout (default 5s) or panic MUST be treated as `Continue` with a warning logged. The pipeline MUST NOT crash.
+
+<a id="AC-PL09"></a>
+**AC-PL09:** The GUI Plugins tab MUST display all discovered plugins with enable/disable toggles, and persist disable state across sessions.
+
+<a id="AC-PL10"></a>
+**AC-PL10:** Plugins subscribing to the OpenCode-era hook key `experimental.session.compacting` MUST be treated as subscribers to the canonical `session.compacting` hook. The alias mapping is applied at plugin registration time; no runtime distinction exists between the two keys.
+
+ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Plugins_System.md#HOOK-EVENTS
+
+---
+
+*Document created for planning only; no code changes.*
+
+## Hook/Block Integration Addendum (2026-03-08)
+
+Plugin hooks must reconcile with the runtime scheduler packet's blocked/failure model.
+
+Required behavior:
+- `plugin.hook.blocked` outcomes must map into explicit blocked-state handling rather than disappearing as generic plugin warnings
+- hook-driven blocking must not silently bypass scheduler observability, retry classification, or recovery-option rendering
+- if a plugin modifies prompt or tool behavior in a way that causes remediation/retry, the canonical runtime lineage still belongs to the shared scheduler/remediation contract, not to plugin-private state
+
+Acceptance criteria:
+- plugin-driven blocks are visible as first-class blocked outcomes when they affect execution
+- plugin hooks do not become a side-channel that bypasses queue analysis or remediation observability
+## Plugin Block Runtime Canonical Alignment (2026-03-09)
+
+Plugin-driven blocking must map into the canonical runtime blocked model.
+
+Rules:
+- `plugin.hook.blocked` that affects execution maps to `blocked_reason_code = plugin_hook_blocked`
+- the runtime-facing blocked path MUST expose `allowed_action_ids[]`, guard metadata, and preserved-local-work state when relevant
+- plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy
+## Plugin Block Runtime Taxonomy Consolidation Addendum (2026-03-09)
+
+Plugin-driven blocking that affects execution MUST map into the canonical runtime blocked model.
+
+### Required rules
+- `plugin.hook.blocked` that stops execution maps to `blocked_reason_code = plugin_hook_blocked`
+- runtime-facing plugin-blocked payloads MUST expose canonical `allowed_action_ids[]`, prerequisite metadata, and `preserved_local_work` when relevant
+- plugin hooks MUST NOT invent plugin-private retry or recovery semantics that bypass scheduler observability or canonical taxonomy
+
+## Plugin Hook Blocked Specification Addendum
+
+This section defines plugin Hook Blocked Specification.
+
+### Hooks that may block execution
+Only execution-flow hooks may trigger `plugin_hook_blocked`:
+- `pre_tool_invoke`
+- `pre_attempt_start`
+- `pre_node_dispatch`
+
+Observation-only hooks such as `post_tool_invoke` and `post_attempt_complete` cannot create `plugin_hook_blocked`.
+
+### Required metadata
+Plugin-blocked payloads MUST include:
+- `blocked_reason_code: plugin_hook_blocked`
+- `plugin_id`
+- `hook_name`
+- `block_reason`
+- canonical `allowed_action_ids[]`
+- `preserved_local_work`
+
+### Recovery scope
+Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Plugins_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### PLUG-002 - Scope And SSOT Authority
+
+```yaml
+plan_unit_id: PLUG-002
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugins_System is the single canonical source of truth for plugin discovery, loading, hook lifecycle, custom tool registration, and structured logging; other plan documents must anchor-link here rather than restating plugin definitions, hook signatures, or load-order rules."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "PLUG-002 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: canonical_owner_scope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0002
+preserved_exact_tokens:
+- "Plugins System (Canonical SSOT)"
+- "single canonical source of truth"
+- "discovery"
+- "loading"
+- "hook lifecycle"
+- "custom tool registration"
+- "structured logging"
+- "Plans/Plugins_System.md#HOOK-EVENTS"
+- "Puppet Master"
+negative_constraints:
+- "Other plan documents MUST reference Plugins_System anchors rather than restating plugin definitions, hook signatures, or load-order rules."
+preserved_contractrefs:
+- "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/DRY_Rules.md"
+- "Plans/Contracts_V0.md"
+- "Plans/Decision_Policy.md"
+```
+
+### PLUG-003 - SSOT Reference Map
+
+```yaml
+plan_unit_id: PLUG-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "The Plugins SSOT reference map preserves the governing references for locked decisions, contracts, DRY, glossary terms, deterministic ambiguity handling, tools, permissions, personas, OpenCode baseline plugins, formatters, models, and GUI specification."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-002
+unblocks: []
+acceptance_criteria:
+- "PLUG-003 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: owner_reference_map
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0003
+preserved_exact_tokens:
+- "SSOT references (DRY)"
+- "Plans/Spec_Lock.json"
+- "Plans/Contracts_V0.md"
+- "Plans/DRY_Rules.md"
+- "Plans/Glossary.md"
+- "Plans/Decision_Policy.md"
+- "Plans/auto_decisions.jsonl"
+- "Plans/Tools.md"
+- "Plans/Permissions_System.md"
+- "Plans/Personas.md"
+- "Plans/OpenCode_Deep_Extraction.md"
+- "Plans/Formatters_System.md"
+- "Plans/Models_System.md"
+- "Plans/FinalGUISpec.md"
+negative_constraints:
+- "The reference map must not be read as plugin behavior that supersedes the owner sections."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/Tools.md"
+- "Plans/Permissions_System.md"
+```
+
+
+<<< CONTEXT_AFTER 758-769 >>>
+### PLUG-004 - Persona And Model Terminology Routing
+
+```yaml
+plan_unit_id: PLUG-004
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin-owned Persona and model references route through Glossary, plans index, Personas, and Models owner docs rather than defining duplicate terminology."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

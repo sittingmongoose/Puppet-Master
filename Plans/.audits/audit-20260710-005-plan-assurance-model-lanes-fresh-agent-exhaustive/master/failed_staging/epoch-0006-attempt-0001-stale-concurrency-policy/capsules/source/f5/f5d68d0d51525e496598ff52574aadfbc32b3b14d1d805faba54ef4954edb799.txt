@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3481-3492 >>>
+L00003481	- FileSafe
+L00003482	- auth refresh
+L00003483	- user confirmation
+L00003484	- replan-required
+L00003485	negative_constraints: []
+L00003486	compatibility_only_notes: []
+L00003487	stale_retired_dispositions: []
+L00003488	owner_boundary_notes: []
+L00003489	owner_hints:
+L00003490	- Plans/Executor_Protocol.md
+L00003491	```
+L00003492	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3493-3883 >>>
+L00003493	### EP-052 - Scheduler Score Tuple And MVP Terms
+L00003494	
+L00003495	```yaml
+L00003496	plan_unit_id: EP-052
+L00003497	unit_type: requirement
+L00003498	status: accepted
+L00003499	owner_doc: Plans/Executor_Protocol.md
+L00003500	canonical_text: Scheduler score tuple uses scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, and node_id with remediation/unblocker/normal ordering, no critical-path MVP term, explicit defaults, and invalid/cyclic exclusion.
+L00003501	gui_related: false
+L00003502	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00003503	split_recommended: false
+L00003504	depends_on: []
+L00003505	unblocks: []
+L00003506	acceptance_criteria:
+L00003507	- The covered source span remains losslessly available for exact-text audit.
+L00003508	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003509	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003510	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003511	validation_surfaces:
+L00003512	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003513	- python3 scripts/pm-plan-index.py validate
+L00003514	risk_class: executor_protocol_drift
+L00003515	reasoning_tier: standard
+L00003516	context_scope: executor_protocol_standardization
+L00003517	implementation_surfaces:
+L00003518	- Plans/Executor_Protocol.md
+L00003519	node_compile_hint:
+L00003520	  mode: scheduler_score_tuple_and_mvp_terms
+L00003521	  create_worknodes: false
+L00003522	source_lineage:
+L00003523	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0040
+L00003524	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0049
+L00003525	preserved_exact_tokens:
+L00003526	- scheduler_lane
+L00003527	- manual_priority
+L00003528	- transitive_unblock_count
+L00003529	- ready_since_utc
+L00003530	- node_id
+L00003531	- remediation > unblocker > normal
+L00003532	- No critical-path term
+L00003533	- 0..100
+L00003534	- default `50`
+L00003535	- invalid/cyclic relationships are excluded
+L00003536	negative_constraints: []
+L00003537	compatibility_only_notes: []
+L00003538	stale_retired_dispositions: []
+L00003539	owner_boundary_notes: []
+L00003540	owner_hints:
+L00003541	- Plans/Executor_Protocol.md
+L00003542	```
+L00003543	
+L00003544	### EP-053 - Wake Trigger Forward Reference
+L00003545	
+L00003546	```yaml
+L00003547	plan_unit_id: EP-053
+L00003548	unit_type: requirement
+L00003549	status: accepted
+L00003550	owner_doc: Plans/Executor_Protocol.md
+L00003551	canonical_text: Runtime recovery wakeup triggers refer to the later Wake reasons and coalescing owner section for wake_reason values and watchdog-only polling rule.
+L00003552	gui_related: false
+L00003553	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00003554	split_recommended: false
+L00003555	depends_on: []
+L00003556	unblocks: []
+L00003557	acceptance_criteria:
+L00003558	- The covered source span remains losslessly available for exact-text audit.
+L00003559	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003560	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003561	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003562	validation_surfaces:
+L00003563	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003564	- python3 scripts/pm-plan-index.py validate
+L00003565	risk_class: executor_protocol_drift
+L00003566	reasoning_tier: standard
+L00003567	context_scope: executor_protocol_standardization
+L00003568	implementation_surfaces:
+L00003569	- Plans/Executor_Protocol.md
+L00003570	node_compile_hint:
+L00003571	  mode: wake_trigger_forward_reference
+L00003572	  create_worknodes: false
+L00003573	source_lineage:
+L00003574	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0041
+L00003575	preserved_exact_tokens:
+L00003576	- Wake reasons and coalescing
+L00003577	- wake_reason
+L00003578	- watchdog-only polling rule
+L00003579	- ContractName:Plans/Orchestrator_Page.md
+L00003580	negative_constraints: []
+L00003581	compatibility_only_notes: []
+L00003582	stale_retired_dispositions: []
+L00003583	owner_boundary_notes:
+L00003584	- No wake-trigger values are redefined in this forward-reference span.
+L00003585	owner_hints:
+L00003586	- Plans/Executor_Protocol.md
+L00003587	```
+L00003588	
+L00003589	### EP-054 - Multi-Surface Execution Unit Context
+L00003590	
+L00003591	```yaml
+L00003592	plan_unit_id: EP-054
+L00003593	unit_type: requirement
+L00003594	status: accepted
+L00003595	owner_doc: Plans/Executor_Protocol.md
+L00003596	canonical_text: Rich editor-agent, workbench, terminal, browser, document, artifact, plugin-first, command-first, rules/skills, persisted tabs, splits/windows, and history/navigation surfaces dispatch through execution_unit_context and preserve attempt identity, safe points, worktree binding, diff/review visibility, and autonomy defaults.
+L00003597	gui_related: true
+L00003598	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, setup copy, panels, or operational surfaces.
+L00003599	split_recommended: false
+L00003600	depends_on: []
+L00003601	unblocks: []
+L00003602	acceptance_criteria:
+L00003603	- The covered source span remains losslessly available for exact-text audit.
+L00003604	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003605	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003606	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003607	validation_surfaces:
+L00003608	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003609	- python3 scripts/pm-plan-index.py validate
+L00003610	risk_class: executor_protocol_drift
+L00003611	reasoning_tier: standard
+L00003612	context_scope: executor_protocol_standardization
+L00003613	implementation_surfaces:
+L00003614	- Plans/Executor_Protocol.md
+L00003615	node_compile_hint:
+L00003616	  mode: multi_surface_execution_unit_context
+L00003617	  create_worknodes: false
+L00003618	source_lineage:
+L00003619	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0042
+L00003620	preserved_exact_tokens:
+L00003621	- /editor-agent
+L00003622	- /workbench
+L00003623	- terminal
+L00003624	- browser
+L00003625	- document
+L00003626	- artifact
+L00003627	- /plugin-first
+L00003628	- command-first
+L00003629	- /rules/skills
+L00003630	- /persisted
+L00003631	- /splits/windows
+L00003632	- /history/navigation
+L00003633	- execution_unit_context
+L00003634	- attempt identity
+L00003635	- safe points
+L00003636	- worktree binding
+L00003637	- diff/review visibility
+L00003638	- user-visible autonomy defaults
+L00003639	negative_constraints: []
+L00003640	compatibility_only_notes: []
+L00003641	stale_retired_dispositions: []
+L00003642	owner_boundary_notes: []
+L00003643	owner_hints:
+L00003644	- Plans/Executor_Protocol.md
+L00003645	```
+L00003646	
+L00003647	### EP-055 - Browser Debug Pause Resume
+L00003648	
+L00003649	```yaml
+L00003650	plan_unit_id: EP-055
+L00003651	unit_type: requirement
+L00003652	status: accepted
+L00003653	owner_doc: Plans/Executor_Protocol.md
+L00003654	canonical_text: Browser-driven debug handoff uses explicit pause and resume inside isolated automation; auth/manual-repro boundaries degrade to attention_required, while richer co-piloting remains future expansion.
+L00003655	gui_related: true
+L00003656	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, setup copy, panels, or operational surfaces.
+L00003657	split_recommended: false
+L00003658	depends_on: []
+L00003659	unblocks: []
+L00003660	acceptance_criteria:
+L00003661	- The covered source span remains losslessly available for exact-text audit.
+L00003662	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003663	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003664	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003665	validation_surfaces:
+L00003666	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003667	- python3 scripts/pm-plan-index.py validate
+L00003668	risk_class: executor_protocol_drift
+L00003669	reasoning_tier: standard
+L00003670	context_scope: executor_protocol_standardization
+L00003671	implementation_surfaces:
+L00003672	- Plans/Executor_Protocol.md
+L00003673	node_compile_hint:
+L00003674	  mode: browser_debug_pause_resume
+L00003675	  create_worknodes: false
+L00003676	source_lineage:
+L00003677	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0042
+L00003678	preserved_exact_tokens:
+L00003679	- Browser-driven debug handoff
+L00003680	- /resume
+L00003681	- isolated automation session
+L00003682	- /manual-repro
+L00003683	- attention_required
+L00003684	- co-piloting
+L00003685	- collaborative browser steering
+L00003686	negative_constraints: []
+L00003687	compatibility_only_notes: []
+L00003688	stale_retired_dispositions: []
+L00003689	owner_boundary_notes: []
+L00003690	owner_hints:
+L00003691	- Plans/Executor_Protocol.md
+L00003692	```
+L00003693	
+L00003694	### EP-056 - PM Native Context Summarization
+L00003695	
+L00003696	```yaml
+L00003697	plan_unit_id: EP-056
+L00003698	unit_type: requirement
+L00003699	status: accepted
+L00003700	owner_doc: Plans/Executor_Protocol.md
+L00003701	canonical_text: Runtime context summarization stays PM-native, treats provider _context_updates only as a reference, preserves tcN handles, and replaces stale full tool results with audited summaries without a separate extra LLM call.
+L00003702	gui_related: false
+L00003703	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00003704	split_recommended: false
+L00003705	depends_on: []
+L00003706	unblocks: []
+L00003707	acceptance_criteria:
+L00003708	- The covered source span remains losslessly available for exact-text audit.
+L00003709	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003710	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003711	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003712	validation_surfaces:
+L00003713	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003714	- python3 scripts/pm-plan-index.py validate
+L00003715	risk_class: executor_protocol_drift
+L00003716	reasoning_tier: standard
+L00003717	context_scope: executor_protocol_standardization
+L00003718	implementation_surfaces:
+L00003719	- Plans/Executor_Protocol.md
+L00003720	node_compile_hint:
+L00003721	  mode: pm_native_context_summarization
+L00003722	  create_worknodes: false
+L00003723	source_lineage:
+L00003724	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0042
+L00003725	preserved_exact_tokens:
+L00003726	- PM-native
+L00003727	- _context_updates
+L00003728	- incremental tool-result compression
+L00003729	- context-detail
+L00003730	- compaction updates
+L00003731	- tcN
+L00003732	- audited summaries
+L00003733	- without a separate extra LLM call
+L00003734	- must not be re-compressed
+L00003735	negative_constraints:
+L00003736	- Executor must not transplant a provider _context_updates protocol as-is.
+L00003737	compatibility_only_notes: []
+L00003738	stale_retired_dispositions: []
+L00003739	owner_boundary_notes: []
+L00003740	owner_hints:
+L00003741	- Plans/Executor_Protocol.md
+L00003742	```
+L00003743	
+L00003744	### EP-057 - Runtime UI Action Families
+L00003745	
+L00003746	```yaml
+L00003747	plan_unit_id: EP-057
+L00003748	unit_type: requirement
+L00003749	status: accepted
+L00003750	owner_doc: Plans/Executor_Protocol.md
+L00003751	canonical_text: UI checkpoint, approve/deny, retry, and seam/lane/promotion/resolution-thread actions are runtime action families keyed by blocked_sequence and allowed_action_ids, not graph-local commands or single-current-task state.
+L00003752	gui_related: true
+L00003753	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, setup copy, panels, or operational surfaces.
+L00003754	split_recommended: false
+L00003755	depends_on: []
+L00003756	unblocks: []
+L00003757	acceptance_criteria:
+L00003758	- The covered source span remains losslessly available for exact-text audit.
+L00003759	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003760	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003761	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003762	validation_surfaces:
+L00003763	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003764	- python3 scripts/pm-plan-index.py validate
+L00003765	risk_class: executor_protocol_drift
+L00003766	reasoning_tier: standard
+L00003767	context_scope: executor_protocol_standardization
+L00003768	implementation_surfaces:
+L00003769	- Plans/Executor_Protocol.md
+L00003770	node_compile_hint:
+L00003771	  mode: runtime_ui_action_families
+L00003772	  create_worknodes: false
+L00003773	source_lineage:
+L00003774	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0042
+L00003775	preserved_exact_tokens:
+L00003776	- UI `/checkpoint`
+L00003777	- /approve/deny
+L00003778	- retry
+L00003779	- /seam/lane/promotion/resolution-thread
+L00003780	- blocked_sequence
+L00003781	- allowed_action_ids[]
+L00003782	- graph-local commands
+L00003783	- single-current-task state
+L00003784	negative_constraints: []
+L00003785	compatibility_only_notes: []
+L00003786	stale_retired_dispositions: []
+L00003787	owner_boundary_notes: []
+L00003788	owner_hints:
+L00003789	- Plans/Executor_Protocol.md
+L00003790	```
+L00003791	
+L00003792	### EP-058 - Managed Instruction Projection Compatibility
+L00003793	
+L00003794	```yaml
+L00003795	plan_unit_id: EP-058
+L00003796	unit_type: requirement
+L00003797	status: accepted
+L00003798	owner_doc: Plans/Executor_Protocol.md
+L00003799	canonical_text: Cursor-native managed instructions target .cursor/rules/*.mdc and .cursor/rules; .cursorrules is legacy compatibility only, and AGENTS.md/CLAUDE.md/root/provider copies are optional target projections that cannot be sole readiness evidence.
+L00003800	gui_related: false
+L00003801	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00003802	split_recommended: false
+L00003803	depends_on: []
+L00003804	unblocks: []
+L00003805	acceptance_criteria:
+L00003806	- The covered source span remains losslessly available for exact-text audit.
+L00003807	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003808	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003809	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003810	validation_surfaces:
+L00003811	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003812	- python3 scripts/pm-plan-index.py validate
+L00003813	risk_class: executor_protocol_drift
+L00003814	reasoning_tier: standard
+L00003815	context_scope: executor_protocol_standardization
+L00003816	implementation_surfaces:
+L00003817	- Plans/Executor_Protocol.md
+L00003818	node_compile_hint:
+L00003819	  mode: managed_instruction_projection_compatibility
+L00003820	  create_worknodes: false
+L00003821	source_lineage:
+L00003822	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0042
+L00003823	preserved_exact_tokens:
+L00003824	- .cursor/rules/*.mdc
+L00003825	- .cursor/rules
+L00003826	- .cursorrules
+L00003827	- AGENTS.md
+L00003828	- CLAUDE.md
+L00003829	- provider-native projected copies
+L00003830	- readiness must never depend solely on projected copies
+L00003831	negative_constraints:
+L00003832	- Readiness must never depend solely on projected copies.
+L00003833	compatibility_only_notes:
+L00003834	- .cursorrules is legacy compatibility only.
+L00003835	stale_retired_dispositions: []
+L00003836	owner_boundary_notes: []
+L00003837	owner_hints:
+L00003838	- Plans/Executor_Protocol.md
+L00003839	```
+L00003840	
+L00003841	### EP-059 - PM Outdated Launch Reprojection
+L00003842	
+L00003843	```yaml
+L00003844	plan_unit_id: EP-059
+L00003845	unit_type: requirement
+L00003846	status: accepted
+L00003847	owner_doc: Plans/Executor_Protocol.md
+L00003848	canonical_text: At launch time, PM Outdated projection should auto-reproject before run launch when safe.
+L00003849	gui_related: false
+L00003850	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00003851	split_recommended: false
+L00003852	depends_on: []
+L00003853	unblocks: []
+L00003854	acceptance_criteria:
+L00003855	- The covered source span remains losslessly available for exact-text audit.
+L00003856	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00003857	- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003858	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003859	validation_surfaces:
+L00003860	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003861	- python3 scripts/pm-plan-index.py validate
+L00003862	risk_class: executor_protocol_drift
+L00003863	reasoning_tier: standard
+L00003864	context_scope: executor_protocol_standardization
+L00003865	implementation_surfaces:
+L00003866	- Plans/Executor_Protocol.md
+L00003867	node_compile_hint:
+L00003868	  mode: pm_outdated_launch_reprojection
+L00003869	  create_worknodes: false
+L00003870	source_lineage:
+L00003871	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0042
+L00003872	preserved_exact_tokens:
+L00003873	- PM Outdated
+L00003874	- auto-reproject
+L00003875	- run launch
+L00003876	negative_constraints: []
+L00003877	compatibility_only_notes: []
+L00003878	stale_retired_dispositions: []
+L00003879	owner_boundary_notes: []
+L00003880	owner_hints:
+L00003881	- Plans/Executor_Protocol.md
+L00003882	```
+L00003883	
+
+<<< CONTEXT_AFTER canonical_document_lines=3884-3895 >>>
+L00003884	### EP-060 - GUI Auth Copy And Direct Gemini Policy Boundary
+L00003885	
+L00003886	```yaml
+L00003887	plan_unit_id: EP-060
+L00003888	unit_type: requirement
+L00003889	status: accepted
+L00003890	owner_doc: Plans/Executor_Protocol.md
+L00003891	canonical_text: GUI auth/setup copy exposes user-visible choices like Sign in with ChatGPT and Use API Key, while Direct-Gemini OAuth removal is PM app-policy and public-distribution compliance policy rather than evidence that Google OAuth protocol disappeared.
+L00003892	gui_related: true
+L00003893	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, setup copy, panels, or operational surfaces.
+L00003894	split_recommended: false
+L00003895	depends_on: []

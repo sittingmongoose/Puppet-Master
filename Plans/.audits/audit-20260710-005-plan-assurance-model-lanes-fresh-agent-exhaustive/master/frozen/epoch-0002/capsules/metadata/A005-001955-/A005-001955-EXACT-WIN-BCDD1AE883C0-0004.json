@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-001955-EXACT-WIN-BCDD1AE883C0-0004",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      984,
+      995
+    ],
+    [
+      1344,
+      1355
+    ]
+  ],
+  "core_range": [
+    996,
+    1343
+  ],
+  "core_sha256": "437c921612fa6412758754b40eeaad426d8d7189e57e899232580e8bd64476e6",
+  "document_path": "Plans/Containers_Registry_and_Unraid.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/40/4076c70fc6a688a7662fb3342d0d1ab1d157398b1d15e663777ee548fec945c1.txt",
+  "source_excerpt_sha256": "4076c70fc6a688a7662fb3342d0d1ab1d157398b1d15e663777ee548fec945c1",
+  "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b",
+  "window_id": "WIN-BCDD1AE883C0-0004"
+}

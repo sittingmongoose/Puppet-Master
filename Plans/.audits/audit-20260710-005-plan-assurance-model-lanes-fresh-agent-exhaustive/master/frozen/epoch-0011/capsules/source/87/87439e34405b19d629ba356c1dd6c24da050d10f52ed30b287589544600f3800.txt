@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=12317-12328 >>>
+L00012317	      "inline_handlers": {},
+L00012318	      "command_tokens": [],
+L00012319	      "local_or_demo_markers": [],
+L00012320	      "accessibility_gaps": [],
+L00012321	      "disposition": "concept_only_owner_adjudicated",
+L00012322	      "canonical_command_id": null,
+L00012323	      "wiring_matrix_key": null,
+L00012324	      "notes": [
+L00012325	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012326	      ],
+L00012327	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012328	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=12329-12707 >>>
+L00012329	    {
+L00012330	      "inventory_id": "pmconcept.l12803.0444",
+L00012331	      "line": 12803,
+L00012332	      "tag": "input",
+L00012333	      "html_id": null,
+L00012334	      "name": null,
+L00012335	      "role": null,
+L00012336	      "class": null,
+L00012337	      "ui_location": "panel-agent-config",
+L00012338	      "label": "Claude, Codex, Copilot, Gemini, Cursor, OpenCode",
+L00012339	      "attrs": {
+L00012340	        "type": "text",
+L00012341	        "value": "Claude, Codex, Copilot, Gemini, Cursor, OpenCode"
+L00012342	      },
+L00012343	      "inline_handlers": {},
+L00012344	      "command_tokens": [],
+L00012345	      "local_or_demo_markers": [],
+L00012346	      "accessibility_gaps": [],
+L00012347	      "disposition": "concept_only_owner_adjudicated",
+L00012348	      "canonical_command_id": null,
+L00012349	      "wiring_matrix_key": null,
+L00012350	      "notes": [
+L00012351	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012352	      ],
+L00012353	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012354	    },
+L00012355	    {
+L00012356	      "inventory_id": "pmconcept.l12816.0445",
+L00012357	      "line": 12816,
+L00012358	      "tag": "summary",
+L00012359	      "html_id": null,
+L00012360	      "name": null,
+L00012361	      "role": null,
+L00012362	      "class": null,
+L00012363	      "ui_location": "panel-agent-config",
+L00012364	      "label": "Claude (Direct) Ready Auth: OAuth Refresh",
+L00012365	      "attrs": {},
+L00012366	      "inline_handlers": {},
+L00012367	      "command_tokens": [],
+L00012368	      "local_or_demo_markers": [],
+L00012369	      "accessibility_gaps": [],
+L00012370	      "disposition": "concept_only_owner_adjudicated",
+L00012371	      "canonical_command_id": null,
+L00012372	      "wiring_matrix_key": null,
+L00012373	      "notes": [
+L00012374	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012375	      ],
+L00012376	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012377	    },
+L00012378	    {
+L00012379	      "inventory_id": "pmconcept.l12823.0446",
+L00012380	      "line": 12823,
+L00012381	      "tag": "button",
+L00012382	      "html_id": null,
+L00012383	      "name": null,
+L00012384	      "role": null,
+L00012385	      "class": "wizard-btn",
+L00012386	      "ui_location": "panel-agent-config",
+L00012387	      "label": "Refresh",
+L00012388	      "attrs": {
+L00012389	        "onclick": "event.stopPropagation(); toast('Refreshing Claude usage\u2026')"
+L00012390	      },
+L00012391	      "inline_handlers": {
+L00012392	        "onclick": "event.stopPropagation(); toast('Refreshing Claude usage\u2026')"
+L00012393	      },
+L00012394	      "command_tokens": [],
+L00012395	      "local_or_demo_markers": [],
+L00012396	      "accessibility_gaps": [],
+L00012397	      "disposition": "concept_only_owner_adjudicated",
+L00012398	      "canonical_command_id": null,
+L00012399	      "wiring_matrix_key": null,
+L00012400	      "notes": [
+L00012401	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012402	      ],
+L00012403	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012404	    },
+L00012405	    {
+L00012406	      "inventory_id": "pmconcept.l12852.0447",
+L00012407	      "line": 12852,
+L00012408	      "tag": "button",
+L00012409	      "html_id": null,
+L00012410	      "name": null,
+L00012411	      "role": null,
+L00012412	      "class": null,
+L00012413	      "ui_location": "panel-agent-config",
+L00012414	      "label": "Refresh Usage",
+L00012415	      "attrs": {
+L00012416	        "onclick": "toast('Refreshing Claude usage\u2026')"
+L00012417	      },
+L00012418	      "inline_handlers": {
+L00012419	        "onclick": "toast('Refreshing Claude usage\u2026')"
+L00012420	      },
+L00012421	      "command_tokens": [],
+L00012422	      "local_or_demo_markers": [],
+L00012423	      "accessibility_gaps": [
+L00012424	        "missing_accessible_name_candidate"
+L00012425	      ],
+L00012426	      "disposition": "concept_only_owner_adjudicated",
+L00012427	      "canonical_command_id": null,
+L00012428	      "wiring_matrix_key": null,
+L00012429	      "notes": [
+L00012430	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012431	      ],
+L00012432	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012433	    },
+L00012434	    {
+L00012435	      "inventory_id": "pmconcept.l12854.0448",
+L00012436	      "line": 12854,
+L00012437	      "tag": "input",
+L00012438	      "html_id": null,
+L00012439	      "name": null,
+L00012440	      "role": null,
+L00012441	      "class": null,
+L00012442	      "ui_location": "panel-agent-config",
+L00012443	      "label": "input",
+L00012444	      "attrs": {
+L00012445	        "type": "checkbox",
+L00012446	        "onchange": "toast(this.checked ? 'Claude set as preferred' : 'Claude unset as preferred')"
+L00012447	      },
+L00012448	      "inline_handlers": {
+L00012449	        "onchange": "toast(this.checked ? 'Claude set as preferred' : 'Claude unset as preferred')"
+L00012450	      },
+L00012451	      "command_tokens": [],
+L00012452	      "local_or_demo_markers": [],
+L00012453	      "accessibility_gaps": [],
+L00012454	      "disposition": "concept_only_owner_adjudicated",
+L00012455	      "canonical_command_id": null,
+L00012456	      "wiring_matrix_key": null,
+L00012457	      "notes": [
+L00012458	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012459	      ],
+L00012460	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012461	    },
+L00012462	    {
+L00012463	      "inventory_id": "pmconcept.l12856.0449",
+L00012464	      "line": 12856,
+L00012465	      "tag": "button",
+L00012466	      "html_id": null,
+L00012467	      "name": null,
+L00012468	      "role": null,
+L00012469	      "class": null,
+L00012470	      "ui_location": "panel-agent-config",
+L00012471	      "label": "Revalidate",
+L00012472	      "attrs": {
+L00012473	        "onclick": "toast('Revalidating Claude credentials\u2026')"
+L00012474	      },
+L00012475	      "inline_handlers": {
+L00012476	        "onclick": "toast('Revalidating Claude credentials\u2026')"
+L00012477	      },
+L00012478	      "command_tokens": [],
+L00012479	      "local_or_demo_markers": [],
+L00012480	      "accessibility_gaps": [
+L00012481	        "missing_accessible_name_candidate"
+L00012482	      ],
+L00012483	      "disposition": "concept_only_owner_adjudicated",
+L00012484	      "canonical_command_id": null,
+L00012485	      "wiring_matrix_key": null,
+L00012486	      "notes": [
+L00012487	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012488	      ],
+L00012489	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012490	    },
+L00012491	    {
+L00012492	      "inventory_id": "pmconcept.l12863.0450",
+L00012493	      "line": 12863,
+L00012494	      "tag": "summary",
+L00012495	      "html_id": null,
+L00012496	      "name": null,
+L00012497	      "role": null,
+L00012498	      "class": null,
+L00012499	      "ui_location": "panel-agent-config",
+L00012500	      "label": "Codex \u2014 ChatGPT Ready Auth: Browser Login Refresh",
+L00012501	      "attrs": {},
+L00012502	      "inline_handlers": {},
+L00012503	      "command_tokens": [],
+L00012504	      "local_or_demo_markers": [],
+L00012505	      "accessibility_gaps": [],
+L00012506	      "disposition": "concept_only_owner_adjudicated",
+L00012507	      "canonical_command_id": null,
+L00012508	      "wiring_matrix_key": null,
+L00012509	      "notes": [
+L00012510	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00012511	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00012512	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012513	      ],
+L00012514	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012515	    },
+L00012516	    {
+L00012517	      "inventory_id": "pmconcept.l12870.0451",
+L00012518	      "line": 12870,
+L00012519	      "tag": "button",
+L00012520	      "html_id": null,
+L00012521	      "name": null,
+L00012522	      "role": null,
+L00012523	      "class": "wizard-btn",
+L00012524	      "ui_location": "panel-agent-config",
+L00012525	      "label": "Refresh",
+L00012526	      "attrs": {
+L00012527	        "onclick": "event.stopPropagation(); toast('Refreshing Codex ChatGPT usage\u2026')"
+L00012528	      },
+L00012529	      "inline_handlers": {
+L00012530	        "onclick": "event.stopPropagation(); toast('Refreshing Codex ChatGPT usage\u2026')"
+L00012531	      },
+L00012532	      "command_tokens": [],
+L00012533	      "local_or_demo_markers": [],
+L00012534	      "accessibility_gaps": [],
+L00012535	      "disposition": "concept_only_owner_adjudicated",
+L00012536	      "canonical_command_id": null,
+L00012537	      "wiring_matrix_key": null,
+L00012538	      "notes": [
+L00012539	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012540	      ],
+L00012541	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012542	    },
+L00012543	    {
+L00012544	      "inventory_id": "pmconcept.l12896.0452",
+L00012545	      "line": 12896,
+L00012546	      "tag": "button",
+L00012547	      "html_id": null,
+L00012548	      "name": null,
+L00012549	      "role": null,
+L00012550	      "class": null,
+L00012551	      "ui_location": "panel-agent-config",
+L00012552	      "label": "Refresh Usage",
+L00012553	      "attrs": {
+L00012554	        "onclick": "toast('Refreshing Codex ChatGPT usage\u2026')"
+L00012555	      },
+L00012556	      "inline_handlers": {
+L00012557	        "onclick": "toast('Refreshing Codex ChatGPT usage\u2026')"
+L00012558	      },
+L00012559	      "command_tokens": [],
+L00012560	      "local_or_demo_markers": [],
+L00012561	      "accessibility_gaps": [
+L00012562	        "missing_accessible_name_candidate"
+L00012563	      ],
+L00012564	      "disposition": "concept_only_owner_adjudicated",
+L00012565	      "canonical_command_id": null,
+L00012566	      "wiring_matrix_key": null,
+L00012567	      "notes": [
+L00012568	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012569	      ],
+L00012570	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012571	    },
+L00012572	    {
+L00012573	      "inventory_id": "pmconcept.l12898.0453",
+L00012574	      "line": 12898,
+L00012575	      "tag": "input",
+L00012576	      "html_id": null,
+L00012577	      "name": null,
+L00012578	      "role": null,
+L00012579	      "class": null,
+L00012580	      "ui_location": "panel-agent-config",
+L00012581	      "label": "input",
+L00012582	      "attrs": {
+L00012583	        "type": "checkbox",
+L00012584	        "onchange": "toast(this.checked ? 'Codex ChatGPT set as preferred' : 'Codex ChatGPT unset as preferred')"
+L00012585	      },
+L00012586	      "inline_handlers": {
+L00012587	        "onchange": "toast(this.checked ? 'Codex ChatGPT set as preferred' : 'Codex ChatGPT unset as preferred')"
+L00012588	      },
+L00012589	      "command_tokens": [],
+L00012590	      "local_or_demo_markers": [],
+L00012591	      "accessibility_gaps": [],
+L00012592	      "disposition": "concept_only_owner_adjudicated",
+L00012593	      "canonical_command_id": null,
+L00012594	      "wiring_matrix_key": null,
+L00012595	      "notes": [
+L00012596	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012597	      ],
+L00012598	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012599	    },
+L00012600	    {
+L00012601	      "inventory_id": "pmconcept.l12906.0454",
+L00012602	      "line": 12906,
+L00012603	      "tag": "summary",
+L00012604	      "html_id": null,
+L00012605	      "name": null,
+L00012606	      "role": null,
+L00012607	      "class": null,
+L00012608	      "ui_location": "panel-agent-config",
+L00012609	      "label": "Codex \u2014 API Key Ready Auth: API Key Refresh",
+L00012610	      "attrs": {},
+L00012611	      "inline_handlers": {},
+L00012612	      "command_tokens": [],
+L00012613	      "local_or_demo_markers": [],
+L00012614	      "accessibility_gaps": [],
+L00012615	      "disposition": "concept_only_owner_adjudicated",
+L00012616	      "canonical_command_id": null,
+L00012617	      "wiring_matrix_key": null,
+L00012618	      "notes": [
+L00012619	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012620	      ],
+L00012621	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012622	    },
+L00012623	    {
+L00012624	      "inventory_id": "pmconcept.l12913.0455",
+L00012625	      "line": 12913,
+L00012626	      "tag": "button",
+L00012627	      "html_id": null,
+L00012628	      "name": null,
+L00012629	      "role": null,
+L00012630	      "class": "wizard-btn",
+L00012631	      "ui_location": "panel-agent-config",
+L00012632	      "label": "Refresh",
+L00012633	      "attrs": {
+L00012634	        "onclick": "event.stopPropagation(); toast('Refreshing Codex API usage\u2026')"
+L00012635	      },
+L00012636	      "inline_handlers": {
+L00012637	        "onclick": "event.stopPropagation(); toast('Refreshing Codex API usage\u2026')"
+L00012638	      },
+L00012639	      "command_tokens": [],
+L00012640	      "local_or_demo_markers": [],
+L00012641	      "accessibility_gaps": [],
+L00012642	      "disposition": "concept_only_owner_adjudicated",
+L00012643	      "canonical_command_id": null,
+L00012644	      "wiring_matrix_key": null,
+L00012645	      "notes": [
+L00012646	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012647	      ],
+L00012648	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012649	    },
+L00012650	    {
+L00012651	      "inventory_id": "pmconcept.l12926.0456",
+L00012652	      "line": 12926,
+L00012653	      "tag": "button",
+L00012654	      "html_id": null,
+L00012655	      "name": null,
+L00012656	      "role": null,
+L00012657	      "class": null,
+L00012658	      "ui_location": "panel-agent-config",
+L00012659	      "label": "Refresh Usage",
+L00012660	      "attrs": {
+L00012661	        "onclick": "toast('Refreshing Codex API usage\u2026')"
+L00012662	      },
+L00012663	      "inline_handlers": {
+L00012664	        "onclick": "toast('Refreshing Codex API usage\u2026')"
+L00012665	      },
+L00012666	      "command_tokens": [],
+L00012667	      "local_or_demo_markers": [],
+L00012668	      "accessibility_gaps": [
+L00012669	        "missing_accessible_name_candidate"
+L00012670	      ],
+L00012671	      "disposition": "concept_only_owner_adjudicated",
+L00012672	      "canonical_command_id": null,
+L00012673	      "wiring_matrix_key": null,
+L00012674	      "notes": [
+L00012675	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012676	      ],
+L00012677	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012678	    },
+L00012679	    {
+L00012680	      "inventory_id": "pmconcept.l12927.0457",
+L00012681	      "line": 12927,
+L00012682	      "tag": "button",
+L00012683	      "html_id": null,
+L00012684	      "name": null,
+L00012685	      "role": null,
+L00012686	      "class": null,
+L00012687	      "ui_location": "panel-agent-config",
+L00012688	      "label": "Update Key",
+L00012689	      "attrs": {
+L00012690	        "onclick": "toast('Opening API key update dialog\u2026')"
+L00012691	      },
+L00012692	      "inline_handlers": {
+L00012693	        "onclick": "toast('Opening API key update dialog\u2026')"
+L00012694	      },
+L00012695	      "command_tokens": [],
+L00012696	      "local_or_demo_markers": [],
+L00012697	      "accessibility_gaps": [
+L00012698	        "missing_accessible_name_candidate"
+L00012699	      ],
+L00012700	      "disposition": "concept_only_owner_adjudicated",
+L00012701	      "canonical_command_id": null,
+L00012702	      "wiring_matrix_key": null,
+L00012703	      "notes": [
+L00012704	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00012705	      ],
+L00012706	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00012707	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=12708-12719 >>>
+L00012708	    {
+L00012709	      "inventory_id": "pmconcept.l12934.0458",
+L00012710	      "line": 12934,
+L00012711	      "tag": "summary",
+L00012712	      "html_id": null,
+L00012713	      "name": null,
+L00012714	      "role": null,
+L00012715	      "class": null,
+L00012716	      "ui_location": "panel-agent-config",
+L00012717	      "label": "GitHub Copilot Needs Setup Auth: GitHub OAuth Refresh",
+L00012718	      "attrs": {},
+L00012719	      "inline_handlers": {},

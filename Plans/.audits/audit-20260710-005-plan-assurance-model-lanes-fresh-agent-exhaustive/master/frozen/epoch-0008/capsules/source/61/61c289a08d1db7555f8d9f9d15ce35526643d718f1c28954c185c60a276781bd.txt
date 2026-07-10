@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3715-3726 >>>
+L00003715	- draft_value
+L00003716	- headless_unavailable
+L00003717	- 'status: "unavailable", reason: "headless"'
+L00003718	- Subagent question tool access is DENIED by default
+L00003719	negative_constraints: []
+L00003720	preserved_contractrefs: []
+L00003721	compatibility_only_notes: []
+L00003722	stale_retired_dispositions: []
+L00003723	owner_hints:
+L00003724	- Plans/Tools.md
+L00003725	```
+L00003726	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3727-4079 >>>
+L00003727	### T-027 - TODO Tool Schema Persistence And Access Policy
+L00003728	
+L00003729	```yaml
+L00003730	plan_unit_id: T-027
+L00003731	unit_type: requirement
+L00003732	status: accepted
+L00003733	owner_doc: Plans/Tools.md
+L00003734	canonical_text: '`todowrite` and `todoread` use the normalized TODO schema for Plan and Deep Plan, persist explicit revision
+L00003735	  states, emit `chat.plan_todo_updated`, and must not be blanket-denied in ask/plan mode unless stricter presets apply.'
+L00003736	gui_related: false
+L00003737	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00003738	split_recommended: true
+L00003739	depends_on:
+L00003740	- T-007
+L00003741	- T-017
+L00003742	- T-025
+L00003743	unblocks:
+L00003744	- T-028
+L00003745	acceptance_criteria:
+L00003746	- TODO schema fields, statuses, and revision states remain preserved.
+L00003747	- Auto-use behavior and ask-mode approval prompts remain explicit.
+L00003748	- Deep Plan edits resync the normalized TODO projection before execution begins.
+L00003749	- '`todoread` remains non-mutating and must not survive as a `source_surface` mutation source.'
+L00003750	validation_surfaces:
+L00003751	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003752	- python3 scripts/pm-plan-index.py validate
+L00003753	risk_class: todo_state_duplication
+L00003754	reasoning_tier: standard
+L00003755	context_scope: tools_phase2b_batch_182
+L00003756	implementation_surfaces:
+L00003757	- Plans/Tools.md
+L00003758	node_compile_hint:
+L00003759	  mode: todo_tool_contract_schema
+L00003760	  create_worknodes: false
+L00003761	source_lineage:
+L00003762	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0029
+L00003763	preserved_exact_tokens:
+L00003764	- Q&A loop
+L00003765	- todo_id
+L00003766	- title
+L00003767	- summary
+L00003768	- status
+L00003769	- dependencies[]
+L00003770	- owner_hint
+L00003771	- verification_hint
+L00003772	- pending
+L00003773	- in_progress
+L00003774	- completed
+L00003775	- blocked
+L00003776	- skipped
+L00003777	- superseded
+L00003778	- draft
+L00003779	- approved
+L00003780	- executing
+L00003781	- chat.plan_todo_updated
+L00003782	- todowrite
+L00003783	- todoread
+L00003784	negative_constraints:
+L00003785	- Ask/Plan presets must not carry inherited blanket-denies or a blanket-deny rule for `question`, `todowrite`, `todoread`,
+L00003786	  or the six web operation tools.
+L00003787	- '`todoread` must not survive as a `source_surface` mutation source.'
+L00003788	preserved_contractrefs:
+L00003789	- 'ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3
+L00003790	  Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events'
+L00003791	compatibility_only_notes: []
+L00003792	stale_retired_dispositions: []
+L00003793	owner_hints:
+L00003794	- Plans/Tools.md
+L00003795	```
+L00003796	
+L00003797	### T-028 - TODO Execution Tracker UI Boundary
+L00003798	
+L00003799	```yaml
+L00003800	plan_unit_id: T-028
+L00003801	unit_type: requirement
+L00003802	status: accepted
+L00003803	owner_doc: Plans/Tools.md
+L00003804	canonical_text: TODO remains the SSOT across single-agent, crew, and subagent runs; sticky-card and execution-tracker own
+L00003805	  the full TODO UI while inline-progress chat messages remain compact links, not a second TODO state model.
+L00003806	gui_related: true
+L00003807	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
+L00003808	  activity, or visible rendering behavior.
+L00003809	split_recommended: false
+L00003810	depends_on:
+L00003811	- T-027
+L00003812	unblocks: []
+L00003813	acceptance_criteria:
+L00003814	- The full TODO list, status badges, focused item behavior, delegated owner display, and post-approval edit restrictions remain
+L00003815	  preserved.
+L00003816	- '`/revise` creates an explicit draft/revision instead of mutating approved history invisibly.'
+L00003817	- Inline-progress chat messages stay compact and link back to the sticky panel.
+L00003818	validation_surfaces:
+L00003819	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003820	- python3 scripts/pm-plan-index.py validate
+L00003821	risk_class: todo_ui_competing_state
+L00003822	reasoning_tier: standard
+L00003823	context_scope: tools_phase2b_batch_182
+L00003824	implementation_surfaces:
+L00003825	- Plans/Tools.md
+L00003826	node_compile_hint:
+L00003827	  mode: todo_ui_state_boundary
+L00003828	  create_worknodes: false
+L00003829	source_lineage:
+L00003830	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0029
+L00003831	preserved_exact_tokens:
+L00003832	- sticky-panel-vs-inline-progress
+L00003833	- sticky-card / execution-tracker
+L00003834	- inline-progress
+L00003835	- /revise
+L00003836	- full TODO list
+L00003837	- status badges
+L00003838	- delegated owner display
+L00003839	negative_constraints: []
+L00003840	preserved_contractrefs:
+L00003841	- 'ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3
+L00003842	  Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events'
+L00003843	compatibility_only_notes: []
+L00003844	stale_retired_dispositions: []
+L00003845	owner_hints:
+L00003846	- Plans/Tools.md
+L00003847	```
+L00003848	
+L00003849	### T-029 - Web Operation Ownership Dispatch And Adapter Routing
+L00003850	
+L00003851	```yaml
+L00003852	plan_unit_id: T-029
+L00003853	unit_type: requirement
+L00003854	status: accepted
+L00003855	owner_doc: Plans/Tools.md
+L00003856	canonical_text: The web operation family is PM-owned above providers, dispatches each invocation to one canonical operation,
+L00003857	  validates before adapter routing, and rejects malformed or unsupported inputs with `invalid_input`.
+L00003858	gui_related: false
+L00003859	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00003860	split_recommended: true
+L00003861	depends_on:
+L00003862	- T-007
+L00003863	- T-017
+L00003864	unblocks:
+L00003865	- T-030
+L00003866	- T-031
+L00003867	- T-032
+L00003868	- T-034
+L00003869	- T-038
+L00003870	acceptance_criteria:
+L00003871	- Operations `search`, `extract`, `research`, `crawl`, `map`, and `fetch`/`read` remain preserved.
+L00003872	- Support tiers remain routing metadata, not provider ownership replacement.
+L00003873	- Malformed or unsupported inputs return `invalid_input` or `unsupported_operation` before adapter dispatch.
+L00003874	validation_surfaces:
+L00003875	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003876	- python3 scripts/pm-plan-index.py validate
+L00003877	risk_class: provider_ownership_drift
+L00003878	reasoning_tier: standard
+L00003879	context_scope: tools_phase2b_batch_182
+L00003880	implementation_surfaces:
+L00003881	- Plans/Tools.md
+L00003882	node_compile_hint:
+L00003883	  mode: web_operation_dispatch_contract
+L00003884	  create_worknodes: false
+L00003885	source_lineage:
+L00003886	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00003887	preserved_exact_tokens:
+L00003888	- search
+L00003889	- extract
+L00003890	- research
+L00003891	- crawl
+L00003892	- map
+L00003893	- fetch
+L00003894	- read
+L00003895	- native
+L00003896	- PM-composed
+L00003897	- unavailable
+L00003898	- unsupported_operation
+L00003899	- invalid_input
+L00003900	negative_constraints: []
+L00003901	preserved_contractrefs: []
+L00003902	compatibility_only_notes: []
+L00003903	stale_retired_dispositions: []
+L00003904	owner_hints:
+L00003905	- Plans/Tools.md
+L00003906	```
+L00003907	
+L00003908	### T-030 - Web Permission And Support-Tier Visibility
+L00003909	
+L00003910	```yaml
+L00003911	plan_unit_id: T-030
+L00003912	unit_type: requirement
+L00003913	status: accepted
+L00003914	owner_doc: Plans/Tools.md
+L00003915	canonical_text: Web permission and GUI/help consumers expose support tier, provider availability, URL/domain/query/task visibility,
+L00003916	  and wildcard versus host-scoped approvals instead of hiding fan-out behind generic `webfetch`.
+L00003917	gui_related: true
+L00003918	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
+L00003919	  activity, or visible rendering behavior.
+L00003920	split_recommended: false
+L00003921	depends_on:
+L00003922	- T-007
+L00003923	- T-029
+L00003924	unblocks: []
+L00003925	acceptance_criteria:
+L00003926	- '`websearch` and `webresearch` use wildcard operation approvals because URLs are not known before discovery.'
+L00003927	- '`/extract/crawl/map` and `webfetch` use host/site-scoped approvals when targets are known.'
+L00003928	- GUI/help surfaces expose operation support tiers and activity labels.
+L00003929	validation_surfaces:
+L00003930	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003931	- python3 scripts/pm-plan-index.py validate
+L00003932	risk_class: web_permission_opacity
+L00003933	reasoning_tier: standard
+L00003934	context_scope: tools_phase2b_batch_182
+L00003935	implementation_surfaces:
+L00003936	- Plans/Tools.md
+L00003937	node_compile_hint:
+L00003938	  mode: web_permission_support_visibility
+L00003939	  create_worknodes: false
+L00003940	source_lineage:
+L00003941	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00003942	preserved_exact_tokens:
+L00003943	- /web
+L00003944	- /help/autocomplete
+L00003945	- Settings
+L00003946	- Searching Web
+L00003947	- Reading Site
+L00003948	- Extracting Site
+L00003949	- Researching Web
+L00003950	- Crawling Site
+L00003951	- Mapping Site
+L00003952	- wildcard-only operation approvals
+L00003953	- host/site-scoped approvals
+L00003954	negative_constraints:
+L00003955	- Provider-doc `/classes`, provider-internal grouping, and provider row layout are not locked PM canon.
+L00003956	preserved_contractrefs: []
+L00003957	compatibility_only_notes: []
+L00003958	stale_retired_dispositions: []
+L00003959	owner_hints:
+L00003960	- Plans/Tools.md
+L00003961	```
+L00003962	
+L00003963	### T-031 - Web Input Shapes And Compatibility Aliases
+L00003964	
+L00003965	```yaml
+L00003966	plan_unit_id: T-031
+L00003967	unit_type: requirement
+L00003968	status: accepted
+L00003969	owner_doc: Plans/Tools.md
+L00003970	canonical_text: Canonical web input shapes remain stable across adapters for `websearch`, `webfetch`, `webextract`, `webresearch`,
+L00003971	  `webcrawl`, and `webmap`, while source shorthand and legacy formats normalize before dispatch.
+L00003972	gui_related: false
+L00003973	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00003974	split_recommended: false
+L00003975	depends_on:
+L00003976	- T-029
+L00003977	unblocks:
+L00003978	- T-032
+L00003979	- T-035
+L00003980	- T-037
+L00003981	- T-041
+L00003982	acceptance_criteria:
+L00003983	- All listed operation parameters, defaults, source/category behavior, and unsupported-operation behavior remain preserved.
+L00003984	- Source shorthand and legacy formats normalize into typed fields before dispatch.
+L00003985	- Provider/API-side hints remain advisory unless a future provider contract reintroduces explicit mapping.
+L00003986	validation_surfaces:
+L00003987	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003988	- python3 scripts/pm-plan-index.py validate
+L00003989	risk_class: adapter_shorthand_schema_drift
+L00003990	reasoning_tier: standard
+L00003991	context_scope: tools_phase2b_batch_182
+L00003992	implementation_surfaces:
+L00003993	- Plans/Tools.md
+L00003994	node_compile_hint:
+L00003995	  mode: web_input_contract_schema
+L00003996	  create_worknodes: false
+L00003997	source_lineage:
+L00003998	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00003999	preserved_exact_tokens:
+L00004000	- websearch
+L00004001	- webfetch
+L00004002	- webextract
+L00004003	- webresearch
+L00004004	- webcrawl
+L00004005	- webmap
+L00004006	- limit?
+L00004007	- /news/images/code/academic
+L00004008	- /research/pdf
+L00004009	- /auto/ocr
+L00004010	- /API-side
+L00004011	- /html/rawHtml/screenshot/pdf/summary/links/images
+L00004012	- /PDF/summary
+L00004013	- 'formats?: string[]'
+L00004014	- /docs/*
+L00004015	- /api/**
+L00004016	- '!/internal/*'
+L00004017	negative_constraints: []
+L00004018	preserved_contractrefs: []
+L00004019	compatibility_only_notes:
+L00004020	- '`limit?`, source/category slash shorthand, `/auto/ocr`, `/API-side`, provider slash shorthand formats, `/PDF/summary`,
+L00004021	  and `formats?: string[]` are compatibility aliases normalized before dispatch.'
+L00004022	stale_retired_dispositions: []
+L00004023	owner_hints:
+L00004024	- Plans/Tools.md
+L00004025	```
+L00004026	
+L00004027	### T-032 - Web Research Execution Recipes
+L00004028	
+L00004029	```yaml
+L00004030	plan_unit_id: T-032
+L00004031	unit_type: requirement
+L00004032	status: accepted
+L00004033	owner_doc: Plans/Tools.md
+L00004034	canonical_text: '`webresearch` supports bounded autonomous and deterministic PM-composed recipes with optional seed URLs,
+L00004035	  capped search/read cycles, citations, and no page interaction in the non-autonomous branch.'
+L00004036	gui_related: false
+L00004037	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004038	split_recommended: false
+L00004039	depends_on:
+L00004040	- T-029
+L00004041	- T-031
+L00004042	unblocks:
+L00004043	- T-033
+L00004044	acceptance_criteria:
+L00004045	- '`starting_urls?: string[]` remains capped at five URLs.'
+L00004046	- Autonomous research remains bounded to at most three search iterations and a 120s total runtime unless narrower limits apply.
+L00004047	- The deterministic non-autonomous branch searches, reads/extracts, and synthesizes without page interaction.
+L00004048	validation_surfaces:
+L00004049	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004050	- python3 scripts/pm-plan-index.py validate
+L00004051	risk_class: unbounded_autonomous_browsing
+L00004052	reasoning_tier: standard
+L00004053	context_scope: tools_phase2b_batch_182
+L00004054	implementation_surfaces:
+L00004055	- Plans/Tools.md
+L00004056	node_compile_hint:
+L00004057	  mode: web_research_runtime_recipe
+L00004058	  create_worknodes: false
+L00004059	source_lineage:
+L00004060	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004061	preserved_exact_tokens:
+L00004062	- 'starting_urls?: string[]'
+L00004063	- 'autonomous: true'
+L00004064	- max_sources
+L00004065	- 120s
+L00004066	- auto_read_cap
+L00004067	- Firecrawl `/v2/agent`
+L00004068	- Tavily
+L00004069	- 'Searching Web: <refined query>'
+L00004070	- 'Reading Site: <url>'
+L00004071	negative_constraints:
+L00004072	- 'When `autonomous: false` or omitted on `webresearch`, the agent does NOT navigate or interact with pages.'
+L00004073	preserved_contractrefs: []
+L00004074	compatibility_only_notes: []
+L00004075	stale_retired_dispositions: []
+L00004076	owner_hints:
+L00004077	- Plans/Tools.md
+L00004078	```
+L00004079	
+
+<<< CONTEXT_AFTER canonical_document_lines=4080-4091 >>>
+L00004080	### T-033 - Agent Web Activity And Audit Evidence Surface
+L00004081	
+L00004082	```yaml
+L00004083	plan_unit_id: T-033
+L00004084	unit_type: requirement
+L00004085	status: accepted
+L00004086	owner_doc: Plans/Tools.md
+L00004087	canonical_text: Agent-web-research is shared by Assistant, Interview, Orchestrator, requirements-doc-builder, and doc-builder
+L00004088	  surfaces; activity cards and audit trails expose search plus `/fetch/read` steps and browser-interaction sub-annotations
+L00004089	  when needed.
+L00004090	gui_related: true
+L00004091	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,

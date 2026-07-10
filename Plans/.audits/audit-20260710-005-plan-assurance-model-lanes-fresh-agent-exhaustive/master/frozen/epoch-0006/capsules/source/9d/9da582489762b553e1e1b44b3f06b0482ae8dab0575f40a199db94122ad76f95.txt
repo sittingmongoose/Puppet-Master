@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE canonical_document_lines=770-781 >>>
+L00000770	preserved_exact_tokens:
+L00000771	  - "single canonical source of truth"
+L00000772	  - "Plans/Personas.md#PERSONA-SCHEMA"
+L00000773	  - "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md"
+L00000774	negative_constraints:
+L00000775	  - "Consumer plans must not restate Persona definitions, storage layout, schema, or selection rules."
+L00000776	preserved_contractrefs:
+L00000777	  - "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md"
+L00000778	owner_hints:
+L00000779	  - Plans/Personas.md
+L00000780	```
+L00000781	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=782-1164 >>>
+L00000782	### P-004 - Agent Runtime Definition
+L00000783	
+L00000784	```yaml
+L00000785	plan_unit_id: P-004
+L00000786	unit_type: requirement
+L00000787	status: accepted
+L00000788	owner_doc: Plans/Personas.md
+L00000789	canonical_text: >-
+L00000790	  An Agent is a concrete ephemeral AI execution unit spawned by the Orchestrator for a node in the run graph, receiving compiled context and producing a response stream.
+L00000791	gui_related: false
+L00000792	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00000793	split_recommended: false
+L00000794	depends_on: []
+L00000795	unblocks: []
+L00000796	acceptance_criteria:
+L00000797	  - Agent remains a running AI execution unit, not a persistent Persona artifact.
+L00000798	  - Agent lifetime remains one run.
+L00000799	  - Contracts_V0 and Executor Protocol ownership references are preserved.
+L00000800	validation_surfaces:
+L00000801	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000802	  - python3 scripts/pm-plan-index.py validate
+L00000803	risk_class: agent_persona_identity_conflation
+L00000804	reasoning_tier: standard
+L00000805	context_scope: personas
+L00000806	implementation_surfaces:
+L00000807	  - Plans/Personas.md
+L00000808	node_compile_hint:
+L00000809	  mode: requirement
+L00000810	  create_worknodes: false
+L00000811	source_lineage:
+L00000812	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0004
+L00000813	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0005
+L00000814	preserved_exact_tokens:
+L00000815	  - "DEF-AGENT"
+L00000816	  - "Agent"
+L00000817	  - "running AI execution unit"
+L00000818	  - "compiled context"
+L00000819	  - "ContractName:Plans/Contracts_V0.md"
+L00000820	  - "ContractName:Plans/Executor_Protocol.md"
+L00000821	negative_constraints:
+L00000822	  - "No additional negative constraints beyond the canonical text."
+L00000823	preserved_contractrefs:
+L00000824	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md"
+L00000825	owner_hints:
+L00000826	  - Plans/Personas.md
+L00000827	```
+L00000828	
+L00000829	### P-005 - Subagent Child Run Definition
+L00000830	
+L00000831	```yaml
+L00000832	plan_unit_id: P-005
+L00000833	unit_type: requirement
+L00000834	status: accepted
+L00000835	owner_doc: Plans/Personas.md
+L00000836	canonical_text: >-
+L00000837	  A subagent is a child run that resolves a Persona for the child task; it does not auto-inherit the parent Persona and is not defined by provider-native agent-file syntax.
+L00000838	gui_related: false
+L00000839	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00000840	split_recommended: false
+L00000841	depends_on: []
+L00000842	unblocks: []
+L00000843	acceptance_criteria:
+L00000844	  - Child Persona may differ materially from parent Persona.
+L00000845	  - Provider-native agent files may seed or export Persona content but PM Persona storage remains canonical.
+L00000846	  - Crew mode may share Persona while varying model or provider selection.
+L00000847	validation_surfaces:
+L00000848	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000849	  - python3 scripts/pm-plan-index.py validate
+L00000850	risk_class: subagent_persona_inheritance_drift
+L00000851	reasoning_tier: standard
+L00000852	context_scope: personas
+L00000853	implementation_surfaces:
+L00000854	  - Plans/Personas.md
+L00000855	node_compile_hint:
+L00000856	  mode: requirement
+L00000857	  create_worknodes: false
+L00000858	source_lineage:
+L00000859	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0006
+L00000860	preserved_exact_tokens:
+L00000861	  - "Subagent"
+L00000862	  - "child run"
+L00000863	  - "PM Persona storage remains canonical"
+L00000864	  - "crew mode"
+L00000865	  - "session.parentID"
+L00000866	negative_constraints:
+L00000867	  - "A subagent is not merely the parent Persona, but smaller."
+L00000868	  - "The child Persona does not auto-inherit from the parent."
+L00000869	  - "OpenCode force-marking is adapter classification evidence only."
+L00000870	preserved_contractrefs:
+L00000871	  - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/CLI_Bridged_Providers.md"
+L00000872	  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md"
+L00000873	owner_hints:
+L00000874	  - Plans/Personas.md
+L00000875	```
+L00000876	
+L00000877	### P-006 - Persona Artifact Contract
+L00000878	
+L00000879	```yaml
+L00000880	plan_unit_id: P-006
+L00000881	unit_type: requirement
+L00000882	status: accepted
+L00000883	owner_doc: Plans/Personas.md
+L00000884	canonical_text: >-
+L00000885	  A Persona is a persistent YAML-frontmatter Markdown behavior-and-runtime contract that shapes Agent or Subagent behavior and feeds compiled context plus effective runtime resolution.
+L00000886	gui_related: true
+L00000887	gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
+L00000888	split_recommended: true
+L00000889	split_recommendation_reason: >-
+L00000890	  The source definition combines runtime contract content and UI-facing metadata; this unit keeps the canonical definition intact.
+L00000891	depends_on: []
+L00000892	unblocks: []
+L00000893	acceptance_criteria:
+L00000894	  - Persona remains persistent and user-editable until deletion.
+L00000895	  - Persona metadata may include identity, instructions, permissions, skills, provider/model preferences, runtime control preferences, aliases, and UI-facing metadata.
+L00000896	  - The Agent/Subagent/Persona distinction table remains preserved.
+L00000897	validation_surfaces:
+L00000898	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000899	  - python3 scripts/pm-plan-index.py validate
+L00000900	risk_class: persona_artifact_contract_drift
+L00000901	reasoning_tier: standard
+L00000902	context_scope: personas
+L00000903	implementation_surfaces:
+L00000904	  - Plans/Personas.md
+L00000905	node_compile_hint:
+L00000906	  mode: requirement
+L00000907	  create_worknodes: false
+L00000908	source_lineage:
+L00000909	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0007
+L00000910	preserved_exact_tokens:
+L00000911	  - "Persona"
+L00000912	  - "YAML-frontmatter Markdown file"
+L00000913	  - "behavior-and-runtime contract"
+L00000914	  - "default_skill_refs"
+L00000915	  - "UI-facing metadata"
+L00000916	  - "Agent"
+L00000917	  - "Subagent"
+L00000918	negative_constraints:
+L00000919	  - "No additional negative constraints beyond the canonical text."
+L00000920	preserved_contractrefs:
+L00000921	  - "ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md"
+L00000922	owner_hints:
+L00000923	  - Plans/Personas.md
+L00000924	```
+L00000925	
+L00000926	### P-007 - Provider Native Separation
+L00000927	
+L00000928	```yaml
+L00000929	plan_unit_id: P-007
+L00000930	unit_type: constraint
+L00000931	status: accepted
+L00000932	owner_doc: Plans/Personas.md
+L00000933	canonical_text: >-
+L00000934	  Personas are Puppet Master abstractions above provider-native agents, provider-native skills, and plugins; provider-native configs stay transport-layer concerns consumed by the Provider facade.
+L00000935	gui_related: false
+L00000936	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00000937	split_recommended: false
+L00000938	depends_on: []
+L00000939	unblocks: []
+L00000940	acceptance_criteria:
+L00000941	  - Provider-native agent configs remain transport concerns.
+L00000942	  - Skills remain invocable context-injection units.
+L00000943	  - Plugins remain hook-based extension modules.
+L00000944	validation_surfaces:
+L00000945	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000946	  - python3 scripts/pm-plan-index.py validate
+L00000947	risk_class: provider_native_persona_conflation
+L00000948	reasoning_tier: standard
+L00000949	context_scope: personas
+L00000950	implementation_surfaces:
+L00000951	  - Plans/Personas.md
+L00000952	node_compile_hint:
+L00000953	  mode: constraint
+L00000954	  create_worknodes: false
+L00000955	source_lineage:
+L00000956	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0008
+L00000957	preserved_exact_tokens:
+L00000958	  - "provider-native agent"
+L00000959	  - "Agent.Info"
+L00000960	  - ".cursor/agents/"
+L00000961	  - "Provider facade"
+L00000962	  - "default_skill_refs"
+L00000963	negative_constraints:
+L00000964	  - "Persona is not a provider-native agent, skill, or plugin."
+L00000965	  - "Persona does not contain skill logic itself."
+L00000966	preserved_contractrefs:
+L00000967	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/OpenCode_Deep_Extraction.md"
+L00000968	owner_hints:
+L00000969	  - Plans/Personas.md
+L00000970	```
+L00000971	
+L00000972	### P-008 - Storage Layout Anchor
+L00000973	
+L00000974	```yaml
+L00000975	plan_unit_id: P-008
+L00000976	unit_type: requirement
+L00000977	status: accepted
+L00000978	owner_doc: Plans/Personas.md
+L00000979	canonical_text: >-
+L00000980	  Persona files use a deterministic two-tier layout where project-local Personas override global Personas by persona_id.
+L00000981	gui_related: true
+L00000982	gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
+L00000983	split_recommended: false
+L00000984	depends_on: []
+L00000985	unblocks: []
+L00000986	acceptance_criteria:
+L00000987	  - The STORAGE-LAYOUT anchor remains preserved.
+L00000988	  - Project-local and global storage roots remain deterministic.
+L00000989	  - Decision Policy ContractRef remains preserved.
+L00000990	validation_surfaces:
+L00000991	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000992	  - python3 scripts/pm-plan-index.py validate
+L00000993	risk_class: persona_storage_layout_drift
+L00000994	reasoning_tier: standard
+L00000995	context_scope: personas
+L00000996	implementation_surfaces:
+L00000997	  - Plans/Personas.md
+L00000998	node_compile_hint:
+L00000999	  mode: requirement
+L00001000	  create_worknodes: false
+L00001001	source_lineage:
+L00001002	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0009
+L00001003	preserved_exact_tokens:
+L00001004	  - "STORAGE-LAYOUT"
+L00001005	  - "persona_id"
+L00001006	  - "Project-local Personas override global Personas"
+L00001007	  - "ContractRef: PolicyRule:Decision_Policy.md§2"
+L00001008	negative_constraints:
+L00001009	  - "No additional negative constraints beyond the canonical text."
+L00001010	preserved_contractrefs:
+L00001011	  - "ContractRef: PolicyRule:Decision_Policy.md§2"
+L00001012	owner_hints:
+L00001013	  - Plans/Personas.md
+L00001014	```
+L00001015	
+L00001016	### P-009 - Storage Roots Resolution And Built In Scope
+L00001017	
+L00001018	```yaml
+L00001019	plan_unit_id: P-009
+L00001020	unit_type: requirement
+L00001021	status: accepted
+L00001022	owner_doc: Plans/Personas.md
+L00001023	canonical_text: >-
+L00001024	  Project and global PERSONA.md roots, Persona resolution order, folder-name invariant, protected built-in scope, bundled specialty scope, and imported provider-native seed-source rules are canonical in Personas.md.
+L00001025	gui_related: false
+L00001026	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00001027	split_recommended: false
+L00001028	depends_on: []
+L00001029	unblocks: []
+L00001030	acceptance_criteria:
+L00001031	  - Project-local Personas are scoped to the active project.
+L00001032	  - Global Personas are available across projects and can be overridden by project-local Personas.
+L00001033	  - Protected built-ins resolve from PM-owned bundled definitions first and cannot be shadowed by user files.
+L00001034	validation_surfaces:
+L00001035	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001036	  - python3 scripts/pm-plan-index.py validate
+L00001037	risk_class: persona_storage_resolution_drift
+L00001038	reasoning_tier: standard
+L00001039	context_scope: personas
+L00001040	implementation_surfaces:
+L00001041	  - Plans/Personas.md
+L00001042	node_compile_hint:
+L00001043	  mode: requirement
+L00001044	  create_worknodes: false
+L00001045	source_lineage:
+L00001046	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0010
+L00001047	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0011
+L00001048	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0012
+L00001049	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0013
+L00001050	preserved_exact_tokens:
+L00001051	  - ".puppet-master/personas/<persona_id>/PERSONA.md"
+L00001052	  - "~/.config/puppet-master/personas/<persona_id>/PERSONA.md"
+L00001053	  - "Folder-name invariant"
+L00001054	  - "protected built-in ID"
+L00001055	  - "bundled first-party specialty Personas"
+L00001056	negative_constraints:
+L00001057	  - "User-created project or global files may not shadow protected built-ins."
+L00001058	  - "Imported provider-native agent files are seed/import sources only and never become the runtime source of truth."
+L00001059	preserved_contractrefs:
+L00001060	  - "ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION"
+L00001061	  - "ContractRef: ContractName:Plans/Personas.md#RESERVED-PERSONAS, ContractName:Plans/FinalGUISpec.md"
+L00001062	owner_hints:
+L00001063	  - Plans/Personas.md
+L00001064	```
+L00001065	
+L00001066	### P-010 - Persona File Schema And Fields
+L00001067	
+L00001068	```yaml
+L00001069	plan_unit_id: P-010
+L00001070	unit_type: requirement
+L00001071	status: accepted
+L00001072	owner_doc: Plans/Personas.md
+L00001073	canonical_text: >-
+L00001074	  PERSONA.md consists of YAML frontmatter followed by Markdown body, with frontmatter fields and enum/value meanings defined by the Personas schema.
+L00001075	gui_related: false
+L00001076	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00001077	split_recommended: false
+L00001078	depends_on: []
+L00001079	unblocks: []
+L00001080	acceptance_criteria:
+L00001081	  - The PERSONA-SCHEMA anchor remains preserved.
+L00001082	  - The YAML frontmatter example remains normative for field names.
+L00001083	  - Field definitions preserve required, recommended, optional, and enum semantics.
+L00001084	validation_surfaces:
+L00001085	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001086	  - python3 scripts/pm-plan-index.py validate
+L00001087	risk_class: persona_schema_field_drift
+L00001088	reasoning_tier: standard
+L00001089	context_scope: personas
+L00001090	implementation_surfaces:
+L00001091	  - Plans/Personas.md
+L00001092	node_compile_hint:
+L00001093	  mode: requirement
+L00001094	  create_worknodes: false
+L00001095	source_lineage:
+L00001096	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0014
+L00001097	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0015
+L00001098	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0016
+L00001099	preserved_exact_tokens:
+L00001100	  - "PERSONA-SCHEMA"
+L00001101	  - "PERSONA.md"
+L00001102	  - "default_mode"
+L00001103	  - "default_platform"
+L00001104	  - "default_permissions_profile"
+L00001105	  - "default_model"
+L00001106	  - "default_variant"
+L00001107	  - "talkativeness"
+L00001108	  - "aliases"
+L00001109	negative_constraints:
+L00001110	  - "No additional negative constraints beyond the canonical text."
+L00001111	preserved_contractrefs:
+L00001112	  - "ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/DRY_Rules.md"
+L00001113	owner_hints:
+L00001114	  - Plans/Personas.md
+L00001115	```
+L00001116	
+L00001117	### P-011 - Validation And Runtime Identity Names
+L00001118	
+L00001119	```yaml
+L00001120	plan_unit_id: P-011
+L00001121	unit_type: constraint
+L00001122	status: accepted
+L00001123	owner_doc: Plans/Personas.md
+L00001124	canonical_text: >-
+L00001125	  Persona validation enforces ID format, uniqueness, protected-ID, enum, registry-ref, and runtime-control rules; Persona runtime identity fields align to requested_persona and effective_persona.
+L00001126	gui_related: false
+L00001127	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00001128	split_recommended: false
+L00001129	depends_on: []
+L00001130	unblocks: []
+L00001131	acceptance_criteria:
+L00001132	  - Validation rejects invalid IDs, protected-ID shadowing, invalid enums, and unavailable references as specified.
+L00001133	  - Provider/model/runtime controls are validated at resolution time.
+L00001134	  - requested_persona and effective_persona are the canonical runtime identity field names.
+L00001135	validation_surfaces:
+L00001136	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001137	  - python3 scripts/pm-plan-index.py validate
+L00001138	risk_class: persona_validation_runtime_identity_drift
+L00001139	reasoning_tier: standard
+L00001140	context_scope: personas
+L00001141	implementation_surfaces:
+L00001142	  - Plans/Personas.md
+L00001143	node_compile_hint:
+L00001144	  mode: constraint
+L00001145	  create_worknodes: false
+L00001146	source_lineage:
+L00001147	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0017
+L00001148	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0018
+L00001149	preserved_exact_tokens:
+L00001150	  - "requested_persona"
+L00001151	  - "effective_persona"
+L00001152	  - "_id variants are retired"
+L00001153	  - "lower-case kebab-case"
+L00001154	  - "protected core built-ins"
+L00001155	negative_constraints:
+L00001156	  - "`_id` variants are retired from canonical runtime payload examples."
+L00001157	  - "Unsupported controls are recorded as skipped or clamped, not silently applied."
+L00001158	preserved_contractrefs:
+L00001159	  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md"
+L00001160	  - "ContractRef: ContractName:Plans/Contracts_V0.md"
+L00001161	owner_hints:
+L00001162	  - Plans/Personas.md
+L00001163	```
+L00001164	
+
+<<< CONTEXT_AFTER canonical_document_lines=1165-1176 >>>
+L00001165	### P-012 - Markdown Body Instructions
+L00001166	
+L00001167	```yaml
+L00001168	plan_unit_id: P-012
+L00001169	unit_type: requirement
+L00001170	status: accepted
+L00001171	owner_doc: Plans/Personas.md
+L00001172	canonical_text: >-
+L00001173	  The Markdown body after Persona frontmatter contains Persona system instructions, is injected into compiled Agent context, and has no structural constraints beyond valid Markdown.
+L00001174	gui_related: false
+L00001175	gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+L00001176	split_recommended: false

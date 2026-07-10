@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8096-8107 >>>
+L00008096	owner_hints:
+L00008097	- Plans/Models_System.md
+L00008098	- Plans/Personas.md
+L00008099	- Plans/Prompt_Pipeline.md
+L00008100	- Plans/FinalGUISpec.md
+L00008101	- Plans/assistant-chat-design.md
+L00008102	```
+L00008103	
+L00008104	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00008105	
+L00008106	This addendum compiles the Free Models ledger into Models_System ownership. It preserves the ledger as source lineage only, keeps Provider_OpenCode adjacent/reference-only, and does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00008107	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8108-8451 >>>
+L00008108	### MS-118 - Free Models Wrapper Catalog And Route Readiness Identity
+L00008109	
+L00008110	```yaml
+L00008111	plan_unit_id: MS-118
+L00008112	unit_type: requirement
+L00008113	status: accepted
+L00008114	owner_doc: Plans/Models_System.md
+L00008115	canonical_text: >-
+L00008116	  PM exposes a single direct-provider grouping named `Free Models` for supported active free/free-limited upstream entries, while preserving the underlying provider, model, account/profile, auth surface, billing/entitlement, transport, quota, and source identity. The wrapper must not rewrite canonical stored provider/model ids into `free_models/*`; it must retain `provider_entry_id`, `provider_family_id`, `model_provider_id`, canonical provider/model ids, stable PM imported ids, hidden subprovider/auth/quota metadata, source refs, and alias/rename/provider-move mappings. Catalog presence or freshness does not prove `usable_now`, quota health, routing readiness, capability support, or policy eligibility.
+L00008117	gui_related: true
+L00008118	gui_classification_reason: Defines the user-visible `Free Models` provider grouping, catalog rows, badges, and model-selector eligibility states.
+L00008119	depends_on: []
+L00008120	unblocks: []
+L00008121	acceptance_criteria:
+L00008122	  - "`Free Models` appears as one PM direct-provider grouping while underlying provider/model/account/source identity remains traceable."
+L00008123	  - Every active supported free/free-limited entry can be listed with badges, but unsupported upstream additions are hidden from normal catalog/detail/search/top-10/setup/routing surfaces.
+L00008124	  - Saved top-10 or section-specific choices that disappear or become ineligible remain saved as `No longer available`, are skipped automatically, and are not silently deleted or replaced.
+L00008125	  - Catalog freshness is represented separately from `usable_now`, quota health, routing readiness, and capability support.
+L00008126	validation_surfaces:
+L00008127	  - python3 scripts/pm-plan-index.py validate
+L00008128	  - Free Models catalog identity and alias/rename fixture coverage
+L00008129	  - Free Models catalog-vs-usable routing readiness fixtures
+L00008130	risk_class: provider_identity_drift
+L00008131	reasoning_tier: high
+L00008132	context_scope: free_models_catalog_identity
+L00008133	implementation_surfaces:
+L00008134	  - Plans/Models_System.md
+L00008135	  - Plans/Contracts_V0.md
+L00008136	  - Plans/storage-plan.md
+L00008137	  - Plans/FinalGUISpec.md
+L00008138	  - Plans/Multi-Account.md
+L00008139	node_compile_hint:
+L00008140	  mode: free_models_catalog_identity_planunit
+L00008141	  create_worknodes: false
+L00008142	  create_nodeseeds: false
+L00008143	source_lineage:
+L00008144	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00008145	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_upstream_inspection_20260629.json
+L00008146	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+L00008147	  - https://github.com/vava-nessa/free-coding-models
+L00008148	source_atom_ids: [atom-0007, atom-0008, atom-0009, atom-0013, atom-0015, atom-0016, atom-0027, atom-0068, atom-0069, atom-0072, atom-0073, atom-0075, atom-0079, atom-0092, atom-0096, atom-0123, atom-0127, atom-0130, atom-0134, atom-0138, atom-0139, atom-0142, atom-0143, atom-0185, atom-0189, atom-0194, atom-0198, atom-0275, atom-0276, atom-0279, atom-0280, atom-0291, atom-0292, atom-0293, atom-0294]
+L00008149	preserved_exact_tokens:
+L00008150	  - "Free Models"
+L00008151	  - "every active free/free-limited with badges"
+L00008152	  - "provider_entry_id"
+L00008153	  - "provider_family_id"
+L00008154	  - "model_provider_id"
+L00008155	  - "No longer available"
+L00008156	  - "unsupported"
+L00008157	  - "If they arent supported, they just should show up at all."
+L00008158	  - "usable_now"
+L00008159	negative_constraints:
+L00008160	  - Do not rewrite canonical provider_id/model_id identifiers into `free_models/*`.
+L00008161	  - Do not treat catalog refresh as proof of `usable_now`, quota health, routing readiness, or capability support.
+L00008162	  - Do not show unsupported upstream additions in normal Free Models catalog, detail, search, top-10, routing, or setup surfaces.
+L00008163	  - Do not silently delete saved top-10 or section-specific model choices when upstream removes or invalidates them.
+L00008164	owner_hints:
+L00008165	  - Plans/Models_System.md
+L00008166	  - Plans/Contracts_V0.md
+L00008167	  - Plans/storage-plan.md
+L00008168	  - Plans/FinalGUISpec.md
+L00008169	```
+L00008170	
+L00008171	### MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary
+L00008172	
+L00008173	```yaml
+L00008174	plan_unit_id: MS-119
+L00008175	unit_type: requirement
+L00008176	status: accepted
+L00008177	owner_doc: Plans/Models_System.md
+L00008178	canonical_text: >-
+L00008179	  Free Models Auto Apply tracks the configured upstream source/channel for `vava-nessa/free-coding-models`, imports trusted catalog/settings/runtime-behavior material through PM-owned schemas, and applies validated Free Models changes automatically on checks. PM checks on app launch plus daily background by default, with configurable cadence, but launch checks run after startup in the background and keep last known-good active until validation completes. Runtime behavior changes are automatic only for the Free Models provider and must enter PM through PM-owned declarative router, probe, normalizer, fallback, source-resolver, test, activation, quarantine, and rollback records.
+L00008180	gui_related: true
+L00008181	gui_classification_reason: Includes model-settings cadence controls and user-visible refresh/update status hooks.
+L00008182	depends_on: []
+L00008183	unblocks: []
+L00008184	acceptance_criteria:
+L00008185	  - Auto Apply accepts only configured trusted source/channel material with source refs, hashes, schema ids, import disposition, and activation/quarantine/rollback receipts.
+L00008186	  - App launch checks never block PM startup or active work for routine checks.
+L00008187	  - Manual all-provider model refresh triggers the Free Models Auto Apply check only for Free Models; non-Free-Models providers remain catalog/model-refresh-only.
+L00008188	  - Runtime behavior adaptation is PM-owned and Free-Models-scoped; upstream commands, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, and arbitrary config writers are rejected.
+L00008189	validation_surfaces:
+L00008190	  - python3 scripts/pm-plan-index.py validate
+L00008191	  - Free Models source resolver and hash mismatch quarantine fixtures
+L00008192	  - Free Models runtime adapter schema and rollback fixtures
+L00008193	risk_class: upstream_runtime_adaptation_drift
+L00008194	reasoning_tier: high
+L00008195	context_scope: free_models_auto_apply
+L00008196	implementation_surfaces:
+L00008197	  - Plans/Models_System.md
+L00008198	  - Plans/Contracts_V0.md
+L00008199	  - Plans/storage-plan.md
+L00008200	  - Plans/Permissions_System.md
+L00008201	  - Plans/FileSafe.md
+L00008202	  - Plans/Runtime_Artifacts_Panel.md
+L00008203	node_compile_hint:
+L00008204	  mode: free_models_auto_apply_source_resolver_planunit
+L00008205	  create_worknodes: false
+L00008206	  create_nodeseeds: false
+L00008207	source_lineage:
+L00008208	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00008209	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_upstream_inspection_20260629.json
+L00008210	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+L00008211	  - source-lineage snapshot observed tag v0.5.39 and commit 874842d49010591cd28200af9e68c8b365843c67 on 2026-06-29
+L00008212	source_atom_ids: [atom-0010, atom-0011, atom-0012, atom-0017, atom-0018, atom-0019, atom-0020, atom-0025, atom-0026, atom-0028, atom-0033, atom-0034, atom-0051, atom-0052, atom-0053, atom-0055, atom-0056, atom-0057, atom-0058, atom-0059, atom-0060, atom-0061, atom-0063, atom-0064, atom-0066, atom-0067, atom-0070, atom-0071, atom-0076, atom-0080, atom-0131, atom-0135, atom-0193, atom-0195, atom-0196, atom-0197, atom-0199, atom-0200, atom-0201, atom-0203, atom-0204, atom-0205, atom-0207, atom-0208, atom-0277, atom-0278, atom-0287, atom-0288, atom-0289, atom-0290, atom-0295, atom-0296]
+L00008213	preserved_exact_tokens:
+L00008214	  - "Auto Apply"
+L00008215	  - "app launch plus a daily background check by default, then be configurable"
+L00008216	  - "inluding direct and cli(not just free)"
+L00008217	  - "Runtime behavior changes should be automatic too, but only for the free model provider."
+L00008218	  - "As long as it adapts to the PM structure."
+L00008219	  - "there is no staging"
+L00008220	  - "no, just update"
+L00008221	  - "native"
+L00008222	negative_constraints:
+L00008223	  - Do not run Free Models through Docker as the PM feature implementation.
+L00008224	  - Do not inherit the upstream local daemon as PM's execution model without PM-native adaptation.
+L00008225	  - Do not execute arbitrary upstream commands/scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers.
+L00008226	  - Do not auto-apply upstream runtime behavior changes for non-Free-Models direct providers or CLI-backed providers.
+L00008227	  - Do not block PM startup or active work for routine launch Auto Apply checks.
+L00008228	owner_hints:
+L00008229	  - Plans/Models_System.md
+L00008230	  - Plans/Contracts_V0.md
+L00008231	  - Plans/storage-plan.md
+L00008232	  - Plans/Permissions_System.md
+L00008233	  - Plans/FileSafe.md
+L00008234	```
+L00008235	
+L00008236	### MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility
+L00008237	
+L00008238	```yaml
+L00008239	plan_unit_id: MS-120
+L00008240	unit_type: requirement
+L00008241	status: accepted
+L00008242	owner_doc: Plans/Models_System.md
+L00008243	canonical_text: >-
+L00008244	  The Free Models priority setting is a PM-wide top-10 provider/model list across all providers and models. The default setup stays global and paid-first: paid providers/models are preferred over Free Models unless the user ranks Free Models above them. Section, surface, and role-specific PM model settings override the global top-10 and must disclose requested/effective behavior. Outside-top-10 fallback is deterministic by eligibility, policy, setup, cost, pressure, provider availability, and saved user ordering; it must not use recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration language in this version.
+L00008245	gui_related: true
+L00008246	gui_classification_reason: Governs the user-visible top-10 list, section override disclosure, selector behavior, and fallback labels.
+L00008247	depends_on: []
+L00008248	unblocks: []
+L00008249	acceptance_criteria:
+L00008250	  - The top-10 list spans all providers/models, not just Free Models.
+L00008251	  - Paid-first is the default initialization, but explicit user ordering can place Free Models above paid providers/models.
+L00008252	  - Section/surface/role overrides remain authoritative over the global top-10 and show requested/effective state in the GUI.
+L00008253	  - New Ready Free Models entries may become deterministic outside-top-10 fallback candidates immediately, but never insert into or reorder saved top-10 entries without explicit user action.
+L00008254	  - Current scope contains no recommended models, coding-strength scoring, online review lookup, local recommendation learning, or in-PM benchmark/probe calibration.
+L00008255	validation_surfaces:
+L00008256	  - python3 scripts/pm-plan-index.py validate
+L00008257	  - Free Models top-10 precedence fixtures
+L00008258	  - Section override requested/effective model disclosure fixtures
+L00008259	risk_class: model_precedence_drift
+L00008260	reasoning_tier: high
+L00008261	context_scope: free_models_priority_and_fallback
+L00008262	implementation_surfaces:
+L00008263	  - Plans/Models_System.md
+L00008264	  - Plans/FinalGUISpec.md
+L00008265	  - Plans/Multi-Account.md
+L00008266	  - Plans/usage-feature.md
+L00008267	  - Plans/Prompt_Pipeline.md
+L00008268	node_compile_hint:
+L00008269	  mode: free_models_priority_precedence_planunit
+L00008270	  create_worknodes: false
+L00008271	  create_nodeseeds: false
+L00008272	source_lineage:
+L00008273	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00008274	source_atom_ids: [atom-0022, atom-0023, atom-0029, atom-0035, atom-0036, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0074, atom-0078, atom-0094, atom-0098, atom-0099, atom-0100, atom-0102, atom-0103, atom-0104, atom-0105, atom-0109, atom-0113, atom-0117, atom-0118, atom-0122, atom-0124, atom-0126, atom-0128, atom-0150, atom-0152, atom-0154, atom-0155, atom-0156, atom-0158, atom-0159, atom-0160, atom-0164, atom-0168, atom-0171, atom-0172, atom-0175, atom-0176, atom-0202, atom-0206, atom-0235, atom-0239, atom-0243, atom-0247, atom-0281, atom-0282]
+L00008275	preserved_exact_tokens:
+L00008276	  - "top 10"
+L00008277	  - "across all the providers/models"
+L00008278	  - "Default to globally"
+L00008279	  - "paid providers should be preferred over the free models unless the user configured the free models above the paid ones in the top 10 list"
+L00008280	  - "those configurable settings override the top 10 and the gui should state that"
+L00008281	  - "No to all, don’t do recommended models."
+L00008282	  - "coding strength"
+L00008283	  - "benchmark"
+L00008284	negative_constraints:
+L00008285	  - Do not silently insert newly imported Ready Free Models entries into the user's saved top-10 list.
+L00008286	  - Do not silently reorder the user's saved top-10 list when Auto Apply imports validated Free Models entries.
+L00008287	  - Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration in the current Free Models version.
+L00008288	  - Do not hide requested/effective model differences when section settings override the global top-10.
+L00008289	owner_hints:
+L00008290	  - Plans/Models_System.md
+L00008291	  - Plans/FinalGUISpec.md
+L00008292	  - Plans/Multi-Account.md
+L00008293	  - Plans/usage-feature.md
+L00008294	```
+L00008295	
+L00008296	## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+L00008297	
+L00008298	This addendum compiles first-run provider and Free Models sequencing from bootstrap ledger `pldg-20260701-001-feature-intake` into Models_System ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+L00008299	
+L00008300	### MS-122 - First-Run Paid Provider And Free Models Sequencing
+L00008301	
+L00008302	```yaml
+L00008303	plan_unit_id: MS-122
+L00008304	unit_type: requirement
+L00008305	status: accepted
+L00008306	owner_doc: Plans/Models_System.md
+L00008307	canonical_text: >-
+L00008308	  First-run onboarding initializes provider/model setup with a paid-provider-first posture. The GUI may use friendly
+L00008309	  row labels such as `Connected`, `Needs sign-in`, and `Could not connect`, but `Connected` is presentation shorthand
+L00008310	  only and must not collapse authentication, entitlement, billing, workspace trust, route validation, quota, or
+L00008311	  provider-readiness proof into `Ready`. `Free Models` and the exact accepted token `Fee models` appear after the
+L00008312	  paid-provider prompt, not before it. Free Models setup and top-10 behavior continue to follow MS-120 and MS-121:
+L00008313	  the top-10 list remains global across all providers/models, paid providers are preferred by default unless the user
+L00008314	  explicitly ranks Free Models above them, setup delegates to the underlying provider/account flow, and current scope
+L00008315	  uses no recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration
+L00008316	  language.
+L00008317	gui_related: true
+L00008318	gui_classification_reason: Governs user-visible first-run provider/model sequencing, Free Models placement, top-10 copy, and readiness labels.
+L00008319	depends_on: [MS-120, MS-121, MA-040, MA-064, F3-409]
+L00008320	unblocks: [F3-411, MA-066, ATS-020]
+L00008321	acceptance_criteria:
+L00008322	  - Paid-provider setup is prompted before Free Models in first-run onboarding.
+L00008323	  - Friendly `Connected` copy is not treated as proof that the provider is fully Ready unless owner readiness contracts prove it.
+L00008324	  - Free Models top-10 and fallback behavior continues to preserve paid-first defaults and explicit user ordering.
+L00008325	  - Free Models setup labels and availability reasons map through MS-121 and underlying provider/account state.
+L00008326	  - Recommendation, quality-rank, coding-strength, online-review, local-learning, and benchmark/probe-calibration language remains absent from this first-run flow.
+L00008327	validation_surfaces:
+L00008328	  - python3 scripts/pm-plan-index.py validate
+L00008329	  - future first-run provider sequencing fixtures
+L00008330	  - future Free Models paid-first/top-10 copy fixtures
+L00008331	risk_class: provider_readiness_false_ready
+L00008332	reasoning_tier: high
+L00008333	context_scope: first_run_provider_model_setup
+L00008334	implementation_surfaces:
+L00008335	  - Plans/Models_System.md
+L00008336	  - Plans/FinalGUISpec.md
+L00008337	  - Plans/Multi-Account.md
+L00008338	  - Plans/usage-feature.md
+L00008339	node_compile_hint:
+L00008340	  mode: first_run_provider_model_sequence_planunit
+L00008341	  create_worknodes: false
+L00008342	  create_nodeseeds: false
+L00008343	source_lineage:
+L00008344	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+L00008345	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+L00008346	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+L00008347	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
+L00008348	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00008349	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00008350	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+L00008351	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+L00008352	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+L00008353	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+L00008354	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+L00008355	source_atom_ids: [atom-0016, atom-0033, atom-0038, atom-0039, atom-0040, atom-0041, atom-0047]
+L00008356	decision_refs: [dec-0004, dec-0008]
+L00008357	preserved_exact_tokens:
+L00008358	  - "Fee models"
+L00008359	  - "Free Models"
+L00008360	  - "paid providers"
+L00008361	  - "Start with a paid provider for the most reliable setup"
+L00008362	  - "Set up a paid provider"
+L00008363	  - "Connected"
+L00008364	  - "Needs sign-in"
+L00008365	  - "Could not connect"
+L00008366	  - "Optional: Free Models"
+L00008367	  - "top 10"
+L00008368	  - "paid providers should be preferred over the free models unless the user configured the free models above the paid ones in the top 10 list"
+L00008369	  - "assistant features may need a provider before they can run"
+L00008370	negative_constraints:
+L00008371	  - Do not show Free Models before the paid-provider prompt.
+L00008372	  - Do not make Free Models the primary first-run path unless Jared later corrects this decision.
+L00008373	  - Do not treat `Connected` or `Logged in` as equivalent to Ready.
+L00008374	  - Do not silently fall back to unrelated paid/costed routes.
+L00008375	  - Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration.
+L00008376	  - Do not silently insert or reorder Free Models in the saved top-10 list.
+L00008377	owner_hints:
+L00008378	  - Plans/Models_System.md
+L00008379	  - Plans/Multi-Account.md
+L00008380	  - Plans/FinalGUISpec.md
+L00008381	  - Plans/usage-feature.md
+L00008382	```
+L00008383	
+L00008384	### MS-121 - Free Models Availability Reason Model And Setup Eligibility
+L00008385	
+L00008386	```yaml
+L00008387	plan_unit_id: MS-121
+L00008388	unit_type: requirement
+L00008389	status: accepted
+L00008390	owner_doc: Plans/Models_System.md
+L00008391	canonical_text: >-
+L00008392	  Free Models availability states are derived from underlying provider/account/model/setup/quota/policy facts and exposed through compact friendly labels while retaining canonical skip and pressure reasons. Normal unavailable reason priority is `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, then `Unknown`, with `Multiple issues` when no single reason dominates. Setup actions delegate to the exact underlying PM provider/account setup surface, carry return context to the originating Free Models row/list, refresh eligibility on return, and keep saved top-10 order unchanged.
+L00008393	gui_related: true
+L00008394	gui_classification_reason: Defines user-visible availability labels, setup actions, compact row reasons, and detail expansion behavior.
+L00008395	depends_on: []
+L00008396	unblocks: []
+L00008397	acceptance_criteria:
+L00008398	  - Compact rows show one top plain reason or `Multiple issues`, while expanded details may show current skip reason, underlying provider/account, last checked time, last successful route if known, cooldown/Retry now state if known, and source/ref.
+L00008399	  - "Setup labels map to account state: `Sign in`, `Set up provider`, or `Reconnect`."
+L00008400	  - Setup cancel or failed auth returns to the originating Free Models row/list, keeps saved top-10 unchanged, refreshes eligibility if possible, and shows `Still needs sign-in` or `Could not connect` without separate notification.
+L00008401	  - Friendly availability labels map to canonical failure/pressure/receipt records and never replace source identity.
+L00008402	validation_surfaces:
+L00008403	  - python3 scripts/pm-plan-index.py validate
+L00008404	  - Free Models availability reason mapping fixtures
+L00008405	  - Free Models setup return-context fixtures
+L00008406	risk_class: availability_reason_mapping_drift
+L00008407	reasoning_tier: high
+L00008408	context_scope: free_models_availability_and_setup
+L00008409	implementation_surfaces:
+L00008410	  - Plans/Models_System.md
+L00008411	  - Plans/FinalGUISpec.md
+L00008412	  - Plans/Multi-Account.md
+L00008413	  - Plans/usage-feature.md
+L00008414	  - Plans/Runtime_Artifacts_Panel.md
+L00008415	node_compile_hint:
+L00008416	  mode: free_models_availability_setup_planunit
+L00008417	  create_worknodes: false
+L00008418	  create_nodeseeds: false
+L00008419	source_lineage:
+L00008420	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00008421	source_atom_ids: [atom-0084, atom-0085, atom-0086, atom-0088, atom-0089, atom-0090, atom-0114, atom-0115, atom-0119, atom-0120, atom-0123, atom-0127, atom-0130, atom-0132, atom-0134, atom-0136, atom-0161, atom-0163, atom-0165, atom-0167, atom-0169, atom-0170, atom-0173, atom-0174, atom-0228, atom-0232, atom-0236, atom-0240, atom-0244, atom-0248, atom-0251, atom-0255, atom-0257, atom-0259, atom-0261, atom-0263, atom-0265, atom-0266, atom-0267, atom-0269, atom-0270, atom-0271, atom-0285, atom-0286]
+L00008422	preserved_exact_tokens:
+L00008423	  - "Needs sign-in"
+L00008424	  - "Rate limited"
+L00008425	  - "Provider offline"
+L00008426	  - "No longer free"
+L00008427	  - "Update issue"
+L00008428	  - "Unknown"
+L00008429	  - "Multiple issues"
+L00008430	  - "Set up provider"
+L00008431	  - "Sign in"
+L00008432	  - "Reconnect"
+L00008433	  - "Still needs sign-in"
+L00008434	  - "Could not connect"
+L00008435	  - "originating Free Models row/list"
+L00008436	negative_constraints:
+L00008437	  - Do not collect or store underlying provider credentials inside the Free Models provider.
+L00008438	  - Do not expose import/runtime jargon in the normal Free Models setup path.
+L00008439	  - Do not create separate notifications for setup cancel or failed auth returns.
+L00008440	  - Do not show raw provider error payloads in normal expanded availability rows.
+L00008441	owner_hints:
+L00008442	  - Plans/Models_System.md
+L00008443	  - Plans/FinalGUISpec.md
+L00008444	  - Plans/Multi-Account.md
+L00008445	  - Plans/usage-feature.md
+L00008446	```
+L00008447	
+L00008448	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00008449	
+L00008450	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00008451	
+
+<<< CONTEXT_AFTER canonical_document_lines=8452-8463 >>>
+L00008452	### MS-123 - P0-PROVIDER-METADATA-REPLAY
+L00008453	
+L00008454	```yaml
+L00008455	plan_unit_id: MS-123
+L00008456	unit_type: requirement
+L00008457	status: accepted
+L00008458	owner_doc: Plans/Models_System.md
+L00008459	canonical_text: >-
+L00008460	  P0-PROVIDER-METADATA-REPLAY (P0) is compiled as canonical Puppet Master intent for Provider-native reasoning/thinking/message metadata replay: Add ProviderNativeMetadataPolicy table: per provider/model capability, fields to retain, redact, drop-on-cross-provider, replay-only-same-account, or canonicalize. Include cache keys and model catalog version. The preserved PM gap/delta is: Need a typed provider-native artifact replay/drop/canonicalize policy for thinking blocks, signatures, reasoning IDs, nullable content, model variants, image/video content, provider account scoping. The observed external-repo signal remains source-lineage evidence: Cline PRs/issues target model catalogs, reasoning effort controls, provider IDs, image capability omission, transient empty model responses, string agent messages, tool invocation repair; Pi issues include thinking-block normalization and Bedrock/OpenAI Responses provider work; Codex PR scopes model cache by provider/account.
+L00008461	gui_related: true
+L00008462	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008463	depends_on:

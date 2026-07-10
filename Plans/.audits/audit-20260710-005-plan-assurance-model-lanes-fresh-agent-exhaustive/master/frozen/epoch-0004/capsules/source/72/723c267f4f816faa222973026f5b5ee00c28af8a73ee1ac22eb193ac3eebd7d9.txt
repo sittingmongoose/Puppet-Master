@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 4652-4663 >>>
+- decomposition
+- MUST NOT persist, exchange, or rehydrate
+- live runtime contract
+negative_constraints: []
+compatibility_only_notes:
+- Retired tier-era context object is a derived or compatibility-only selection/decomposition helper.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4664-5061 >>>
+### EP-076 - Blocked Sequence Identity And Restart Recovery
+
+```yaml
+plan_unit_id: EP-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: blocked_sequence is canonical per run_id/node_id blocked episode and unresolved blocked episodes restore on restart without reminting, with request_id retained only as subordinate compatibility lookup metadata.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: blocked_sequence_identity_and_restart_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0057
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0058
+preserved_exact_tokens:
+- blocked_sequence
+- run_id/node_id
+- blocked episode
+- restart
+- without reminting
+- request_id
+- subordinate compatibility handle
+negative_constraints: []
+compatibility_only_notes:
+- request_id is lineage or lookup metadata rather than a competing approval target.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-077 - Approval Scope And Durable Approver Identity
+
+```yaml
+plan_unit_id: EP-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Blocked-episode approval scope is separate from session-wide policy scope, and approval/rejection events persist durable approver identity fields.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: approval_scope_and_durable_approver_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0058
+preserved_exact_tokens:
+- approval scope
+- session-wide policy scope
+- durable approver identity
+- approval and rejection events
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-078 - Execution Role Account Usage Carry-Through
+
+```yaml
+plan_unit_id: EP-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Execution role, requested_account_id, operational_identity, account-switch and pressure ownership, startup recovery, DAE jail/approval policy, usage switch-history, and usage execution-role follow-through transfer through owner and consumer docs.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: execution_role_account_usage_carry_through
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0058
+preserved_exact_tokens:
+- execution_role
+- requested_account_id
+- operational_identity
+- account-switch
+- pressure ownership
+- DAE jail/approval policy
+- usage switch-history
+- usage execution-role follow-through
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-079 - Provider Model Precedence And Worktree Assignment
+
+```yaml
+plan_unit_id: EP-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Provider/model precedence is owned across run, seam, package, node, overseer, and delegated-subagent levels and ties to parallel-node worktree assignment and ownership transitions.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: provider_model_precedence_and_worktree_assignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0059
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0060
+preserved_exact_tokens:
+- provider/model precedence
+- run
+- seam
+- package
+- node
+- overseer
+- delegated-subagent
+- parallel-node worktree assignment
+- ownership transitions
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-080 - Promotion-Aware Provider Records And Legacy Taxonomy Retirement
+
+```yaml
+plan_unit_id: EP-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Provider and event records for dispatched work are promotion-aware, preserve requested/effective account resolution across delegation, and keep Phase/Task/Subtask/Iteration as legacy taxonomy rather than canonical runtime ownership.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: promotion_aware_provider_records_and_legacy_taxonomy_retirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0060
+preserved_exact_tokens:
+- promotion-aware
+- requested/effective account resolution
+- package and seam overseer delegation
+- Phase/Task/Subtask/Iteration
+- legacy taxonomy
+- canonical runtime ownership
+negative_constraints: []
+compatibility_only_notes:
+- Phase/Task/Subtask/Iteration remains legacy taxonomy, not canonical runtime ownership.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-081 - Actor Resolver Inputs And Auto Receipt Basis
+
+```yaml
+plan_unit_id: EP-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Actor resolver inputs include actor type, overseer/worker/reviewer/corroborator/recovery/graph patch roles, operation type, scope, language/framework/domain, and GUI/backend/infra hints; auto resolution records actor-type basis.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: actor_resolver_inputs_and_auto_receipt_basis
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0060
+preserved_exact_tokens:
+- actor type
+- package overseer
+- seam overseer
+- node worker
+- verifier
+- /reviewer
+- corroborator
+- graph patch planner
+- recovery actor
+- operation type
+- scope level
+- language/framework
+- repo `/domain`
+- GUI, backend-heavy, or infra-heavy hints
+- auto
+- actor-type mapping
+- receipt records
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- GUI is used as routing hint here, not GUI implementation.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-082 - Run-Level Deferred Rule
+
+```yaml
+plan_unit_id: EP-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: If any node is runnable the run remains active; if no node is runnable and blocked, backoff, or prerequisite-waiting work exists, the run is deferred until prerequisite, restore, remediation, auth, or capacity wakeups.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: run_level_deferred_rule
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0061
+preserved_exact_tokens:
+- runnable
+- active
+- deferred
+- blocked
+- backoff
+- prerequisite-waiting
+- prerequisite resolution
+- restore completion
+- remediation completion
+- auth recovery
+- capacity change
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-083 - Attempt Counter Invariant
+
+```yaml
+plan_unit_id: EP-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: attempt_count equals automatic_retry_count plus prerequisite_resume_count plus manual_resume_count plus remediation_retry_count plus one initial attempt, with sub-counters incrementing at attempt start and not inferred by subtraction.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: attempt_counter_invariant
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0062
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0063
+preserved_exact_tokens:
+- Counter Relationships and Event Ordering Addendum
+- attempt_count
+- automatic_retry_count
+- prerequisite_resume_count
+- manual_resume_count
+- remediation_retry_count
+- + 1 (initial attempt)
+- increments at attempt start
+- Independent policy counters MUST NOT be inferred
+negative_constraints:
+- Independent policy counters must not be inferred by subtracting from attempt_count.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+
+<<< CONTEXT_AFTER 5062-5073 >>>
+### EP-084 - Debug Verification Summary Recurrence Rule
+
+```yaml
+plan_unit_id: EP-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Debug-mode verification records verification_summary with adapter_kind, attempt_count, passed, heuristic_version, optional latest_receipt_ref, and notes, and passes only when the prior class/reason/signature does not recur and rerun reaches expected terminal state.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []

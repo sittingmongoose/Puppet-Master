@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=18673-18684 >>>
+L00018673	  - "users-login-v2"
+L00018674	  - "thread-a1b2c3d4"
+L00018675	  - "assistant/<sanitized_title>"
+L00018676	  - "chat.thread_worktree_renamed"
+L00018677	negative_constraints:
+L00018678	  - "Auto-create title suffixing uses no user dialog."
+L00018679	  - "Rename failure keeps the temp name with no user interruption."
+L00018680	owner_hints:
+L00018681	  - Plans/assistant-chat-design.md
+L00018682	  - Plans/storage-plan.md
+L00018683	```
+L00018684	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=18685-19079 >>>
+L00018685	### ACD-337 - Auto Worktree Runtime Ownership
+L00018686	
+L00018687	```yaml
+L00018688	plan_unit_id: ACD-337
+L00018689	unit_type: constraint
+L00018690	status: accepted
+L00018691	owner_doc: Plans/assistant-chat-design.md
+L00018692	canonical_text: >-
+L00018693	  Chat runtime owns auto-create; Executor never invokes `WorktreeManager`
+L00018694	  directly; create is serialized per project and reverse lookup write is atomic;
+L00018695	  race failures retry with the next suffix, while non-race failures do not retry.
+L00018696	gui_related: false
+L00018697	gui_classification_reason: Auto-create ownership, serialization, and retry rules are runtime constraints.
+L00018698	depends_on: [ACD-335]
+L00018699	unblocks: []
+L00018700	acceptance_criteria:
+L00018701	  - Chat runtime owns auto-create calls.
+L00018702	  - "`WorktreeManager::create_worktree` is serialized per project and reverse lookup write is atomic."
+L00018703	  - Race failures retry with next suffix; non-race failures do not retry.
+L00018704	validation_surfaces:
+L00018705	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018706	  - python3 scripts/pm-plan-index.py validate
+L00018707	risk_class: executor_boundary
+L00018708	reasoning_tier: high
+L00018709	context_scope: chat_runtime
+L00018710	implementation_surfaces:
+L00018711	  - Plans/assistant-chat-design.md
+L00018712	  - Plans/Executor_Protocol.md
+L00018713	  - Plans/WorktreeGitImprovement.md
+L00018714	node_compile_hint:
+L00018715	  mode: auto_worktree_runtime_ownership
+L00018716	  create_worknodes: false
+L00018717	source_lineage:
+L00018718	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0151
+L00018719	preserved_exact_tokens:
+L00018720	  - "mutex/lock"
+L00018721	  - "redb transaction"
+L00018722	negative_constraints:
+L00018723	  - "Executor never invokes WorktreeManager directly for thread worktree creation."
+L00018724	  - "Auto-create does not retry on non-race failures."
+L00018725	owner_hints:
+L00018726	  - Plans/assistant-chat-design.md
+L00018727	  - Plans/Executor_Protocol.md
+L00018728	```
+L00018729	
+L00018730	### ACD-338 - Assistant Worktree Settings Registry
+L00018731	
+L00018732	```yaml
+L00018733	plan_unit_id: ACD-338
+L00018734	unit_type: requirement
+L00018735	status: accepted
+L00018736	owner_doc: Plans/assistant-chat-design.md
+L00018737	canonical_text: >-
+L00018738	  Settings registry adds project-level worktree settings with exact keys, types,
+L00018739	  defaults, labels, and descriptions for auto-create, cleanup default, base ref,
+L00018740	  follow-thread, warning threshold, create timeout, pre-merge test, test
+L00018741	  command, timeout, and test target.
+L00018742	gui_related: true
+L00018743	gui_classification_reason: The settings registry includes visible labels and project settings UI values.
+L00018744	depends_on: [ACD-335]
+L00018745	unblocks: [ACD-339, ACD-340, ACD-369]
+L00018746	acceptance_criteria:
+L00018747	  - Project-level assistant worktree settings preserve their exact keys, types, defaults, labels, and descriptions.
+L00018748	  - Cleanup default supports `ask`, `keep`, and `remove`.
+L00018749	  - Pre-merge test target supports `merged_result` and `branch_only`.
+L00018750	validation_surfaces:
+L00018751	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018752	  - python3 scripts/pm-plan-index.py validate
+L00018753	risk_class: settings_registry
+L00018754	reasoning_tier: high
+L00018755	context_scope: settings
+L00018756	implementation_surfaces:
+L00018757	  - Plans/assistant-chat-design.md
+L00018758	  - Plans/storage-plan.md
+L00018759	  - Plans/FinalGUISpec.md
+L00018760	node_compile_hint:
+L00018761	  mode: assistant_worktree_settings_registry
+L00018762	  create_worknodes: false
+L00018763	source_lineage:
+L00018764	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152
+L00018765	preserved_exact_tokens:
+L00018766	  - "config:project:{pid}:branching.assistant_auto_worktree"
+L00018767	  - "config:project:{pid}:branching.assistant_worktree_cleanup_default"
+L00018768	  - "config:project:{pid}:branching.assistant_worktree_base_ref"
+L00018769	  - "config:project:{pid}:file_manager.worktree_follow_thread"
+L00018770	  - "ask"
+L00018771	  - "keep"
+L00018772	  - "remove"
+L00018773	  - "merged_result"
+L00018774	  - "branch_only"
+L00018775	negative_constraints: []
+L00018776	owner_hints:
+L00018777	  - Plans/assistant-chat-design.md
+L00018778	  - Plans/storage-plan.md
+L00018779	```
+L00018780	
+L00018781	### ACD-339 - Assistant Worktrees Settings Placement
+L00018782	
+L00018783	```yaml
+L00018784	plan_unit_id: ACD-339
+L00018785	unit_type: requirement
+L00018786	status: accepted
+L00018787	owner_doc: Plans/assistant-chat-design.md
+L00018788	canonical_text: Settings UI places Assistant Worktrees under Settings > Branching below existing branching controls, grouped as Creation, Merge & Testing, and Behavior.
+L00018789	gui_related: true
+L00018790	gui_classification_reason: Settings placement and grouping are visible configuration UI.
+L00018791	depends_on: [ACD-338]
+L00018792	unblocks: [ACD-340]
+L00018793	acceptance_criteria:
+L00018794	  - Assistant Worktrees appears below existing branching controls in Settings > Branching.
+L00018795	  - Settings are grouped into Creation, Merge & Testing, and Behavior groups.
+L00018796	validation_surfaces:
+L00018797	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018798	  - python3 scripts/pm-plan-index.py validate
+L00018799	risk_class: settings_ui
+L00018800	reasoning_tier: standard
+L00018801	context_scope: gui
+L00018802	implementation_surfaces:
+L00018803	  - Plans/assistant-chat-design.md
+L00018804	  - Plans/FinalGUISpec.md
+L00018805	node_compile_hint:
+L00018806	  mode: assistant_worktrees_settings_placement
+L00018807	  create_worknodes: false
+L00018808	source_lineage:
+L00018809	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152
+L00018810	preserved_exact_tokens:
+L00018811	  - "Assistant Worktrees"
+L00018812	  - "Creation"
+L00018813	  - "Merge & Testing"
+L00018814	  - "Behavior"
+L00018815	negative_constraints: []
+L00018816	owner_hints:
+L00018817	  - Plans/assistant-chat-design.md
+L00018818	  - Plans/FinalGUISpec.md
+L00018819	```
+L00018820	
+L00018821	### ACD-340 - Assistant Worktree Settings Namespace And Clamps
+L00018822	
+L00018823	```yaml
+L00018824	plan_unit_id: ACD-340
+L00018825	unit_type: constraint
+L00018826	status: accepted
+L00018827	owner_doc: Plans/assistant-chat-design.md
+L00018828	canonical_text: Namespace rules keep `file_manager.worktree_follow_thread` under `file_manager.*`; numeric settings clamp on load with warning using min/max/zero behavior.
+L00018829	gui_related: false
+L00018830	gui_classification_reason: Settings namespace and clamping are persistence/config behavior.
+L00018831	depends_on: [ACD-338]
+L00018832	unblocks: []
+L00018833	acceptance_criteria:
+L00018834	  - "`file_manager.worktree_follow_thread` stays in the `file_manager.*` namespace."
+L00018835	  - Assistant-specific and generic worktree setting prefixes keep their distinct meanings.
+L00018836	  - Out-of-range numeric settings clamp to valid bounds on load with a log warning.
+L00018837	validation_surfaces:
+L00018838	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018839	  - python3 scripts/pm-plan-index.py validate
+L00018840	risk_class: settings_registry
+L00018841	reasoning_tier: standard
+L00018842	context_scope: settings
+L00018843	implementation_surfaces:
+L00018844	  - Plans/assistant-chat-design.md
+L00018845	  - Plans/storage-plan.md
+L00018846	node_compile_hint:
+L00018847	  mode: assistant_worktree_settings_namespace_clamps
+L00018848	  create_worknodes: false
+L00018849	source_lineage:
+L00018850	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0152
+L00018851	preserved_exact_tokens:
+L00018852	  - "file_manager.*"
+L00018853	  - "assistant_worktree_*"
+L00018854	  - "worktree_*"
+L00018855	  - "0 = disabled"
+L00018856	negative_constraints:
+L00018857	  - "Do not move file manager behavior into `branching.*`."
+L00018858	owner_hints:
+L00018859	  - Plans/assistant-chat-design.md
+L00018860	  - Plans/storage-plan.md
+L00018861	```
+L00018862	
+L00018863	### ACD-341 - Thread Selector Worktree Icon
+L00018864	
+L00018865	```yaml
+L00018866	plan_unit_id: ACD-341
+L00018867	unit_type: requirement
+L00018868	status: accepted
+L00018869	owner_doc: Plans/assistant-chat-design.md
+L00018870	canonical_text: Thread selector shows a theme-consistent branch/tree glyph, not emoji, in the left gutter; absent when unbound; compact rows use `wt_icon`, branch label, status/owner copy, and full tooltip lines.
+L00018871	gui_related: true
+L00018872	gui_classification_reason: Thread selector glyph, row slot, copy, and tooltip behavior are visible UI.
+L00018873	depends_on: [ACD-323]
+L00018874	unblocks: [ACD-342]
+L00018875	acceptance_criteria:
+L00018876	  - Thread selector shows a theme-consistent branch/tree glyph in the left gutter only when bound.
+L00018877	  - Compact/default rows use the `wt_icon` slot before branch label and chevron.
+L00018878	  - Tooltips and owner copy preserve branch/path/status and owner labels.
+L00018879	validation_surfaces:
+L00018880	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018881	  - python3 scripts/pm-plan-index.py validate
+L00018882	risk_class: thread_selector_ui
+L00018883	reasoning_tier: standard
+L00018884	context_scope: gui
+L00018885	implementation_surfaces:
+L00018886	  - Plans/assistant-chat-design.md
+L00018887	  - Plans/FinalGUISpec.md
+L00018888	  - Plans/storage-plan.md
+L00018889	node_compile_hint:
+L00018890	  mode: thread_selector_worktree_icon
+L00018891	  create_worknodes: false
+L00018892	source_lineage:
+L00018893	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0153
+L00018894	preserved_exact_tokens:
+L00018895	  - "wt_icon"
+L00018896	  - "Thread: <thread_title>"
+L00018897	  - "Orch: <tier_label>"
+L00018898	  - "Manual"
+L00018899	negative_constraints:
+L00018900	  - "Thread selector worktree icon is not emoji."
+L00018901	  - "No placeholder is shown when unbound."
+L00018902	owner_hints:
+L00018903	  - Plans/assistant-chat-design.md
+L00018904	  - Plans/FinalGUISpec.md
+L00018905	```
+L00018906	
+L00018907	### ACD-342 - Worktree Projection Status Compatibility
+L00018908	
+L00018909	```yaml
+L00018910	plan_unit_id: ACD-342
+L00018911	unit_type: compatibility_disposition
+L00018912	status: accepted
+L00018913	owner_doc: Plans/assistant-chat-design.md
+L00018914	canonical_text: >-
+L00018915	  Status rendering preserves projection wording as compatibility lineage: icons
+L00018916	  read `worktree_projection.v1:{project_id}:{worktree_id}` with `dirty_state`,
+L00018917	  `conflict_state`, and stale freshness display, without making Assistant Chat
+L00018918	  the storage projection owner.
+L00018919	gui_related: true
+L00018920	gui_classification_reason: Stale projection status changes visible icon and tooltip behavior.
+L00018921	depends_on: [ACD-341]
+L00018922	unblocks: []
+L00018923	acceptance_criteria:
+L00018924	  - Chat header and thread selector icons read status from the worktree projection.
+L00018925	  - Stale projection status renders last-known state with desaturation and tooltip copy.
+L00018926	  - Assistant Chat does not become a second projection owner.
+L00018927	validation_surfaces:
+L00018928	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018929	  - python3 scripts/pm-plan-index.py validate
+L00018930	risk_class: projection_compatibility
+L00018931	reasoning_tier: high
+L00018932	context_scope: compatibility
+L00018933	implementation_surfaces:
+L00018934	  - Plans/assistant-chat-design.md
+L00018935	  - Plans/storage-plan.md
+L00018936	  - Plans/FinalGUISpec.md
+L00018937	node_compile_hint:
+L00018938	  mode: worktree_projection_status_compatibility
+L00018939	  create_worknodes: false
+L00018940	source_lineage:
+L00018941	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0153
+L00018942	preserved_exact_tokens:
+L00018943	  - "worktree_projection.v1:{project_id}:{worktree_id}"
+L00018944	  - "dirty_state"
+L00018945	  - "conflict_state"
+L00018946	  - "projection_freshness = stale"
+L00018947	  - "(status may be outdated)"
+L00018948	negative_constraints:
+L00018949	  - "Assistant Chat must not define a second storage projection owner."
+L00018950	owner_hints:
+L00018951	  - Plans/assistant-chat-design.md
+L00018952	  - Plans/storage-plan.md
+L00018953	```
+L00018954	
+L00018955	### ACD-343 - Thread Delete Worktree Cleanup Scope
+L00018956	
+L00018957	```yaml
+L00018958	plan_unit_id: ACD-343
+L00018959	unit_type: constraint
+L00018960	status: accepted
+L00018961	owner_doc: Plans/assistant-chat-design.md
+L00018962	canonical_text: Cleanup choices belong to thread delete only; there is no automatic completed-thread cleanup; keep unbinds and leaves disk state, while remove unbinds and prunes after dirty/active-run safeguards.
+L00018963	gui_related: false
+L00018964	gui_classification_reason: Cleanup lifecycle scope and disk semantics are workflow/storage behavior.
+L00018965	depends_on: [ACD-325]
+L00018966	unblocks: [ACD-344, ACD-346]
+L00018967	acceptance_criteria:
+L00018968	  - Cleanup choices are part of thread delete confirmation only.
+L00018969	  - Keep unbinds and leaves the worktree on disk.
+L00018970	  - Remove unbinds and prunes the worktree after dirty and active-run safeguards.
+L00018971	validation_surfaces:
+L00018972	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018973	  - python3 scripts/pm-plan-index.py validate
+L00018974	risk_class: worktree_cleanup
+L00018975	reasoning_tier: high
+L00018976	context_scope: cleanup
+L00018977	implementation_surfaces:
+L00018978	  - Plans/assistant-chat-design.md
+L00018979	  - Plans/UI_Command_Catalog.md
+L00018980	  - Plans/storage-plan.md
+L00018981	node_compile_hint:
+L00018982	  mode: thread_delete_worktree_cleanup_scope
+L00018983	  create_worknodes: false
+L00018984	source_lineage:
+L00018985	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0154
+L00018986	preserved_exact_tokens:
+L00018987	  - "branching.assistant_worktree_cleanup_default"
+L00018988	  - "chat.thread_worktree_unbound"
+L00018989	negative_constraints:
+L00018990	  - "Cleanup is not part of archive/unarchive lifecycle changes."
+L00018991	  - "There is no automatic completed-thread cleanup path."
+L00018992	owner_hints:
+L00018993	  - Plans/assistant-chat-design.md
+L00018994	  - Plans/storage-plan.md
+L00018995	```
+L00018996	
+L00018997	### ACD-344 - Thread Delete Worktree Confirmation UI
+L00018998	
+L00018999	```yaml
+L00019000	plan_unit_id: ACD-344
+L00019001	unit_type: requirement
+L00019002	status: accepted
+L00019003	owner_doc: Plans/assistant-chat-design.md
+L00019004	canonical_text: Existing delete confirmation extends with keep/remove choices, dirty warning, exact button labels, tertiary cancel default focus, and default choice from settings.
+L00019005	gui_related: true
+L00019006	gui_classification_reason: Extended thread delete confirmation is visible modal UI.
+L00019007	depends_on: [ACD-343]
+L00019008	unblocks: [ACD-345]
+L00019009	acceptance_criteria:
+L00019010	  - Cleanup options are embedded into the existing delete confirmation dialog.
+L00019011	  - The extended confirmation preserves title, body, dirty warning, and button copy.
+L00019012	  - Default choice follows `branching.assistant_worktree_cleanup_default`.
+L00019013	validation_surfaces:
+L00019014	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019015	  - python3 scripts/pm-plan-index.py validate
+L00019016	risk_class: worktree_cleanup
+L00019017	reasoning_tier: standard
+L00019018	context_scope: gui
+L00019019	implementation_surfaces:
+L00019020	  - Plans/assistant-chat-design.md
+L00019021	  - Plans/FinalGUISpec.md
+L00019022	  - Plans/UI_Command_Catalog.md
+L00019023	node_compile_hint:
+L00019024	  mode: thread_delete_worktree_confirmation_ui
+L00019025	  create_worknodes: false
+L00019026	source_lineage:
+L00019027	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0154
+L00019028	preserved_exact_tokens:
+L00019029	  - "Delete thread?"
+L00019030	  - "Delete and keep worktree"
+L00019031	  - "Delete and remove worktree"
+L00019032	  - "Cancel"
+L00019033	negative_constraints:
+L00019034	  - "Cleanup options are not shown as a separate modal."
+L00019035	owner_hints:
+L00019036	  - Plans/assistant-chat-design.md
+L00019037	  - Plans/FinalGUISpec.md
+L00019038	```
+L00019039	
+L00019040	### ACD-345 - Dirty Worktree Destructive Cleanup
+L00019041	
+L00019042	```yaml
+L00019043	plan_unit_id: ACD-345
+L00019044	unit_type: constraint
+L00019045	status: accepted
+L00019046	owner_doc: Plans/assistant-chat-design.md
+L00019047	canonical_text: Dirty destructive removal uses `git worktree remove --force <path>` plus `git branch -D <branch>` only after warning; unbind has no dedicated MVP undo.
+L00019048	gui_related: false
+L00019049	gui_classification_reason: Destructive cleanup command and no-undo behavior are workflow/runtime constraints.
+L00019050	depends_on: [ACD-344]
+L00019051	unblocks: []
+L00019052	acceptance_criteria:
+L00019053	  - Dirty destructive removal uses forced worktree removal and branch deletion after warning.
+L00019054	  - Unbind leaves the worktree on disk as a manual worktree.
+L00019055	  - Dedicated unbind undo is post-MVP.
+L00019056	validation_surfaces:
+L00019057	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019058	  - python3 scripts/pm-plan-index.py validate
+L00019059	risk_class: destructive_action
+L00019060	reasoning_tier: high
+L00019061	context_scope: cleanup
+L00019062	implementation_surfaces:
+L00019063	  - Plans/assistant-chat-design.md
+L00019064	  - Plans/WorktreeGitImprovement.md
+L00019065	node_compile_hint:
+L00019066	  mode: dirty_worktree_destructive_cleanup
+L00019067	  create_worknodes: false
+L00019068	source_lineage:
+L00019069	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0154
+L00019070	preserved_exact_tokens:
+L00019071	  - "git worktree remove --force <path>"
+L00019072	  - "git branch -D <branch>"
+L00019073	negative_constraints:
+L00019074	  - "Unbind has no dedicated undo in MVP."
+L00019075	owner_hints:
+L00019076	  - Plans/assistant-chat-design.md
+L00019077	  - Plans/WorktreeGitImprovement.md
+L00019078	```
+L00019079	
+
+<<< CONTEXT_AFTER canonical_document_lines=19080-19091 >>>
+L00019080	### ACD-346 - Completed Thread Worktree Retention
+L00019081	
+L00019082	```yaml
+L00019083	plan_unit_id: ACD-346
+L00019084	unit_type: requirement
+L00019085	status: accepted
+L00019086	owner_doc: Plans/assistant-chat-design.md
+L00019087	canonical_text: Completed or failed threads with bound worktrees do not auto-unbind or clean up; dirty completed/failed worktrees surface in Source Control and may toast merge/cleanup guidance.
+L00019088	gui_related: true
+L00019089	gui_classification_reason: Completed/failed worktree status and toast guidance are visible UI behavior.
+L00019090	depends_on: [ACD-343]
+L00019091	unblocks: [ACD-347]

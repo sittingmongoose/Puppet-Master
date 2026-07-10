@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2884-2895 >>>
+L00002884	- **File Editor**: source mode, split preview mode, detached preview mode, and browser mode for HTML/workspace browsing
+L00002885	- **Embedded Document Pane**: preview-capable document review surface using the same rendering and preview identity contract
+L00002886	- **Editor-tab Browser surface**: the canonical in-shell host for `workspace_preview`
+L00002887	- **Detached preview/browser windows**: first-class `detached_preview` surfaces linked to the originating browser subject
+L00002888	- **Automation/Auth browser windows**: visible `automation_session` and `auth_session` surfaces that are not counted as normal in-shell browser tabs
+L00002889	- **Bottom-panel browser-adjacent surfaces**: optional logs, evidence, downloads, console/network summaries, or DevTools-adjacent panes that do not own the canonical browsing session
+L00002890	
+L00002891	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+L00002892	
+L00002893	Browser-derived capture chips in the Chat Panel appear in the composer chip strip with a bounded preview, page/source label, capture kind, remove/revoke affordance, and blocked/expired state when applicable. They serialize only when the user sends the message and only through the corresponding structured attachment path.
+L00002894	
+L00002895	### GUI behavior rules
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2896-3290 >>>
+L00002896	
+L00002897	- Browser and agent-debugging UX follows the Section15 built-in browser contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. The GUI presents the PM-managed CEF runtime, DevTools, visible `automation_session` / `auth_session` surfaces, `/video` evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced storage or `/cookie` changes require explicit confirmation, and takeover controls expose pause, `/continue/stop`, and resume as named actions.
+L00002898	- Debug browser-automation defaults favor redacted summary packs, bounded evidence windows, isolated session handoff, `/audit` trails, and least-privilege browser takeover. They do not present broad shared-session control as the default user-facing model.
+L00002899	- Debug attention banners display `attention_required_reason_code` values such as `auth_handoff_required`, `manual_repro_required`, `manual_verification_required`, and `target_selection_required`. Debugger attach loss or manual debugger steering that PM does not own in MVP degrades to `attention_required`.
+L00002900	- An arbitrary URL remains a diagnose/verify-only browser investigation until PM binds it to a workspace-backed target; only then may the GUI offer durable-fix actions.
+L00002901	- detached preview/browser windows are part of the intended UX and are not described as degraded workarounds
+L00002902	- the editor/workspace tab surface is the canonical in-shell host for normal browsing and HTML preview
+L00002903	- the bottom panel must not be described as the primary browser host
+L00002904	- HTML/browser mode must visually read as a real browser-capable surface rather than as a static Markdown preview
+L00002905	- users must be able to watch agent-driven browser/testing sessions live when automation is running visibly
+L00002906	- docked DevTools is the default and lives inside the currently focused browser session surface; detached DevTools is an alternate layout
+L00002907	- Browser/rendered mode carries the required/desired browser capability set: it must open browser-handled content, support highlight/select browser content and screenshot capture into chat through visible chips, allow agent control to fully navigate/use user-locked web-app and website flows through named actions, preserve web-app compatibility including DevTools plus screenshot / console / network inspection, and expose DevTools on Linux, macOS, and Windows.
+L00002908	- Session-class UX distinguishes the same visible browser session the user watches, a separate visible automation window/tab, and hidden/ephemeral automation sessions; hidden/ephemeral sessions are allowed only as separate `automation_session` surfaces with an open/watch affordance, user-facing browser tabs remain the default visible host, and `Open in Detached Browser` is the explicit command when a separate window is needed.
+L00002909	- image viewing remains native and must not inherit unnecessary browser chrome
+L00002910	
+L00002911	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00002912	
+L00002913	### Chat panel behavior
+L00002914	
+L00002915	Chat messages that contain renderable Markdown/Mermaid content must support:
+L00002916	
+L00002917	- readable Markdown formatting
+L00002918	- native Mermaid diagram cards where Mermaid syntax is detected
+L00002919	- actions for copy source, open in editor, open detached preview, and export diagram where relevant
+L00002920	- visible error states for malformed Mermaid instead of silent raw-block disappearance
+L00002921	
+L00002922	Chat must not execute arbitrary HTML from message content.
+L00002923	
+L00002924	Context Lens placement is fixed in the Chat panel: the control lives in the top-right of the chat window immediately to the right of the search bar, renders as an icon plus dropdown arrow, supports multi-select in all modes, and exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+L00002925	
+L00002926	### File editor behavior
+L00002927	
+L00002928	The File Editor view must expose clear mode controls for render-capable files:
+L00002929	
+L00002930	- Source
+L00002931	- Preview
+L00002932	- Split
+L00002933	- Detached preview
+L00002934	- Browser/rendered mode for HTML
+L00002935	
+L00002936	The mode switch must not change the canonical buffer model. Split mode should preserve shared-buffer editing semantics with the existing document/editor contract.
+L00002937	
+L00002938	Preview, browser, and other `/rendered` experiences are derivative of source and `/buffer` state. They may cache view mode, scroll, or export preferences, but they do not become peers with separate canonical content authority.
+L00002939	
+L00002940	For local HTML, default `Open` = source editor; explicit `Open in Browser` opens the editor/workspace tabs browser surface, `Open in Detached Browser` opens a secondary detached browser window, and the editor toolbar/action plus agent file-target flow invoke the same canonical open command.
+L00002941	
+L00002942	### Embedded document pane behavior
+L00002943	
+L00002944	The Embedded Document Pane must reuse the same rendering pipeline and PreviewSession abstraction as the file editor and chat. It is a review/inspection surface, not a separate rendering system.
+L00002945	
+L00002946	Required actions:
+L00002947	
+L00002948	- open source
+L00002949	- open detached preview
+L00002950	- request re-render/reload
+L00002951	- perform allowed structured edits when the underlying document kind supports them
+L00002952	
+L00002953	### Bottom panel browser behavior
+L00002954	
+L00002955	The bottom panel is not the canonical host for normal browsing, HTML preview, or click-to-context workflows.
+L00002956	
+L00002957	Allowed bottom-panel browser-adjacent roles are:
+L00002958	- console/network summaries for the focused browser session
+L00002959	- downloads, trace/video progress, and evidence activity tied to the focused browser session
+L00002960	- automation activity, step status, or capture status linked to a visible browser session
+L00002961	- DevTools-adjacent panes that complement the focused browser session without becoming a separate browser host
+L00002962	
+L00002963	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+L00002964	
+L00002965	Rules:
+L00002966	- actions surfaced from the bottom panel must focus or act on the owning browser session rather than invent a separate browser identity
+L00002967	- browser open, detached-open, takeover, promotion, and recovery actions always target the canonical browser session model
+L00002968	- PM browser chrome and any bottom-panel browser-adjacent actions may expose DevTools entry/bridge actions (`Open DevTools`, `Toggle DevTools Dock`, `Focus Browser`) or evidence actions; deeper inspection tools live inside the DevTools UI itself, and these actions must act on the owning `browser_session_id` without making the bottom panel the primary browsing session.
+L00002969	
+L00002970	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
+L00002971	
+L00002972	### Windowing and platform behavior
+L00002973	
+L00002974	- the browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux
+L00002975	- native child-window embedding is the baseline host strategy; offscreen rendering is secondary
+L00002976	- if the implementation uses a CEF wrapper such as `wef`, user-visible chrome must still present the feature as PM-managed browser capability rather than wrapper branding
+L00002977	- setup, Doctor, update, and installer surfaces must disclose a selected CEF path's roughly ~1 GB app-size impact and provide remediation when runtime install/update verification fails
+L00002978	- offscreen rendering may support capture, evidence, and degraded rendering workflows, but it must not replace the native child-window baseline for the canonical visible browser host
+L00002979	- detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session
+L00002980	- GUI copy must not imply that the browser is only available through detached fallback windows or platform-specific system-webview assumptions
+L00002981	- when the bundled browser runtime is damaged or unavailable, the UI must surface `runtime_unavailable` with remediation and keep source/native surfaces usable
+L00002982	- the UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained
+L00002983	
+L00002984	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md
+L00002985	
+L00002986	### Performance and accessibility
+L00002987	
+L00002988	- Use lazy rendering and virtualization for long message streams and large documents.
+L00002989	- Preserve scroll positions where feasible when re-rendering preview content.
+L00002990	- Preview controls must be keyboard reachable.
+L00002991	- Diagram export/open/source actions must have explicit labels and accessible tooltips/text.
+L00002992	
+L00002993	### Acceptance criteria addendum
+L00002994	
+L00002995	- the same logical subject can move between chat card, editor preview, embedded doc pane, editor-tab browser, detached preview, and detached browser without inventing separate rendering contracts
+L00002996	- Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces
+L00002997	- HTML rendered mode behaves like a real browser/workspace preview, not a static screenshot
+L00002998	- the bottom panel is not required as the primary browser host for the feature to work
+L00002999	- platform limitations may change embedding details, but they must not remove the feature or hide requested/effective browser capability differences
+L00003000	- users can watch a live `automation_session`, safely take over, and promote it to normal browsing without losing the visible browser
+L00003001	
+L00003002	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+L00003003	
+L00003004	## Assistant Planning UX Addendum (2026-03-08)
+L00003005	
+L00003006	### 1. Assistant Chat planning controls
+L00003007	
+L00003008	Assistant Chat planning controls must expose both **Plan** and **Deep Plan** as chat workflow choices.
+L00003009	
+L00003010	Required controls:
+L00003011	- planning-mode selector entry for `Plan`
+L00003012	- planning-mode selector entry for `Deep Plan`
+L00003013	- `Plan Thoroughness (PT)` control visible when either planning overlay is active
+L00003014	
+L00003015	PT control contract:
+L00003016	- control type: segmented control, dropdown, or equivalent compact selector
+L00003017	- canonical labels: `Light`, `Balanced`, `Comprehensive`
+L00003018	- default selection: `Balanced`
+L00003019	- Deep Plan and Plan share the same PT labels
+L00003020	- tooltip/help copy must explain that Deep Plan is more intensive than Plan at the same PT
+L00003021	
+L00003022	### 2. Plan vs Deep Plan visible behavior
+L00003023	
+L00003024	**Plan** UI expectations:
+L00003025	- lightweight plan artifact in thread
+L00003026	- sticky plan panel remains visible in chat
+L00003027	- normalized TODO list is visible before approval
+L00003028	- users may revise TODO structure before approval
+L00003029	- execution begins only after explicit approval
+L00003030	
+L00003031	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00003032	
+L00003033	**Deep Plan** UI expectations:
+L00003034	- richer planning artifact opens in a preview-capable document/editor surface
+L00003035	- the same normalized TODO contract remains visible in the thread plan panel
+L00003036	- document review, annotations, and targeted revision remain available
+L00003037	- Deep Plan remains more intensive than Plan at the same PT
+L00003038	
+L00003039	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md
+L00003040	
+L00003041	**Shared TODO tracker rules:**
+L00003042	- the sticky plan panel is the authoritative TODO tracker
+L00003043	- inline chat updates are milestone-style, not a competing tracker
+L00003044	- TODO statuses support at least `pending`, `in_progress`, `completed`, `blocked`, and `skipped`
+L00003045	- the same TODO identity must survive single-agent, subagent, and crew execution
+L00003046	- plan state transitions (`draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`) must remain visible and restorable
+L00003047	
+L00003048	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+L00003049	
+L00003050	### 3. Deep Plan review in editor / Embedded Document Pane
+L00003051	
+L00003052	Deep Plan documents reuse the Embedded Document Pane annotation/revision contract.
+L00003053	
+L00003054	Required behavior:
+L00003055	- highlight text -> annotation action palette
+L00003056	- annotation markers in margin + annotation list/drawer
+L00003057	- `Resubmit with Annotations` launches targeted revision for the plan document
+L00003058	- deterministic annotation re-anchoring after edits
+L00003059	- no silent annotation loss
+L00003060	- no automatic Multi-Pass Review requirement before plan approval/execution
+L00003061	
+L00003062	The plan document may contain:
+L00003063	- headings
+L00003064	- lists / tables
+L00003065	- fenced code blocks
+L00003066	- Mermaid diagrams
+L00003067	- file paths / references
+L00003068	- validation and rollout notes
+L00003069	
+L00003070	### 4. Assistant recommendation card for Planning Wizard
+L00003071	
+L00003072	When Assistant Chat or Deep Plan recommends the Planning Wizard, show a visible recommendation card rather than silently switching surfaces.
+L00003073	
+L00003074	Required card content:
+L00003075	- reason summary (for example: `This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow.`)
+L00003076	- primary CTA: `Add a new Feature or Enhancement`
+L00003077	- secondary action: `Stay in Chat` / `Not now`
+L00003078	
+L00003079	Optional supporting copy may mention:
+L00003080	- that Planning Wizard can prune irrelevant topics automatically
+L00003081	- that imported plan/chat context will be carried into the wizard
+L00003082	
+L00003083	### 5. Post-acceptance wizard handoff surface
+L00003084	
+L00003085	If the user accepts the recommendation:
+L00003086	- switch to the Planning Wizard intake/interview flow
+L00003087	- show a visible imported-context banner (`Imported from Assistant Chat` or `Imported from Deep Plan`)
+L00003088	- show whether a plan artifact was included
+L00003089	- show the imported goal/scope summary
+L00003090	
+L00003091	Recommended imported-context panel contents:
+L00003092	- user goal
+L00003093	- scope summary
+L00003094	- included plan yes/no
+L00003095	- open questions count
+L00003096	- `has_gui` hint when known
+L00003097	
+L00003098	If a project is already active, the wizard should open on the preloaded feature/enhancement path rather than on a blank intent picker.
+L00003099	
+L00003100	### 6. Non-goals
+L00003101	
+L00003102	- Do not copy external GUI layout from OpenCode, Cursor, VSCode, or other tools.
+L00003103	- Do not auto-create repo files for planning artifacts without explicit user action.
+L00003104	- Do not silently redirect the user from chat into the wizard.
+L00003105	
+L00003106	### 7. Acceptance criteria
+L00003107	
+L00003108	- Assistant Chat visibly exposes both Plan and Deep Plan.
+L00003109	- PT is shown for both planning overlays using the canonical labels `Light`, `Balanced`, and `Comprehensive`.
+L00003110	- Deep Plan documents open in a preview-capable editor/document surface and support durable annotations plus targeted revision.
+L00003111	- When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
+L00003112	- Accepting the CTA opens the Planning Wizard intake/interview flow with visible imported context.
+L00003113	- Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
+L00003114	
+L00003115	## Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
+L00003116	
+L00003117	
+L00003118	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact GUI tokens and older examples; the canonical GUI summary and referenced owner docs govern overlapping blocked/recovery behavior.
+L00003119	
+L00003120	### 1. Dashboard cards
+L00003121	
+L00003122	
+L00003123	The Dashboard must distinguish:
+L00003124	- `wizard_attention_required`
+L00003125	- `wizard_blocked`
+L00003126	- HITL blocked actions
+L00003127	- remote-side-effect blocked actions
+L00003128	
+L00003129	`wizard_blocked` card requirements:
+L00003130	- more severe copy than `wizard_attention_required`
+L00003131	- primary CTA: `Resume Wizard`
+L00003132	- secondary CTA: `View report`
+L00003133	- auto-dismiss only when the wizard leaves `blocked`
+L00003134	
+L00003135	### 2. Assistant thread selector / badges
+L00003136	
+L00003137	#### 2.1 Worktree icon in thread selector
+L00003138	
+L00003139	Each thread row in the thread selector displays a worktree icon when the thread has an active worktree binding.
+L00003140	
+L00003141	- **Position:** Left gutter of thread row, vertically below the status badge (running/blocked/attention)
+L00003142	- **Icon:** Theme-consistent branch/tree glyph from icon set
+L00003143	- **Size:** Same size as status badge icons so visual weight stays consistent.
+L00003144	- **Visibility:** Present only when thread has a worktree binding; absent (no placeholder) when unbound
+L00003145	- **Hover tooltip content:** Line 1 is the branch name, e.g. `assistant/fix-auth-bug`; line 2 is status pill text such as `clean`, `dirty`, or `conflict`; line 3 is the worktree path, e.g. `.puppet-master/worktrees/wt-abc123`.
+L00003146	- **Icon color:** Clean: `icon-secondary`. Dirty: `accent-warning`. Conflict: `accent-error`. Colors resolve through theme tokens across all three built-in themes.
+L00003147	- **Stale projection:** Icon shows last-known state with subtle desaturation; tooltip appends "(status may be outdated)"
+L00003148	- **Accessible label:** Thread selector worktree icon uses `aria-label="Has worktree: {branch_name}, {status}"`.
+L00003149	- **Announcements:** Worktree state changes are announced through an `aria-live="polite"` region for create, unbind, remove, dirty status, conflict status, and creation-failed transitions.
+L00003150	- **Completed/failed dirty worktrees:** If a completed or failed thread still has a dirty bound worktree, the selector may show status pill text such as `dirty · completed` or `dirty · failed`, and the completion toast suggests merge/cleanup; there is no auto-cleanup.
+L00003151	
+L00003152	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+L00003153	
+L00003154	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003155	
+L00003156	Thread and session navigation uses persistent shell surfaces.
+L00003157	
+L00003158	Rules:
+L00003159	- the active thread list is visible in a persistent sidebar or equivalent persistent region, not only in a floating overlay
+L00003160	- the selector must expose running, queued, blocked, and attention-required badges per thread
+L00003161	- branch lineage is visible in the selector/history model using stable branch labels and source-origin metadata
+L00003162	- badge aggregation must preserve highest-severity state while still showing blocked counts when present
+L00003163	- the project/session browser may complement thread navigation but does not replace the active-thread list inside chat
+L00003164	
+L00003165	The floating thread-list overlay pattern is not canonical after this section.
+L00003166	### 3. Run Graph and Orchestrator views
+L00003167	
+L00003168	Required visible scheduler/remediation data:
+L00003169	- wake reason
+L00003170	- ready/blocked/backoff/remediation counts
+L00003171	- selected-node score breakdown
+L00003172	- ready-but-unselected reasons
+L00003173	- safe-point ID
+L00003174	- remediation lineage identifiers
+L00003175	
+L00003176	### 4. blocked outcome copy
+L00003177	
+L00003178	When a remote side effect or guard prevents execution, the GUI MUST present the outcome as `blocked`, not `failed`, and must preserve any completed local work.
+L00003179	
+L00003180	### 5. Event-driven correctness
+L00003181	
+L00003182	All scheduler/remediation/blocked UI updates must follow the existing `invoke_from_event_loop` event-driven rule. No timer polling for correctness.
+L00003183	
+L00003184	### 6. Acceptance criteria
+L00003185	
+L00003186	- Dashboard has a first-class `wizard_blocked` card.
+L00003187	- Thread badges distinguish `blocked` from `attention_required`.
+L00003188	- Scheduler/remediation state is inspectable in run surfaces.
+L00003189	- blocked outcomes are not mislabeled as failures.
+L00003190	- new runtime widgets obey the event-driven rewrite rule.
+L00003191	## Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+L00003192	
+L00003193	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves older parity wording; it is not a peer normative blocked/recovery section.
+L00003194	
+L00003195	The GUI must expose the packet's runtime state without relying on hidden behavior.
+L00003196	
+L00003197	### Required visible elements
+L00003198	- queue-analysis summary with last wake reason
+L00003199	- blocked-state badges and grouped blocked lists
+L00003200	- safe-point state and restore status where applicable
+L00003201	- remediation lineage navigation
+L00003202	- disabled-action explanations tied to canonical reason codes
+L00003203	- clear distinction between `attention_required`, `blocked`, `retrying`, and terminal failure
+L00003204	
+L00003205	### Event-driven update rule
+L00003206	
+L00003207	
+L00003208	All scheduler, blocked, and remediation widgets MUST update from runtime events/projections rather than periodic timers.
+L00003209	
+L00003210	### UX safety rule
+L00003211	If the GUI cannot perform a required action in the current mode, it must state why and point to the canonical recovery path. The GUI must not present controls that imply hidden fallback, hidden retry, or hidden re-auth behavior.
+L00003212	## Compatibility/source-lineage - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)
+L00003213	
+L00003214	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact `wizard_blocked`, queue, and recovery tokens while the canonical GUI summary governs precedence.
+L00003215	
+L00003216	### `wizard_blocked` CtA card
+L00003217	Add a first-class `wizard_blocked` card alongside `wizard_attention_required`.
+L00003218	
+L00003219	Required fields:
+L00003220	- `card_type = wizard_blocked`
+L00003221	- `wizard_id`
+L00003222	- `wizard_step`
+L00003223	- `blocked_reason_code`
+L00003224	- `report_ref`
+L00003225	- `resume_url`
+L00003226	- `thread_id?`
+L00003227	
+L00003228	Required UI behavior:
+L00003229	- more severe visual treatment than `wizard_attention_required`
+L00003230	- primary action: `Resume Wizard`
+L00003231	- secondary action: `View report`
+L00003232	- auto-dismiss only when the wizard leaves `blocked`
+L00003233	- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
+L00003234	### Thread/status surfaces
+L00003235	Thread and run status surfaces MUST include distinct presentations for:
+L00003236	- `attention_required`
+L00003237	- `blocked`
+L00003238	- `retrying/backoff`
+L00003239	- `remediation`
+L00003240	## Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+L00003241	
+L00003242	> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves GUI-specific recovery tokens that supplement the canonical summary only where they do not conflict with named owner docs.
+L00003243	
+L00003244	This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
+L00003245	
+L00003246	### FileSafe rendering
+L00003247	A FileSafe block is a persistent blocked episode until the underlying runtime block resolves. It MUST NOT auto-dismiss while still active.
+L00003248	
+L00003249	### Degraded draft warning
+L00003250	
+L00003251	
+L00003252	Decomposition degradation is a pre-lock planning state only. GUI copy MUST NOT imply silent degraded canonical execution after graph lock.
+L00003253	
+L00003254	### All-nodes-blocked gating
+L00003255	
+L00003256	
+L00003257	Until owner runtime contracts define dedicated all-blocked events, GUI surfaces MAY derive all-blocked banners from current projections but MUST NOT treat undeclared runtime events as canonical.
+L00003258	## Canonical Blocked/Recovery Behavior
+L00003259	This section is the canonical GUI summary for blocked and recovery surfaces.
+L00003260	
+L00003261	### Dashboard Action Required
+L00003262	Blocked and recovery UI binds to canonical blocked projections and HITL records.
+L00003263	- `wizard_blocked` is a first-class card alongside `wizard_attention_required`
+L00003264	- blocked cards use the fields `card_type`, `wizard_id`, `wizard_step`, `blocked_reason_code`, `report_ref`, `resume_url`, and optional `thread_id`
+L00003265	- `wizard_blocked` uses more severe visual treatment than `wizard_attention_required`
+L00003266	- primary action: `Resume Wizard`
+L00003267	- secondary action: `View report`
+L00003268	- auto-dismiss only when the wizard leaves `blocked`
+L00003269	- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
+L00003270	- blocked payloads use ordered `allowed_action_ids[]`
+L00003271	- blocked episodes remain distinct when more than one is active
+L00003272	- GUI labels may vary by surface, but command binding always resolves through the shared runtime command catalog
+L00003273	- Blocked and attention-required remain distinct; `wizard-blocked` cards outrank `wizard-attention-required`, thread badges preserve highest severity and blocked counts, usage warnings preserve thresholds, quiet periods, and clear actions, and all-nodes-blocked can escalate by elapsed time.
+L00003274	
+L00003275	### Thread and run status taxonomy
+L00003276	`waiting_approval` and other blocked reasons are runtime overlays, not replacement run-graph lifecycle states.
+L00003277	- lifecycle remains the graph-progress contract
+L00003278	- blocked, backoff, retry, remediation, and approval-pending are rendered from runtime projections
+L00003279	- requested vs effective persona/platform/model remains visible where runtime substitution occurred
+L00003280	
+L00003281	### Scope rule
+L00003282	The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces.
+L00003283	
+L00003284	The shared blocked/remediation taxonomy preserves actor-specific state machines and object identities: assistant, interview/builder, runtime, and Orchestrator actors consume common blocked fields without collapsing their lifecycle models.
+L00003285	
+L00003286	### Visual distinction
+L00003287	- blocked episodes are visually distinct from ordinary paused/idle states
+L00003288	- multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate
+L00003289	- remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment
+L00003290	
+
+<<< CONTEXT_AFTER canonical_document_lines=3291-3302 >>>
+L00003291	### Runtime state presentation
+L00003292	Scheduler surfaces MUST visually distinguish:
+L00003293	- blocked waiting for prerequisite or approval
+L00003294	- retrying/backoff
+L00003295	- remediation in progress
+L00003296	- terminal failure
+L00003297	
+L00003298	### Recovery UX rules
+L00003299	- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+L00003300	- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
+L00003301	- if no valid safe point exists, `Retry from safe point` is disabled with an explanation
+L00003302	- Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.

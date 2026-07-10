@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8480-8491 >>>
+L00008480	- "palette visibility"
+L00008481	- "shortcut eligibility"
+L00008482	- "/action-light"
+L00008483	- "/high-consequence"
+L00008484	negative_constraints: []
+L00008485	compatibility_only_notes: []
+L00008486	stale_retired_dispositions: []
+L00008487	owner_boundary_notes: []
+L00008488	owner_hints:
+L00008489	- "Plans/FinalGUISpec.md"
+L00008490	```
+L00008491	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8492-8871 >>>
+L00008492	### F3-093 - Shared Runtime Status And Disabled Control Explanations
+L00008493	
+L00008494	```yaml
+L00008495	plan_unit_id: F3-093
+L00008496	unit_type: requirement
+L00008497	status: accepted
+L00008498	owner_doc: Plans/FinalGUISpec.md
+L00008499	canonical_text: >-
+L00008500	  Runtime-backed surfaces share one status vocabulary and disabled-control explanation model:
+L00008501	  badges derive from canonical reason codes, and disabled mutation controls expose inline reason,
+L00008502	  hover/focus detail, keyboard accessibility, and recovery CTA.
+L00008503	gui_related: true
+L00008504	gui_classification_reason: >-
+L00008505	  This unit defines visible status labels, badges, disabled controls, tooltips, and recovery UI.
+L00008506	split_recommended: true
+L00008507	depends_on: []
+L00008508	unblocks: []
+L00008509	acceptance_criteria:
+L00008510	- "The covered source span remains losslessly available for exact-text audit."
+L00008511	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008512	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008513	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008514	validation_surfaces:
+L00008515	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008516	- "python3 scripts/pm-plan-index.py validate"
+L00008517	risk_class: finalgui_drift
+L00008518	reasoning_tier: standard
+L00008519	context_scope: finalgui_standardization
+L00008520	implementation_surfaces:
+L00008521	- "Plans/FinalGUISpec.md"
+L00008522	node_compile_hint:
+L00008523	  mode: shared_runtime_status_and_disabled_control_explanations
+L00008524	  create_worknodes: false
+L00008525	source_lineage:
+L00008526	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0068"
+L00008527	preserved_exact_tokens:
+L00008528	- "Running"
+L00008529	- "Ready"
+L00008530	- "Blocked"
+L00008531	- "Needs Attention"
+L00008532	- "Degraded"
+L00008533	- "Stale"
+L00008534	- "Detached"
+L00008535	- "Not Configured"
+L00008536	- "disabled-control"
+L00008537	negative_constraints:
+L00008538	- "/text/badge meaning must stay consistent and derive from canonical reason codes rather than panel-local copy."
+L00008539	compatibility_only_notes: []
+L00008540	stale_retired_dispositions: []
+L00008541	owner_boundary_notes: []
+L00008542	owner_hints:
+L00008543	- "Plans/FinalGUISpec.md"
+L00008544	```
+L00008545	
+L00008546	### F3-094 - Deep-Link Context And Shell Route Contract
+L00008547	
+L00008548	```yaml
+L00008549	plan_unit_id: F3-094
+L00008550	unit_type: requirement
+L00008551	status: accepted
+L00008552	owner_doc: Plans/FinalGUISpec.md
+L00008553	canonical_text: >-
+L00008554	  Deep links from receipts, blocked views, and owner-route attention preserve visible context by
+L00008555	  applying clearable context filters or isolated focus modes, and shell navigation consumes shared
+L00008556	  route contracts before reviving stale tier or widgetized assumptions.
+L00008557	gui_related: true
+L00008558	gui_classification_reason: >-
+L00008559	  This unit defines visible deep-link, shell navigation, filter, and focus behavior.
+L00008560	split_recommended: true
+L00008561	depends_on: []
+L00008562	unblocks: []
+L00008563	acceptance_criteria:
+L00008564	- "The covered source span remains losslessly available for exact-text audit."
+L00008565	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008566	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008567	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008568	validation_surfaces:
+L00008569	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008570	- "python3 scripts/pm-plan-index.py validate"
+L00008571	risk_class: finalgui_drift
+L00008572	reasoning_tier: standard
+L00008573	context_scope: finalgui_standardization
+L00008574	implementation_surfaces:
+L00008575	- "Plans/FinalGUISpec.md"
+L00008576	node_compile_hint:
+L00008577	  mode: deep_link_context_and_shell_route_contract
+L00008578	  create_worknodes: false
+L00008579	source_lineage:
+L00008580	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0068"
+L00008581	preserved_exact_tokens:
+L00008582	- "Operation receipts"
+L00008583	- "visible context filter chip"
+L00008584	- "isolated focus mode"
+L00008585	- "/search"
+L00008586	- "/focus"
+L00008587	- "Shell `/navigation`"
+L00008588	- "deep-link"
+L00008589	- "stale `Tiers`"
+L00008590	negative_constraints:
+L00008591	- "Shell navigation must consume the shared route contract before reviving stale Tiers or widgetized Orchestrator surface assumptions."
+L00008592	compatibility_only_notes:
+L00008593	- "Shell navigation and deep-link handling must not revive stale Tiers or widgetized Orchestrator surface assumptions."
+L00008594	stale_retired_dispositions:
+L00008595	- "Shell `/navigation` and `deep-link` handling consume the shared route contract before reviving stale `Tiers` or widgetized Orchestrator assumptions."
+L00008596	owner_boundary_notes: []
+L00008597	owner_hints:
+L00008598	- "Plans/FinalGUISpec.md"
+L00008599	```
+L00008600	
+L00008601	### F3-095 - Explain This State Evidence Contract
+L00008602	
+L00008603	```yaml
+L00008604	plan_unit_id: F3-095
+L00008605	unit_type: requirement
+L00008606	status: accepted
+L00008607	owner_doc: Plans/FinalGUISpec.md
+L00008608	canonical_text: >-
+L00008609	  Explain this state is a GUI affordance on status and blocked UI that may auto-open on first
+L00008610	  block, offers ELI5 plus expert detail, and derives explanations only from canonical reason
+L00008611	  codes, validation fields, allowed actions, state chains, and receipt projections.
+L00008612	gui_related: true
+L00008613	gui_classification_reason: >-
+L00008614	  This unit defines visible explanation affordances and evidence-backed state copy.
+L00008615	split_recommended: true
+L00008616	depends_on: []
+L00008617	unblocks: []
+L00008618	acceptance_criteria:
+L00008619	- "The covered source span remains losslessly available for exact-text audit."
+L00008620	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008621	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008622	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008623	validation_surfaces:
+L00008624	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008625	- "python3 scripts/pm-plan-index.py validate"
+L00008626	risk_class: finalgui_drift
+L00008627	reasoning_tier: standard
+L00008628	context_scope: finalgui_standardization
+L00008629	implementation_surfaces:
+L00008630	- "Plans/FinalGUISpec.md"
+L00008631	node_compile_hint:
+L00008632	  mode: explain_this_state_evidence_contract
+L00008633	  create_worknodes: false
+L00008634	source_lineage:
+L00008635	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0068"
+L00008636	preserved_exact_tokens:
+L00008637	- "Explain this state"
+L00008638	- "ELI5"
+L00008639	- "expert detail"
+L00008640	- "allowed_action_ids[]"
+L00008641	- "/blocked/diverged/degraded"
+L00008642	- "/event/storage"
+L00008643	- "/events/storage"
+L00008644	- "/tradeoffs"
+L00008645	negative_constraints:
+L00008646	- "The GUI says what data is unavailable instead of filling the gap with generic copy."
+L00008647	compatibility_only_notes: []
+L00008648	stale_retired_dispositions: []
+L00008649	owner_boundary_notes: []
+L00008650	owner_hints:
+L00008651	- "Plans/FinalGUISpec.md"
+L00008652	```
+L00008653	
+L00008654	### F3-096 - Target Banners Empty States And Dense Accessibility
+L00008655	
+L00008656	```yaml
+L00008657	plan_unit_id: F3-096
+L00008658	unit_type: requirement
+L00008659	status: accepted
+L00008660	owner_doc: Plans/FinalGUISpec.md
+L00008661	canonical_text: >-
+L00008662	  Destructive, targeted, and remote-mutating surfaces show effective target/context banners,
+L00008663	  preserve canonical empty-state taxonomy, keep hide-when-unused surfaces discoverable, and provide
+L00008664	  non-color accessibility for dense custom surfaces.
+L00008665	gui_related: true
+L00008666	gui_classification_reason: >-
+L00008667	  This unit defines visible target banners, empty states, accessibility, and discoverability.
+L00008668	split_recommended: true
+L00008669	depends_on: []
+L00008670	unblocks: []
+L00008671	acceptance_criteria:
+L00008672	- "The covered source span remains losslessly available for exact-text audit."
+L00008673	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008674	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008675	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008676	validation_surfaces:
+L00008677	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008678	- "python3 scripts/pm-plan-index.py validate"
+L00008679	risk_class: accessibility_gui
+L00008680	reasoning_tier: standard
+L00008681	context_scope: finalgui_standardization
+L00008682	implementation_surfaces:
+L00008683	- "Plans/FinalGUISpec.md"
+L00008684	node_compile_hint:
+L00008685	  mode: target_banners_empty_states_and_dense_accessibility
+L00008686	  create_worknodes: false
+L00008687	source_lineage:
+L00008688	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0068"
+L00008689	preserved_exact_tokens:
+L00008690	- "/targeted"
+L00008691	- "/runtime/context"
+L00008692	- "Not relevant"
+L00008693	- "Not configured"
+L00008694	- "Unavailable"
+L00008695	- "No data yet"
+L00008696	- "No results for current filter"
+L00008697	- "/screen-reader"
+L00008698	- "/table"
+L00008699	negative_constraints:
+L00008700	- "Empty-state taxonomy entries are distinct states, not interchangeable copy."
+L00008701	compatibility_only_notes: []
+L00008702	stale_retired_dispositions: []
+L00008703	owner_boundary_notes: []
+L00008704	owner_hints:
+L00008705	- "Plans/FinalGUISpec.md"
+L00008706	```
+L00008707	
+L00008708	### F3-097 - Blocked Recovery Owner-Routed Action Family
+L00008709	
+L00008710	```yaml
+L00008711	plan_unit_id: F3-097
+L00008712	unit_type: constraint
+L00008713	status: accepted
+L00008714	owner_doc: Plans/FinalGUISpec.md
+L00008715	canonical_text: >-
+L00008716	  Blocked-state recovery uses one owner-routed action family across Orchestrator, destination
+L00008717	  panels, Dashboard, modal approvals, graph dialogs, chat actions, UI, runtime, and chat-thread
+L00008718	  resolution.
+L00008719	gui_related: true
+L00008720	gui_classification_reason: >-
+L00008721	  This unit constrains visible blocked/recovery routing and remediation affordances.
+L00008722	split_recommended: true
+L00008723	depends_on: []
+L00008724	unblocks: []
+L00008725	acceptance_criteria:
+L00008726	- "The covered source span remains losslessly available for exact-text audit."
+L00008727	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008728	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008729	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008730	validation_surfaces:
+L00008731	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008732	- "python3 scripts/pm-plan-index.py validate"
+L00008733	risk_class: owner_route_drift
+L00008734	reasoning_tier: standard
+L00008735	context_scope: finalgui_standardization
+L00008736	implementation_surfaces:
+L00008737	- "Plans/FinalGUISpec.md"
+L00008738	node_compile_hint:
+L00008739	  mode: blocked_recovery_owner_routed_action_family
+L00008740	  create_worknodes: false
+L00008741	source_lineage:
+L00008742	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0068"
+L00008743	preserved_exact_tokens:
+L00008744	- "Blocked-state integration"
+L00008745	- "owner route"
+L00008746	- "recovery CTA"
+L00008747	- "allowed actions"
+L00008748	- "Dashboard CtAs"
+L00008749	- "modal `/toast` approvals"
+L00008750	- "graph-local dialogs"
+L00008751	- "/recovery"
+L00008752	negative_constraints:
+L00008753	- "If a destination panel cannot host the requested recovery action, it links back to the owner route with the original receipt/filter context preserved; it must not create a competing remediation path."
+L00008754	compatibility_only_notes: []
+L00008755	stale_retired_dispositions: []
+L00008756	owner_boundary_notes:
+L00008757	- "Resolution-thread ownership belongs to the canonical attention/blocked route, not the surface that happened to display the prompt."
+L00008758	owner_hints:
+L00008759	- "Plans/FinalGUISpec.md"
+L00008760	```
+L00008761	
+L00008762	### F3-098 - Governance Policy Outcomes And Partial Receipts
+L00008763	
+L00008764	```yaml
+L00008765	plan_unit_id: F3-098
+L00008766	unit_type: requirement
+L00008767	status: accepted
+L00008768	owner_doc: Plans/FinalGUISpec.md
+L00008769	canonical_text: >-
+L00008770	  Governance and policy outcomes render as blocked outcomes with distinct remediation pivots,
+L00008771	  partial receipts, exact policy-blocked object and stage disclosure, resume revalidation, and
+L00008772	  original/current policy or remote outcome retention.
+L00008773	gui_related: true
+L00008774	gui_classification_reason: >-
+L00008775	  This unit defines visible governance-blocked state, receipt, remediation, and revalidation UI.
+L00008776	split_recommended: true
+L00008777	depends_on: []
+L00008778	unblocks: []
+L00008779	acceptance_criteria:
+L00008780	- "The covered source span remains losslessly available for exact-text audit."
+L00008781	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008782	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008783	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008784	validation_surfaces:
+L00008785	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008786	- "python3 scripts/pm-plan-index.py validate"
+L00008787	risk_class: finalgui_drift
+L00008788	reasoning_tier: standard
+L00008789	context_scope: finalgui_standardization
+L00008790	implementation_surfaces:
+L00008791	- "Plans/FinalGUISpec.md"
+L00008792	node_compile_hint:
+L00008793	  mode: governance_policy_outcomes_and_partial_receipts
+L00008794	  create_worknodes: false
+L00008795	source_lineage:
+L00008796	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0068"
+L00008797	preserved_exact_tokens:
+L00008798	- "Governance and policy outcomes"
+L00008799	- "blocked outcomes"
+L00008800	- "Gatekeeper/Kyverno/Pod"
+L00008801	- "remote_mismatch"
+L00008802	- "partial `/receipts`"
+L00008803	- "/stage"
+L00008804	- "renamed_redirected"
+L00008805	- "transferred targets"
+L00008806	negative_constraints:
+L00008807	- "Governance and policy outcomes are blocked outcomes, not generic failures."
+L00008808	compatibility_only_notes: []
+L00008809	stale_retired_dispositions: []
+L00008810	owner_boundary_notes:
+L00008811	- "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md"
+L00008812	owner_hints:
+L00008813	- "Plans/FinalGUISpec.md"
+L00008814	```
+L00008815	
+L00008816	### F3-099 - Progress Catalog Default Drill Targets
+L00008817	
+L00008818	```yaml
+L00008819	plan_unit_id: F3-099
+L00008820	unit_type: requirement
+L00008821	status: accepted
+L00008822	owner_doc: Plans/FinalGUISpec.md
+L00008823	canonical_text: >-
+L00008824	  Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C, with the promoted
+L00008825	  13-widget Progress catalog and each widget's default drill target preserved.
+L00008826	gui_related: true
+L00008827	gui_classification_reason: >-
+L00008828	  This unit defines visible Progress widgets and their user-facing drill targets.
+L00008829	split_recommended: false
+L00008830	depends_on: []
+L00008831	unblocks: []
+L00008832	acceptance_criteria:
+L00008833	- "The covered source span remains losslessly available for exact-text audit."
+L00008834	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00008835	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00008836	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00008837	validation_surfaces:
+L00008838	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00008839	- "python3 scripts/pm-plan-index.py validate"
+L00008840	risk_class: finalgui_drift
+L00008841	reasoning_tier: standard
+L00008842	context_scope: finalgui_standardization
+L00008843	implementation_surfaces:
+L00008844	- "Plans/FinalGUISpec.md"
+L00008845	node_compile_hint:
+L00008846	  mode: progress_catalog_default_drill_targets
+L00008847	  create_worknodes: false
+L00008848	source_lineage:
+L00008849	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0069"
+L00008850	preserved_exact_tokens:
+L00008851	- "progress.run-overview"
+L00008852	- "progress.current-task"
+L00008853	- "progress.lane-health"
+L00008854	- "progress.node-throughput"
+L00008855	- "progress.blocked-concerns"
+L00008856	- "progress.approval-queue"
+L00008857	- "progress.recovery-status"
+L00008858	- "progress.artifact-receipts"
+L00008859	- "progress.worktree-state"
+L00008860	- "progress.account-pressure"
+L00008861	- "progress.account-switches"
+L00008862	- "progress.escalation-stack"
+L00008863	- "progress.attention-summary"
+L00008864	negative_constraints: []
+L00008865	compatibility_only_notes: []
+L00008866	stale_retired_dispositions: []
+L00008867	owner_boundary_notes: []
+L00008868	owner_hints:
+L00008869	- "Plans/FinalGUISpec.md"
+L00008870	```
+L00008871	
+
+<<< CONTEXT_AFTER canonical_document_lines=8872-8883 >>>
+L00008872	### F3-100 - Progress State Action And Alert Labels
+L00008873	
+L00008874	```yaml
+L00008875	plan_unit_id: F3-100
+L00008876	unit_type: requirement
+L00008877	status: accepted
+L00008878	owner_doc: Plans/FinalGUISpec.md
+L00008879	canonical_text: >-
+L00008880	  Progress UI labels include the canonical state, action, and alert taxonomy used by Progress
+L00008881	  widgets and attention views.
+L00008882	gui_related: true
+L00008883	gui_classification_reason: >-

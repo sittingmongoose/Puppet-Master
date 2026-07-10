@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 13033-13044 >>>
+- rebuild disposable projections
+- JSONL/Tantivy
+- authoritative
+negative_constraints:
+- Backup/restore must rebuild disposable projections after restore rather than treating them as authoritative.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 13045-13443 >>>
+### SP-183 - Export Replica Per-Project Seglog Event Registry Enhancements
+
+```yaml
+plan_unit_id: SP-183
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Enhancement coverage preserves export from seglog or JSONL mirror, embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries.
+gui_related: false
+gui_classification_reason: This unit preserves backend enhancement routing and owner boundaries.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: export_replica_per_project_seglog_event_registry_enhancements
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
+preserved_exact_tokens:
+- Export
+- thread or run history
+- JSONL/JSON
+- seglog
+- JSONL mirror
+- thread_id
+- Read replicas
+- embedded redb
+- server-backed store
+- dashboard/Usage reads
+- Per-project seglog
+- §2.1.2
+- app-global
+- Event schema registry
+- payload validation
+- doc generation
+- Plans/Contracts_V0.md
+- top-level envelope
+- Streaming projector
+- Optional richer UX path
+- committed projector state
+- durable checkpoints
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-184 - Seglog Redb Jsonl Tantivy Build Phases
+
+```yaml
+plan_unit_id: SP-184
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The implementation order heading and phases 1-4 remain PlanUnit readiness metadata for seglog foundation, redb/schema, JSONL mirror, and Tantivy chat index build phases, with storage directories, namespaces, checkpoints, and exit criteria preserved without creating WorkNodes.
+gui_related: false
+gui_classification_reason: This unit preserves backend phased implementation order as readiness metadata only.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: seglog_redb_jsonl_tantivy_build_phases
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0103
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0104
+preserved_exact_tokens:
+- Implementation order and testing
+- Phase 1 -- seglog foundation
+- storage/seglog
+- storage/redb
+- storage/jsonl
+- storage/tantivy
+- seglog writer only
+- envelope format
+- seq
+- flush
+- rotation
+- Phase 2 -- redb and schema
+- settings
+- sessions
+- runs
+- checkpoints
+- editor
+- rollups
+- review_rules
+- migrations runner
+- 'Phase 3 -- projector: seglog → JSONL mirror'
+- JSONL mirror
+- 'Phase 4 -- projector: seglog → Tantivy (chat index)'
+- chat.message
+- chat.thread_created
+- thread_id
+- content
+- role
+- ts
+- message_id
+negative_constraints:
+- Phased implementation order is PlanUnit readiness metadata, not WorkNodes or executable build tasks.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-185 - Analytics Chat Editor Usage Wiring Phase
+
+```yaml
+plan_unit_id: SP-185
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Phases 5-6 preserve analytics scan and rollups plus chat, editor, and Usage wiring expectations, including tool_usage, p50/p95/error_count, redb rollups, Usage/dashboard reads, usage.event, run.completed, and end-to-end visible flow.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible Usage/dashboard, chat, editor, and end-to-end wiring expectations.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: analytics_chat_editor_usage_wiring_phase
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0104
+preserved_exact_tokens:
+- Phase 5 -- analytics scan and rollups
+- analytics scan job
+- periodic or on-demand
+- 5h/7d usage rollups
+- tool latency
+- tool_usage
+- per-tool count
+- p50/p95
+- error_count
+- Plans/Tools.md §8.4
+- redb rollups namespace
+- scan checkpoint
+- UI
+- test reader
+- Phase 6 -- wire chat, editor, and Usage
+- assistant-chat-design
+- FileManager.md §2.9
+- Usage/dashboard
+- usage-feature.md
+- usage.event
+- run.completed
+- Full flow works
+- create thread
+- send message
+- Usage view shows rollups
+- editor state persists
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-186 - Storage Phase Dependency Ordering
+
+```yaml
+plan_unit_id: SP-186
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage phase dependencies require seglog writer before projectors, redb schema/migrations and checkpoints before projector checkpoint use, rollups before analytics writes, Tantivy before chat search UX, and chat/editor/Usage wiring after storage primitives exist.
+gui_related: false
+gui_classification_reason: This unit preserves backend dependency ordering and startup prerequisites.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: storage_phase_dependency_ordering
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0104
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0105
+preserved_exact_tokens:
+- Dependencies
+- seglog writer before any projector
+- redb open + schema + migrations
+- checkpoints
+- rollups
+- projectors must not start until redb is open and checkpoints namespace exists
+- analytics scan must not run until rollups namespace
+- scan checkpoint key
+- current segment may be empty
+- position 0
+- Dependency graph
+- Event type schemas
+- Tantivy chat index
+- Chat/editor/Usage wiring
+negative_constraints:
+- Projectors must not start until redb is open and checkpoints namespace exists.
+- Analytics scan must not run until rollups namespace and scan checkpoint key exist.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-187 - Durable Store Startup Lock And Fallback Order
+
+```yaml
+plan_unit_id: SP-187
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Startup order resolves app data root, probes durable-store safety including unsafe-filesystem/NFS posture, derives lock-path, acquires pm.lock before writers, enters read-only mode if held, opens stores and projectors in order, and routes fallback metadata to safe local storage while preserving logical-root lineage and diagnostics.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible startup diagnostics/read-only posture and backend lock/fallback order.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: durable_store_startup_lock_and_fallback_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0106
+preserved_exact_tokens:
+- Startup order
+- app data root
+- environment override optional
+- unsafe-filesystem
+- NFS
+- safe local fallback
+- lock-path
+- pm.lock
+- /read-only viewer mode
+- storage/seglog
+- storage/redb
+- storage/jsonl
+- storage/tantivy
+- Open redb
+- run migrations
+- Open the seglog writer
+- Start projectors
+- analytics schedulers
+- per-project index services
+- durable-store fallback
+- session snapshot metadata
+- lineage
+- user-visible diagnostics
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-188 - Regex Index Startup Recovery
+
+```yaml
+plan_unit_id: SP-188
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Regex-index startup recovery scans regex_index directories after project context, selects and validates gen-{N} candidates, verifies index_meta, checksums, lookup.bin and git anchors, creates IndexSnapshot when ready, serves raw ripgrep on no_index or corrupt snapshots, and deletes corrupt/orphaned generations during recovery.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible Search fallback and backend regex-index recovery behavior.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: regex_index_startup_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0106
+preserved_exact_tokens:
+- Regex-index startup recovery
+- regex_index/
+- grep
+- Search-panel regex query
+- gen-{N}/
+- index_meta.json
+- xxh3 checksums
+- lookup.bin
+- mmap
+- anchor_sha
+- git cat-file -t {anchor_sha}
+- IndexSnapshot
+- ready
+- no_index
+- raw ripgrep
+- checksum or metadata mismatch
+- corrupt generation directory
+- full rebuild
+- orphaned or partial generations
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 13444-13455 >>>
+### SP-189 - Shutdown Flush Close And Cache Retention
+
+```yaml
+plan_unit_id: SP-189
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Shutdown signals projectors, cancels in-flight regex builds, flushes and closes seglog, closes redb, releases the active durable-store lock only after final writer flush, and leaves valid regex snapshots and reusable remote cache state in place.
+gui_related: false
+gui_classification_reason: This unit preserves backend shutdown, flush, lock-release, and cache-retention rules.
+split_recommended: false
+depends_on:

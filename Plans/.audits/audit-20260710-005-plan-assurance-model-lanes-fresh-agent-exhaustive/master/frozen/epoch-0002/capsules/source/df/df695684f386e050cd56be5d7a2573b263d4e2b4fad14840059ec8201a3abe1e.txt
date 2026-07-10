@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE 1233-1244 >>>
+- progress
+- visual drag target
+negative_constraints:
+- Large drop operations must not block the main thread or tree UI.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+split_recommendation_reason: Implementation and user feedback details are combined in the source span.
+```
+
+
+<<< AUTHORITATIVE_CORE 1245-1607 >>>
+### F-014 - Drag Drop Gaps Security And Failure Handling
+
+```yaml
+plan_unit_id: F-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Drag/drop gap handling covers cross-platform behavior, directory drops, move-versus-copy clarity, name conflicts, symlink policy, sensitive path exposure, cancellation, errors, locked files, path-too-long messages, project-root write guards, permission-denied errors, disk-space checks, rollback cleanup, and background execution.
+gui_related: true
+gui_classification_reason: This unit covers user-visible drag/drop failure handling and security prompts.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: drag_drop_gaps_security_failure_handling
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0015
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0016
+preserved_exact_tokens:
+- Symlinks
+- Sensitive path exposure
+- Cancel / failure mid-copy
+- Locked files / permissions
+- Path too long
+- project-root write guard
+- permission-denied
+- insufficient space
+- rollback cleanup
+- background task
+negative_constraints:
+- Dragged-in paths must be validated against allowed workspace/project boundaries before mutation.
+- Do not block the main thread or tree UI.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+split_recommendation_reason: Security/backend failure and user-visible error handling are preserved together from adjacent spans.
+```
+
+### F-015 - Deferred Drag Drop Enhancements
+
+```yaml
+plan_unit_id: F-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Deferred drag/drop enhancements include internal reorder for custom sort, same-filesystem move fallback, undo toast for recent copies, drag-to-chat attachment, and Settings options for default drop action, conflict policy, and show hidden files.
+gui_related: true
+gui_classification_reason: This unit captures optional visible drag/drop enhancements and settings.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: deferred_drag_drop_enhancements
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0017
+preserved_exact_tokens:
+- Internal reorder
+- Move instead of copy
+- Undo toast
+- Drag to chat
+- Default drop action
+- Conflict policy
+- Show hidden files
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- These are enhancements, not MVP hard blockers unless promoted by later owner docs.
+owner_hints:
+- Plans/FileManager.md
+```
+
+### F-016 - IDE Style Editor MVP Acceptance
+
+```yaml
+plan_unit_id: F-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  The in-app IDE-style editor MVP opens files from the open-file contract, saves buffers, shows dirty and read-only states, enforces large-file limits, shows transient states, handles empty-file behavior, preserves canonical paths, and records cursor/scroll payload shape and highlight duration settings.
+gui_related: true
+gui_classification_reason: This unit defines visible editor MVP acceptance behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: ide_style_editor_mvp_acceptance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0018
+preserved_exact_tokens:
+- In-app IDE-style editor (MVP)
+- Open failure
+- Empty file behavior
+- canonical path
+- §4.1
+- { line, column, scroll_y }
+- editor/highlight_duration_ms
+- Loading
+- File not found
+negative_constraints:
+- Editor behavior must enforce large file threshold and hard cap.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+```
+
+### F-017 - Editor Placement Layout Detach And Tabs
+
+```yaml
+plan_unit_id: F-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Editor placement uses the File Editor strip and supports docked visibility, detach/redock, one floating editor window, tabs with active-buffer switching, close/unsaved prompts, reorder, and persistence.
+gui_related: true
+gui_classification_reason: This unit defines editor placement, layout, detach, and tab UI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: editor_placement_layout_detach_and_tabs
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0019
+preserved_exact_tokens:
+- File Editor strip
+- Placement
+- layout
+- detach
+- redock
+- one floating editor window
+- tabs
+- reorder
+- persistence
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+```
+
+### F-018 - Editing Save State Model
+
+```yaml
+plan_unit_id: F-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Editor save state keeps dirty, read-only, degraded, change-marker, write-lock, stale-disk, changed-on-disk, transient save/reload failure, and recovery attention as orthogonal facts; Save is explicit, save failure leaves dirty state intact with retry, save-as, and reason, and shared buffers remain authoritative.
+gui_related: true
+gui_classification_reason: This unit covers user-visible dirty/read-only/degraded/change-marker/write-lock/stale-disk facts and save behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: editing_save_state_model
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0020
+preserved_exact_tokens:
+- dirty
+- read-only
+- /degraded
+- change-marker
+- write-lock
+- stale-disk
+- changed-on-disk
+- Save is explicit
+- save failure leaves dirty
+- retry
+- save-as
+- ContractName:Plans/storage-plan.md
+negative_constraints:
+- Save failure must not silently clear dirty state.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+split_recommendation_reason: Source span also carries revert/restore and remote recovery contracts split into F-019 and F-020.
+```
+
+### F-019 - Revert Restore Boundaries
+
+```yaml
+plan_unit_id: F-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Revert and restore flows route through explicit backend-owned restore history: cmd.chat.revert resolves target_message_id or latest assistant turn, whole-turn multi-file restores update each buffer via backend refresh notification, and document pane restore/history uses the same restore pipeline without owning separate restore points.
+gui_related: false
+gui_classification_reason: This unit defines backend restore/revert routing and history boundaries, not GUI layout.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: revert_restore_boundaries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0020
+preserved_exact_tokens:
+- cmd.chat.revert
+- target_message_id
+- latest assistant turn
+- whole-turn multi-file restore
+- backend refresh notification
+- Restore to… / History
+- document pane
+- restore points
+negative_constraints:
+- Neither File Editor nor document pane stores or manufactures restore points independently.
+- Restore/revert must not create separate history branches.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+split_recommendation_reason: Split from editing/save source span to keep backend restore history separate from GUI save states.
+```
+
+### F-020 - Recover Unsaved And Remote Backed Recovery
+
+```yaml
+plan_unit_id: F-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Recover-unsaved is required for local and remote-backed buffers; recovered remote-backed buffers represent local unsaved memory only, show the exact recovery banner, and must reconnect or revalidate destination before save or flush claims remote success.
+gui_related: true
+gui_classification_reason: This unit governs visible recover-unsaved and remote-backed recovery banners and states.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- Plans/FileManager.md
+node_compile_hint:
+  mode: recover_unsaved_remote_backed_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0020
+preserved_exact_tokens:
+- Recover unsaved
+- local and remote-backed buffers
+- Recovered local edits — remote destination not yet synchronized
+- reconnect
+- revalidate
+- remote save/flush
+- remote terminal
+- /run-debug
+negative_constraints:
+- Remote terminal and /run-debug execution must not be promised merely because a remote-backed file can be edited.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/FileManager.md
+split_recommendation_reason: Split from broader editing/save source span for recovery-specific user-visible behavior.
+```
+
+
+<<< CONTEXT_AFTER 1608-1619 >>>
+### F-021 - Remote Offline Cached File Wording
+
+```yaml
+plan_unit_id: F-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  File Manager/editor owns cached-file-only offline editing: live UI uses Work offline (cached files only), legacy Work offline (cached) is compatibility shorthand only, no cached snapshot disables or shows no-cached-files state, and remote degraded states disclose host, pending write, read-only, search, git, shell, LSP, and file write availability.
+gui_related: true
+gui_classification_reason: This unit defines visible offline/cached-file labels and remote degraded states.
+split_recommended: false

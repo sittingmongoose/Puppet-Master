@@ -1,0 +1,397 @@
+<<< CONTEXT_BEFORE 2224-2235 >>>
+- Firecrawl cache serves as provider-side optimization only
+- `cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"`
+- Question/questionnaire session state persistence and TODO schema persistence are storage-owned carry-through requirements that web cache and activity payloads must not overwrite.
+
+Compatibility/source-lineage disposition: this extract preserves cache state values, provider labels, and storage carry-through rules as source tokens. Cache persistence and activity payload typing remain storage-owned while Tools owns cache-routing behavior.
+## Canonical owner and consumer reconciliation
+
+Tools are defined SSOT in this document. Consumers in other surfaces (UI, CLI, Help, Permissions) reference this document rather than restating tool definitions.
+
+Tools is the single-owner SSOT for tool-level web operation behavior, provider capability tiers, Firecrawl routing, and cache-routing / cache routing decisions. `Plans/storage-plan.md` owns cache persistence and activity payload storage; `Plans/CLI_Bridged_Providers.md`, `Plans/Provider_OpenCode.md`, `Plans/newtools.md`, and OpenCode audit surfaces remain consumer or provider-adjacent references rather than competing tool owners.
+
+OpenCode billing and /caching evidence confirms that extra abstraction layers make tracking HARDER, not easier; Tools therefore owns explicit tool-level cache-routing and provider-capability decisions while usage, storage, prompt-cache, and provider bridge owners keep their narrower accounting and persistence contracts.
+
+<<< AUTHORITATIVE_CORE 2236-2603 >>>
+
+- Firecrawl/web operations in `Plans/Tools.md` span `### 3.5C`, `### 3.5D`, `## 10`, `### 10.3`, `### 10.7`, `### 11.1`, and `## 14`. This document owns Firecrawl integration, TODO contract carry-through, provider placement, cache, audit/error mapping, and the traceability obligations `obl-013`, `obl-014`, `obl-041`, `obl-053`, `obl-054`, `obl-062`, `obl-066`, `obl-067`, `obl-029`, `obl-040`, `obl-043`, and `obl-068`.
+- Stale permission, LSP, and web-output carry-through markers such as `/LSP/web-output`, `/web-output/LSP/permission`, and legacy `web-output` phrasing are retired as owner text; live tool canon points to the dedicated Contracts and storage owners for WebAction, common web output fields, and blocked-action payloads.
+
+### Consumer propagation
+
+#### Acceptance carry-through
+- Expand blocked_notice beyond blocked_family and allowed_action_ids[]
+- Carry escalation_level, action_available ownership, and usage observability through blocked surfaces
+- Under `## Canonical owner and consumer reconciliation` -> `### Consumer propagation`, blocked surfaces must not stop at `blocked_family` plus `allowed_action_ids[]`.
+- Consumer propagation must carry `escalation_level`, `action_available` ownership, and usage observability through blocked_notice handling.
+- If `allowed_action_ids[]` remains in this subsection, it must be explicitly subordinate to the richer blocked_notice contract rather than the complete surface definition.
+
+### Required data shape
+
+#### Acceptance carry-through
+- Share one attribution family across tool events, runtime artifacts, receipts, and usage records
+- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Carry usage switch-history and usage execution-role follow-through
+- Under `## Canonical owner and consumer reconciliation` -> `### Required data shape`, define one attribution family shared across tool events, runtime artifacts, receipts, and usage records.
+- Carry run/attempt/thread/node/artifact/provider/usage anchors together with execution/runtime identity fields in the tool record shape.
+- Transfer `execution_role`, `requested_account_id`, `operational_identity`, account-switch ownership, pressure ownership, `blocked_sequence` minting, startup recovery handshake, and DAE jail/approval policy into the owner/consumer contract.
+- Require usage switch-history and usage execution-role follow-through in the same reconciled owner data shape.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Tools.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### T-002 - Tools Document Authority And Owner Boundary
+
+```yaml
+plan_unit_id: T-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Plans/Tools.md is the canonical owner for built-in tools, custom tools, MCP registry and policy integration,
+  permission-model context, provider routing, and thin runtime tool contracts; per-platform MCP config remains in Plans/newtools.md
+  and AGENTS.md, while live MCP naming, authentication, and availability remain in Plans/MCP_Integration.md.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks:
+- T-003
+- T-004
+- T-012
+acceptance_criteria:
+- Compliance, scope, SSOT references, and owner/consumer boundaries remain preserved.
+- Tool/search contracts remain canonical here rather than a parallel chat-thread-only tool model.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_owner_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0003
+preserved_exact_tokens:
+- Puppet Master
+- built-in tools
+- custom tools
+- MCP
+- allow/deny/ask
+- '`question`'
+- '`todowrite`'
+- '`todoread`'
+- '`web*`'
+- '`skill`'
+- '`task`'
+- '`lsp`'
+- '`/tool/search`'
+negative_constraints:
+- Do not use `tool.invoked.index_used` for fuzzy/path discovery; it remains only grep/Search sparse-n-gram disclosure.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host tool-context obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### T-166 - Host Capability Context For Tools Shells And Integration Commands
+
+```yaml
+plan_unit_id: T-166
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Tools, shells, and integration commands may consume containerized-host context through PM-owned host capability
+  references and HostCapabilityCommand dispatch envelopes, but tool availability never grants host execution authority by
+  itself. Tool calls, bounded shell-like actions, and service/database/API integration commands carry
+  host_capability_ref, host_profile_id, host_assignment_id, execution_unit_context_ref, permission_snapshot_id,
+  FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy, transcript policy,
+  required receipt refs, cleanup expectations, and redaction profile where applicable. Provider tools receive host
+  capability as context/capability input rather than direct provider authority, and all container exec or runtime
+  operations remain mediated by Executor, Run Modes, Permissions, FileSafe, UI_Command_Catalog, and Runtime Artifacts
+  receipt projection.
+gui_related: false
+gui_classification_reason: Tool capability context and dispatch policy are backend/tooling behavior, not user-visible visual presentation.
+depends_on: [CV-303, CV-304, EP-109, RM-048, PS-126, F2-194]
+unblocks: [MI-031, CBP-023, GRS-032, OSI-431]
+acceptance_criteria:
+  - Tools can reference host_capability_ref and host_profile_id without using backend runtime ids as PM identity.
+  - Tool invocation events preserve permission_snapshot_id, host_preflight_receipt, host_execution_receipt, cleanup or blocker refs, and redaction policy where host resources are involved.
+  - Provider tools, shells, and integration commands are denied or blocked with explicit blocker payloads when authority, FileSafe, secret, egress, or runtime gates fail.
+  - Host-side commands such as lint, typecheck, format, git, package installs, static analysis, and browser tests stay host/worktree-side unless runtime services are required.
+  - Container-runtime commands are used for service context, database/API/integration work, runtime-specific tests, logs, exec, and artifact capture only through PM-owned command and receipt paths.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future tool invocation and HostCapabilityCommand policy fixtures
+risk_class: host_tool_authority_drift
+reasoning_tier: high
+context_scope: containerized_host_tool_context
+implementation_surfaces:
+  - Plans/Tools.md
+  - future tool registry and shell/integration command dispatch
+node_compile_hint:
+  mode: host_capability_tool_context
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0047
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
+source_atom_ids: [atom-0023, atom-0040, atom-0044, atom-0047, atom-0053, atom-0064, atom-0069, atom-0073, atom-0081]
+preserved_exact_tokens:
+  - "provider tools"
+  - "shells"
+  - "integration commands"
+  - "host_capability_ref"
+  - "host_profile_id"
+  - "HostCapabilityCommand"
+  - "tool invocation event"
+  - "permission_snapshot_id"
+  - "host_preflight_receipt"
+  - "host_execution_receipt"
+negative_constraints:
+  - Do not let tool availability grant host execution authority.
+  - Do not let container exec bypass Executor, Permissions, FileSafe, UI_Command_Catalog, Tools policy, or receipts.
+  - Do not route every command through a container just because a host exists.
+  - Do not expose raw secrets or unredacted provider, registry, SSH, or environment credentials through tool context.
+owner_hints:
+  - Plans/Tools.md
+  - Plans/Executor_Protocol.md
+  - Plans/Run_Modes.md
+  - Plans/Permissions_System.md
+  - Plans/FileSafe.md
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into tool capability and provider-native tool requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### T-164 - Provider Native Tool Mediation And Capability Scope
+
+```yaml
+plan_unit_id: T-164
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Provider-native tool calls and hosted/client tool capabilities must be mediated through PM tool policy and permission custody. Tool availability is caller-scoped and must include provider_entry_id, account_profile_ref, model_id, capability_id, caller_scope, execution_role, enabled_on_instance, usable_now, blocked_reason, permission_snapshot_id, redaction_profile, and verification_state. Cursor client tools such as `providerIdentifier: client` / `toolName: pm_echo` are evidence for route-specific capability handling, not permission bypasses.
+gui_related: false
+gui_classification_reason: Tool policy/capability mediation contract rather than visual presentation.
+depends_on: [CV-294, PS-119]
+unblocks: []
+acceptance_criteria:
+  - Provider-native tools pass through PM permission/capability policy before use.
+  - Tool availability is caller-scoped and does not infer usable_now from provider enablement alone.
+  - Provider tool evidence does not store secrets or provider-native hidden state.
+  - Tool result records can link to runtime artifacts without re-owning artifact schema.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_tool_permission_bypass
+reasoning_tier: high
+context_scope: provider_native_tools
+implementation_surfaces: [Plans/Tools.md, Plans/Permissions_System.md, Plans/Contracts_V0.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: provider_native_tool_mediation, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0117
+  - pldg-20260624-001-provider-updates:atom-0120
+source_atom_ids: [atom-0117, atom-0120, atom-0121, atom-0131]
+preserved_exact_tokens: ["provider-native tools", "providerIdentifier: client", "toolName: pm_echo", "enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "permission_snapshot_id"]
+negative_constraints:
+  - Do not bypass PM permission custody for provider-native tools.
+  - Do not infer `usable_now` from provider enablement alone.
+  - Do not store provider secret material in tool records.
+owner_hints: [Plans/Tools.md, Plans/Permissions_System.md, Plans/Contracts_V0.md, Plans/Runtime_Artifacts_Panel.md]
+```
+
+### T-003 - Tool GUI Settings And Usage Visibility
+
+```yaml
+plan_unit_id: T-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The GUI exposes tool support through Settings > Advanced > MCP Configuration, Settings > Permissions, required
+  MVP presets, built-in plus MCP-discovered permission rows, and Usage-page tool metrics from seglog rollups.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, or
+  visible rendering behavior.
+split_recommended: false
+depends_on:
+- T-002
+unblocks: []
+acceptance_criteria:
+- Settings bind to the same central registry config used by runs.
+- Presets Read-only, Plan mode, and Full are implemented but optional to apply.
+- Usage shows tool name, invocation count, latency p50/p95, and error rate.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_owner_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: gui_contract_alignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0004
+preserved_exact_tokens:
+- Settings > Advanced > MCP Configuration
+- Settings > Permissions
+- Read-only
+- Plan mode
+- Full
+- Usage page
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-004 - Permission Summary Consumes Permissions SSOT
+
+```yaml
+plan_unit_id: T-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tools summarizes permission actions, precedence, and persistence for registry context only; canonical permission
+  semantics remain in Plans/Permissions_System.md.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-002
+unblocks:
+- T-006
+- T-007
+acceptance_criteria:
+- '`allow`, `ask`, and `deny` meanings stay aligned with Permissions_System.'
+- Precedence order and TOML/redb paths remain summary references, not duplicate ownership.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_policy_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0005
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0007
+preserved_exact_tokens:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules'
+- allow
+- deny
+- ask
+- Mode override > Session cache > Persona overrides > Project-level > Global-level > Defaults
+- '`tool_permissions`'
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-005 - Canonical Child Run Identity For Subagents
+
+```yaml
+plan_unit_id: T-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: A PM subagent is a child run with canonical identity fields and requested/effective Persona/runtime fields;
+  provider-native subagent, child-session, or plain-run paths are adapter differences that do not change PM child-run canon.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-004
+unblocks:
+- T-015
+acceptance_criteria:
+- All child-run identity fields remain preserved.
+- Disposable-by-default lifecycle is retained.
+- Provider invocation kind stays additive adapter metadata.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_identity_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: child_run_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0008
+preserved_exact_tokens:
+- child_run_id
+- parent_run_id
+- thread_id
+- batch_id?
+- subgroup_id?
+- attempt_id?
+- requested/effective Persona
+- effective provider invocation kind
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md,
+  ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 2604-2615 >>>
+### T-006 - FileSafe And Embedded Review Guard
+
+```yaml
+plan_unit_id: T-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: FileSafe applies after tool permission and may still block an allowed tool invocation; embedded document review
+  is not a hidden mutation channel.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

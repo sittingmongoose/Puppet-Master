@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5805-5816 >>>
+L00005805	Run-scoped proof artifacts:
+L00005806	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00005807	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00005808	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00005809	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00005810	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00005811	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00005812	
+L00005813	Phase 2B batch 050 atomized or structurally dispositioned `Executor_Protocol-S0001` through `Executor_Protocol-S0029` into `EP-002` through `EP-033`. Phase 2B batch 051 atomized or structurally dispositioned `Executor_Protocol-S0030` through `Executor_Protocol-S0065` into `EP-034` through `EP-086`. Phase 2B batch 052 atomized `Executor_Protocol-S0066` through `Executor_Protocol-S0067` into `EP-087` through `EP-095`, structurally dispositioned `Executor_Protocol-S0068`, `Executor_Protocol-S0069`, and `Executor_Protocol-S0071`, and retired `EP-001` as migration lineage for `Executor_Protocol-S0070`. No residual source-preserving Executor Protocol PlanUnit remains. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+L00005814	
+L00005815	## Ledger Compile Addendum - pldg-20260614-001
+L00005816	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5817-6211 >>>
+L00005817	### EP-096 - Runtime Consumer Header Recovery Compile Addendum
+L00005818	
+L00005819	```yaml
+L00005820	plan_unit_id: EP-096
+L00005821	unit_type: requirement
+L00005822	status: accepted
+L00005823	owner_doc: Plans/Executor_Protocol.md
+L00005824	canonical_text: >-
+L00005825	  Executor_Protocol missing Section 5 and top owner stubs recover as runtime consumer sections. Executor consumes tier-era retirement,
+L00005826	  blocked-policy transfer, provider/model carry-through, approval scope, durable approver identity, and worktree allocation from their owners;
+L00005827	  it must not revive tier as primary execution canon or replace Models_System provider/model precedence ownership.
+L00005828	gui_related: false
+L00005829	gui_classification_reason: Executor runtime protocol and scheduler consumer sections are backend/runtime contracts.
+L00005830	depends_on: [EP-005, EP-075, EP-077, EP-079]
+L00005831	unblocks: []
+L00005832	acceptance_criteria:
+L00005833	  - Section 5 is restored or explicitly aliased as a structural parent without changing scheduler behavior.
+L00005834	  - tier, TierContext, tier_id, TierType, and Phase/Task/Subtask are compatibility-only in Executor runtime context.
+L00005835	  - Approval scope and durable approver identity consume Contracts/HITL owner fields.
+L00005836	validation_surfaces:
+L00005837	  - python3 scripts/pm-plan-index.py validate
+L00005838	  - manual Executor heading/owner review
+L00005839	risk_class: executor_consumer_drift
+L00005840	reasoning_tier: standard
+L00005841	context_scope: executor_owner_stub_recovery
+L00005842	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/Models_System.md]
+L00005843	node_compile_hint: {mode: executor_consumer_section_recovery, create_worknodes: false}
+L00005844	source_lineage:
+L00005845	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+L00005846	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0038
+L00005847	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0072
+L00005848	preserved_exact_tokens: ["Retire tier-era canon and shadow fields", "Identity and blocked-policy transfer cluster", "Coverage blocker provider/model precedence owner section", "Approval scope key and approver identity", "TierContext", "tier_id", "execution_role", "requested_account_id", "operational_identity"]
+L00005849	negative_constraints:
+L00005850	  - Do not revive tier vocabulary as primary Executor canon.
+L00005851	  - Do not make Executor replace Models_System provider/model precedence ownership.
+L00005852	owner_hints: [Plans/Executor_Protocol.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/human-in-the-loop.md]
+L00005853	```
+L00005854	
+L00005855	## Ledger Compile Addendum - pldg-20260615-001
+L00005856	
+L00005857	### EP-097 - Runtime Addenda Consolidation Boundary
+L00005858	
+L00005859	```yaml
+L00005860	plan_unit_id: EP-097
+L00005861	unit_type: compatibility_disposition
+L00005862	status: accepted
+L00005863	owner_doc: Plans/Executor_Protocol.md
+L00005864	canonical_text: >-
+L00005865	  Executor_Protocol runtime scheduler, blocked/recovery, retry, safe-point,
+L00005866	  remediation, readiness, score, attempt lifecycle, and provider/model carry-through
+L00005867	  addenda are consolidated as consumer-facing executor rules subordinate to the
+L00005868	  named runtime, contract, storage, mode, model, and wiring owners. Historical
+L00005869	  `Canonical Alignment` or `Consolidation Addendum` headings and dates remain
+L00005870	  source-lineage, but executor implementers must not treat overlapping addenda as
+L00005871	  peer precedence layers or infer canonical behavior from their order.
+L00005872	gui_related: false
+L00005873	gui_classification_reason: This unit defines executor/runtime protocol precedence rather than visual presentation.
+L00005874	depends_on:
+L00005875	  - EP-096
+L00005876	unblocks: []
+L00005877	acceptance_criteria:
+L00005878	  - Executor runtime recovery behavior is read through named owner sections and PlanUnits rather than additive addendum order.
+L00005879	  - Scheduler, blocked/recovery, retry, safe-point, remediation, readiness, score, attempt lifecycle, approval, and provider/model terms remain preserved as exact lineage.
+L00005880	  - Executor consumes Contracts_V0, Run_Modes, Models_System, storage-plan, and Wiring_Matrix ownership without replacing them.
+L00005881	  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
+L00005882	validation_surfaces:
+L00005883	  - python3 scripts/pm-plan-index.py validate
+L00005884	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
+L00005885	risk_class: executor_addenda_precedence_drift
+L00005886	reasoning_tier: high
+L00005887	context_scope: executor_runtime_addenda_consolidation
+L00005888	implementation_surfaces:
+L00005889	  - Plans/Executor_Protocol.md
+L00005890	  - Plans/Contracts_V0.md
+L00005891	  - Plans/Run_Modes.md
+L00005892	  - Plans/Models_System.md
+L00005893	  - Plans/storage-plan.md
+L00005894	  - Plans/Wiring_Matrix.md
+L00005895	node_compile_hint:
+L00005896	  mode: executor_runtime_addenda_consolidation
+L00005897	  create_worknodes: false
+L00005898	source_lineage:
+L00005899	  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+L00005900	  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
+L00005901	  - pldg-20260615-001-part-4-fable-cleanup:atom-0015
+L00005902	  - pldg-20260615-001-part-4-fable-cleanup:atom-0018
+L00005903	  - local:Plans/Executor_Protocol.md:259
+L00005904	  - local:Plans/Executor_Protocol.md:506
+L00005905	  - local:Plans/Executor_Protocol.md:578
+L00005906	  - local:Plans/Executor_Protocol.md:663
+L00005907	preserved_exact_tokens:
+L00005908	  - "Runtime Scheduler Addendum (2026-03-08)"
+L00005909	  - "Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)"
+L00005910	  - "Canonical Runtime Scheduler Canonical Alignment (2026-03-09)"
+L00005911	  - "Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)"
+L00005912	  - "Canonical Alignment"
+L00005913	  - "Consolidation Addendum"
+L00005914	  - "runtime scheduler"
+L00005915	  - "blocked/recovery"
+L00005916	  - "retry"
+L00005917	  - "safe-point"
+L00005918	  - "remediation"
+L00005919	  - "blocked_sequence"
+L00005920	  - "request_id"
+L00005921	  - "tier-era"
+L00005922	  - "TierContext"
+L00005923	  - "Phase/Task/Subtask/Iteration"
+L00005924	negative_constraints:
+L00005925	  - Do not leave overlapping addenda as coequal normative sections when owner PlanUnits carry the merged rule.
+L00005926	  - Do not semantically change scheduler, blocked, retry, safe-point, remediation, readiness, score, attempt lifecycle, or provider/model behavior during consolidation.
+L00005927	compatibility_only_notes:
+L00005928	  - Cited runtime addenda sections are compatibility/source-lineage sections; named owner PlanUnits and owner docs carry merged runtime precedence.
+L00005929	owner_hints:
+L00005930	  - Plans/Executor_Protocol.md
+L00005931	  - Plans/Contracts_V0.md
+L00005932	  - Plans/Run_Modes.md
+L00005933	  - Plans/Models_System.md
+L00005934	  - Plans/storage-plan.md
+L00005935	  - Plans/Wiring_Matrix.md
+L00005936	```
+L00005937	
+L00005938	## Ledger Compile Addendum - pldg-20260616-002
+L00005939	
+L00005940	### EP-098 - GoalRun WorkNode Scheduler Boundary
+L00005941	
+L00005942	```yaml
+L00005943	plan_unit_id: EP-098
+L00005944	unit_type: requirement
+L00005945	status: accepted
+L00005946	owner_doc: Plans/Executor_Protocol.md
+L00005947	canonical_text: >-
+L00005948	  Executor/runtime scheduler owns concrete runnable WorkNode dispatch for Orchestrator GoalRuns. Goal Runtime and Orchestrator may define objectives, WorkGraph shape, WorkNode requests, verification requirements, receipts, and projections, but Executor remains authoritative for readiness, dependency, blocked-state, retry/backoff, wakeups, capacity-aware parallel dispatch, and failure-class recovery. High-end controller/planner decomposition may decompose objectives into a WorkGraph and bounded WorkNodes as runnable work requests, but concrete dispatch remains gated by Executor readiness and scheduler policy. WorkNode execution success is provisional until verification and receipt certification complete.
+L00005949	gui_related: false
+L00005950	gui_classification_reason: Scheduler ownership, dispatch, retry/backoff, capacity, and provisional execution semantics are runtime behavior, not visual presentation.
+L00005951	depends_on: [GRS-026, GRS-027, PNC-009, PS-115, W-071]
+L00005952	unblocks: [OP-022, RGV-012]
+L00005953	acceptance_criteria:
+L00005954	  - Goal Runtime does not dispatch concrete graph nodes directly.
+L00005955	  - Executor scheduler readiness, blocked/backoff, retry, capacity, wakeup, and failure-class semantics remain canonical for WorkNodes.
+L00005956	  - RepairWorkNodes and WorkNode retries remain bounded by scheduler and write-surface policy.
+L00005957	  - Controller/planner decomposition can produce WorkGraph and bounded WorkNode runnable work requests without bypassing Executor readiness or scheduler authority.
+L00005958	  - WorkNode success alone does not certify parent GoalRun or final completion.
+L00005959	validation_surfaces:
+L00005960	  - python3 scripts/pm-plan-index.py validate
+L00005961	  - future Executor WorkNode scheduler integration tests
+L00005962	risk_class: scheduler_boundary_drift
+L00005963	reasoning_tier: high
+L00005964	context_scope: executor_goalrun_worknode_dispatch
+L00005965	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
+L00005966	node_compile_hint: {mode: goalrun_worknode_scheduler_boundary, create_worknodes: false}
+L00005967	source_lineage:
+L00005968	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0009
+L00005969	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0013
+L00005970	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0017
+L00005971	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0020
+L00005972	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0041
+L00005973	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0042
+L00005974	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0048
+L00005975	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0049
+L00005976	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0054
+L00005977	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0076
+L00005978	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+L00005979	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
+L00005980	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0007
+L00005981	preserved_exact_tokens:
+L00005982	  - "readiness"
+L00005983	  - "blocked state"
+L00005984	  - "retry/backoff"
+L00005985	  - "capacity-aware dispatch"
+L00005986	  - "failure-class recovery"
+L00005987	  - "ready WorkNodes"
+L00005988	  - "bounded executable unit"
+L00005989	  - "decomposes"
+L00005990	  - "bounded WorkNodes"
+L00005991	  - "runnable work"
+L00005992	  - "Execution success is not completion"
+L00005993	negative_constraints:
+L00005994	  - Do not bypass blocked/backoff/capacity semantics.
+L00005995	  - Do not let WorkNode executors certify global completion.
+L00005996	  - Do not treat design-time WorkNode terms as permission to create runtime work artifacts.
+L00005997	owner_hints: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Orchestrator_Page.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md]
+L00005998	```
+L00005999	
+L00006000	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00006001	
+L00006002	### EP-099 - Executor Intake For WorkNode Requests
+L00006003	
+L00006004	```yaml
+L00006005	plan_unit_id: EP-099
+L00006006	unit_type: requirement
+L00006007	status: accepted
+L00006008	owner_doc: Plans/Executor_Protocol.md
+L00006009	canonical_text: >-
+L00006010	    WorkNode requests become runnable only after Executor intake validates graph integrity, source-control requirements, test bindings, model routing, authority requirements, readiness prerequisites, and scheduler metadata. ExecutorIntakeReport is the boundary artifact proving that a WorkNodeRequest was accepted, rejected, or blocked. The strict runtime contract packet defines non-executable WorkGraph draft and WorkNodeRequest shapes before dispatch; Executor owns runnable dispatch, ready-state evaluation, capacity-aware scheduling, retry/backoff, blocked-state recovery, and failure-class recovery after explicit runtime enablement and accepted intake.
+L00006011	gui_related: false
+L00006012	gui_classification_reason: Intake, scheduling, retry, and blocked recovery are runtime protocol behavior, not visual presentation.
+L00006013	depends_on: [EP-098, PNC-013]
+L00006014	unblocks: [EP-100, EP-101, EP-102, GRS-030]
+L00006015	acceptance_criteria:
+L00006016	  - WorkNodeRequest records cannot bypass Executor intake.
+L00006017	  - ExecutorIntakeReport validates graph integrity, source-control/test/model/authority metadata, readiness prerequisites, and scheduler metadata.
+L00006018	  - PlanCompile remains unable to dispatch runnable WorkNodes directly.
+L00006019	validation_surfaces:
+L00006020	  - python3 scripts/pm-plans-verify.py run-gates
+L00006021	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006022	risk_class: executor_intake_bypass
+L00006023	reasoning_tier: high
+L00006024	context_scope: executor_worknode_request_intake
+L00006025	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json]
+L00006026	node_compile_hint: {mode: executor_intake_boundary, create_worknodes: false}
+L00006027	source_lineage:
+L00006028	  - pldg-20260617-001-plans-to-code-handoff:atom-0016
+L00006029	  - pldg-20260617-001-plans-to-code-handoff:atom-0042
+L00006030	  - pldg-20260617-001-plans-to-code-handoff:dec-0005
+L00006031	preserved_exact_tokens:
+L00006032	  - "ExecutorIntakeReport"
+L00006033	  - "WorkNodeRequest"
+L00006034	  - "readiness prerequisites"
+L00006035	  - "Executor intake"
+L00006036	  - "not runnable WorkNodes"
+L00006037	negative_constraints:
+L00006038	  - Do not let WorkNodeRequest bypass Executor intake.
+L00006039	  - Do not let PlanCompile directly dispatch worker execution.
+L00006040	owner_hints:
+L00006041	  - Plans/Executor_Protocol.md
+L00006042	  - Plans/Plan_To_Node_Compilation.md
+L00006043	```
+L00006044	
+L00006045	### EP-100 - Source-Control And Model Preflight Execution Context
+L00006046	
+L00006047	```yaml
+L00006048	plan_unit_id: EP-100
+L00006049	unit_type: requirement
+L00006050	status: accepted
+L00006051	owner_doc: Plans/Executor_Protocol.md
+L00006052	canonical_text: >-
+L00006053	  Executor intake and dispatch must establish a source-control execution context and model-resolution context before mutation-capable work starts. The execution context preserves repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Model routing preserves requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. PlanCompile does not own source control; source control, worktrees, safe points, snapshots, rollback, FileSafe, and GitHub promotion apply after Executor accepts WorkNode requests.
+L00006054	  This PlanUnit is the source-control execution contract, and GitHub optional promotion cannot replace local execution truth.
+L00006055	gui_related: false
+L00006056	gui_classification_reason: Execution preflight and model receipt fields are backend runtime contracts.
+L00006057	depends_on: [EP-099, MS-111, W-072, F2-189]
+L00006058	unblocks: [EP-102, POA-048, RAP-029]
+L00006059	acceptance_criteria:
+L00006060	  - Mutation-capable WorkNodes have repo/worktree/baseline/safe-point context before risky execution.
+L00006061	  - Model resolution receipts are captured before dispatch and visible to receipt consumers.
+L00006062	  - GitHub is optional promotion/output and local source-control/worktree state remains execution truth.
+L00006063	validation_surfaces:
+L00006064	  - python3 scripts/pm-plans-verify.py run-gates
+L00006065	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006066	risk_class: unsafe_execution_context
+L00006067	reasoning_tier: high
+L00006068	context_scope: executor_preflight_context
+L00006069	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md, Plans/FileSafe.md, Plans/Models_System.md, Plans/GitHub_Integration.md, Plans/plans_to_code_handoff.schema.json]
+L00006070	node_compile_hint: {mode: source_control_and_model_preflight, create_worknodes: false}
+L00006071	source_lineage:
+L00006072	  - pldg-20260617-001-plans-to-code-handoff:atom-0024
+L00006073	  - pldg-20260617-001-plans-to-code-handoff:atom-0035
+L00006074	  - pldg-20260617-001-plans-to-code-handoff:atom-0038
+L00006075	  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+L00006076	preserved_exact_tokens:
+L00006077	  - "source-control execution contract"
+L00006078	  - "worktrees"
+L00006079	  - "snapshots"
+L00006080	  - "safe points"
+L00006081	  - "branch_head_state"
+L00006082	  - "head_commit_oid"
+L00006083	  - "changed_files"
+L00006084	  - "conflict_refs"
+L00006085	  - "rollback_ref"
+L00006086	  - "rollback"
+L00006087	  - "FileSafe"
+L00006088	  - "GitHub optional"
+L00006089	  - "PR"
+L00006090	  - "GitHub Actions"
+L00006091	  - "local source-control truth"
+L00006092	  - "requested_model_profile"
+L00006093	  - "effective_model_profile"
+L00006094	negative_constraints:
+L00006095	  - Do not make PlanCompile own source-control mutation.
+L00006096	  - Do not require GitHub for local-only project completion.
+L00006097	owner_hints:
+L00006098	  - Plans/Executor_Protocol.md
+L00006099	  - Plans/WorktreeGitImprovement.md
+L00006100	  - Plans/FileSafe.md
+L00006101	  - Plans/GitHub_Integration.md
+L00006102	  - Plans/GitHub_API_Auth_and_Flows.md
+L00006103	```
+L00006104	
+L00006105	### EP-101 - Automated Test Binding Intake
+L00006106	
+L00006107	```yaml
+L00006108	plan_unit_id: EP-101
+L00006109	unit_type: requirement
+L00006110	status: accepted
+L00006111	owner_doc: Plans/Executor_Protocol.md
+L00006112	canonical_text: >-
+L00006113	  Executor intake must validate WorkNode test_binding fields before dispatch: required capabilities, required harnesses, generated/reused tests, generated_test_ids, reused_test_ids, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, flake policy, expected artifacts, and test_gap_policy. WorkNode completion cannot depend on human eyeballing. If automatic verification is unavailable, Executor blocks the WorkNode or requests test-harness work rather than marking it complete.
+L00006114	  Executor test intake preserves generated_test_ids, reused_test_ids, browser_session_required, visual_evidence_required, browser/GUI/device sessions, and manual_only_acceptance_not_allowed before completion is accepted.
+L00006115	gui_related: true
+L00006116	gui_classification_reason: Browser/session requirements, emulator requirements, screenshots, and visual evidence are user-visible verification surfaces.
+L00006117	depends_on: [EP-099, ATS-003, ATS-004]
+L00006118	unblocks: [EP-102, GRS-030, RAP-029]
+L00006119	acceptance_criteria:
+L00006120	  - Test binding is validated during Executor intake before runnable dispatch.
+L00006121	  - Manual-only acceptance is not sufficient for WorkNode completion.
+L00006122	  - Test gaps become blockers or harness work.
+L00006123	validation_surfaces:
+L00006124	  - python3 scripts/pm-plans-verify.py run-gates
+L00006125	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006126	risk_class: unverified_execution_completion
+L00006127	reasoning_tier: high
+L00006128	context_scope: executor_test_binding
+L00006129	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Automated_Testing_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/plans_to_code_handoff.schema.json]
+L00006130	node_compile_hint: {mode: executor_test_binding_intake, create_worknodes: false}
+L00006131	source_lineage:
+L00006132	  - pldg-20260617-001-plans-to-code-handoff:atom-0029
+L00006133	  - pldg-20260617-001-plans-to-code-handoff:atom-0033
+L00006134	  - pldg-20260617-001-plans-to-code-handoff:atom-0034
+L00006135	  - pldg-20260617-001-plans-to-code-handoff:dec-0012
+L00006136	  - pldg-20260617-001-plans-to-code-handoff:dec-0013
+L00006137	preserved_exact_tokens:
+L00006138	  - "test_binding"
+L00006139	  - "reused_test_ids"
+L00006140	  - "browser_session_required"
+L00006141	  - "visual_evidence_required"
+L00006142	  - "test_gap_policy"
+L00006143	  - "100% automated"
+L00006144	  - "no human intervention"
+L00006145	  - "test capability blocker"
+L00006146	  - "test-harness WorkNode"
+L00006147	negative_constraints:
+L00006148	  - Do not make manual visual inspection a required completion step.
+L00006149	  - Do not silently allow unverifiable WorkNodes.
+L00006150	owner_hints:
+L00006151	  - Plans/Executor_Protocol.md
+L00006152	  - Plans/Automated_Testing_System.md
+L00006153	```
+L00006154	
+L00006155	### EP-102 - Failure Signatures, Loop Breakers, And Plan Changes
+L00006156	
+L00006157	```yaml
+L00006158	plan_unit_id: EP-102
+L00006159	unit_type: requirement
+L00006160	status: accepted
+L00006161	owner_doc: Plans/Executor_Protocol.md
+L00006162	canonical_text: >-
+L00006163	  Executor repair loops preserve failure_signature records with kind, normalized_key, attempt_count, last_safe_point_id, last_repair_worknode_id, overseer_reviewed, auditor_reviewed, repeated_failure_policy, escalation_lane, user_escalation_allowed, and last evidence refs. Repeated failures escalate internally through normal repair, Auditor classification, Overseer graph/work/model/source-control/test-harness repair, High-Effort/Auditor deep repair, and only then critical user escalation unless explicit HITL policy requires earlier intervention. If Plans change during execution, PlanChangeDetected pauses affected lanes, a PlanDiffImpactReport classifies nodes as unaffected, needs_recompile, invalidated, or already_safe, and Executor resumes only after graph patching/replan work and currentness gates. The ledger phrase create replan WorkNodes is disposed for this phase as future runtime-enabled replan work only; current Plans-to-code contracts do not create replan WorkNodes.
+L00006164	  Failure signatures expose failure_signature.kind, and external-effect preflights preserve network_access_policy, secret_access_policy, and destructive_command_policy before risky repair or execution continues. Overseer review and High-Effort Worker escalation remain internal repair routes before critical user escalation.
+L00006165	gui_related: false
+L00006166	gui_classification_reason: Loop-breaker and PlanChangeDetected policy is runtime orchestration behavior.
+L00006167	depends_on: [EP-099, EP-100, EP-101, GRS-029, PS-116]
+L00006168	unblocks: [GRS-030, POA-048]
+L00006169	acceptance_criteria:
+L00006170	  - Failure signatures are normalized and counted across repair attempts.
+L00006171	  - Repeated failures route internally before user escalation in default mode.
+L00006172	  - Plan changes pause affected lanes and require impact classification before resume.
+L00006173	validation_surfaces:
+L00006174	  - python3 scripts/pm-plans-verify.py run-gates
+L00006175	  - future failure_signature and PlanDiffImpactReport validation
+L00006176	risk_class: infinite_repair_loop
+L00006177	reasoning_tier: high
+L00006178	context_scope: executor_repair_loop_breakers
+L00006179	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/Permissions_System.md, Plans/Project_Output_Artifacts.md]
+L00006180	node_compile_hint: {mode: executor_loop_breaker_policy, create_worknodes: false}
+L00006181	source_lineage:
+L00006182	  - pldg-20260617-001-plans-to-code-handoff:atom-0046
+L00006183	  - pldg-20260617-001-plans-to-code-handoff:atom-0047
+L00006184	  - pldg-20260617-001-plans-to-code-handoff:atom-0048
+L00006185	  - pldg-20260617-001-plans-to-code-handoff:dec-0020
+L00006186	  - pldg-20260617-001-plans-to-code-handoff:dec-0021
+L00006187	  - pldg-20260617-001-plans-to-code-handoff:corr-0009
+L00006188	preserved_exact_tokens:
+L00006189	  - "failure_signature"
+L00006190	  - "normalized_key"
+L00006191	  - "attempt_count"
+L00006192	  - "repeated_failure_policy"
+L00006193	  - "escalation_lane"
+L00006194	  - "Auditor classification"
+L00006195	  - "Overseer review"
+L00006196	  - "High-Effort Worker"
+L00006197	  - "critical user escalation"
+L00006198	  - "PlanChangeDetected"
+L00006199	  - "PlanDiffImpactReport"
+L00006200	  - "needs_recompile"
+L00006201	  - "invalidated"
+L00006202	  - "currentness gate"
+L00006203	negative_constraints:
+L00006204	  - Do not jump to user decision because a low-quality agent got stuck.
+L00006205	  - Do not create replan WorkNodes in this design-only phase.
+L00006206	owner_hints:
+L00006207	  - Plans/Executor_Protocol.md
+L00006208	  - Plans/Goal_Runtime_System.md
+L00006209	  - Plans/Planning_Ledger_System.md
+L00006210	```
+L00006211	
+
+<<< CONTEXT_AFTER canonical_document_lines=6212-6223 >>>
+L00006212	### EP-103 - Plans-To-Code Execution Receipt Chain
+L00006213	
+L00006214	```yaml
+L00006215	plan_unit_id: EP-103
+L00006216	unit_type: requirement
+L00006217	status: accepted
+L00006218	owner_doc: Plans/Executor_Protocol.md
+L00006219	canonical_text: >-
+L00006220	  Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_promotion_receipt when applicable, worknode_completion_receipt, and finalization evidence. Each transition records source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, and user escalation condition. Worker claims are never enough to certify code complete.
+L00006221	  The receipt chain preserves source_artifact, destination_artifact, retry_route, rollback_route, all WorkNodes terminal, all automated tests passed or dispositioned, and artifact-backed handoff evidence before code completion is certified. The source-control chain must preserve the same repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, rollback_available, rollback_ref, and restore_command_or_action through preflight, safe point creation, mutation/change, optional promotion, finalization, and completion certification.
+L00006222	gui_related: false
+L00006223	gui_classification_reason: Execution receipts and certification handoffs are runtime/evidence contracts.

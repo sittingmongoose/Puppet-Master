@@ -1,0 +1,265 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5731-5742 >>>
+L00005731	  - Do not make Coasts' web UI the PM product surface.
+L00005732	  - Do not treat Coasts runtime claims as PM-supported runtime evidence.
+L00005733	  - Do not promote `newtools.md` compatibility bridges or stale owner hints into product canon.
+L00005734	  - Do not import Coasts passwordless sudo, GatewayPorts, docker.sock, or upstream daemon/service authority as PM defaults.
+L00005735	owner_hints:
+L00005736	  - Plans/Containers_Registry_and_Unraid.md
+L00005737	  - Plans/Automated_Testing_System.md
+L00005738	  - Plans/Executor_Protocol.md
+L00005739	  - Plans/Permissions_System.md
+L00005740	  - Plans/FileSafe.md
+L00005741	```
+L00005742	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5743-5992 >>>
+L00005743	### CRAU-091 - RuntimeHostFamilyProfile MVP Matrix And Capability Probes
+L00005744	
+L00005745	```yaml
+L00005746	plan_unit_id: CRAU-091
+L00005747	unit_type: requirement
+L00005748	status: accepted
+L00005749	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005750	canonical_text: >-
+L00005751	  The containerized-hosts MVP covers the whole runtime surface through a RuntimeHostFamilyProfile or equivalent
+L00005752	  matrix, not a generic container row or post-MVP deferral. Runtime families include Docker/Compose as the default
+L00005753	  local path; Podman as a capability-probed compatible alternate with visible rootless limits; Sysbox as the
+L00005754	  non-privileged/rootless nested-runtime candidate where available; remote Docker over SSH as a trusted remote-host
+L00005755	  path after PM validation and host trust; Kubernetes namespaces as project-scoped namespace/workload support, not
+L00005756	  cluster-admin; CI-hosted containers as an external ephemeral path; Unraid-hosted environments through Publish/Unraid
+L00005757	  and host templates; and privileged DinD as critical-risk disabled until explicit trust/approval. Each row records
+L00005758	  family id, setup inputs, supported operations, preflight probes, trust tier, gates, blocked states, receipt refs,
+L00005759	  cleanup policy, Coasts source-lineage refs only, and row-specific acceptance tests.
+L00005760	gui_related: false
+L00005761	gui_classification_reason: Runtime-family capability matrix and probes are backend/container behavior, not GUI presentation.
+L00005762	depends_on: [CRAU-090, CV-303, PS-126, F2-194]
+L00005763	unblocks: [ATS-019, EP-109, RAP-042]
+L00005764	acceptance_criteria:
+L00005765	  - Every runtime family in the whole-MVP scope has discover, configure, provision, project/worktree binding, start/stop/restart, endpoint exposure, health probe, log stream, bounded command, artifact/receipt, cleanup/retention, blocked/degraded, and acceptance-test behavior.
+L00005766	  - Podman, Sysbox, Kubernetes, remote Docker SSH, CI-hosted, Unraid-hosted, and privileged DinD rows expose capability probes, limitations, blocked states, and gate outcomes instead of parity promises.
+L00005767	  - Privileged DinD is disabled by default and requires explicit trust/approval, risk acknowledgement, and cleanup receipts before any bounded use.
+L00005768	  - Remote Docker SSH and Sysbox do not silently fall back to local Docker or privileged DinD.
+L00005769	validation_surfaces:
+L00005770	  - python3 scripts/pm-plan-index.py validate
+L00005771	  - future RuntimeHostFamilyProfile schema fixtures
+L00005772	  - future Docker Manager runtime-family preflight fixtures
+L00005773	risk_class: runtime_family_matrix_drift
+L00005774	reasoning_tier: high
+L00005775	context_scope: containerized_hosts_runtime_matrix
+L00005776	implementation_surfaces:
+L00005777	  - Plans/Containers_Registry_and_Unraid.md
+L00005778	  - future Docker Manager runtime-family matrix
+L00005779	node_compile_hint:
+L00005780	  mode: runtime_host_family_profile_matrix
+L00005781	  create_worknodes: false
+L00005782	  create_nodeseeds: false
+L00005783	source_lineage:
+L00005784	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0028
+L00005785	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0030
+L00005786	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0031
+L00005787	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0032
+L00005788	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0033
+L00005789	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0035
+L00005790	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0052
+L00005791	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0059
+L00005792	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0068
+L00005793	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0077
+L00005794	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#runtime_family_matrix
+L00005795	source_atom_ids: [atom-0028, atom-0030, atom-0031, atom-0032, atom-0033, atom-0035, atom-0052, atom-0059, atom-0068, atom-0077]
+L00005796	decision_refs: [dec-0004, dec-0006, dec-0007, dec-0017, dec-0020]
+L00005797	preserved_exact_tokens:
+L00005798	  - "RuntimeHostFamilyProfile"
+L00005799	  - "whole thing for mvp"
+L00005800	  - "Docker/Compose"
+L00005801	  - "Podman"
+L00005802	  - "rootless limits"
+L00005803	  - "Sysbox"
+L00005804	  - "remote Docker over SSH"
+L00005805	  - "trusted remote-host path"
+L00005806	  - "Kubernetes namespaces"
+L00005807	  - "project-scoped namespace/workload"
+L00005808	  - "not cluster-admin"
+L00005809	  - "CI-hosted containers"
+L00005810	  - "Unraid-hosted environments"
+L00005811	  - "Publish/Unraid"
+L00005812	  - "privileged DinD"
+L00005813	  - "critical-risk"
+L00005814	  - "disabled until explicit trust/approval"
+L00005815	  - "capability-probed compatible alternate"
+L00005816	  - "no-local-fallback"
+L00005817	  - "privileged DinD default-disabled"
+L00005818	negative_constraints:
+L00005819	  - Do not hide broad-runtime support behind one generic container row.
+L00005820	  - Do not claim Podman/Sysbox/Kubernetes/remote parity without capability probes and blocker states.
+L00005821	  - Do not enable privileged DinD by default.
+L00005822	  - Do not silently fall back from remote Docker SSH or Sysbox to privileged DinD.
+L00005823	  - Do not promote Coasts runtime claims into PM-supported runtime evidence.
+L00005824	owner_hints:
+L00005825	  - Plans/Containers_Registry_and_Unraid.md
+L00005826	  - Plans/Automated_Testing_System.md
+L00005827	  - Plans/Permissions_System.md
+L00005828	  - Plans/FileSafe.md
+L00005829	  - Plans/Runtime_Artifacts_Panel.md
+L00005830	```
+L00005831	
+L00005832	### CRAU-092 - Docker/Hosts Routed Detail Destination Boundary
+L00005833	
+L00005834	```yaml
+L00005835	plan_unit_id: CRAU-092
+L00005836	unit_type: requirement
+L00005837	status: accepted
+L00005838	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005839	canonical_text: >-
+L00005840	  Docker Manager remains the canonical operational owner, Activity Bar side-panel owner, and `docker_manager` command
+L00005841	  namespace for container, registry, Unraid, Kubernetes, and host capability behavior. `Docker/Hosts` is the native
+L00005842	  Slint routed primary-content page/lab for expanded host profiles, instances, Runtime Matrix, Host Lab Sessions,
+L00005843	  Access & Ports, Receipts & Artifacts, and Settings. It is opened from Docker Manager, command palette/search,
+L00005844	  Orchestrator/Executor run details, ATS sessions, Runtime Artifacts, assistant links, and receipts; it is not a new
+L00005845	  Activity Bar slot, not a separate Coasts website, not a PMConcept.html transplant, and not a separate Unraid panel.
+L00005846	  Dynamic URLs remain visible and usable for running instances while canonical ports/URLs are convenience bindings for
+L00005847	  the active selected or checked-out instance. The Docker/Hosts route payload is
+L00005848	  `{route_target: "docker_hosts", owner_surface: "docker_manager", project_id, repo_id?, workspace_root_id?,
+L00005849	  source_surface, subview, focus_kind?, host_capability_ref?, host_profile_id?, host_instance_id?,
+L00005850	  host_assignment_id?, runtime_family?, runtime_context_ref?, port_access_ref?, receipt_ref?, blocked_sequence?}`.
+L00005851	  Runtime families, host profiles, host instances, access records, and receipt refs are PM identities; raw Docker,
+L00005852	  Kubernetes, Unraid, or Coasts-local ids are backend facts only and must not replace PM identity.
+L00005853	gui_related: true
+L00005854	gui_classification_reason: This unit defines the user-visible Docker/Hosts page/lab boundary and navigation relationship to Docker Manager.
+L00005855	depends_on: [CRAU-007, CRAU-090, CRAU-091, UCC-105]
+L00005856	unblocks: [ACD-430, OP-028, RGV-015]
+L00005857	acceptance_criteria:
+L00005858	  - Docker/Hosts is reachable as a routed primary-content page/lab from Docker Manager and cross-surface links.
+L00005859	  - Docker Manager remains the Activity Bar side-panel owner and command namespace.
+L00005860	  - Expanded Host Lab detail is not trapped in the small Docker side-panel and does not create a separate website or Unraid shell panel.
+L00005861	  - Access actions use structured port_access_record data and do not guess low-confidence localhost URLs.
+L00005862	  - Docker/Hosts route payloads include owner_surface, source_surface, subview, and the relevant PM host/profile/instance/access/receipt identity refs before focusing a detail view.
+L00005863	  - Raw container, pod, service, or provider endpoint ids are displayed only as backend facts under PM host identity.
+L00005864	validation_surfaces:
+L00005865	  - python3 scripts/pm-plan-index.py validate
+L00005866	  - future Docker/Hosts routing and Docker Manager command namespace fixtures
+L00005867	risk_class: docker_hosts_owner_routing_drift
+L00005868	reasoning_tier: high
+L00005869	context_scope: docker_hosts_routed_detail_boundary
+L00005870	implementation_surfaces:
+L00005871	  - Plans/Containers_Registry_and_Unraid.md
+L00005872	  - Plans/FinalGUISpec.md
+L00005873	  - Plans/UI_Command_Catalog.md
+L00005874	  - future Docker/Hosts native Slint page
+L00005875	node_compile_hint:
+L00005876	  mode: docker_hosts_routed_detail_boundary
+L00005877	  create_worknodes: false
+L00005878	  create_nodeseeds: false
+L00005879	source_lineage:
+L00005880	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0036
+L00005881	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00005882	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0015
+L00005883	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0061
+L00005884	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0070
+L00005885	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00005886	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+L00005887	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#docker_hosts_gui_ia
+L00005888	source_atom_ids: [atom-0015, atom-0036, atom-0046, atom-0061, atom-0070, atom-0075, atom-0080]
+L00005889	decision_refs: [dec-0009, dec-0011, dec-0017, dec-0020]
+L00005890	preserved_exact_tokens:
+L00005891	  - "Docker/Hosts"
+L00005892	  - "Slint"
+L00005893	  - "routed primary-content page"
+L00005894	  - "Docker Manager"
+L00005895	  - "docker_manager"
+L00005896	  - "Activity Bar side-panel owner"
+L00005897	  - "Overview"
+L00005898	  - "Profiles"
+L00005899	  - "Instances"
+L00005900	  - "Runtime Matrix"
+L00005901	  - "Host Lab Sessions"
+L00005902	  - "Access & Ports"
+L00005903	  - "Receipts & Artifacts"
+L00005904	  - "Settings"
+L00005905	  - "Open App"
+L00005906	  - "Open Container"
+L00005907	  - "PMConcept.html"
+L00005908	negative_constraints:
+L00005909	  - Do not create a new Activity Bar slot for Docker/Hosts.
+L00005910	  - Do not reverse Jared accepted Docker/Hosts page placement.
+L00005911	  - Do not make Docker/Hosts a Coasts website transplant.
+L00005912	  - Do not create a separate Unraid panel.
+L00005913	  - Do not copy PMConcept.html HTML/CSS/demo code.
+L00005914	  - Do not rely on canonical localhost ports as the only way to access a test host.
+L00005915	owner_hints:
+L00005916	  - Plans/Containers_Registry_and_Unraid.md
+L00005917	  - Plans/FinalGUISpec.md
+L00005918	  - Plans/UI_Command_Catalog.md
+L00005919	  - Plans/Runtime_Artifacts_Panel.md
+L00005920	```
+L00005921	
+L00005922	### CRAU-001 - Containers, Registry, and Unraid Integration Source-Preserving Bridge Retired
+L00005923	
+L00005924	```yaml
+L00005925	plan_unit_id: CRAU-001
+L00005926	unit_type: compatibility_disposition
+L00005927	status: accepted
+L00005928	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005929	canonical_text: >-
+L00005930	  The former Containers, Registry, and Unraid source-preserving structural
+L00005931	  bridge is retired in place after Phase 2B atomized
+L00005932	  Containers_Registry_and_Unraid-S0001 through
+L00005933	  Containers_Registry_and_Unraid-S0082 into CRAU-002 through CRAU-084 and
+L00005934	  recorded structural dispositions for Containers_Registry_and_Unraid-S0083,
+L00005935	  Containers_Registry_and_Unraid-S0084, and
+L00005936	  Containers_Registry_and_Unraid-S0086. CRAU-001 remains only as migration
+L00005937	  lineage for the retired bridge span and must not re-own atomized source
+L00005938	  coverage.
+L00005939	gui_related: false
+L00005940	gui_classification_reason: The retired bridge is migration lineage; S0085's former mixed GUI/product bridge text is now covered by CRAU-002 through CRAU-084 and should not drive GUI routing.
+L00005941	split_recommended: false
+L00005942	depends_on: []
+L00005943	unblocks: []
+L00005944	acceptance_criteria:
+L00005945	  - CRAU-001 no longer uses the source-preserving PlanUnit compile hint.
+L00005946	  - Prior product source coverage remains carried by CRAU-002 through CRAU-084.
+L00005947	  - Structural spans S0083, S0084, and S0086 are explicitly dispositioned as no-unit structural coverage.
+L00005948	  - The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00005949	  - Coverage for the retired bridge is recorded in the Phase 2B batch 031 coverage map.
+L00005950	validation_surfaces:
+L00005951	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005952	  - python3 scripts/pm-plan-index.py validate
+L00005953	risk_class: migration_lineage
+L00005954	reasoning_tier: standard
+L00005955	context_scope: plan_standardization
+L00005956	implementation_surfaces:
+L00005957	  - Plans/Containers_Registry_and_Unraid.md
+L00005958	node_compile_hint:
+L00005959	  mode: source_preserving_bridge_retired
+L00005960	  create_worknodes: false
+L00005961	source_lineage:
+L00005962	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0085
+L00005963	```
+L00005964	
+L00005965	## Migration Coverage
+L00005966	
+L00005967	Original hash: `3202a4e6ff9310224dc3878a24ccc1c11c06a93576ab97cb26208da84b591560`.
+L00005968	
+L00005969	Run-scoped proof artifacts:
+L00005970	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00005971	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00005972	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00005973	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00005974	
+L00005975	All original spans from `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0082` remain preserved in place. Phase 2B batch 028 atomized `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0027` into fine-grained PlanUnits `CRAU-002` through `CRAU-031` or explicit structural dispositions. Phase 2B batch 029 atomized `Containers_Registry_and_Unraid-S0028` through `Containers_Registry_and_Unraid-S0062` into fine-grained PlanUnits `CRAU-032` through `CRAU-063` or explicit structural dispositions. Phase 2B batch 030 atomized `Containers_Registry_and_Unraid-S0063` through `Containers_Registry_and_Unraid-S0082` into fine-grained PlanUnits `CRAU-064` through `CRAU-084`. Phase 2B batch 031 dispositioned structural spans `Containers_Registry_and_Unraid-S0083`, `Containers_Registry_and_Unraid-S0084`, and `Containers_Registry_and_Unraid-S0086` as structural no-unit coverage and retired `CRAU-001` as migration lineage for `Containers_Registry_and_Unraid-S0085`. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00005976	
+L00005977	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00005978	
+L00005979	This addendum repairs non-runtime container rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00005980	
+L00005981	- Repairs `sfk-7b9d615ae9afdde05c7a903e`: container reason-code aliases normalize to the canonical set `runtime_context_missing`, `compose_file_missing`, `container_unreachable`, `port_unbound`, `auth_expired`, `permission_denied`, and `unknown`.
+L00005982	- Repairs `sfk-cf0cd10a899404f5be291961`: template repo state transitions are `unknown -> clean -> dirty -> committed -> ready_to_push -> pushed`; failure states are `conflict`, `auth_required`, and `remote_rejected`. UI labels map `dirty` to `dirty`, `committed` to `committed`, and `ready-to-push` to `ready_to_push`.
+L00005983	- Repairs `sfk-30416f5cbd6db8016051db19`: Docker Manager cockpit controls are enabled only when target runtime is reachable, permission snapshot allows the operation, no conflicting operation is active, and required auth is valid. Disabled reason codes are `runtime_unreachable`, `permission_denied`, `operation_in_progress`, `auth_required`, and `unsupported_runtime`.
+L00005984	
+L00005985	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00005986	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00005987	
+L00005988	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00005989	
+L00005990	- `registry_line 240` (explicitly_deferred; source line 861; `sfk-cf0cd10a899404f5be291961`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L4319-4373: 9-state template-repo enum is "normative" but no transition table is inline; CRAU-070 UI labels ("dirty/committed/ready-to-push") don't map onto the canonical enum values add mapping.
+L00005991	
+L00005992	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

@@ -1,0 +1,370 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-355 >>>
+L00000001	{
+L00000002	  "$schema": "https://puppetmaster.local/schemas/storage_value_registry.schema.json",
+L00000003	  "schema_id": "pm.storage_value_registry.v1",
+L00000004	  "schema_version": "1.0.0",
+L00000005	  "generated_at_utc": "2026-07-07T17:54:01Z",
+L00000006	  "owner_doc": "Plans/storage-plan.md",
+L00000007	  "buildability_gate_policy": {
+L00000008	    "buildability_gate_passed_must_remain_false": true,
+L00000009	    "ordinary_product_worknodes_allowed": false,
+L00000010	    "ordinary_product_nodeseeds_allowed": false,
+L00000011	    "scope": "tier_0c_2_storage_value_contracts_only"
+L00000012	  },
+L00000013	  "critical_family_ids": [
+L00000014	    "approved_plan_pack",
+L00000015	    "plan_approved_outbox",
+L00000016	    "plan_compile_run",
+L00000017	    "compiler_wave_contract",
+L00000018	    "workgraph_draft",
+L00000019	    "worknode_request",
+L00000020	    "executor_intake_report",
+L00000021	    "attempt_receipt",
+L00000022	    "event_record_index",
+L00000023	    "blocked_projection",
+L00000024	    "goal_receipt"
+L00000025	  ],
+L00000026	  "families": [
+L00000027	    {
+L00000028	      "family_id": "approved_plan_pack",
+L00000029	      "storage_kind": "redb",
+L00000030	      "status": "materialized",
+L00000031	      "tier": "tier_0_launch_critical",
+L00000032	      "key_shape": "approved_plan_pack.v1:{project_id}:{approved_plan_pack_id}",
+L00000033	      "value_schema_id": "pm.storage_value.approved_plan_pack.v1",
+L00000034	      "value_schema_ref": "Plans/storage_value_registry.json#/families/approved_plan_pack/value_schema",
+L00000035	      "owner_doc": "Plans/Planning_Wizard.md#PWIZ-014",
+L00000036	      "producer": [
+L00000037	        "Planning Wizard final-review approval CAS"
+L00000038	      ],
+L00000039	      "consumers": [
+L00000040	        "PlanCompileRun bootstrap reader",
+L00000041	        "implementation-readiness gate",
+L00000042	        "audit evidence projector"
+L00000043	      ],
+L00000044	      "schema_version": "1.0.0",
+L00000045	      "encoding": "messagepack_canonical",
+L00000046	      "required_fields": [
+L00000047	        "schema_id",
+L00000048	        "schema_version",
+L00000049	        "project_id",
+L00000050	        "approved_plan_pack_id",
+L00000051	        "pack_version",
+L00000052	        "pack_hash",
+L00000053	        "planning_run_id",
+L00000054	        "planning_run_revision",
+L00000055	        "topic_map_version",
+L00000056	        "plan_unit_index_hash",
+L00000057	        "acceptance_unit_index_hash",
+L00000058	        "project_context_snapshot_hash",
+L00000059	        "testing_policy_hash",
+L00000060	        "final_audit_closure_hash",
+L00000061	        "created_at_utc",
+L00000062	        "created_by_actor_ref",
+L00000063	        "source_refs",
+L00000064	        "redaction_profile"
+L00000065	      ],
+L00000066	      "optional_fields": [
+L00000067	        "prd_pack_ref",
+L00000068	        "amendment_refs",
+L00000069	        "closure_record_refs",
+L00000070	        "readiness_report_ref",
+L00000071	        "ledger_lineage_refs",
+L00000072	        "supersedes_pack_id"
+L00000073	      ],
+L00000074	      "nullable_fields": [
+L00000075	        "supersedes_pack_id"
+L00000076	      ],
+L00000077	      "replay_behavior": "Read by exact key during PlanApproved/PlanCompileRun recovery; stale hashes block launch and route back to Planning Wizard refresh.",
+L00000078	      "migration": "No legacy writer is canonical; future value changes require a new family version and source-pack hash preservation.",
+L00000079	      "retention_compaction": "Retain with planning-run lineage, audit closure, and any GoalRun receipt that references the pack; never compact below retained receipt reachability.",
+L00000080	      "redaction_no_secret_rule": "Only non-secret refs and hashes may be persisted; project context and policy bodies are stored by ref, not inline secret-bearing content.",
+L00000081	      "legacy_canonical_crosswalk_status": "Canonical Tier 0C-2 value schema for ApprovedPlanPack; ledger/source-lineage pack prose is non-authoritative.",
+L00000082	      "value_schema": {
+L00000083	        "type": "object",
+L00000084	        "additionalProperties": false,
+L00000085	        "required": [
+L00000086	          "schema_id",
+L00000087	          "schema_version",
+L00000088	          "project_id",
+L00000089	          "approved_plan_pack_id",
+L00000090	          "pack_version",
+L00000091	          "pack_hash",
+L00000092	          "planning_run_id",
+L00000093	          "planning_run_revision",
+L00000094	          "topic_map_version",
+L00000095	          "plan_unit_index_hash",
+L00000096	          "acceptance_unit_index_hash",
+L00000097	          "project_context_snapshot_hash",
+L00000098	          "testing_policy_hash",
+L00000099	          "final_audit_closure_hash",
+L00000100	          "created_at_utc",
+L00000101	          "created_by_actor_ref",
+L00000102	          "source_refs",
+L00000103	          "redaction_profile"
+L00000104	        ],
+L00000105	        "properties": {
+L00000106	          "schema_id": {
+L00000107	            "const": "pm.storage_value.approved_plan_pack.v1"
+L00000108	          },
+L00000109	          "schema_version": {
+L00000110	            "const": "1.0.0"
+L00000111	          },
+L00000112	          "project_id": {
+L00000113	            "type": "string",
+L00000114	            "minLength": 1
+L00000115	          },
+L00000116	          "approved_plan_pack_id": {
+L00000117	            "type": "string",
+L00000118	            "minLength": 1
+L00000119	          },
+L00000120	          "pack_version": {
+L00000121	            "type": "integer",
+L00000122	            "minimum": 1
+L00000123	          },
+L00000124	          "pack_hash": {
+L00000125	            "type": "string",
+L00000126	            "minLength": 1
+L00000127	          },
+L00000128	          "planning_run_id": {
+L00000129	            "type": "string",
+L00000130	            "minLength": 1
+L00000131	          },
+L00000132	          "planning_run_revision": {
+L00000133	            "type": "integer",
+L00000134	            "minimum": 1
+L00000135	          },
+L00000136	          "topic_map_version": {
+L00000137	            "type": "integer",
+L00000138	            "minimum": 1
+L00000139	          },
+L00000140	          "plan_unit_index_hash": {
+L00000141	            "type": "string",
+L00000142	            "minLength": 1
+L00000143	          },
+L00000144	          "acceptance_unit_index_hash": {
+L00000145	            "type": "string",
+L00000146	            "minLength": 1
+L00000147	          },
+L00000148	          "project_context_snapshot_hash": {
+L00000149	            "type": "string",
+L00000150	            "minLength": 1
+L00000151	          },
+L00000152	          "testing_policy_hash": {
+L00000153	            "type": "string",
+L00000154	            "minLength": 1
+L00000155	          },
+L00000156	          "final_audit_closure_hash": {
+L00000157	            "type": "string",
+L00000158	            "minLength": 1
+L00000159	          },
+L00000160	          "created_at_utc": {
+L00000161	            "type": "string",
+L00000162	            "format": "date-time"
+L00000163	          },
+L00000164	          "created_by_actor_ref": {
+L00000165	            "type": "string",
+L00000166	            "minLength": 1
+L00000167	          },
+L00000168	          "source_refs": {
+L00000169	            "type": "array",
+L00000170	            "items": {
+L00000171	              "type": "string",
+L00000172	              "minLength": 1
+L00000173	            }
+L00000174	          },
+L00000175	          "redaction_profile": {
+L00000176	            "type": "string",
+L00000177	            "enum": [
+L00000178	              "no_secrets",
+L00000179	              "redacted_refs_only"
+L00000180	            ]
+L00000181	          },
+L00000182	          "prd_pack_ref": {
+L00000183	            "type": "string"
+L00000184	          },
+L00000185	          "amendment_refs": {
+L00000186	            "type": "array",
+L00000187	            "items": {
+L00000188	              "type": "string"
+L00000189	            }
+L00000190	          },
+L00000191	          "closure_record_refs": {
+L00000192	            "type": "array",
+L00000193	            "items": {
+L00000194	              "type": "string"
+L00000195	            }
+L00000196	          },
+L00000197	          "readiness_report_ref": {
+L00000198	            "type": "string"
+L00000199	          },
+L00000200	          "ledger_lineage_refs": {
+L00000201	            "type": "array",
+L00000202	            "items": {
+L00000203	              "type": "string"
+L00000204	            }
+L00000205	          },
+L00000206	          "supersedes_pack_id": {
+L00000207	            "type": [
+L00000208	              "string",
+L00000209	              "null"
+L00000210	            ]
+L00000211	          }
+L00000212	        }
+L00000213	      }
+L00000214	    },
+L00000215	    {
+L00000216	      "family_id": "plan_approved_outbox",
+L00000217	      "storage_kind": "redb_and_seglog",
+L00000218	      "status": "materialized",
+L00000219	      "tier": "tier_0_launch_critical",
+L00000220	      "key_shape": "plan_approved_outbox.v1:{project_id}:{idempotency_key}",
+L00000221	      "value_schema_id": "pm.storage_value.plan_approved_outbox.v1",
+L00000222	      "value_schema_ref": "Plans/storage_value_registry.json#/families/plan_approved_outbox/value_schema",
+L00000223	      "owner_doc": "Plans/Planning_Wizard.md#PWIZ-014",
+L00000224	      "producer": [
+L00000225	        "Planning Wizard Approve And Build command boundary"
+L00000226	      ],
+L00000227	      "consumers": [
+L00000228	        "EventRecord writer",
+L00000229	        "PlanCompileRun binder",
+L00000230	        "idempotency replay"
+L00000231	      ],
+L00000232	      "schema_version": "1.0.0",
+L00000233	      "encoding": "messagepack_canonical",
+L00000234	      "required_fields": [
+L00000235	        "schema_id",
+L00000236	        "schema_version",
+L00000237	        "project_id",
+L00000238	        "approval_cas_receipt_id",
+L00000239	        "approved_plan_pack_id",
+L00000240	        "idempotency_key",
+L00000241	        "plan_compile_run_id",
+L00000242	        "outbox_status",
+L00000243	        "outbox_sequence",
+L00000244	        "created_at_utc",
+L00000245	        "redaction_profile"
+L00000246	      ],
+L00000247	      "optional_fields": [
+L00000248	        "published_event_id",
+L00000249	        "published_sequence_id",
+L00000250	        "retry_count",
+L00000251	        "last_error_ref"
+L00000252	      ],
+L00000253	      "nullable_fields": [
+L00000254	        "published_event_id",
+L00000255	        "published_sequence_id",
+L00000256	        "last_error_ref"
+L00000257	      ],
+L00000258	      "replay_behavior": "Duplicate approval delivery returns the existing PlanApproved append/projection result for the same idempotency key.",
+L00000259	      "migration": "Legacy unkeyed approval notes are source-lineage only; migration creates an idempotency-keyed outbox row before publishing.",
+L00000260	      "retention_compaction": "Retain at least as long as the referenced PlanCompileRun and audit closure; failed rows retain retry lineage until superseded.",
+L00000261	      "redaction_no_secret_rule": "No approval body or environment data is stored here; only receipt ids, refs, hashes, and status enums.",
+L00000262	      "legacy_canonical_crosswalk_status": "Canonical PlanApproved transactional outbox row; PlanApproved EventRecord remains the append-only publication.",
+L00000263	      "value_schema": {
+L00000264	        "type": "object",
+L00000265	        "additionalProperties": false,
+L00000266	        "required": [
+L00000267	          "schema_id",
+L00000268	          "schema_version",
+L00000269	          "project_id",
+L00000270	          "approval_cas_receipt_id",
+L00000271	          "approved_plan_pack_id",
+L00000272	          "idempotency_key",
+L00000273	          "plan_compile_run_id",
+L00000274	          "outbox_status",
+L00000275	          "outbox_sequence",
+L00000276	          "created_at_utc",
+L00000277	          "redaction_profile"
+L00000278	        ],
+L00000279	        "properties": {
+L00000280	          "schema_id": {
+L00000281	            "const": "pm.storage_value.plan_approved_outbox.v1"
+L00000282	          },
+L00000283	          "schema_version": {
+L00000284	            "const": "1.0.0"
+L00000285	          },
+L00000286	          "project_id": {
+L00000287	            "type": "string",
+L00000288	            "minLength": 1
+L00000289	          },
+L00000290	          "approval_cas_receipt_id": {
+L00000291	            "type": "string",
+L00000292	            "minLength": 1
+L00000293	          },
+L00000294	          "approved_plan_pack_id": {
+L00000295	            "type": "string",
+L00000296	            "minLength": 1
+L00000297	          },
+L00000298	          "idempotency_key": {
+L00000299	            "type": "string",
+L00000300	            "minLength": 1
+L00000301	          },
+L00000302	          "plan_compile_run_id": {
+L00000303	            "type": "string",
+L00000304	            "minLength": 1
+L00000305	          },
+L00000306	          "outbox_status": {
+L00000307	            "type": "string",
+L00000308	            "enum": [
+L00000309	              "pending",
+L00000310	              "published",
+L00000311	              "acked",
+L00000312	              "failed"
+L00000313	            ]
+L00000314	          },
+L00000315	          "outbox_sequence": {
+L00000316	            "type": "integer",
+L00000317	            "minimum": 1
+L00000318	          },
+L00000319	          "created_at_utc": {
+L00000320	            "type": "string",
+L00000321	            "format": "date-time"
+L00000322	          },
+L00000323	          "redaction_profile": {
+L00000324	            "type": "string",
+L00000325	            "enum": [
+L00000326	              "no_secrets",
+L00000327	              "redacted_refs_only"
+L00000328	            ]
+L00000329	          },
+L00000330	          "published_event_id": {
+L00000331	            "type": [
+L00000332	              "string",
+L00000333	              "null"
+L00000334	            ]
+L00000335	          },
+L00000336	          "published_sequence_id": {
+L00000337	            "type": [
+L00000338	              "integer",
+L00000339	              "null"
+L00000340	            ],
+L00000341	            "minimum": 1
+L00000342	          },
+L00000343	          "retry_count": {
+L00000344	            "type": "integer",
+L00000345	            "minimum": 0
+L00000346	          },
+L00000347	          "last_error_ref": {
+L00000348	            "type": [
+L00000349	              "string",
+L00000350	              "null"
+L00000351	            ]
+L00000352	          }
+L00000353	        }
+L00000354	      }
+L00000355	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=356-367 >>>
+L00000356	    {
+L00000357	      "family_id": "plan_compile_run",
+L00000358	      "storage_kind": "redb",
+L00000359	      "status": "materialized",
+L00000360	      "tier": "tier_0_launch_critical",
+L00000361	      "key_shape": "plan_compile_run.v1:{project_id}:{plan_compile_run_id}",
+L00000362	      "value_schema_id": "pm.storage_value.plan_compile_run.v1",
+L00000363	      "value_schema_ref": "Plans/storage_value_registry.json#/families/plan_compile_run/value_schema",
+L00000364	      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+L00000365	      "producer": [
+L00000366	        "PlanCompile bootstrap authority"
+L00000367	      ],

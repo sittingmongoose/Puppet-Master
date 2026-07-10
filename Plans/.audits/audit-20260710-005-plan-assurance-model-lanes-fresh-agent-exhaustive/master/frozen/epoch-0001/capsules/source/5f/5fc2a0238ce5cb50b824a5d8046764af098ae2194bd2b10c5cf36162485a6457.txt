@@ -1,0 +1,397 @@
+<<< CONTEXT_BEFORE 4784-4795 >>>
+- "source_object_ref"
+- "remediation.resolved"
+- "/actor"
+- "project-attention projections"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 4796-5163 >>>
+### F3-022 - Concrete Account GUI Display
+
+```yaml
+plan_unit_id: F3-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Provider dispatch and account identity GUI surfaces display concrete-account request,
+  account_switch_reason, account, execution-role, model variant, role-scoped pool selection,
+  operational identity, switch history, and trust state.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: concrete_account_gui_display
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0015"
+preserved_exact_tokens:
+- "ProviderRequestEnvelope"
+- "account_switch_reason"
+- "/account"
+- "execution-role"
+- "/model/variant"
+- "role-scoped pool selection"
+- "operational identity"
+- "switch-history"
+negative_constraints:
+- "The GUI must not imply shared token ownership across accounts, providers, or execution roles."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-023 - Requested Identity Owner Boundary
+
+```yaml
+plan_unit_id: F3-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Prompt_Pipeline locks requested/effective identity semantics including concrete-account intent,
+  while tier-era override ownership remains compatibility vocabulary only.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines terminology, owner-boundary, runtime, storage, or governance behavior rather
+  than visual presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: requested_identity_owner_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0015"
+preserved_exact_tokens:
+- "Prompt_Pipeline.md"
+- "/effective"
+- "concrete-account intent"
+- "tier-era override ownership"
+- "compatibility vocabulary"
+negative_constraints: []
+compatibility_only_notes:
+- "Tier-era override ownership is compatibility vocabulary only."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-024 - Operational Identity Rows
+
+```yaml
+plan_unit_id: F3-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Operational identity is distinct from provider-account identity, and worker identity rows must
+  expose execution_role and operational target context before GUI surfaces treat them as complete
+  runtime identity.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: operational_identity_rows
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0016"
+preserved_exact_tokens:
+- "operational identity"
+- "provider-account identity"
+- "execution_role"
+- "operational target context"
+- "lane-backed operational identity"
+- "Source Control"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-025 - Projection Vocabulary Compatibility
+
+```yaml
+plan_unit_id: F3-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Compatibility-only source vocabulary is noncanonical, and live wording must use owner
+  terminology for projection freshness versus projection health.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines terminology, owner-boundary, runtime, storage, or governance behavior rather
+  than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: projection_vocabulary_compatibility
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0017"
+preserved_exact_tokens:
+- "Projection freshness vs projection health"
+- "Compatibility-only source vocabulary"
+- "noncanonical"
+- "owner terminology"
+negative_constraints: []
+compatibility_only_notes:
+- "Compatibility-only source vocabulary is noncanonical; live wording uses owner terminology."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-026 - Compliance And Slint Baseline
+
+```yaml
+plan_unit_id: F3-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  FinalGUISpec follows DRY_Rules and Contracts_V0, uses Puppet Master naming and deterministic
+  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.1 with slint_build and renderer choices as the
+  authoritative implementation baseline.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: compliance_and_slint_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0020"
+preserved_exact_tokens:
+- "Plans/DRY_Rules.md"
+- "Plans/Contracts_V0.md"
+- "Puppet Master"
+- "Rust stable 1.96.1"
+- "Slint 1.17.1"
+- "slint_build"
+- "winit + Skia"
+- "FemtoVG-wgpu"
+- "software renderer"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Compliance statement preserves SSOT references and deterministic Decision_Policy defaults."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-027 - GUI Rewrite Shell Summary
+
+```yaml
+plan_unit_id: F3-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Slint GUI replaces the Iced GUI with an IDE shell of Activity Bar, Primary Content, Side
+  Panel, Bottom Panel, status bar, deterministic themes, detachable panels, dashboard
+  rearrangement, and event-driven updates.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: gui_rewrite_shell_summary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0022"
+preserved_exact_tokens:
+- "Iced-based GUI"
+- "Slint 1.17.1"
+- "IDE-shell layout"
+- "Activity Bar"
+- "Primary Content"
+- "Side Panel"
+- "Bottom Panel"
+- "Retro Dark"
+- "Retro Light"
+- "Basic Modern"
+- "invoke_from_event_loop"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md"
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-028 - New Surfaces And Promoted Workflows
+
+```yaml
+plan_unit_id: F3-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The GUI surface set includes Usage, File Manager, editor surface, Chat, Agent Activity,
+  Artifacts, Source Control, GitHub Actions, Docker Manager, Run & Debug, Assistant Debug Mode,
+  project switching, language detection, audio feedback, catalog/sync, and SSH remote editing.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: new_surfaces_and_promoted_workflows
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0022"
+preserved_exact_tokens:
+- "Usage page"
+- "File Manager panel"
+- "Chat panel"
+- "Agent Activity pane"
+- "Artifacts"
+- "Source Control"
+- "GitHub Actions"
+- "Docker Manager"
+- "Run & Debug"
+- "Assistant Debug Mode"
+- "SSH remote editing"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md"
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 5164-5175 >>>
+### F3-029 - Core Stack Technologies
+
+```yaml
+plan_unit_id: F3-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia with
+  FemtoVG-wgpu and software fallbacks, redb for layout persistence, seglog for events, and Tantivy
+  for search.
+gui_related: true

@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14475-14486 >>>
+L00014475	preserved_exact_tokens:
+L00014476	- "clickable/draggable controls"
+L00014477	- "24px"
+L00014478	- "height/width"
+L00014479	negative_constraints: []
+L00014480	compatibility_only_notes: []
+L00014481	stale_retired_dispositions: []
+L00014482	owner_boundary_notes: []
+L00014483	owner_hints:
+L00014484	- "Plans/FinalGUISpec.md"
+L00014485	```
+L00014486	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14487-14873 >>>
+L00014487	### F3-205 - Slint Root Widgets And Views Layout
+L00014488	
+L00014489	```yaml
+L00014490	plan_unit_id: F3-205
+L00014491	unit_type: requirement
+L00014492	status: accepted
+L00014493	owner_doc: Plans/FinalGUISpec.md
+L00014494	canonical_text: >-
+L00014495	  The Slint UI tree includes `build.rs`, `ui/app.slint`, `ui/theme.slint`, reusable
+L00014496	  `ui/widgets/*` components, and `ui/views/*` page-level views including dashboard, settings,
+L00014497	  wizard, interview, nodes, evidence, metrics, history, memory, ledger, coverage, projects,
+L00014498	  setup, usage, file_editor, agent_activity, and not_found.
+L00014499	gui_related: true
+L00014500	gui_classification_reason: >-
+L00014501	  This unit covers the Slint root, theme, reusable widget, and page-level view file layout
+L00014502	  from the directory map.
+L00014503	split_recommended: false
+L00014504	depends_on: []
+L00014505	unblocks: []
+L00014506	acceptance_criteria:
+L00014507	- "The covered source span remains losslessly available for exact-text audit."
+L00014508	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014509	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014510	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014511	validation_surfaces:
+L00014512	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014513	- "python3 scripts/pm-plan-index.py validate"
+L00014514	risk_class: finalgui_drift
+L00014515	reasoning_tier: standard
+L00014516	context_scope: finalgui_standardization
+L00014517	implementation_surfaces:
+L00014518	- "Plans/FinalGUISpec.md"
+L00014519	node_compile_hint:
+L00014520	  mode: slint_root_widgets_and_views_layout
+L00014521	  create_worknodes: false
+L00014522	source_lineage:
+L00014523	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014524	preserved_exact_tokens:
+L00014525	- "build.rs"
+L00014526	- "slint_build::compile(\"ui/app.slint\")"
+L00014527	- "ui/app.slint"
+L00014528	- "theme.slint"
+L00014529	- "widgets/"
+L00014530	- "panel_card.slint"
+L00014531	- "status_badge.slint"
+L00014532	- "selectable_text.slint"
+L00014533	- "command_palette.slint"
+L00014534	- "views/"
+L00014535	- "dashboard.slint"
+L00014536	- "settings.slint"
+L00014537	- "usage.slint"
+L00014538	- "file_editor.slint"
+L00014539	- "agent_activity.slint"
+L00014540	- "not_found.slint"
+L00014541	negative_constraints: []
+L00014542	compatibility_only_notes: []
+L00014543	stale_retired_dispositions: []
+L00014544	owner_boundary_notes: []
+L00014545	owner_hints:
+L00014546	- "Plans/FinalGUISpec.md"
+L00014547	```
+L00014548	
+L00014549	### F3-206 - Slint Panels And Windows Layout
+L00014550	
+L00014551	```yaml
+L00014552	plan_unit_id: F3-206
+L00014553	unit_type: requirement
+L00014554	status: accepted
+L00014555	owner_doc: Plans/FinalGUISpec.md
+L00014556	canonical_text: >-
+L00014557	  Slint panel and window files live under `ui/panels/` and `ui/windows/`, including chat, file
+L00014558	  manager, bottom runtime panel, shared browser panel, debug panel, floating panel, and about
+L00014559	  window surfaces.
+L00014560	gui_related: true
+L00014561	gui_classification_reason: >-
+L00014562	  This unit covers visible detachable panel and secondary-window Slint file placement.
+L00014563	split_recommended: false
+L00014564	depends_on: []
+L00014565	unblocks: []
+L00014566	acceptance_criteria:
+L00014567	- "The covered source span remains losslessly available for exact-text audit."
+L00014568	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014569	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014570	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014571	validation_surfaces:
+L00014572	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014573	- "python3 scripts/pm-plan-index.py validate"
+L00014574	risk_class: finalgui_drift
+L00014575	reasoning_tier: standard
+L00014576	context_scope: finalgui_standardization
+L00014577	implementation_surfaces:
+L00014578	- "Plans/FinalGUISpec.md"
+L00014579	node_compile_hint:
+L00014580	  mode: slint_panels_and_windows_layout
+L00014581	  create_worknodes: false
+L00014582	source_lineage:
+L00014583	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014584	preserved_exact_tokens:
+L00014585	- "panels/"
+L00014586	- "chat_panel.slint"
+L00014587	- "file_manager_panel.slint"
+L00014588	- "bottom_panel.slint"
+L00014589	- "browser_panel.slint"
+L00014590	- "debug_panel.slint"
+L00014591	- "windows/"
+L00014592	- "floating_panel.slint"
+L00014593	- "about.slint"
+L00014594	negative_constraints: []
+L00014595	compatibility_only_notes: []
+L00014596	stale_retired_dispositions: []
+L00014597	owner_boundary_notes: []
+L00014598	owner_hints:
+L00014599	- "Plans/FinalGUISpec.md"
+L00014600	```
+L00014601	
+L00014602	### F3-207 - Rust App And Bridge Layout
+L00014603	
+L00014604	```yaml
+L00014605	plan_unit_id: F3-207
+L00014606	unit_type: requirement
+L00014607	status: accepted
+L00014608	owner_doc: Plans/FinalGUISpec.md
+L00014609	canonical_text: >-
+L00014610	  Rust app and bridge code is organized under `src/main.rs`, `src/app.rs`, and `src/bridge/`
+L00014611	  modules for theme sync, VecModel setup/model factories, callback wiring, and multi-window
+L00014612	  lifecycle.
+L00014613	gui_related: true
+L00014614	gui_classification_reason: >-
+L00014615	  This unit covers the Rust app entrypoint and Slint bridge modules that feed GUI state.
+L00014616	split_recommended: false
+L00014617	depends_on: []
+L00014618	unblocks: []
+L00014619	acceptance_criteria:
+L00014620	- "The covered source span remains losslessly available for exact-text audit."
+L00014621	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014622	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014623	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014624	validation_surfaces:
+L00014625	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014626	- "python3 scripts/pm-plan-index.py validate"
+L00014627	risk_class: finalgui_drift
+L00014628	reasoning_tier: standard
+L00014629	context_scope: finalgui_standardization
+L00014630	implementation_surfaces:
+L00014631	- "Plans/FinalGUISpec.md"
+L00014632	node_compile_hint:
+L00014633	  mode: rust_app_and_bridge_layout
+L00014634	  create_worknodes: false
+L00014635	source_lineage:
+L00014636	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014637	preserved_exact_tokens:
+L00014638	- "src/main.rs"
+L00014639	- "BackendSelector"
+L00014640	- "src/app.rs"
+L00014641	- "AppState"
+L00014642	- "message routing"
+L00014643	- "bridge/"
+L00014644	- "theme_bridge.rs"
+L00014645	- "model_bridge.rs"
+L00014646	- "callback_bridge.rs"
+L00014647	- "window_bridge.rs"
+L00014648	- "VecModel"
+L00014649	negative_constraints: []
+L00014650	compatibility_only_notes: []
+L00014651	stale_retired_dispositions: []
+L00014652	owner_boundary_notes: []
+L00014653	owner_hints:
+L00014654	- "Plans/FinalGUISpec.md"
+L00014655	```
+L00014656	
+L00014657	### F3-208 - Rust Panels Effects And Theme Layout
+L00014658	
+L00014659	```yaml
+L00014660	plan_unit_id: F3-208
+L00014661	unit_type: requirement
+L00014662	status: accepted
+L00014663	owner_doc: Plans/FinalGUISpec.md
+L00014664	canonical_text: >-
+L00014665	  Rust panel, effects, and theme modules include panel registry, dock/undock layout, snap
+L00014666	  zones, pixel grid and paper texture generation, color palettes, design tokens, ThemeVariant
+L00014667	  application, and custom theme TOML loading.
+L00014668	gui_related: true
+L00014669	gui_classification_reason: >-
+L00014670	  This unit covers Rust-side panel registry, layout, effects, and theme modules that support
+L00014671	  GUI behavior.
+L00014672	split_recommended: false
+L00014673	depends_on: []
+L00014674	unblocks: []
+L00014675	acceptance_criteria:
+L00014676	- "The covered source span remains losslessly available for exact-text audit."
+L00014677	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014678	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014679	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014680	validation_surfaces:
+L00014681	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014682	- "python3 scripts/pm-plan-index.py validate"
+L00014683	risk_class: finalgui_drift
+L00014684	reasoning_tier: standard
+L00014685	context_scope: finalgui_standardization
+L00014686	implementation_surfaces:
+L00014687	- "Plans/FinalGUISpec.md"
+L00014688	node_compile_hint:
+L00014689	  mode: rust_panels_effects_and_theme_layout
+L00014690	  create_worknodes: false
+L00014691	source_lineage:
+L00014692	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014693	preserved_exact_tokens:
+L00014694	- "src/panels/"
+L00014695	- "registry.rs"
+L00014696	- "PanelRegistry"
+L00014697	- "layout.rs"
+L00014698	- "snap.rs"
+L00014699	- "effects/"
+L00014700	- "grid_texture.rs"
+L00014701	- "paper_texture.rs"
+L00014702	- "SharedPixelBuffer"
+L00014703	- "theme/"
+L00014704	- "palette.rs"
+L00014705	- "tokens.rs"
+L00014706	- "variants.rs"
+L00014707	- "ThemeVariant"
+L00014708	- "custom_loader.rs"
+L00014709	- "TOML files"
+L00014710	negative_constraints: []
+L00014711	compatibility_only_notes: []
+L00014712	stale_retired_dispositions: []
+L00014713	owner_boundary_notes: []
+L00014714	owner_hints:
+L00014715	- "Plans/FinalGUISpec.md"
+L00014716	```
+L00014717	
+L00014718	### F3-209 - Browser Integration Layout
+L00014719	
+L00014720	```yaml
+L00014721	plan_unit_id: F3-209
+L00014722	unit_type: requirement
+L00014723	status: accepted
+L00014724	owner_doc: Plans/FinalGUISpec.md
+L00014725	canonical_text: >-
+L00014726	  Browser integration modules live under `src/browser/` and cover wry webview lifecycle, URL
+L00014727	  navigation, bookmark persistence, and click-to-context element capture.
+L00014728	gui_related: true
+L00014729	gui_classification_reason: >-
+L00014730	  This unit covers browser integration modules for user-visible webview, bookmarks, and
+L00014731	  click-to-context behavior.
+L00014732	split_recommended: false
+L00014733	depends_on: []
+L00014734	unblocks: []
+L00014735	acceptance_criteria:
+L00014736	- "The covered source span remains losslessly available for exact-text audit."
+L00014737	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014738	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014739	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014740	validation_surfaces:
+L00014741	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014742	- "python3 scripts/pm-plan-index.py validate"
+L00014743	risk_class: finalgui_drift
+L00014744	reasoning_tier: standard
+L00014745	context_scope: finalgui_standardization
+L00014746	implementation_surfaces:
+L00014747	- "Plans/FinalGUISpec.md"
+L00014748	node_compile_hint:
+L00014749	  mode: browser_integration_layout
+L00014750	  create_worknodes: false
+L00014751	source_lineage:
+L00014752	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014753	preserved_exact_tokens:
+L00014754	- "browser/"
+L00014755	- "webview.rs"
+L00014756	- "wry webview lifecycle"
+L00014757	- "URL navigation"
+L00014758	- "bookmarks.rs"
+L00014759	- "Bookmark persistence"
+L00014760	- "context_capture.rs"
+L00014761	- "Click-to-context element capture"
+L00014762	negative_constraints: []
+L00014763	compatibility_only_notes: []
+L00014764	stale_retired_dispositions: []
+L00014765	owner_boundary_notes: []
+L00014766	owner_hints:
+L00014767	- "Plans/FinalGUISpec.md"
+L00014768	```
+L00014769	
+L00014770	### F3-210 - Debug And SSH Module Layout
+L00014771	
+L00014772	```yaml
+L00014773	plan_unit_id: F3-210
+L00014774	unit_type: requirement
+L00014775	status: accepted
+L00014776	owner_doc: Plans/FinalGUISpec.md
+L00014777	canonical_text: >-
+L00014778	  Debug and SSH support modules live under `src/debug/` and `src/ssh/`, covering DAP protocol
+L00014779	  client, breakpoint management, launch configuration parsing, SSH/SFTP connection management,
+L00014780	  remote filesystem abstraction, and system keychain credential storage.
+L00014781	gui_related: false
+L00014782	gui_classification_reason: >-
+L00014783	  This unit is backend/debug/remote module organization, not itself a visual surface contract.
+L00014784	split_recommended: false
+L00014785	depends_on: []
+L00014786	unblocks: []
+L00014787	acceptance_criteria:
+L00014788	- "The covered source span remains losslessly available for exact-text audit."
+L00014789	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014790	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014791	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014792	validation_surfaces:
+L00014793	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014794	- "python3 scripts/pm-plan-index.py validate"
+L00014795	risk_class: finalgui_drift
+L00014796	reasoning_tier: standard
+L00014797	context_scope: finalgui_standardization
+L00014798	implementation_surfaces:
+L00014799	- "Plans/FinalGUISpec.md"
+L00014800	node_compile_hint:
+L00014801	  mode: debug_and_ssh_module_layout
+L00014802	  create_worknodes: false
+L00014803	source_lineage:
+L00014804	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014805	preserved_exact_tokens:
+L00014806	- "debug/"
+L00014807	- "dap_client.rs"
+L00014808	- "DAP protocol client"
+L00014809	- "breakpoints.rs"
+L00014810	- "launch_config.rs"
+L00014811	- "ssh/"
+L00014812	- "connection.rs"
+L00014813	- "SSH/SFTP connection management"
+L00014814	- "remote_fs.rs"
+L00014815	- "keychain.rs"
+L00014816	- "System keychain credential storage"
+L00014817	negative_constraints: []
+L00014818	compatibility_only_notes: []
+L00014819	stale_retired_dispositions: []
+L00014820	owner_boundary_notes: []
+L00014821	owner_hints:
+L00014822	- "Plans/FinalGUISpec.md"
+L00014823	```
+L00014824	
+L00014825	### F3-211 - Audio Module Layout
+L00014826	
+L00014827	```yaml
+L00014828	plan_unit_id: F3-211
+L00014829	unit_type: requirement
+L00014830	status: accepted
+L00014831	owner_doc: Plans/FinalGUISpec.md
+L00014832	canonical_text: >-
+L00014833	  Audio modules live under `src/audio/` and cover rodio-based audio playback plus
+L00014834	  event-to-sound mapping.
+L00014835	gui_related: false
+L00014836	gui_classification_reason: >-
+L00014837	  This unit is audio backend module organization; user-facing sound UX is covered by F3-187.
+L00014838	split_recommended: false
+L00014839	depends_on: []
+L00014840	unblocks: []
+L00014841	acceptance_criteria:
+L00014842	- "The covered source span remains losslessly available for exact-text audit."
+L00014843	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014844	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014845	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014846	validation_surfaces:
+L00014847	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014848	- "python3 scripts/pm-plan-index.py validate"
+L00014849	risk_class: finalgui_drift
+L00014850	reasoning_tier: standard
+L00014851	context_scope: finalgui_standardization
+L00014852	implementation_surfaces:
+L00014853	- "Plans/FinalGUISpec.md"
+L00014854	node_compile_hint:
+L00014855	  mode: audio_module_layout
+L00014856	  create_worknodes: false
+L00014857	source_lineage:
+L00014858	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0141"
+L00014859	preserved_exact_tokens:
+L00014860	- "audio/"
+L00014861	- "player.rs"
+L00014862	- "rodio-based audio playback"
+L00014863	- "events.rs"
+L00014864	- "Event-to-sound mapping"
+L00014865	negative_constraints: []
+L00014866	compatibility_only_notes: []
+L00014867	stale_retired_dispositions: []
+L00014868	owner_boundary_notes:
+L00014869	- "F3-187 owns user-facing sound effects accessibility behavior."
+L00014870	owner_hints:
+L00014871	- "Plans/FinalGUISpec.md"
+L00014872	```
+L00014873	
+
+<<< CONTEXT_AFTER canonical_document_lines=14874-14885 >>>
+L00014874	### F3-212 - Catalog And Sync Module Layout
+L00014875	
+L00014876	```yaml
+L00014877	plan_unit_id: F3-212
+L00014878	unit_type: requirement
+L00014879	status: accepted
+L00014880	owner_doc: Plans/FinalGUISpec.md
+L00014881	canonical_text: >-
+L00014882	  Catalog and sync modules live under `src/catalog/` and `src/sync/`, covering catalog index
+L00014883	  fetch/cache, one-click install logic, bundle export, bundle import, and conflict resolution.
+L00014884	gui_related: false
+L00014885	gui_classification_reason: >-

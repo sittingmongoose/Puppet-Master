@@ -1,0 +1,333 @@
+<<< CONTEXT_BEFORE 13777-13788 >>>
+- Credential and sensitive output redaction timing
+- agent0ai/agent-zero
+- cline/cline
+- openai/codex
+negative_constraints: []
+observed_signal: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+pm_current_coverage: PM has FileSafe and privileged session metadata minimization.
+pm_gap_or_delta: 'Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only.'
+proposal_or_recommendation: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy.
+compile_disposition: create_new_planunit
+```
+
+
+<<< AUTHORITATIVE_CORE 13789-14106 >>>
+### F2-196 - P1-TRACE-REDACTION-BEFORE-WRITE
+
+```yaml
+plan_unit_id: F2-196
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  P1-TRACE-REDACTION-BEFORE-WRITE (P1) is compiled as canonical Puppet Master intent for Trace/debug log redaction before persistence: Imported external-repo finding extrepo-20260703-0033 / P1-TRACE-REDACTION-BEFORE-WRITE (P1). The preserved PM gap/delta is: Add invariant that full prompts, requests, provider payloads, WebSocket frames, and tool raw outputs cannot hit trace/debug logs before redaction/bounding unless explicit encrypted local debug capture is enabled. The observed external-repo signal remains source-lineage evidence: Codex 0.142.5 fixed full Responses WebSocket request payloads being written to trace logs.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Trace log search cannot find full prompt/tool payload under default config
+- Raw debug capture has opt-in, expiry, encryption, and export warnings
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Trace log search cannot find full prompt/tool payload under default config
+- Raw debug capture has opt-in, expiry, encryption, and export warnings
+risk_class: p1_memory_history_logging_hardening
+reasoning_tier: standard
+context_scope: memory_history_logging
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: p1_trace_redaction_before_write
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0037
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0037
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0033/P1-TRACE-REDACTION-BEFORE-WRITE@line=33
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0033/P1-TRACE-REDACTION-BEFORE-WRITE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:13
+source_atom_ids:
+- atom-0037
+external_atom_id: extrepo-20260703-0033
+source_row_id: P1-TRACE-REDACTION-BEFORE-WRITE
+priority: P1
+finding_family: Trace/debug log redaction before persistence
+source_repos:
+- openai/codex
+target_docs:
+- Plans/Permissions_System.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+owner_hints:
+- Plans/Permissions_System.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+preserved_exact_tokens:
+- extrepo-20260703-0033
+- P1-TRACE-REDACTION-BEFORE-WRITE
+- P1
+- Trace/debug log redaction before persistence
+- openai/codex
+negative_constraints: []
+observed_signal: Codex 0.142.5 fixed full Responses WebSocket request payloads being written to trace logs.
+pm_current_coverage: Permissions requires provider exposure scrub and persisted/export/screenshot redaction profiles.
+pm_gap_or_delta: Add invariant that full prompts, requests, provider payloads, WebSocket frames, and tool raw outputs cannot hit trace/debug logs before redaction/bounding unless explicit encrypted local debug capture is enabled.
+compile_disposition: create_new_planunit
+```
+
+### F2-197 - P0-LOG-REDACTION-BEFORE-WRITE
+
+```yaml
+plan_unit_id: F2-197
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  P0-LOG-REDACTION-BEFORE-WRITE (P0) is compiled as canonical Puppet Master intent for Logging, traces, diagnostics, and privacy: Add ObservabilityEnvelope and TracePersistencePolicy: sensitivity classification before persistence, bounded per-run log quotas, log sampling levels, per-character terminal log suppression, OTLP export adapter as optional, support-bundle redaction, and trace-to-usage correlation IDs. The preserved PM gap/delta is: Observability needs a redaction-before-write and log-volume contract shared by provider traces, WebSockets/SSE, terminal streams, subagents, tools, MCP, memory, and support bundles. The observed external-repo signal remains source-lineage evidence: Codex issues show raw logs with paths/env/account/token-like data, heavy idle I/O, and stale helper processes; Pi exposes OpenTelemetry hooks; OpenCode supports Helicone/monitoring headers; Warp issue logs show per-character terminal event floods.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Raw provider requests/WS payloads are scrubbed before disk.
+- Terminal huge-output fixture cannot create unbounded per-character logs.
+- Support bundle validator rejects secrets/env/token-like fields.
+- Usage/cost/log traces join by attempt_id without exposing hidden content.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Raw provider requests/WS payloads are scrubbed before disk.
+- Terminal huge-output fixture cannot create unbounded per-character logs.
+- Support bundle validator rejects secrets/env/token-like fields.
+- Usage/cost/log traces join by attempt_id without exposing hidden content.
+risk_class: p0_memory_history_logging_hardening
+reasoning_tier: high
+context_scope: memory_history_logging
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/storage-plan.md
+- Plans/usage-feature.md
+- Plans/FinalGUISpec.md
+- Plans/Executor_Protocol.md
+- Plans/Provider_OpenCode.md
+node_compile_hint:
+  mode: p0_log_redaction_before_write
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0066
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0066
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0062/P0-LOG-REDACTION-BEFORE-WRITE@line=62
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0062/P0-LOG-REDACTION-BEFORE-WRITE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:8
+source_atom_ids:
+- atom-0066
+external_atom_id: extrepo-20260703-0062
+source_row_id: P0-LOG-REDACTION-BEFORE-WRITE
+priority: P0
+finding_family: Logging, traces, diagnostics, and privacy
+source_repos:
+- Codex
+- OpenCode
+- Warp
+- Pi
+- Agent Zero
+target_docs:
+- Plans/storage-plan.md
+- Plans/usage-feature.md
+- Plans/FinalGUISpec.md
+- Plans/Executor_Protocol.md
+- Plans/Provider_OpenCode.md
+owner_hints:
+- Plans/storage-plan.md
+- Plans/usage-feature.md
+- Plans/FinalGUISpec.md
+- Plans/Executor_Protocol.md
+- Plans/Provider_OpenCode.md
+preserved_exact_tokens:
+- extrepo-20260703-0062
+- P0-LOG-REDACTION-BEFORE-WRITE
+- P0
+- Logging, traces, diagnostics, and privacy
+- Codex
+- OpenCode
+- Warp
+- Pi
+- Agent Zero
+negative_constraints: []
+observed_signal: Codex issues show raw logs with paths/env/account/token-like data, heavy idle I/O, and stale helper processes; Pi exposes OpenTelemetry hooks; OpenCode supports Helicone/monitoring headers; Warp issue logs show per-character terminal event floods.
+pm_current_coverage: PM has seglog, usage records, provider/usage join fields, terminal persistence, and runtime artifact identity.
+pm_gap_or_delta: Observability needs a redaction-before-write and log-volume contract shared by provider traces, WebSockets/SSE, terminal streams, subagents, tools, MCP, memory, and support bundles.
+proposal_or_recommendation: 'Add ObservabilityEnvelope and TracePersistencePolicy: sensitivity classification before persistence, bounded per-run log quotas, log sampling levels, per-character terminal log suppression, OTLP export adapter as optional, support-bundle redaction, and trace-to-usage correlation IDs.'
+compile_disposition: create_new_planunit
+```
+
+### F2-198 - filesystem_boundary_regressions
+
+```yaml
+plan_unit_id: F2-198
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  filesystem_boundary_regressions (P1) is compiled as canonical Puppet Master intent for filesystem_boundary_regressions: Add external path/symlink regression suite The preserved PM gap/delta is: Need exhaustive fixtures across read/bash/grep/glob/edit and child contexts The observed external-repo signal remains source-lineage evidence: OpenCode Plan-mode outside-project read/symlink/search bug family
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Permission/FileSafe test matrix
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Permission/FileSafe test matrix
+risk_class: p1_security_release_supply_chain_hardening
+reasoning_tier: standard
+context_scope: security_release_supply_chain
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+node_compile_hint:
+  mode: filesystem_boundary_regressions
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0113
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0113
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0109/filesystem_boundary_regressions@line=109
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0109/filesystem_boundary_regressions
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:11
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+source_atom_ids:
+- atom-0113
+external_atom_id: extrepo-20260703-0109
+source_row_id: filesystem_boundary_regressions
+priority: P1
+finding_family: filesystem_boundary_regressions
+target_docs:
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+- Plans/Tools.md
+owner_hints:
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+- Plans/Tools.md
+preserved_exact_tokens:
+- extrepo-20260703-0109
+- filesystem_boundary_regressions
+- P1
+negative_constraints: []
+observed_signal: OpenCode Plan-mode outside-project read/symlink/search bug family
+pm_current_coverage: Path normalization/symlink fail-closed/external_directory guard strong
+pm_gap_or_delta: Need exhaustive fixtures across read/bash/grep/glob/edit and child contexts
+proposal_or_recommendation: Add external path/symlink regression suite
+compile_disposition: create_new_planunit
+```
+
+### F2-199 - FileSafe Fail Closed Security Repair
+
+```yaml
+plan_unit_id: F2-199
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe fail-closed security canon requires BashGuard, FileGuard, and SecurityFilter
+  initialization failures to block guarded execution with typed diagnostics; approved commands to
+  match only exact normalized command identities; missing or empty command/path allowlists and
+  missing destructive baselines to block regardless of strict_mode; destructive override requests
+  to require authenticated operator grant, auth realm, identity, reason, scope, expiry, audit
+  events, and receipt; prompt/free-text extraction to remain advisory only; realpath/case-fold/
+  symlink checks to cover non-existent create targets and TOCTOU rechecks; and retired
+  fail-open/prefix snippets to be fenced as noncanonical source-lineage.
+gui_related: false
+gui_classification_reason: This unit defines FileSafe security behavior and validator coverage rather than visual presentation.
+depends_on: [F2-024, F2-028, F2-030, F2-031, F2-032, F2-040, F2-041, F2-052, F2-074, F2-101, F2-114, F2-115, F2-116]
+unblocks: [CV-312]
+acceptance_criteria:
+  - Guard initialization failure emits filesafe.guard_init_failed and blocks command/file execution.
+  - Missing or empty allowlists and missing baselines block regardless of strict_mode.
+  - Approved command git status rejects git status && rm -rf /.
+  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, audit event, and receipt.
+  - Retired BashGuard::disabled(), SecurityFilter::disabled(), prefix-match, and starts_with snippets cannot be copied as implementation guidance.
+  - Prompt/free-text command and path extraction is advisory and never the sole Layer-1 enforcement boundary.
+  - Non-existent create targets and pre-dispatch/pre-rename rechecks enforce realpath/case-fold/symlink scope and emit filesafe.path_denied on TOCTOU drift.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: filesafe_fail_closed_security_regression
+reasoning_tier: high
+context_scope: filesafe_fail_closed_security_repair
+implementation_surfaces:
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/Tools.md
+  - scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: filesafe_fail_closed_security_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+source_atom_ids: []
+priority: P0
+finding_family: filesafe_fail_open_and_allowlist_security
+preserved_exact_tokens:
+  - "fable-20260706-p0-filesafe-fail-open-and-allowlist-security"
+  - "`filesafe.guard_init_failed`"
+  - "`filesafe.command_denied`"
+  - "`filesafe.path_denied`"
+  - "`PUPPET_MASTER_ALLOW_DESTRUCTIVE`"
+  - "`approved_command_identity_mismatch`"
+  - "`path_toc_tou_recheck_failed`"
+negative_constraints:
+  - Do not use disabled guard fallback for initialization failure.
+  - Do not use prefix, substring, starts_with, shell-fragment, or chained-command expansion matching for approved_commands.
+  - Do not let strict_mode=false permit writes when the authoritative allowlist is missing or empty.
+  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 as sufficient destructive override authority.
+  - Do not use prompt/free-text extraction as the sole Layer-1 enforcement boundary.
+owner_hints:
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime FileSafe rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-e8baa3796f5c29cdb66f46eb`: `RedactionSettlement` fields are `settlement_id`, `source_ref`, `redaction_profile_id`, `decision`, `redacted_artifact_ref?`, `blocked_reason_code?`, and `created_at_utc`. `ObservabilityEnvelope` fields are `envelope_id`, `trace_id`, `event_refs[]`, `sampling_policy_id`, `quota_class`, `redaction_settlement_id`, and `created_at_utc`. `TracePersistencePolicy` fields are `policy_id`, `sample_rate`, `max_bytes_per_trace`, `retention_days`, `redaction_required`, and `export_allowed`.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 133` (explicitly_deferred; source line 578; `sfk-e8baa3796f5c29cdb66f46eb`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L13510-13589,13664-13754 (F2-195/197): RedactionSettlement and ObservabilityEnvelope/TracePersistencePolicy proposed with zero data contract, hook point, quota, or sampling algorithm FIX: define concrete schema/limits or mark as requiring a follow-up design doc.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

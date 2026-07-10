@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 1881-1892 >>>
+  - "placeholder"
+  - "structural no-op"
+negative_constraints:
+  - "Plugin transforms MUST NOT delete system or persona content, reorder messages in a way that breaks alternation, or modify immune content."
+  - "Placeholder repair preserves structure only; it MUST NOT invent substantive user intent, assistant claims, tool calls, or hidden policy content."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Architecture_Invariants.md"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 1893-2291 >>>
+### PP-026 - Rotation Follow-Up Run Boundary
+
+```yaml
+plan_unit_id: PP-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Rotation terminates a run and spawns a follow-up only after deterministic compaction/pruning fails against the final assembled payload; ask and plan are rotation-ineligible, regular and yolo are eligible, and rotated runs inherit continuity state and finish with done.rotated.
+gui_related: false
+gui_classification_reason: This unit defines follow-up run spawning behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-022"
+  - "PP-024"
+unblocks: []
+acceptance_criteria:
+  - "Rotation Follow-Up Run Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0020
+preserved_exact_tokens:
+  - "ROTATION"
+  - "final assembled payload"
+  - "ask"
+  - "plan"
+  - "regular"
+  - "yolo"
+  - "thread_id"
+  - "mode"
+  - "strategy"
+  - "effective Persona/runtime state"
+  - "tool-policy snapshot"
+  - "done.rotated"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Run_Modes.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-027 - GUI Injected Context Transparency
+
+```yaml
+plan_unit_id: PP-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The GUI exposes an Injected Context breakdown per run or turn, including paths, byte counts, truncation reason, and a safe preview of compiled prompt sections for transparency and debugging.
+gui_related: true
+gui_classification_reason: This unit defines GUI inspection and user-visible prompt transparency behavior.
+split_recommended: false
+depends_on:
+  - "PP-014"
+  - "PP-024"
+unblocks: []
+acceptance_criteria:
+  - "GUI Injected Context Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0021"
+preserved_exact_tokens:
+  - "GUI"
+  - "Injected Context"
+  - "paths + byte counts"
+  - "truncation reason"
+  - "safe preview"
+  - "compiled prompt"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/FinalGUISpec.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/FinalGUISpec.md"
+```
+
+### PP-028 - Prompt Pipeline Acceptance Gates
+
+```yaml
+plan_unit_id: PP-028
+unit_type: acceptance_criteria
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Prompt assembly must follow the canonical stage ordering, and compaction must preserve protected tool outputs so skill outputs are not pruned.
+gui_related: false
+gui_classification_reason: This unit preserves prompt assembly and compaction acceptance criteria rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-008"
+  - "PP-009"
+  - "PP-016"
+  - "PP-020"
+unblocks: []
+acceptance_criteria:
+  - "Prompt Pipeline Acceptance Gates remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: acceptance_criteria
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0022"
+preserved_exact_tokens:
+  - "AC-PP01"
+  - "AC-PP02"
+  - "canonical stage ordering"
+  - "protected tool outputs"
+  - "skill"
+negative_constraints:
+  - "Compaction MUST preserve protected tool outputs; skill outputs MUST NOT be pruned."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Prompt_Pipeline.md#ASSEMBLY-PIPELINE"
+  - "ContractRef: ContractName:Plans/Prompt_Pipeline.md#COMPACTION, ContractName:Plans/Run_Modes.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-029 - Effective Runtime Resolution Pipeline Boundary
+
+```yaml
+plan_unit_id: PP-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The requested/effective runtime pipeline is locked for provider family selection, account or server-profile resolution, billing or entity attribution, and PM-native skills/MCP assembly before provider handoff.
+gui_related: false
+gui_classification_reason: This unit defines runtime resolver ownership rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-008"
+unblocks: []
+acceptance_criteria:
+  - "Effective Runtime Resolution Pipeline Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0023"
+preserved_exact_tokens:
+  - "Effective Persona and Runtime Resolution Pipeline"
+  - "provider family selection"
+  - "account or server-profile resolution"
+  - "billing/entity attribution"
+  - "PM-native skills/MCP assembly"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/Multi-Account.md"
+  - "Plans/Models_System.md"
+```
+
+### PP-030 - Pre-Prompt Resolution And Skill Readiness Order
+
+```yaml
+plan_unit_id: PP-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Before final prompt payload emission, runtime resolution follows the ordered surface, provider, account/profile, entitlement, effective runtime, skill readiness, MCP/tool availability, instruction bundle, and frozen snapshot stages, with PM-native skill/tool readiness derived from explicit dependency metadata and transported through normal prompt/context assembly.
+gui_related: false
+gui_classification_reason: This unit defines pre-prompt resolver and skill readiness ordering rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-029"
+  - "PP-009"
+unblocks: []
+acceptance_criteria:
+  - "Pre-Prompt Resolution And Skill Readiness Order remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0024"
+preserved_exact_tokens:
+  - "surface context and workflow overlay"
+  - "requested provider entry"
+  - "provider family"
+  - "eligible account rows"
+  - "server-profile rows"
+  - "entitlement or billing-entity selection"
+  - "PM-native skill readiness"
+  - "required_tool_refs"
+  - "optional_tool_refs"
+  - "list_skills_for_agent(project_root, permissions)"
+  - "prompt_parts"
+  - "tool_policy"
+  - "transport-agnostic"
+negative_constraints:
+  - "PM skill context is delivered through compiled prompt/context assembly, not through a mandatory provider-native install path or raw skill names/paths."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-031 - Selection Source And Reason Enumeration
+
+```yaml
+plan_unit_id: PP-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Prompt Pipeline preserves persona_selection_source as the canonical requested-Persona source enum and adds runtime_selection_source plus a human-readable selection_reason for inspectors and audit history.
+gui_related: false
+gui_classification_reason: This unit defines resolver source metadata rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-029"
+unblocks: []
+acceptance_criteria:
+  - "Selection Source And Reason Enumeration remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0025"
+preserved_exact_tokens:
+  - "persona_selection_source"
+  - "runtime_selection_source"
+  - "manual_ui"
+  - "surface_default"
+  - "config_default"
+  - "persona_preference"
+  - "auto_family_pool"
+  - "fallback"
+  - "selection_reason"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-032 - Requested Persona Precedence Non-Rewrite
+
+```yaml
+plan_unit_id: PP-032
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Requested Persona precedence remains explicit override, scoped natural-language override, surface mapping, surface auto resolver candidate, config default, then canonical fallback; runtime/provider selection happens afterward and cannot rewrite the winning requested-Persona source.
+gui_related: false
+gui_classification_reason: This unit defines Persona resolver precedence and non-rewrite rules rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-031"
+unblocks: []
+acceptance_criteria:
+  - "Requested Persona Precedence Non-Rewrite remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0026"
+preserved_exact_tokens:
+  - "Canonical requested-Persona precedence"
+  - "explicit run-envelope or manual surface override"
+  - "active scoped natural-language override"
+  - "surface-specific explicit mapping"
+  - "surface auto resolver candidate"
+  - "config default"
+  - "canonical fallback"
+negative_constraints:
+  - "Runtime/provider selection occurs after requested Persona resolution and MUST NOT rewrite the winning requested-Persona source."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-033 - Runtime Account Profile Resolution Rules
+
+```yaml
+plan_unit_id: PP-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Provider/runtime resolution preserves requested_platform, effective_platform, provider_family_id, effective account rows, effective connection_profile_id, and billing/entity bucket semantics while keeping provider examples distinct by runtime surface and auth family.
+gui_related: false
+gui_classification_reason: This unit defines runtime/account/profile resolver fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-031"
+  - "PP-032"
+unblocks: []
+acceptance_criteria:
+  - "Runtime Account Profile Resolution Rules remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0027"
+preserved_exact_tokens:
+  - "requested_platform"
+  - "effective_platform"
+  - "provider_family_id"
+  - "effective account row"
+  - "connection_profile_id"
+  - "billing/entity bucket"
+  - "Gemini CLI"
+  - "ChatGPT"
+  - "API key"
+  - "GitHub Copilot"
+  - "OpenCode"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+
+<<< CONTEXT_AFTER 2292-2303 >>>
+### PP-034 - Requested Effective Account Identity Fields
+
+```yaml
+plan_unit_id: PP-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The shared requested/effective account identity contract adds requested_account_id beside requested_account_policy, models requested_account_binding independently, carries effective account identity through runtime envelopes, and treats provider_account_id only as subordinate provider-native echo metadata.
+gui_related: false
+gui_classification_reason: This unit defines account identity schema fields rather than visual presentation.
+split_recommended: false

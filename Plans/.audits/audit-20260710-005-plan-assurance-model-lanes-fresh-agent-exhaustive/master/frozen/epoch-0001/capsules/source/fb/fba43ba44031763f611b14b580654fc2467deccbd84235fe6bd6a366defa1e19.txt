@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE 1097-1108 >>>
+
+Add the following entry to the §7 defaults table:
+
+| Key | Default | Rationale |
+|---|---|---|
+| `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |
+
+## Runtime blocked-Outcome Integration Addendum (2026-03-08)
+
+### 1. Policy-denied outcomes are blocked outcomes
+
+When the permission layer prevents execution, the runtime must treat the result as blocked/denied rather than generic failure.
+
+<<< AUTHORITATIVE_CORE 1109-1478 >>>
+
+This includes:
+- deny rules
+- user rejection of `ask`
+- headless `ask -> deny`
+- `external_publish_side_effect` blocks
+
+### 2. Recovery-option payloads
+
+Permission outcomes that surface to runtime/UI must include canonical blocked-state actions and family identity.
+
+Minimum fields:
+- `blocked_family` (`blocked_policy` | `blocked_approval` | `blocked_preflight` | `blocked_governance`)
+- `blocked_reason_code`
+- `guard_name?`
+- `allowed_action_ids[]`
+- `approval_scope_key?`
+- `approval_target_ref?`
+- `permission_snapshot_id?`
+- `runtime_identity_context?`
+- `revalidation_required?`
+- `executed: false`
+
+Rules:
+- `allowed_action_ids[]` is canonical; prose-only recovery hints are non-conforming
+- Runtime payload field names are closed: legacy `recovery_options[]` and `allowed_actions[]` are compatibility aliases only and MUST NOT replace `allowed_action_ids[]` in new blocked or recovery payloads.
+- approval surfaces in chat/dialogs/cards must summarize the exact target, scope, and drift boundary for the request
+- UI labels may vary, but the exposed actions must map to the canonical semantics: one-shot approval, reusable scope/session approval when policy allows, and deny/decline
+- `blocked_preflight` is used for stale target, undeclared host, drift, or capability/preflight failures discovered before dispatch; these outcomes do not masquerade as `failure_class`
+- payload consumers must render blocked family + action ids without inventing local enum families or alias field names
+- Domain-sensitive operational sessions use permission classes instead of one generic run-command approval. Read-only inspection, interactive shell `/exec`, and network tunnel exposure are separate classes for `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward`; approvals for one class do not imply approval for another.
+- Tool permission and domain approval are separate: generic tool allow, `/session/YOLO`, or headless defaults never approve domain-sensitive Git push/force-push/prune/destructive discard (`/force-push/prune/destructive`), workflow `/cancel/rerun/admin` CRUD, image push/repo create/template push, or Kubernetes `/delete/exec/port-forward` operations. Protection-rule changes, `/namespace/workload` mutations, SCM destructive actions, `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward` require their own domain approval class.
+- `/queued` and background approval requests bind to the exact queued attempt, target, guard, and preflight snapshot. Approval may pause one node, block the whole run, or block only a follow-on step according to the blocked payload, but resumption always re-runs preflight when the target, policy, or permission snapshot may have changed.
+- Policy-denied, approval-missing, and preflight-failed outcomes remain distinct: `blocked_policy`, `blocked_approval`, and `blocked_preflight` choose different copy, recovery actions, and retry paths instead of collapsing into a generic blocked reason.
+- Mutating actions use a per-target in-flight operation key for `/dedupe` across the main window, detached windows, Dashboard, and Orchestrator shortcuts. Identical operations coalesce, while conflicting operations surface `operation_in_progress` with the owning target/action context.
+- Every mutating action revalidates stable target identity immediately before execution, including stale table rows, stale cards, and stale `/selections`. If the selected target has materially changed, the action aborts with `state_changed_refresh_required` and requires refresh or reselection.
+- Remote-side-effect transports may end as `indeterminate_remote_outcome` when the server-side action might have succeeded but the client lost confirmation. The receipt preserves `requested`, `transport_lost`, and later `reconciled` states, and the UI exposes a `Refresh remote state` recovery CTA rather than labeling the action simply failed.
+
+Policy-field defaults and closed enums:
+
+| Field | Default | Allowed values |
+| --- | --- | --- |
+| `network_access_policy` | `ask` | `deny`, `ask`, `allow_project_declared`, `allow_session`, `allow_all` |
+| `secret_access_policy` | `ask` | `deny`, `ask`, `allow_named_secret`, `allow_session_named_secret` |
+| `destructive_command_policy` | `ask` | `deny`, `ask`, `allow_once`, `allow_session_for_target` |
+| `filesystem_write_policy` | `ask_project` | `deny`, `ask_project`, `allow_project`, `allow_declared_paths` |
+| `database_test_data_policy` | `deny_real` | `deny_real`, `ask_sandbox`, `allow_sandbox` |
+
+Recovery reason-code minima: `blocked_policy`, `blocked_approval`, `blocked_preflight`, `state_changed_refresh_required`, `operation_in_progress`, `indeterminate_remote_outcome`, `budget_exhausted`, and `permission_snapshot_stale`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
+
+A permission snapshot captures the resolved permission state at attempt start for auditability, immutability, and replay-safe approval logic.
+
+After any approval, policy, mode, or project change, a retry creates a new permission snapshot; the prior snapshot stays frozen for historical audit and never mutates in place.
+
+**Schema:**
+```json
+{
+  "snapshot_id": "uuid",
+  "attempt_id": "uuid",
+  "node_id": "uuid",
+  "captured_at": "ISO-8601 timestamp",
+  "approval_scope_key": "string?",
+  "approval_target_ref": "string?",
+  "requested_account_binding": "string?",
+  "effective_account_binding": "string?",
+  "account_switch_event_ref": "string?",
+  "permission_decision_context": {
+    "decision_context_ref": "string?",
+    "mode_override": "string?",
+    "preflight_snapshot_ref": "string?",
+    "policy_source_ref": "string?"
+  },
+  "actor_surface_context": {
+    "actor_kind": "assistant | interviewer | builder | orchestrator | subagent | user | system",
+    "execution_role": "string?",
+    "surface_id": "string?",
+    "surface_route": "string?",
+    "project_id": "string?",
+    "thread_id": "string?",
+    "run_id": "string?"
+  },
+  "runtime_identity_context": {
+    "requested_platform": "string",
+    "effective_platform": "string",
+    "provider_family_id": "string?",
+    "requested_runtime_identity": "string?",
+    "effective_runtime_identity": "string?",
+    "host_ref": "string?",
+    "transport_host_ref": "string?",
+    "upstream_provider_ref": "string?",
+    "repo_id": "string?",
+    "worktree_id": "string?"
+  },
+  "resolved_permissions": {
+    "<permission_key>": {
+      "requested_permission_state": "allow | deny | ask | unset",
+      "effective_permission_state": "allow | deny | ask",
+      "downgrade_reason": "string?",
+      "resolution": "allow | deny | ask",
+      "source": "preset | project | user_override | session",
+      "effective_value": true
+    }
+  }
+}
+```
+
+`stop_reason_code` values consumed by permission-adjacent blocked receipts are `user_stopped`, `policy_denied`, `budget_exhausted`, `safe_point_required`, `permission_snapshot_stale`, and `indeterminate_remote_outcome`. `blocked_reason_code` values are `approval_required`, `policy_denied`, `preflight_failed`, `state_changed`, `domain_sensitive_action`, `secret_required`, `network_forbidden`, `external_side_effect`, and `operation_in_progress`. `budget_kind` values are `turns`, `tokens`, `wall_time_seconds`, `parallel_agents`, and `cost`.
+
+**Rules:**
+1. The snapshot is created before `attempt.started` becomes durable; when a run has no narrower attempt record yet, the effective permission snapshot is frozen before run start becomes durable.
+2. The snapshot is immutable after creation; later approval, policy, mode, project, account, target, or runtime-identity changes create a new snapshot and a new attempt/run lineage entry before retry or resume.
+3. Approval reuse is valid only while `approval_scope_key`, `approval_target_ref`, and the relevant runtime identity context still match. Drift invalidates the prior approval instead of silently reusing it.
+4. Historical run, attempt, chat, and audit views show the frozen permission snapshot that governed that execution; current Settings state must not be presented as historical effective permission state.
+5. Requested and effective permission states are both preserved per permission key. `requested_permission_state` records the state before clamping by mode, role, account, FileSafe, headless posture, or runtime capability; `effective_permission_state` records the state actually enforced. When the effective state is narrower than requested, `downgrade_reason` records the canonical reason code or policy source that caused the clamp.
+6. `actor_surface_context` identifies the actor and surface that requested the snapshot so approval, blocked, and audit surfaces can distinguish Assistant, Interviewer, builder, Orchestrator, subagent, user, and system requests without inferring that context from prose.
+7. `permission_decision_context` records the target, mode, preflight, and policy context used to make the permission decision; consumers may index those refs but must not collapse them into the runtime identity block.
+8. `transport_host_ref` names the host or transport boundary that carried the operation, while `upstream_provider_ref` names the provider or adapter whose policy/account state influenced execution. They may match for local providers but remain separate when a bridge, proxy, tunnel, or hosted provider is involved.
+9. `Plans/storage-plan.md` owns the durable key family and joins for this record, but this document owns the payload schema, enum sets (`/enums`), and interpretation rules.
+10. Chat, provider, and storage surfaces may reference these fields, but they MUST NOT redefine the nested snapshot schema locally.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+
+Required fields:
+- blocked_sequence
+- execution_entity_id
+- lane_id
+- package_id
+- account_id
+- allowed_action_ids
+
+Canonical terms and values:
+- blocked_sequence
+- execution_entity_id
+- lane_id
+- package_id
+- account_id
+- allowed_action_ids
+
+Behavioral rules:
+- Permission snapshots must preserve blocked-episode identity and scoped approval dimensions together.
+
+Permission carry-through:
+- lane/package/account scope
+- ordered `allowed_action_ids[]`
+### External side-effect wakeup chain
+
+When HITL approval resolves an `external_side_effect_blocked` state:
+
+1. The approval handler MUST emit a `prerequisite_resolved` event with `wake_reason: approval_resolved` and the `node_id` / `attempt_id` of the blocked node.
+2. The event bus delivers this to the scheduler.
+3. The scheduler runs a wakeup pass and transitions the node from blocked to runnable.
+
+This is an immediate event-driven wakeup, not polling-based.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### Target-bound domain approvals and preflight revalidation
+
+Domain approval and preflight decisions close the historical blind-spot where an action name was approved without the exact mutable target. SCM approvals carry `project_id`, `repo_id`, optional `worktree_id`, `/worktree/context`, `branch`, and `commit`; GitHub Actions approvals carry `repo_remote`, optional `workflow_id`, `run_id`, and `/environment`; Docker approvals carry `runtime`, `registry_host`, `namespace`, `/repository`, and optional `image_ref`; Kubernetes approvals carry `kube_context`, `namespace`, optional `workload_ref`, and optional `resource_ref`. Permission evaluation runs static policy, cheap capability or `/precondition` preflight, approval request only while still actionable, and full execution-time `/revalidate` immediately before mutation. Each approval records a `preflight_revision`; any stale-preflight evidence or changed target identity invalidates reuse and returns the action to blocked state.
+
+## Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)
+
+
+External-side-effect and admin-gated behavior for this packet uses canonical permission and blocked-state rules.
+
+Required mappings:
+- GitHub Actions rerun/cancel/dispatch and admin CRUD operations may require explicit capability and may surface blocked outcomes when approval or auth prerequisites are missing
+- Docker Hub repository creation, image push, managed template-repo create/push, and Kubernetes mutating actions use the external-side-effect guard model when they produce hosted or remote side effects
+- requested vs effective capability disclosure must remain visible whenever a surface control is disabled by partial auth or policy state
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Decision_Policy.md
+
+### Provider exposure, remote-side-effect provenance, and privileged sessions
+
+Provider/LLM exposure rules apply before any diff, conflict hunk, workflow log, container log, manifest snippet, inspect output, workflow YAML preview, manifest diff, discovered URL, or screenshot is sent to provider-backed features. Such exposure requires explicit permission, `/data-class` labeling, per-feature opt-in, local-only fallback, and `secret-scrub` before provider transmission. Secret scrubbing only before local persistence is insufficient for `LLM` or other provider features.
+
+Review, diff, export, `/evidence/history`, and provider features distinguish ephemeral in-memory view, scrubbed persisted blob, and user-exported file. Anything persisted, indexed, screenshotted through `/screenshots`, exported, or included in evidence/history records the redaction profile, whether mandatory scrub ran, and whether display may hide details.
+
+Remote-side-effect receipts include `approval_source`, `executing_subsystem`, and effective account / credential handle. `approval_source` values include `explicit confirm`, `cached permission`, `policy auto-allow`, and `browser fallback`. `executing_subsystem` values include `git`, `GitHub API`, `docker CLI`, `kubectl`, and `SSH remote`. This applies to push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent remote-side-effect actions.
+
+Sensitive metadata minimization covers remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace/workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts. Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile.
+
+`/logout/project-delete`, unlink, and project-delete cleanup clear or invalidate non-secret residue that can still identify the user or project: validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts.
+
+Session-style privileged operations include `docker exec/attach`, `kubectl exec`, `kubectl port-forward`, remote SCM-over-SSH mutation sessions, and browser/device auth handoffs. Persist bounded metadata only: actor, target, started/ended timestamps, credential realm, transport, local bind address/port when relevant, and requested vs effective state. Do not persist interactive transcript or `stdin` by default.
+
+Build/deploy secret-handling uses no-persist/no-echo rules for docker build secrets, build args, compose env files, registry auth helpers, kube Secret manifests, and generated deployment YAML containing sensitive values. Secret resources are never rendered back in full, indexed, or included in receipts/evidence beyond kind/name/namespace and redacted status. ConfigMap rendering follows a separate configurable redaction policy because it may contain sensitive plaintext.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Permissions_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### PS-002 - Permission SSOT Authority And Compatibility Header
+
+```yaml
+plan_unit_id: PS-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Plans/Permissions_System.md owns the canonical permission system SSOT, owner-section live specification framing, compatibility-only source vocabulary handling, and the requirement that other docs reference permission anchors rather than restating action definitions, precedence, granular syntax, or defaults."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "PS-002 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_ssot_authority
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0004
+preserved_exact_tokens:
+- "Permissions System (Canonical SSOT)"
+- "Canonical owner-section requirements"
+- "Requested/effective account identity contract"
+- "Compatibility-only source vocabulary is noncanonical"
+- "single canonical source of truth"
+- "Plans/Permissions_System.md#PERM-ACTIONS"
+- "Puppet Master"
+negative_constraints:
+- "Other plan documents must reference permission anchors rather than restating permission action definitions, precedence rules, granular syntax, or default tables."
+preserved_contractrefs:
+- "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md"
+compatibility_only_notes:
+- "Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/DRY_Rules.md"
+- "Plans/Contracts_V0.md"
+- "Plans/Decision_Policy.md"
+```
+
+### PS-003 - Permission SSOT Reference Catalog
+
+```yaml
+plan_unit_id: PS-003
+unit_type: reference
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The Permissions SSOT reference catalog preserves the governing references for Spec Lock, Contracts, DRY, Glossary, Decision Policy, Tools, FileSafe, Run Modes, Personas, OpenCode baseline permissions, GUI specification, and CLI-bridged providers."
+gui_related: true
+gui_classification_reason: "This unit is GUI-related only because the reference catalog preserves the GUI specification reference; it does not itself define a GUI implementation."
+split_recommended: false
+depends_on:
+- PS-002
+unblocks: []
+acceptance_criteria:
+- "PS-003 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_reference_catalog
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0005
+preserved_exact_tokens:
+- "SSOT references (DRY)"
+- "Plans/Spec_Lock.json"
+- "Plans/Contracts_V0.md"
+- "Plans/DRY_Rules.md"
+- "Plans/Glossary.md"
+- "Plans/Decision_Policy.md"
+- "Plans/auto_decisions.jsonl"
+- "Plans/Tools.md"
+- "Plans/FileSafe.md"
+- "Plans/Run_Modes.md"
+- "Plans/Personas.md"
+- "Plans/OpenCode_Deep_Extraction.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/CLI_Bridged_Providers.md"
+negative_constraints:
+- "The reference catalog must not be read as permission behavior that supersedes the owner sections."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/Tools.md"
+- "Plans/FileSafe.md"
+```
+
+### PS-004 - Requested Account Binding And Approval Scope Data Shape
+
+```yaml
+plan_unit_id: PS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission data shape requires requested_account_id beside requested_account_policy, requested_account_binding, subordinate provider_account_id metadata, provider-native OpenCode session IDs instead of canonical thread_id, and approval_scope_key across actor, lane, run, and account context."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-002
+unblocks: []
+acceptance_criteria:
+- "PS-004 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_account_identity_shape
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0008
+preserved_exact_tokens:
+- "Canonical data-shape reconciliation"
+- "Required data shape"
+- "Acceptance carry-through"
+- "requested_account_id"
+- "requested_account_policy"
+- "requested_account_binding"
+- "provider_account_id"
+- "thread_id"
+- "approval_scope_key"
+- "HITL"
+- "doom-loop"
+negative_constraints:
+- "provider_account_id is subordinate provider-native metadata, not canonical account identity."
+- "OpenCode session IDs must move to provider-native correlation fields instead of canonical thread_id."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Contracts_V0.md"
+- "Plans/CLI_Bridged_Providers.md"
+```
+
+
+<<< CONTEXT_AFTER 1479-1490 >>>
+### PS-005 - Actor Lane Approval Scope Key Boundary
+
+```yaml
+plan_unit_id: PS-005
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Approval scope is actor/lane-aware across actor, run, lane, account, package/seam context, shared runtime identity, HITL, and blocked-overlay flow; session-centric and tier-boundary approval language is compatibility-only."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

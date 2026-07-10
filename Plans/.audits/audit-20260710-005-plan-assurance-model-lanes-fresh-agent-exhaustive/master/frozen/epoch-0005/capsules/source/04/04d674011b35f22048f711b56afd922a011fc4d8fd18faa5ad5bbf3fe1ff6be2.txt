@@ -1,0 +1,411 @@
+<<< CONTEXT_BEFORE canonical_document_lines=591-602 >>>
+L00000591	
+L00000592	Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00000593	
+L00000594	#### Subsystem architecture and non-ship rules
+L00000595	The terminal implementation is split into explicit subsystem contracts:
+L00000596	- process host and PTY `/session/process` supervision
+L00000597	- terminal `/engine` and transcript buffer
+L00000598	- renderer
+L00000599	- shell-integration metadata extractor
+L00000600	- workspace chrome and cross-surface UI
+L00000601	
+L00000602	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=603-984 >>>
+L00000603	
+L00000604	Rules:
+L00000605	- subsystem boundaries and ownership MUST be explicit
+L00000606	- The terminal SSOT layers are: PTY `/session/process` transport; VT `/ANSI/grid/buffer` terminal-model `/engine`; shell-integration metadata for prompt marks, command boundaries, exit status, cwd, recent command, and `/directory`; and workspace/session UI for sections, tabs, quadrants, detached windows, command palette, search, blocks, `/separators`, sticky headers, badges, and quick actions.
+L00000607	- acceptance gates MUST exist for process-host correctness, renderer stability, transcript integrity, shell-integration degradation, and cross-surface reveal behavior
+L00000608	- Parser-engine gates cover `/VT` escape parsing, `/ANSI/grid/buffer` state, `/selection/scroll` anchor stability, and regression-tested replay fixtures for command blocks, alternate-screen transitions, huge output, search, and resize.
+L00000609	- GPU acceleration may improve rendering, but it does not excuse a bad terminal model or transcript architecture
+L00000610	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00000611	- DOM/React/webview-style terminal rendering architectures that treat terminal output as normal document UI are non-ship for the terminal core; terminal output is a high-frequency mutable grid, and these approaches frequently correlate with flicker, scroll jumps, selection breakage, and input lag.
+L00000612	- `/document-style` terminal output, thread-coupled PTY parsing, document-level transcript mutation, and unstated failure-mode fallback are non-ship architecture patterns even when wrapped in `/features` language.
+L00000613	- Terminal core MUST center native screen/buffer state, diff-based painting, and off-UI-thread PTY/buffer work, including ingestion and processing, so rendering remains bounded and selection/input stay stable under high-frequency output.
+L00000614	- Avoid DOM, `/DOM-style`, or `/string-concatenation-style` render models, keep heavy work off the UI thread, throttle high-frequency updates, preserve `/scroll`, selection, cursor, and `/focus/attach` stability during huge-output bursts, and compute selection anchors, search hits, cursor coordinates, and wrapped-line navigation from terminal-model buffer state rather than from painted rows or recycled `/list` `/widgets`; app shell `/layout/chrome` and Slint-style host chrome do not own terminal `/engine` semantics or UI `/reconciliation` of terminal cells.
+L00000615	- Platform performance tests cover WSL, `/Windows/Wayland/macOS`, IME behavior, GPU fallback, `/PTY` resize/focus/attach paths, and `/compositing/scrolling`; GPU can help grid drawing, but it never rescues a weak terminal-model architecture.
+L00000616	- Observability MUST exist for lifecycle transitions, resize, focus, attach or detach, renderer failures, PTY and `/PTY` failures, performance counters, and structured session metadata.
+L00000617	- Terminal observability and failure-triage are first-class for users, PM developers, and support `/reconciliation` workflows collecting high-signal artifacts; diagnostic domains stay separate for PTY `/process` lifecycle, transport `/attach/detach/reconnect`, shell capability, transcript `/retention/pruning`, renderer `/compositor/performance`, clipboard `/IME/input/accessibility`, workspace restore, and windowing.
+L00000618	- structured-event recording includes session create, `/attach/ready/start-command/finish-command`, interrupt, `/terminate/kill`, detach, `/reattach/move-window`, resize, `/focus/visibility`, cwd/profile changes, renderer errors, shell-integration state changes, selection and clipboard failures, and capability fallback for `/render/integration` diagnostics.
+L00000619	- Terminal settings/diagnostics expose current renderer mode/fallback state, shell integration capability tier/source visibility, last restore outcome for the pane/session when relevant, transcript persistence availability/retention status, and recent terminal errors/events relevant to the current pane.
+L00000620	- Capability diagnostics show shell/profile identity when known, capability tier, which shell-integration features are authoritative versus unavailable/degraded, and when PM has fallen back from rich command metadata to plain transcript behavior.
+L00000621	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00000622	- Terminal performance instrumentation includes PTY input/output throughput indicators, parser/buffer latency, frame/render timing, dropped/deferred paint counters, search latency on large retained transcript, and transcript flush/persist latency.
+L00000623	- PM can produce a terminal diagnostic bundle per pane/session/project on request. Bundle contents may include structured lifecycle/error events, renderer/capability/settings state, settings relevant to terminal behavior, and optional transcript excerpts only when explicitly included; support bundles clearly label transcript content as absent, partial, or included.
+L00000624	- Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".
+L00000625	- Repeated identical failures follow the alerting `/noise` rule and are coalesced in diagnostics rather than spamming banners/toasts/logs, while persistent degraded conditions remain inspectable without repeatedly interrupting the user.
+L00000626	- All major terminal subsystems emit typed events at state-transition boundaries, and diagnostic state is queryable per pane/session and project-wide without scraping rendered UI text.
+L00000627	
+L00000628	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+L00000629	
+L00000630	#### Acceptance criteria
+L00000631	- two terminal sections, multi-tab behavior, and one-to-four pane tabs behave deterministically across docked and detached presentation
+L00000632	- same-session reveal never spawns a duplicate shell when the referenced `terminal_session_id` still exists
+L00000633	- restarting a session mints a new `terminal_session_id`; clearing scrollback does not
+L00000634	- restored historical sessions never fake live PTY continuity
+L00000635	- terminal, output, problems, debug console, and ports preserve linkback to the owning terminal or dev session
+L00000636	- huge-output, search, and scrollback paths remain responsive under bounded-render and bounded-memory rules
+L00000637	
+L00000638	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+L00000639	### 3.15 Hot Reload, Live Reload, and Fast Iteration
+L00000640	
+L00000641	- dev sessions are stack-aware and distinguish hot reload from live reload when the stack supports both
+L00000642	- fallback to live reload is explicit in UI copy and state
+L00000643	- one-click launch, status, logs, errors, and termination rules are required
+L00000644	- project switch and app shutdown use explicit termination/cleanup rules
+L00000645	
+L00000646	### 3.16 Sound Effects Settings
+L00000647	
+L00000648	- sound effects are grouped as settings, not per-view ad hoc toggles
+L00000649	- sound notifications follow action-needed / completion semantics and respect do-not-disturb or muted-state policy from the shell
+L00000650	
+L00000651	### 3.17 Instant Project Switch
+L00000652	
+L00000653	- default switch target is the active workspace tab only
+L00000654	- an alternate command opens the target project in a new workspace tab
+L00000655	- switching recalculates project-scoped config, sessions, terminal cwd, browser preview state, and effective tool/MCP/persona state
+L00000656	- background activity from the old project remains visible through badges/attention surfaces
+L00000657	- missing-path, duplicate-path, and in-flight-run behavior are deterministic and user-visible
+L00000658	
+L00000659	### 3.18 Built-in Browser and Click-to-Context
+L00000660	
+L00000661	This section consumes the linked owner contract and stays aligned with it.
+L00000662	
+L00000663	ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract
+L00000664	
+L00000665	Core rules:
+L00000666	- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only.
+L00000667	- Reading Site remains reserved for the PM-native Site Reader path.
+L00000668	- provider-routed fetch must not reuse the reserved native Site Reader identity.
+L00000669	- The PM built-in browser and click-to-context `/browser-interaction` topic is separate from the web-operation family and the Site Reader/Reading Site read path: browser browsing, preview, click-to-context, DevTools-linked capture, and visible browser-session behavior MUST NOT collapse into `websearch`, provider-routed `webfetch`, site/page reading intents, or Site Reader-only behavior.
+L00000670	- The promoted GUI consumes agent web research activity cards without re-owning tool routing or treating them as browser UI: cited web search stays transparent and source-linked in chat, `Searching Web: <query>` is the search/discovery label, `Reading Site: <url>` is reserved for PM-native Site Reader, Site Reader exposes `/detail-level` choices (`minimal`, `summary`, `full`), `/fetches` stay token-efficient and iframe-aware, `/observe` read paths remain separate from browser `/automation`, and `/free-tier` or provider-limit degradation is shown before offering unavailable web actions.
+L00000671	- PM's browser-session contract is capability-first: the selected runtime must provide cross-platform embedding for editor-tab and detached browser surfaces; offscreen rendering is secondary capture/render support, not the primary visible host.
+L00000672	- CEF wrappers such as `wef` are implementation candidates only. PM may enable that path only after the PM-owned packaging/update/install strategy is explicit.
+L00000673	- If the selected path uses an auto-downloaded CEF binary distribution via `cargo-wef`, requested/effective browser state must surface `runtime_unavailable` until the pinned binary is present, verified, and healthy.
+L00000674	- Browser click/highlight/share flow MUST use an explicit chip-based model: browser-derived context enters a thread only through visible, user-triggered chips, never through hidden automatic context injection.
+L00000675	- Browser capture is split into two browser-specific attachment paths: text selection creates `browser_selection_context`, and element pick creates `browser_element_context`.
+L00000676	- Browser screenshot and combined selection+screenshot actions create runtime-artifact references plus the selected browser context chip; they MUST NOT inject raw unbounded page bodies, DOM dumps, or screenshots directly into prompt text.
+L00000677	- `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update explicit browser-session share state only; sharing a browser subject does not serialize page, selection, or element context unless a separate visible capture chip is created.
+L00000678	- Blocked, expired, or revoked browser chips may remain visible for audit, but they MUST NOT serialize as successful prompt attachments.
+L00000679	- PM's browser control-plane backlog MUST remain named-action based. Borrow-worthy action families include tab lifecycle (`list`, `create`, `select`, `close`), richer interactions (`hover`, `drag`, `select option`, `fill form`, `press key`, `navigate back`, resize), wait primitives (`wait for time`, `wait for text`, `wait for text disappearance`), dialog handling, file upload handling, storage inspection/control for cookies, `localStorage`, `sessionStorage`, and `storage-state` import/export, network state and request routing/mocking, trace/video capture for agent runs, page/PDF export, test-oriented verification actions, and locator generation.
+L00000680	- `Playwright MCP` remains reference material for structured page snapshots, screenshots, and browser automation taxonomy; raw DevTools/CDP exposure is not an unresolved browser-contract question, and page-code execution APIs such as `browser_run_code` and `browser_evaluate` MUST NOT become PM's guaranteed browser contract because PM converges on strong named actions instead of freeform low-level execution.
+L00000681	- An explicit advanced browser `/test-debug` escape hatch may expose low-level diagnostics or execution for testing workflows, but it remains opt-in and MUST NOT replace the named browser/testing action contract as PM's default surface.
+L00000682	- DevTools model: embedded vs detached DevTools; who can open it, when, and agent/browser introspection flows are explicit. User-opened DevTools and agent introspection use named browser actions or advanced debug/testing paths; raw DevTools/CDP protocol scripting remains non-core and must disclose active browser-session capability state.
+L00000683	- screenshot-related labels and evidence/artifact actions remain user-facing named actions: browser screenshots, traces, and combined selection+screenshot captures use the same artifact pipeline as GUI automation, including naming, retention, manifest shape, chat rendering, privacy redaction rules, and runtime-artifact references. `/screenshot/devtools/automation` capabilities stay governed by named actions, artifact routing, permission disclosure, and requested/effective capability state.
+L00000684	- Persistence + isolation: browser history, cookies, storage, auth sessions, per-project isolation, restore eligibility, and crash recovery are explicit browser-session state. Normal browser sessions are project-scoped, while `automation_session` and `auth_session` remain isolated unless user-confirmed promotion or state copy changes profile/restore behavior.
+L00000685	- Runtime/process lifecycle: PM-managed browser helpers use a helper/subprocess layout with `/subprocess` startup, shutdown, crash detection, restart policy, sandboxing, and diagnostics surfaces. Failures surface as requested/effective runtime state instead of silent fallback.
+L00000686	- Distribution + runtime layout: per-platform runtime bundle layout, update rules, signature/hash verification with `/hash` evidence, and uninstall/removal behavior with `/removal` evidence are required for macOS, Linux, and Windows packages.
+L00000687	- Platform guarantee matrix: Linux/macOS/Windows guarantees are explicit; capability differences may be degraded-but-supported only when effective capability loss is disclosed before use.
+L00000688	- Permissions + safety: permission keys, trust tiers, agent-vs-user authority, auth/session sensitivity rules, and no-silent-fallback blocked semantics govern every browser action, storage/auth use, DevTools flow, and artifact capture.
+L00000689	- Commands + UI surfaces: inspect/screenshot/devtools/automation named actions expose exact browser chrome controls, status indicators, and activity disclosure for visible browsing, DevTools, auth, and automation; the promoted GUI may reveal those controls without re-owning the browser model.
+L00000690	- Acceptance criteria + test plan: scenario-driven criteria for local HTML preview, web app interaction, screenshots, DevTools, auth flow, crash recovery, restore, and cross-platform packaging cover the PM-managed CEF runtime, named actions, artifacts, permissions, and requested/effective degradation behavior.
+L00000691	- `Playwright MCP` attach-to-existing-browser flows are reference material for a possible future adopt existing session/state UX, including real-profile or `storage-state` import, but they do not change PM's design center away from a PM-owned built-in browser surface or convert `/local-browser`, `/browser-agent`, or `/mcp-browser-use` into product commands.
+L00000692	- `Chrome DevTools MCP` is reference material for live Chrome inspection/debugging, screenshots, console/network/performance insights, and control-plane/tool taxonomy; it is not PM's embedded browser foundation.
+L00000693	- `BrowserMCP/mcp` is reference material for real-profile/local-browser control, but it is not a direct dependency while it cannot be built standalone.
+L00000694	- `Saik0s/mcp-browser-use` is reference material for browser-use, browser-agent, task/observability/dashboard ideas, but its separate LLM/browser-agent loop is a poor core architecture for PM because PM's own agent must own reasoning/control directly.
+L00000695	- BrowserMCP, browser-use, Playwright MCP, Chrome DevTools MCP, and `chromiumoxide` remain tool/capability comparison inputs; they do not replace the hybrid/PM-owned browser contract or become the PM core architecture.
+L00000696	- Playwright MCP config types are reference material for PM's browser-session option model: persistent vs isolated profiles, `cdpEndpoint`, extension attach flows, snapshot modes, file-access controls, and output/session persistence knobs may inform requested/effective capability fields, but raw CDP endpoints or extension attach are not PM's default product foundation.
+L00000697	- Browser-session options include persistent profiles through `profile: { name: string, saveChanges: boolean }`; `saveChanges` determines whether cookies and localStorage are written back after the session so authenticated workflows can persist intentionally, while `/localStorage` slash notation remains lineage for the canonical `localStorage` storage field.
+L00000698	- Normal browser sessions are project-scoped persistent profile/store subjects: `workspace_preview` uses the project profile; `detached_preview` shares the originating `workspace_preview` profile/state unless explicitly opened as a separate browsing session; `automation_session` uses a separate ephemeral profile by default; and `auth_session` uses a separate isolated auth profile/store.
+L00000699	- Browser tab-cap handling is `no-silent-retargeting` / no LRU reuse: PM must prompt, block, explicitly close, or open detached rather than silently retargeting an existing browser subject.
+L00000700	- PM may borrow the Playwright MCP named action taxonomy as a reference shape: core automation, tab management, network controls, storage controls, devtools-style capture, coordinate fallback actions, PDF export, and testing / verification actions. The canonical PM surface remains named actions such as tab lifecycle `list/create/select/close` and wait primitives `wait for time/text/text disappearance`, not slash-like `/create/select/close`, `/visual`, `/text/text`, or `/control` product commands.
+L00000701	- Browser runtime direction keeps the browser `surface-class` taxonomy while replacing backend ambiguity with the PM-managed CEF runtime contract; Wry/hybrid approaches are comparison/background material rather than the default recommendation, Playwright, CDP, and MCP projects remain automation and control-plane inspiration rather than the core browser runtime, and the packaging/runtime cost is accepted as the trade for capability and reliability.
+L00000702	- Runtime comparison inputs such as OS webviews, Playwright/CDP sidecars, Rust-native CDP backends such as `chromiumoxide`, Wry/hybrid by browser surface/session class shells, and Chromium/Chrome-for-Testing first-run installation helpers remain background material; the canonical Chromium/CEF capability owner is the PM-managed CEF runtime, with any lighter than CEF or `no Chromium needed` claim treated as an explicit packaging/install/runtime tradeoff rather than proof that no Chromium-class runtime is unnecessary.
+L00000703	- Historical comparison labels such as Wry/OS-webview, CEF/Chromium, screenshots/DevTools/network/automation, browser/surface, /automation, /runtime, and /CDP are lineage shorthand; the live browser canon is the PM-managed CEF runtime plus named browser actions, requested/effective capability fields, and explicit degradation disclosure.
+L00000704	- The default browser bundle profile is a `mostly-full` CEF runtime with modest trimming; aggressively pruned bundles that sacrifice browser capabilities/features are nondefault and must surface requested/effective capability degradation before use.
+L00000705	- Legacy runtime comparison inputs `Wry`, `WebView2`, `WKWebView`, and `WebKitGTK` are preserved only as background labels; PM must not leave browser fallback behavior or effective capability disclosure `under-specified`, because degraded states are advertised through requested/effective browser capability fields, `runtime_unavailable`, and `/capability-degradation` before a feature is offered.
+L00000706	- Lightweight `site-reader` and `/web-fetch/read-webpage` flows remain web/read paths; they are distinct from the full interactive built-in browser, visible `automation_session`, and visible `/auth`/`auth_session` surfaces.
+L00000707	- The canonical browser action table schema uses these columns at minimum: `action_id`, `bucket`, `tier` (`guaranteed_everyday` or `advanced_debug_testing`), `permission_layer`, `allowed_session_classes`, `requested_capabilities`, `artifacts_emitted`, `degradation_or_blocking_behavior`, and `user_visible_entry_points`.
+L00000708	- Browser runtime output MUST separate structured page snapshots for actioning from screenshots for evidence/visual output. Action results may expose typed browser-output sections such as `Open tabs`, `Page state`, `Snapshot`, `New console messages`, `Modal state`, and `Downloads` rather than one flat opaque blob.
+L00000709	
+L00000710	Fields:
+L00000711	- value?: string
+L00000712	- description?: string
+L00000713	- timeout_ms
+L00000714	- type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network"
+L00000715	
+L00000716	Labels and values:
+L00000717	- Reading Site
+L00000718	
+L00000719	Rules:
+L00000720	- invalid_input
+L00000721	- 5 MB default
+L00000722	- timeout_ms defaults to 5000ms; max 30000ms; total across all actions capped at 30s
+L00000723	- Unknown `type` values → `invalid_input` error
+L00000724	- Actions are executed sequentially in array order
+L00000725	- reject non-HTTP(S) schemes
+L00000726	- default to `https://` if bare domain
+L00000727	- reject malformed URLs
+L00000728	## 4. Command families required by the promoted features
+L00000729	The UI command catalog must expose stable commands for:
+L00000730	- project switch and project open-in-new-workspace-tab
+L00000731	- workspace tab create, close, reopen, move, and focus
+L00000732	- detached window open, reattach, and close for supported surfaces
+L00000733	- thread context detail open, focus, close, and context-compaction actions
+L00000734	- branch-from-restore and branch-open actions
+L00000735	- browser open, focus, detach, open-DevTools, toggle-DevTools-dock, share, revoke-share, capture, takeover, promotion, and recovery actions
+L00000736	- terminal show, focus, new-tab, split-pane, move-to-section, rename, pin, close-pane, close-tab, clear-scrollback, restart-session, terminate-session, kill-session, detach-section, and reattach-section actions
+L00000737	- dev-session start, stop, restart, show-output, show-problems, and show-ports actions
+L00000738	- catalog install, update, remove, enable, disable, and apply-later actions
+L00000739	
+L00000740	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+L00000741	
+L00000742	Rules:
+L00000743	- `Open in Terminal` and `Show Terminal` normalize to the terminal command family rather than inventing chat-local commands
+L00000744	- terminal layout changes and terminal runtime actions are separate command categories even when they share one visual toolbar
+L00000745	- cross-surface reveal commands target canonical identities such as `terminal_session_id` and `dev_session_id` rather than freeform labels
+L00000746	
+L00000747	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000748	## 5. Persistence and restore rules
+L00000749	- project restore uses stable `project_id`, not raw path alone
+L00000750	- workspace tabs restore independently
+L00000751	- detached windows restore only when their surface class and platform support allow it
+L00000752	- in-shell normal browser tabs restore by project and workspace tab and preserve profile scope
+L00000753	- detached normal browsing restores with the originating normal browsing session when supported
+L00000754	- auth sessions and automation sessions do not auto-resume or silently resume active work after restart
+L00000755	- `auth_session` must not auto-close on presumed success; PM cannot reliably infer completion across arbitrary sites, so completion is explicit user or provider/flow evidence rather than a hidden browser lifecycle guess.
+L00000756	- terminal sessions and dev sessions have explicit restore eligibility; a running process is never assumed alive after restart without verification
+L00000757	
+L00000758	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+L00000759	
+L00000760	Terminal persistence guarantees:
+L00000761	- section, tab, pane, selection-of-active-pane, labels, pin state, dock/detach placement, and linked dev-session references are `guaranteed_durable`
+L00000762	- bounded transcript snapshots, command-block metadata, cwd snapshots, shell-integration hints, and derived Output or Ports linkage are `best_effort_durable`
+L00000763	- live PTY continuity, unlimited scrollback, active TUI alternate-screen content, live selections, and in-flight search highlights are `transient_only`
+L00000764	
+L00000765	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md
+L00000766	
+L00000767	Canonical restore outcomes are:
+L00000768	- `restored_live`
+L00000769	- `restored_exited`
+L00000770	- `restored_disconnected`
+L00000771	- `restored_without_history`
+L00000772	
+L00000773	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
+L00000774	
+L00000775	Additional rules:
+L00000776	- user-confirmed promotion from paused automation into normal browsing copies or promotes eligible browser state into the normal persistent profile/store, converts or reclassifies the visible automation browser as a normal browser tab/session, and changes future restore behavior because the session is no longer treated as automation; promotion or state copy must be an explicit user action, never a hidden side effect
+L00000777	- browser requested/effective runtime and capability state is stored as frozen runtime history rather than recomputed heuristically from current settings
+L00000778	- crash recovery preserves recoverable metadata and completed evidence artifacts when possible
+L00000779	- terminal restart or replacement creates a new `terminal_session_id`; restoring a historical pane never synthesizes that new identity automatically
+L00000780	- no browser or terminal session class may silently bleed storage into another profile scope
+L00000781	- Persistent profiles are scoped by profile name and project; `profile: { name: string, saveChanges: boolean }` never allows cookies or localStorage to bleed into another profile scope, and disabled `saveChanges` keeps the session isolated even when it began from a named profile.
+L00000782	
+L00000783	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+L00000784	## 6. Non-goals and anti-drift rules
+L00000785	
+L00000786	The following are explicitly non-canonical after promotion:
+L00000787	- title-bar project bar as the primary project-switch shell
+L00000788	- floating thread-selector overlay as the canonical thread navigation model
+L00000789	- detached usage pop-out as the canonical per-thread usage surface
+L00000790	- one broad browser-instance model with LRU reuse as the core browser contract
+L00000791	- the bottom panel as the primary browser host
+L00000792	- silent automatic context injection from ordinary browser clicks or text selection
+L00000793	- silent storage bleed between browser session classes or profile scopes
+L00000794	- raw CDP or arbitrary browser code execution as the guaranteed core browser contract
+L00000795	- generic watch mode as the primary dev-loop model
+L00000796	- MCP as config-and-passthrough only
+L00000797	- app-level-only tool permission scope as sufficient for the promoted project-switch/MCP/browser model
+L00000798	- stale Persona/tier selectors from `Personas.md`, `Contracts_V0`, and `Contracts_V0.md`, such as `_persona_id` and `select_for_tier()`, as canonical promoted-shell fields; Section 15 consumers use requested/effective Persona identity and runtime owner scope instead.
+L00000799	
+L00000800	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md
+L00000801	
+L00000802	## Owner / Consumer Map
+L00000803	
+L00000804	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Section15_MVP_Promoted_Features_Spec.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000805	
+L00000806	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000807	
+L00000808	## PlanUnits
+L00000809	
+L00000810	### SMPFS-002 - Section 15 Authority And Owner Boundary
+L00000811	
+L00000812	```yaml
+L00000813	plan_unit_id: SMPFS-002
+L00000814	unit_type: requirement
+L00000815	status: accepted
+L00000816	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000817	canonical_text: Section 15 owns promoted-feature shell and surface behavior while storage, command, permission, tool, usage, FileManager, and widget SSOTs remain canonical subsystem owners through ContractRefs and owner/consumer boundaries.
+L00000818	gui_related: true
+L00000819	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00000820	split_recommended: true
+L00000821	depends_on:
+L00000822	- PDS-003
+L00000823	- PDS-004
+L00000824	- PDS-005
+L00000825	- PNC-001
+L00000826	- PS-001
+L00000827	- SP-001
+L00000828	- T-001
+L00000829	- UCC-001
+L00000830	- UF-001
+L00000831	unblocks: []
+L00000832	acceptance_criteria:
+L00000833	- SMPFS-002 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00000834	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000835	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000836	validation_surfaces:
+L00000837	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000838	- python3 scripts/pm-plan-index.py validate
+L00000839	risk_class: owner_boundary_drift
+L00000840	reasoning_tier: standard
+L00000841	context_scope: section15_authority
+L00000842	implementation_surfaces:
+L00000843	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000844	node_compile_hint:
+L00000845	  mode: section15_authority_owner_boundary
+L00000846	  create_worknodes: false
+L00000847	source_lineage:
+L00000848	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0001
+L00000849	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0002
+L00000850	preserved_exact_tokens:
+L00000851	- Section 15 Promoted Features Spec
+L00000852	- 0. Scope and SSOT status
+L00000853	- Puppet Master MVP GUI plan addendum
+L00000854	- SSOT
+L00000855	- must not redefine their persistence schemas or command catalogs
+L00000856	negative_constraints: []
+L00000857	preserved_contractrefs:
+L00000858	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md'
+L00000859	compatibility_only_notes: []
+L00000860	stale_retired_dispositions: []
+L00000861	owner_hints:
+L00000862	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000863	- Plans/FinalGUISpec.md
+L00000864	- Plans/storage-plan.md
+L00000865	- Plans/UI_Command_Catalog.md
+L00000866	- Plans/Tools.md
+L00000867	- Plans/Permissions_System.md
+L00000868	- Plans/usage-feature.md
+L00000869	- Plans/FileManager.md
+L00000870	```
+L00000871	
+L00000872	### SMPFS-003 - Workspace-Tab Shell Ownership
+L00000873	
+L00000874	```yaml
+L00000875	plan_unit_id: SMPFS-003
+L00000876	unit_type: requirement
+L00000877	status: accepted
+L00000878	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000879	canonical_text: 'The app shell is workspace-tab based: each workspace tab owns one active project, project switching is a workspace-tab concern rather than a title-bar project bar, and background, blocked, or failed activity remains visible through persistent shell regions.'
+L00000880	gui_related: true
+L00000881	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00000882	split_recommended: false
+L00000883	depends_on:
+L00000884	- PDS-003
+L00000885	- PDS-004
+L00000886	- PDS-005
+L00000887	- PNC-001
+L00000888	- UCC-001
+L00000889	- WM-001
+L00000890	unblocks: []
+L00000891	acceptance_criteria:
+L00000892	- SMPFS-003 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00000893	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000894	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000895	validation_surfaces:
+L00000896	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000897	- python3 scripts/pm-plan-index.py validate
+L00000898	risk_class: shell_ownership_drift
+L00000899	reasoning_tier: standard
+L00000900	context_scope: workspace_tab_shell
+L00000901	implementation_surfaces:
+L00000902	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000903	node_compile_hint:
+L00000904	  mode: workspace_tab_shell_ownership
+L00000905	  create_worknodes: false
+L00000906	source_lineage:
+L00000907	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0003
+L00000908	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0004
+L00000909	preserved_exact_tokens:
+L00000910	- 1. Canonical shell and surface model
+L00000911	- 1.1 Shell ownership
+L00000912	- workspace tab
+L00000913	- one active project
+L00000914	- Title bar
+L00000915	- background/blocked/failed activity
+L00000916	negative_constraints: []
+L00000917	preserved_contractrefs: []
+L00000918	compatibility_only_notes: []
+L00000919	stale_retired_dispositions: []
+L00000920	owner_hints:
+L00000921	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000922	- Plans/FinalGUISpec.md
+L00000923	- Plans/Wiring_Matrix.md
+L00000924	```
+L00000925	
+L00000926	### SMPFS-004 - Persistent Shell Surface Inventory
+L00000927	
+L00000928	```yaml
+L00000929	plan_unit_id: SMPFS-004
+L00000930	unit_type: requirement
+L00000931	status: accepted
+L00000932	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000933	canonical_text: Persistent shell surfaces include primary in-window and secondary detached surfaces, preserving workspace preview, detached preview, terminal, browser, DevTools, compare/review, and related shell-region identities.
+L00000934	gui_related: true
+L00000935	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00000936	split_recommended: false
+L00000937	depends_on:
+L00000938	- PDS-003
+L00000939	- PDS-004
+L00000940	- PDS-005
+L00000941	- PNC-001
+L00000942	- UCC-001
+L00000943	- SP-001
+L00000944	- WM-001
+L00000945	unblocks: []
+L00000946	acceptance_criteria:
+L00000947	- SMPFS-004 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00000948	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000949	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000950	validation_surfaces:
+L00000951	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000952	- python3 scripts/pm-plan-index.py validate
+L00000953	risk_class: surface_inventory_drift
+L00000954	reasoning_tier: standard
+L00000955	context_scope: persistent_shell_surfaces
+L00000956	implementation_surfaces:
+L00000957	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000958	node_compile_hint:
+L00000959	  mode: persistent_shell_surface_inventory
+L00000960	  create_worknodes: false
+L00000961	source_lineage:
+L00000962	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0005
+L00000963	preserved_exact_tokens:
+L00000964	- 1.2 Persistent shell surfaces
+L00000965	- workspace_preview
+L00000966	- detached_preview
+L00000967	- terminal
+L00000968	- browser
+L00000969	- DevTools
+L00000970	- compare/review
+L00000971	- primary in-window surfaces
+L00000972	- secondary detached surfaces
+L00000973	negative_constraints: []
+L00000974	preserved_contractrefs:
+L00000975	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md'
+L00000976	compatibility_only_notes: []
+L00000977	stale_retired_dispositions: []
+L00000978	owner_hints:
+L00000979	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000980	- Plans/FinalGUISpec.md
+L00000981	- Plans/FileManager.md
+L00000982	- Plans/UI_Command_Catalog.md
+L00000983	```
+L00000984	
+
+<<< CONTEXT_AFTER canonical_document_lines=985-996 >>>
+L00000985	### SMPFS-005 - Shell Surface Hosting Constraints
+L00000986	
+L00000987	```yaml
+L00000988	plan_unit_id: SMPFS-005
+L00000989	unit_type: requirement
+L00000990	status: accepted
+L00000991	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000992	canonical_text: Browser and HTML preview are editor or workspace-tab first; the bottom panel is not the canonical browser host, and no promoted feature may depend only on floating transient overlays for navigation, review, or activity state.
+L00000993	gui_related: true
+L00000994	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00000995	split_recommended: false
+L00000996	depends_on:

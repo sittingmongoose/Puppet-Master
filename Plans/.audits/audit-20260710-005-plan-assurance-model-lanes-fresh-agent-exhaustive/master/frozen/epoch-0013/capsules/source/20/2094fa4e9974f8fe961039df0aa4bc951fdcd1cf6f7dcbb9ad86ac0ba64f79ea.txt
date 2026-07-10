@@ -1,0 +1,137 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1983-1994 >>>
+L00001983	source_atom_ids: [atom-0054, atom-0061, atom-0069, atom-0079, atom-0085, atom-0091]
+L00001984	preserved_exact_tokens: ["remote Git", "remote_cache", "SSH/reconnect", "verification paths", "staging/re-anchor", "no-silent-local-fallback", "alternate discovery/search layout"]
+L00001985	negative_constraints:
+L00001986	  - Do not define alternate discovery/search layout or ranking behavior in GitHub Integration.
+L00001987	  - Do not block local-only planning or build completion solely because GitHub is unavailable.
+L00001988	owner_hints: [Plans/GitHub_Integration.md, Plans/storage-plan.md, Plans/WorktreeGitImprovement.md, Plans/FileSafe.md, Plans/Permissions_System.md]
+L00001989	```
+L00001990	
+L00001991	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00001992	
+L00001993	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00001994	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1995-2116 >>>
+L00001995	### GI-034 - github_update_workflow
+L00001996	
+L00001997	```yaml
+L00001998	plan_unit_id: GI-034
+L00001999	unit_type: requirement
+L00002000	status: accepted
+L00002001	owner_doc: Plans/GitHub_Integration.md
+L00002002	canonical_text: >-
+L00002003	  github_update_workflow (P1) is compiled as canonical Puppet Master intent for github_update_workflow: Add GitHubUpdateCurrentness and ReleaseTagVerifier The preserved PM gap/delta is: Need rate-limit-safe updater and release/action tag currentness guard The observed external-repo signal remains source-lineage evidence: OpenCode upgrade GitHub API 403 and stale github@latest action issues
+L00002004	gui_related: true
+L00002005	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00002006	depends_on:
+L00002007	- PDS-003
+L00002008	- PNC-001
+L00002009	unblocks: []
+L00002010	acceptance_criteria:
+L00002011	- Unauthenticated/authenticated API fallback tests
+L00002012	- stale tag detection
+L00002013	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00002014	validation_surfaces:
+L00002015	- python3 scripts/pm-plan-index.py validate
+L00002016	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00002017	- Unauthenticated/authenticated API fallback tests
+L00002018	- stale tag detection
+L00002019	risk_class: p1_security_release_supply_chain_hardening
+L00002020	reasoning_tier: standard
+L00002021	context_scope: security_release_supply_chain
+L00002022	implementation_surfaces:
+L00002023	- Plans/GitHub_Integration.md
+L00002024	- Plans/BinaryLocator_Spec.md
+L00002025	- Plans/FinalGUISpec.md
+L00002026	node_compile_hint:
+L00002027	  mode: github_update_workflow
+L00002028	  create_worknodes: false
+L00002029	  create_nodeseeds: false
+L00002030	source_lineage:
+L00002031	- pldg-20260703-001-feature-intake:atom-0115
+L00002032	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0115
+L00002033	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0111/github_update_workflow@line=111
+L00002034	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0111/github_update_workflow
+L00002035	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00002036	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00002037	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:13
+L00002038	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+L00002039	source_atom_ids:
+L00002040	- atom-0115
+L00002041	external_atom_id: extrepo-20260703-0111
+L00002042	source_row_id: github_update_workflow
+L00002043	priority: P1
+L00002044	finding_family: github_update_workflow
+L00002045	target_docs:
+L00002046	- Plans/GitHub_Integration.md
+L00002047	- Plans/BinaryLocator_Spec.md
+L00002048	- Plans/FinalGUISpec.md
+L00002049	owner_hints:
+L00002050	- Plans/GitHub_Integration.md
+L00002051	- Plans/BinaryLocator_Spec.md
+L00002052	- Plans/FinalGUISpec.md
+L00002053	preserved_exact_tokens:
+L00002054	- extrepo-20260703-0111
+L00002055	- github_update_workflow
+L00002056	- P1
+L00002057	negative_constraints: []
+L00002058	observed_signal: OpenCode upgrade GitHub API 403 and stale github@latest action issues
+L00002059	pm_current_coverage: Broad GitHub/Auth/Setup surfaces exist
+L00002060	pm_gap_or_delta: Need rate-limit-safe updater and release/action tag currentness guard
+L00002061	proposal_or_recommendation: Add GitHubUpdateCurrentness and ReleaseTagVerifier
+L00002062	compile_disposition: create_new_planunit
+L00002063	```
+L00002064	
+L00002065	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00002066	
+L00002067	This addendum is canonical GitHub integration spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00002068	
+L00002069	### Actions Observation Transport
+L00002070	
+L00002071	Repairs row `sfk-9e19da53b708f174b92bbe76`.
+L00002072	
+L00002073	GitHub Actions readiness uses webhook delivery when configured and polling fallback otherwise. Polling interval defaults to `30000` ms while a run is active and `300000` ms while idle. Staleness state begins after two missed polling intervals or one webhook delivery failure plus one failed poll. Observation records carry `observation_id`, `workflow_run_id`, `transport`, `observed_state`, `observed_at_utc`, and `staleness_reason_code?`.
+L00002074	
+L00002075	### Compare, Graph Patch, And Pinned Workflow Schemas
+L00002076	
+L00002077	Repairs row `sfk-a27bc5c5401709bfa6f09922`.
+L00002078	
+L00002079	`compare_origin` fields are `repo_id`, `base_ref`, `head_ref`, `base_sha`, `head_sha`, `merge_base_sha?`, and `comparison_url?`.
+L00002080	
+L00002081	`graph_patch_request` fields are `request_id`, `repo_id`, `base_ref`, `patch_ref`, `target_paths[]`, `requested_by`, and `created_at_utc`.
+L00002082	
+L00002083	`graph_patch_result` fields are `request_id`, `applied`, `changed_paths[]`, `conflict_paths[]`, `error_code?`, `result_ref?`, and `created_at_utc`.
+L00002084	
+L00002085	`pinned_workflow_record` fields are `workflow_id`, `workflow_file_path`, `pinned_ref`, `pinned_sha`, `last_verified_at_utc`, `verification_state`, and `reason_code?`.
+L00002086	
+L00002087	### Actions Blocked Reason Table
+L00002088	
+L00002089	Repairs row `sfk-4ca6da4b81de5f8665c4ae9f`.
+L00002090	
+L00002091	| reason_code | severity | retryable | user message |
+L00002092	| --- | --- | --- | --- |
+L00002093	| `actions_auth_missing` | blocked | yes | Connect a GitHub account with Actions access. |
+L00002094	| `actions_auth_expired` | blocked | yes | Refresh GitHub authentication. |
+L00002095	| `actions_workflow_disabled` | blocked | no | Enable the workflow in GitHub before retrying. |
+L00002096	| `actions_branch_protected` | blocked | no | Branch policy blocks this action. |
+L00002097	| `actions_rate_limited` | warning | yes | GitHub rate limit is active; retry later. |
+L00002098	| `actions_runner_unavailable` | warning | yes | No runner is available for this workflow. |
+L00002099	| `actions_observation_stale` | warning | yes | Refresh workflow status before deciding. |
+L00002100	
+L00002101	### Worktree Topology Commands
+L00002102	
+L00002103	Repairs row `sfk-218bd2f9b09b060a43aa18b8`.
+L00002104	
+L00002105	Command IDs: `cmd.git.worktree.open_topology`, `cmd.git.worktree.create`, `cmd.git.worktree.remove`, `cmd.git.worktree.prune`, `cmd.git.worktree.switch`, and `cmd.git.worktree.repair`.
+L00002106	
+L00002107	Destructive commands require confirmation fields `target_worktree_id`, `expected_path`, `expected_branch`, `confirmation_text`, and `permission_snapshot_id`. Disabled states are `dirty_worktree`, `untracked_files`, `protected_branch`, `missing_remote`, `permission_denied`, and `operation_in_progress`.
+L00002108	
+L00002109	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00002110	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00002111	
+L00002112	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00002113	
+L00002114	- `registry_line 317` (explicitly_deferred; source line 1083; `sfk-a27bc5c5401709bfa6f09922`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L84-227: no field-level schema for `compare_origin`, `graph_patch_request/result`, or pinned-workflow record every payload named, never typed.
+L00002115	
+L00002116	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

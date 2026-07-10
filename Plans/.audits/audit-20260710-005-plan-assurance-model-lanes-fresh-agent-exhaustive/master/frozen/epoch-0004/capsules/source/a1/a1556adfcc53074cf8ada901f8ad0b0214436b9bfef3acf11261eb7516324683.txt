@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE 1134-1145 >>>
+```
+
+`/chip/persistence` is storage-owned for document and browser capture handoff. `selection-to-chat`, `document-selection`, and `browser.context_captured` write chat-side pending composer chips into `composer_prep_state.v1:{thread_id}` with bounded excerpt or browser context summary, source pointer, provenance, requested/effective target, sensitivity status, capture status, and failure status when forwarding is blocked. Browser capture records preserve `attachment_type` as either `browser_selection_context` or `browser_element_context`, plus `chip_id`, `browser_session_id`, and optional `thread_id`, so element-pick and text-selection chips remain distinct until the user sends. Legacy browser-only click-to-context and Deep Plan note-only review wording are compatibility labels only; persistence normalizes these paths into typed selection/context chips plus durable annotation records instead of maintaining separate browser-only or note-only storage families.
+
+Bundle annotation/revision audit events:
+- `bundle.note_created` records the durable annotation id and source document provenance.
+- `bundle.note_status_changed` records status changes for `open`, `addressed`, `still_open`, `cannot_apply`, and `resolved`.
+- `bundle.revision_started`, `bundle.revision_completed`, and `bundle.revision_interrupted` record targeted revision lifecycle, `annotation_ids[]`, and `requested_revision_capability` versus effective capability.
+- `bundle.selection_sent_to_chat` records `requested_target` and `effective_target` for successful chat handoff.
+- `bundle.selection_forward_blocked` records blocked handoff attempts and the visible reason instead of pretending the chip was sent.
+
+Preview and browser persistence:
+
+<<< AUTHORITATIVE_CORE 1146-1541 >>>
+
+Legacy `browser_state.v1` and `browser_state:v1` single-blob shapes are retired. Browser persistence is split across `preview_state.v1`, `browser_session_state.v1`, and `browser_profile_state.v1` so requested/effective runtime capability, permission tier, profile scope, restore policy, and visible session class remain auditable independently. Browser-specific fields such as `requested_browser_runtime`, `effective_browser_runtime`, requested/effective capabilities, and visible session class are additive child fields on the shared runtime-identity model; they must not fork the canonical requested/effective naming pattern owned by `Plans/Contracts_V0.md`.
+
+```text
+preview_state.v1:{project_id}:{preview_id} {
+  preview_id: string,
+  preview_type: "web" | "markdown" | "component",
+  source_file: string,
+  port: u16?,
+  status: "starting" | "running" | "stopped" | "error",
+  last_refresh: ISO8601,
+}
+
+browser_session_state.v1:{project_id}:{browser_session_id} {
+  browser_session_id: string,
+  project_id: string,
+  workspace_tab_id: string?,
+  preview_subject_id: string?,
+  session_class: "workspace_preview" | "detached_preview" | "automation_session" | "auth_session" | "normal_browsing",
+  requested_browser_runtime: string,
+  effective_browser_runtime: string,
+  requested_capabilities: string[],
+  effective_capabilities: string[],
+  capability_degradations: string[],
+  blocked_actions: string[],
+  permission_tier: "always_allowed" | "session_granted" | "explicit_confirmation",
+  profile_scope: string,
+  restore_policy: "restore_intent" | "restore_session" | "do_not_restore",
+  takeover_state: "none" | "offered" | "paused_for_user" | "promoted" | "stopped_keep_browser",
+  url: string,
+  viewport: { width: u32, height: u32 },
+  scroll_position: { x: f64, y: f64 },
+  zoom_level: f64,
+  dev_tools_open: bool,
+  last_error: string?,
+}
+
+browser_profile_state.v1:{project_id}:{profile_scope} {
+  project_id: string,
+  profile_scope: string,
+  user_agent: string?,
+  cookies_enabled: bool,
+  javascript_enabled: bool,
+  custom_headers: Record<string, string>,
+  profile: { name: string, saveChanges: boolean },
+  persistent_profiles_enabled: bool,
+  cookie_scope: "session" | "project_profile",
+  localStorage_persistence: "isolated" | "save_on_close",
+  saveChanges_writeback_state: "not_requested" | "pending" | "written" | "blocked" | "failed",
+}
+```
+
+**runtime artifact index** authoritative record families:
+
+```text
+artifacts_project_state.v1:{project_id} {
+  project_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable",
+  artifacts: [{
+    artifact_id: string,
+    artifact_type: string,
+    run_id?: string,
+    thread_id?: string,
+    node_id?: string,
+    attempt_id?: string,
+    worktree_id?: string,
+    lane_id?: string,
+    repo_id?: string,
+    path_ref?: string,
+    branch_ref?: string,
+    baseline_ref?: string
+  }]
+}
+
+projector.checkpoint.runtime_artifacts:{project_id} {
+  project_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+```
+
+**worktree record** and **lane record** authoritative fields:
+
+```text
+worktree_record.v1:{project_id}:{worktree_id} {
+  project_id: string,
+  worktree_id: string,
+  lane_id?: string,
+  owner_thread_id?: string,
+  repo_id?: string,
+  path_ref?: string,
+  branch_ref?: string,
+  baseline_ref?: string
+}
+
+lane_record.v1:{project_id}:{lane_id} {
+  project_id: string,
+  lane_id: string,
+  worktree_id?: string,
+  repo_id?: string,
+  path_ref?: string,
+  branch_ref?: string,
+  baseline_ref?: string
+}
+
+worktree_projection.v1:{project_id}:{worktree_id} {
+  project_id: string,
+  worktree_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+
+lane_projection.v1:{project_id}:{lane_id} {
+  project_id: string,
+  lane_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+```
+
+Related events:
+- `preview.session.started`
+- `preview.session.stopped`
+- `preview.session.refreshed`
+- `browser.session.navigated`
+- `browser.session.resized`
+- `browser.context_captured`
+
+Required identity and attribution fields across runtime-linked record families include:
+- `project_id`
+- `run_id`
+- `node_id?`
+- `attempt_id?`
+- `blocked_sequence?`
+- `feature_seam_id?`
+- `work_package_id?`
+- `lane_id?`
+- `worktree_id?`
+- `execution_role?`
+- `requested_platform?`
+- `effective_platform?`
+- `requested_provider_family_id?`
+- `provider_family_id?`
+- `effective_provider_family_id?`
+- `requested_transport_kind?`
+- `effective_transport_kind?`
+- `requested_runtime_platform_id?`
+- `effective_runtime_platform_id?`
+- `requested_model?`
+- `effective_model?`
+- `model_provider_id?`
+- `model_id_raw?`
+- `model_key?`
+- `requested_auth_mode?`
+- `effective_auth_mode?`
+- `requested_account_policy?`
+- `requested_account_id?`
+- `requested_billing_entity_id?`
+- `effective_account_id?`
+- `effective_billing_entity_id?`
+- `effective_billing_entity_label?`
+- `effective_entitlement_class?`
+- `connection_profile_id?`
+- `requested_connection_profile_id?`
+- `effective_connection_profile_id?`
+- `selectable_unit_id?`
+- `effective_health_state?`
+- `effective_pressure_state?`
+- `instruction_projection_state?`
+- `skill_projection_state?`
+- `reason_codes[]?`
+- `transport_backend_contract?`
+- `account_switch_reason?`
+- `provider_attempt_ref?`
+- `usage_event_ref?`
+- `workspace_tab_id?`
+- `terminal_section_id?`
+- `terminal_tab_id?`
+- `terminal_pane_id?`
+- `terminal_leaf_pane_id?`
+- `terminal_workgroup_id?`
+- `editor_terminal_panel_id?`
+- `terminal_session_id?`
+- `dev_session_id?`
+
+Storage rules for provider/runtime identity:
+- `selectable_unit` persistence carries the full chosen-unit snapshot: `selectable_unit_id`, `root_path`, `last_usage_snapshot`, and `last_cooldown_snapshot` are stored with the attempt or deeper resolver/debug payload that needs them.
+- Lower-level `provider-session` identifiers stay out of base canonical event `/history` records; they may appear only in attempt-scoped or `/debug` payloads where they are subordinate to `attempt_id`, `provider_attempt_ref?`, and the requested/effective runtime snapshot.
+- Runtime transport/backend contracts are stored as account/auth and capability facts using the exact backend vocabulary `direct_api`, `acp`, `stream_json`, and `headless_json` when those surfaces are material to replay, health, or attribution.
+- Persisted provider/runtime records that need a storage-local transport discriminator use `transport_class` and reuse canonical `ProviderTransport` values rather than inventing unrelated transport labels.
+- Requested/effective runtime snapshots preserve `requested_provider_family_id`, `effective_provider_family_id`, `requested_transport_kind`, `effective_transport_kind`, `requested_connection_profile_id`, and `effective_connection_profile_id` separately so explicit user/profile intent, resolver fallback, and the transport that actually executed the call remain auditable.
+- Attempt and resolver records persist `effective_health_state`, `effective_pressure_state`, and `instruction_projection_state` beside the selected runtime snapshot when those states affected eligibility, routing, fallback, or projected-instruction trust; these fields do not collapse into account auth status, generic cooldown, or `skill_projection_state`.
+- Model availability and `/discovery` records use `model_key = model_provider_id/model_id_raw`; `/model_id_raw` is preserved as provider-native identity and does not replace PM's canonical model identifier.
+- Provider-native projection records persist `drift-state` and `drift-check` timing separately from `/detach` and `/runtime` actions, so repair history can distinguish stale projections from user-detached targets.
+- Codex-style entitlement attribution stores the exact class distinction `effective_entitlement_class = chatgpt_plan | api_billed` so ChatGPT-plan usage and API-billed usage do not collapse into one account bucket.
+- Resolver output records preserve `reason_codes` / `reason_codes[]` for the selected `selectable_unit_id`, including fallback, pressure, capability, and policy reasons.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-chat-design.md
+
+Projection-state families must expose both freshness and health:
+- `projection_freshness`: `current | refreshing | stale`
+- `projection_health`: `healthy | degraded | unavailable`
+
+Rules:
+- stale and degraded are different states and must not collapse into one generic trust field.
+- account-backed runtime records and server-profile-backed runtime records remain distinct durable shapes even though the GUI presents them in one runtime ontology.
+- usage attribution records store effective billing/entity context when it explains the active quota bucket, but they do not persist scheduler-only debug internals.
+- `requested_runtime_platform_id` and `effective_runtime_platform_id` stay audit-visible requested/effective runtime snapshot fields; lower-level `/provider-registry/scheduler-only` internals remain hidden unless a concrete debug/audit use case proves otherwise.
+- GUI projection key `terminal_state:v1` may remain a GUI-facing projection name, but canonical ownership stays with terminal workspace, section, workgroup, tab, leaf-pane, panel, session, and command-block records.
+- route restoration resolves through canonical record identity, not through feature-local ad hoc payloads.
+- PM-generated CLI adapter config and projection files are derived artifacts and MUST NOT become the canonical ownership store for accounts, MCP state, instruction state, or skills.
+- Prompt `injected-context` artifacts and provider-facing instruction projections are derived runtime inputs; storage persists their source refs, projection state, and lineage, not the injected text as a canonical replacement for Prompt Pipeline owner contracts.
+- Prompt/cache affinity preserves stable cache identity across ordinary continuation or resume within the same logical run lineage. Branch, rewind, replacement, and other lineage-changing actions establish a new cache lineage; manual `Compact Now` does not by itself force a new cache lineage unless it also changes the logical run lineage.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
+
+ContractRef: Plans/Runtime_Artifacts_Panel.md#4. redb key and projector, Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle
+
+### Runtime artifact and projection storage scope
+
+Storage restores identity-native targets subject-first: persisted `doc:<document_id>` and `artifact:<artifact_id>` subjects remain the durable identity for generated or staged content, while `resume_url` and route payloads restore navigation context around that subject rather than replacing it. Any surviving `tier_runtime_record` is a compatibility/current-view overlay and MUST NOT own canonical runtime identity, joins, or restoration authority.
+
+
+Required fields:
+- artifact_type
+- repo_id
+- path_ref
+- branch_ref
+- baseline_ref
+
+Canonical terms and values:
+- artifacts_project_state.v1:{project_id}
+- projector.checkpoint.runtime_artifacts:{project_id}
+
+Labels:
+- runtime artifact index
+- worktree record
+- lane record
+
+Behavioral rules:
+- Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.
+- Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.
+
+### Canonical terminal persistence decomposition
+
+
+Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:
+
+1. `terminal_session.v1:{terminal_session_id}` — PTY session state
+2. `terminal_layout.v1:{project_id}` — terminal panel layout
+3. `terminal_history.v1:{terminal_session_id}` — command history
+4. `terminal_profile.v1:{profile_name}` — shell profile config
+5. `terminal_env.v1:{project_id}` — environment variable overrides
+6. `terminal_cwd.v1:{terminal_session_id}` — working directory
+7. `terminal_scroll.v1:{terminal_session_id}` — scroll buffer state
+8. `terminal_font.v1:global` — terminal font settings
+9. `terminal_color.v1:global` — terminal color scheme
+
+FinalGUISpec §15.1 references `terminal_state:v1` as a subset alias. The canonical keys above provide the full decomposition.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+### Terminal persistence data model
+
+Storage-plan owns the terminal persistence `/data-model`; Contracts and UI surfaces consume these records rather than inventing local terminal schemas.
+
+- `terminal_project_state`: `project_id`, settings version, last-opened time, restore flag, and per-project terminal settings blob/reference.
+- `terminal_sections`: `terminal_section_id`, `project_id`, `order_index`, `dock_state`, `dock_zone`, visibility, and `detached_window_bounds` when detached.
+- `terminal_tabs`: `terminal_tab_id`, `terminal_section_id`, `order_index`, label, active state, `layout_style`, and `review_only`.
+- `terminal_panes`: `terminal_pane_id`, `terminal_tab_id`, `order_index`, `layout_slot`, label, `runtime_state`, and nullable `attached_terminal_session_id`.
+- `terminal_sessions`: `terminal_session_id`, current pane attachment, `shell_type`, `shell_profile`, cwd, `cwd_snapshot`, environment summary, capability tier, `runtime_state`, `created_at`, last activity timestamp, nullable `exit_code`, and restore state. For worktree-bound thread terminals, the `terminal_session_record` records `cwd_snapshot` as the worktree path, not the main project root.
+- `terminal_command_blocks`: command-block identity, owning `terminal_session_id`, ordinal, command text, cwd, exit status, `/scrollback` or transcript anchors, and command-block metadata.
+
+Terminal storage MUST preserve the `section/tab/pane/session` identity split rather than collapsing it into flat bottom-panel metadata. Durable restore first reconstructs terminal sections, tabs, panes, labels, layout style, and session bindings; only after that may runtime code verify whether an attached `terminal_session_id` is still live.
+
+The restore record carries an explicit transcript-vs-command-block boundary. Transcript chunks are bounded, append-oriented, and referenced by session and scrollback anchors; command blocks are metadata layered on those transcript ranges and may become partially backed or metadata-only when transcript retention prunes backing output. This is the canonical no-fake-liveness rule: a restored pane may be historical, review-limited, or history-unavailable, but storage MUST NOT mark it live unless liveness is revalidated by the terminal runtime.
+
+Storage also owns the durable join shape for `/tab/pane/session` and `/tab/pane/session/dev-session` lookups. Command `/routing` and `/open` selectors persist target identity refs such as `terminal_section_id`, `terminal_tab_id`, `terminal_pane_id`, `terminal_session_id`, and optional `dev_session_id`; route/open recovery must use those refs instead of labels, last visible titles, or legacy `cmd.dev.*`-only hidden-gap assumptions.
+
+Terminal GUI `/persistence/settings` records are separate from live PTY state. Storage persists project/workspace defaults, per-tab overrides, font and color references, transcript-retention settings, and shell profile refs; `Plans/FinalGUISpec.md` owns visible Settings > Terminal GUI grouping, `/theming/discoverability`, shortcuts, and user-facing labels, while this plan owns the durable keys and migration behavior consumed by that GUI.
+
+Terminal terminology cross-refs remain explicit so storage does not drift back into ambiguous "terminal tab" wording. `terminal_section_id`, `terminal_tab_id`, `terminal_pane_id`, `terminal_session_id`, and `dev_session_id` are the persisted terms consumed by `Plans/Glossary.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Contracts_V0.md`; adjacent terminal-heavy tools and /IDEs research informs these records only through canonical fields, not through research-task names.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+### Naming and migration rules (terminal/storage keys)
+Storage migrations are forward-only and monotonic.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Required rules:
+- New fields must be additive first; destructive renames require a migration note in the same section that introduces them.
+- Keys MUST keep stable semantic names across runtime, persistence, and events unless this plan explicitly defines a translation layer.
+- `session_id`, `thread_id`, `run_id`, `message_id`, `step_id`, `tool_call_id`, `approval_id`, `provider_session_id`, `terminal_session_id`, and `dev_session_id` keep their existing meanings everywhere they appear.
+- If two subsystems need different terminology, the owner doc must define the mapping explicitly rather than silently overloading a shared field name.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Storage owner lock-path, migration, and bounded-collections canon
+
+Storage owns `lock-path` derivation. The active `pm.lock` path is `root-derived`: compute it from the selected `logical-root` and, when the selected durable root is not safe for writes, from the safe-local `fallback-derived` durable-store path while preserving the logical root in lineage and diagnostics. Legacy hardcoded `/.puppet-master/pm.lock` and `<project>/.puppet-master/pm.lock` strings are migration evidence only; new writers and consumer docs MUST use the owner-derived lock path.
+
+When the active durable-store lock cannot be acquired or validated, PM opens storage projections in `/read-only` viewer mode and stops before writer startup. It MUST NOT create a second project-local lock beside the owner-derived path.
+
+Storage also owns `run.completed.usage` persistence as the optional run-completion usage snapshot. It is a bounded snapshot derived from canonical `usage.event` records, not a replacement for the usage event ledger.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md
+
+### Storage-owned rewrite contract
+All non-append durable-store rewrites MUST use same-directory temporary files and atomic promotion.
+- Replacement writes for state files, manifests, checkpoints, segment rewrites, or similar durable storage artifacts MUST create `<target>.tmp.<random>` in the target directory, write the full replacement payload there, `fsync` the temp file, and then rename/promote it into place.
+- Append-only seglog/event writers are exempt from temp-rename promotion, but they remain subject to durable flush and corruption-detection rules.
+- Per-session temp directories MAY hold scratch artifacts or janitor-managed work files, but they MUST NOT be used for replacement writes that rely on same-filesystem atomic rename.
+- Failure to create the temp file, `fsync` it, or rename/promote it is a hard error; PM MUST NOT silently fall back to direct overwrite.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+Storage-root (`storage-root`) selection order:
+1. Explicit user-configured storage root (if valid and permitted).
+2. `PUPPET_MASTER_DATA_DIR` environment override when present, valid, and permitted.
+3. Project-scoped durable root when the feature is project-owned.
+4. App-level durable root for cross-project state.
+5. Session temp root only for explicitly temporary data.
+
+Selection rules:
+- A feature may write to a session temp root only if its contract explicitly classifies the artifact as temporary or disposable.
+- Durable state MUST survive process restart unless the owning contract explicitly says otherwise.
+- Remote-mode projects keep durable storage colocated with the owning authority defined by `Plans/GitHub_Integration.md`; temp mirrors are not durable ownership transfers.
+
+Durable-store safety rules:
+- Never rewrite durable files via cross-filesystem temp paths when the final correctness contract depends on atomic rename.
+- Janitor cleanup MAY remove abandoned temp files, but it MUST NOT touch active durable targets or preserved checkpoints.
+- When a durable store is unavailable, writers fail closed and surface a structured error instead of downgrading silently to temp-only persistence.
+- Detect `unsafe-filesystem` classes such as NFS, remote mounts without reliable locking, and roots that cannot prove same-directory atomic rename semantics before opening writers. If a safe local durable-store fallback is available, route writer state, lock files, and session snapshots there while keeping the selected logical root as lineage; otherwise enter `/read-only` viewer mode.
+- Migration backups follow `backup-before-any-migration-step`: snapshot the affected canonical store before validation, schema rewrite, file promotion, destructive cleanup, or rollback-sensitive repair begins, and keep that backup addressable until the migration result has been verified.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+#### Active durable-store lock identity
+The active durable-store lock is keyed by `(storage_root, authority_scope, store_family)`.
+- Session or run ids are not sufficient durable-store lock identities by themselves.
+- Store families that require independent recovery or retention policies must not share a lock identity merely because they live under the same root.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+#### Concrete bounded collections
+Live storage-managed collections MUST have explicit bounds or retention contracts.
+
+The universal bounded-collection rule is `TTL` plus `/max-cardinality`: every persistent `/long-lived` storage-managed collection either declares a time-to-live, declares a maximum retained item count, or declares both. This is the `bounded-collections` canon; a separate collection inventory is not required when the owner section names the family, bound type, bound source, and retention/eviction notes.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md
+
+| Collection / family | Bound type | Bound source | Notes |
+|---|---|---|---|
+| Active assistant and child-session state maps | Max cardinality | Active run envelope plus `max_total_active_agents` | Historical data moves to durable history/checkpoints instead of staying in live maps. |
+| MCP connection and auth-handle caches | Max cardinality | Registered server count x active auth scopes | Superseded or idle handles are evicted instead of accumulating indefinitely. |
+| LSP session and host/root attachment maps | Max cardinality | Open project/worktree roots x configured servers | Restart/rebind replaces prior attachments instead of widening the map. |
+| Projector and analytics work queues | Max queue depth | Per-projector batch limits plus checkpoint/resume contract | Excess work spills via checkpointed resume rather than unbounded in-memory growth. |
+| Persisted event records and `seglog.event_appended` append observability | TTL + cardinality | Run/thread retention policy plus segment checkpoint boundaries | Default TTL is inherited from the owning event family retention window; cleanup is triggered by janitor sweep and segment compaction, with legal-hold or preserved-run anchors opting out explicitly. |
+| Safe points, snapshot metadata, and undo indexes | TTL + cardinality | Session/run lineage plus configured retention window | Preserved or legal-hold items opt out explicitly; ordinary session artifacts age out. |
+| Temp artifacts and stale rewrite remnants | TTL | Janitor sweep plus configured max age | `.tmp.*` rewrite remnants and abandoned scratch artifacts are cleaned deterministically. |
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md
+
+### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
+
+Regex-index indexing model byte contract (`storage-plan.md ### 2.4`): implementers MUST NOT decode content to Unicode for frequency-table computation or n-gram extraction; all extraction, weighting, and case-fold guard checks operate byte-level on `u8`.
+
+Regex-index build concurrency (`storage-plan.md ### 2.4`): projects share a common build thread pool, each project has one build slot within that shared pool, and when the pool is saturated pending builds queue FIFO until their project slot and a shared worker are available.
+
+Concurrent mmap/file-handle contract (`storage-plan.md ### 2.4`): on Windows, `memmap2` index files are opened with `share_mode(0x7)` (`FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE`) as defense-in-depth; on Linux and macOS (`/macOS`), mmap'd file deletion remains safe through inode-by-fd semantics.
+
+
+**Consumption model:** Each projector advances in canonical seglog order:
+
+1. Read checkpoint from redb (`segment_generation`, `segment_name`, `byte_offset`, `last_seq`).
+2. Open seglog at that location and read records in order.
+3. For each event, update only the projections that own it (JSONL mirror, Tantivy, redb snapshot/projector state, analytics enqueue, etc.).
+4. Commit the new checkpoint only after the owned projection writes are durable.
+
+**JSONL mirror policy:**
+- JSONL mirror is derived, human-readable, and rebuildable. It is never authoritative over seglog.
+- The mirror preserves the canonical event envelope in sequence order; projector-local metadata may exist in file naming or side metadata, but not as a semantic fork of the event payload.
+- Mirror files rotate deterministically with seglog generations/segments so replay, diffing, and corruption recovery stay explainable.
+- A missing or stale mirror file is repaired by replaying the corresponding seglog range; PM MUST NOT backfill seglog from JSONL.
+- Mirror retention follows the source seglog retention/preservation decision. A preserved or legal-hold seglog range keeps its mirror unless the mirror is explicitly regenerated in place from the same source range.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
+
+**Tantivy/index rebuild rules:**
+- Tantivy indices, analytics rollups, and other projections rebuild from seglog or the canonical source range chosen by the owning projector.
+- Projector checkpoints are durable ownership boundaries; partial projection writes do not advance checkpoints.
+- Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+<<< CONTEXT_AFTER 1542-1553 >>>
+
+**Checkpoint guarantees:**
+- checkpoints encode enough information to resume without duplicate semantic writes
+- sequence order, not file mtime, is the source of truth for replay ordering
+- checkpoint advancement is atomic with projector durability, not with UI refresh timing
+- projector checkpoints are not a substitute for runtime recovery checkpoint markers. Runtime/executor-owned checkpoint marker events and safe-point lineage records MUST be durably emitted to seglog before mutation-capable execution resumes or restore flows continue.
+- recovery resume logic uses the canonical runtime checkpoint marker stream plus projector checkpoints; projector checkpoints alone are insufficient for mutation/recovery replay.
+- `run.completed.usage` is the optional run-completion snapshot carried in `run.completed`; it is derived from canonical `usage.event` records and must include the same attribution tuple when present.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+### 2.5 Analytics scan jobs

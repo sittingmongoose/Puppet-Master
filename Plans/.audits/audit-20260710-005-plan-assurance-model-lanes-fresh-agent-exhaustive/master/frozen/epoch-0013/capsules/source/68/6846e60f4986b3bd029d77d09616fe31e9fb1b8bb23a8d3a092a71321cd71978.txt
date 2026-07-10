@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15767-15778 >>>
+L00015767	  - "`/routing`"
+L00015768	  - "`/runtime`"
+L00015769	  - "`/handoff`"
+L00015770	  - "`/history`"
+L00015771	  - "`/storage/orchestration`"
+L00015772	negative_constraints:
+L00015773	  - "Chat storage/orchestration projections MUST NOT invent child-only shadow state machines."
+L00015774	owner_hints:
+L00015775	  - Plans/Contracts_V0.md
+L00015776	  - Plans/storage-plan.md
+L00015777	```
+L00015778	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15779-16155 >>>
+L00015779	### CV-260 - Child-To-Parent Signals And Legacy Labels
+L00015780	
+L00015781	```yaml
+L00015782	plan_unit_id: CV-260
+L00015783	unit_type: compatibility_disposition
+L00015784	status: accepted
+L00015785	owner_doc: Plans/Contracts_V0.md
+L00015786	canonical_text: >-
+L00015787	  Child-to-parent signals are canonical runtime events, not ad hoc UI messages;
+L00015788	  progress, result, blocked, clarification_needed, context_expansion_requested,
+L00015789	  user_input_requested, failed, and cancelled remain canonical, while legacy
+L00015790	  labels such as clarification-needed, context-expansion-needed, and
+L00015791	  user-input-requested map back to canonical events.
+L00015792	gui_related: true
+L00015793	gui_classification_reason: This unit includes user-facing signal label compatibility and chat/crew projection semantics.
+L00015794	split_recommended: false
+L00015795	depends_on: [CV-257]
+L00015796	unblocks: [CV-261]
+L00015797	acceptance_criteria:
+L00015798	  - "Child-to-parent signals remain canonical runtime events."
+L00015799	  - "Parent orchestration may summarize, consolidate, or route signals without losing canonical event identity."
+L00015800	  - "Legacy user-facing labels map back to canonical events."
+L00015801	validation_surfaces:
+L00015802	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015803	  - python3 scripts/pm-plan-index.py validate
+L00015804	risk_class: child_signal_label_drift
+L00015805	reasoning_tier: high
+L00015806	context_scope: child_to_parent_signal_compatibility
+L00015807	implementation_surfaces:
+L00015808	  - Plans/Contracts_V0.md
+L00015809	  - Plans/assistant-chat-design.md
+L00015810	node_compile_hint:
+L00015811	  mode: child_to_parent_signal_compatibility
+L00015812	  create_worknodes: false
+L00015813	source_lineage:
+L00015814	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0112
+L00015815	preserved_exact_tokens:
+L00015816	  - "`progress`"
+L00015817	  - "`result`"
+L00015818	  - "`blocked`"
+L00015819	  - "`clarification_needed`"
+L00015820	  - "`context_expansion_requested`"
+L00015821	  - "`user_input_requested`"
+L00015822	  - "`failed`"
+L00015823	  - "`cancelled`"
+L00015824	  - "`clarification-needed`"
+L00015825	  - "`context-expansion-needed`"
+L00015826	  - "`user-input-requested`"
+L00015827	  - "ContractRef: Child-to-parent escalation and progress signals MUST remain canonical runtime events even when parent chat or crew UI projects them into higher-level summaries. [Source: Tools.md#event-model; assistant-chat-design.md#14-subagents--crew]"
+L00015828	compatibility_only_notes:
+L00015829	  - "Legacy user-facing signal labels map back to canonical child-to-parent runtime events."
+L00015830	negative_constraints:
+L00015831	  - "Child-to-parent signals must not become ad hoc UI message strings."
+L00015832	owner_hints:
+L00015833	  - Plans/Contracts_V0.md
+L00015834	  - Plans/assistant-chat-design.md
+L00015835	```
+L00015836	
+L00015837	### CV-261 - Child Projection Identity And Reversibility
+L00015838	
+L00015839	```yaml
+L00015840	plan_unit_id: CV-261
+L00015841	unit_type: requirement
+L00015842	status: accepted
+L00015843	owner_doc: Plans/Contracts_V0.md
+L00015844	canonical_text: >-
+L00015845	  Chat-facing child projection events may normalize lifecycle into UI-specific
+L00015846	  envelopes, but must preserve child_run_id, parent_run_id, thread_id,
+L00015847	  timestamps, attempt identity when relevant, requested/effective persona and
+L00015848	  runtime descriptors, and reversibility to canonical event payloads.
+L00015849	gui_related: true
+L00015850	gui_classification_reason: This unit defines chat/cards/groups/batch summaries and session header/sidebar projections.
+L00015851	split_recommended: false
+L00015852	depends_on: [CV-257, CV-260]
+L00015853	unblocks: []
+L00015854	acceptance_criteria:
+L00015855	  - "Projection events preserve child_run_id, parent_run_id, thread_id, timestamp, attempt identity, and requested/effective persona/runtime descriptors when relevant."
+L00015856	  - "Child runs are not demoted into anonymous status text."
+L00015857	  - "Session header and sidebar token/context/cost displays remain projections over canonical records and usage events."
+L00015858	validation_surfaces:
+L00015859	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015860	  - python3 scripts/pm-plan-index.py validate
+L00015861	risk_class: child_projection_identity_loss
+L00015862	reasoning_tier: high
+L00015863	context_scope: child_projection_identity_reversibility
+L00015864	implementation_surfaces:
+L00015865	  - Plans/Contracts_V0.md
+L00015866	  - Plans/assistant-chat-design.md
+L00015867	  - Plans/storage-plan.md
+L00015868	node_compile_hint:
+L00015869	  mode: child_projection_identity_reversibility
+L00015870	  create_worknodes: false
+L00015871	source_lineage:
+L00015872	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0112
+L00015873	preserved_exact_tokens:
+L00015874	  - "`child_run_id`"
+L00015875	  - "`parent_run_id`"
+L00015876	  - "`thread_id`"
+L00015877	  - "requested/effective persona/runtime descriptors"
+L00015878	  - "anonymous status text"
+L00015879	  - "`/sidebar`"
+L00015880	  - "`/context`"
+L00015881	  - "ContractRef: ContractName: child_projection_identity. Any projection event that feeds chat, cards, groups, or batch summaries MUST preserve canonical child identity fields and MUST NOT demote child runs into anonymous status text. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; assistant-chat-design.md#14-subagents--crew]"
+L00015882	negative_constraints:
+L00015883	  - "Child lineage must not be over-summarized into generic status text."
+L00015884	owner_hints:
+L00015885	  - Plans/Contracts_V0.md
+L00015886	  - Plans/assistant-chat-design.md
+L00015887	  - Plans/storage-plan.md
+L00015888	```
+L00015889	
+L00015890	### CV-262 - Retry Reroute Replacement Resume Distinction
+L00015891	
+L00015892	```yaml
+L00015893	plan_unit_id: CV-262
+L00015894	unit_type: constraint
+L00015895	status: accepted
+L00015896	owner_doc: Plans/Contracts_V0.md
+L00015897	canonical_text: >-
+L00015898	  retry, reroute, replacement, and resume are distinct runtime concepts that
+L00015899	  remain distinct in contracts, storage, and event history; projections may
+L00015900	  summarize them but must not collapse them into one generic retry or restart
+L00015901	  bucket, and resume/reopen is an exception path rather than baseline
+L00015902	  continuity for disposable helpers.
+L00015903	gui_related: false
+L00015904	gui_classification_reason: This unit defines runtime lifecycle distinctions rather than visual presentation.
+L00015905	split_recommended: false
+L00015906	depends_on: [CV-257]
+L00015907	unblocks: []
+L00015908	acceptance_criteria:
+L00015909	  - "resume, retry, reroute, and replacement preserve their distinct meanings."
+L00015910	  - "Projections do not collapse these concepts into one retry/restart bucket."
+L00015911	  - "Cancelled and superseded children are terminal by default; resume/reopen is an exception path."
+L00015912	validation_surfaces:
+L00015913	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015914	  - python3 scripts/pm-plan-index.py validate
+L00015915	risk_class: child_retry_resume_semantic_collapse
+L00015916	reasoning_tier: high
+L00015917	context_scope: child_retry_reroute_replacement_resume
+L00015918	implementation_surfaces:
+L00015919	  - Plans/Contracts_V0.md
+L00015920	  - Plans/storage-plan.md
+L00015921	  - Plans/assistant-chat-design.md
+L00015922	node_compile_hint:
+L00015923	  mode: child_retry_reroute_replacement_resume_distinction
+L00015924	  create_worknodes: false
+L00015925	source_lineage:
+L00015926	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0113
+L00015927	preserved_exact_tokens:
+L00015928	  - "`retry`"
+L00015929	  - "`reroute`"
+L00015930	  - "`replacement`"
+L00015931	  - "`resume`"
+L00015932	  - "retry/restart bucket"
+L00015933	  - "Disposable-by-default child lifecycle"
+L00015934	  - "ContractRef: Runtime and storage contracts MUST preserve the semantic distinction between resume, retry, reroute, and replacement; projections MAY summarize them but MUST NOT collapse them into one generic retry/restart bucket. [Source: Tools.md#retry-reroute-replacement-and-cancel; storage-plan.md#canonical-child-run-records-and-batch-structure]"
+L00015935	  - "ContractRef: Disposable-by-default child lifecycle is canonical; resume/reopen behavior MUST be treated as an exception path, not the baseline continuity model. [Source: assistant-memory-subsystem.md#capability-boundary-assistant-only; assistant-chat-design.md#15-plan-mode--crew-mode]"
+L00015936	negative_constraints:
+L00015937	  - "Runtime and storage contracts must not collapse resume, retry, reroute, and replacement into one generic retry/restart bucket."
+L00015938	owner_hints:
+L00015939	  - Plans/Contracts_V0.md
+L00015940	  - Plans/storage-plan.md
+L00015941	```
+L00015942	
+L00015943	### CV-263 - Crew Side-File Retirement Boundary
+L00015944	
+L00015945	```yaml
+L00015946	plan_unit_id: CV-263
+L00015947	unit_type: compatibility_disposition
+L00015948	status: accepted
+L00015949	owner_doc: Plans/Contracts_V0.md
+L00015950	canonical_text: >-
+L00015951	  Older crew message-board and active-agent side-file patterns retire into the
+L00015952	  child-run contract; side-files may project from canonical child-run records but
+L00015953	  must not stand beside them as competing runtime truth.
+L00015954	gui_related: false
+L00015955	gui_classification_reason: This unit defines runtime source-of-truth compatibility boundaries.
+L00015956	split_recommended: false
+L00015957	depends_on: [CV-257]
+L00015958	unblocks: [CV-264, CV-265]
+L00015959	acceptance_criteria:
+L00015960	  - "Older crew message-board and active-agent side-file patterns are retired into the child-run contract."
+L00015961	  - "Side-files may project from canonical child-run records."
+L00015962	  - "Side-files must not compete as runtime truth."
+L00015963	validation_surfaces:
+L00015964	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015965	  - python3 scripts/pm-plan-index.py validate
+L00015966	risk_class: crew_side_file_runtime_truth_split
+L00015967	reasoning_tier: high
+L00015968	context_scope: crew_side_file_retirement_boundary
+L00015969	implementation_surfaces:
+L00015970	  - Plans/Contracts_V0.md
+L00015971	  - Plans/orchestrator-subagent-integration.md
+L00015972	node_compile_hint:
+L00015973	  mode: crew_side_file_retirement_boundary
+L00015974	  create_worknodes: false
+L00015975	source_lineage:
+L00015976	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0114
+L00015977	preserved_exact_tokens:
+L00015978	  - "`Plans/orchestrator-subagent-integration.md`"
+L00015979	  - "`/message-board`"
+L00015980	  - "`active-agent`"
+L00015981	  - "competing source of runtime truth"
+L00015982	compatibility_only_notes:
+L00015983	  - "Older crew side-file patterns are projection-only compatibility paths."
+L00015984	negative_constraints:
+L00015985	  - "A side-file must not stand beside canonical child-run records as competing runtime truth."
+L00015986	owner_hints:
+L00015987	  - Plans/Contracts_V0.md
+L00015988	  - Plans/orchestrator-subagent-integration.md
+L00015989	```
+L00015990	
+L00015991	### CV-264 - Crew Board Attribution
+L00015992	
+L00015993	```yaml
+L00015994	plan_unit_id: CV-264
+L00015995	unit_type: requirement
+L00015996	status: accepted
+L00015997	owner_doc: Plans/Contracts_V0.md
+L00015998	canonical_text: >-
+L00015999	  Crew coordination uses explicit crew-board messages or crew-scoped
+L00016000	  coordination records; messages are task-scoped, attributable, timestamped,
+L00016001	  and persisted, and hidden direct peer messaging is not a canonical runtime
+L00016002	  channel.
+L00016003	gui_related: false
+L00016004	gui_classification_reason: This unit defines crew coordination runtime record requirements.
+L00016005	split_recommended: false
+L00016006	depends_on: [CV-263]
+L00016007	unblocks: []
+L00016008	acceptance_criteria:
+L00016009	  - "Crew coordination uses explicit board messages or crew-scoped records."
+L00016010	  - "Crew board messages are task-scoped, attributable, timestamped, and persisted."
+L00016011	  - "Hidden direct peer messaging is not canonical."
+L00016012	validation_surfaces:
+L00016013	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016014	  - python3 scripts/pm-plan-index.py validate
+L00016015	risk_class: hidden_peer_channel_drift
+L00016016	reasoning_tier: high
+L00016017	context_scope: crew_board_attribution
+L00016018	implementation_surfaces:
+L00016019	  - Plans/Contracts_V0.md
+L00016020	  - Plans/assistant-chat-design.md
+L00016021	  - Plans/storage-plan.md
+L00016022	node_compile_hint:
+L00016023	  mode: crew_board_attribution_contract
+L00016024	  create_worknodes: false
+L00016025	source_lineage:
+L00016026	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0114
+L00016027	preserved_exact_tokens:
+L00016028	  - "crew board"
+L00016029	  - "task-scoped"
+L00016030	  - "attributable"
+L00016031	  - "timestamped"
+L00016032	  - "hidden direct peer messaging"
+L00016033	  - "ContractRef: Crew-board coordination MUST remain attributable, inspectable, and task-scoped; hidden direct peer messaging is not a canonical runtime channel. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]"
+L00016034	negative_constraints:
+L00016035	  - "Hidden direct peer messaging is not a canonical runtime channel."
+L00016036	owner_hints:
+L00016037	  - Plans/Contracts_V0.md
+L00016038	  - Plans/assistant-chat-design.md
+L00016039	  - Plans/storage-plan.md
+L00016040	```
+L00016041	
+L00016042	### CV-265 - Crew Coordination Authority Envelope
+L00016043	
+L00016044	```yaml
+L00016045	plan_unit_id: CV-265
+L00016046	unit_type: constraint
+L00016047	status: accepted
+L00016048	owner_doc: Plans/Contracts_V0.md
+L00016049	canonical_text: >-
+L00016050	  Crew board traffic does not widen authority; permissions, tools, skills,
+L00016051	  plugins, MCP access, and provider restrictions remain subject to the same
+L00016052	  requested/effective capability rules as any other child run.
+L00016053	gui_related: false
+L00016054	gui_classification_reason: This unit defines authority and capability boundaries for crew coordination.
+L00016055	split_recommended: false
+L00016056	depends_on: [CV-263]
+L00016057	unblocks: []
+L00016058	acceptance_criteria:
+L00016059	  - "Crew coordination messages do not widen authority."
+L00016060	  - "Permissions, tools, skills, plugins, MCP access, and provider restrictions remain bound to the child's effective runtime envelope."
+L00016061	validation_surfaces:
+L00016062	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016063	  - python3 scripts/pm-plan-index.py validate
+L00016064	risk_class: crew_authority_widening
+L00016065	reasoning_tier: high
+L00016066	context_scope: crew_coordination_authority_envelope
+L00016067	implementation_surfaces:
+L00016068	  - Plans/Contracts_V0.md
+L00016069	  - Plans/Permissions_System.md
+L00016070	  - Plans/Skills_System.md
+L00016071	node_compile_hint:
+L00016072	  mode: crew_coordination_authority_envelope
+L00016073	  create_worknodes: false
+L00016074	source_lineage:
+L00016075	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0114
+L00016076	preserved_exact_tokens:
+L00016077	  - "permissions"
+L00016078	  - "tools"
+L00016079	  - "skills"
+L00016080	  - "plugins"
+L00016081	  - "MCP access"
+L00016082	  - "provider restrictions"
+L00016083	  - "requested/effective capability rules"
+L00016084	  - "ContractRef: Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; Skills_System.md#child-capability-subset-clarification]"
+L00016085	negative_constraints:
+L00016086	  - "Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope."
+L00016087	owner_hints:
+L00016088	  - Plans/Contracts_V0.md
+L00016089	  - Plans/Permissions_System.md
+L00016090	  - Plans/Skills_System.md
+L00016091	```
+L00016092	
+L00016093	### CV-266 - Subagent Lineage Envelope And Alias Boundary
+L00016094	
+L00016095	```yaml
+L00016096	plan_unit_id: CV-266
+L00016097	unit_type: compatibility_disposition
+L00016098	status: accepted
+L00016099	owner_doc: Plans/Contracts_V0.md
+L00016100	canonical_text: >-
+L00016101	  Stable subagent.* event families preserve the PM lineage envelope with run,
+L00016102	  thread, agent, parent, child, parent-thread, and requested/effective runtime
+L00016103	  descriptor fields; subagent.spawn_requested and subagent.spawn_completed
+L00016104	  remain under subagent.*, while chat.subagent_* and chat.subagent_spawned are
+L00016105	  legacy source aliases only.
+L00016106	gui_related: false
+L00016107	gui_classification_reason: This unit defines runtime lineage and event alias boundaries.
+L00016108	split_recommended: false
+L00016109	depends_on: [CV-256]
+L00016110	unblocks: [CV-267, CV-268, CV-269]
+L00016111	acceptance_criteria:
+L00016112	  - "Every subagent.* event preserves the PM lineage envelope."
+L00016113	  - "subagent.spawn_requested and subagent.spawn_completed remain under subagent.*."
+L00016114	  - "chat.subagent_* and chat.subagent_spawned remain legacy source aliases only."
+L00016115	validation_surfaces:
+L00016116	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016117	  - python3 scripts/pm-plan-index.py validate
+L00016118	risk_class: subagent_lineage_alias_drift
+L00016119	reasoning_tier: high
+L00016120	context_scope: subagent_lineage_envelope_alias_boundary
+L00016121	implementation_surfaces:
+L00016122	  - Plans/Contracts_V0.md
+L00016123	  - Plans/orchestrator-subagent-integration.md
+L00016124	  - Plans/storage-plan.md
+L00016125	  - Plans/CLI_Bridged_Providers.md
+L00016126	  - Plans/Run_Modes.md
+L00016127	node_compile_hint:
+L00016128	  mode: subagent_lineage_envelope_alias_boundary
+L00016129	  create_worknodes: false
+L00016130	source_lineage:
+L00016131	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0115
+L00016132	preserved_exact_tokens:
+L00016133	  - "`subagent.*`"
+L00016134	  - "`run_id`"
+L00016135	  - "`thread_id`"
+L00016136	  - "`agent_id`"
+L00016137	  - "`parent_run_id?`"
+L00016138	  - "`child_run_id?`"
+L00016139	  - "`parent_thread_id?`"
+L00016140	  - "`subagent.spawn_requested`"
+L00016141	  - "`subagent.spawn_completed`"
+L00016142	  - "`chat.subagent_*`"
+L00016143	  - "`chat.subagent_spawned`"
+L00016144	  - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md"
+L00016145	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md"
+L00016146	compatibility_only_notes:
+L00016147	  - "chat.subagent_* and chat.subagent_spawned are legacy source aliases only."
+L00016148	negative_constraints:
+L00016149	  - "Child identity and lineage are not optional metadata for subagent.* events."
+L00016150	owner_hints:
+L00016151	  - Plans/Contracts_V0.md
+L00016152	  - Plans/orchestrator-subagent-integration.md
+L00016153	  - Plans/storage-plan.md
+L00016154	```
+L00016155	
+
+<<< CONTEXT_AFTER canonical_document_lines=16156-16167 >>>
+L00016156	### CV-267 - Subagent Lifecycle Events
+L00016157	
+L00016158	```yaml
+L00016159	plan_unit_id: CV-267
+L00016160	unit_type: requirement
+L00016161	status: accepted
+L00016162	owner_doc: Plans/Contracts_V0.md
+L00016163	canonical_text: >-
+L00016164	  Subagent lifecycle event rows and payloads are preserved for subagent.spawned,
+L00016165	  subagent.started, subagent.completed, subagent.failed, subagent.cancelled,
+L00016166	  subagent.timeout, subagent.paused, and subagent.resumed.
+L00016167	gui_related: false

@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 1034-1045 >>>
+- runtime recovery
+- projection health
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 1046-1407 >>>
+### G-016 - Runtime Operation Vocabulary And Copy Boundaries
+
+```yaml
+plan_unit_id: G-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: Runtime operation vocabulary reserves copy for Review, Requested, Effective, Why different?, Health, Capability, Readiness, Validation, Retry, Resume, Recover, Restore, wake reason, queue analysis, and remediation lineage while keeping provenance, legal hold, receipt retention, and bulk undo/cost disclosure separate.
+gui_related: true
+gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: runtime_operation_vocabulary_copy_boundaries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0016
+preserved_exact_tokens:
+- Review
+- Requested
+- Effective
+- Why different?
+- Health
+- Capability
+- Readiness
+- Validation
+- Retry
+- Resume
+- Recover
+- Restore
+- wake_reason
+- queue analysis
+- remediation lineage
+- /legal
+- /undo/cost
+negative_constraints:
+- Surfaces must not use Actual, Resolved, Current, Available, or Fallback as synonyms for Requested/Effective concepts.
+- Provenance, legal hold, receipt retention, and bulk undo/cost disclosure must not collapse into generic Health, Capability, Readiness, or Validation copy.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+### G-017 - Evidence And Spec-integrity Vocabulary
+
+```yaml
+plan_unit_id: G-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: Evidence vocabulary distinguishes evidence bundles, wrapper/alias evidence, spec-integrity evidence, and interview artifact evidence so command proof, alias normalization, ghost IDs, missing schema/sections, dead references, and node evidence stay machine-consistent.
+gui_related: false
+gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: evidence_spec_integrity_vocabulary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0017
+preserved_exact_tokens:
+- Evidence bundle
+- Wrapper and alias evidence
+- evidence.schema.json
+- /fail
+- wrapper-normalization
+- alias-resolution
+- spec-integrity
+- Interview artifact evidence
+- Project_Output_Artifacts
+- node_id
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:evidence.schema.json'
+```
+
+### G-018 - Secret Handling Vocabulary
+
+```yaml
+plan_unit_id: G-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: Secret handling vocabulary defines Secret and Credential store and keeps OS-backed credential storage as the only allowed persistence for secrets.
+gui_related: false
+gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: secret_handling_vocabulary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0018
+preserved_exact_tokens:
+- Secret
+- Credential store
+- OS-backed keychain/credential manager
+- only allowed persistence for secrets
+negative_constraints:
+- OS-backed credential store is the only allowed persistence for secrets.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: Invariant:INV-002'
+```
+
+### G-019 - DRYRules Primitive
+
+```yaml
+plan_unit_id: G-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: DRYRules primitive vocabulary defines reuse-first methodology and DRY tags for widget, data, function, and helper reuse under DRY_Rules ownership.
+gui_related: true
+gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: dryrules_primitive
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0020
+preserved_exact_tokens:
+- DRYRules
+- DRY:WIDGET
+- DRY:DATA
+- DRY:FN
+- DRY:HELPER
+- Plans/DRY_Rules.md
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+```
+
+### G-020 - PatchPipeline Primitive
+
+```yaml
+plan_unit_id: G-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: PatchPipeline primitive vocabulary defines the Git and PR workflow pipeline and preserves local git ownership under WorktreeGitImprovement and hosting ownership under GitHub_API_Auth_and_Flows.
+gui_related: false
+gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: patchpipeline_primitive
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0021
+preserved_exact_tokens:
+- PatchPipeline
+- Git + PR workflow pipeline
+- worktrees
+- branches
+- commits
+- push
+- hosting operations
+- local git operations
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- WorktreeGitImprovement owns local git operations; GitHub_API_Auth_and_Flows owns hosting operations.
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:PatchPipeline, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### G-021 - SessionStore Primitive And Runtime Persistence Boundary
+
+```yaml
+plan_unit_id: G-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: SessionStore primitive vocabulary defines session/run/event/artifact storage over seglog, redb, Tantivy, replay, projections, runtime records, and storage-owned overlay shape while forbidding secrets and keeping runtime state out of plan-node shards and project-local JSON sidecars.
+gui_related: false
+gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: sessionstore_runtime_persistence_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0022
+preserved_exact_tokens:
+- SessionStore
+- seglog
+- redb
+- Tantivy
+- target_seq
+- freshness notifications
+- attempt_record
+- tier_runtime_record
+- blocked_projection
+- usage_record
+- /redb/projections
+negative_constraints:
+- Secrets are forbidden in persistent storage.
+- Runtime state is not stored in plan-node shards or project-local JSON sidecars.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:SessionStore, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage'
+```
+
+### G-022 - InstantGrep User-facing Name
+
+```yaml
+plan_unit_id: G-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: InstantGrep primitive vocabulary defines the promoted user-facing name for transparent regex-grep acceleration over SparseNgramIndex plus grep and Search-panel integration.
+gui_related: true
+gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: glossary_drift
+reasoning_tier: standard
+context_scope: glossary_standardization
+implementation_surfaces:
+- Plans/Glossary.md
+node_compile_hint:
+  mode: instantgrep_user_facing_name
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0023
+preserved_exact_tokens:
+- InstantGrep
+- Instant Grep
+- SparseNgramIndex
+- grep
+- Search-panel integration
+negative_constraints:
+- Instant Grep is not a second tool name and not a separate index family.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Glossary.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+
+<<< CONTEXT_AFTER 1408-1419 >>>
+### G-023 - SparseNgramIndex Query And Storage Semantics
+
+```yaml
+plan_unit_id: G-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: SparseNgramIndex vocabulary defines sparse n-gram regex acceleration, build/query extraction, Roaring Bitmap postings keyed by xxh3, generation-numbered snapshots, ArcSwap publish, and ripgrep final verification.
+gui_related: true
+gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+split_recommended: false
+depends_on: []

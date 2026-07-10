@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE canonical_document_lines=776-787 >>>
+L00000776	### 10.7 Usage pipeline and normalization mapping
+L00000777	- Upstream reference pattern: OpenCode's message-level usage flow (`Session.getUsage`, processor finish-step, and related normalization logic) is useful as an extraction target for how response metadata becomes durable usage records.
+L00000778	- Puppet Master mapping rule: all extracted usage terminology, persistence semantics, and UI linkage MUST map into `Plans/usage-feature.md` and `Plans/storage-plan.md` rather than creating a parallel OpenCode-shaped usage vocabulary in this document or downstream packets.
+L00000779	
+L00000780	## Owner / Consumer Map
+L00000781	
+L00000782	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/OpenCode_Deep_Extraction.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000783	
+L00000784	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000785	
+L00000786	## PlanUnits
+L00000787	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=788-1145 >>>
+L00000788	### ODE-001 - OpenCode Deep Extraction Retired Source-Preserving Bridge
+L00000789	
+L00000790	```yaml
+L00000791	plan_unit_id: ODE-001
+L00000792	unit_type: compatibility_disposition
+L00000793	status: accepted
+L00000794	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00000795	canonical_text: >-
+L00000796	  ODE-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 110 because OpenCode_Deep_Extraction-S0001 through S0070 are covered by ODE-002 through ODE-074 or explicit structural dispositions. ODE-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+L00000797	gui_related: false
+L00000798	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained OpenCode Deep Extraction PlanUnits and coverage_map proof.
+L00000799	split_recommended: false
+L00000800	depends_on:
+L00000801	- 'ODE-002'
+L00000802	- 'ODE-003'
+L00000803	- 'ODE-004'
+L00000804	- 'ODE-005'
+L00000805	- 'ODE-006'
+L00000806	- 'ODE-007'
+L00000807	- 'ODE-008'
+L00000808	- 'ODE-009'
+L00000809	- 'ODE-010'
+L00000810	- 'ODE-011'
+L00000811	- 'ODE-012'
+L00000812	- 'ODE-013'
+L00000813	- 'ODE-014'
+L00000814	- 'ODE-015'
+L00000815	- 'ODE-016'
+L00000816	- 'ODE-017'
+L00000817	- 'ODE-018'
+L00000818	- 'ODE-019'
+L00000819	- 'ODE-020'
+L00000820	- 'ODE-021'
+L00000821	- 'ODE-022'
+L00000822	- 'ODE-023'
+L00000823	- 'ODE-024'
+L00000824	- 'ODE-025'
+L00000825	- 'ODE-026'
+L00000826	- 'ODE-027'
+L00000827	- 'ODE-028'
+L00000828	- 'ODE-029'
+L00000829	- 'ODE-030'
+L00000830	- 'ODE-031'
+L00000831	- 'ODE-032'
+L00000832	- 'ODE-033'
+L00000833	- 'ODE-034'
+L00000834	- 'ODE-035'
+L00000835	- 'ODE-036'
+L00000836	- 'ODE-037'
+L00000837	- 'ODE-038'
+L00000838	- 'ODE-039'
+L00000839	- 'ODE-040'
+L00000840	- 'ODE-041'
+L00000841	- 'ODE-042'
+L00000842	- 'ODE-043'
+L00000843	- 'ODE-044'
+L00000844	- 'ODE-045'
+L00000845	- 'ODE-046'
+L00000846	- 'ODE-047'
+L00000847	- 'ODE-048'
+L00000848	- 'ODE-049'
+L00000849	- 'ODE-050'
+L00000850	- 'ODE-051'
+L00000851	- 'ODE-052'
+L00000852	- 'ODE-053'
+L00000853	- 'ODE-054'
+L00000854	- 'ODE-055'
+L00000855	- 'ODE-056'
+L00000856	- 'ODE-057'
+L00000857	- 'ODE-058'
+L00000858	- 'ODE-059'
+L00000859	- 'ODE-060'
+L00000860	- 'ODE-061'
+L00000861	- 'ODE-062'
+L00000862	- 'ODE-063'
+L00000863	- 'ODE-064'
+L00000864	- 'ODE-065'
+L00000865	- 'ODE-066'
+L00000866	- 'ODE-067'
+L00000867	- 'ODE-068'
+L00000868	- 'ODE-069'
+L00000869	- 'ODE-070'
+L00000870	- 'ODE-071'
+L00000871	- 'ODE-072'
+L00000872	- 'ODE-073'
+L00000873	- 'ODE-074'
+L00000874	unblocks: []
+L00000875	acceptance_criteria:
+L00000876	- 'ODE-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 110.'
+L00000877	- 'OpenCode_Deep_Extraction-S0001 through S0070 product/source coverage is owned by ODE-002 through ODE-074 or explicit structural dispositions.'
+L00000878	- 'ODE-001 remains only to preserve migration lineage for the former source-preserving bridge.'
+L00000879	- 'The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.'
+L00000880	validation_surfaces:
+L00000881	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000882	- python3 scripts/pm-plan-index.py validate
+L00000883	risk_class: migration_lineage
+L00000884	reasoning_tier: standard
+L00000885	context_scope: residual_plan_standardization
+L00000886	implementation_surfaces:
+L00000887	- Plans/OpenCode_Deep_Extraction.md
+L00000888	node_compile_hint:
+L00000889	  mode: source_preserving_bridge_retired
+L00000890	  create_worknodes: false
+L00000891	source_lineage:
+L00000892	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0035'
+L00000893	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0036'
+L00000894	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0037'
+L00000895	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0038'
+L00000896	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0039'
+L00000897	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0040'
+L00000898	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0041'
+L00000899	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0042'
+L00000900	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0043'
+L00000901	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0044'
+L00000902	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0045'
+L00000903	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0046'
+L00000904	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0047'
+L00000905	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0048'
+L00000906	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0049'
+L00000907	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0050'
+L00000908	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0051'
+L00000909	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0052'
+L00000910	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0053'
+L00000911	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0054'
+L00000912	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0055'
+L00000913	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0056'
+L00000914	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0057'
+L00000915	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0058'
+L00000916	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0059'
+L00000917	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0060'
+L00000918	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0061'
+L00000919	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0062'
+L00000920	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0063'
+L00000921	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0064'
+L00000922	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0065'
+L00000923	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0066'
+L00000924	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0067'
+L00000925	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0068'
+L00000926	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0069'
+L00000927	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0070'
+L00000928	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0073'
+L00000929	preserved_exact_tokens:
+L00000930	- 'ODE-001'
+L00000931	- 'OpenCode Deep Extraction Residual Source-Preserving Bridge'
+L00000932	- 'source_preserving_planunit'
+L00000933	- 'source_preserving_bridge_retired'
+L00000934	- '7E.2 Built-in selection'
+L00000935	- '10.7 Usage pipeline and normalization mapping'
+L00000936	- 'PlanUnits'
+L00000937	- 'Migration Coverage'
+L00000938	negative_constraints:
+L00000939	- 'ODE-001 must not re-own OpenCode_Deep_Extraction-S0001 through OpenCode_Deep_Extraction-S0070 after Phase 2B batch 110.'
+L00000940	- 'ODE-001 must not use node_compile_hint.mode=source_preserving_planunit.'
+L00000941	compatibility_only_notes:
+L00000942	- 'Retired bridge is migration-lineage compatibility only.'
+L00000943	stale_retired_dispositions:
+L00000944	- source_preserving_bridge_retired
+L00000945	owner_boundary_notes:
+L00000946	- 'Fine-grained ODE PlanUnits and coverage_map proof now carry product/source coverage.'
+L00000947	owner_hints:
+L00000948	- Plans/OpenCode_Deep_Extraction.md
+L00000949	preserved_contractrefs: []
+L00000950	```
+L00000951	
+L00000952	### ODE-002 - Document Purpose And Naming Guard
+L00000953	
+L00000954	```yaml
+L00000955	plan_unit_id: ODE-002
+L00000956	unit_type: requirement
+L00000957	status: accepted
+L00000958	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00000959	canonical_text: >-
+L00000960	  The document preserves Puppet Master naming, compliance with Plans/DRY_Rules.md and Plans/Contracts_V0.md, and deterministic defaults while stating that older names are only referenced as legacy naming.
+L00000961	gui_related: false
+L00000962	gui_classification_reason: The unit records document governance and naming, not a GUI surface.
+L00000963	split_recommended: false
+L00000964	depends_on: []
+L00000965	unblocks: []
+L00000966	acceptance_criteria:
+L00000967	- 'Covered source spans remain losslessly available for exact-text audit.'
+L00000968	- 'The covered OpenCode baseline fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+L00000969	- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+L00000970	- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+L00000971	validation_surfaces:
+L00000972	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000973	- python3 scripts/pm-plan-index.py validate
+L00000974	risk_class: document_purpose_and_naming_guard
+L00000975	reasoning_tier: standard
+L00000976	context_scope: opencode_deep_extraction_standardization
+L00000977	implementation_surfaces:
+L00000978	- Plans/OpenCode_Deep_Extraction.md
+L00000979	node_compile_hint:
+L00000980	  mode: document_purpose_and_naming_guard
+L00000981	  create_worknodes: false
+L00000982	source_lineage:
+L00000983	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0001'
+L00000984	preserved_exact_tokens:
+L00000985	- 'Puppet Master'
+L00000986	- 'legacy naming'
+L00000987	- 'Plans/DRY_Rules.md'
+L00000988	- 'Plans/Contracts_V0.md'
+L00000989	- 'Plans/Decision_Policy.md'
+L00000990	negative_constraints:
+L00000991	- 'Platform name is Puppet Master only.'
+L00000992	compatibility_only_notes: []
+L00000993	stale_retired_dispositions: []
+L00000994	owner_boundary_notes:
+L00000995	- 'This extraction document is reference lineage and not a design fork.'
+L00000996	owner_hints:
+L00000997	- Plans/OpenCode_Deep_Extraction.md
+L00000998	preserved_contractrefs: []
+L00000999	```
+L00001000	
+L00001001	### ODE-003 - Baseline Reference
+L00001002	
+L00001003	```yaml
+L00001004	plan_unit_id: ODE-003
+L00001005	unit_type: requirement
+L00001006	status: accepted
+L00001007	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00001008	canonical_text: >-
+L00001009	  The OpenCode baseline is the upstream repository https://github.com/anomalyco/opencode at Reference date 2026-02-27 UTC, with a version policy that requires no local clone.
+L00001010	gui_related: false
+L00001011	gui_classification_reason: The unit records external reference metadata, not UI behavior.
+L00001012	split_recommended: false
+L00001013	depends_on: []
+L00001014	unblocks: []
+L00001015	acceptance_criteria:
+L00001016	- 'Covered source spans remain losslessly available for exact-text audit.'
+L00001017	- 'The covered OpenCode baseline fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+L00001018	- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+L00001019	- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+L00001020	validation_surfaces:
+L00001021	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001022	- python3 scripts/pm-plan-index.py validate
+L00001023	risk_class: baseline_reference
+L00001024	reasoning_tier: standard
+L00001025	context_scope: opencode_deep_extraction_standardization
+L00001026	implementation_surfaces:
+L00001027	- Plans/OpenCode_Deep_Extraction.md
+L00001028	node_compile_hint:
+L00001029	  mode: baseline_reference
+L00001030	  create_worknodes: false
+L00001031	source_lineage:
+L00001032	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0002'
+L00001033	preserved_exact_tokens:
+L00001034	- 'https://github.com/anomalyco/opencode'
+L00001035	- 'Reference date'
+L00001036	- '2026-02-27 UTC'
+L00001037	- 'no local clone required'
+L00001038	negative_constraints: []
+L00001039	compatibility_only_notes: []
+L00001040	stale_retired_dispositions: []
+L00001041	owner_boundary_notes:
+L00001042	- 'OpenCode remains baseline reference lineage.'
+L00001043	owner_hints:
+L00001044	- Plans/OpenCode_Deep_Extraction.md
+L00001045	preserved_contractrefs: []
+L00001046	```
+L00001047	
+L00001048	### ODE-004 - Extraction Goal
+L00001049	
+L00001050	```yaml
+L00001051	plan_unit_id: ODE-004
+L00001052	unit_type: requirement
+L00001053	status: accepted
+L00001054	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00001055	canonical_text: >-
+L00001056	  The extraction goal is to map reusable OpenCode guidance for run modes, agents, permissions, commands, formatters, skills, plugins, models, provider streams, UI command patterns, storage, and event envelopes into Puppet Master SSOT plans without importing drift-prone details.
+L00001057	gui_related: true
+L00001058	gui_classification_reason: The covered goal explicitly includes UI command patterns alongside backend/runtime surfaces.
+L00001059	split_recommended: true
+L00001060	depends_on: []
+L00001061	unblocks: []
+L00001062	acceptance_criteria:
+L00001063	- 'Covered source spans remain losslessly available for exact-text audit.'
+L00001064	- 'The covered OpenCode baseline fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+L00001065	- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+L00001066	- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+L00001067	- 'Mixed GUI/backend scope is explicit and remains split_recommended for downstream owner adoption.'
+L00001068	validation_surfaces:
+L00001069	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001070	- python3 scripts/pm-plan-index.py validate
+L00001071	risk_class: extraction_goal
+L00001072	reasoning_tier: standard
+L00001073	context_scope: opencode_deep_extraction_standardization
+L00001074	implementation_surfaces:
+L00001075	- Plans/OpenCode_Deep_Extraction.md
+L00001076	node_compile_hint:
+L00001077	  mode: extraction_goal
+L00001078	  create_worknodes: false
+L00001079	source_lineage:
+L00001080	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0003'
+L00001081	preserved_exact_tokens:
+L00001082	- 'run modes'
+L00001083	- 'agents'
+L00001084	- 'permissions'
+L00001085	- 'UI command patterns'
+L00001086	- 'without importing drift-prone details'
+L00001087	negative_constraints:
+L00001088	- 'Do not import drift-prone details.'
+L00001089	compatibility_only_notes: []
+L00001090	stale_retired_dispositions: []
+L00001091	owner_boundary_notes:
+L00001092	- 'Puppet Master SSOT plans remain the destination for adopted guidance.'
+L00001093	owner_hints:
+L00001094	- Plans/OpenCode_Deep_Extraction.md
+L00001095	preserved_contractrefs: []
+L00001096	```
+L00001097	
+L00001098	### ODE-005 - Hard Constraints And Owner Boundaries
+L00001099	
+L00001100	```yaml
+L00001101	plan_unit_id: ODE-005
+L00001102	unit_type: requirement
+L00001103	status: accepted
+L00001104	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00001105	canonical_text: >-
+L00001106	  Puppet Master locked stack decisions win; extraction is autonomous and deterministic; findings map to one existing owner or are discarded; generated adapter config remains derived and /no-secrets; OpenCode is baseline-only lineage; permission-preset deltas must not narrow /question/skill/LSP/todo/subagent assistance.
+L00001107	gui_related: false
+L00001108	gui_classification_reason: The unit records governance and owner boundaries, not a GUI surface.
+L00001109	split_recommended: false
+L00001110	depends_on: []
+L00001111	unblocks: []
+L00001112	acceptance_criteria:
+L00001113	- 'Covered source spans remain losslessly available for exact-text audit.'
+L00001114	- 'The covered OpenCode baseline fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+L00001115	- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+L00001116	- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+L00001117	validation_surfaces:
+L00001118	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001119	- python3 scripts/pm-plan-index.py validate
+L00001120	risk_class: hard_constraints_and_owner_boundaries
+L00001121	reasoning_tier: standard
+L00001122	context_scope: opencode_deep_extraction_standardization
+L00001123	implementation_surfaces:
+L00001124	- Plans/OpenCode_Deep_Extraction.md
+L00001125	node_compile_hint:
+L00001126	  mode: hard_constraints_and_owner_boundaries
+L00001127	  create_worknodes: false
+L00001128	source_lineage:
+L00001129	- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0004'
+L00001130	preserved_exact_tokens:
+L00001131	- '/no-secrets'
+L00001132	- 'baseline-only reference lineage'
+L00001133	- '/question/skill/LSP/todo/subagent'
+L00001134	- 'Puppet Master locked stack decisions'
+L00001135	negative_constraints:
+L00001136	- 'Permission-preset deltas must not narrow PM planning/research defaults below the product tool surface.'
+L00001137	compatibility_only_notes: []
+L00001138	stale_retired_dispositions: []
+L00001139	owner_boundary_notes:
+L00001140	- 'Live PM runtime and permission canon stay in Plans/Permissions_System.md, Plans/Run_Modes.md, Plans/Tools.md, and Plans/Contracts_V0.md.'
+L00001141	owner_hints:
+L00001142	- Plans/OpenCode_Deep_Extraction.md
+L00001143	preserved_contractrefs: []
+L00001144	```
+L00001145	
+
+<<< CONTEXT_AFTER canonical_document_lines=1146-1157 >>>
+L00001146	### ODE-006 - Transfer Token Fidelity
+L00001147	
+L00001148	```yaml
+L00001149	plan_unit_id: ODE-006
+L00001150	unit_type: requirement
+L00001151	status: accepted
+L00001152	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00001153	canonical_text: >-
+L00001154	  Hook and formatter extraction must preserve exact lineage tokens including hook-name, HTE, DAE, /DAE, format.*, /rotated, /tool, shell.env, file.edited, permission.ask, and mutation_capable for the owning Skills, Plugins, Formatters, Tools, and permission docs.
+L00001155	gui_related: false
+L00001156	gui_classification_reason: The unit preserves lineage tokens for non-GUI owner docs.
+L00001157	split_recommended: false

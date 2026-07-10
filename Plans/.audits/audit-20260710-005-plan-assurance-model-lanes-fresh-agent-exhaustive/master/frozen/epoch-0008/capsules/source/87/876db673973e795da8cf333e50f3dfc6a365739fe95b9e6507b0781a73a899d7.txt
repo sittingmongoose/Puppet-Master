@@ -1,0 +1,413 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3242-3253 >>>
+L00003242	  - "storage shape"
+L00003243	  - "contract"
+L00003244	  - "HITL"
+L00003245	  - "FileSafe"
+L00003246	  - "container publishing"
+L00003247	negative_constraints:
+L00003248	  - "Accept recovery_options[] or allowed_actions[] only in deprecation notices, migration notes, or gate rules that detect them as defects."
+L00003249	preserved_contractrefs:
+L00003250	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md"
+L00003251	owner_hints:
+L00003252	  - Plans/Progression_Gates.md
+L00003253	```
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3254-3637 >>>
+L00003254	### PG-057 - Runtime Recovery Canonicalization Gate
+L00003255	
+L00003256	```yaml
+L00003257	plan_unit_id: PG-057
+L00003258	unit_type: constraint
+L00003259	status: accepted
+L00003260	owner_doc: Plans/Progression_Gates.md
+L00003261	canonical_text: >-
+L00003262	  Runtime recovery sweeps must fail deprecated blocked payload fields, stale append-only contradictions, analysis_id queue identity, and blocked-reason-as-failure-class modeling.
+L00003263	gui_related: false
+L00003264	gui_classification_reason: >-
+L00003265	  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+L00003266	split_recommended: false
+L00003267	depends_on:
+L00003268	  - "PG-056"
+L00003269	unblocks: []
+L00003270	acceptance_criteria:
+L00003271	  - "Runtime Recovery Canonicalization Gate remains addressable as a fine-grained Progression Gates PlanUnit."
+L00003272	  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+L00003273	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003274	validation_surfaces:
+L00003275	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003276	  - "python3 scripts/pm-plan-index.py validate"
+L00003277	risk_class: progression_gate_drift
+L00003278	reasoning_tier: standard
+L00003279	context_scope: progression_gates
+L00003280	implementation_surfaces:
+L00003281	  - Plans/Progression_Gates.md
+L00003282	node_compile_hint:
+L00003283	  mode: constraint
+L00003284	  create_worknodes: false
+L00003285	source_lineage:
+L00003286	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0047
+L00003287	preserved_exact_tokens:
+L00003288	  - "allowed_actions[]"
+L00003289	  - "recovery_options[]"
+L00003290	  - "analysis_id"
+L00003291	  - "scheduler_pass_id"
+L00003292	  - "failure_class"
+L00003293	  - "stale canonical text"
+L00003294	negative_constraints:
+L00003295	  - "Deprecated names are accepted only inside deprecation notices, migration notes, or gate rules that detect them as defects."
+L00003296	preserved_contractrefs:
+L00003297	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Crosswalk.md"
+L00003298	owner_hints:
+L00003299	  - Plans/Progression_Gates.md
+L00003300	```
+L00003301	### PG-001 - Progression Gates Retired Source-Preserving Bridge
+L00003302	
+L00003303	```yaml
+L00003304	plan_unit_id: PG-001
+L00003305	unit_type: compatibility_disposition
+L00003306	status: retired
+L00003307	owner_doc: Plans/Progression_Gates.md
+L00003308	canonical_text: >-
+L00003309	  PG-001 is a retired source-preserving bridge for generated PDS Owner / Consumer Map, PlanUnits, and Migration Coverage audit material. Product prose from Progression_Gates-S0001 through Progression_Gates-S0047 is covered by fine-grained PG-002 through PG-057; Progression_Gates-S0048, Progression_Gates-S0049, and Progression_Gates-S0051 are generated structural/audit metadata, and Progression_Gates-S0050 is retired bridge lineage. No residual source_preserving_planunit product coverage remains for Plans/Progression_Gates.md.
+L00003310	gui_related: false
+L00003311	gui_classification_reason: The live retired bridge is migration/audit metadata only; the historical bridge span preserved GUI-related source tokens in span_map and coverage_map.
+L00003312	split_recommended: false
+L00003313	depends_on:
+L00003314	  - PG-002
+L00003315	  - PG-003
+L00003316	  - PG-004
+L00003317	  - PG-005
+L00003318	  - PG-006
+L00003319	  - PG-007
+L00003320	  - PG-008
+L00003321	  - PG-009
+L00003322	  - PG-010
+L00003323	  - PG-011
+L00003324	  - PG-012
+L00003325	  - PG-013
+L00003326	  - PG-014
+L00003327	  - PG-015
+L00003328	  - PG-016
+L00003329	  - PG-017
+L00003330	  - PG-018
+L00003331	  - PG-019
+L00003332	  - PG-020
+L00003333	  - PG-021
+L00003334	  - PG-022
+L00003335	  - PG-023
+L00003336	  - PG-024
+L00003337	  - PG-025
+L00003338	  - PG-026
+L00003339	  - PG-027
+L00003340	  - PG-028
+L00003341	  - PG-029
+L00003342	  - PG-030
+L00003343	  - PG-031
+L00003344	  - PG-032
+L00003345	  - PG-033
+L00003346	  - PG-034
+L00003347	  - PG-035
+L00003348	  - PG-036
+L00003349	  - PG-037
+L00003350	  - PG-038
+L00003351	  - PG-039
+L00003352	  - PG-040
+L00003353	  - PG-041
+L00003354	  - PG-042
+L00003355	  - PG-043
+L00003356	  - PG-044
+L00003357	  - PG-045
+L00003358	  - PG-046
+L00003359	  - PG-047
+L00003360	  - PG-048
+L00003361	  - PG-049
+L00003362	  - PG-050
+L00003363	  - PG-051
+L00003364	  - PG-052
+L00003365	  - PG-053
+L00003366	  - PG-054
+L00003367	  - PG-055
+L00003368	  - PG-056
+L00003369	  - PG-057
+L00003370	unblocks: []
+L00003371	acceptance_criteria:
+L00003372	  - PG-001 does not override PG-002 through PG-057 for Progression_Gates-S0001 through Progression_Gates-S0047.
+L00003373	  - Retired generated bridge and Migration Coverage spans remain available for exact-text audit.
+L00003374	  - Plans/Progression_Gates.md has no residual source_preserving_planunit product coverage after this bridge retirement.
+L00003375	  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition.
+L00003376	validation_surfaces:
+L00003377	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003378	  - python3 scripts/pm-plan-index.py validate
+L00003379	risk_class: residual_bridge_overreach
+L00003380	reasoning_tier: standard
+L00003381	context_scope: progression_gates_residual_bridge
+L00003382	implementation_surfaces:
+L00003383	  - Plans/Progression_Gates.md
+L00003384	node_compile_hint:
+L00003385	  mode: retired_source_preserving_bridge
+L00003386	  create_worknodes: false
+L00003387	source_lineage:
+L00003388	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0048
+L00003389	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0049
+L00003390	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0050
+L00003391	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0051
+L00003392	preserved_exact_tokens:
+L00003393	  - "PG-001"
+L00003394	  - "Progression Gates (Canonical) Source-Preserving PlanUnit"
+L00003395	  - "Progression Gates Residual Source-Preserving Bridge"
+L00003396	  - "source_preserving_planunit"
+L00003397	  - "retired_source_preserving_bridge"
+L00003398	  - "source_preserving_bridge_retired"
+L00003399	  - "Owner / Consumer Map"
+L00003400	  - "PlanUnits"
+L00003401	  - "Migration Coverage"
+L00003402	  - "PG-002"
+L00003403	  - "PG-057"
+L00003404	  - "Progression_Gates-S0048"
+L00003405	  - "Progression_Gates-S0049"
+L00003406	  - "Progression_Gates-S0050"
+L00003407	  - "Progression_Gates-S0051"
+L00003408	negative_constraints:
+L00003409	  - "PG-001 must not be used as implementation-ready product coverage for spans now mapped to PG-002 through PG-057."
+L00003410	  - "Do not remap Progression_Gates-S0001 through Progression_Gates-S0047 product coverage back to PG-001."
+L00003411	  - "PG-001 must not re-enter source_preserving_planunit mode after phase2b-149."
+L00003412	owner_hints:
+L00003413	  - Plans/Progression_Gates.md
+L00003414	```
+L00003415	
+L00003416	## Migration Coverage
+L00003417	
+L00003418	Original hash: `bb5559baa9f9e32acbf9ba920afade85c4de1d3ef0dd21c4be288cfc39e21271`.
+L00003419	
+L00003420	Run-scoped proof artifacts:
+L00003421	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00003422	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00003423	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00003424	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00003425	
+L00003426	Original spans from `Progression_Gates-S0001` through `Progression_Gates-S0047` are preserved in place and atomized into fine-grained PlanUnits `PG-002` through `PG-057`. Generated structural/audit spans `Progression_Gates-S0048` through `Progression_Gates-S0051` are explicitly dispositioned; `PG-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Progression_Gates.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+L00003427	
+L00003428	## Ledger Compile Addendum - pldg-20260614-002
+L00003429	
+L00003430	### PG-058 - Coverage Owner Definition Records
+L00003431	
+L00003432	```yaml
+L00003433	plan_unit_id: PG-058
+L00003434	unit_type: requirement
+L00003435	status: accepted
+L00003436	owner_doc: Plans/Progression_Gates.md
+L00003437	canonical_text: >-
+L00003438	  Coverage blockers `cov-034`, `cov-511`, and `cov-526` require owner-definition records before
+L00003439	  progression gates can mark them complete. Each owner-definition record carries coverage_id, owner
+L00003440	  doc/section, responsible domain, required validation/evidence, dependency/risk linkage, pass/fail
+L00003441	  criteria, affected PlanUnits or gates, escalation path, and retirement conditions. Gate checks must
+L00003442	  also flag live canonical terms such as `future scope`, `future-scope`, `reserved anchors`, and
+L00003443	  `deliberately not designed yet` as plan-readiness drift unless the terms appear only in preserved
+L00003444	  source-lineage or stale/retired-token fields.
+L00003445	gui_related: false
+L00003446	gui_classification_reason: Progression coverage owner-definition records and gate checks are governance/validation contracts, not visual presentation.
+L00003447	depends_on: [PG-057]
+L00003448	unblocks: []
+L00003449	acceptance_criteria:
+L00003450	  - "`cov-034`, `cov-511`, and `cov-526` cannot pass without owner-definition records."
+L00003451	  - Owner-definition records include owner doc/section, responsible domain, validation/evidence, dependency/risk linkage, pass/fail criteria, affected PlanUnits or gates, escalation path, and retirement conditions.
+L00003452	  - Future-scope placeholder language is gate-visible drift unless quarantined as source-lineage or stale/retired text.
+L00003453	validation_surfaces:
+L00003454	  - python3 scripts/pm-plan-index.py validate
+L00003455	  - PlanUnit-aware readiness scan of live canonical_text and acceptance_criteria outside PG-058's own placeholder-ban definition for "future scope|future-scope|reserved anchors|deliberately not designed yet", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.
+L00003456	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+L00003457	risk_class: progression_owner_definition_gap
+L00003458	reasoning_tier: high
+L00003459	context_scope: progression_coverage_owner_records
+L00003460	implementation_surfaces: [Plans/Progression_Gates.md]
+L00003461	node_compile_hint: {mode: coverage_owner_definition_records, create_worknodes: false}
+L00003462	source_lineage:
+L00003463	  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
+L00003464	  - pldg-20260614-002-part-3-fable-cleanup:atom-0114
+L00003465	  - pldg-20260614-002-part-3-fable-cleanup:atom-0115
+L00003466	  - pldg-20260614-002-part-3-fable-cleanup:atom-0116
+L00003467	preserved_exact_tokens: ["cov-034/cov-511/cov-526", "cov-034", "cov-511", "cov-526", "owner-definition gaps until resolved", "Nothing in the plans is future scope at all.", "future scope", "future-scope", "reserved anchors", "deliberately not designed yet"]
+L00003468	negative_constraints:
+L00003469	  - Do not mark `cov-034`, `cov-511`, or `cov-526` complete without owner-definition records.
+L00003470	  - Do not leave future-scope placeholder language as live canonical plan truth.
+L00003471	owner_hints: [Plans/Progression_Gates.md]
+L00003472	```
+L00003473	
+L00003474	
+L00003475	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00003476	
+L00003477	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00003478	
+L00003479	### PG-059 - Zero-Incomplete And Planning Compile-Ready Gates
+L00003480	
+L00003481	```yaml
+L00003482	plan_unit_id: PG-059
+L00003483	unit_type: requirement
+L00003484	status: accepted
+L00003485	owner_doc: Plans/Progression_Gates.md
+L00003486	canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
+L00003487	  risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Planning is compile-ready only when all required topics are Ready or explicitly excluded, ledgers are synchronized, topic plans compiled and audited, invalidations resolved, final integration and final audit completed, testing requirements captured, project context current, source lineage complete, zero-incomplete gate passed, and immutable ApprovedPlanPack can be created.'
+L00003488	gui_related: false
+L00003489	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00003490	depends_on: []
+L00003491	unblocks: []
+L00003492	acceptance_criteria:
+L00003493	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00003494	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00003495	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00003496	validation_surfaces:
+L00003497	- python3 scripts/pm-plan-index.py validate
+L00003498	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00003499	risk_class: stale_or_forbidden_behavior
+L00003500	reasoning_tier: high
+L00003501	context_scope: ledger_to_plans_compile
+L00003502	implementation_surfaces:
+L00003503	- Plans/Progression_Gates.md
+L00003504	- Plans/Planning_Wizard.md
+L00003505	- Plans/Plan_Document_System.md
+L00003506	- Plans/Plan_To_Node_Compilation.md
+L00003507	- Plans/Executor_Protocol.md
+L00003508	- Plans/Automated_Testing_System.md
+L00003509	- Plans/Contracts_V0.md
+L00003510	- Plans/human-in-the-loop.md
+L00003511	node_compile_hint:
+L00003512	  mode: canonical_planunit_from_bootstrap_ledger
+L00003513	  create_worknodes: false
+L00003514	  create_nodeseeds: false
+L00003515	source_lineage:
+L00003516	- pldg-20260618-001-prd-planning-wizard:atom-0136
+L00003517	- pldg-20260618-001-prd-planning-wizard:atom-0137
+L00003518	- pldg-20260618-001-prd-planning-wizard:atom-0138
+L00003519	- pldg-20260618-001-prd-planning-wizard:atom-0139
+L00003520	- pldg-20260618-001-prd-planning-wizard:atom-0140
+L00003521	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+L00003522	source_atom_ids:
+L00003523	- atom-0136
+L00003524	- atom-0137
+L00003525	- atom-0138
+L00003526	- atom-0139
+L00003527	- atom-0140
+L00003528	decision_refs:
+L00003529	- dec-0027
+L00003530	- dec-0028
+L00003531	correction_refs:
+L00003532	- corr-0010
+L00003533	preserved_exact_tokens:
+L00003534	- zero
+L00003535	- stubs
+L00003536	- TODOs
+L00003537	- TBDs
+L00003538	- placeholders
+L00003539	- Planning Wizard approval
+L00003540	- Plan Compile certification
+L00003541	- WorkNode completion
+L00003542	- Goal completion
+L00003543	- context-aware
+L00003544	- user_approved_incomplete_item
+L00003545	- compile-ready
+L00003546	negative_constraints:
+L00003547	- No stubs or TODOs at all unless the user explicitly approves the exact item.
+L00003548	- Do not accept a broad 'allow TODOs' exception.
+L00003549	owner_hints:
+L00003550	- Plans/Planning_Wizard.md
+L00003551	- Plans/Plan_Document_System.md
+L00003552	- Plans/Progression_Gates.md
+L00003553	- Plans/Plan_To_Node_Compilation.md
+L00003554	- Plans/Executor_Protocol.md
+L00003555	- Plans/Automated_Testing_System.md
+L00003556	- Plans/Contracts_V0.md
+L00003557	- Plans/human-in-the-loop.md
+L00003558	```
+L00003559	
+L00003560	## Implementation Readiness Gate Addendum - 2026-07-05
+L00003561	
+L00003562	This addendum installs an implementation-buildability gate check. It validates readiness artifacts and disabled-state truthfulness only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance seal artifacts, or production build tasks.
+L00003563	
+L00003564	### PG-060 - Implementation Buildability Gate Verification
+L00003565	
+L00003566	```yaml
+L00003567	plan_unit_id: PG-060
+L00003568	unit_type: validation_rule
+L00003569	status: accepted
+L00003570	owner_doc: Plans/Progression_Gates.md
+L00003571	canonical_text: >-
+L00003572	  The standard governance gate stack includes `python3 scripts/pm-plans-verify.py validate-implementation-readiness`.
+L00003573	  That validator passes only when Plans/.implementation_readiness/readiness_blockers.jsonl,
+L00003574	  readiness_matrix.json, and buildability_gate_report.json are syntactically valid, current, complete for every required
+L00003575	  blocker family, and truthful about Planning Wizard disabled-state behavior. A passing implementation-readiness
+L00003576	  validator does not mean the product is buildable; it means the buildability gate report correctly says whether
+L00003577	  buildability_gate_passed is true or false. Progression gates must not treat source preservation, schema existence,
+L00003578	  wiring JSON existence, semantic closure, or other validators passing as implementation buildability proof. While the
+L00003579	  gate is blocked, Approve And Build remains disabled and the disabled reason lists currently open blocker families
+L00003580	  plus exact owner docs. PNC-019 appears as a hard disabled reason only while node_readiness.hard_disabled is true.
+L00003581	  The validator also fails if PNC-019 bootstrap authority is missing, ambiguous, overbroad, confused with ordinary
+L00003582	  product WorkNodes, or reported as runtime enablement before executable lifecycle certification exists.
+L00003583	gui_related: false
+L00003584	gui_classification_reason: Defines governance validation behavior rather than visual presentation.
+L00003585	depends_on: [PG-059, PWIZ-018, PDS-019, PNC-021, PNC-022]
+L00003586	unblocks: []
+L00003587	acceptance_criteria:
+L00003588	  - run-gates includes validate-implementation-readiness.
+L00003589	  - validate-implementation-readiness passes only when the blocker registry, matrix, and report are current and complete.
+L00003590	  - validate-implementation-readiness includes fixture checks for all blockers open, one blocker closed, all blockers closed with PNC-019 still blocked, and all blockers closed with PNC-019 unblocked.
+L00003591	  - validate-implementation-readiness fails when PNC-019 bootstrap authority is missing, ambiguous, overbroad, or grants ordinary product WorkNodes before executable lifecycle certification.
+L00003592	  - Validator pass is never interpreted as buildability_gate_passed=true.
+L00003593	  - Approve And Build disabled reasons include only currently open blocker families, exact owner docs, and PNC-019 only while node readiness is hard-disabled.
+L00003594	validation_surfaces:
+L00003595	  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+L00003596	  - python3 scripts/pm-plans-verify.py run-gates
+L00003597	  - python3 scripts/pm-implementation-readiness.py validate
+L00003598	  - python3 scripts/pm-implementation-readiness.py self-test
+L00003599	risk_class: governance_false_buildability
+L00003600	reasoning_tier: high
+L00003601	context_scope: standard_governance_gates
+L00003602	implementation_surfaces:
+L00003603	  - Plans/Progression_Gates.md
+L00003604	  - scripts/pm-plans-verify.py
+L00003605	  - scripts/pm-implementation-readiness.py
+L00003606	  - Plans/.implementation_readiness/buildability_gate_report.json
+L00003607	node_compile_hint:
+L00003608	  mode: implementation_buildability_gate_verification
+L00003609	  create_worknodes: false
+L00003610	  create_nodeseeds: false
+L00003611	source_lineage:
+L00003612	  - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
+L00003613	  - Plans/Planning_Wizard.md#PWIZ-018
+L00003614	  - Plans/Plan_To_Node_Compilation.md#PNC-021
+L00003615	  - Plans/Plan_To_Node_Compilation.md#PNC-022
+L00003616	preserved_exact_tokens:
+L00003617	  - "validate-implementation-readiness"
+L00003618	  - "validators passing"
+L00003619	  - "semantic closure"
+L00003620	  - "source-preservation"
+L00003621	  - "PNC-019"
+L00003622	  - "ordinary product WorkNodes"
+L00003623	negative_constraints:
+L00003624	  - Do not treat validators passing as enough.
+L00003625	  - Do not treat semantic closure as implementation buildability.
+L00003626	  - Do not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this gate.
+L00003627	owner_hints:
+L00003628	  - Plans/Progression_Gates.md
+L00003629	  - Plans/Planning_Wizard.md
+L00003630	  - Plans/Plan_Document_System.md
+L00003631	  - Plans/Plan_To_Node_Compilation.md
+L00003632	```
+L00003633	
+L00003634	## FABLE Gate Registry Repair Addendum - 2026-07-07
+L00003635	
+L00003636	This addendum closes the FABLE gate-registry portion of the GUI command/wiring repair. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime certification harnesses, generated governance artifacts, or production build tasks.
+L00003637	
+
+<<< CONTEXT_AFTER canonical_document_lines=3638-3649 >>>
+L00003638	### PG-061 - FABLE Gate Registry Tombstones And Manual Traceability Status
+L00003639	
+L00003640	```yaml
+L00003641	plan_unit_id: PG-061
+L00003642	unit_type: validation_rule
+L00003643	status: accepted
+L00003644	owner_doc: Plans/Progression_Gates.md
+L00003645	canonical_text: >-
+L00003646	  The FABLE gate-registry repair makes GATE-007 and GATE-008 explicit reserved tombstones, strengthens GATE-010
+L00003647	  to reject generic production wiring locations, fabricated command_applied events, and catalog namespace-root rows,
+L00003648	  and records GATE-011, GATE-012, and GATE-013 as manual-pending traceability gates with named owner docs until
+L00003649	  live generated-project validators exist. A successful run-gates result cannot be reported as PASS evidence for

@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6013-6024 >>>
+L00006013	- memory.gist.discarded
+L00006014	- settings.updated
+L00006015	- Assistant chat Gist Review panel
+L00006016	negative_constraints: []
+L00006017	preserved_contractrefs:
+L00006018	- 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
+L00006019	compatibility_only_notes: []
+L00006020	stale_retired_dispositions: []
+L00006021	owner_hints:
+L00006022	- Plans/UI_Command_Catalog.md
+L00006023	```
+L00006024	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6025-6421 >>>
+L00006025	### UCC-085 - Memory Maintenance Command Rows
+L00006026	
+L00006027	```yaml
+L00006028	plan_unit_id: UCC-085
+L00006029	unit_type: requirement
+L00006030	status: accepted
+L00006031	owner_doc: Plans/UI_Command_Catalog.md
+L00006032	canonical_text: Assistant memory maintenance commands rebuild lexical and semantic indexes, run verification and dedup sweeps, summarize monthly memory, and prune archives with project/month/policy payloads and lifecycle events.
+L00006033	gui_related: true
+L00006034	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00006035	split_recommended: false
+L00006036	depends_on:
+L00006037	- PDS-003
+L00006038	- PDS-004
+L00006039	- PDS-005
+L00006040	- PNC-001
+L00006041	unblocks: []
+L00006042	acceptance_criteria:
+L00006043	- UCC-085 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006044	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006045	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006046	validation_surfaces:
+L00006047	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006048	- python3 scripts/pm-plan-index.py validate
+L00006049	risk_class: ui_command_catalog_drift
+L00006050	reasoning_tier: standard
+L00006051	context_scope: ui_command_catalog_batch_190
+L00006052	implementation_surfaces:
+L00006053	- Plans/UI_Command_Catalog.md
+L00006054	node_compile_hint:
+L00006055	  mode: memory_maintenance_command_rows
+L00006056	  create_worknodes: false
+L00006057	source_lineage:
+L00006058	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0045
+L00006059	preserved_exact_tokens:
+L00006060	- cmd.chat.memory.rebuild_lexical_index
+L00006061	- cmd.chat.memory.rebuild_semantic_index
+L00006062	- cmd.chat.memory.verification_sweep
+L00006063	- cmd.chat.memory.dedup_sweep
+L00006064	- cmd.chat.memory.summarize_monthly
+L00006065	- cmd.chat.memory.prune_archive
+L00006066	- memory.index.lexical.rebuild.started
+L00006067	- memory.index.lexical.rebuild.completed
+L00006068	- memory.index.semantic.rebuild.started
+L00006069	- memory.index.semantic.rebuild.completed
+L00006070	- memory.verification_sweep.started
+L00006071	- memory.verification_sweep.completed
+L00006072	- memory.dedup_sweep.started
+L00006073	- memory.dedup_sweep.completed
+L00006074	- memory.monthly_summary.started
+L00006075	- memory.prune_archive.completed
+L00006076	negative_constraints: []
+L00006077	preserved_contractrefs:
+L00006078	- 'ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand'
+L00006079	compatibility_only_notes: []
+L00006080	stale_retired_dispositions: []
+L00006081	owner_hints:
+L00006082	- Plans/UI_Command_Catalog.md
+L00006083	```
+L00006084	
+L00006085	### UCC-086 - Artifact Side Panel Navigation Commands
+L00006086	
+L00006087	```yaml
+L00006088	plan_unit_id: UCC-086
+L00006089	unit_type: requirement
+L00006090	status: accepted
+L00006091	owner_doc: Plans/UI_Command_Catalog.md
+L00006092	canonical_text: Artifact side-panel navigation commands show artifacts in Usage or Ledger with project, route_target, open_subject, artifact/usage/ledger/run/thread refs, and shared route/open identity.
+L00006093	gui_related: true
+L00006094	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00006095	split_recommended: false
+L00006096	depends_on:
+L00006097	- PDS-003
+L00006098	- PDS-004
+L00006099	- PDS-005
+L00006100	- PNC-001
+L00006101	unblocks: []
+L00006102	acceptance_criteria:
+L00006103	- UCC-086 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006104	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006105	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006106	validation_surfaces:
+L00006107	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006108	- python3 scripts/pm-plan-index.py validate
+L00006109	risk_class: ui_command_catalog_drift
+L00006110	reasoning_tier: standard
+L00006111	context_scope: ui_command_catalog_batch_190
+L00006112	implementation_surfaces:
+L00006113	- Plans/UI_Command_Catalog.md
+L00006114	node_compile_hint:
+L00006115	  mode: artifact_side_panel_navigation_commands
+L00006116	  create_worknodes: false
+L00006117	source_lineage:
+L00006118	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0046
+L00006119	preserved_exact_tokens:
+L00006120	- 2.8A Side-panel and artifacts navigation commands
+L00006121	- cmd.artifacts.show_in_usage
+L00006122	- cmd.artifacts.show_in_ledger
+L00006123	- project_id
+L00006124	- route_target
+L00006125	- open_subject
+L00006126	- artifact_id?
+L00006127	- usage_event_ref?
+L00006128	- ledger_ref?
+L00006129	- run_id?
+L00006130	- thread_id?
+L00006131	- artifact drill-through
+L00006132	- shared route/open identity
+L00006133	negative_constraints: []
+L00006134	preserved_contractrefs: []
+L00006135	compatibility_only_notes: []
+L00006136	stale_retired_dispositions: []
+L00006137	owner_hints:
+L00006138	- Plans/UI_Command_Catalog.md
+L00006139	```
+L00006140	
+L00006141	### UCC-087 - Search Panel Command Rows
+L00006142	
+L00006143	```yaml
+L00006144	plan_unit_id: UCC-087
+L00006145	unit_type: requirement
+L00006146	status: accepted
+L00006147	owner_doc: Plans/UI_Command_Catalog.md
+L00006148	canonical_text: Search panel commands reveal/focus Search, find/replace in files, open results through route_target, replace selected/all, rebuild indexes, and evict remote cache with project/query/session/subject/disposition payloads.
+L00006149	gui_related: true
+L00006150	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00006151	split_recommended: false
+L00006152	depends_on:
+L00006153	- PDS-003
+L00006154	- PDS-004
+L00006155	- PDS-005
+L00006156	- PNC-001
+L00006157	unblocks: []
+L00006158	acceptance_criteria:
+L00006159	- UCC-087 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006160	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006161	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006162	validation_surfaces:
+L00006163	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006164	- python3 scripts/pm-plan-index.py validate
+L00006165	risk_class: ui_command_catalog_drift
+L00006166	reasoning_tier: standard
+L00006167	context_scope: ui_command_catalog_batch_190
+L00006168	implementation_surfaces:
+L00006169	- Plans/UI_Command_Catalog.md
+L00006170	node_compile_hint:
+L00006171	  mode: search_panel_command_rows
+L00006172	  create_worknodes: false
+L00006173	source_lineage:
+L00006174	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0048
+L00006175	preserved_exact_tokens:
+L00006176	- cmd.search.show
+L00006177	- cmd.search.find_in_files
+L00006178	- cmd.search.replace_in_files
+L00006179	- cmd.search.open_result
+L00006180	- cmd.search.replace_selected
+L00006181	- cmd.search.replace_all
+L00006182	- cmd.search.rebuild_index
+L00006183	- cmd.search.evict_remote_cache
+L00006184	- query_session_id
+L00006185	- subject_id
+L00006186	- disposition?
+L00006187	- route_target
+L00006188	- remote_cache_id?
+L00006189	negative_constraints: []
+L00006190	preserved_contractrefs: []
+L00006191	compatibility_only_notes: []
+L00006192	stale_retired_dispositions: []
+L00006193	owner_hints:
+L00006194	- Plans/UI_Command_Catalog.md
+L00006195	```
+L00006196	
+L00006197	### UCC-088 - Search Routing Query Session Owner Policy
+L00006198	
+L00006199	```yaml
+L00006200	plan_unit_id: UCC-088
+L00006201	unit_type: requirement
+L00006202	status: accepted
+L00006203	owner_doc: Plans/UI_Command_Catalog.md
+L00006204	canonical_text: Search commands remain side-panel scoped, preserve run-aware search scope, query-session state, open disposition, replacement payload core, Search-owner snapshot validation, and Orchestrator search routing/action policy ownership.
+L00006205	gui_related: true
+L00006206	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00006207	split_recommended: false
+L00006208	depends_on:
+L00006209	- PDS-003
+L00006210	- PDS-004
+L00006211	- PDS-005
+L00006212	- PNC-001
+L00006213	unblocks: []
+L00006214	acceptance_criteria:
+L00006215	- UCC-088 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006216	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006217	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006218	validation_surfaces:
+L00006219	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006220	- python3 scripts/pm-plan-index.py validate
+L00006221	risk_class: ui_command_catalog_drift
+L00006222	reasoning_tier: standard
+L00006223	context_scope: ui_command_catalog_batch_190
+L00006224	implementation_surfaces:
+L00006225	- Plans/UI_Command_Catalog.md
+L00006226	node_compile_hint:
+L00006227	  mode: search_routing_query_session_owner_policy
+L00006228	  create_worknodes: false
+L00006229	source_lineage:
+L00006230	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0048
+L00006231	preserved_exact_tokens:
+L00006232	- Search command routing
+L00006233	- route_target
+L00006234	- side-panel scoped
+L00006235	- run-aware search scope
+L00006236	- query-session state
+L00006237	- open-disposition / reuse policy
+L00006238	- cmd.search.replace_all { query_session_id, replacement }
+L00006239	- project_id
+L00006240	- Plans/Orchestrator_Page.md#search-routing-and-action-policy
+L00006241	negative_constraints:
+L00006242	- Search replacement applies only after the Search owner validates the current result snapshot and mutation path.
+L00006243	preserved_contractrefs: []
+L00006244	compatibility_only_notes: []
+L00006245	stale_retired_dispositions: []
+L00006246	owner_hints:
+L00006247	- Plans/UI_Command_Catalog.md
+L00006248	```
+L00006249	
+L00006250	### UCC-089 - Runtime Recovery Namespace And Allowed Action Mapping
+L00006251	
+L00006252	```yaml
+L00006253	plan_unit_id: UCC-089
+L00006254	unit_type: requirement
+L00006255	status: accepted
+L00006256	owner_doc: Plans/UI_Command_Catalog.md
+L00006257	canonical_text: Runtime recovery uses the shared cmd.runtime.* namespace, treats legacy recovery namespaces as deprecated aliases, and maps allowed_action_id values to canonical runtime command IDs with minimum args including run, node, attempt, and blocked_sequence identity.
+L00006258	gui_related: false
+L00006259	gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+L00006260	split_recommended: false
+L00006261	depends_on:
+L00006262	- PDS-003
+L00006263	- PDS-004
+L00006264	- PDS-005
+L00006265	- PNC-001
+L00006266	unblocks: []
+L00006267	acceptance_criteria:
+L00006268	- UCC-089 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006269	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006270	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006271	validation_surfaces:
+L00006272	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006273	- python3 scripts/pm-plan-index.py validate
+L00006274	risk_class: ui_command_catalog_drift
+L00006275	reasoning_tier: standard
+L00006276	context_scope: ui_command_catalog_batch_190
+L00006277	implementation_surfaces:
+L00006278	- Plans/UI_Command_Catalog.md
+L00006279	node_compile_hint:
+L00006280	  mode: runtime_recovery_namespace_allowed_action_mapping
+L00006281	  create_worknodes: false
+L00006282	source_lineage:
+L00006283	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0049
+L00006284	preserved_exact_tokens:
+L00006285	- References
+L00006286	- cmd.runtime.*
+L00006287	- Legacy recovery command namespaces
+L00006288	- deprecated aliases
+L00006289	- allowed_action_id
+L00006290	- approve
+L00006291	- decline
+L00006292	- retry_now
+L00006293	- resume_after_prerequisite
+L00006294	- restore_safe_point_then_retry
+L00006295	- start_fresh_attempt
+L00006296	- replan
+L00006297	- skip_node
+L00006298	- abort_run
+L00006299	- open_details
+L00006300	- cmd.runtime.approve
+L00006301	- cmd.runtime.decline
+L00006302	- cmd.runtime.retry_now
+L00006303	- cmd.runtime.open_attempt_details
+L00006304	- blocked_sequence
+L00006305	negative_constraints: []
+L00006306	preserved_contractrefs: []
+L00006307	compatibility_only_notes:
+L00006308	- Legacy recovery command namespaces are deprecated aliases only.
+L00006309	stale_retired_dispositions:
+L00006310	- 'Canonical recovery commands use one shared namespace: cmd.runtime.*.'
+L00006311	owner_hints:
+L00006312	- Plans/UI_Command_Catalog.md
+L00006313	```
+L00006314	
+L00006315	### UCC-090 - Runtime Recovery Worktree Baseline Validation
+L00006316	
+L00006317	```yaml
+L00006318	plan_unit_id: UCC-090
+L00006319	unit_type: requirement
+L00006320	status: accepted
+L00006321	owner_doc: Plans/UI_Command_Catalog.md
+L00006322	canonical_text: SCM-targeted retry and fresh-attempt recovery commands support the same worktree reuse policy as restore; baseline_target is the closed safe_point/historical_commit/worktree_head enum and runtime dispatch must validate repo, worktree, and baseline exactly.
+L00006323	gui_related: false
+L00006324	gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+L00006325	split_recommended: false
+L00006326	depends_on:
+L00006327	- PDS-003
+L00006328	- PDS-004
+L00006329	- PDS-005
+L00006330	- PNC-001
+L00006331	unblocks: []
+L00006332	acceptance_criteria:
+L00006333	- UCC-090 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006334	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006335	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006336	validation_surfaces:
+L00006337	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006338	- python3 scripts/pm-plan-index.py validate
+L00006339	risk_class: ui_command_catalog_drift
+L00006340	reasoning_tier: standard
+L00006341	context_scope: ui_command_catalog_batch_190
+L00006342	implementation_surfaces:
+L00006343	- Plans/UI_Command_Catalog.md
+L00006344	node_compile_hint:
+L00006345	  mode: runtime_recovery_worktree_baseline_validation
+L00006346	  create_worknodes: false
+L00006347	source_lineage:
+L00006348	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0049
+L00006349	preserved_exact_tokens:
+L00006350	- SCM-targeted retry
+L00006351	- /fresh-attempt
+L00006352	- worktree reuse policy
+L00006353	- restore
+L00006354	- baseline_target
+L00006355	- safe_point | historical_commit | worktree_head
+L00006356	- repo_id
+L00006357	- worktree_id
+L00006358	- worktree
+L00006359	- baseline
+L00006360	negative_constraints:
+L00006361	- Runtime dispatch must reject recovery commands rather than silently substitute another worktree or baseline.
+L00006362	preserved_contractrefs: []
+L00006363	compatibility_only_notes: []
+L00006364	stale_retired_dispositions: []
+L00006365	owner_hints:
+L00006366	- Plans/UI_Command_Catalog.md
+L00006367	```
+L00006368	
+L00006369	### UCC-091 - Runtime Navigation Route Identity Commands
+L00006370	
+L00006371	```yaml
+L00006372	plan_unit_id: UCC-091
+L00006373	unit_type: requirement
+L00006374	status: accepted
+L00006375	owner_doc: Plans/UI_Command_Catalog.md
+L00006376	canonical_text: The runtime navigation commands `cmd.runtime.open_queue_analysis`, `cmd.runtime.open_remediation_lineage`, and `cmd.runtime.open_safe_point_history` are registered route identity examples owned by the catalog and shared route contract, with payloads `{ run_id, scheduler_pass_id }`, `{ run_id, remediation_root_id }`, and `{ run_id, safe_point_id? }`; they must not be treated as local graph shortcuts with implied unregistered route identities.
+L00006377	gui_related: false
+L00006378	gui_classification_reason: Span preserves route identity registration and command payload ownership, not GUI layout or visual presentation.
+L00006379	split_recommended: false
+L00006380	depends_on:
+L00006381	- PDS-003
+L00006382	- PDS-004
+L00006383	- PDS-005
+L00006384	- PNC-001
+L00006385	unblocks: []
+L00006386	acceptance_criteria:
+L00006387	- UCC-091 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00006388	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00006389	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006390	validation_surfaces:
+L00006391	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006392	- python3 scripts/pm-plan-index.py validate
+L00006393	risk_class: ui_command_catalog_drift
+L00006394	reasoning_tier: standard
+L00006395	context_scope: ui_command_catalog_batch_191
+L00006396	implementation_surfaces:
+L00006397	- Plans/UI_Command_Catalog.md
+L00006398	node_compile_hint:
+L00006399	  mode: runtime_navigation_route_identity_commands
+L00006400	  create_worknodes: false
+L00006401	source_lineage:
+L00006402	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0050
+L00006403	preserved_exact_tokens:
+L00006404	- Navigation commands
+L00006405	- cmd.runtime.open_queue_analysis
+L00006406	- cmd.runtime.open_remediation_lineage
+L00006407	- cmd.runtime.open_safe_point_history
+L00006408	- '{ run_id, scheduler_pass_id }'
+L00006409	- '{ run_id, remediation_root_id }'
+L00006410	- '{ run_id, safe_point_id? }'
+L00006411	- local graph shortcuts
+L00006412	- route identities are implied but unregistered
+L00006413	negative_constraints:
+L00006414	- Runtime navigation commands must not be treated as local graph shortcuts whose route identities are implied but unregistered.
+L00006415	preserved_contractrefs: []
+L00006416	compatibility_only_notes: []
+L00006417	stale_retired_dispositions: []
+L00006418	owner_hints:
+L00006419	- Plans/UI_Command_Catalog.md
+L00006420	```
+L00006421	
+
+<<< CONTEXT_AFTER canonical_document_lines=6422-6433 >>>
+L00006422	### UCC-092 - Pre Attempt Blocked Sequence Identity
+L00006423	
+L00006424	```yaml
+L00006425	plan_unit_id: UCC-092
+L00006426	unit_type: requirement
+L00006427	status: accepted
+L00006428	owner_doc: Plans/UI_Command_Catalog.md
+L00006429	canonical_text: When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and recovery handling MUST NOT fabricate an `attempt_id`.
+L00006430	gui_related: false
+L00006431	gui_classification_reason: Span preserves runtime blocked-episode identity and scheduler contract behavior, not GUI layout or visual presentation.
+L00006432	split_recommended: false
+L00006433	depends_on:

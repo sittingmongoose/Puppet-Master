@@ -1,0 +1,382 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-367 >>>
+L00000001	# PRD Builder
+L00000002	
+L00000003	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document is compiled from bootstrap ledger `pldg-20260618-001-prd-planning-wizard`; the ledger remains source-lineage memory, while this live Plan doc is canonical after compilation.
+L00000004	
+L00000005	> **PlanProfile:** New Plan Authoring Profile
+L00000006	
+L00000007	## 0. Scope
+L00000008	
+L00000009	PRD Builder is the finished-product planning-intake workspace that creates, normalizes, reviews, versions, and approves PRD Packs before Planning Wizard work begins. It supports conversation-first, import-first, and hybrid requirements capture while preserving exact source lineage, source manifests, conflicts, annotations, readiness, and immutable approval snapshots.
+L00000010	
+L00000011	
+L00000012	## 1. Ownership And Consumers
+L00000013	
+L00000014	PRD Builder owns intake-depth product intent, source ingestion, PRD projection, Approved PRD Pack creation, PRD annotations, and the explicit `Approve PRD for Planning Wizard` handoff. It consumes Assistant Chat, Planning Ledger, Plan Document System, FileSafe, Project Output Artifacts, Contracts, Final GUI, and UI Command contracts without owning implementation planning, Plan Compile, Executor provisioning, WorkNodes, or Orchestrator runtime execution.
+L00000015	
+L00000016	PRD Builder may self-initiate web/search/fetch/extract/research/deep-research/crawl/map (`websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`) and Site Reader/browser evidence through the shared PM WebOperation/BrowserAction dispatcher when current external facts, docs, issues, PRs, URLs, visual/dynamic pages, competitive comparison, site topology, bounded source traversal, or source authority materially changes product intent. The resulting read receipts, extract receipts, citations, browser artifacts, source-selection reasons, closure states, and failure states are PRD source evidence only; they may flow into PRD ledger records, source manifests, annotations, readiness warnings, and Approved PRD Pack source refs, but they do not create WorkNodes, NodeSeeds, executable queues, runtime code, implementation files, production build tasks, or Plan Compile authority.
+L00000017	
+L00000018	### GUI command repair note (2026-07-02)
+L00000019	
+L00000020	The production PRD Builder final action dispatches `cmd.prd_builder.approve_for_planning_wizard`; it is not `Approve & Continue`. The command creates the immutable Approved PRD Pack handoff snapshot, carries PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, authority/currentness refs, and an idempotency key, and is disabled when blocking conflicts, stale source anchors, missing required sections, or ledger sync failure prevent a safe handoff. PMConcept `Approve & Continue` labels are source-lineage only and must be replaced by `Approve PRD for Planning Wizard` in production surfaces.
+L00000021	
+L00000022	
+L00000023	## 2. Canonical PlanUnits
+L00000024	
+L00000025	
+L00000026	### PRDB-001 - PRD Builder Naming, Scope, And Product Boundary
+L00000027	
+L00000028	
+L00000029	```yaml
+L00000030	plan_unit_id: PRDB-001
+L00000031	unit_type: requirement
+L00000032	status: accepted
+L00000033	owner_doc: Plans/PRD_Builder.md
+L00000034	canonical_text: 'The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. Requirements documents means arbitrary user-provided source documents; it is not the feature name and may include PRDs, notes, specifications, tickets, diagrams, and poorly formatted source material. PRD Builder captures and normalizes planning-intake product intent; Planning Wizard consumes an approved PRD Pack or normalized requirements input and resolves implementation-ready planning. Plans/bootstrap and Codex ledger-transfer workflows are development tooling for building Puppet Master and must remain distinct from the finished PRD Builder, Planning Wizard, Plan Compile, WorkNode, and Orchestrator runtime. Superseded legacy planning-pipeline experiments are not an authority, dependency, implementation pattern, or product reference for this redesign; use Goal Runtime,
+L00000035	  the current v2 ledger, standardized Plan docs, current Auditor loop, and current Plan Compile contracts.'
+L00000036	gui_related: true
+L00000037	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000038	depends_on: []
+L00000039	unblocks: []
+L00000040	acceptance_criteria:
+L00000041	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000042	- "`cmd.prd_builder.approve_for_planning_wizard` carries PRD Pack id/version/hash, source manifest hash, approval actor, currentness refs, idempotency key, projected availability, disabled reason, and a handoff receipt without emitting fabricated command_applied events."
+L00000043	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000044	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000045	validation_surfaces:
+L00000046	- python3 scripts/pm-plan-index.py validate
+L00000047	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000048	risk_class: stale_or_forbidden_behavior
+L00000049	reasoning_tier: high
+L00000050	context_scope: ledger_to_plans_compile
+L00000051	implementation_surfaces:
+L00000052	- Plans/PRD_Builder.md
+L00000053	- Plans/FinalGUISpec.md
+L00000054	- Plans/00-plans-index.md
+L00000055	- Plans/Planning_Wizard.md
+L00000056	- Plans/bootstrap/Bootstrap_Planning_Workflow.md
+L00000057	- Plans/Goal_Runtime_System.md
+L00000058	node_compile_hint:
+L00000059	  mode: canonical_planunit_from_bootstrap_ledger
+L00000060	  create_worknodes: false
+L00000061	  create_nodeseeds: false
+L00000062	source_lineage:
+L00000063	- pldg-20260618-001-prd-planning-wizard:atom-0001
+L00000064	- pldg-20260618-001-prd-planning-wizard:atom-0003
+L00000065	- pldg-20260618-001-prd-planning-wizard:atom-0004
+L00000066	- pldg-20260618-001-prd-planning-wizard:atom-0005
+L00000067	- pldg-20260618-001-prd-planning-wizard:atom-0006
+L00000068	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+L00000069	source_atom_ids:
+L00000070	- atom-0001
+L00000071	- atom-0003
+L00000072	- atom-0004
+L00000073	- atom-0005
+L00000074	- atom-0006
+L00000075	decision_refs:
+L00000076	- dec-0001
+L00000077	- dec-0002
+L00000078	correction_refs:
+L00000079	- corr-0001
+L00000080	- corr-0003
+L00000081	- corr-0009
+L00000082	preserved_exact_tokens:
+L00000083	- PRD Builder
+L00000084	- Requirements Doc Builder
+L00000085	- requirements documents
+L00000086	- source documents
+L00000087	- planning-intake
+L00000088	- Approved PRD Pack
+L00000089	- implementation-ready planning
+L00000090	- bootstrap workflow
+L00000091	- finished product
+L00000092	- Goal Runtime
+L00000093	- v2 ledger
+L00000094	- Auditor
+L00000095	negative_constraints:
+L00000096	- Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.
+L00000097	- Do not collapse PRD Builder and Planning Wizard into one indistinguishable interview.
+L00000098	- Do not expose bootstrap/Codex workflow artifacts as ordinary product UX or runtime contracts.
+L00000099	- Do not cite, restore, copy, or depend on superseded experimental planning-pipeline stages in canonical product Plans.
+L00000100	owner_hints:
+L00000101	- Plans/PRD_Builder.md
+L00000102	- Plans/FinalGUISpec.md
+L00000103	- Plans/00-plans-index.md
+L00000104	- Plans/Planning_Wizard.md
+L00000105	- Plans/bootstrap/Bootstrap_Planning_Workflow.md
+L00000106	- Plans/Goal_Runtime_System.md
+L00000107	```
+L00000108	
+L00000109	
+L00000110	### PRDB-002 - Conversation, Import, And Hybrid PRD Creation
+L00000111	
+L00000112	
+L00000113	```yaml
+L00000114	plan_unit_id: PRDB-002
+L00000115	unit_type: requirement
+L00000116	status: accepted
+L00000117	owner_doc: Plans/PRD_Builder.md
+L00000118	canonical_text: 'A user with no source documents can start in PRD Builder chat; the agent asks discovery questions, updates the PRD ledger every turn, and continuously renders the PRD projection. A user can upload existing requirements material and have PRD Builder preserve, parse, extract, reconcile, and normalize it into the standard PRD and PRD Pack. Uploads and conversation may be combined at any time in one PRD Builder workspace so users can clarify, correct, extend, override, and source newly introduced requirements without restarting.'
+L00000119	gui_related: true
+L00000120	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000121	depends_on: []
+L00000122	unblocks: []
+L00000123	acceptance_criteria:
+L00000124	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000125	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000126	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000127	validation_surfaces:
+L00000128	- python3 scripts/pm-plan-index.py validate
+L00000129	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000130	risk_class: owner_drift
+L00000131	reasoning_tier: standard
+L00000132	context_scope: ledger_to_plans_compile
+L00000133	implementation_surfaces:
+L00000134	- Plans/PRD_Builder.md
+L00000135	- Plans/FinalGUISpec.md
+L00000136	- Plans/assistant-chat-design.md
+L00000137	node_compile_hint:
+L00000138	  mode: canonical_planunit_from_bootstrap_ledger
+L00000139	  create_worknodes: false
+L00000140	  create_nodeseeds: false
+L00000141	source_lineage:
+L00000142	- pldg-20260618-001-prd-planning-wizard:atom-0017
+L00000143	- pldg-20260618-001-prd-planning-wizard:atom-0018
+L00000144	- pldg-20260618-001-prd-planning-wizard:atom-0019
+L00000145	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00000146	source_atom_ids:
+L00000147	- atom-0017
+L00000148	- atom-0018
+L00000149	- atom-0019
+L00000150	decision_refs:
+L00000151	- dec-0006
+L00000152	correction_refs: []
+L00000153	preserved_exact_tokens:
+L00000154	- conversation-first
+L00000155	- import-first
+L00000156	- normalize
+L00000157	- hybrid
+L00000158	- uploads and conversation
+L00000159	negative_constraints:
+L00000160	- Do not force users to choose permanently between upload and chat.
+L00000161	owner_hints:
+L00000162	- Plans/PRD_Builder.md
+L00000163	- Plans/FinalGUISpec.md
+L00000164	- Plans/assistant-chat-design.md
+L00000165	```
+L00000166	
+L00000167	
+L00000168	### PRDB-003 - Discovery Questions And Planning-Intake Boundary
+L00000169	
+L00000170	
+L00000171	```yaml
+L00000172	plan_unit_id: PRDB-003
+L00000173	unit_type: requirement
+L00000174	status: accepted
+L00000175	owner_doc: Plans/PRD_Builder.md
+L00000176	canonical_text: 'PRD Builder proactively asks enough targeted discovery questions to make product intent complete and testable, including problem, users, goals, scope, non-goals, constraints, success, source authority, risks, assumptions, and uncertainty. Ask questions in digestible batches, use existing ledger answers before asking, avoid repetition, and prefer questions whose answers materially change the PRD. PRD Builder captures what, why, who, scope, constraints, acceptance expectations, risks, assumptions, dependencies, and open questions without pretending to produce implementation-ready plans.'
+L00000177	gui_related: true
+L00000178	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000179	depends_on: []
+L00000180	unblocks: []
+L00000181	acceptance_criteria:
+L00000182	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000183	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000184	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000185	validation_surfaces:
+L00000186	- python3 scripts/pm-plan-index.py validate
+L00000187	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000188	risk_class: owner_drift
+L00000189	reasoning_tier: standard
+L00000190	context_scope: ledger_to_plans_compile
+L00000191	implementation_surfaces:
+L00000192	- Plans/PRD_Builder.md
+L00000193	- Plans/assistant-chat-design.md
+L00000194	- Plans/Plan_To_Node_Compilation.md
+L00000195	node_compile_hint:
+L00000196	  mode: canonical_planunit_from_bootstrap_ledger
+L00000197	  create_worknodes: false
+L00000198	  create_nodeseeds: false
+L00000199	source_lineage:
+L00000200	- pldg-20260618-001-prd-planning-wizard:atom-0020
+L00000201	- pldg-20260618-001-prd-planning-wizard:atom-0021
+L00000202	- pldg-20260618-001-prd-planning-wizard:atom-0022
+L00000203	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00000204	source_atom_ids:
+L00000205	- atom-0020
+L00000206	- atom-0021
+L00000207	- atom-0022
+L00000208	decision_refs:
+L00000209	- dec-0007
+L00000210	correction_refs: []
+L00000211	preserved_exact_tokens:
+L00000212	- targeted discovery questions
+L00000213	- digestible batches
+L00000214	- gap-driven
+L00000215	- planning-intake PRD
+L00000216	negative_constraints:
+L00000217	- Do not re-ask answered questions or overwhelm the user with one giant questionnaire.
+L00000218	- Do not create WorkNodes, implementation sequences, file-edit plans, final architecture contracts, or execution graphs in PRD Builder.
+L00000219	owner_hints:
+L00000220	- Plans/PRD_Builder.md
+L00000221	- Plans/assistant-chat-design.md
+L00000222	- Plans/Plan_To_Node_Compilation.md
+L00000223	```
+L00000224	
+L00000225	
+L00000226	### PRDB-004 - PRD Ledger, Projection, Structure, And Stable IDs
+L00000227	
+L00000228	
+L00000229	```yaml
+L00000230	plan_unit_id: PRDB-004
+L00000231	unit_type: requirement
+L00000232	status: accepted
+L00000233	owner_doc: Plans/PRD_Builder.md
+L00000234	canonical_text: 'Every substantive PRD Builder exchange must append an event and update affected PRD atoms, decisions, assumptions, constraints, questions, conflicts, annotations, projections, and handoff state before the turn is complete. The durable PRD ledger is working memory and source lineage; the visible PRD is a versioned human-readable projection of accepted ledger atoms and must not become the only source of truth. The primary PRD contains Summary, Problem or Opportunity, Goals, Users or Actors, Scope, Non-Goals, Functional Requirements, Non-Functional Requirements, UX Expectations, Data or Integration or Environment Constraints, Acceptance Criteria, Assumptions, Risks and Dependencies, Open Questions, and Source Notes. Material functional requirements and acceptance criteria receive stable identifiers such as FR-001 and AC-001, with stable internal atom IDs and source lineage.'
+L00000235	gui_related: true
+L00000236	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000237	depends_on: []
+L00000238	unblocks: []
+L00000239	acceptance_criteria:
+L00000240	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000241	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000242	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000243	validation_surfaces:
+L00000244	- python3 scripts/pm-plan-index.py validate
+L00000245	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000246	risk_class: owner_drift
+L00000247	reasoning_tier: standard
+L00000248	context_scope: ledger_to_plans_compile
+L00000249	implementation_surfaces:
+L00000250	- Plans/PRD_Builder.md
+L00000251	- Plans/Planning_Ledger_System.md
+L00000252	- Plans/assistant-chat-design.md
+L00000253	- Plans/Plan_Document_System.md
+L00000254	node_compile_hint:
+L00000255	  mode: canonical_planunit_from_bootstrap_ledger
+L00000256	  create_worknodes: false
+L00000257	  create_nodeseeds: false
+L00000258	source_lineage:
+L00000259	- pldg-20260618-001-prd-planning-wizard:atom-0010
+L00000260	- pldg-20260618-001-prd-planning-wizard:atom-0023
+L00000261	- pldg-20260618-001-prd-planning-wizard:atom-0024
+L00000262	- pldg-20260618-001-prd-planning-wizard:atom-0025
+L00000263	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00000264	source_atom_ids:
+L00000265	- atom-0010
+L00000266	- atom-0023
+L00000267	- atom-0024
+L00000268	- atom-0025
+L00000269	decision_refs:
+L00000270	- dec-0004
+L00000271	- dec-0008
+L00000272	correction_refs:
+L00000273	- corr-0004
+L00000274	preserved_exact_tokens:
+L00000275	- after every substantive turn
+L00000276	- ledger_sync_blocked
+L00000277	- PRD ledger
+L00000278	- projection
+L00000279	- Functional Requirements
+L00000280	- Non-Functional Requirements
+L00000281	- Acceptance Criteria
+L00000282	- Open Questions
+L00000283	- Source Notes
+L00000284	- FR-001
+L00000285	- AC-001
+L00000286	negative_constraints:
+L00000287	- Do not defer ledger reconstruction until the end of the conversation.
+L00000288	owner_hints:
+L00000289	- Plans/PRD_Builder.md
+L00000290	- Plans/Planning_Ledger_System.md
+L00000291	- Plans/assistant-chat-design.md
+L00000292	- Plans/Plan_Document_System.md
+L00000293	```
+L00000294	
+L00000295	
+L00000296	### PRDB-005 - PRD Pack, Approval, Versioning, And Readiness
+L00000297	
+L00000298	
+L00000299	```yaml
+L00000300	plan_unit_id: PRDB-005
+L00000301	unit_type: requirement
+L00000302	status: accepted
+L00000303	owner_doc: Plans/PRD_Builder.md
+L00000304	canonical_text: 'The default workspace emphasizes one primary PRD while exposing supporting assumptions and constraints, open questions, source traceability, and quality/readiness views without making users manage many equal documents. Approval creates an immutable, versioned Approved PRD Pack containing the primary PRD, accepted PRD-ledger snapshot, source manifest, traceability, assumptions and constraints, open questions, quality report, approval receipt, hashes, and version identity. The PRD Builder final action is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning Wizard consumes a specific approved version rather than mutable editor state. Edits after approval create a new draft based on the approved version and require a new approval event; previous Approved PRD Packs remain immutable and addressable. PRD Builder exposes Ready, Ready with Warnings, and Blocked based on source extraction,
+L00000305	  required sections, blocking conflicts, annotations, quality findings, and approval-snapshot ability; accepted warnings carry into Planning Wizard.'
+L00000306	gui_related: true
+L00000307	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000308	depends_on: []
+L00000309	unblocks: []
+L00000310	acceptance_criteria:
+L00000311	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000312	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000313	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000314	validation_surfaces:
+L00000315	- python3 scripts/pm-plan-index.py validate
+L00000316	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000317	risk_class: owner_drift
+L00000318	reasoning_tier: high
+L00000319	context_scope: ledger_to_plans_compile
+L00000320	implementation_surfaces:
+L00000321	- Plans/PRD_Builder.md
+L00000322	- Plans/FinalGUISpec.md
+L00000323	- Plans/Contracts_V0.md
+L00000324	- Plans/Project_Output_Artifacts.md
+L00000325	- Plans/UI_Command_Catalog.md
+L00000326	node_compile_hint:
+L00000327	  mode: canonical_planunit_from_bootstrap_ledger
+L00000328	  create_worknodes: false
+L00000329	  create_nodeseeds: false
+L00000330	source_lineage:
+L00000331	- pldg-20260618-001-prd-planning-wizard:atom-0026
+L00000332	- pldg-20260618-001-prd-planning-wizard:atom-0027
+L00000333	- pldg-20260618-001-prd-planning-wizard:atom-0028
+L00000334	- pldg-20260618-001-prd-planning-wizard:atom-0029
+L00000335	- pldg-20260618-001-prd-planning-wizard:atom-0038
+L00000336	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00000337	source_atom_ids:
+L00000338	- atom-0026
+L00000339	- atom-0027
+L00000340	- atom-0028
+L00000341	- atom-0029
+L00000342	- atom-0038
+L00000343	decision_refs:
+L00000344	- dec-0002
+L00000345	- dec-0008
+L00000346	correction_refs: []
+L00000347	preserved_exact_tokens:
+L00000348	- primary PRD
+L00000349	- supporting artifacts
+L00000350	- Approved PRD Pack
+L00000351	- immutable
+L00000352	- versioned
+L00000353	- Approve PRD for Planning Wizard
+L00000354	- successor version
+L00000355	- Ready
+L00000356	- Ready with Warnings
+L00000357	- Blocked
+L00000358	negative_constraints: []
+L00000359	owner_hints:
+L00000360	- Plans/PRD_Builder.md
+L00000361	- Plans/FinalGUISpec.md
+L00000362	- Plans/Contracts_V0.md
+L00000363	- Plans/Project_Output_Artifacts.md
+L00000364	- Plans/UI_Command_Catalog.md
+L00000365	```
+L00000366	
+L00000367	
+
+<<< CONTEXT_AFTER canonical_document_lines=368-379 >>>
+L00000368	### PRDB-006 - Source Ingestion, Sharding, And Parallel Extraction
+L00000369	
+L00000370	
+L00000371	```yaml
+L00000372	plan_unit_id: PRDB-006
+L00000373	unit_type: requirement
+L00000374	status: accepted
+L00000375	owner_doc: Plans/PRD_Builder.md
+L00000376	canonical_text: 'PRD Builder preserves original uploaded artifacts byte-for-byte with stable source IDs, hashes, MIME/type metadata, and extraction status before semantic processing. Create deterministic text, heading, page, table, image, and offset projections plus a source manifest recording coverage, extraction warnings, skipped content, and parser versions. Large documents must be divided into bounded, source-addressable slices that preserve page, heading, paragraph, table, image, and offset lineage so agents never need to ingest the entire corpus at once. When source size or diversity exceeds bounded thresholds, the controller must launch many read-only extraction subagents in parallel, record assignment and result receipts, and reject completion if required parallel work was skipped. Each intake subagent emits bounded candidate requirement atoms, source spans, confidence, ambiguity, conflicts, duplicates, and extraction warnings;
+L00000377	  only the controller or assigned owner may reduce and write the canonical PRD ledger and draft.'
+L00000378	gui_related: false
+L00000379	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.

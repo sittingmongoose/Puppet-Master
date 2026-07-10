@@ -1,0 +1,413 @@
+<<< CONTEXT_BEFORE 7560-7571 >>>
+negative_constraints:
+- Delegated work and memory loops do not create hidden orchestrator memory beyond owner boundaries.
+- Task/run/subagent scope must not collapse into FIFO chat ordering.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 7572-7955 >>>
+### OSI-022 - Provider And Permission Event Projection
+
+```yaml
+plan_unit_id: OSI-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: 'Provider and permission boundaries stay explicit: A2A references are adapter-only, and permission consumers
+  project blocked reason, safe point, event family, /event/usage, policy-visible role routing, UI_Command_Catalog route meaning,
+  and MUST VERIFY inspection requirements through shared runtime events.'
+gui_related: true
+gui_classification_reason: This unit includes UI_Command_Catalog route meaning and permission projection visible to UI/runtime
+  consumers.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_and_permission_event_projection
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: provider_permission_event_projection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- Provider_Stream_Mapping_External_Reference_A2A.md
+- adapter references only
+- /account/trust metadata
+- Permissions_System.md
+- blocked-reason
+- safe-point
+- event-family
+- /event/usage
+- UI_Command_Catalog
+- MUST VERIFY
+- VERIFY
+negative_constraints:
+- Hard-wires to tier scope are non-canonical when they drop /account/trust metadata.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-023 - Packet Emission Fidelity Gate
+
+```yaml
+plan_unit_id: OSI-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Packet artifacts are useful preflight planning state but are not faithful-emission-safe until packet-planning
+  inputs remove contradictions in owner docs, target-level runtime fields, and graph scheduling records.
+gui_related: false
+gui_classification_reason: This unit covers packet emission fidelity gating, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: packet_emission_fidelity_gate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: packet_emission_fidelity_gate
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- Packet emission
+- target-level fidelity
+- packet-planning
+- preflight contract
+- downstream packet emission
+negative_constraints:
+- Packet-planning is not proof that downstream packet emission can proceed.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-024 - Owner Audit And Storage Gap Posture
+
+```yaml
+plan_unit_id: OSI-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: The six-pass owner-doc audit posture treats remaining issues as exact owner-doc structural mismatch and target-level
+  drift, coverage tails uniformly as Gemini + Opus + Sonnet, and storage receipt/activity gaps as under-transfer or anchor
+  failures until storage owner records the contract.
+gui_related: false
+gui_classification_reason: This unit covers audit posture and storage gap ownership, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_audit_and_storage_gap_posture
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: owner_audit_storage_gap_posture
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- six-pass owner-doc audit posture
+- Gemini + Opus + Sonnet
+- storage receipt
+- /activity
+- under-transfer
+- anchor failures
+- missing-content
+negative_constraints:
+- Storage receipt and /activity gaps are not total missing-content claims against this orchestrator doc.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-025 - Destructive Action Compatibility Vocabulary
+
+```yaml
+plan_unit_id: OSI-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: non_reversible is the canonical destructive action taxonomy for durable /live mutation; FinalGUISpec, page-spec,
+  detached_window, project-state, artifact_kind, task_id, and UI_Command_Catalog references are consumer or compatibility
+  vocabulary unless this section names the runtime owner.
+gui_related: true
+gui_classification_reason: This unit affects user-visible destructive action taxonomy and UI command consumers.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: destructive_action_compatibility_vocabulary
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: destructive_action_compatibility_vocabulary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- non_reversible
+- /live
+- /skills/files
+- FinalGUISpec.md
+- page-spec
+- detached_window
+- project-state
+- artifact_kind
+- task_id
+- UI_Command_Catalog.md
+negative_constraints: []
+compatibility_only_notes:
+- Listed GUI/page-spec terms are consumer or compatibility vocabulary unless the runtime owner is named.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-026 - Crew Coordination Identity Keys
+
+```yaml
+plan_unit_id: OSI-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: ActiveAgent, crew structs, and coordination payloads key first on run/thread/parent-child/node/attempt/package/seam/lane
+  identity; tier-keyed fields are compatibility labels only and must not outrank package/seam runtime identity.
+gui_related: false
+gui_classification_reason: This unit covers coordination payload identity, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: crew_coordination_identity_keys
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: crew_coordination_identity_keys
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- ActiveAgent
+- crew structs
+- run/thread/parent-child/node/attempt/package/seam/lane identity
+- tier-keyed
+- /package/seam
+negative_constraints:
+- tier-keyed fields must not become primary crew lookup keys.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-027 - Command Metadata And GUI Execution Policy
+
+```yaml
+plan_unit_id: OSI-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Orchestrator action metadata is command-owner bound to UI_Command_Catalog, including palette-visible, shortcut-worthy,
+  context-menu only, bulk-safe, and bulk-forbidden; GUI execution-policy settings explicitly choose retry identity and node
+  worker class.
+gui_related: true
+gui_classification_reason: This unit governs GUI command metadata, bulk mutation controls, and execution-policy settings.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: command_metadata_and_gui_execution_policy
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: command_metadata_gui_execution_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- command-owner
+- UI_Command_Catalog
+- palette-visible
+- shortcut-worthy
+- context-menu
+- bulk-safe
+- bulk-forbidden
+- GUI `execution-policy`
+- fresh agent/subagent
+- same-agent retries
+- full-agent override
+negative_constraints:
+- Bulk mutation remains disabled unless catalog and permission contracts both allow it.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+### OSI-028 - Tier View Projection Boundary
+
+```yaml
+plan_unit_id: OSI-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: tier_type, tier_id, title/description, and optional parent labels are projection-only grouping helpers and
+  never replace run/node/package/seam/attempt identity in runtime routing.
+gui_related: true
+gui_classification_reason: This unit affects UI grouping/projection labels for tier views.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tier_view_projection_boundary
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: tier_view_projection_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0009
+preserved_exact_tokens:
+- Tier `/view` identity
+- tier_type
+- tier_id
+- title/description
+- parent labels
+- projection-only
+- runtime routing
+negative_constraints:
+- Tier view labels never replace runtime routing identity.
+compatibility_only_notes:
+- tier_type and tier_id may help UI grouping only as projection labels.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/usage-feature.md'
+```
+
+
+<<< CONTEXT_AFTER 7956-7967 >>>
+### OSI-029 - Structured Attempt Handoff
+
+```yaml
+plan_unit_id: OSI-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Each failed node attempt emits a structured-attempt-handoff receipt describing what happened, what changed,
+  why it failed or was blocked, and what to try next; retries remain policy-driven and may route to remediation, graph patch,
+  worker replacement, or HITL.
+gui_related: false
+gui_classification_reason: This unit covers retry/remediation handoff records, not GUI behavior.

@@ -1,0 +1,363 @@
+<<< CONTEXT_BEFORE 2975-2986 >>>
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Each seam must leave explicit owner docs, consumer docs, unresolved risk if any, and implementation-ready acceptance guidance
+  before moving out of reconciliation.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 2987-3320 >>>
+### AI-045 - Native Workbench Service Bound Evidence
+
+```yaml
+plan_unit_id: AI-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Puppet Master keeps a PM-native Rust plus Slint service-bound workbench architecture, preserving benchmark/research
+  lineage for service boundaries, collaborative room constraints, degraded/indexing/remote/offline/requested-vs-effective
+  state visibility, and the anti-delegated-core rule from implementation-reference synthesis.
+gui_related: true
+gui_classification_reason: This unit covers native workbench product architecture and Slint shell/workbench UI constraints.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: native_workbench_service_bound_evidence
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: native_workbench_service_bound_evidence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+preserved_exact_tokens:
+- INV-022 -- Service-bound native workbench architecture
+- bench-01
+- bench-04
+- bench-09
+- bench-17
+- bench-21
+- bench-29
+- bench-32
+- bench-10
+- bench-30
+- Rust/Tauri
+- Slint shell/workbench UI
+- fleet-synthesis
+- research_summaries
+- implementation_ref_findings
+- implementation_ref_summaries
+- 32-target implementation-reference fleet
+- hidden delegated-backend ownership
+negative_constraints:
+- Puppet Master must avoid hidden delegated-backend ownership of core workbench state.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Thin-editor/wrapper and IDE-shell lessons are bounded implementation tactics inside PM-native Rust + Slint architecture,
+  not direct architecture foundations.
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+### AI-046 - UI Responsiveness And Background Service Projections
+
+```yaml
+plan_unit_id: AI-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Editor/view responsiveness stays separate from heavier file walking, git, indexing, remote RPC, PTY/runtime,
+  and provider services; Git/SCM subprocess work is never an editor or UI hot-path dependency, and editor/file surfaces consume
+  coalesced background projections with explicit revalidation before mutation.
+gui_related: true
+gui_classification_reason: This unit governs UI/editor responsiveness, source-control projections, and user-visible file/editor
+  surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_responsiveness_and_background_service_projections
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: ui_responsiveness_background_service_projections
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+preserved_exact_tokens:
+- Editor/view responsiveness
+- latency-sensitive
+- file walking
+- git
+- indexing
+- remote RPC
+- PTY/runtime
+- provider-dispatched services
+- background worker/proxy
+- Git/SCM subprocess
+- UI hot-path dependency
+- coalesce
+- budget
+- explicit revalidation
+negative_constraints:
+- Git/SCM subprocess work is never an editor or UI hot-path dependency.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Source Control and worktree services own SCM refresh projections; editor/file surfaces consume projections and request explicit
+  revalidation before mutation.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+### AI-047 - Platform Adapter Seam
+
+```yaml
+plan_unit_id: AI-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: OS-facing behavior is an explicit platform adapter seam for open/reveal, dialogs, drag/drop, file watching,
+  URL handoff, path normalization, process/PTY integration, native dialogs, trash behavior, keychain/credential access, symlink/case
+  sensitivity, clipboard, IME, accessibility bridges, and browser/webview embedding.
+gui_related: true
+gui_classification_reason: This unit affects user-visible native OS integration, dialogs, drag/drop, clipboard, accessibility,
+  and embedded browser/webview behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: platform_adapter_seam
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: platform_adapter_seam
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+preserved_exact_tokens:
+- OS-facing behavior
+- Open/reveal
+- dialogs
+- drag/drop
+- file watching
+- URL handoff
+- path normalization
+- process/PTY integration
+- platform adapters
+- native dialogs
+- trash behavior
+- keychain/credential access
+- symlink
+- case-sensitivity
+- clipboard/IME/accessibility
+- browser/webview embedding
+negative_constraints:
+- OS-facing behavior must not be implemented as scattered per-view shortcuts.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+### AI-048 - Shared Rust Core Ownership
+
+```yaml
+plan_unit_id: AI-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: The shared Rust core owns typed resource identity, buffer/text model, save/recovery/on-disk transactions,
+  watcher/invalidation normalization, ignore policy, search/indexing/autodetection, LSP brokering, diff/review engine, preview
+  session state, terminal/runtime state, remote/session state machine, command routing, and persistence schemas.
+gui_related: false
+gui_classification_reason: This unit covers core service ownership, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shared_rust_core_ownership
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: shared_rust_core_ownership
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+preserved_exact_tokens:
+- Resource identity
+- workspace file
+- scratch/history/generated/remote/session-bound resource
+- provider-owned runtime object identity
+- shared Rust core
+- buffer/text model
+- save/recovery/on-disk change transactions
+- watcher/invalidation normalization
+- ignore policy
+- search/indexing/autodetection
+- LSP brokering
+- diff/review engine
+- preview session state
+- terminal/runtime state
+- remote/session state machine
+- command routing
+- persistence schemas
+negative_constraints:
+- Resource identity must not be inferred from view placement or path strings alone.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The shared Rust core owns cross-surface core services while platform adapters own OS specifics.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+### AI-049 - Ignore Search Index Invalidation And Storage Isolation
+
+```yaml
+plan_unit_id: AI-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Ignore handling, search/index walks, and tree visibility share one deliberate policy layer; watchers, remote
+  notifications, and provider streams are invalidation signals only; search/index storage follows storage-isolation and no-secrets-in-storage
+  with remote-build, local-query, and remote-verify for remote non-Git Instant Grep.
+gui_related: false
+gui_classification_reason: This unit covers search/index/storage policy and invalidation semantics, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ignore_search_index_invalidation_and_storage_isolation
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: ignore_search_index_invalidation_storage_isolation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+preserved_exact_tokens:
+- Ignore handling
+- search/index walks
+- tree visibility
+- File Manager
+- Search
+- LSP/indexing
+- Source Control
+- preview surfaces
+- invalidation signals
+- bounded reconciliation
+- storage-isolation
+- no-secrets-in-storage
+- regex index
+- sparse n-gram postings
+- dirty layer
+- remote/local cache projections
+- remote-build
+- local-query
+- remote-verify
+negative_constraints:
+- File Manager, Search, LSP/indexing, Source Control, and preview surfaces cannot diverge silently on ignore/search/index
+  visibility.
+- File watchers, remote file-change notifications, and provider update streams are invalidation signals, not authoritative
+  state.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< CONTEXT_AFTER 3321-3332 >>>
+### AI-050 - Service Routing External Adapters And Anti DOM Constraints
+
+```yaml
+plan_unit_id: AI-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: File/open/search/undo/terminal/diff/preview routing resolves through service-registered/provider seams and
+  owner contracts; external engines and CLIs are adapters only; requested-vs-effective state remains explicit; browser-specific
+  assumptions such as DOM roots, service-worker persistence, hidden file inputs, Blob downloads, localStorage identity, query-string
+  routing, and browser-only clipboard/selection hacks must not shape PM architecture.
+gui_related: false

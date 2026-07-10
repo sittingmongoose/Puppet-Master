@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4720-4731 >>>
+L00004720	  - "operation cards"
+L00004721	  - "source blocks"
+L00004722	  - "citations"
+L00004723	  - "search snippets"
+L00004724	  - "extracted page text"
+L00004725	  - "synthesized conclusions"
+L00004726	negative_constraints: []
+L00004727	owner_hints:
+L00004728	  - Plans/assistant-chat-design.md
+L00004729	  - Plans/Tools.md
+L00004730	```
+L00004731	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4732-5104 >>>
+L00004732	### ACD-027 - Question Flow Lifecycle
+L00004733	
+L00004734	```yaml
+L00004735	plan_unit_id: ACD-027
+L00004736	unit_type: requirement
+L00004737	status: accepted
+L00004738	owner_doc: Plans/assistant-chat-design.md
+L00004739	canonical_text: Question flows are PM-managed, draft-backed, resumable, and follow the canonical lifecycle draft -> incomplete -> ready_to_submit -> submitted -> paused.
+L00004740	gui_related: true
+L00004741	gui_classification_reason: Question draft state, completion state, submission state, and pause/resume behavior are user-visible interaction behavior.
+L00004742	depends_on: []
+L00004743	unblocks: [ACD-028, ACD-029, ACD-030, ACD-031]
+L00004744	acceptance_criteria:
+L00004745	  - Question drafts are thread-scoped and auto-save until submit.
+L00004746	  - Users can answer out of order and revise before submit where the question type allows it.
+L00004747	  - The canonical lifecycle states are preserved.
+L00004748	validation_surfaces:
+L00004749	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004750	  - python3 scripts/pm-plan-index.py validate
+L00004751	risk_class: question_lifecycle
+L00004752	reasoning_tier: standard
+L00004753	context_scope: questionnaire
+L00004754	implementation_surfaces:
+L00004755	  - Plans/assistant-chat-design.md
+L00004756	node_compile_hint:
+L00004757	  mode: question_flow_lifecycle
+L00004758	  create_worknodes: false
+L00004759	source_lineage:
+L00004760	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004761	preserved_exact_tokens:
+L00004762	  - "draft"
+L00004763	  - "incomplete"
+L00004764	  - "ready_to_submit"
+L00004765	  - "submitted"
+L00004766	  - "paused"
+L00004767	  - "Thread-scoped draft state"
+L00004768	  - "drafts auto-save continuously"
+L00004769	negative_constraints: []
+L00004770	owner_hints:
+L00004771	  - Plans/assistant-chat-design.md
+L00004772	```
+L00004773	
+L00004774	### ACD-028 - Question Schema And Compatibility Normalization
+L00004775	
+L00004776	```yaml
+L00004777	plan_unit_id: ACD-028
+L00004778	unit_type: requirement
+L00004779	status: accepted
+L00004780	owner_doc: Plans/assistant-chat-design.md
+L00004781	canonical_text: Question schema names, enums, answer sources, legacy aliases, and compatibility normalizations are locked to the questionnaire envelope while preserving single_question compatibility through internal promotion.
+L00004782	gui_related: false
+L00004783	gui_classification_reason: Schema fields, aliases, enum values, and compatibility normalization are data-contract behavior rather than visual implementation.
+L00004784	depends_on: [ACD-027]
+L00004785	unblocks: [ACD-029, ACD-030]
+L00004786	acceptance_criteria:
+L00004787	  - single_question callers are promoted into the questionnaire envelope before processing.
+L00004788	  - Legacy input and output aliases normalize into canonical answer arrays and object-array options before draft storage, validation, or final answer submission.
+L00004789	  - allow_freeform is canonical and allow_other remains a retired alias.
+L00004790	validation_surfaces:
+L00004791	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004792	  - python3 scripts/pm-plan-index.py validate
+L00004793	risk_class: schema_compatibility
+L00004794	reasoning_tier: standard
+L00004795	context_scope: questionnaire
+L00004796	implementation_surfaces:
+L00004797	  - Plans/assistant-chat-design.md
+L00004798	  - Plans/Contracts_V0.md
+L00004799	node_compile_hint:
+L00004800	  mode: question_schema_normalization
+L00004801	  create_worknodes: false
+L00004802	source_lineage:
+L00004803	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004804	preserved_exact_tokens:
+L00004805	  - "single_question"
+L00004806	  - "questionnaire"
+L00004807	  - "QuestionItem"
+L00004808	  - "allow_freeform"
+L00004809	  - "allow_other"
+L00004810	  - "default_values"
+L00004811	  - "draft_value"
+L00004812	  - "response_kind"
+L00004813	  - "validation_state"
+L00004814	  - "header?: string"
+L00004815	  - "text: string"
+L00004816	  - "options?: string[]"
+L00004817	  - "answer: string"
+L00004818	  - "Something else"
+L00004819	  - "Decision #9"
+L00004820	negative_constraints: []
+L00004821	compatibility_only_notes:
+L00004822	  - "single_question is legacy syntactic sugar over the questionnaire envelope with exactly one QuestionItem."
+L00004823	  - "Legacy tool-shape aliases header?: string, text: string, and options?: string[] are accepted only at the compatibility boundary."
+L00004824	stale_retired_terms:
+L00004825	  - "allow_other"
+L00004826	owner_hints:
+L00004827	  - Plans/assistant-chat-design.md
+L00004828	```
+L00004829	
+L00004830	### ACD-029 - Question Card Rendering Contract
+L00004831	
+L00004832	```yaml
+L00004833	plan_unit_id: ACD-029
+L00004834	unit_type: requirement
+L00004835	status: accepted
+L00004836	owner_doc: Plans/assistant-chat-design.md
+L00004837	canonical_text: Question-card rendering supports visible options, freeform or Other paths, multi-select checkbox layouts, shared question-card styling across Assistant and document-building flows, and optional source-text-first visual context.
+L00004838	gui_related: true
+L00004839	gui_classification_reason: Question-card options, checkbox groups, shared styling, and visual context are direct UI presentation and interaction requirements.
+L00004840	depends_on: [ACD-027, ACD-028]
+L00004841	unblocks: []
+L00004842	acceptance_criteria:
+L00004843	  - Multi-select renders options as a checkbox group and preserves selected option IDs in order.
+L00004844	  - Shared question styling uses one consistent question-card flow across Assistant, Interviewer, requirements, and document-builder questions.
+L00004845	  - Source-text-first visual context may be attached while PM remains owner of draft and submit lifecycle.
+L00004846	validation_surfaces:
+L00004847	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004848	  - python3 scripts/pm-plan-index.py validate
+L00004849	risk_class: visual_flow_drift
+L00004850	reasoning_tier: standard
+L00004851	context_scope: questionnaire_ui
+L00004852	implementation_surfaces:
+L00004853	  - Plans/assistant-chat-design.md
+L00004854	  - Plans/FinalGUISpec.md
+L00004855	node_compile_hint:
+L00004856	  mode: question_card_rendering
+L00004857	  create_worknodes: false
+L00004858	source_lineage:
+L00004859	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004860	preserved_exact_tokens:
+L00004861	  - "multi_select"
+L00004862	  - "options?: Array<{id, label, description?}>"
+L00004863	  - "string[]"
+L00004864	  - "/flow"
+L00004865	  - "/Interviewer/requirements"
+L00004866	  - "/document-builder"
+L00004867	  - "source-text-first visual context"
+L00004868	negative_constraints: []
+L00004869	compatibility_only_notes:
+L00004870	  - "string[] remains backwards-compatible only for legacy single_question callers."
+L00004871	owner_hints:
+L00004872	  - Plans/assistant-chat-design.md
+L00004873	  - Plans/FinalGUISpec.md
+L00004874	```
+L00004875	
+L00004876	### ACD-030 - Question Submit And Dismiss Contract
+L00004877	
+L00004878	```yaml
+L00004879	plan_unit_id: ACD-030
+L00004880	unit_type: requirement
+L00004881	status: accepted
+L00004882	owner_doc: Plans/assistant-chat-design.md
+L00004883	canonical_text: Question submission and dismissal preserve submitted-versus-dismissed distinction. Dismissal pauses the flow and never fabricates partial submitted answers, auto-submits, or auto-cancels the broader thread.
+L00004884	gui_related: true
+L00004885	gui_classification_reason: Submit, dismissal, pause, and status feedback are user-visible question-card behavior.
+L00004886	depends_on: [ACD-027, ACD-028]
+L00004887	unblocks: []
+L00004888	acceptance_criteria:
+L00004889	  - /submit is the explicit user action that moves a ready question flow to submitted.
+L00004890	  - Dismissing pauses rather than auto-submitting, auto-cancelling, or fabricating partial answers.
+L00004891	  - Inline visuals do not invoke submit through sendPrompt.
+L00004892	validation_surfaces:
+L00004893	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004894	  - python3 scripts/pm-plan-index.py validate
+L00004895	risk_class: answer_integrity
+L00004896	reasoning_tier: high
+L00004897	context_scope: questionnaire
+L00004898	implementation_surfaces:
+L00004899	  - Plans/assistant-chat-design.md
+L00004900	node_compile_hint:
+L00004901	  mode: question_submit_dismiss_contract
+L00004902	  create_worknodes: false
+L00004903	source_lineage:
+L00004904	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004905	preserved_exact_tokens:
+L00004906	  - "answered"
+L00004907	  - "submitted"
+L00004908	  - "dismissed"
+L00004909	  - "timed_out"
+L00004910	  - "unavailable"
+L00004911	  - "/submit"
+L00004912	  - "/dismiss"
+L00004913	  - "NOT via `sendPrompt`"
+L00004914	  - "submitted_at?"
+L00004915	negative_constraints:
+L00004916	  - "Question flows never perform auto-submitting or auto-cancelling when dismissed."
+L00004917	stale_retired_terms:
+L00004918	  - "/dismiss"
+L00004919	owner_hints:
+L00004920	  - Plans/assistant-chat-design.md
+L00004921	```
+L00004922	
+L00004923	### ACD-031 - Subagent Question Boundary
+L00004924	
+L00004925	```yaml
+L00004926	plan_unit_id: ACD-031
+L00004927	unit_type: constraint
+L00004928	status: accepted
+L00004929	owner_doc: Plans/assistant-chat-design.md
+L00004930	canonical_text: Subagent question tool access is default-denied. Subagents escalate user questions to the parent orchestrator, and headless or HITL-unavailable flows return unavailable status.
+L00004931	gui_related: false
+L00004932	gui_classification_reason: Subagent question routing and default-denial are orchestration and policy behavior, not GUI implementation.
+L00004933	depends_on: [ACD-027]
+L00004934	unblocks: []
+L00004935	acceptance_criteria:
+L00004936	  - Subagents cannot address users directly unless explicitly re-enabled by run config.
+L00004937	  - Parent orchestrator owns the user-question surface decision.
+L00004938	  - Headless or HITL-unavailable question flows report unavailable status.
+L00004939	validation_surfaces:
+L00004940	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004941	  - python3 scripts/pm-plan-index.py validate
+L00004942	risk_class: subagent_boundary
+L00004943	reasoning_tier: standard
+L00004944	context_scope: hitl
+L00004945	implementation_surfaces:
+L00004946	  - Plans/assistant-chat-design.md
+L00004947	  - Plans/human-in-the-loop.md
+L00004948	node_compile_hint:
+L00004949	  mode: subagent_question_boundary
+L00004950	  create_worknodes: false
+L00004951	source_lineage:
+L00004952	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0033
+L00004953	preserved_exact_tokens:
+L00004954	  - "default-denial"
+L00004955	  - "Subagent question tool access is DENIED by default"
+L00004956	  - "status = \"unavailable\""
+L00004957	  - "assistant-chat-design.md §15.2"
+L00004958	negative_constraints:
+L00004959	  - "Subagent-direct question flows are prohibited product behavior, not a configurable local default."
+L00004960	owner_hints:
+L00004961	  - Plans/assistant-chat-design.md
+L00004962	  - Plans/human-in-the-loop.md
+L00004963	```
+L00004964	
+L00004965	### ACD-032 - Planning Model Core
+L00004966	
+L00004967	```yaml
+L00004968	plan_unit_id: ACD-032
+L00004969	unit_type: requirement
+L00004970	status: accepted
+L00004971	owner_doc: Plans/assistant-chat-design.md
+L00004972	canonical_text: Plan and Deep Plan share a normalized TODO projection, named Q&A loop, locked TODO schema, and locked status set while preserving explicit plan/checklist review before execution.
+L00004973	gui_related: false
+L00004974	gui_classification_reason: This unit defines planning data and workflow semantics rather than concrete visual presentation.
+L00004975	depends_on: []
+L00004976	unblocks: [ACD-033, ACD-034, ACD-035, ACD-038, ACD-040, ACD-043]
+L00004977	acceptance_criteria:
+L00004978	  - Plan and Deep Plan both project to a normalized TODO list.
+L00004979	  - TODO items preserve the canonical schema and active status set.
+L00004980	  - Competitive rationale remains source-lineage context without changing the canonical PM planning model.
+L00004981	validation_surfaces:
+L00004982	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004983	  - python3 scripts/pm-plan-index.py validate
+L00004984	risk_class: planning_model
+L00004985	reasoning_tier: standard
+L00004986	context_scope: plan_modes
+L00004987	implementation_surfaces:
+L00004988	  - Plans/assistant-chat-design.md
+L00004989	  - Plans/storage-plan.md
+L00004990	node_compile_hint:
+L00004991	  mode: planning_model_core
+L00004992	  create_worknodes: false
+L00004993	source_lineage:
+L00004994	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0034
+L00004995	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0035
+L00004996	preserved_exact_tokens:
+L00004997	  - "Plan"
+L00004998	  - "Deep Plan"
+L00004999	  - "Q&A loop"
+L00005000	  - "todo_id"
+L00005001	  - "title"
+L00005002	  - "summary"
+L00005003	  - "status"
+L00005004	  - "dependencies[]"
+L00005005	  - "owner_hint"
+L00005006	  - "verification_hint"
+L00005007	  - "pending | in_progress | completed | blocked | skipped"
+L00005008	  - "Cursor"
+L00005009	  - "Codex"
+L00005010	  - "Claude Code"
+L00005011	negative_constraints: []
+L00005012	owner_hints:
+L00005013	  - Plans/assistant-chat-design.md
+L00005014	  - Plans/storage-plan.md
+L00005015	```
+L00005016	
+L00005017	### ACD-033 - Visible Plan Review Surface
+L00005018	
+L00005019	```yaml
+L00005020	plan_unit_id: ACD-033
+L00005021	unit_type: requirement
+L00005022	status: accepted
+L00005023	owner_doc: Plans/assistant-chat-design.md
+L00005024	canonical_text: Plan review is checklist-forward and visible, with a reviewable plan artifact, normalized TODO projection, live execution progress, sticky panel, and structural controls before approval.
+L00005025	gui_related: true
+L00005026	gui_classification_reason: Plan panel, checklist review, structural controls, sticky panel, and live execution progress are user-visible GUI behavior.
+L00005027	depends_on: [ACD-032]
+L00005028	unblocks: []
+L00005029	acceptance_criteria:
+L00005030	  - Planning is not hidden inside an opaque unified planning/execution loop.
+L00005031	  - The review surface exposes add, remove, and reorder structural controls before approval.
+L00005032	  - Live execution progress remains connected to the normalized TODO projection.
+L00005033	validation_surfaces:
+L00005034	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005035	  - python3 scripts/pm-plan-index.py validate
+L00005036	risk_class: planning_ui_projection
+L00005037	reasoning_tier: standard
+L00005038	context_scope: plan_review
+L00005039	implementation_surfaces:
+L00005040	  - Plans/assistant-chat-design.md
+L00005041	  - Plans/FinalGUISpec.md
+L00005042	node_compile_hint:
+L00005043	  mode: visible_plan_review_surface
+L00005044	  create_worknodes: false
+L00005045	source_lineage:
+L00005046	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0035
+L00005047	preserved_exact_tokens:
+L00005048	  - "visible plan/checklist review"
+L00005049	  - "execution-tracker"
+L00005050	  - "plan panel"
+L00005051	  - "/add/remove/reorder"
+L00005052	  - "sticky panel"
+L00005053	negative_constraints: []
+L00005054	owner_hints:
+L00005055	  - Plans/assistant-chat-design.md
+L00005056	  - Plans/FinalGUISpec.md
+L00005057	```
+L00005058	
+L00005059	### ACD-034 - Plan Revision And TODO History
+L00005060	
+L00005061	```yaml
+L00005062	plan_unit_id: ACD-034
+L00005063	unit_type: requirement
+L00005064	status: accepted
+L00005065	owner_doc: Plans/assistant-chat-design.md
+L00005066	canonical_text: Plan and TODO persistence uses explicit revision states, gated structural edits, bounded history, chat.plan_todo_updated emissions, Deep Plan diff reconciliation, run-level states, and explicit replans.
+L00005067	gui_related: false
+L00005068	gui_classification_reason: Revision history, mutation events, and plan state persistence are backend/data behavior rather than visual implementation.
+L00005069	depends_on: [ACD-032]
+L00005070	unblocks: [ACD-043, ACD-044]
+L00005071	acceptance_criteria:
+L00005072	  - Structural edits after approval create a new revision rather than invisibly mutating approved history.
+L00005073	  - Deep Plan artifact edits resync the TODO projection through PM-extracted diffs.
+L00005074	  - chat.plan_todo_updated records durable normalized TODO mutations.
+L00005075	validation_surfaces:
+L00005076	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005077	  - python3 scripts/pm-plan-index.py validate
+L00005078	risk_class: todo_history_drift
+L00005079	reasoning_tier: high
+L00005080	context_scope: plan_persistence
+L00005081	implementation_surfaces:
+L00005082	  - Plans/assistant-chat-design.md
+L00005083	  - Plans/storage-plan.md
+L00005084	  - Plans/Contracts_V0.md
+L00005085	node_compile_hint:
+L00005086	  mode: plan_revision_todo_history
+L00005087	  create_worknodes: false
+L00005088	source_lineage:
+L00005089	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0035
+L00005090	preserved_exact_tokens:
+L00005091	  - "chat.plan_todo_updated"
+L00005092	  - "todoread"
+L00005093	  - "source_surface"
+L00005094	  - "/diffs"
+L00005095	  - "/run-level"
+L00005096	  - "/replans"
+L00005097	  - "stale artifact copy"
+L00005098	negative_constraints:
+L00005099	  - "`todoread` must not survive as a `source_surface` mutation source."
+L00005100	owner_hints:
+L00005101	  - Plans/assistant-chat-design.md
+L00005102	  - Plans/storage-plan.md
+L00005103	```
+L00005104	
+
+<<< CONTEXT_AFTER canonical_document_lines=5105-5116 >>>
+L00005105	### ACD-035 - Plan Thoroughness Control Surface
+L00005106	
+L00005107	```yaml
+L00005108	plan_unit_id: ACD-035
+L00005109	unit_type: requirement
+L00005110	status: accepted
+L00005111	owner_doc: Plans/assistant-chat-design.md
+L00005112	canonical_text: Plan Thoroughness is a visible Assistant Chat GUI control for Plan and Deep Plan with the enum Light, Balanced, and Comprehensive; both Plan and Deep Plan default to Balanced.
+L00005113	gui_related: true
+L00005114	gui_classification_reason: Plan Thoroughness is a visible Assistant Chat GUI control.
+L00005115	depends_on: [ACD-032]
+L00005116	unblocks: [ACD-036, ACD-037]

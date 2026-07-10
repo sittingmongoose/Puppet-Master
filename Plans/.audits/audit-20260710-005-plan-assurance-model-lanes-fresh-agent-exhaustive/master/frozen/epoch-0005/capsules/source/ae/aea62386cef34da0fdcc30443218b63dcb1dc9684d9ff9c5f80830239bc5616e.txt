@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4449-4460 >>>
+L00004449	- Key stored/missing
+L00004450	negative_constraints:
+L00004451	- Secrets must not be written to seglog, redb, Tantivy, YAML config, .puppet-master/config.json, logs, evidence bundles, or state files.
+L00004452	compatibility_only_notes: []
+L00004453	stale_retired_dispositions: []
+L00004454	owner_boundary_notes: []
+L00004455	owner_hints:
+L00004456	- Plans/newtools.md
+L00004457	preserved_contractrefs:
+L00004458	- 'ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002'
+L00004459	```
+L00004460	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4461-4822 >>>
+L00004461	### N2-070 - Iced Catalog Detection Hints
+L00004462	
+L00004463	```yaml
+L00004464	plan_unit_id: N2-070
+L00004465	unit_type: requirement
+L00004466	status: accepted
+L00004467	owner_doc: Plans/newtools.md
+L00004468	canonical_text: Catalog detection rules must reliably set detected_gui_frameworks; for Iced, preferred detection checks Cargo.toml for iced or scans for src/automation/headless_runner or src/automation/action_catalog.rs, and must not miss Puppet Master automation pattern.
+L00004469	gui_related: true
+L00004470	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+L00004471	split_recommended: false
+L00004472	depends_on: []
+L00004473	unblocks: []
+L00004474	acceptance_criteria:
+L00004475	- Covered source spans remain losslessly available for exact-text audit.
+L00004476	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004477	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004478	validation_surfaces:
+L00004479	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004480	- python3 scripts/pm-plan-index.py validate
+L00004481	risk_class: iced_catalog_detection_hints
+L00004482	reasoning_tier: standard
+L00004483	context_scope: newtools_standardization
+L00004484	implementation_surfaces:
+L00004485	- Plans/newtools.md
+L00004486	node_compile_hint:
+L00004487	  mode: iced_catalog_detection_hints
+L00004488	  create_worknodes: false
+L00004489	source_lineage:
+L00004490	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004491	preserved_exact_tokens:
+L00004492	- Cargo.toml
+L00004493	- iced
+L00004494	- src/automation/headless_runner
+L00004495	- src/automation/action_catalog.rs
+L00004496	negative_constraints:
+L00004497	- Detection must not miss Iced when the Puppet Master automation pattern is present.
+L00004498	compatibility_only_notes: []
+L00004499	stale_retired_dispositions: []
+L00004500	owner_boundary_notes: []
+L00004501	owner_hints:
+L00004502	- Plans/newtools.md
+L00004503	preserved_contractrefs:
+L00004504	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:AGENTS.md, PolicyRule:Decision_Policy.md§2'
+L00004505	```
+L00004506	
+L00004507	### N2-071 - Playwright And Framework Tool Strategy Wiring
+L00004508	
+L00004509	```yaml
+L00004510	plan_unit_id: N2-071
+L00004511	unit_type: requirement
+L00004512	status: accepted
+L00004513	owner_doc: Plans/newtools.md
+L00004514	canonical_text: write_test_strategy, TestStrategyConfig, InterviewOrchestratorConfig, and app.rs must pass selected_framework_tools and plan_custom_headless_tool through interview completion so markdown and JSON include framework tools and custom headless sections/items.
+L00004515	gui_related: true
+L00004516	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+L00004517	split_recommended: false
+L00004518	depends_on: []
+L00004519	unblocks: []
+L00004520	acceptance_criteria:
+L00004521	- Covered source spans remain losslessly available for exact-text audit.
+L00004522	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004523	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004524	validation_surfaces:
+L00004525	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004526	- python3 scripts/pm-plan-index.py validate
+L00004527	risk_class: playwright_framework_tool_strategy_wiring
+L00004528	reasoning_tier: standard
+L00004529	context_scope: newtools_standardization
+L00004530	implementation_surfaces:
+L00004531	- Plans/newtools.md
+L00004532	node_compile_hint:
+L00004533	  mode: playwright_framework_tool_strategy_wiring
+L00004534	  create_worknodes: false
+L00004535	source_lineage:
+L00004536	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004537	preserved_exact_tokens:
+L00004538	- write_test_strategy
+L00004539	- TestStrategyConfig
+L00004540	- InterviewOrchestratorConfig
+L00004541	- app.rs
+L00004542	- selected_framework_tools
+L00004543	- plan_custom_headless_tool
+L00004544	negative_constraints: []
+L00004545	compatibility_only_notes: []
+L00004546	stale_retired_dispositions: []
+L00004547	owner_boundary_notes: []
+L00004548	owner_hints:
+L00004549	- Plans/newtools.md
+L00004550	preserved_contractrefs:
+L00004551	- 'ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005'
+L00004552	```
+L00004553	
+L00004554	### N2-072 - Headless Tool Binary Convention Documentation
+L00004555	
+L00004556	```yaml
+L00004557	plan_unit_id: N2-072
+L00004558	unit_type: requirement
+L00004559	status: accepted
+L00004560	owner_doc: Plans/newtools.md
+L00004561	canonical_text: The generator and agents share documented command conventions in AGENTS.md or STATE_FILES.md, emitting stable commands when conventions are followed and EXAMPLE markers plus criterion-based instructions otherwise.
+L00004562	gui_related: true
+L00004563	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+L00004564	split_recommended: false
+L00004565	depends_on: []
+L00004566	unblocks: []
+L00004567	acceptance_criteria:
+L00004568	- Covered source spans remain losslessly available for exact-text audit.
+L00004569	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004570	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004571	validation_surfaces:
+L00004572	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004573	- python3 scripts/pm-plan-index.py validate
+L00004574	risk_class: headless_tool_binary_convention_documentation
+L00004575	reasoning_tier: standard
+L00004576	context_scope: newtools_standardization
+L00004577	implementation_surfaces:
+L00004578	- Plans/newtools.md
+L00004579	node_compile_hint:
+L00004580	  mode: headless_tool_binary_convention_documentation
+L00004581	  create_worknodes: false
+L00004582	source_lineage:
+L00004583	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004584	preserved_exact_tokens:
+L00004585	- AGENTS.md
+L00004586	- STATE_FILES.md
+L00004587	- EXAMPLE
+L00004588	negative_constraints: []
+L00004589	compatibility_only_notes: []
+L00004590	stale_retired_dispositions: []
+L00004591	owner_boundary_notes: []
+L00004592	owner_hints:
+L00004593	- Plans/newtools.md
+L00004594	preserved_contractrefs:
+L00004595	- 'ContractRef: ContractName:AGENTS.md, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§4'
+L00004596	```
+L00004597	
+L00004598	### N2-073 - Doctor Platform Version Report
+L00004599	
+L00004600	```yaml
+L00004601	plan_unit_id: N2-073
+L00004602	unit_type: requirement
+L00004603	status: accepted
+L00004604	owner_doc: Plans/newtools.md
+L00004605	canonical_text: Doctor or a small platform config report records CLI version per platform, such as agent --version or codex --version, so support can correlate behavior with platform churn.
+L00004606	gui_related: false
+L00004607	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004608	split_recommended: false
+L00004609	depends_on: []
+L00004610	unblocks: []
+L00004611	acceptance_criteria:
+L00004612	- Covered source spans remain losslessly available for exact-text audit.
+L00004613	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004614	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004615	validation_surfaces:
+L00004616	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004617	- python3 scripts/pm-plan-index.py validate
+L00004618	risk_class: doctor_platform_version_report
+L00004619	reasoning_tier: standard
+L00004620	context_scope: newtools_standardization
+L00004621	implementation_surfaces:
+L00004622	- Plans/newtools.md
+L00004623	node_compile_hint:
+L00004624	  mode: doctor_platform_version_report
+L00004625	  create_worknodes: false
+L00004626	source_lineage:
+L00004627	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004628	preserved_exact_tokens:
+L00004629	- agent --version
+L00004630	- codex --version
+L00004631	- platform churn
+L00004632	negative_constraints: []
+L00004633	compatibility_only_notes: []
+L00004634	stale_retired_dispositions: []
+L00004635	owner_boundary_notes: []
+L00004636	owner_hints:
+L00004637	- Plans/newtools.md
+L00004638	preserved_contractrefs:
+L00004639	- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005'
+L00004640	```
+L00004641	
+L00004642	### N2-074 - Existing Test Strategy Backward Compatibility
+L00004643	
+L00004644	```yaml
+L00004645	plan_unit_id: N2-074
+L00004646	unit_type: requirement
+L00004647	status: accepted
+L00004648	owner_doc: Plans/newtools.md
+L00004649	canonical_text: Existing pre-newtools test-strategy.md and test-strategy.json continue to work; loader and prompt builder tolerate missing headless_gui and framework_tool items and optional tool metadata, with verification by tests or manual pre-newtools fixture.
+L00004650	gui_related: false
+L00004651	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004652	split_recommended: false
+L00004653	depends_on: []
+L00004654	unblocks: []
+L00004655	acceptance_criteria:
+L00004656	- Covered source spans remain losslessly available for exact-text audit.
+L00004657	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004658	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004659	validation_surfaces:
+L00004660	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004661	- python3 scripts/pm-plan-index.py validate
+L00004662	risk_class: existing_test_strategy_backward_compatibility
+L00004663	reasoning_tier: standard
+L00004664	context_scope: newtools_standardization
+L00004665	implementation_surfaces:
+L00004666	- Plans/newtools.md
+L00004667	node_compile_hint:
+L00004668	  mode: existing_test_strategy_backward_compatibility
+L00004669	  create_worknodes: false
+L00004670	source_lineage:
+L00004671	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004672	preserved_exact_tokens:
+L00004673	- test-strategy.md
+L00004674	- test-strategy.json
+L00004675	- headless_gui
+L00004676	- framework_tool
+L00004677	negative_constraints: []
+L00004678	compatibility_only_notes:
+L00004679	- No migration of old files is required.
+L00004680	stale_retired_dispositions: []
+L00004681	owner_boundary_notes: []
+L00004682	owner_hints:
+L00004683	- Plans/newtools.md
+L00004684	preserved_contractrefs:
+L00004685	- 'ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2'
+L00004686	```
+L00004687	
+L00004688	### N2-075 - MCP Doctor Reachability Check
+L00004689	
+L00004690	```yaml
+L00004691	plan_unit_id: N2-075
+L00004692	unit_type: requirement
+L00004693	status: accepted
+L00004694	owner_doc: Plans/newtools.md
+L00004695	canonical_text: Doctor verifies configured MCP servers such as Context7 are reachable or can list tools per selected platform, complementing the headless-tool check.
+L00004696	gui_related: false
+L00004697	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004698	split_recommended: false
+L00004699	depends_on: []
+L00004700	unblocks: []
+L00004701	acceptance_criteria:
+L00004702	- Covered source spans remain losslessly available for exact-text audit.
+L00004703	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004704	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004705	validation_surfaces:
+L00004706	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004707	- python3 scripts/pm-plan-index.py validate
+L00004708	risk_class: mcp_doctor_reachability_check
+L00004709	reasoning_tier: standard
+L00004710	context_scope: newtools_standardization
+L00004711	implementation_surfaces:
+L00004712	- Plans/newtools.md
+L00004713	node_compile_hint:
+L00004714	  mode: mcp_doctor_reachability_check
+L00004715	  create_worknodes: false
+L00004716	source_lineage:
+L00004717	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004718	preserved_exact_tokens:
+L00004719	- Context7
+L00004720	- list tools
+L00004721	- headless-tool check
+L00004722	negative_constraints: []
+L00004723	compatibility_only_notes: []
+L00004724	stale_retired_dispositions: []
+L00004725	owner_boundary_notes: []
+L00004726	owner_hints:
+L00004727	- Plans/newtools.md
+L00004728	preserved_contractrefs:
+L00004729	- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005'
+L00004730	```
+L00004731	
+L00004732	### N2-076 - Catalog Version And Overlay Metadata
+L00004733	
+L00004734	```yaml
+L00004735	plan_unit_id: N2-076
+L00004736	unit_type: requirement
+L00004737	status: accepted
+L00004738	owner_doc: Plans/newtools.md
+L00004739	canonical_text: The catalog exposes a base CATALOG_VERSION and overlay last_updated metadata so agents and docs can reference catalog freshness while debugging tool availability.
+L00004740	gui_related: false
+L00004741	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004742	split_recommended: false
+L00004743	depends_on: []
+L00004744	unblocks: []
+L00004745	acceptance_criteria:
+L00004746	- Covered source spans remain losslessly available for exact-text audit.
+L00004747	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004748	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004749	validation_surfaces:
+L00004750	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004751	- python3 scripts/pm-plan-index.py validate
+L00004752	risk_class: catalog_version_overlay_metadata
+L00004753	reasoning_tier: standard
+L00004754	context_scope: newtools_standardization
+L00004755	implementation_surfaces:
+L00004756	- Plans/newtools.md
+L00004757	node_compile_hint:
+L00004758	  mode: catalog_version_overlay_metadata
+L00004759	  create_worknodes: false
+L00004760	source_lineage:
+L00004761	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+L00004762	preserved_exact_tokens:
+L00004763	- CATALOG_VERSION
+L00004764	- last_updated
+L00004765	- catalog freshness
+L00004766	negative_constraints: []
+L00004767	compatibility_only_notes: []
+L00004768	stale_retired_dispositions: []
+L00004769	owner_boundary_notes: []
+L00004770	owner_hints:
+L00004771	- Plans/newtools.md
+L00004772	preserved_contractrefs:
+L00004773	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, SchemaID:evidence.schema.json'
+L00004774	```
+L00004775	
+L00004776	### N2-077 - Tool Discovery Crew Communication Boundary
+L00004777	
+L00004778	```yaml
+L00004779	plan_unit_id: N2-077
+L00004780	unit_type: requirement
+L00004781	status: accepted
+L00004782	owner_doc: Plans/newtools.md
+L00004783	canonical_text: Tool-discovery crews follow PM child-run behavior, communicate through an attributable crew board when enabled, persist findings through canonical event/storage structures rather than .puppet-master/memory/*, and disclose degradation to independent child runs or a single child when crew coordination is unavailable.
+L00004784	gui_related: false
+L00004785	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004786	split_recommended: false
+L00004787	depends_on: []
+L00004788	unblocks: []
+L00004789	acceptance_criteria:
+L00004790	- Covered source spans remain losslessly available for exact-text audit.
+L00004791	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004792	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004793	validation_surfaces:
+L00004794	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004795	- python3 scripts/pm-plan-index.py validate
+L00004796	risk_class: tool_discovery_crew_communication_boundary
+L00004797	reasoning_tier: standard
+L00004798	context_scope: newtools_standardization
+L00004799	implementation_surfaces:
+L00004800	- Plans/newtools.md
+L00004801	node_compile_hint:
+L00004802	  mode: tool_discovery_crew_communication_boundary
+L00004803	  create_worknodes: false
+L00004804	source_lineage:
+L00004805	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0042
+L00004806	preserved_exact_tokens:
+L00004807	- crew board
+L00004808	- .puppet-master/memory/*
+L00004809	- child runs
+L00004810	negative_constraints:
+L00004811	- Crew findings must not be persisted through .puppet-master/memory/* files.
+L00004812	compatibility_only_notes: []
+L00004813	stale_retired_dispositions: []
+L00004814	owner_boundary_notes:
+L00004815	- Crew findings are persisted through canonical event/storage structures.
+L00004816	owner_hints:
+L00004817	- Plans/newtools.md
+L00004818	preserved_contractrefs:
+L00004819	- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md'
+L00004820	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md'
+L00004821	```
+L00004822	
+
+<<< CONTEXT_AFTER canonical_document_lines=4823-4834 >>>
+L00004823	### N2-078 - Tool Discovery Lifecycle Canon
+L00004824	
+L00004825	```yaml
+L00004826	plan_unit_id: N2-078
+L00004827	unit_type: requirement
+L00004828	status: accepted
+L00004829	owner_doc: Plans/newtools.md
+L00004830	canonical_text: Tool-discovery lifecycle and quality features use canonical blocked payload fields, runtime taxonomy, child-run or crew events, handoff bundles, canonical state, and lineage-preserving reroute, replacement, or cancellation instead of active-agent or child-memory side files.
+L00004831	gui_related: false
+L00004832	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004833	split_recommended: false
+L00004834	depends_on: []

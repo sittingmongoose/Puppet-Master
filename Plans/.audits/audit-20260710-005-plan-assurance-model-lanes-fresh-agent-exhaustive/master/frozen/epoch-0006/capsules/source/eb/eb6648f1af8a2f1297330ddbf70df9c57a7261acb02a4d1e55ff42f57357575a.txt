@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2257-2268 >>>
+L00002257	compatibility_only_notes: []
+L00002258	stale_retired_dispositions: []
+L00002259	owner_boundary_notes:
+L00002260	- FileSafe remains the DAE enforcement owner for post-approval arg mutation, context_files write-scope widening, fail-open
+L00002261	  initialization paths, and recovery_options[] vs allowed_action_ids[] schema drift.
+L00002262	owner_hints:
+L00002263	- Plans/Architecture_Invariants.md
+L00002264	preserved_contractrefs:
+L00002265	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002266	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002267	```
+L00002268	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2269-2619 >>>
+L00002269	### AI-033 - Runtime Governance Layer And Gate Visibility
+L00002270	
+L00002271	```yaml
+L00002272	plan_unit_id: AI-033
+L00002273	unit_type: requirement
+L00002274	status: accepted
+L00002275	owner_doc: Plans/Architecture_Invariants.md
+L00002276	canonical_text: Runtime governance is a governance-layer invariant with Decision_Policy, Permissions_System, Contracts_V0,
+L00002277	  scheduler lane ordering, and mutation-safe-point ownership, and runtime /governance verification must be visible to numbered
+L00002278	  gates and script-enforcement tables.
+L00002279	gui_related: false
+L00002280	gui_classification_reason: This unit covers governance and validation surfaces, not GUI behavior.
+L00002281	split_recommended: false
+L00002282	depends_on: []
+L00002283	unblocks: []
+L00002284	acceptance_criteria:
+L00002285	- Covered source spans remain losslessly available for exact-text audit.
+L00002286	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002287	  bridge.
+L00002288	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002289	  own contracts.
+L00002290	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002291	validation_surfaces:
+L00002292	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002293	- python3 scripts/pm-plan-index.py validate
+L00002294	risk_class: runtime_governance_layer_and_gate_visibility
+L00002295	reasoning_tier: standard
+L00002296	context_scope: architecture_invariants_standardization
+L00002297	implementation_surfaces:
+L00002298	- Plans/Architecture_Invariants.md
+L00002299	node_compile_hint:
+L00002300	  mode: runtime_governance_layer_gate_visibility
+L00002301	  create_worknodes: false
+L00002302	source_lineage:
+L00002303	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002304	preserved_exact_tokens:
+L00002305	- governance-layer
+L00002306	- Plans/Decision_Policy.md
+L00002307	- corroboration
+L00002308	- promotion
+L00002309	- Plans/Permissions_System.md
+L00002310	- requested/effective identity model
+L00002311	- scheduler lane ordering
+L00002312	- mutation-safe-point
+L00002313	- Runtime /governance
+L00002314	- numbered gates
+L00002315	- script-enforcement tables
+L00002316	negative_constraints:
+L00002317	- Mandatory runtime governance checks cannot remain real only in addendum prose while invisible to gate registries.
+L00002318	compatibility_only_notes: []
+L00002319	stale_retired_dispositions: []
+L00002320	owner_boundary_notes:
+L00002321	- Decision_Policy owns concern, corroboration, promotion, authority, and lifecycle rules consumed by runtime governance.
+L00002322	owner_hints:
+L00002323	- Plans/Architecture_Invariants.md
+L00002324	preserved_contractrefs:
+L00002325	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002326	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002327	```
+L00002328	
+L00002329	### AI-034 - Route Consuming Command Wrappers
+L00002330	
+L00002331	```yaml
+L00002332	plan_unit_id: AI-034
+L00002333	unit_type: requirement
+L00002334	status: accepted
+L00002335	owner_doc: Plans/Architecture_Invariants.md
+L00002336	canonical_text: Cross-surface UI command wrappers such as artifact, orchestrator, and panel-switch commands remain navigation-like
+L00002337	  route consumers only when they normalize through canonical route/runtime objects rather than publishing local runtime semantics.
+L00002338	gui_related: true
+L00002339	gui_classification_reason: This unit governs UI command wrappers and navigation-like route consumers.
+L00002340	split_recommended: false
+L00002341	depends_on: []
+L00002342	unblocks: []
+L00002343	acceptance_criteria:
+L00002344	- Covered source spans remain losslessly available for exact-text audit.
+L00002345	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002346	  bridge.
+L00002347	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002348	  own contracts.
+L00002349	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002350	validation_surfaces:
+L00002351	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002352	- python3 scripts/pm-plan-index.py validate
+L00002353	risk_class: route_consuming_command_wrappers
+L00002354	reasoning_tier: standard
+L00002355	context_scope: architecture_invariants_standardization
+L00002356	implementation_surfaces:
+L00002357	- Plans/Architecture_Invariants.md
+L00002358	node_compile_hint:
+L00002359	  mode: route_consuming_command_wrappers
+L00002360	  create_worknodes: false
+L00002361	source_lineage:
+L00002362	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002363	preserved_exact_tokens:
+L00002364	- cmd.artifacts.show_in_ledger
+L00002365	- cmd.artifacts.show_in_usage
+L00002366	- cmd.orchestrator.open_in_source_control
+L00002367	- cmd.orchestrator.open_in_github_actions
+L00002368	- cmd.orchestrator.open_in_docker_manager
+L00002369	- cmd.panel.switch
+L00002370	- navigation-like
+L00002371	- canonical route/runtime objects
+L00002372	negative_constraints:
+L00002373	- Local pages must not publish independent Orchestrator or runtime semantics before route consumers reconcile through canonical
+L00002374	  route/runtime objects.
+L00002375	compatibility_only_notes: []
+L00002376	stale_retired_dispositions: []
+L00002377	owner_boundary_notes: []
+L00002378	owner_hints:
+L00002379	- Plans/Architecture_Invariants.md
+L00002380	preserved_contractrefs:
+L00002381	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002382	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002383	```
+L00002384	
+L00002385	### AI-035 - Graph Artifact Stale Consumer Reconciliation
+L00002386	
+L00002387	```yaml
+L00002388	plan_unit_id: AI-035
+L00002389	unit_type: requirement
+L00002390	status: accepted
+L00002391	owner_doc: Plans/Architecture_Invariants.md
+L00002392	canonical_text: Run Graph and Runtime Artifacts remain required consumers for receipt/usage identity, projection-trust hooks,
+L00002393	  producer identity, trust/provenance, and cross-surface linkage, while stale tier-era mirrors in Run_Graph_View and Orchestrator_Page
+L00002394	  must reconcile before surfacing runtime truth.
+L00002395	gui_related: true
+L00002396	gui_classification_reason: This unit covers user-visible graph/artifact consumers and stale runtime display reconciliation.
+L00002397	split_recommended: false
+L00002398	depends_on: []
+L00002399	unblocks: []
+L00002400	acceptance_criteria:
+L00002401	- Covered source spans remain losslessly available for exact-text audit.
+L00002402	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002403	  bridge.
+L00002404	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002405	  own contracts.
+L00002406	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002407	validation_surfaces:
+L00002408	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002409	- python3 scripts/pm-plan-index.py validate
+L00002410	risk_class: graph_artifact_stale_consumer_reconciliation
+L00002411	reasoning_tier: standard
+L00002412	context_scope: architecture_invariants_standardization
+L00002413	implementation_surfaces:
+L00002414	- Plans/Architecture_Invariants.md
+L00002415	node_compile_hint:
+L00002416	  mode: graph_artifact_stale_consumer_reconciliation
+L00002417	  create_worknodes: false
+L00002418	source_lineage:
+L00002419	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002420	preserved_exact_tokens:
+L00002421	- Plans/Run_Graph_View.md
+L00002422	- Plans/Runtime_Artifacts_Panel.md
+L00002423	- receipt/usage identity
+L00002424	- projection-trust
+L00002425	- producer identity
+L00002426	- trust/provenance
+L00002427	- cross-surface linkage
+L00002428	- Plans/Orchestrator_Page.md
+L00002429	- stale tier-era aggregation
+L00002430	negative_constraints:
+L00002431	- Runtime artifact or graph consumers must not replace receipt/usage identity, projection-trust, producer identity, trust/provenance,
+L00002432	  or cross-surface hooks with local pivots.
+L00002433	compatibility_only_notes: []
+L00002434	stale_retired_dispositions:
+L00002435	- Strong stale consumers for this runtime identity cluster are Plans/Run_Graph_View.md and Plans/Orchestrator_Page.md; their
+L00002436	  mirrors must reconcile to these invariants.
+L00002437	owner_boundary_notes: []
+L00002438	owner_hints:
+L00002439	- Plans/Architecture_Invariants.md
+L00002440	preserved_contractrefs:
+L00002441	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002442	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002443	```
+L00002444	
+L00002445	### AI-036 - Route Transport And Object Kind Identity
+L00002446	
+L00002447	```yaml
+L00002448	plan_unit_id: AI-036
+L00002449	unit_type: requirement
+L00002450	status: accepted
+L00002451	owner_doc: Plans/Architecture_Invariants.md
+L00002452	canonical_text: resume_url remains serialized deep-link transport only; attention flows, search, command routing, CtA restoration,
+L00002453	  and route-target recovery resolve through canonical route_target or subject identity first, tier_id is only derived compatibility
+L00002454	  metadata, and object_kind carries most cross-surface identity work.
+L00002455	gui_related: true
+L00002456	gui_classification_reason: This unit affects user-visible navigation, search, attention, CtA, and route restoration behavior.
+L00002457	split_recommended: false
+L00002458	depends_on: []
+L00002459	unblocks: []
+L00002460	acceptance_criteria:
+L00002461	- Covered source spans remain losslessly available for exact-text audit.
+L00002462	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002463	  bridge.
+L00002464	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002465	  own contracts.
+L00002466	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002467	validation_surfaces:
+L00002468	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002469	- python3 scripts/pm-plan-index.py validate
+L00002470	risk_class: route_transport_and_object_kind_identity
+L00002471	reasoning_tier: standard
+L00002472	context_scope: architecture_invariants_standardization
+L00002473	implementation_surfaces:
+L00002474	- Plans/Architecture_Invariants.md
+L00002475	node_compile_hint:
+L00002476	  mode: route_transport_object_kind_identity
+L00002477	  create_worknodes: false
+L00002478	source_lineage:
+L00002479	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002480	preserved_exact_tokens:
+L00002481	- resume_url
+L00002482	- deep-link
+L00002483	- route_target
+L00002484	- subject identity
+L00002485	- /CtA
+L00002486	- route-target
+L00002487	- highest-value focus recovery
+L00002488	- tier_id
+L00002489	- object_kind
+L00002490	- cross-surface identity
+L00002491	negative_constraints:
+L00002492	- A URL may carry a target but must not be stronger or more exact than the owner route contract.
+L00002493	- New route consumers must prefer owner-defined object kinds over ad hoc route fields.
+L00002494	compatibility_only_notes:
+L00002495	- tier_id may survive only as derived display/grouping compatibility metadata.
+L00002496	stale_retired_dispositions: []
+L00002497	owner_boundary_notes: []
+L00002498	owner_hints:
+L00002499	- Plans/Architecture_Invariants.md
+L00002500	preserved_contractrefs:
+L00002501	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002502	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002503	```
+L00002504	
+L00002505	### AI-037 - Bridged Provider And Content Identity Contracts
+L00002506	
+L00002507	```yaml
+L00002508	plan_unit_id: AI-037
+L00002509	unit_type: requirement
+L00002510	status: accepted
+L00002511	owner_doc: Plans/Architecture_Invariants.md
+L00002512	canonical_text: Bridged-provider normalized events require a versioned correlation block with actor, thread, attempt, and
+L00002513	  lineage refs; subject_id remains frozen to canonical families until a new cross-surface content identity is proven, and
+L00002514	  orchestrator.receipt remains a bridge record rather than an identity substitute.
+L00002515	gui_related: false
+L00002516	gui_classification_reason: This unit covers provider/content identity contracts, not GUI behavior.
+L00002517	split_recommended: false
+L00002518	depends_on: []
+L00002519	unblocks: []
+L00002520	acceptance_criteria:
+L00002521	- Covered source spans remain losslessly available for exact-text audit.
+L00002522	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002523	  bridge.
+L00002524	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002525	  own contracts.
+L00002526	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002527	validation_surfaces:
+L00002528	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002529	- python3 scripts/pm-plan-index.py validate
+L00002530	risk_class: bridged_provider_and_content_identity_contracts
+L00002531	reasoning_tier: standard
+L00002532	context_scope: architecture_invariants_standardization
+L00002533	implementation_surfaces:
+L00002534	- Plans/Architecture_Invariants.md
+L00002535	node_compile_hint:
+L00002536	  mode: bridged_provider_content_identity_contracts
+L00002537	  create_worknodes: false
+L00002538	source_lineage:
+L00002539	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002540	preserved_exact_tokens:
+L00002541	- bridged-provider
+L00002542	- versioned correlation block
+L00002543	- actor/thread/attempt/lineage refs
+L00002544	- /thread/attempt/lineage
+L00002545	- subject_id
+L00002546	- cross-surface content identity
+L00002547	- orchestrator.receipt
+L00002548	- bridge record
+L00002549	negative_constraints:
+L00002550	- orchestrator.receipt must not substitute for canonical cross-surface identity families.
+L00002551	compatibility_only_notes: []
+L00002552	stale_retired_dispositions: []
+L00002553	owner_boundary_notes: []
+L00002554	owner_hints:
+L00002555	- Plans/Architecture_Invariants.md
+L00002556	preserved_contractrefs:
+L00002557	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002558	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002559	```
+L00002560	
+L00002561	### AI-038 - Worktree Source Control Runtime Visibility
+L00002562	
+L00002563	```yaml
+L00002564	plan_unit_id: AI-038
+L00002565	unit_type: requirement
+L00002566	status: accepted
+L00002567	owner_doc: Plans/Architecture_Invariants.md
+L00002568	canonical_text: WorktreeGitImprovement already owns the source-control product boundary, and worktree plus Source Control
+L00002569	  surfaces retarget stale identity anchors to runtime route identity while PM-managed worktree roots appear through Source
+L00002570	  Control / Orchestrator visibility contracts instead of hidden side roots.
+L00002571	gui_related: true
+L00002572	gui_classification_reason: This unit governs Source Control and Orchestrator user-visible worktree visibility.
+L00002573	split_recommended: false
+L00002574	depends_on: []
+L00002575	unblocks: []
+L00002576	acceptance_criteria:
+L00002577	- Covered source spans remain losslessly available for exact-text audit.
+L00002578	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00002579	  bridge.
+L00002580	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00002581	  own contracts.
+L00002582	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002583	validation_surfaces:
+L00002584	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002585	- python3 scripts/pm-plan-index.py validate
+L00002586	risk_class: worktree_source_control_runtime_visibility
+L00002587	reasoning_tier: standard
+L00002588	context_scope: architecture_invariants_standardization
+L00002589	implementation_surfaces:
+L00002590	- Plans/Architecture_Invariants.md
+L00002591	node_compile_hint:
+L00002592	  mode: worktree_source_control_runtime_visibility
+L00002593	  create_worknodes: false
+L00002594	source_lineage:
+L00002595	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+L00002596	preserved_exact_tokens:
+L00002597	- Plans/WorktreeGitImprovement.md
+L00002598	- WorktreeGitImprovement.md
+L00002599	- source-control surface boundary
+L00002600	- identity anchor
+L00002601	- runtime route identity
+L00002602	- PM-managed worktree visibility
+L00002603	- managed Unraid template repos
+L00002604	- live-run artifact directories
+L00002605	- Source Control / Orchestrator
+L00002606	negative_constraints:
+L00002607	- PM-owned git or /file roots must not remain hidden side roots outside Source Control / Orchestrator worktree visibility
+L00002608	  contracts.
+L00002609	compatibility_only_notes: []
+L00002610	stale_retired_dispositions:
+L00002611	- The stale part of WorktreeGitImprovement is the identity anchor, not the product boundary.
+L00002612	owner_boundary_notes: []
+L00002613	owner_hints:
+L00002614	- Plans/Architecture_Invariants.md
+L00002615	preserved_contractrefs:
+L00002616	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+L00002617	  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+L00002618	```
+L00002619	
+
+<<< CONTEXT_AFTER canonical_document_lines=2620-2631 >>>
+L00002620	### AI-039 - Legacy Tier Event And Usage Evidence Demotion
+L00002621	
+L00002622	```yaml
+L00002623	plan_unit_id: AI-039
+L00002624	unit_type: requirement
+L00002625	status: accepted
+L00002626	owner_doc: Plans/Architecture_Invariants.md
+L00002627	canonical_text: Consumers must not mix canonical blocked, scheduler, remediation lineage, or /scheduler/remediation lineage
+L00002628	  with legacy tier-event push streams, and usage/evidence families move away from tier-first correlation toward usage-event
+L00002629	  or node/attempt identity as primary.
+L00002630	gui_related: true
+L00002631	gui_classification_reason: This unit affects user-visible status, usage, ledger, runtime, and graph inspection surfaces.

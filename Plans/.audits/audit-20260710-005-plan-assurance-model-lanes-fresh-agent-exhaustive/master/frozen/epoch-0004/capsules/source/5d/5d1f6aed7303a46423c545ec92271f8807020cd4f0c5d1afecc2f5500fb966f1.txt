@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 736-747 >>>
+  - "max_retries=3"
+  - "1s -> 2s -> 4s"
+  - "+/-25%"
+  - "5"
+  - "2 minutes"
+  - "30s"
+negative_constraints: []
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Provider_OpenCode.md
+```
+
+
+<<< AUTHORITATIVE_CORE 748-1109 >>>
+### CBP-011 - Bridged Capability Projection and Unknown Fact States
+
+```yaml
+plan_unit_id: CBP-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  CLI-bridged and server-bridged providers project the shared provider
+  capability metadata surface, including multi-account routing and pressure
+  interpretation fields, and mark unobservable facts as unsupported, opaque,
+  inferred, or stale rather than copying direct-provider confidence.
+gui_related: false
+gui_classification_reason: Capability projection and confidence states are provider metadata semantics.
+split_recommended: false
+depends_on: [CBP-005]
+unblocks: [CBP-012, CBP-013]
+acceptance_criteria:
+  - Bridged providers project supports_multi_account, account_identity_kind, quota_signal_sources, quota_signal_confidence, supports_threshold_switch, supports_hard_exhaustion_detection, supports_rate_limit_detection, supports_reset_countdown, supports_manual_set_active, supports_cooldown, supports_retry_budget, supports_role_scoped_account_pools, and reset countdown support.
+  - Unobservable provider facts are marked unsupported, opaque, inferred, or stale.
+  - Bridge invoke options such as account_id?, retry_policy?, and max_retries? do not prove multi-account support by themselves.
+  - Canonical resolver must accept the provider capability snapshot before selected request fields are carried.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: bridged_capability_projection_drift
+reasoning_tier: high
+context_scope: provider_capabilities
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: cli_bridged_provider_capability_projection_unknown_states
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0009
+preserved_exact_tokens:
+  - "supports_multi_account"
+  - "account_identity_kind"
+  - "quota_signal_sources"
+  - "supports_hard_exhaustion_detection"
+  - "unsupported"
+  - "opaque"
+  - "inferred"
+  - "stale"
+negative_constraints:
+  - "Bridge invoke options do not by themselves prove multi-account support."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Models_System.md
+```
+
+### CBP-012 - Provider Eligibility Filtering and No Silent Fallback
+
+```yaml
+plan_unit_id: CBP-012
+unit_type: constraint
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  Provider eligibility filtering removes unconfigured, recently rate-limited, or
+  temporarily unavailable providers before adapter selection and returns
+  no_eligible_adapter when no candidate remains.
+gui_related: false
+gui_classification_reason: Eligibility filtering is backend provider selection behavior.
+split_recommended: false
+depends_on: [CBP-011]
+unblocks: []
+acceptance_criteria:
+  - Filtering removes providers missing API key, missing URL, or other required connection fields.
+  - Filtering removes providers currently rate-limited from a known recent 429.
+  - Filtering removes providers temporarily unavailable from a known recent 5xx.
+  - If filtering removes every candidate, the facade returns no_eligible_adapter.
+  - The facade does not silently fall back to an unrelated provider.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_eligibility_fallback_drift
+reasoning_tier: high
+context_scope: provider_capabilities
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: cli_bridged_provider_eligibility_filtering
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0009
+preserved_exact_tokens:
+  - "missing API key"
+  - "missing URL"
+  - "429"
+  - "5xx"
+  - "no_eligible_adapter"
+negative_constraints:
+  - "Do not silently fall back to an unrelated provider."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+```
+
+### CBP-013 - Account Identity Switch Attribution and A2A Trust Boundary
+
+```yaml
+plan_unit_id: CBP-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  CLI_Bridged_Providers owns bridged-provider canonical account identity,
+  switch-reason disclosure, conversational-actor routing, multi-account support
+  declarations, switch attribution, account-routing limits, and the boundary
+  that A2A account/trust migration must not move PM orchestration identity.
+gui_related: true
+gui_classification_reason: switch-reason disclosure and conversational-actor routing have user-visible/account routing implications.
+split_recommended: true
+split_recommendation_reason: Source span S0009 mixes backend capability projection with user-visible switch/account routing and A2A migration boundaries.
+depends_on: [CBP-011]
+unblocks: [CBP-014]
+acceptance_criteria:
+  - CLI_Bridged_Providers.md is the facade owner for canonical account identity.
+  - The facade owns switch-reason disclosure and conversational-actor routing through bridged providers.
+  - Bridged providers declare bridged multi-account support, /switch behavior, switch attribution, and account-routing limits in parity with Multi-Account.md.
+  - Omission is not a declaration that bridged routing is unsupported.
+  - Provider_Stream_Mapping_External_Reference_A2A.md remains external-reference mapping only.
+  - A2A must publish /migration guidance and /account/trust versioning before PM projects new actor/account/trust semantics.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: bridged_account_identity_drift
+reasoning_tier: high
+context_scope: provider_capabilities
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+node_compile_hint:
+  mode: cli_bridged_provider_account_identity_switch_attribution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0009
+preserved_exact_tokens:
+  - "switch-reason"
+  - "conversational-actor"
+  - "/switch"
+  - "Multi-Account.md"
+  - "/account/trust"
+negative_constraints:
+  - "Omission is not a declaration that bridged routing is unsupported."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Multi-Account.md
+```
+
+### CBP-014 - Auth Ingestion Refresh Reconfigure and Nil Client Guards
+
+```yaml
+plan_unit_id: CBP-014
+unit_type: constraint
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  Provider-facade auth ingestion preserves credential precedence,
+  refresh-before-expiry, client reconfigure after token/client change,
+  provider cache obligations, and Gemini/VertexAI fail-fast nil/error client
+  initialization.
+gui_related: false
+gui_classification_reason: Auth ingestion and client initialization are adapter/runtime guard behavior.
+split_recommended: false
+depends_on: [CBP-013]
+unblocks: [CBP-017]
+acceptance_criteria:
+  - Explicit config wins over stored OAuth state unless the resolver records an override.
+  - /expiry evidence triggers refresh before a mid-session 401 stall.
+  - Credential refresh changing effective token/client requires client /reconfigure before reuse.
+  - Provider-specific cache markers including cache-with-OAuth, cache-point, or cache-boundary remain positive adapter obligations when required.
+  - OC-PROV-009 remains PROV evidence for Copilot and bridges whose HTTP client caches auth state.
+  - Gemini/VertexAI nil/error client init result propagates immediately as provider error and is not stored behind a typed-interface value that later appears valid.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: auth_ingestion_client_guard_drift
+reasoning_tier: high
+context_scope: provider_auth_ingestion
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: cli_bridged_provider_auth_ingestion_reconfigure_nil_client
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0009
+preserved_exact_tokens:
+  - "/auth/ingestion"
+  - "/expiry"
+  - "/reconfigure"
+  - "cache-with-OAuth"
+  - "OC-PROV-009"
+  - "Gemini/VertexAI"
+negative_constraints:
+  - "A nil/error client init result must not be stored behind a typed-interface value that later appears valid."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+```
+
+### CBP-015 - Finish Reason Tool Identity Retry and Schema Guards
+
+```yaml
+plan_unit_id: CBP-015
+unit_type: constraint
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  Bridged providers map termination metadata, finish reasons, tool-call
+  identity, retry decisions, and emitted schemas into structured canonical
+  behavior without dispatching truncated tool calls or collapsing duplicate tool
+  calls by name/input.
+gui_related: false
+gui_classification_reason: Finish reason, tool identity, retry, and schema guards are adapter execution semantics.
+split_recommended: false
+depends_on: [CBP-010]
+unblocks: [CBP-016]
+acceptance_criteria:
+  - finishReason=length attached to incomplete tool_use never becomes an /execute request.
+  - The bridge emits tool_result(ok=false, error=truncated_by_length) for downstream tool policy.
+  - FinishReasonUnknown, FinishReasonContentFilter, and FinishReasonSafety remain canonical finish reasons.
+  - Tool call identity is keyed by provider call IDs / UUIDs and never by Name+Input deduplication.
+  - Retry decisions use provider error codes/HTTP status and failure class instead of fragile substring matching.
+  - Unknown errors default to not retrying.
+  - Gemini stream retries restart the underlying connection/iterator from an OUTER retry loop.
+  - Empty choice arrays are checked before indexing and adapter-emitted tool schemas include required fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: finish_reason_tool_identity_retry_drift
+reasoning_tier: high
+context_scope: provider_tool_calls
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: cli_bridged_provider_finish_reason_tool_identity_retry_schema
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0009
+preserved_exact_tokens:
+  - "finishReason=length"
+  - "/no-dispatch"
+  - "FinishReasonUnknown"
+  - "FinishReasonContentFilter"
+  - "FinishReasonSafety"
+  - "Name+Input"
+  - "OC-EXEC-113"
+  - "OC-PROV-003"
+negative_constraints:
+  - "Tool call identity is keyed by provider call IDs / UUIDs, never by Name+Input deduplication."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+```
+
+### CBP-016 - Role Schema Ordering Cancellation and Malformed Tool Storage
+
+```yaml
+plan_unit_id: CBP-016
+unit_type: constraint
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  Provider-facade ingestion declares adapter-facing role schema capabilities,
+  records ordering/reordering boundaries, treats context errors as cancellation,
+  and persists malformed tool-call JSON only as structured error events.
+gui_related: false
+gui_classification_reason: Role schema, ordering, cancellation, and malformed tool-call storage are adapter/event semantics.
+split_recommended: false
+depends_on: [CBP-008, CBP-009, CBP-015]
+unblocks: []
+acceptance_criteria:
+  - system_role_name, developer-role handling, and provider-native role aliases are declared as bridge capabilities and normalized before request construction.
+  - Provider CLI native labels do not silently redefine PM roles.
+  - Buffering/retry/resume records whether downstream consumers see original order, replay order, or repaired order.
+  - Stream cancellation treats ctx.Err() != nil as cancellation and emits EventError with the cancellation reason before close.
+  - Malformed tool-call JSON is validated when stored or admitted, not during later re-serialization.
+  - Malformed provider tool calls may persist only as structured error events and must not be silently dropped from history.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: role_ordering_cancellation_tool_storage_drift
+reasoning_tier: high
+context_scope: provider_tool_calls
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: cli_bridged_provider_role_ordering_cancellation_malformed_tool_storage
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0009
+preserved_exact_tokens:
+  - "/schema"
+  - "system_role_name"
+  - "/reordering"
+  - "ctx.Err() != nil"
+  - "EventError"
+  - "OC-EXEC-109"
+negative_constraints:
+  - "A provider CLI's native label must not silently redefine PM roles."
+  - "Malformed tool-call JSON MUST NOT be silently dropped from history."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+```
+
+### CBP-017 - Retired Gemini CLI Account Root and Provider Protocol Lineage
+
+```yaml
+plan_unit_id: CBP-017
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  Retired Gemini CLI account-root and protocol-probe vocabulary remains
+  available only as source-lineage. Active PM provider support must not create
+  or launch Gemini CLI account roots, must not use GEMINI_CLI_HOME as an
+  active root, and must treat CBP-019/CBP-020 as the replacement canon: Gemini
+  Direct stays direct API, while Antigravity CLI owns the active CLI-runtime
+  lane.
+gui_related: false
+gui_classification_reason: Retired CLI account-root lineage and compatibility disposition rather than visual presentation.
+split_recommended: false
+depends_on: [CBP-014]
+unblocks: []
+acceptance_criteria:
+  - Covered Gemini CLI source tokens remain losslessly available for exact-text audit.
+  - Gemini CLI is not an active CLI-bridged provider route.
+  - GEMINI_CLI_HOME is not reused as an Antigravity account root.
+  - Gemini Direct remains a separate active direct API route.
+  - Antigravity CLI owns active Google-owned CLI-runtime setup and probing.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retired_gemini_cli_protocol_resurrection
+reasoning_tier: high
+context_scope: retired_gemini_cli_lineage
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: retired_gemini_cli_account_protocol_lineage
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0010
+preserved_exact_tokens:
+  - "Gemini CLI account"
+  - "GEMINI_CLI_HOME"
+  - "/session/config"
+  - "OTLP"
+  - "ACP"
+  - "JSON `/stream-json`"
+  - "MCP"
+compatibility_only_notes:
+  - Gemini CLI account-root/protocol evidence is retained for migration/currentness lineage only and is superseded by CBP-019/CBP-020 for active implementation.
+negative_constraints:
+  - "Do not provision or launch Gemini CLI account roots."
+  - "Do not alias `gemini_cli` to `antigravity_cli`."
+  - "Do not reuse `GEMINI_CLI_HOME` for Antigravity."
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+```
+
+
+<<< CONTEXT_AFTER 1110-1121 >>>
+### CBP-018 - ACP Cursor Stale-Assumption Retirement
+
+```yaml
+plan_unit_id: CBP-018
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  ACP is provider-protocol capability metadata for CLI-bridged adapters, and
+  Cursor ACP support retires stale assumptions that Cursor cannot expose ACP
+  while preserving provider ontology, account identity, transport/runtime
+  boundaries, and account-root isolation.

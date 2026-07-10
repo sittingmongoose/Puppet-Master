@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE 2592-2603 >>>
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md,
+  ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2604-2992 >>>
+### T-006 - FileSafe And Embedded Review Guard
+
+```yaml
+plan_unit_id: T-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: FileSafe applies after tool permission and may still block an allowed tool invocation; embedded document review
+  is not a hidden mutation channel.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-004
+unblocks:
+- T-007
+acceptance_criteria:
+- Permission answers whether the agent may call the tool; FileSafe answers whether the invocation may proceed.
+- No direct `patch-apply` or `/suggested-change` mode is introduced for `embedded-document-pane` without a separate tool,
+  permission, FileSafe, and audit contract.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hidden_mutation_channel
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: policy_guard_constraint
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0009
+preserved_exact_tokens:
+- FileSafe
+- '`embedded-document-pane`'
+- '`patch-apply`'
+- '`/suggested-change`'
+negative_constraints:
+- Embedded document review is not a hidden tool mutation channel.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-007 - Central Policy Engine And Result Taxonomy
+
+```yaml
+plan_unit_id: T-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Every agent-usable tool attempt passes through one canonical policy engine for identity, permission, approval/HITL,
+  FileSafe, validation, terminal or shell binding, execution or rejection, and normalized result persistence.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, or
+  visible rendering behavior.
+split_recommended: true
+depends_on:
+- T-004
+- T-006
+unblocks:
+- T-008
+acceptance_criteria:
+- Canonical order 1-7 remains preserved.
+- Shell-backed execution binds to canonical terminal-session state when execution occurs.
+- Denied or blocked shell calls do not mint fake live terminal sessions.
+- Result taxonomy includes all required values.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: policy_order_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_policy_runtime_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0010
+preserved_exact_tokens:
+- allowed_succeeded
+- allowed_runtime_error
+- permission_denied
+- user_declined
+- headless_ask_denied
+- filesafe_blocked
+- validation_blocked
+- cancelled
+- timed_out
+- post_scan_failure
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md'
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md'
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-008 - Tool Routing Audit Gap Carry-Through
+
+```yaml
+plan_unit_id: T-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tool route activations are persistence-aware, audit records preserve unresolved exact_items gap lineage, blocked-packet
+  consumers preserve runtime blocked terms, and recovery/validation/project-state consumers keep lineage explicit without
+  reviving stale request shapes.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, or
+  visible rendering behavior.
+split_recommended: true
+depends_on:
+- T-007
+unblocks: []
+acceptance_criteria:
+- Historical-run navigation may update stored `focused_run_id`; hover previews, comparisons, and pivots must not.
+- gap-001, gap-002, gap-004, gap-005, gap-006, and broken-anchor lineage remain visible until owner docs close them.
+- '`{ tool_name, invocation_summary, options }` is not revived as a canonical ask shape.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: audit_lineage_loss
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: audit_lineage_requirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0011
+preserved_exact_tokens:
+- exact_items
+- gap-001
+- gap-002
+- gap-004
+- gap-005
+- gap-006
+- blocked_notice
+- blocked-episode
+- Last updated
+- /freshness
+- /recovery
+- '`allowed_action_ids` / `allowed_action_ids[]`'
+negative_constraints:
+- Do not revive `{ tool_name, invocation_summary, options }` as canonical ask shape.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Unresolved gap and broken-anchor names remain visible until owner docs close them.
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-009 - Tool Side-Effect Identity And Governance Authority
+
+```yaml
+plan_unit_id: T-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tool export, side-effect, GitHub/Source Control, and runtime-governance records carry operational identity,
+  trust, multi-context repo scope, account re-resolution, blocked-governance, pre-dispatch interception, and shared attention/status
+  payloads.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: true
+depends_on:
+- T-007
+unblocks: []
+acceptance_criteria:
+- Tool consumers do not assume one `/current` repo context.
+- '`/tool`, `operational_identity`, and `trust_state_at_export` remain preserved.'
+- Remote side-effect approval honors runtime governance before execution.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: side_effect_authority_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: side_effect_authority_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0011
+preserved_exact_tokens:
+- multi-repo
+- multi-context
+- DAE
+- /restart
+- re-resolution
+- blocked_owner
+- /governance
+- pre-dispatch
+- info
+- warning
+- attention_required
+- blocked
+- system_notification
+negative_constraints:
+- GitHub and Source Control tool consumers must not assume one `/current` repo context.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-010 - Tool Widgets Scope And Node-Native Evidence
+
+```yaml
+plan_unit_id: T-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tool-facing widgets and command routing expose scope/identity mismatches, normalize command target variants
+  through a shared target model, preserve blocked-sequence identity, and treat node-native evidence as authority while tier
+  fields survive only as compatibility/grouping projections.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, or
+  visible rendering behavior.
+split_recommended: true
+depends_on:
+- T-007
+unblocks: []
+acceptance_criteria:
+- Page-global, app-global, project-scoped, and `/run-centric` scope remain distinct.
+- Missing `IDs` are structural.
+- '`tier-native` and `tier-aligned` never remain execution authority.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_runtime_scope_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: gui_runtime_consumer_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0011
+preserved_exact_tokens:
+- cmd.*.open_*
+- object_kind
+- '`Executor_Protocol` / `Executor_Protocol.md`'
+- '`/attempt/blocked-sequence`'
+- '`node-native`'
+- '`tier-native`'
+- '`tier-aligned`'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- Any `tier-native` or `tier-aligned` fields survive only as compatibility/grouping projections.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-011 - Cross-Plan Tool Permission Reference Map
+
+```yaml
+plan_unit_id: T-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tools keeps a consumer reference map to Permissions_System, FileSafe, FileManager, assistant-chat-design,
+  orchestrator-subagent-integration, and interview-subagent-integration for permission, FileSafe, workspace, approval, and
+  run-config alignment.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, or
+  visible rendering behavior.
+split_recommended: false
+depends_on:
+- T-004
+- T-006
+- T-007
+unblocks: []
+acceptance_criteria:
+- Each plan relation is preserved without re-owning adjacent docs.
+- Permissions_System remains canonical for GUI and persistence permission behavior.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_reference_staleness
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: owner_reference_map
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0012
+preserved_exact_tokens:
+- Permissions_System.md
+- FileSafe.md
+- FileManager.md
+- assistant-chat-design.md
+- orchestrator-subagent-integration.md
+- interview-subagent-integration.md
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-012 - Built-In Tool Registry Target Set
+
+```yaml
+plan_unit_id: T-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The central registry holds canonical built-in tool names, permission keys, limits, and provider-neutral semantics
+  for shell, file, search, web, and question tools; provider/native mappings do not alter registry names or policy evaluation.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, or
+  visible rendering behavior.
+split_recommended: true
+depends_on:
+- T-002
+- T-004
+- T-007
+unblocks:
+- T-013
+- T-016
+acceptance_criteria:
+- Each table tool and permission key remains preserved.
+- OpenCode-compatible evidence is adapter context, not a PM owner override.
+- Plan agents ask before `bash` by default unless policy grants it.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_registry_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_181
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_registry_requirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0013
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0014
+preserved_exact_tokens:
+- bash
+- edit
+- write
+- read
+- grep
+- glob
+- list
+- patch
+- multiedit
+- webfetch
+- websearch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+- question
+- '`opencode` split-terminal behavior'
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The grep stale snapshot/fallback note remains product canon for registry behavior until a later owner pass moves or supersedes
+  it.
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 2993-3004 >>>
+### T-013 - Debug-Capable Tool Classification
+
+```yaml
+plan_unit_id: T-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`debug_capable` is metadata on a tool or capability and classifies cross-surface debug families without creating
+  new tool IDs or bypassing permission, artifact, visibility, or stale-runtime safeguards.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

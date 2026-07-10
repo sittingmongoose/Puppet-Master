@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 6474-6485 >>>
+- "dry-run validation"
+- "hard blocking"
+negative_constraints: []
+compatibility_only_notes:
+- "Compatibility FileSafe snapshot events are emitted only when they map to Contracts-owned safe_point.created / safe_point.restored payload contracts."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 6486-6883 >>>
+### F2-067 - FileSafe Verification Coverage Checklist
+
+```yaml
+plan_unit_id: F2-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe verification checklist coverage includes unit tests for destructive command
+  detection, scope validation, verification-gate exemptions, optimistic concurrency, git
+  snapshot error handling, and post-stage verification; integration tests cover real shell
+  commands, plan apply and rewrite paths, remote-mode mounted project paths, and
+  canonicalization failures.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification coverage requirements.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_verification_coverage_checklist
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0033"
+preserved_exact_tokens:
+- "Unit tests for destructive command detection"
+- "Unit tests for scope validation"
+- "Unit tests for verification-gate exemptions"
+- "Unit tests for optimistic concurrency conflict detection"
+- "Unit tests for git snapshot error handling and post-stage verification"
+- "Integration tests with real shell commands"
+- "Integration tests for plan apply and rewrite paths"
+- "Remote-mode tests covering mounted project paths and canonicalization failures"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-068 - Core Consumer Plan Boundary Notes
+
+```yaml
+plan_unit_id: F2-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Orchestrator consumes FileSafe through BaseRunner::execute_command without orchestrator-logic
+  changes; Interview and Worktree execution are protected without plan-specific changes;
+  MiscPlan cleanup policy is complemented by FileSafe prevention before destructive operations
+  occur.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines owner/consumer relationships between backend plans.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: core_consumer_plan_boundary_notes
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0035"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0036"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0037"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0038"
+preserved_exact_tokens:
+- "Orchestrator Plan"
+- "BaseRunner::execute_command()"
+- "No changes needed to orchestrator logic itself."
+- "Interview Plan"
+- "No interview-specific changes needed."
+- "Worktree Plan"
+- "No worktree-specific changes needed."
+- "MiscPlan"
+- "cleanup policies"
+- "preventing destructive operations before they occur"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Orchestrator, Interview, Worktree, and MiscPlan consume FileSafe guard behavior; FileSafe remains the safety-policy owner."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-069 - Hooks FileSafe First Boundary
+
+```yaml
+plan_unit_id: F2-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Plans/newfeatures.md §9 owns hooks as a user/plugin extension point, while dangerous-command
+  blocking remains FileSafe core pre-execution guard behavior; PreToolUse can invoke the same
+  blocklist and integration point, preserving one blocklist and FileSafe first.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend hook and FileSafe ownership boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: hooks_filesafe_first_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0039"
+preserved_exact_tokens:
+- "Plans/newfeatures.md §9"
+- "Hook system"
+- "user/plugin extension point"
+- "PreToolUse"
+- "continue/block/modify"
+- "Dangerous-command blocking"
+- "FileSafe"
+- "core pre-execution guard"
+- "same blocklist and extension point"
+- "one blocklist and one integration point"
+- "FileSafe first"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "newfeatures.md owns hooks as extension points; FileSafe owns dangerous-command blocking."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-070 - Tool Permission And FileSafe Invocation Boundary
+
+```yaml
+plan_unit_id: F2-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Tools.md owns central tool registry permissions and OpenCode alignment, while FileSafe
+  complements tool permissions by deciding whether a specific invocation may proceed, mapping
+  command blocklist to bash deny patterns, write scope to edit path allowlist, and security
+  filter to read path denial through a single central policy engine.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend permission and invocation-safety boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: tool_permission_and_filesafe_invocation_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0040"
+preserved_exact_tokens:
+- "Plans/Tools.md"
+- "central tool registry"
+- "permission model (allow/deny/ask)"
+- "OpenCode Permissions"
+- "FileSafe and tool permissions are complementary"
+- "may the agent call this tool?"
+- "may this specific invocation proceed?"
+- "command blocklist ≈ bash deny patterns"
+- "write scope ≈ edit path allowlist"
+- "security filter ≈ read path deny (e.g. .env)"
+- "single central policy engine"
+- "Tools.md §2.4"
+- "§2.5"
+- "§8.2"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Tools.md owns registry-level permission policy; FileSafe owns invocation-specific guard decisions."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-071 - Assistant YOLO Shared FileSafe Config And Guard Primacy
+
+```yaml
+plan_unit_id: F2-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Assistant YOLO mode removes permission prompts and the human approval step, so Assistant chat
+  and YOLO runs must use the same FileSafe settings as the rest of the app and FileSafe remains
+  the primary protection layer for destructive commands, write scope, and sensitive files.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend guard primacy and shared config behavior for Assistant YOLO mode.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: assistant_yolo_shared_filesafe_config_and_guard_primacy
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0041"
+preserved_exact_tokens:
+- "YOLO mode"
+- "maximum permissions"
+- "no permission prompts"
+- "no human approval step"
+- "primary protection layer"
+- "Same FileSafe config for Assistant"
+- "Command blocklist"
+- "Write scope"
+- "Security filter"
+- "No separate \"Assistant-only\" bypass unless explicitly configured"
+- "10a. FileSafe and Assistant YOLO mode"
+negative_constraints:
+- "Assistant chat must not have a separate Assistant-only FileSafe bypass unless explicitly configured."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Assistant chat owns chat mode semantics; FileSafe owns guard enforcement and safety state consumed by Assistant YOLO runs."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-072 - YOLO FileSafe Visible State And Explicit Override Surface
+
+```yaml
+plan_unit_id: F2-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  When YOLO is enabled, the GUI should recommend or warn that FileSafe remain enabled, expose
+  active FileSafe state without deep navigation, keep FileSafe toggles easy to find, and allow
+  any per-chat FileSafe relaxation only through an explicit clearly labeled non-default setting.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI-visible FileSafe state, warning, and per-context override presentation
+  for YOLO mode.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: yolo_filesafe_visible_state_and_explicit_override_surface
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0041"
+preserved_exact_tokens:
+- "Recommend FileSafe on when YOLO is on"
+- "FileSafe protects you when YOLO is on"
+- "small indicator"
+- "Configurable and visible"
+- "§13.4"
+- "§15.5"
+- "relax FileSafe for this chat only"
+- "explicit, clearly labeled setting--not the default"
+- "FileSafe should be the main line of defense"
+negative_constraints:
+- "Per-context FileSafe relaxation is not the default when YOLO is on."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Final GUI and Assistant UI consume FileSafe state visibility requirements; FileSafe owns safety state."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-073 - Dirty Layer Search Results Do Not Weaken Mutation Guards
+
+```yaml
+plan_unit_id: F2-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Dirty-layer freshness from grep/search acceleration does not weaken FileSafe mutation or
+  /path-guard behavior; any accelerated search result that leads to a write, patch, restore, or
+  generated edit still passes canonicalization, write-scope, security-filter, and optimistic-
+  concurrency checks before mutation.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend mutation guard requirements for accelerated search results.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: dirty_layer_search_results_do_not_weaken_mutation_guards
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0043"
+preserved_exact_tokens:
+- "dirty-layer freshness"
+- "grep/search acceleration"
+- "/path-guard"
+- "write, patch, restore, or generated edit"
+- "FileSafe canonicalization"
+- "write-scope"
+- "security-filter"
+- "optimistic-concurrency checks"
+- "11.1 FileSafe: Write scope (CRITICAL)"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 6884-6895 >>>
+### F2-074 - Realpath Before Scope Check Owner Invariant
+
+```yaml
+plan_unit_id: F2-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  All file paths submitted to FileSafe write-scope or security-filter checks resolve through
+  realpath before scope comparison, normalize relative paths against working_directory, resolve
+  symlinks, fail closed on resolution failure, compare non-existent create targets through the
+  canonical nearest existing parent plus normalized final segment, recheck before dispatch/promote

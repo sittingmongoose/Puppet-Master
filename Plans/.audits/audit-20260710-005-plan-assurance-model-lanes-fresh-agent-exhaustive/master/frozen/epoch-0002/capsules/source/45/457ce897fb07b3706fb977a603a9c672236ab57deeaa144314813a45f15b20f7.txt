@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE 2730-2741 >>>
+- "file-tree action handoff"
+- "Source Control review behavior"
+- "not optional appendices"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "The old placeholder restore missing §10-§12 is retired."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2742-3118 >>>
+### F-042 - Breadcrumb And Outline LSP Fallback
+
+```yaml
+plan_unit_id: F-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager owns the editor breadcrumb strip and outline; available LSP data uses
+  documentSymbol, fallback uses heuristic or regex outline data, and degraded state is labeled
+  when LSP is unavailable.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs visible editor breadcrumb and outline surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: breadcrumb_and_outline_lsp_fallback
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0039"
+preserved_exact_tokens:
+- "breadcrumb strip"
+- "outline"
+- "documentSymbol"
+- "heuristic or regex outline data"
+- "degraded state"
+- "LSP"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-043 - Editor Surface Seams And Strong Preview Coverage
+
+```yaml
+plan_unit_id: F-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager keeps broad editor meta-findings canonical, preserves sparse implementation seams as
+  visible product seams, keeps image and HTML/browser preview coverage explicit, keeps cmd.browser
+  command routing with the browser command family, and shares click-to-open from files-touched,
+  Read:, and Edited: entries with assistant-chat-design.
+gui_related: true
+gui_classification_reason: >-
+  This unit carries user-visible editor, preview, browser, and chat routing surface boundaries.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: editor_surface_seams_and_strong_preview_coverage
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0039"
+preserved_exact_tokens:
+- "/buffers"
+- "/dirty"
+- "/drop"
+- "image /HTML preview"
+- "rename"
+- "delete"
+- "duplicate"
+- "/compare"
+- "patch/conflict handling"
+- "symbol-index fallback"
+- "remote SSH/LSP"
+- "cmd.browser"
+- "cmd.browser.*"
+- "files-touched"
+- "Read:"
+- "Edited:"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Browser preview and cmd.browser routing belong to the browser owner docs; click-to-open from chat entries is shared with assistant-chat-design.md."
+owner_hints:
+- "Plans/FileManager.md"
+split_recommendation_reason: >-
+  The span mixes strong existing preview coverage, sparse editor seams, and cross-doc browser/chat
+  routing boundaries; later implementation may split those surfaces.
+```
+
+### F-044 - Go To Symbol Owner And Fallbacks
+
+```yaml
+plan_unit_id: F-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager §10.2 is the canonical owner for Go to symbol; command-palette and quick-open symbol
+  picker behavior uses documentSymbol and workspace/symbol when LSP is available and heuristic,
+  regex, or indexed symbol fallbacks when it is not.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs command-palette and quick-open symbol picker behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: go_to_symbol_owner_and_fallbacks
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0040"
+preserved_exact_tokens:
+- "FileManager §10.2"
+- "Go to symbol"
+- "command-palette"
+- "quick-open symbol picker"
+- "documentSymbol"
+- "workspace/symbol"
+- "heuristic, regex, or indexed symbol fallback"
+- "FileManager §10.9"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "References to FileManager §10.9 as the Go to symbol owner are stale and must be corrected rather than inventing a new §10.9 owner."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-045 - Symbol Index Status Search Boundary
+
+```yaml
+plan_unit_id: F-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Symbol-index /status language in FileManager is scoped to Go to symbol and semantic navigation;
+  FileManager consumes search results and fallback labels while grep and Search regex acceleration
+  stay under Tools and storage-plan.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs visible symbol-index status and fallback labels while preserving Search
+  ownership boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: symbol_index_status_search_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0040"
+preserved_exact_tokens:
+- "symbol-index /status"
+- "/FileManager.md"
+- "grep"
+- "Search regex acceleration"
+- "Tools"
+- "storage-plan"
+- "fallback labels"
+negative_constraints:
+- "Symbol-index /status language must not imply that the regex index owns File Manager search or symbol indexing."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Search and grep acceleration remain under Tools and storage-plan; FileManager consumes results and labels."
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-046 - Diagnostics Gutter And Change Marker Projection
+
+```yaml
+plan_unit_id: F-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Diagnostics, gutter markers, and editor change markers render in the editor surface, consume LSP
+  or fallback projections, and preserve open-file identity from §4.1.
+gui_related: true
+gui_classification_reason: >-
+  Diagnostics, gutter markers, and change markers are visible editor projections.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: diagnostics_gutter_and_change_marker_projection
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0041"
+preserved_exact_tokens:
+- "Diagnostics"
+- "gutter markers"
+- "editor change markers"
+- "LSP"
+- "fallback projections"
+- "§4.1"
+- "open-file identity"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-047 - Editor Semantic Actions And FileSafe Mutation Boundary
+
+```yaml
+plan_unit_id: F-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Definition, references, hover, code actions, formatting, rename, and apply-edit flows route
+  through the FileManager editor surface, with FileSafe used whenever a mutation is applied.
+gui_related: true
+gui_classification_reason: >-
+  Definition, hover, code action, formatting, rename, and apply-edit flows are visible editor
+  actions.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: editor_semantic_actions_and_filesafe_mutation_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0042"
+preserved_exact_tokens:
+- "Definition"
+- "references"
+- "hover"
+- "code actions"
+- "formatting"
+- "rename"
+- "apply-edit"
+- "FileSafe"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+### F-048 - Add To Assistant Chat File Reference Lock
+
+```yaml
+plan_unit_id: F-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  FileManager owns the file-tree action surface, and cmd.chat.add_file_reference is a lock: Add to
+  Assistant Chat inserts a visible file reference chip into the active composer or thread context,
+  file references are file-only in MVP, and folder insertion is out of scope.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs the visible Add to Assistant Chat action and composer reference chip.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: file_manager_drift
+reasoning_tier: standard
+context_scope: file_manager_standardization
+implementation_surfaces:
+- "Plans/FileManager.md"
+node_compile_hint:
+  mode: add_to_assistant_chat_file_reference_lock
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0043"
+preserved_exact_tokens:
+- "cmd.chat.add_file_reference"
+- "lock, not a recommendation"
+- "Add to Assistant Chat"
+- "visible file reference chip"
+- "active composer/thread context"
+- "file-only in MVP"
+- "folder insertion is out of scope"
+negative_constraints:
+- "Add to Assistant Chat must not inline full file contents as a hidden side effect."
+- "Folder insertion is out of scope for MVP."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileManager.md"
+```
+
+
+<<< CONTEXT_AFTER 3119-3130 >>>
+### F-049 - Search Entrypoint Delegation
+
+```yaml
+plan_unit_id: F-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileManager.md
+canonical_text: >-
+  Search entrypoints from command palette, keyboard shortcuts, Search panel chrome, and context
+  menus normalize to the Search-owned cmd.search.* family; FileManager may reveal or open selected
+  file results but must not duplicate Search semantics under file-manager-local or legacy
+  /chat/lsp-local names.

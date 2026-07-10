@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE 6314-6325 >>>
+- .puppet-master/evidence/android/screen.png
+- adb shell screenrecord /sdcard/test.mp4
+- adb pull /sdcard/test.mp4 .puppet-master/evidence/android/test.mp4
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 6326-6705 >>>
+### N2-110 - Expo React Native Generated Plan Commands
+
+```yaml
+plan_unit_id: N2-110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Generated Expo/React Native plans preserve npx expo start with i/a simulator shortcuts, npx expo run:ios, npx expo run:android, detox test -c ios.sim.debug, and detox test -c android.emu.debug.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: expo_react_native_generated_plan_commands
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: expo_react_native_generated_plan_commands
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0060
+preserved_exact_tokens:
+- npx expo start
+- press i
+- a (Android emulator)
+- npx expo run:ios
+- npx expo run:android
+- detox test -c ios.sim.debug
+- detox test -c android.emu.debug
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-111 - Detox Artifact Config Baseline
+
+```yaml
+plan_unit_id: N2-111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The Detox artifact baseline preserves detox.config.js with artifacts.rootDir .puppet-master/evidence/detox and enabled screenshot, video, and log plugins, including shouldTakeAutomaticSnapshots.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: detox_artifact_config_baseline
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: detox_artifact_config_baseline
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0060
+preserved_exact_tokens:
+- detox.config.js
+- rootDir
+- .puppet-master/evidence/detox
+- screenshot
+- shouldTakeAutomaticSnapshots
+- video
+- log
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-112 - Fallback E2E Snippets
+
+```yaml
+plan_unit_id: N2-112
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Fallback E2E snippets preserve maestro test flows/smoke.yaml and Appium driver-managed screenshots/recordings through session APIs or executeScript mobile commands in the test runtime.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: fallback_e2e_snippets
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: fallback_e2e_snippets
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0061
+preserved_exact_tokens:
+- maestro test flows/smoke.yaml
+- Appium
+- session APIs
+- executeScript
+- mobile commands
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-113 - Preview Build Docker Actions Scope
+
+```yaml
+plan_unit_id: N2-113
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Preview, Build, Docker, and Actions contracts define deterministic Slint-rebuild behavior for Preview/Build actions and their Docker/GitHub Actions integrations.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: preview_build_docker_actions_scope
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: preview_build_docker_actions_scope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0062
+preserved_exact_tokens:
+- 14.6 Preview, Build, Docker, and Actions Contracts
+- Slint-rebuild
+- Preview/Build actions
+- Docker/GitHub Actions integrations
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md#7.2, ContractName:Plans/Project_Output_Artifacts.md'
+```
+
+### N2-114 - Preview UX And Session Behavior
+
+```yaml
+plan_unit_id: N2-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Preview controls require Dashboard Orchestrator Status to include PREVIEW and Orchestrator Progress widget.orchestrator_status to include Preview. Preview resolves from selected stack and visual_targets, launches one preview_session_id per action, emits manifest.json, timeline.jsonl, screenshots/video when available, and shows inline chat evidence or a deterministic clickable artifact fallback.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: preview_ux_session_behavior
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: preview_ux_session_behavior
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0063
+preserved_exact_tokens:
+- PREVIEW
+- widget.orchestrator_status
+- Preview
+- visual_targets
+- preview_session_id
+- manifest.json
+- timeline.jsonl
+- screenshot/video
+- clickable artifact path
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: UICommand:cmd.orchestrator.preview_open, UICommand:cmd.orchestrator.preview_stop, UICommand:cmd.orchestrator.open_preview_artifact, SchemaID:evidence.schema.json'
+```
+
+### N2-115 - Preview UI Command IDs
+
+```yaml
+plan_unit_id: N2-115
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Reserved canonical preview UI command IDs are cmd.orchestrator.preview_open, cmd.orchestrator.preview_stop, and cmd.orchestrator.open_preview_artifact.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: preview_ui_command_ids
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: preview_ui_command_ids
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0063
+preserved_exact_tokens:
+- cmd.orchestrator.preview_open
+- cmd.orchestrator.preview_stop
+- cmd.orchestrator.open_preview_artifact
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- These command IDs are canonical and reserved.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: UICommand:cmd.orchestrator.preview_open, UICommand:cmd.orchestrator.preview_stop, UICommand:cmd.orchestrator.open_preview_artifact, SchemaID:evidence.schema.json'
+```
+
+### N2-116 - Build Controls And Artifact UI
+
+```yaml
+plan_unit_id: N2-116
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Build controls require Dashboard Orchestrator Status to include BUILD and Orchestrator Progress widget.orchestrator_status to include Build. Build action resolves native, web, mobile, or container profile from project stack and settings; GUI shows latest artifact list with open path / copy path action; chat shows a concise build summary plus artifact links.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: build_controls_artifact_ui
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: build_controls_artifact_ui
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0064
+preserved_exact_tokens:
+- BUILD
+- widget.orchestrator_status
+- Build
+- native
+- web
+- mobile
+- container
+- open path / copy path
+- artifact links
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md'
+```
+
+### N2-117 - Build Result Payload Minima
+
+```yaml
+plan_unit_id: N2-117
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Build runs produce a normalized build_result payload containing build_id, build_profile, status, artifacts[] with path, kind, sha256, and size_bytes, plus logs_path.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: build_result_payload_minima
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: build_result_payload_minima
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0064
+preserved_exact_tokens:
+- build_result
+- build_id
+- build_profile
+- status
+- artifacts[]
+- path
+- kind
+- sha256
+- size_bytes
+- logs_path
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md'
+```
+
+
+<<< CONTEXT_AFTER 6706-6717 >>>
+### N2-118 - Build Output Examples And Commands
+
+```yaml
+plan_unit_id: N2-118
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Build output examples and commands preserve Linux installer outputs under installer/linux/, multi-platform installer helper concrete path reporting, and reserved canonical command IDs cmd.orchestrator.build_run and cmd.orchestrator.open_build_artifact.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: true
+depends_on: []

@@ -1,0 +1,96 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "wave_schema_crosscheck_v1",
+  "counts": {
+    "assignments": 8,
+    "eligible": 8,
+    "pending": 0,
+    "rejected": 0
+  },
+  "eligible_assignment_ids": [
+    "A005-001013-EXACT-WIN-7414C6C901F8-0009",
+    "A005-001014-ADVERSARIAL-WIN-7414C6C901F8-0009",
+    "A005-001015-EXACT-WIN-7414C6C901F8-0010",
+    "A005-001016-ADVERSARIAL-WIN-7414C6C901F8-0010",
+    "A005-001017-EXACT-WIN-7414C6C901F8-0011",
+    "A005-001018-ADVERSARIAL-WIN-7414C6C901F8-0011",
+    "A005-001019-EXACT-WIN-7414C6C901F8-0012",
+    "A005-001020-ADVERSARIAL-WIN-7414C6C901F8-0012"
+  ],
+  "results": [
+    {
+      "assignment_id": "A005-001013-EXACT-WIN-7414C6C901F8-0009",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "28998aef86f8acefe6b4c1850f8702f3476b81d5e9354cfd254a89b18f52f347",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001013_exact_0009_terminal",
+      "terminal_seal_sha256": "17bcd1dfa57791700db8b823480e44377707bae4df4f6a16e44864554f6677ce"
+    },
+    {
+      "assignment_id": "A005-001014-ADVERSARIAL-WIN-7414C6C901F8-0009",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "91da2ecc3ef5e4e996db364b04073f9a096df18af1da73140b05eed9363025e5",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001014_adversarial_0009_terminal",
+      "terminal_seal_sha256": "a202bdd3a9418dde9b4ca79d8c7ab6bb59d167167c873f5dfef448a19d34d4b3"
+    },
+    {
+      "assignment_id": "A005-001015-EXACT-WIN-7414C6C901F8-0010",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "cb4de69f355655699febe533565d8430d790a26b9a6d0b6c0e0e8e220a3e0baa",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001015_exact_0010_terminal",
+      "terminal_seal_sha256": "ea9395f928566750aef5485ebe073932c30dcb36afacab617abe1aa7e958174b"
+    },
+    {
+      "assignment_id": "A005-001016-ADVERSARIAL-WIN-7414C6C901F8-0010",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "7a3474c3b2060289b68d9b3b703295f29bcf39186902f66203f33b0aa8a91643",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001016_adversarial_0010_terminal",
+      "terminal_seal_sha256": "809cf20c9fbe3e61b12ded3c8db5e45ab02e2c20e42fb36181619014887250a8"
+    },
+    {
+      "assignment_id": "A005-001017-EXACT-WIN-7414C6C901F8-0011",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "6418ea6b64a53108829f83f95168e49629629281f63d2c7a6f453d5fd9d874b6",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001017_exact_0011_terminal",
+      "terminal_seal_sha256": "f4a4fdf0f019c65c7927a43d9f5a722e25857b28b003dbcdcbd3d625ab62030d"
+    },
+    {
+      "assignment_id": "A005-001018-ADVERSARIAL-WIN-7414C6C901F8-0011",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "ce855bb17eb9423700fcf1dac0c6a81a93d0f9b550755ad1b3c2b2e0a9633f51",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001018_adversarial_0011_terminal",
+      "terminal_seal_sha256": "df87229a143763490a018fa037ad466e58b33971cddee5091978de49d317dd64"
+    },
+    {
+      "assignment_id": "A005-001019-EXACT-WIN-7414C6C901F8-0012",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "0c264a1c28f86a8fef439e963e8686132c5e532896208ebbd332c54bd232c028",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001019_exact_0012_terminal",
+      "terminal_seal_sha256": "ecfd8ab36446e4f950dcd4e8e670612bb2b3a76e865bbf21fa59488f10022555"
+    },
+    {
+      "assignment_id": "A005-001020-ADVERSARIAL-WIN-7414C6C901F8-0012",
+      "attempt_id": "attempt-0009",
+      "errors": [],
+      "result_sha256": "728813d7131c440a8fcd682a51fe1447f22ddc166b25f7177d5cb3dab84642ae",
+      "state": "eligible",
+      "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001020_adversarial_0012_terminal",
+      "terminal_seal_sha256": "b2f54d405feabb2e5a8bd15ff4a64234dafd4074ff6c65808ee35c6b10f953aa"
+    }
+  ],
+  "status": "pass",
+  "wave_id": "blind-wave-0003-a"
+}

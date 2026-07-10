@@ -1,0 +1,99 @@
+<<< AUTHORITATIVE_CORE 1-98 >>>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.acceptance_manifest.schema.v1",
+  "title": "Puppet Master Acceptance Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "graph_id", "generated_at_utc", "nodes"],
+  "properties": {
+    "schema_id": {"type": "string", "const": "pm.acceptance_manifest.schema.v1"},
+    "graph_id": {"type": "string", "minLength": 1},
+    "generated_at_utc": {"type": "string", "minLength": 1},
+    "export_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional export manifest identity for acceptance packets; used with export_kind, project_id, focused_run_id, source_surface, generated_at_utc, filter_summary, included_record_ids[], included_artifact_ids[], included_file_paths[]?, lineage_notes?, trust_state_at_export?, status_notes, and schema_version."
+    },
+    "export_kind": {"type": "string", "minLength": 1},
+    "project_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "focused_run_id": {"type": "string", "minLength": 1},
+    "source_surface": {"type": "string", "minLength": 1},
+    "filter_summary": {"type": "string"},
+    "record_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "artifact_counts": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "included_record_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "included_artifact_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "included_file_paths": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "lineage_notes": {"type": "string"},
+    "trust_state_at_export": {"type": "string"},
+    "status_notes": {"type": "string"},
+    "schema_version": {"type": "string", "minLength": 1},
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/node_entry"}
+    }
+  },
+  "$defs": {
+    "evidence_pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "path"],
+      "properties": {
+        "schema_id": {"type": "string", "const": "pm.evidence.schema.v1"},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "command_spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd", "expect_exit_code"],
+      "properties": {
+        "cmd": {"type": "string", "minLength": 1},
+        "cwd": {"type": "string"},
+        "expect_exit_code": {"type": "integer"},
+        "timeout_ms": {"type": "integer", "minimum": 0},
+        "expect_stdout_contains": {"type": "array", "items": {"type": "string"}},
+        "expect_stderr_contains": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "check_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "commands"],
+      "properties": {
+        "check_id": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/command_spec"}
+        },
+        "expected_events": {"type": "array", "items": {"type": "string"}},
+        "contract_refs": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "node_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "evidence_required", "checks"],
+      "properties": {
+        "node_id": {"type": "string", "minLength": 1},
+        "evidence_required": {"$ref": "#/$defs/evidence_pointer"},
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/check_entry"}
+        }
+      }
+    }
+  }
+}

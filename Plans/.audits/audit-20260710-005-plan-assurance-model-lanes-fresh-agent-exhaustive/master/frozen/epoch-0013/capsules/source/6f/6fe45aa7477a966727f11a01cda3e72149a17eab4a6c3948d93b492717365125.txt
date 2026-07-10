@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9247-9258 >>>
+L00009247	- "doc:"
+L00009248	- "artifact:"
+L00009249	- "inspector_target"
+L00009250	negative_constraints:
+L00009251	- "`inspector_target` is secondary metadata, not primary identity."
+L00009252	compatibility_only_notes: []
+L00009253	stale_retired_dispositions: []
+L00009254	owner_boundary_notes: []
+L00009255	owner_hints:
+L00009256	- "Plans/FinalGUISpec.md"
+L00009257	```
+L00009258	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9259-9654 >>>
+L00009259	### F3-107 - Indexing Settings Admin Surface
+L00009260	
+L00009261	```yaml
+L00009262	plan_unit_id: F3-107
+L00009263	unit_type: requirement
+L00009264	status: accepted
+L00009265	owner_doc: Plans/FinalGUISpec.md
+L00009266	canonical_text: >-
+L00009267	  Indexing settings expose project-search index controls for enablement, thresholds, generated and
+L00009268	  custom exclusions, follow-symlinks default OFF, partial remote cache controls, disk usage, cache
+L00009269	  eviction confirmation, and rebuild.
+L00009270	gui_related: true
+L00009271	gui_classification_reason: >-
+L00009272	  This unit defines visible Settings controls for search indexing administration.
+L00009273	split_recommended: false
+L00009274	depends_on: []
+L00009275	unblocks: []
+L00009276	acceptance_criteria:
+L00009277	- "The covered source span remains losslessly available for exact-text audit."
+L00009278	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009279	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009280	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009281	validation_surfaces:
+L00009282	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009283	- "python3 scripts/pm-plan-index.py validate"
+L00009284	risk_class: finalgui_drift
+L00009285	reasoning_tier: standard
+L00009286	context_scope: finalgui_standardization
+L00009287	implementation_surfaces:
+L00009288	- "Plans/FinalGUISpec.md"
+L00009289	node_compile_hint:
+L00009290	  mode: indexing_settings_admin_surface
+L00009291	  create_worknodes: false
+L00009292	source_lineage:
+L00009293	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0073"
+L00009294	preserved_exact_tokens:
+L00009295	- "enable/disable index"
+L00009296	- "large file threshold"
+L00009297	- "follow-symlinks toggle default OFF"
+L00009298	- "/partial"
+L00009299	- "manual cache eviction"
+L00009300	- "Rebuild Index"
+L00009301	- "remote-only cache controls"
+L00009302	negative_constraints: []
+L00009303	compatibility_only_notes: []
+L00009304	stale_retired_dispositions: []
+L00009305	owner_boundary_notes: []
+L00009306	owner_hints:
+L00009307	- "Plans/FinalGUISpec.md"
+L00009308	```
+L00009309	
+L00009310	### F3-108 - Settings Provider Web Row Disclosure
+L00009311	
+L00009312	```yaml
+L00009313	plan_unit_id: F3-108
+L00009314	unit_type: requirement
+L00009315	status: accepted
+L00009316	owner_doc: Plans/FinalGUISpec.md
+L00009317	canonical_text: >-
+L00009318	  Settings provider and web rows preserve row-level health/error disclosure, last-failure
+L00009319	  messaging, availability, support-tier visibility, readiness state, provider identity, and
+L00009320	  contextual help without moving provider routing ownership out of Tools.
+L00009321	gui_related: true
+L00009322	gui_classification_reason: >-
+L00009323	  This unit defines visible Settings row disclosure and help/autocomplete behavior.
+L00009324	split_recommended: true
+L00009325	depends_on: []
+L00009326	unblocks: []
+L00009327	acceptance_criteria:
+L00009328	- "The covered source span remains losslessly available for exact-text audit."
+L00009329	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009330	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009331	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009332	validation_surfaces:
+L00009333	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009334	- "python3 scripts/pm-plan-index.py validate"
+L00009335	risk_class: finalgui_drift
+L00009336	reasoning_tier: standard
+L00009337	context_scope: finalgui_standardization
+L00009338	implementation_surfaces:
+L00009339	- "Plans/FinalGUISpec.md"
+L00009340	node_compile_hint:
+L00009341	  mode: settings_provider_web_row_disclosure
+L00009342	  create_worknodes: false
+L00009343	source_lineage:
+L00009344	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0074"
+L00009345	preserved_exact_tokens:
+L00009346	- "row-level health/error disclosure"
+L00009347	- "last-failure messaging"
+L00009348	- "support-tier visibility"
+L00009349	- "/web help/autocomplete"
+L00009350	- "provider identity"
+L00009351	- "readiness state"
+L00009352	- "Plans/Tools.md"
+L00009353	negative_constraints:
+L00009354	- "Provider routing ownership must not move out of `Plans/Tools.md`."
+L00009355	compatibility_only_notes: []
+L00009356	stale_retired_dispositions: []
+L00009357	owner_boundary_notes:
+L00009358	- "The row contract includes provider identity, support tier, readiness state, last failure, and contextual help."
+L00009359	owner_hints:
+L00009360	- "Plans/FinalGUISpec.md"
+L00009361	```
+L00009362	
+L00009363	### F3-109 - Unified Settings Tab Registry
+L00009364	
+L00009365	```yaml
+L00009366	plan_unit_id: F3-109
+L00009367	unit_type: requirement
+L00009368	status: accepted
+L00009369	owner_doc: Plans/FinalGUISpec.md
+L00009370	canonical_text: >-
+L00009371	  The unified Settings surface exposes the canonical 19-tab registry so run-touched settings
+L00009372	  content has a visible landing zone, unsupported tabs remain searchable and command-addressable,
+L00009373	  and tab placement routes to owner docs instead of copying their detailed behavior.
+L00009374	gui_related: true
+L00009375	gui_classification_reason: >-
+L00009376	  This unit defines visible Settings tab structure, labels, searchability, and owner routing.
+L00009377	split_recommended: true
+L00009378	depends_on: []
+L00009379	unblocks: []
+L00009380	acceptance_criteria:
+L00009381	- "The covered source span remains losslessly available for exact-text audit."
+L00009382	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009383	- "The Settings Tab Registry is canonical at 19 tabs and includes Terminal."
+L00009384	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009385	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009386	validation_surfaces:
+L00009387	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009388	- "python3 scripts/pm-plan-index.py validate"
+L00009389	risk_class: finalgui_drift
+L00009390	reasoning_tier: standard
+L00009391	context_scope: finalgui_standardization
+L00009392	implementation_surfaces:
+L00009393	- "Plans/FinalGUISpec.md"
+L00009394	node_compile_hint:
+L00009395	  mode: unified_settings_tab_registry
+L00009396	  create_worknodes: false
+L00009397	source_lineage:
+L00009398	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0074"
+L00009399	- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+L00009400	- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+L00009401	- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
+L00009402	preserved_exact_tokens:
+L00009403	- "Settings Tab Registry"
+L00009404	- "19-tab Settings registry"
+L00009405	- "General"
+L00009406	- "Models / Providers"
+L00009407	- "Tiers (retired alias)"
+L00009408	- "Branching"
+L00009409	- "Verification"
+L00009410	- "Memory"
+L00009411	- "Budgets"
+L00009412	- "Advanced"
+L00009413	- "Terminal"
+L00009414	- "Permissions"
+L00009415	- "LSP"
+L00009416	- "Interview"
+L00009417	- "Media"
+L00009418	- "Auth"
+L00009419	- "Health"
+L00009420	- "Rules"
+L00009421	- "Shortcuts"
+L00009422	- "Skills"
+L00009423	- "Plugins"
+L00009424	- "24 tabs across 5 groups"
+L00009425	- "Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML"
+L00009426	negative_constraints:
+L00009427	- "Hidden or unsupported tabs remain searchable and command-addressable instead of disappearing silently."
+L00009428	compatibility_only_notes:
+L00009429	- "`Tiers (retired alias)` is compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces."
+L00009430	stale_retired_dispositions:
+L00009431	- "`24 tabs across 5 groups` and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` list are stale migration/source-lineage notes only."
+L00009432	owner_boundary_notes: []
+L00009433	owner_hints:
+L00009434	- "Plans/FinalGUISpec.md"
+L00009435	```
+L00009436	
+L00009437	### F3-110 - Settings Help Scope And Legacy Alias Migration
+L00009438	
+L00009439	```yaml
+L00009440	plan_unit_id: F3-110
+L00009441	unit_type: constraint
+L00009442	status: accepted
+L00009443	owner_doc: Plans/FinalGUISpec.md
+L00009444	canonical_text: >-
+L00009445	  Settings is the tooltip-heavy help surface for setting meaning and precedence, may expose
+L00009446	  package/seam/lane/run/account-aware scopes, and migrates older Tiers, tiers.slint, and TierTree
+L00009447	  settings rows as aliases only.
+L00009448	gui_related: true
+L00009449	gui_classification_reason: >-
+L00009450	  This unit constrains visible Settings help copy, scope labels, and legacy alias presentation.
+L00009451	split_recommended: true
+L00009452	depends_on: []
+L00009453	unblocks: []
+L00009454	acceptance_criteria:
+L00009455	- "The covered source span remains losslessly available for exact-text audit."
+L00009456	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009457	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009458	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009459	validation_surfaces:
+L00009460	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009461	- "python3 scripts/pm-plan-index.py validate"
+L00009462	risk_class: compatibility_drift
+L00009463	reasoning_tier: standard
+L00009464	context_scope: finalgui_standardization
+L00009465	implementation_surfaces:
+L00009466	- "Plans/FinalGUISpec.md"
+L00009467	node_compile_hint:
+L00009468	  mode: settings_help_scope_and_legacy_alias_migration
+L00009469	  create_worknodes: false
+L00009470	source_lineage:
+L00009471	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0074"
+L00009472	preserved_exact_tokens:
+L00009473	- "tooltip-heavy `/help`"
+L00009474	- "global"
+L00009475	- "/project"
+L00009476	- "/seam/lane/run/account-aware"
+L00009477	- "Tiers"
+L00009478	- "tiers.slint"
+L00009479	- "TierTree"
+L00009480	- "node/package/lane/seam"
+L00009481	negative_constraints:
+L00009482	- "Detailed behavior remains in the owner docs; FinalGUISpec owns discoverability, grouping, disabled-state copy, and cross-surface routing."
+L00009483	compatibility_only_notes:
+L00009484	- "Settings rows that still arrive from older run artifacts under `Tiers`, `tiers.slint`, or `TierTree` migrate to this registry as aliases only."
+L00009485	stale_retired_dispositions: []
+L00009486	owner_boundary_notes: []
+L00009487	owner_hints:
+L00009488	- "Plans/FinalGUISpec.md"
+L00009489	```
+L00009490	
+L00009491	### F3-111 - Storage Usage Inspector Owner Boundaries
+L00009492	
+L00009493	```yaml
+L00009494	plan_unit_id: F3-111
+L00009495	unit_type: requirement
+L00009496	status: accepted
+L00009497	owner_doc: Plans/FinalGUISpec.md
+L00009498	canonical_text: >-
+L00009499	  FinalGUISpec exposes storage and usage detail, history, ledger, runtime, and receipt inspector
+L00009500	  entrypoints while storage-plan and usage-feature remain owner docs for storage, usage record
+L00009501	  truth, projection rules, key registration, projector rebuild, and receipt row shape.
+L00009502	gui_related: true
+L00009503	gui_classification_reason: >-
+L00009504	  This unit defines visible inspector entrypoints and cross-surface routing to owner truths.
+L00009505	split_recommended: true
+L00009506	depends_on: []
+L00009507	unblocks: []
+L00009508	acceptance_criteria:
+L00009509	- "The covered source span remains losslessly available for exact-text audit."
+L00009510	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009511	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009512	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009513	validation_surfaces:
+L00009514	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009515	- "python3 scripts/pm-plan-index.py validate"
+L00009516	risk_class: owner_route_drift
+L00009517	reasoning_tier: standard
+L00009518	context_scope: finalgui_standardization
+L00009519	implementation_surfaces:
+L00009520	- "Plans/FinalGUISpec.md"
+L00009521	node_compile_hint:
+L00009522	  mode: storage_usage_inspector_owner_boundaries
+L00009523	  create_worknodes: false
+L00009524	source_lineage:
+L00009525	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0074"
+L00009526	preserved_exact_tokens:
+L00009527	- "/detail/history/ledger/runtime"
+L00009528	- "effective_account_id"
+L00009529	- "redb-backed projection pages"
+L00009530	- "seglog-derived views"
+L00009531	- "projector `/rebuild`"
+L00009532	- "receipt row shape"
+L00009533	- "storage-plan.md"
+L00009534	- "usage-feature.md"
+L00009535	negative_constraints:
+L00009536	- "FinalGUISpec may expose receipt summaries only by routing to storage-plan owner truth."
+L00009537	compatibility_only_notes:
+L00009538	- "`Plans/usage-feature.md` / `/usage-feature.md` may surface usage-local and tier-local legacy identity only as migration vocabulary."
+L00009539	stale_retired_dispositions: []
+L00009540	owner_boundary_notes:
+L00009541	- "`Plans/storage-plan.md` / `/storage-plan.md` and `Plans/usage-feature.md` / `/usage-feature.md` remain the consumer docs for storage and usage record truth."
+L00009542	owner_hints:
+L00009543	- "Plans/FinalGUISpec.md"
+L00009544	```
+L00009545	
+L00009546	### F3-112 - Runtime Override Display And Operational Identity Grammar
+L00009547	
+L00009548	```yaml
+L00009549	plan_unit_id: F3-112
+L00009550	unit_type: requirement
+L00009551	status: accepted
+L00009552	owner_doc: Plans/FinalGUISpec.md
+L00009553	canonical_text: >-
+L00009554	  Runtime-related Settings, inspectors, and history surfaces share requested/effective override
+L00009555	  display grammar and use the bounded operational-identity payload with kind, requested_ref,
+L00009556	  effective_ref, selection_reason, and partial_capability fields.
+L00009557	gui_related: true
+L00009558	gui_classification_reason: >-
+L00009559	  This unit defines visible Settings, inspector, and history display grammar.
+L00009560	split_recommended: true
+L00009561	depends_on: []
+L00009562	unblocks: []
+L00009563	acceptance_criteria:
+L00009564	- "The covered source span remains losslessly available for exact-text audit."
+L00009565	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009566	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009567	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009568	validation_surfaces:
+L00009569	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009570	- "python3 scripts/pm-plan-index.py validate"
+L00009571	risk_class: finalgui_drift
+L00009572	reasoning_tier: standard
+L00009573	context_scope: finalgui_standardization
+L00009574	implementation_surfaces:
+L00009575	- "Plans/FinalGUISpec.md"
+L00009576	node_compile_hint:
+L00009577	  mode: runtime_override_display_and_operational_identity_grammar
+L00009578	  create_worknodes: false
+L00009579	source_lineage:
+L00009580	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0074"
+L00009581	preserved_exact_tokens:
+L00009582	- "requested/effective deltas"
+L00009583	- "support-state"
+L00009584	- "source snapshot"
+L00009585	- "requested value"
+L00009586	- "effective value"
+L00009587	- "switch or clamp reason"
+L00009588	- "operational-identity"
+L00009589	- "{ kind, requested_ref?, effective_ref?, selection_reason?, partial_capability? }"
+L00009590	negative_constraints:
+L00009591	- "Provider-, registry-, Kubernetes-, and future surface-specific identities may extend the `kind` vocabulary without adding hidden credential ownership."
+L00009592	compatibility_only_notes: []
+L00009593	stale_retired_dispositions: []
+L00009594	owner_boundary_notes: []
+L00009595	owner_hints:
+L00009596	- "Plans/FinalGUISpec.md"
+L00009597	```
+L00009598	
+L00009599	### F3-113 - Agent Config Provider Skill Row Surface
+L00009600	
+L00009601	```yaml
+L00009602	plan_unit_id: F3-113
+L00009603	unit_type: requirement
+L00009604	status: accepted
+L00009605	owner_doc: Plans/FinalGUISpec.md
+L00009606	canonical_text: >-
+L00009607	  Agent Config owns the visible provider, model, account, instruction, Skills, and Personas
+L00009608	  management surface, mirrors Skills owner vocabulary, exposes row source/readiness/recovery
+L00009609	  context, and leaves durable preferences to Settings.
+L00009610	gui_related: true
+L00009611	gui_classification_reason: >-
+L00009612	  This unit defines visible Agent Config rows, vocabulary, and management surfaces.
+L00009613	split_recommended: true
+L00009614	depends_on: []
+L00009615	unblocks: []
+L00009616	acceptance_criteria:
+L00009617	- "The covered source span remains losslessly available for exact-text audit."
+L00009618	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00009619	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00009620	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00009621	validation_surfaces:
+L00009622	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00009623	- "python3 scripts/pm-plan-index.py validate"
+L00009624	risk_class: finalgui_drift
+L00009625	reasoning_tier: standard
+L00009626	context_scope: finalgui_standardization
+L00009627	implementation_surfaces:
+L00009628	- "Plans/FinalGUISpec.md"
+L00009629	node_compile_hint:
+L00009630	  mode: agent_config_provider_skill_row_surface
+L00009631	  create_worknodes: false
+L00009632	source_lineage:
+L00009633	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0075"
+L00009634	preserved_exact_tokens:
+L00009635	- "Agent Config"
+L00009636	- "Skills"
+L00009637	- "Personas"
+L00009638	- "bundled"
+L00009639	- "protected_core"
+L00009640	- "catalog_installed"
+L00009641	- "manual_import"
+L00009642	- "project_local"
+L00009643	- "global_local"
+L00009644	- "pm_enhanced"
+L00009645	- "ready_with_warnings"
+L00009646	negative_constraints:
+L00009647	- "Settings remains the durable preference surface."
+L00009648	compatibility_only_notes: []
+L00009649	stale_retired_dispositions: []
+L00009650	owner_boundary_notes: []
+L00009651	owner_hints:
+L00009652	- "Plans/FinalGUISpec.md"
+L00009653	```
+L00009654	
+
+<<< CONTEXT_AFTER canonical_document_lines=9655-9666 >>>
+L00009655	### F3-114 - Agent Config Personas Tab Contract
+L00009656	
+L00009657	```yaml
+L00009658	plan_unit_id: F3-114
+L00009659	unit_type: requirement
+L00009660	status: accepted
+L00009661	owner_doc: Plans/FinalGUISpec.md
+L00009662	canonical_text: >-
+L00009663	  The Agent Config Personas tab exposes persona library editing, runtime preferences, skill refs,
+L00009664	  row eligibility and compatibility disclosure, read-only protected core built-ins, and editable
+L00009665	  restorable bundled specialty Personas.
+L00009666	gui_related: true

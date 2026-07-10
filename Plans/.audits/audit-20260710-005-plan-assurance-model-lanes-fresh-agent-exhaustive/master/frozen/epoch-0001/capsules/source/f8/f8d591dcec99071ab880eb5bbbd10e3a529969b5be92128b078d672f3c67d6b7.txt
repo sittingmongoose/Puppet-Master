@@ -1,0 +1,422 @@
+<<< CONTEXT_BEFORE 2076-2087 >>>
+  - "blocked"
+  - "degraded"
+  - "certified complete"
+negative_constraints:
+  - Do not allow a failed verification to become a done-with-issues state.
+  - Do not reduce audit/verification strictness to save cost.
+  - Do not keep applying the same low-end patch indefinitely.
+owner_hints: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/Permissions_System.md, Plans/WorktreeGitImprovement.md, Plans/Progression_Gates.md]
+```
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+
+<<< AUTHORITATIVE_CORE 2088-2480 >>>
+### GRS-028 - Planning Wizard Approval To PlanCompile Boundary
+
+```yaml
+plan_unit_id: GRS-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Future native Planning Wizard approval may emit a PlanApproved event that invisibly starts native PlanCompile, creates a PlanCompileRun, and projects progress in Orchestrator only after a later enablement PlanUnit accepts that runtime launch. Until then, current bootstrap and design_only v1 PlanCompile records remain design-only and disabled; this disabled boundary does not disable the finished-product native_runtime branch once runtime_enablement_ref and runtime_policy_snapshot_ref exist. Planning Wizard, Plan Compiler supervision, PRD Builder structured conversion, and ledger-to-Plans conversion use Overseer Model semantics, while Auditor Model owns the Auditor audit-to-repair verification loop that repeats audit, bounded repair, and re-audit until completion is certified or a critical block or authority boundary stops the loop.
+  Future native launch remains invisible to the user only after explicit enablement, and new records, prompts, and plan updates must use Planning Wizard terminology. Do not introduce new references or meta-comments using retired Chain Wizard or Plan Wizard names as active terminology.
+gui_related: false
+gui_classification_reason: Trigger and model-role boundary are runtime behavior; Orchestrator owns visible projection.
+depends_on: [GRS-002, PNC-010, MS-110]
+unblocks: [OP-023, F3-396]
+acceptance_criteria:
+  - Current bootstrap and design_only v1 PlanCompile launch remains disabled until explicit enablement.
+  - Planning Wizard approval is the future trigger source, not this compile's runtime action.
+  - Overseer and Auditor model roles are consumed from Models_System.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Goal Runtime PlanApproved integration review
+risk_class: premature_runtime_launch
+reasoning_tier: high
+context_scope: planning_wizard_plancompile_trigger
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Models_System.md, Plans/Orchestrator_Page.md]
+node_compile_hint: {mode: future_planning_wizard_plancompile_trigger, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0008
+  - pldg-20260617-001-plans-to-code-handoff:atom-0009
+  - pldg-20260617-001-plans-to-code-handoff:atom-0020
+  - pldg-20260617-001-plans-to-code-handoff:atom-0022
+  - pldg-20260617-001-plans-to-code-handoff:dec-0004
+  - pldg-20260617-001-plans-to-code-handoff:dec-0008
+  - pldg-20260617-001-plans-to-code-handoff:dec-0028
+preserved_exact_tokens:
+  - "Planning Wizard"
+  - "Plan Wizard"
+  - "PlanApproved event"
+  - "PlanCompileRun"
+  - "invisible to the user"
+  - "Overseer Model"
+  - "Auditor Model"
+  - "Auditor audit-to-repair loop"
+  - "critical block"
+negative_constraints:
+  - Do not enable this automatic launch yet.
+  - Do not introduce new references using retired Chain Wizard or Plan Wizard names as active terminology.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - Plan Wizard is retired as active product/runtime/compile terminology; current prose, PlanUnits, commands, events, prompts, and index rows use Planning Wizard.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Orchestrator_Page.md
+```
+
+### GRS-029 - Hands-Off Autonomy And HITL Boundary
+
+```yaml
+plan_unit_id: GRS-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Plans-to-code execution defaults to hands-off autonomy. User escalation is last-resort for critical authority blockers: missing credentials or secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, unrecoverable environment failure, true product decision with no inferable answer, or security-sensitive approval. HITL is an explicit setting or mode that can add configured package, seam, or critical checkpoints without becoming required for correctness. Default runtime repair routes ordinary uncertainty through Auditor, Overseer, graph/work/model/source-control/test-harness repair, and high-effort repair before asking the user.
+  Configured checkpoints are HITL-only additions, while default escalation remains limited to credentials/secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, and security-sensitive approval. Internal repair escalation uses Overseer review and High-Effort Worker routing before user escalation when evidence permits.
+gui_related: false
+gui_classification_reason: Autonomy, HITL, and escalation policy are runtime/permission behavior.
+depends_on: [GRS-027, PS-116, HITL-036]
+unblocks: [EP-102, GRS-030, OP-024]
+acceptance_criteria:
+  - Default mode is hands-off with critical-only user escalation.
+  - HITL checkpoints are explicit opt-in behavior, not required correctness gates.
+  - Ordinary row-level uncertainty is resolved internally when evidence allows.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future autonomy and HITL mode review
+risk_class: unnecessary_user_escalation
+reasoning_tier: high
+context_scope: plans_to_code_autonomy
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Permissions_System.md, Plans/human-in-the-loop.md, Plans/Executor_Protocol.md]
+node_compile_hint: {mode: autonomy_hitl_policy, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0044
+  - pldg-20260617-001-plans-to-code-handoff:atom-0045
+  - pldg-20260617-001-plans-to-code-handoff:atom-0046
+  - pldg-20260617-001-plans-to-code-handoff:dec-0019
+  - pldg-20260617-001-plans-to-code-handoff:dec-0020
+  - pldg-20260617-001-plans-to-code-handoff:corr-0009
+preserved_exact_tokens:
+  - "HITL"
+  - "hands-off"
+  - "critical authority blockers"
+  - "configured checkpoints"
+  - "Overseer review"
+  - "High-Effort Worker"
+  - "credentials/secrets"
+  - "billing/payment/legal/license"
+  - "unsafe destructive operation"
+  - "irreversible external side effect"
+  - "security-sensitive approval"
+negative_constraints:
+  - Do not ask the user for ordinary row-level uncertainty in default mode.
+  - Do not route default failures to user decision before Overseer/Auditor/internal repair paths are exhausted.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Permissions_System.md
+  - Plans/Executor_Protocol.md
+```
+
+### GRS-030 - Plans-To-Code Goal Completion Certification
+
+```yaml
+plan_unit_id: GRS-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Plans-to-code completion requires a GoalCompletionReceipt. Code complete means all WorkNodes are terminal with valid receipts, all required automated tests passed or are explicitly dispositioned, all source-control receipts are valid, rollback and safe-point requirements are satisfied, Auditor passed, no active blockers remain, no stale Plan/WorkGraph/currentness mismatch remains, final source state is clean or intentionally preserved, and final summary/evidence is written. GoalCompletionReceipt fields include rollback_requirements_satisfied, safe_point_requirements_satisfied, no_stale_plan_workgraph_currentness_mismatch, final_source_state, final_summary_ref, child_receipt_refs, worknode_receipt_refs, changed_artifact_refs, validator_outcomes, authority_check_refs, source_control_receipt_refs, test_receipt_refs, model_resolution_receipt_refs, unresolved_risks, and evidence_layers. Worker says done is insufficient; completion must preserve source evidence, canonical Plan evidence, process evidence, governance evidence, test evidence, source-control evidence, and completion receipts as separate truth layers.
+  GoalCompletionReceipt certification requires the exact code-complete evidence that all WorkNodes terminal, all automated tests passed or were dispositioned, and no active blockers remain. Plans to code completion is an artifact-backed handoff where Auditor verifies before final certification.
+gui_related: false
+gui_classification_reason: Completion certification and evidence truth-layer policy are runtime/governance behavior.
+depends_on: [GRS-027, GRS-029, EP-103, ATS-004]
+unblocks: [RAP-029, CV-289, OP-024]
+acceptance_criteria:
+  - GoalCompletionReceipt proves code-complete status from objective receipt criteria.
+  - Test, source-control, Auditor, blocker, currentness, and final evidence states are checked before completion.
+  - Evidence truth layers remain separate and auditable.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+risk_class: false_completion
+reasoning_tier: high
+context_scope: plans_to_code_completion
+implementation_surfaces: [Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md, Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: goal_completion_certification, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0043
+  - pldg-20260617-001-plans-to-code-handoff:atom-0055
+  - pldg-20260617-001-plans-to-code-handoff:atom-0060
+  - pldg-20260617-001-plans-to-code-handoff:dec-0018
+  - pldg-20260617-001-plans-to-code-handoff:dec-0023
+preserved_exact_tokens:
+  - "GoalCompletionReceipt"
+  - "code complete"
+  - "all WorkNodes terminal"
+  - "all automated tests passed"
+  - "no active blockers"
+  - "source evidence"
+  - "canonical evidence"
+  - "process evidence"
+  - "governance evidence"
+  - "test evidence"
+  - "source-control evidence"
+  - "Plans to code completion"
+  - "artifact-backed handoff"
+  - "Auditor verifies"
+  - "final certification"
+negative_constraints:
+  - Do not accept worker says done as code completion.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Project_Output_Artifacts.md
+```
+
+ContractRef: ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Models_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Project_Output_Artifacts.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### GRS-031 - Approve And Build Launch, Parallel Enforcement, And Atomic Activation
+
+```yaml
+plan_unit_id: GRS-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: 'Approve And Build first validates a compare-and-swap approval boundary over the PlanningRun revision, topic map version, immutable pack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash shown in final review. It then atomically writes the immutable pack, approval_cas_receipt, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, pack hash, and approval CAS inputs; duplicate delivery returns the existing PlanCompileRun rather than creating another run. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and returns its identity synchronously before projection reconciliation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains product-runtime canon and does not launch PlanCompile. For broad stages the controller computes a bounded worklist and mandatory minimum parallel assignments, launches read-only subagents, records assignment and completion receipts, and rejects certification when required parallel work is absent. A required broad stage may reduce scope or block with a typed runtime-capability
+  error, but it may not silently substitute one broad agent for mandatory parallel analysis or review. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Activation persists activation_pending, records_materialized, entrypoints_queued, start_event_pending, active, and cancelled_before_mutation
+  states; retries resume idempotently, duplicate commands return the existing GoalRun, and cancellation routes according to whether mutation began. Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all findings are durably closed or a true typed blocker remains. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision,
+  requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+- Approve And Build records an approval CAS receipt and fails closed when final-review currentness inputs drift.
+- The PlanCompileRun identity is created or returned synchronously; projection identity reconciliation cannot be the source of run identity truth.
+- "`cmd.runtime.approve` consumes canonical approval/currentness inputs, records UICommandResponse and approval/dispatch receipt refs, and emits only canonical runtime events or explicit receipts, never `runtime.command_applied`."
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: stale_or_forbidden_behavior
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/Orchestrator_Page.md
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0104
+- pldg-20260618-001-prd-planning-wizard:atom-0105
+- pldg-20260618-001-prd-planning-wizard:atom-0106
+- pldg-20260618-001-prd-planning-wizard:atom-0114
+- pldg-20260618-001-prd-planning-wizard:atom-0115
+- pldg-20260618-001-prd-planning-wizard:atom-0120
+- pldg-20260618-001-prd-planning-wizard:atom-0125
+- pldg-20260618-001-prd-planning-wizard:atom-0126
+- pldg-20260618-001-prd-planning-wizard:atom-0127
+- pldg-20260618-001-prd-planning-wizard:atom-0130
+- pldg-20260618-001-prd-planning-wizard:atom-0133
+- pldg-20260618-001-prd-planning-wizard:atom-0135
+- pldg-20260618-001-prd-planning-wizard:atom-0143
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+source_atom_ids:
+- atom-0104
+- atom-0105
+- atom-0106
+- atom-0114
+- atom-0115
+- atom-0120
+- atom-0125
+- atom-0126
+- atom-0127
+- atom-0130
+- atom-0133
+- atom-0135
+- atom-0143
+decision_refs:
+- dec-0021
+- dec-0023
+- dec-0025
+- dec-0026
+correction_refs:
+- corr-0008
+- corr-0009
+preserved_exact_tokens:
+- PlanApproved
+- approval_cas_receipt
+- transactional outbox
+- idempotency_key
+- project_id
+- pack_hash
+- PlanningRun revision
+- topic map version
+- project-context snapshot hash
+- automatic_after_approval
+- PlanCompileRun
+- minimum_parallel_assignments
+- assignment receipt
+- completion receipt
+- parallelism_required
+- runtime-capability blocker
+- all required active-scope
+- mixed
+- GoalRunStarted
+- BuildStarted
+- activation transaction
+- activation commit
+- running
+- activation_pending
+- records_materialized
+- entrypoints_queued
+- cancelled_before_mutation
+- AuditCycle
+- AuditFinding
+- RepairAttempt
+- AuditClosure
+- CertificationReceipt
+- multiple bounded read-only specialist agents in parallel
+- durably closed
+- sole writer
+- serialized writes
+- auto_resolvable
+- safe_default_with_assumption
+- requires_user_risk_acceptance
+negative_constraints:
+- Do not require a redundant ordinary Start Build confirmation after Approve And Build.
+- Do not approve stale final-review inputs or defer PlanCompileRun identity creation to projection reconciliation.
+- Do not accept agent self-report as proof that required parallel subagents were used.
+- Do not silently degrade a mandatory parallel stage to one agent.
+- Do not start a partially accepted required WorkGraph.
+- Do not make superseded experimental pipeline artifacts part of the product audit architecture.
+- Do not certify a broad final audit performed by one agent when parallel specialist review is required.
+- Do not allow parallel repair subagents to race canonical Plan writes.
+owner_hints:
+- Plans/Contracts_V0.md
+- Plans/Goal_Runtime_System.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/Orchestrator_Page.md
+- Plans/human-in-the-loop.md
+```
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+### GRS-033 - P1-AGENT-FOCUS-WATCHDOG
+
+```yaml
+plan_unit_id: GRS-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  P1-AGENT-FOCUS-WATCHDOG (P1) is compiled as canonical Puppet Master intent for Agent focus/progress watchdog for GUI: Add AgentProgressHeartbeat event and Focus/Attention state for GoalRuns and terminal-bound agents. The preserved PM gap/delta is: Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering. The observed external-repo signal remains source-lineage evidence: Warp issue list includes agent loses focus/stops work; Codex goal docs recommend compact progress reports with current checkpoint/verified/remains/blocked; Cline has repeating tasks/stuck thinking reports.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Long-running shell command exposes next-check countdown and manual snapshot trigger.
+- Agent stalled/no-heartbeat surfaces as attention_required without losing terminal session.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Long-running shell command exposes next-check countdown and manual snapshot trigger.
+- Agent stalled/no-heartbeat surfaces as attention_required without losing terminal session.
+risk_class: p1_agent_control_subagents_hardening
+reasoning_tier: standard
+context_scope: agent_control_subagents
+implementation_surfaces:
+- Plans/Goal_Runtime_System.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: p1_agent_focus_watchdog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0021
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0021
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0017/P1-AGENT-FOCUS-WATCHDOG@line=17
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0017/P1-AGENT-FOCUS-WATCHDOG
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:17
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+source_atom_ids:
+- atom-0021
+external_atom_id: extrepo-20260703-0017
+source_row_id: P1-AGENT-FOCUS-WATCHDOG
+priority: P1
+finding_family: Agent focus/progress watchdog for GUI
+source_repos:
+- warpdotdev/warp
+- cline/cline
+- openai/codex
+target_docs:
+- Plans/Goal_Runtime_System.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+owner_hints:
+- Plans/Goal_Runtime_System.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+preserved_exact_tokens:
+- extrepo-20260703-0017
+- P1-AGENT-FOCUS-WATCHDOG
+- P1
+- Agent focus/progress watchdog for GUI
+- warpdotdev/warp
+- cline/cline
+- openai/codex
+negative_constraints: []
+observed_signal: Warp issue list includes agent loses focus/stops work; Codex goal docs recommend compact progress reports with current checkpoint/verified/remains/blocked; Cline has repeating tasks/stuck thinking reports.
+pm_current_coverage: PM has Goal Runtime and closure registry concepts, but terminal/dev-loop progress integration can be stronger.
+pm_gap_or_delta: 'Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering.'
+proposal_or_recommendation: Add AgentProgressHeartbeat event and Focus/Attention state for GoalRuns and terminal-bound agents.
+compile_disposition: create_new_planunit
+```
+
+
+<<< CONTEXT_AFTER 2481-2492 >>>
+### GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT
+
+```yaml
+plan_unit_id: GRS-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028 / P1-INTERRUPT-CANCEL-SETTLEMENT (P1). The preserved PM gap/delta is: Define cancellation propagation and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to success/failure; history interruption boundary. The observed external-repo signal remains source-lineage evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption.
+gui_related: true
+gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+depends_on:

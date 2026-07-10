@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE 26060-26071 >>>
+  - Do not create a top-level Settings tab for notifications.
+  - Do not bundle PeonPing-style voice packs until license verification permits it.
+  - Do not make sound the sole carrier of blocked, approval-required, failure, or completion state.
+  - Do not let preview send external notifications.
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 26072-26434 >>>
+### F3-406 - DRY Method Settings And Visible State Placement
+
+```yaml
+plan_unit_id: F3-406
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The GUI exposes the application-level DRY Method default guard as a user-controllable setting for
+  `app.agent_rules.dry_method_default_guard` with default enabled and stored states enabled or disabled_by_user.
+  Assistant Chat and relevant run detail surfaces show compact DRY applied, DRY degraded, DRY disabled, rules missing,
+  rules stale, owner/source route found, owner/source route unresolved, mutation blocked, exploratory caveat used,
+  and existing owner reused states when the DRY Method materially affects trust, mutation, or routing. The setting uses
+  the UI_Command_Catalog and Wiring_Matrix commands for `cmd.settings.agent_rules.dry_method_default_guard.set`, and
+  help copy says: "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user
+  instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+gui_related: true
+gui_classification_reason: Defines visible setting placement and DRY state/disclosure presentation in GUI surfaces.
+depends_on: [ACD-429, ARC-036, CV-299, SP-223, UCC-104, WM-040]
+unblocks: [ATS-018]
+acceptance_criteria:
+  - Users can turn the default DRY Method guard off without disabling unrelated safety, source authority, governance, secrets, or source-control rules.
+  - Settings help text explains exactly what disabling DRY does and does not change.
+  - Trust-affecting missing or stale rule state is visible to the user, not logs-only.
+  - Routine no-effect turns avoid chat flooding while receipts still preserve provenance.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method settings and disclosure GUI fixtures
+risk_class: dry_method_gui_transparency_gap
+reasoning_tier: high
+context_scope: dry_method_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - future Assistant Chat DRY disclosure UI
+  - future Settings UI
+node_compile_hint:
+  mode: dry_method_gui_settings_disclosure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-002
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-003
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0054
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+source_atom_ids: [atom-0054, atom-0073, atom-0074, atom-0083, atom-0089]
+decision_refs: [dec-0016, dec-0017]
+preserved_exact_tokens:
+  - "app.agent_rules.dry_method_default_guard"
+  - "enabled"
+  - "disabled_by_user"
+  - "DRY applied"
+  - "DRY degraded"
+  - "DRY disabled"
+  - "rules missing"
+  - "rules stale"
+  - "owner/source route unresolved"
+  - "mutation blocked"
+  - "exploratory caveat used"
+  - "cmd.settings.agent_rules.dry_method_default_guard.set"
+  - "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+negative_constraints:
+  - Do not make DRY opt-in by default.
+  - Do not make it impossible for the user to turn off the default DRY guard.
+  - Do not treat disabled DRY as permission to bypass explicit user instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+  - Do not hide trust-affecting DRY state in backend logs only.
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+```
+
+### F3-403 - Teach Help Icon Teacher Thread And Guided Overlay GUI
+
+```yaml
+plan_unit_id: F3-403
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: Teach/Teacher uses the Assistant Chat window/thread model rather than a detached teaching app. Help
+  icons on major surfaces launch a new Teacher thread with current-surface context. Teacher thread presentation
+  includes persona badge, low-end/fast model source, context/model chips, source/context disclosure, activity cards,
+  footer status where relevant, and thread states such as working, unread, blocked, degraded, draft, archived, or
+  handoff. Guided GUI overlay uses highlight/spotlight, anchored captions, Back, Next, Stop, Let me try, and Do
+  it controls, confirmation for mutations, degraded state recovery, keyboard and screen-reader accessibility, responsive
+  behavior, and no stale target stepping.
+gui_related: true
+gui_classification_reason: Defines visible help icons, Teacher thread chrome, source panels, overlay captions, controls,
+  degraded states, and responsive/accessibility behavior.
+depends_on:
+- ACD-426
+- UCC-102
+- G-026
+unblocks:
+- ATS-014
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: teach_gui_underspecification
+reasoning_tier: high
+context_scope: teach_teacher_gui
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- future Assistant Chat Teacher thread
+- future guided overlay
+node_compile_hint:
+  mode: teach_guided_gui_consumer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0103
+- pldg-20260626-001-feature-name:atom-0104
+- pldg-20260626-001-feature-name:atom-0106
+- pldg-20260626-001-feature-name:atom-0130
+- pldg-20260626-001-feature-name:atom-0139
+- pldg-20260626-001-feature-name:atom-0141
+- pldg-20260626-001-feature-name:atom-0143
+- pldg-20260626-001-feature-name:atom-0144
+- pldg-20260626-001-feature-name:atom-0150
+- pldg-20260626-001-feature-name:atom-0151
+- pldg-20260626-001-feature-name:atom-0154
+- chat:teach-visual-specificity-challenge
+- chat:teacher-feature-initial-framing
+- chat:teach-gap-fill-correction
+- q-0028
+- chat:teach-bundle-accepted-pmconcept-reference
+- chat:work-through-teach-gaps
+- Plans/FinalGUISpec.md#F3-016-help-and-contextual-affordances
+- Plans/FinalGUISpec.md#19.5-runtime-display-requirements
+- Plans/Media_Generation_and_Capabilities.md#capability-usability-semantics
+- Concepts/PMConcept.html
+- chat:assistant-chat-threads-modeled-in-concept
+- Concepts/PMConcept.html#chat-panel
+- Concepts/PMConcept.html#chat-thread-sidebar
+- Concepts/PMConcept.html#switchToChatThread
+- chat:pmconcept-gui-reference
+source_atom_ids:
+- atom-0103
+- atom-0104
+- atom-0106
+- atom-0130
+- atom-0139
+- atom-0141
+- atom-0143
+- atom-0144
+- atom-0150
+- atom-0151
+- atom-0154
+decision_refs:
+- dec-0021
+- dec-0022
+- dec-0023
+- dec-0024
+correction_refs:
+- corr-0002
+- corr-0003
+preserved_exact_tokens:
+- help icon
+- how it will look
+- major page/panel headers
+- tooltip
+- new Teacher thread
+- current surface
+- assistant chat window
+- opens a new thread
+- Teacher
+- persona badge
+- context chip
+- low-end/fast model
+- How it will show the user
+- control the Gui
+- highlight
+- spotlight
+- Back
+- Next
+- Stop
+- Let me try
+- Do it
+- Assistant Chat thread header
+- Teacher activity cards
+- Sources used
+- PM context panel
+- guided overlay captions
+- Teach memory capture prompts
+- Settings > model row
+- command palette `/teach` result
+- Help/Glossary pages
+- current-context example
+- clicked
+- brings the user to the assistant chat window
+- Teacher mode
+- Teacher badge
+- model chip
+- source disclosure
+- Teacher mode header
+- requested/effective Persona
+- current surface/context chip
+- Teach capture availability
+- Start guided walkthrough
+- Show sources
+- Save as taught memory
+- Hand off
+- spotlight/outline
+- anchored caption
+- step counter
+- return-to-chat
+- small screens
+- safe spacing
+- target surface unavailable
+- route/control no longer exists
+- context stale
+- selection lost
+- permission blocked
+- capability unavailable
+- help entry missing
+- model fallback/clamp
+- user stops
+- For the Gui
+- PMConcept.html
+- That isnt the final form
+- just a concept
+- will give you an idea
+- figure the gui out for these features
+- The assistant chat window and threads are modeled in the concept too.
+- Assistant Chat
+- thread
+- persona
+- new thread
+- dense workbench
+- activity rail
+- page tabs
+- resizable chat panel
+- floating chat
+- compact chips
+- role badges
+- runtime popovers
+- activity cards
+negative_constraints:
+- Do not bury Teach behind only slash commands.
+- Do not add a loud or decorative help affordance that competes with primary workflow controls.
+- Do not launch Teacher without current-surface context.
+- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
+- Do not omit requested/effective persona or model disclosure from the Teacher thread.
+- Do not make Teacher launch a modal that blocks normal navigation as the only path.
+- Do not use raw cursor/click automation as the teaching UI.
+- Do not obscure the target control with the explanatory caption.
+- Do not allow Teacher to click destructive/mutating controls without confirmation and permission gates.
+- Do not fork labels between surfaces.
+- Do not make context help available only from the full Help page.
+- Do not include generic examples when current surface context is available.
+- Do not silently mutate an existing non-Teacher thread into Teacher mode.
+- Do not lose the originating surface/control context during launch.
+- Do not require users to know `/teach` before discovering help.
+- Do not invent a separate chat product surface for Teacher.
+- Do not hide requested/effective Persona/model state.
+- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
+- Do not obscure the target control with the explanation caption.
+- Do not make the overlay inaccessible without keyboard or screen-reader fallback.
+- Do not trap the user in the overlay without Stop/return-to-chat.
+- Do not keep stepping through a stale or missing UI target.
+- Do not hide permission/capability/model degraded states.
+- Do not turn degraded guidance into generic apology text without a next action.
+- Do not treat PMConcept.html as final or canonical UI truth.
+- Do not copy the concept HTML/CSS directly into canonical Plans or implementation.
+- Do not let the concept override accepted ledger decisions or canonical Plans owner docs during a future compile.
+- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
+- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
+- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
+- Do not freeze PMConcept colors, CSS, demo data, or HTML class names as canonical implementation details.
+- Do not use PMConcept visual inspiration to skip responsive, accessibility, overflow, or actual Slint/Rust feasibility
+  checks.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md
+- Plans/Models_System.md
+- Plans/Personas.md
+- Plans/Permissions_System.md
+- Plans/Glossary.md
+- Plans/Commands_System.md
+- Plans/Automated_Testing_System.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/Orchestrator_Page.md
+compatibility_only_notes:
+- Concept/source-lineage references are preserved for routing and audit only; they do not make external plugins
+  or PMConcept.html canonical implementation source.
+```
+
+## Ledger Compile Addendum - pldg-20260629-001-feature-name
+
+This addendum compiles Free Models user-facing settings, catalog, onboarding/setup, and status behavior into FinalGUISpec ownership. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+
+### F3-407 - Free Models Provider Catalog Settings And GitHub Attribution
+
+```yaml
+plan_unit_id: F3-407
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings and model-selection surfaces expose `Free Models` as one provider grouping with compact model rows that show model name, underlying provider, readiness/status, cost/free state, and small capability icon group. Expanded details carry source/ref/version, upstream GitHub attribution/link, underlying provider/account, setup steps, quota/pressure detail, cost/free caveats, and support/debug links. The GUI must include the upstream GitHub link `https://github.com/vava-nessa/free-coding-models` in a comments/attribution area without making upstream docs canonical UI truth.
+gui_related: true
+gui_classification_reason: Owns visible provider catalog rows, badges, icons, details, and GitHub attribution/link placement.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Compact rows fit dense model settings space without hiding critical blockers.
+  - Expanded details expose source/ref/version and the upstream GitHub attribution/link.
+  - Unsupported upstream additions do not appear in normal catalog/detail/search/top-10/setup/routing surfaces.
+  - Disabled rows offer one primary plain action when possible.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Free Models model selector density and attribution UI fixtures
+  - Responsive/overflow checks for compact model rows
+risk_class: gui_density_and_attribution_drift
+reasoning_tier: high
+context_scope: free_models_catalog_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: free_models_catalog_gui_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+  - https://github.com/vava-nessa/free-coding-models
+source_atom_ids: [atom-0014, atom-0027, atom-0075, atom-0077, atom-0079, atom-0081, atom-0082, atom-0083, atom-0087, atom-0138, atom-0142, atom-0153, atom-0157, atom-0161, atom-0162, atom-0163, atom-0165, atom-0166, atom-0167, atom-0169, atom-0170, atom-0173, atom-0174, atom-0186, atom-0190, atom-0291, atom-0292]
+preserved_exact_tokens:
+  - "Free Models"
+  - "https://github.com/vava-nessa/free-coding-models"
+  - "comments"
+  - "Github"
+  - "model name"
+  - "underlying provider"
+  - "readiness/status"
+  - "cost/free state"
+  - "small capability icons"
+  - "That is a lot of info to display in a small area."
+  - "View details"
+negative_constraints:
+  - Do not overload compact model rows with dense import/runtime diagnostics.
+  - Do not show unsupported upstream additions in normal Free Models catalog, detail, search, top-10, routing, or setup surfaces.
+  - Do not include recommended models, coding-strength badges, quality-rank badges, or recommendation confidence labels.
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+
+<<< CONTEXT_AFTER 26435-26446 >>>
+### F3-408 - Free Models Priority Refresh And Passive Update UX
+
+```yaml
+plan_unit_id: F3-408
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected.
+gui_related: true
+gui_classification_reason: Owns visible model refresh button, update status, timestamps, and attention-state wording.
+depends_on: []

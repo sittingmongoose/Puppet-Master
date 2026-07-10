@@ -1,0 +1,147 @@
+<<< CONTEXT_BEFORE canonical_document_lines=378-389 >>>
+L00000378	      "canonical_route": "Plans/Planning_Ledger_System.md",
+L00000379	      "evidence_refs": [
+L00000380	        "AGENTS.md",
+L00000381	        "Plans/Planning_Ledger_System.md"
+L00000382	      ],
+L00000383	      "allowed_contexts": [
+L00000384	        "Bootstrap ledger layout shorthand"
+L00000385	      ],
+L00000386	      "validator_policy": "warn",
+L00000387	      "replacement_ref": "Plans/ledgers/v2/*/manifest.json",
+L00000388	      "notes": "Structured v2 ledgers use per-ledger manifest files; no aggregate Plans/ledgers/v2/manifest.json exists."
+L00000389	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=390-521 >>>
+L00000390	    {
+L00000391	      "raw_ref": "crates/ui_commands/",
+L00000392	      "classification": "allowed_exception",
+L00000393	      "surface_type": "future_artifact",
+L00000394	      "match_kind": "exact",
+L00000395	      "canonical_route": "Plans/UI_Command_Catalog.md",
+L00000396	      "evidence_refs": [
+L00000397	        "Plans/UI_Command_Catalog.md",
+L00000398	        "Plans/BinaryLocator_Spec.md"
+L00000399	      ],
+L00000400	      "allowed_contexts": [
+L00000401	        "Future typed command implementation crate",
+L00000402	        "Preserved source-lineage command tokens"
+L00000403	      ],
+L00000404	      "validator_policy": "allow",
+L00000405	      "replacement_ref": "future typed UICommand implementation crate",
+L00000406	      "notes": "The current repo has no runtime crate; typed UICommand implementation belongs to a future Rust/Slint build lane."
+L00000407	    },
+L00000408	    {
+L00000409	      "raw_ref": "Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors",
+L00000410	      "classification": "typo",
+L00000411	      "surface_type": "concrete_path",
+L00000412	      "match_kind": "doc_anchor",
+L00000413	      "canonical_route": "Plans/FinalGUISpec.md",
+L00000414	      "evidence_refs": [
+L00000415	        "Plans/FinalGUISpec.md"
+L00000416	      ],
+L00000417	      "allowed_contexts": [
+L00000418	        "Legacy Chain Wizard owner-anchor references"
+L00000419	      ],
+L00000420	      "validator_policy": "warn",
+L00000421	      "replacement_ref": "Plans/FinalGUISpec.md",
+L00000422	      "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
+L00000423	    },
+L00000424	    {
+L00000425	      "raw_ref": "Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD",
+L00000426	      "classification": "typo",
+L00000427	      "surface_type": "concrete_path",
+L00000428	      "match_kind": "doc_anchor",
+L00000429	      "canonical_route": "Plans/Prompt_Pipeline.md",
+L00000430	      "evidence_refs": [
+L00000431	        "Plans/Prompt_Pipeline.md"
+L00000432	      ],
+L00000433	      "allowed_contexts": [
+L00000434	        "Legacy effective-resolution owner-anchor references"
+L00000435	      ],
+L00000436	      "validator_policy": "warn",
+L00000437	      "replacement_ref": "Plans/Prompt_Pipeline.md",
+L00000438	      "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
+L00000439	    },
+L00000440	    {
+L00000441	      "raw_ref": ".puppet-master/state/active-agents.json",
+L00000442	      "classification": "historical_source_lineage_ref",
+L00000443	      "surface_type": "process_artifact",
+L00000444	      "match_kind": "exact",
+L00000445	      "canonical_route": "Plans/storage-plan.md",
+L00000446	      "evidence_refs": [
+L00000447	        "Plans/storage-plan.md",
+L00000448	        "Plans/orchestrator-subagent-integration.md",
+L00000449	        "Plans/Contracts_V0.md"
+L00000450	      ],
+L00000451	      "allowed_contexts": [
+L00000452	        "Compatibility/debug mirror references",
+L00000453	        "Preserved source-lineage tokens",
+L00000454	        "Explicit export or corruption-recovery notes"
+L00000455	      ],
+L00000456	      "validator_policy": "allow",
+L00000457	      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+L00000458	      "notes": "Non-canonical debug/export mirror of coordination agent projection; canonical truth is seglog coordination events and redb projections."
+L00000459	    },
+L00000460	    {
+L00000461	      "raw_ref": ".puppet-master/state/agent-messages.json",
+L00000462	      "classification": "historical_source_lineage_ref",
+L00000463	      "surface_type": "process_artifact",
+L00000464	      "match_kind": "exact",
+L00000465	      "canonical_route": "Plans/storage-plan.md",
+L00000466	      "evidence_refs": [
+L00000467	        "Plans/storage-plan.md",
+L00000468	        "Plans/orchestrator-subagent-integration.md",
+L00000469	        "Plans/Contracts_V0.md"
+L00000470	      ],
+L00000471	      "allowed_contexts": [
+L00000472	        "Compatibility/debug mirror references",
+L00000473	        "Preserved source-lineage tokens",
+L00000474	        "Explicit export or corruption-recovery notes"
+L00000475	      ],
+L00000476	      "validator_policy": "allow",
+L00000477	      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+L00000478	      "notes": "Non-canonical debug/interoperability mirror of crew-board coordination records; canonical truth is EventRecord-backed crew coordination."
+L00000479	    },
+L00000480	    {
+L00000481	      "raw_ref": ".puppet-master/state/verification-{node_id}-end.json",
+L00000482	      "classification": "historical_source_lineage_ref",
+L00000483	      "surface_type": "process_artifact",
+L00000484	      "match_kind": "exact",
+L00000485	      "canonical_route": "Plans/storage-plan.md",
+L00000486	      "evidence_refs": [
+L00000487	        "Plans/storage-plan.md",
+L00000488	        "Plans/orchestrator-subagent-integration.md",
+L00000489	        "Plans/Contracts_V0.md"
+L00000490	      ],
+L00000491	      "allowed_contexts": [
+L00000492	        "Compatibility/debug mirror references",
+L00000493	        "Preserved source-lineage tokens",
+L00000494	        "Explicit export or corruption-recovery notes"
+L00000495	      ],
+L00000496	      "validator_policy": "allow",
+L00000497	      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+L00000498	      "notes": "Retired source-lineage/debug export for verification result mirrors; canonical truth is runtime verification/receipt records and redb projections."
+L00000499	    },
+L00000500	    {
+L00000501	      "raw_ref": ".puppet-master/state/handoff-validation-{node_id}.json",
+L00000502	      "classification": "historical_source_lineage_ref",
+L00000503	      "surface_type": "process_artifact",
+L00000504	      "match_kind": "exact",
+L00000505	      "canonical_route": "Plans/storage-plan.md",
+L00000506	      "evidence_refs": [
+L00000507	        "Plans/storage-plan.md",
+L00000508	        "Plans/orchestrator-subagent-integration.md",
+L00000509	        "Plans/Contracts_V0.md"
+L00000510	      ],
+L00000511	      "allowed_contexts": [
+L00000512	        "Compatibility/debug mirror references",
+L00000513	        "Preserved source-lineage tokens",
+L00000514	        "Explicit export or corruption-recovery notes"
+L00000515	      ],
+L00000516	      "validator_policy": "allow",
+L00000517	      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+L00000518	      "notes": "Retired source-lineage/debug export for handoff validation mirrors; canonical truth is runtime verification/receipt records and redb projections."
+L00000519	    }
+L00000520	  ]
+L00000521	}

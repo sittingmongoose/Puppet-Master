@@ -16,7 +16,8 @@
                   border-color 0.15s ease;
     }
     /* pm-sheen-compatible hover: soft accent elevation, never a pink glow.
-       (Sheen sweep + translateY come from .pm-sheen in pm6-css-global.) */
+       (Lift + accent ring come from .pm-sheen in pm6-css-global; the old
+       sweep is gone.) */
     .bento-widget:hover {
       box-shadow: var(--shadow), 0 10px 30px color-mix(in srgb, var(--accent-blue) 16%, transparent);
     }
@@ -153,12 +154,10 @@
       letter-spacing: 1px;
       border-bottom: var(--border-width) solid var(--border);
       background: var(--surface-elevated);
-      border-left: 4px solid var(--accent-lime);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    [data-theme^="basic"] .panel-header { border-left-color: var(--accent-blue); }
     
     .files-search {
       display: flex;
@@ -261,7 +260,7 @@
     .slash-command-menu.visible { display: flex; }
     .slash-cmd-item { padding: var(--sm) var(--md); font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: var(--sm); }
     .slash-cmd-item:hover { background: var(--surface); }
-    .slash-cmd-item.active { background: color-mix(in srgb, var(--accent-blue) 12%, transparent); border-left: 2px solid var(--accent-blue); }
+    .slash-cmd-item.active { background: color-mix(in srgb, var(--accent-blue) 12%, transparent); }
     .slash-cmd-name { font-weight: bold; color: var(--text-primary); }
     .slash-cmd-desc { color: var(--text-muted); font-size: 10px; }
 
@@ -289,11 +288,11 @@
     [data-theme^="retro"] .jump-to-latest { color: var(--accent-lime); }
     [data-theme^="basic"] .jump-to-latest { color: var(--accent-blue); }
 
-    .activity-card { background: var(--surface); border: 1px solid var(--border-light); border-left: 3px solid var(--text-muted); border-radius: 6px; padding: var(--sm) var(--md); margin-top: var(--sm); margin-bottom: var(--sm); font-size: 11px; display: flex; flex-direction: column; gap: var(--xs); }
+    .activity-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; padding: var(--sm) var(--md); margin-top: var(--sm); margin-bottom: var(--sm); font-size: 11px; display: flex; flex-direction: column; gap: var(--xs); }
     [data-theme^="retro"] .activity-card { border-radius: 0; }
-    .activity-card.web { border-left-color: var(--accent-orange); }
-    .activity-card.bash { border-left-color: var(--accent-magenta); }
-    .activity-card.diff { border-left-color: var(--accent-blue); }
+    .activity-card.web { background: color-mix(in srgb, var(--accent-orange) 8%, var(--surface)); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
+    .activity-card.bash { background: color-mix(in srgb, var(--accent-magenta) 8%, var(--surface)); border-color: color-mix(in srgb, var(--accent-magenta) 30%, var(--border)); }
+    .activity-card.diff { background: color-mix(in srgb, var(--accent-blue) 8%, var(--surface)); border-color: color-mix(in srgb, var(--accent-blue) 30%, var(--border)); }
     .activity-card-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
     .activity-card-body { color: var(--text-secondary); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -430,50 +429,34 @@
     }
     .cl-off-btn:hover { color: var(--text-primary); }
 
-    /* Glass theme overrides for context lens (pre-baked fills; no per-control blur) */
+    /* Glass theme overrides for context lens (steps of the sheet; popover =
+       reading plate; violet family, no glow rings) */
     [data-theme^="glass"] .context-lens-btn {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.10);
+      background: var(--pm6-glass-step-1);
+      border-color: var(--glass-hairline);
     }
     [data-theme^="glass"] .context-lens-btn:hover {
-      background: rgba(34, 211, 238, 0.08);
-      border-color: rgba(34, 211, 238, 0.25);
+      background: var(--pm6-glass-step-2);
+      border-color: var(--glass-edge);
     }
     [data-theme^="glass"] .context-lens-btn.cl-active {
-      background: rgba(34, 211, 238, 0.12);
-      border-color: rgba(34, 211, 238, 0.30);
-      box-shadow: 0 0 10px rgba(34, 211, 238, 0.20);
+      background: var(--pm6-glass-step-3);
+      border-color: rgba(var(--pm6-glass-a-rgb), 0.40);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .context-lens-popover {
-      background: rgba(15, 23, 42, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.40),
-        inset 1px 1px 0 0 rgba(255, 255, 255, 0.08);
-    }
-    [data-theme="glass-light"] .context-lens-btn {
-      background: rgba(8, 145, 178, 0.06);
-      border-color: rgba(8, 145, 178, 0.10);
-    }
-    [data-theme="glass-light"] .context-lens-btn:hover {
-      background: rgba(8, 145, 178, 0.10);
-      border-color: rgba(8, 145, 178, 0.25);
+      background: var(--pm6-glass-plate);
+      border: 1px solid var(--glass-hairline);
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        var(--pm6-glass-drop);
     }
     [data-theme="glass-light"] .context-lens-btn.cl-active {
-      color: #065a73;
-      background: rgba(8, 145, 178, 0.14);
-      border-color: rgba(8, 145, 178, 0.30);
-      box-shadow: 0 0 10px rgba(8, 145, 178, 0.15);
+      color: var(--text-primary);
     }
-    [data-theme="glass-light"] .context-lens-popover {
-      background: rgba(200, 225, 240, 0.90);
-      border: 1px solid rgba(8, 145, 178, 0.12);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12),
-        inset 1px 1px 0 0 rgba(255, 255, 255, 0.50);
+    [data-theme^="glass"] .cl-mode-item.cl-selected {
+      background: var(--pm6-glass-step-3);
     }
-    [data-theme="glass-light"] .cl-mode-item.cl-selected {
-      background: rgba(8, 145, 178, 0.10);
-    }
-    [data-theme="glass-light"] .cl-mode-item.cl-selected svg { color: #065a73; }
+    [data-theme^="glass"] .cl-mode-item.cl-selected svg { color: var(--accent-blue); }
 
     /* --- Context Detail Pane (editor tab) --- */
     .context-detail-pane { display: none; flex-direction: column; height: 100%; overflow-y: auto; background: var(--surface); font-size: 12px; }
@@ -535,7 +518,7 @@
     .wt-modal-inner h3 { font-family: var(--display-font); font-size: 16px; margin: 0 0 16px 0; color: var(--text-primary); }
     .wt-modal-inner label { display: block; font-size: 11px; color: var(--text-secondary); margin-bottom: 12px; }
     .wt-modal-inner input, .wt-modal-inner select { width: 100%; margin-top: 4px; padding: 6px 10px; background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; color: var(--text-primary); font-size: 12px; box-sizing: border-box; }
-    .wt-collision-warning { margin-top: 8px; padding: 10px 12px; background: color-mix(in srgb, var(--accent-warning) 9%, transparent); border-left: 3px solid var(--accent-warning); border-radius: 0 6px 6px 0; font-size: 11px; color: var(--text-secondary); }
+    .wt-collision-warning { margin-top: 8px; padding: 10px 12px; background: color-mix(in srgb, var(--accent-warning) 9%, transparent); border: 1px solid color-mix(in srgb, var(--accent-warning) 30%, var(--border)); border-radius: 6px; font-size: 11px; color: var(--text-secondary); }
     .wt-error-msg { margin-top: 8px; font-size: 11px; color: var(--accent-error); }
     .wt-creating { animation: wtCreateLoading 1.2s ease-in-out infinite; }
 
@@ -547,10 +530,10 @@
     .seg-btn:hover { background: var(--surface-elevated); }
     .seg-btn.active { background: var(--accent-blue); color: var(--surface); }
     .wt-merge-commit-msg { width: 100%; min-height: 80px; font-family: monospace; font-size: 11px; resize: vertical; margin-top: 4px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border-light); border-radius: 6px; color: var(--text-primary); box-sizing: border-box; }
-    .wt-merge-guard { margin: 12px 0; padding: 10px 12px; border-left: 3px solid var(--accent-warning); background: color-mix(in srgb, var(--accent-warning) 7%, transparent); border-radius: 0 6px 6px 0; font-size: 11px; }
+    .wt-merge-guard { margin: 12px 0; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--accent-warning) 30%, var(--border)); background: color-mix(in srgb, var(--accent-warning) 7%, transparent); border-radius: 6px; font-size: 11px; }
     .wt-test-output { margin: 12px 0; padding: 10px; font-family: monospace; font-size: 10px; background: var(--background); border-radius: 6px; max-height: 200px; overflow-y: auto; white-space: pre-wrap; line-height: 1.6; }
-    .wt-test-pass { border-left: 3px solid var(--accent-lime); }
-    .wt-test-fail { border-left: 3px solid var(--accent-error); }
+    .wt-test-pass { background: color-mix(in srgb, var(--accent-lime) 8%, var(--background)); border: 1px solid color-mix(in srgb, var(--accent-lime) 30%, var(--border)); }
+    .wt-test-fail { background: color-mix(in srgb, var(--accent-error) 8%, var(--background)); border: 1px solid color-mix(in srgb, var(--accent-error) 30%, var(--border)); }
     .wt-post-merge-banner { margin: 12px 0; padding: 12px 14px; background: color-mix(in srgb, var(--accent-lime) 7%, transparent); border: 1px solid color-mix(in srgb, var(--accent-lime) 20%, transparent); border-radius: 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
 
     /* --- Subagent Inline Cards --- */
@@ -579,7 +562,7 @@
     .sa-work-stream { font-size: 11px; font-family: monospace; background: var(--background); padding: 10px; border-radius: 6px; max-height: 160px; overflow-y: auto; line-height: 1.6; }
     .sa-work-stream .tool-call { color: var(--accent-magenta); }
     .sa-work-stream .tool-result { color: var(--text-muted); font-style: italic; }
-    .sa-thought-stream { font-size: 11px; color: var(--text-secondary); font-style: italic; padding: 10px; background: var(--surface-elevated); border-radius: 6px; border-left: 3px solid var(--accent-magenta); line-height: 1.5; }
+    .sa-thought-stream { font-size: 11px; color: var(--text-secondary); font-style: italic; padding: 10px; background: color-mix(in srgb, var(--accent-magenta) 8%, var(--surface-elevated)); border-radius: 6px; border: 1px solid color-mix(in srgb, var(--accent-magenta) 30%, var(--border)); line-height: 1.5; }
     .sa-state-block { padding: 8px 10px; border: 1px solid var(--border-light); border-radius: 6px; font-size: 11px; background: var(--surface-elevated); }
     .sa-state-block .state-label { font-weight: 700; font-size: 10px; color: var(--accent-warning); margin-bottom: 4px; }
     .sa-state-block.blocked-state .state-label { color: var(--accent-error); }
@@ -619,13 +602,13 @@
     .sa-crew-debate { border-top: 1px solid var(--border-light); padding-top: 12px; }
     .sa-crew-msg { padding: 10px 14px; margin: 8px 0; border-radius: 8px; font-size: 11px; background: var(--surface); line-height: 1.5; animation: crewDebateSlide 0.3s ease; }
     .sa-crew-msg .crew-author { font-weight: 700; font-size: 10px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
-    .sa-crew-msg.from-architect { border-left: 3px solid var(--accent-blue); }
+    .sa-crew-msg.from-architect { background: color-mix(in srgb, var(--accent-blue) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent-blue) 30%, var(--border)); }
     .sa-crew-msg.from-architect .crew-author { color: var(--accent-blue); }
-    .sa-crew-msg.from-security { border-left: 3px solid var(--accent-magenta); }
+    .sa-crew-msg.from-security { background: color-mix(in srgb, var(--accent-magenta) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent-magenta) 30%, var(--border)); }
     .sa-crew-msg.from-security .crew-author { color: var(--accent-magenta); }
-    .sa-crew-msg.from-api { border-left: 3px solid var(--accent-lime); }
+    .sa-crew-msg.from-api { background: color-mix(in srgb, var(--accent-lime) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent-lime) 30%, var(--border)); }
     .sa-crew-msg.from-api .crew-author { color: var(--accent-lime); }
-    .sa-crew-msg.from-lead { border-left: 3px solid var(--accent-orange); }
+    .sa-crew-msg.from-lead { background: color-mix(in srgb, var(--accent-orange) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
     .sa-crew-msg.from-lead .crew-author { color: var(--accent-orange); }
     .sa-crew-synthesis { background: color-mix(in srgb, var(--accent-lime) 6%, transparent); border: 1px solid color-mix(in srgb, var(--accent-lime) 18%, transparent); padding: 14px; border-radius: 8px; margin: 12px 0; font-size: 11px; line-height: 1.6; }
     .sa-crew-synthesis .synth-title { font-weight: 700; font-size: 12px; margin-bottom: 8px; color: var(--accent-lime); }
@@ -696,15 +679,15 @@
     /* --- Glass Theme Overrides for New Components ---
        Pre-baked fills only: these all live inside already-blurred panels, so
        they take no backdrop-filter of their own (glass perf budget). */
-    [data-theme^="glass"] .subagent-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
-    [data-theme^="glass"] .sa-crew-board { background: rgba(45,212,191,0.05); border-color: rgba(45,212,191,0.15); }
-    [data-theme^="glass"] .sa-batch-card { background: rgba(255,255,255,0.04); }
-    [data-theme^="glass"] .wt-bind-dropdown { background: rgba(20,30,40,0.94); box-shadow: 0 8px 24px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.10); }
-    [data-theme^="glass"] .wt-create-modal .wt-modal-inner { background: rgba(20,30,40,0.96); box-shadow: 0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.10); }
-    [data-theme^="glass"] .wt-merge-modal .wt-merge-inner { background: rgba(20,30,40,0.96); box-shadow: 0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.10); }
-    [data-theme^="glass"] .sa-crew-msg { background: rgba(255,255,255,0.04); }
-    [data-theme^="glass"] .fm-wt-breadcrumb { background: rgba(255,255,255,0.04); }
-    [data-theme^="glass"] .sa-thought-stream { background: rgba(244,114,182,0.07); }
+    [data-theme^="glass"] .subagent-card { background: var(--pm6-glass-step-2); border: 1px solid var(--glass-hairline); }
+    [data-theme^="glass"] .sa-crew-board { background: rgba(var(--pm6-glass-a-rgb),0.07); border-color: rgba(var(--pm6-glass-a-rgb),0.20); }
+    [data-theme^="glass"] .sa-batch-card { background: var(--pm6-glass-step-1); }
+    [data-theme^="glass"] .wt-bind-dropdown { background: var(--pm6-glass-plate); box-shadow: inset 0 1px 0 var(--glass-edge), var(--pm6-glass-drop); }
+    [data-theme^="glass"] .wt-create-modal .wt-modal-inner { background: var(--pm6-glass-plate); box-shadow: inset 0 1px 0 var(--glass-edge), 0 16px 48px var(--pm6-glass-pane-shadow2); }
+    [data-theme^="glass"] .wt-merge-modal .wt-merge-inner { background: var(--pm6-glass-plate); box-shadow: inset 0 1px 0 var(--glass-edge), 0 16px 48px var(--pm6-glass-pane-shadow2); }
+    [data-theme^="glass"] .sa-crew-msg { background: var(--pm6-glass-step-1); }
+    [data-theme^="glass"] .fm-wt-breadcrumb { background: var(--pm6-glass-step-1); }
+    [data-theme^="glass"] .sa-thought-stream { background: rgba(var(--pm6-glass-b-rgb),0.08); }
 
     /* --- Retro Theme Overrides for New Components --- */
     [data-theme^="retro"] .subagent-card { border-radius: 0; border: var(--border-width-inner, 1px) solid var(--border); }
@@ -905,23 +888,22 @@
       background: color-mix(in srgb, var(--terminal-bg, var(--surface)) 85%, var(--pm-tab-hi) 15%);
       box-shadow: none;
       border-width: 1px;
-      border-left-width: 1px;
       border-bottom-width: 1px;
       border-color: color-mix(in srgb, var(--pm-tab-hi) 58%, var(--border-light));
       padding: 2px 5px 3px 5px;
     }
 
-    /* --- Glass Theme Terminal Tabs Redesign --- */
+    /* --- Glass Theme Terminal Tabs Redesign (steps of the sheet) --- */
     [data-theme^="glass"] .pm-term-wg-tab {
       border-radius: 8px;
-      /* pre-baked fill; tab sits inside the already-blurred bottom panel */
-      background: color-mix(in srgb, var(--surface-elevated) 78%, transparent);
+      /* pre-baked step fill; tab sits on the one glass pane */
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] .pm-term-wg-tab.pm-term-tab-active {
       animation: none;
-      background: color-mix(in srgb, var(--surface-elevated) 85%, var(--wg-accent, var(--accent-lime)) 15%);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      border-bottom: 2px solid var(--wg-accent, var(--accent-lime));
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 var(--glass-edge), 0 4px 12px var(--pm6-glass-pane-shadow2);
+      border-bottom: 2px solid var(--wg-accent, var(--accent-blue));
       outline: none;
     }
 

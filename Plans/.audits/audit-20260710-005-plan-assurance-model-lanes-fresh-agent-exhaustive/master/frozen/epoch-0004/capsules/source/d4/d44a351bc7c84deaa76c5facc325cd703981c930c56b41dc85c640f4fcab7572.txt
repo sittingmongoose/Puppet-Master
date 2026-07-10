@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 8107-8118 >>>
+- "ACID_LIME"
+- "Retro themes"
+- "Basic theme"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/FinalGUISpec.md#13, ContractName:Plans/DRY_Rules.md#7"
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 8119-8491 >>>
+### F3-086 - Views Section Owner Boundary
+
+```yaml
+plan_unit_id: F3-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The GUI surface owns visible display of concerns, progress, artifacts, and help through scoped
+  views, while Contracts_V0 owns concern definitions, approval-scope semantics, and route/open
+  ownership.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible view-surface ownership and interaction boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: views_section_owner_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0066"
+preserved_exact_tokens:
+- "concerns"
+- "progress"
+- "artifacts"
+- "help"
+- "Plans/Contracts_V0.md"
+- "visible widget and interaction layer"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Canonical concern definitions, approval scope semantics, and route/open ownership are defined in Plans/Contracts_V0.md."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-087 - Orchestrator Projection Trust And Stale Mutation Gating
+
+```yaml
+plan_unit_id: F3-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Orchestrator projection state separates freshness from health, reserves trust_tier for preview
+  or browser semantics, discloses stale/degraded states, and narrows or disables mutation controls
+  until canonical/current revalidation succeeds.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible projection state, copy, and disabled mutation behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: orchestrator_projection_trust_and_stale_mutation_gating
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0067"
+preserved_exact_tokens:
+- "current"
+- "refreshing"
+- "stale"
+- "degraded"
+- "unavailable"
+- "projection_freshness"
+- "projection_health"
+- "trust_tier"
+- "/degraded"
+negative_constraints:
+- "Projection-freshness copy never borrows Preview trust_tier or treats browser trust as runtime projection trust."
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "trust_tier is reserved for preview/browser semantics only rather than acting as the general projection-state bucket."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-088 - Orchestrator Progress Widget Scope And Tab View-State
+
+```yaml
+plan_unit_id: F3-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Only Progress is widget-composed inside Orchestrator; non-Progress tabs use native view-state,
+  dense tabs require slice loading and virtualization, and Progress renders coherent historical
+  snapshots when focused on a historical run.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Orchestrator widget layout, tab state, and dense-view behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: orchestrator_progress_widget_scope_and_tab_view_state
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0067"
+preserved_exact_tokens:
+- "Only `Progress`"
+- "orchestrator:progress"
+- "view-state"
+- "Slice-based loading"
+- "virtualization"
+- "lazy expansion"
+- "demand-loaded inspectors"
+- "historical snapshots"
+negative_constraints:
+- "Non-Progress tabs use native view-state contracts rather than widget-layout fields."
+compatibility_only_notes:
+- "Legacy widget-composed tab keys `orchestrator:tiers`, `orchestrator:evidence`, `orchestrator:history`, and `orchestrator:ledger` plus generic `/remove/move/resize` behavior are migration aliases."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-089 - Legacy Tier Alias Translation And Native Object Routing
+
+```yaml
+plan_unit_id: F3-089
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Legacy Tiers, phase/task/subtask, TierChanged, tier_id, widget canvas, and tier-first
+  Orchestrator vocabulary remain compatibility aliases only; native GUI routing normalizes through
+  object-first route_target, package, seam, lane, and runtime-object behavior.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains visible navigation, labels, and migration aliases in GUI surfaces.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: compatibility_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: legacy_tier_alias_translation_and_native_object_routing
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0067"
+preserved_exact_tokens:
+- "Tiers"
+- "phase/task/subtask"
+- "TierChanged"
+- "tier_id"
+- "route_target"
+- "package `/seam/lane`"
+- "`/package/node`"
+- "widget.tier_tree"
+- "widget.progress_bars"
+negative_constraints:
+- "`Progress` widgets must not teach active-tier, `phase-task-subtask`, or `tier-targeted` terminal semantics as the primary operational mental model."
+compatibility_only_notes:
+- "`Plans/Orchestrator_Page.md` / `/Orchestrator_Page.md` carry-through references to `Tab 2: Tiers`, `orchestrator:tiers`, and `FinalGUISpec section 7.7` are legacy aliases only."
+- "Legacy tier-era `Plans/Orchestrator_Page.md` / `/Orchestrator_Page.md` signals are compatibility inputs only."
+- "The old `all Orchestrator tabs are widget canvases` model from `Widget_System.md` and `Orchestrator_Page.md` is compatibility-only."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-090 - Orchestrator Surface Boundaries And Record-Backed Audit
+
+```yaml
+plan_unit_id: F3-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Source Control owns Git-native mutations, Orchestrator owns operational explanation and recovery
+  context, History owns chronological durable story, Ledger owns exact record inspection, and GUI
+  downstream surfaces consume Orchestrator routing/projection decisions.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Orchestrator boundary, navigation, and audit-surface behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: orchestrator_surface_boundaries_and_record_backed_audit
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0067"
+preserved_exact_tokens:
+- "Source Control"
+- "Orchestrator"
+- "History"
+- "Ledger"
+- "record-backed slices"
+- "provider `/runtime`"
+- "/routing/projection"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "`Source Control` is the execution surface for Git-native mutations, while `Orchestrator` remains the operational surface explaining why those actions matter."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-091 - Dashboard Orchestrator Chat Attention Routing
+
+```yaml
+plan_unit_id: F3-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Dashboard Orchestrator widgets, blocked-node CTAs, thread badges, and live-run cards route
+  through one Dashboard to Orchestrator to chat-thread attention contract with overseer/thread,
+  lane, active-object, seam, lane, and package-node context.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible dashboard, Orchestrator, chat, CTA, and attention-routing behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: dashboard_orchestrator_chat_attention_routing
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0067"
+preserved_exact_tokens:
+- "widget.orchestrator_status"
+- "widget.current_task"
+- "dashboard -> Orchestrator -> chat `CTA`"
+- "/seam/lane-aware"
+- "/seams/lanes"
+- "/package/node"
+- "blocked-node CtAs"
+negative_constraints: []
+compatibility_only_notes:
+- "Dashboard CtAs demote tiers-first widgets or layouts to compatibility-only presentation."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-092 - Seams Lazy Rollups And Action-Surface Triage
+
+```yaml
+plan_unit_id: F3-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Seams load compact seam/lane rollups before lazy package and node details, and action surfaces
+  classify affordances by navigation versus mutation, palette visibility, shortcut eligibility,
+  multi-target safety, and confirmation or reversibility.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Seams expansion, inspector, and action-surface behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: seams_lazy_rollups_and_action_surface_triage
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0067"
+preserved_exact_tokens:
+- "`Seams`"
+- "/seams/lanes"
+- "/package/node"
+- "navigation vs mutation"
+- "palette visibility"
+- "shortcut eligibility"
+- "/action-light"
+- "/high-consequence"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 8492-8503 >>>
+### F3-093 - Shared Runtime Status And Disabled Control Explanations
+
+```yaml
+plan_unit_id: F3-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Runtime-backed surfaces share one status vocabulary and disabled-control explanation model:
+  badges derive from canonical reason codes, and disabled mutation controls expose inline reason,
+  hover/focus detail, keyboard accessibility, and recovery CTA.
+gui_related: true

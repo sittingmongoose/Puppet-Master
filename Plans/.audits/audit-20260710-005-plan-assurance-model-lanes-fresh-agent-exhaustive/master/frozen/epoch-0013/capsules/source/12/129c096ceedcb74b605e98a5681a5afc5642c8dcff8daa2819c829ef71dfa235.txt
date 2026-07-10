@@ -1,0 +1,28 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-27 >>>
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.change_budget.schema.v1",
+L00000004	  "title": "Puppet Master Change Budget",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "allowed_paths",
+L00000010	    "forbidden_paths",
+L00000011	    "forbidden_files",
+L00000012	    "max_files_changed",
+L00000013	    "max_lines_added",
+L00000014	    "max_lines_deleted"
+L00000015	  ],
+L00000016	  "properties": {
+L00000017	    "schema_id": {"type": "string", "const": "pm.change_budget.schema.v1"},
+L00000018	    "allowed_paths": {"type": "array", "items": {"type": "string"}},
+L00000019	    "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+L00000020	    "forbidden_files": {"type": "array", "items": {"type": "string"}},
+L00000021	    "max_files_changed": {"type": "integer", "minimum": 0},
+L00000022	    "max_lines_added": {"type": "integer", "minimum": 0},
+L00000023	    "max_lines_deleted": {"type": "integer", "minimum": 0},
+L00000024	    "max_total_loc_delta": {"type": "integer", "minimum": 0},
+L00000025	    "notes": {"type": "string"}
+L00000026	  }
+L00000027	}

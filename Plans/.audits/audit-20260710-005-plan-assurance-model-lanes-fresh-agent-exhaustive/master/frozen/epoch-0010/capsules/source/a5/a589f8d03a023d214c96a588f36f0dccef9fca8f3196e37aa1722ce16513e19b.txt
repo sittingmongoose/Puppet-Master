@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2150-2161 >>>
+L00002150	        "status"
+L00002151	      ],
+L00002152	      "nullable_fields": [],
+L00002153	      "replay_behavior": "Deferred lifecycle record; not on launch-critical Approve And Build path.",
+L00002154	      "migration": "Must preserve active/acknowledged/resolved/dismissed semantics.",
+L00002155	      "retention_compaction": "Retain while linked source events or blocked episodes remain.",
+L00002156	      "redaction_no_secret_rule": "Evidence bodies are ref-only or redacted.",
+L00002157	      "legacy_canonical_crosswalk_status": "canonical_key_deferred_value_schema",
+L00002158	      "deferred_owner": "Plans/storage-plan.md",
+L00002159	      "deferred_reason": "Concern lifecycle is not Tier 0C-2 storage launch-critical.",
+L00002160	      "reopen_condition": "Reopen when concern lifecycle enters implementation-readiness scope."
+L00002161	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2162-2555 >>>
+L00002162	    {
+L00002163	      "family_id": "runtime_artifact_projector_families",
+L00002164	      "storage_kind": "redb_projection",
+L00002165	      "status": "deferred_not_build_blocking",
+L00002166	      "tier": "later_gui_or_feature_projection",
+L00002167	      "key_shape": "artifacts_index.v1:{project_id}:{artifact_id} | artifacts_project_state.v1:{project_id} | projector.checkpoint.runtime_artifacts:{project_id}",
+L00002168	      "value_schema_id": "pm.storage_value.runtime_artifact_projector_families.v1",
+L00002169	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/runtime_artifact_projector_families",
+L00002170	      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+L00002171	      "producer": [
+L00002172	        "Runtime artifact projector"
+L00002173	      ],
+L00002174	      "consumers": [
+L00002175	        "Runtime Artifacts panel",
+L00002176	        "usage/dashboard"
+L00002177	      ],
+L00002178	      "schema_version": "1.0.0",
+L00002179	      "encoding": "messagepack_canonical",
+L00002180	      "required_fields": [
+L00002181	        "schema_version"
+L00002182	      ],
+L00002183	      "optional_fields": [
+L00002184	        "artifact_id",
+L00002185	        "project_id",
+L00002186	        "checkpoint_cursor"
+L00002187	      ],
+L00002188	      "nullable_fields": [],
+L00002189	      "replay_behavior": "Rebuildable from canonical events and receipts.",
+L00002190	      "migration": "Family-specific schemas required before implementation authority.",
+L00002191	      "retention_compaction": "Checkpoint is disposable; artifact index retention follows artifact/evidence policy.",
+L00002192	      "redaction_no_secret_rule": "Artifact content is ref-only and redacted by evidence class.",
+L00002193	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002194	      "deferred_owner": "Plans/Runtime_Artifacts_Panel.md",
+L00002195	      "deferred_reason": "Runtime artifact GUI projections are outside Tier 0C-2 launch-critical storage.",
+L00002196	      "reopen_condition": "Reopen with runtime artifact panel implementation fixtures."
+L00002197	    },
+L00002198	    {
+L00002199	      "family_id": "worktree_lane_thread_families",
+L00002200	      "storage_kind": "redb_projection",
+L00002201	      "status": "deferred_not_build_blocking",
+L00002202	      "tier": "later_gui_or_feature_projection",
+L00002203	      "key_shape": "worktree_record.v1:{project_id}:{worktree_id} | worktree_projection.v1:{project_id}:{worktree_id} | thread_state:{thread_id}:worktree_binding | thread_state:{thread_id}:persona_override | worktree_binding_reverse:{worktree_id} | lane_record.v1:{project_id}:{lane_id} | lane_projection.v1:{project_id}:{lane_id}",
+L00002204	      "value_schema_id": "pm.storage_value.worktree_lane_thread_families.v1",
+L00002205	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/worktree_lane_thread_families",
+L00002206	      "owner_doc": "Plans/WorktreeGitImprovement.md",
+L00002207	      "producer": [
+L00002208	        "Source Control and assistant-thread projectors"
+L00002209	      ],
+L00002210	      "consumers": [
+L00002211	        "Assistant chat",
+L00002212	        "Source Control",
+L00002213	        "Orchestrator"
+L00002214	      ],
+L00002215	      "schema_version": "1.0.0",
+L00002216	      "encoding": "messagepack_canonical",
+L00002217	      "required_fields": [
+L00002218	        "schema_version"
+L00002219	      ],
+L00002220	      "optional_fields": [
+L00002221	        "project_id",
+L00002222	        "thread_id",
+L00002223	        "worktree_id",
+L00002224	        "lane_id"
+L00002225	      ],
+L00002226	      "nullable_fields": [],
+L00002227	      "replay_behavior": "Thread/worktree bindings rebuild from chat.thread_worktree_* events; lane/worktree records retain lifecycle lineage.",
+L00002228	      "migration": "Legacy thread/worktree aliases must write the canonical project/thread/worktree/lane keys.",
+L00002229	      "retention_compaction": "Records retain archive/removed/deleted tombstones while historical links exist.",
+L00002230	      "redaction_no_secret_rule": "Paths may be redacted or display-normalized; no local machine secrets may be stored.",
+L00002231	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002232	      "deferred_owner": "Plans/WorktreeGitImprovement.md",
+L00002233	      "deferred_reason": "Worktree/lane GUI projections are not required to close Tier 0C-2 persistence blockers.",
+L00002234	      "reopen_condition": "Reopen when Source Control/assistant worktree storage enters implementation scope."
+L00002235	    },
+L00002236	    {
+L00002237	      "family_id": "project_attention_account_families",
+L00002238	      "storage_kind": "redb_projection",
+L00002239	      "status": "deferred_not_build_blocking",
+L00002240	      "tier": "later_gui_or_feature_projection",
+L00002241	      "key_shape": "project_summary.v1:{project_id} | project_attention_item.v1:{project_id}:{attention_item_id} | account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id} | account_switch_event.v1:{provider_id}:{event_id}",
+L00002242	      "value_schema_id": "pm.storage_value.project_attention_account_families.v1",
+L00002243	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/project_attention_account_families",
+L00002244	      "owner_doc": "Plans/Multi-Account.md",
+L00002245	      "producer": [
+L00002246	        "attention and account projectors"
+L00002247	      ],
+L00002248	      "consumers": [
+L00002249	        "Dashboard",
+L00002250	        "Orchestrator",
+L00002251	        "usage views"
+L00002252	      ],
+L00002253	      "schema_version": "1.0.0",
+L00002254	      "encoding": "messagepack_canonical",
+L00002255	      "required_fields": [
+L00002256	        "schema_version"
+L00002257	      ],
+L00002258	      "optional_fields": [
+L00002259	        "project_id",
+L00002260	        "provider_id",
+L00002261	        "account_id",
+L00002262	        "source_event_ids"
+L00002263	      ],
+L00002264	      "nullable_fields": [],
+L00002265	      "replay_behavior": "Rebuild account/attention projections from events and runtime attribution records.",
+L00002266	      "migration": "Requires owner-specific schemas before build authority.",
+L00002267	      "retention_compaction": "Attention projections are disposable; pressure/switch events retain according to account history policy.",
+L00002268	      "redaction_no_secret_rule": "Account labels and provider identity are redacted/masked according to export policy; auth material is never stored.",
+L00002269	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002270	      "deferred_owner": "Plans/Multi-Account.md",
+L00002271	      "deferred_reason": "Account/attention projections are later GUI/runtime projections.",
+L00002272	      "reopen_condition": "Reopen with provider/account stream readiness."
+L00002273	    },
+L00002274	    {
+L00002275	      "family_id": "provider_runtime_identity_families",
+L00002276	      "storage_kind": "redb",
+L00002277	      "status": "deferred_not_build_blocking",
+L00002278	      "tier": "later_gui_or_feature_projection",
+L00002279	      "key_shape": "provider_account_record.v1:{provider_id}:{account_id} | provider_entitlement_context_record.v1:{provider_id}:{account_id}:{billing_entity_id} | server_profile_record.v1:{provider_id}:{connection_profile_id}",
+L00002280	      "value_schema_id": "pm.storage_value.provider_runtime_identity_families.v1",
+L00002281	      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/provider_runtime_identity_families",
+L00002282	      "owner_doc": "Plans/Multi-Account.md",
+L00002283	      "producer": [
+L00002284	        "provider discovery and account manager"
+L00002285	      ],
+L00002286	      "consumers": [
+L00002287	        "Prompt Pipeline",
+L00002288	        "PlanCompile provider routing",
+L00002289	        "usage views"
+L00002290	      ],
+L00002291	      "schema_version": "1.0.0",
+L00002292	      "encoding": "messagepack_canonical",
+L00002293	      "required_fields": [
+L00002294	        "schema_version"
+L00002295	      ],
+L00002296	      "optional_fields": [
+L00002297	        "provider_id",
+L00002298	        "account_id",
+L00002299	        "billing_entity_id",
+L00002300	        "connection_profile_id"
+L00002301	      ],
+L00002302	      "nullable_fields": [],
+L00002303	      "replay_behavior": "Deferred; provider stream readiness must prove discovery/currentness before launch.",
+L00002304	      "migration": "Must split account-backed and server-profile-backed runtime identity.",
+L00002305	      "retention_compaction": "Retain non-secret identity snapshots while linked usage/runtime records exist.",
+L00002306	      "redaction_no_secret_rule": "Credentials and tokens remain in the OS credential store; this family stores masked identity refs only.",
+L00002307	      "legacy_canonical_crosswalk_status": "deferred_group_inventory",
+L00002308	      "deferred_owner": "Plans/Multi-Account.md",
+L00002309	      "deferred_reason": "Provider stream blocker remains open.",
+L00002310	      "reopen_condition": "Reopen in provider_stream tier."
+L00002311	    },
+L00002312	    {
+L00002313	      "family_id": "terminal_workspace_state",
+L00002314	      "storage_kind": "redb",
+L00002315	      "status": "materialized",
+L00002316	      "tier": "later_gui_or_feature_projection",
+L00002317	      "key_shape": "terminal_workspace_state.v1:{project_id}:{workspace_tab_id}",
+L00002318	      "value_schema_id": "pm.storage_value.terminal_workspace_state.v1",
+L00002319	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_workspace_state/value_schema",
+L00002320	      "owner_doc": "Plans/storage-plan.md",
+L00002321	      "producer": ["terminal and editor projectors"],
+L00002322	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002323	      "schema_version": "1.0.0",
+L00002324	      "encoding": "messagepack_canonical",
+L00002325	      "required_fields": ["schema_id", "schema_version", "project_id", "workspace_tab_id", "section_order", "updated_at_utc", "redaction_profile"],
+L00002326	      "optional_fields": ["active_section_id", "active_terminal_tab_id", "layout_generation", "resource_budget_ref"],
+L00002327	      "nullable_fields": ["active_section_id", "active_terminal_tab_id"],
+L00002328	      "replay_behavior": "Restores terminal workspace layout and selected ids as historical GUI state only; replay never certifies terminal process liveness.",
+L00002329	      "migration": "Legacy terminal bottom-panel blobs split into workspace, section, tab, pane, session, and command-block rows before implementation authority.",
+L00002330	      "retention_compaction": "Retain while the project workspace exists; compact superseded layout generations after referenced sessions and command blocks expire.",
+L00002331	      "redaction_no_secret_rule": "Stores ids, ordering, and layout refs only; transcripts, environment, shell output, and credentials are excluded or stored by scrubbed refs.",
+L00002332	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002333	      "value_schema": {
+L00002334	        "type": "object",
+L00002335	        "additionalProperties": false,
+L00002336	        "required": ["schema_id", "schema_version", "project_id", "workspace_tab_id", "section_order", "updated_at_utc", "redaction_profile"],
+L00002337	        "properties": {
+L00002338	          "schema_id": {"const": "pm.storage_value.terminal_workspace_state.v1"},
+L00002339	          "schema_version": {"const": "1.0.0"},
+L00002340	          "project_id": {"type": "string", "minLength": 1},
+L00002341	          "workspace_tab_id": {"type": "string", "minLength": 1},
+L00002342	          "section_order": {"type": "array", "items": {"type": "string"}},
+L00002343	          "active_section_id": {"type": ["string", "null"]},
+L00002344	          "active_terminal_tab_id": {"type": ["string", "null"]},
+L00002345	          "layout_generation": {"type": "integer", "minimum": 0},
+L00002346	          "resource_budget_ref": {"type": "string"},
+L00002347	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002348	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002349	        }
+L00002350	      }
+L00002351	    },
+L00002352	    {
+L00002353	      "family_id": "terminal_section_record",
+L00002354	      "storage_kind": "redb",
+L00002355	      "status": "materialized",
+L00002356	      "tier": "later_gui_or_feature_projection",
+L00002357	      "key_shape": "terminal_section_record.v1:{project_id}:{terminal_section_id}",
+L00002358	      "value_schema_id": "pm.storage_value.terminal_section_record.v1",
+L00002359	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_section_record/value_schema",
+L00002360	      "owner_doc": "Plans/storage-plan.md",
+L00002361	      "producer": ["terminal and editor projectors"],
+L00002362	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002363	      "schema_version": "1.0.0",
+L00002364	      "encoding": "messagepack_canonical",
+L00002365	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_section_id", "workspace_tab_id", "section_title", "terminal_tab_order", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002366	      "optional_fields": ["active_terminal_tab_id", "collapsed"],
+L00002367	      "nullable_fields": ["active_terminal_tab_id"],
+L00002368	      "replay_behavior": "Restores terminal sections and tab ordering without asserting that any child process is still alive.",
+L00002369	      "migration": "Imports legacy terminal section blobs into one section row per section id.",
+L00002370	      "retention_compaction": "Retain while referenced by terminal_workspace_state; compact after all child tab records expire.",
+L00002371	      "redaction_no_secret_rule": "Section labels and ids only; command contents and environment values are not persisted here.",
+L00002372	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002373	      "value_schema": {
+L00002374	        "type": "object",
+L00002375	        "additionalProperties": false,
+L00002376	        "required": ["schema_id", "schema_version", "project_id", "terminal_section_id", "workspace_tab_id", "section_title", "terminal_tab_order", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002377	        "properties": {
+L00002378	          "schema_id": {"const": "pm.storage_value.terminal_section_record.v1"},
+L00002379	          "schema_version": {"const": "1.0.0"},
+L00002380	          "project_id": {"type": "string", "minLength": 1},
+L00002381	          "terminal_section_id": {"type": "string", "minLength": 1},
+L00002382	          "workspace_tab_id": {"type": "string", "minLength": 1},
+L00002383	          "section_title": {"type": "string"},
+L00002384	          "terminal_tab_order": {"type": "array", "items": {"type": "string"}},
+L00002385	          "active_terminal_tab_id": {"type": ["string", "null"]},
+L00002386	          "collapsed": {"type": "boolean"},
+L00002387	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002388	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002389	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002390	        }
+L00002391	      }
+L00002392	    },
+L00002393	    {
+L00002394	      "family_id": "terminal_tab_record",
+L00002395	      "storage_kind": "redb",
+L00002396	      "status": "materialized",
+L00002397	      "tier": "later_gui_or_feature_projection",
+L00002398	      "key_shape": "terminal_tab_record.v1:{project_id}:{terminal_tab_id}",
+L00002399	      "value_schema_id": "pm.storage_value.terminal_tab_record.v1",
+L00002400	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_tab_record/value_schema",
+L00002401	      "owner_doc": "Plans/storage-plan.md",
+L00002402	      "producer": ["terminal and editor projectors"],
+L00002403	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002404	      "schema_version": "1.0.0",
+L00002405	      "encoding": "messagepack_canonical",
+L00002406	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_tab_id", "terminal_section_id", "tab_title", "pane_tree_root_id", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002407	      "optional_fields": ["active_terminal_session_id"],
+L00002408	      "nullable_fields": ["active_terminal_session_id"],
+L00002409	      "replay_behavior": "Restores tab metadata and pane-tree root for historical layout review only.",
+L00002410	      "migration": "Splits legacy terminal tab data from grouped bottom-panel state.",
+L00002411	      "retention_compaction": "Retain while referenced by a section; compact after pane and session references expire.",
+L00002412	      "redaction_no_secret_rule": "Tab metadata cannot include shell output, raw command text, credentials, or secret-bearing environment values.",
+L00002413	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002414	      "value_schema": {
+L00002415	        "type": "object",
+L00002416	        "additionalProperties": false,
+L00002417	        "required": ["schema_id", "schema_version", "project_id", "terminal_tab_id", "terminal_section_id", "tab_title", "pane_tree_root_id", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002418	        "properties": {
+L00002419	          "schema_id": {"const": "pm.storage_value.terminal_tab_record.v1"},
+L00002420	          "schema_version": {"const": "1.0.0"},
+L00002421	          "project_id": {"type": "string", "minLength": 1},
+L00002422	          "terminal_tab_id": {"type": "string", "minLength": 1},
+L00002423	          "terminal_section_id": {"type": "string", "minLength": 1},
+L00002424	          "tab_title": {"type": "string"},
+L00002425	          "pane_tree_root_id": {"type": "string", "minLength": 1},
+L00002426	          "active_terminal_session_id": {"type": ["string", "null"]},
+L00002427	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002428	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002429	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002430	        }
+L00002431	      }
+L00002432	    },
+L00002433	    {
+L00002434	      "family_id": "terminal_pane_record",
+L00002435	      "storage_kind": "redb",
+L00002436	      "status": "materialized",
+L00002437	      "tier": "later_gui_or_feature_projection",
+L00002438	      "key_shape": "terminal_pane_record.v1:{project_id}:{terminal_pane_id}",
+L00002439	      "value_schema_id": "pm.storage_value.terminal_pane_record.v1",
+L00002440	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_pane_record/value_schema",
+L00002441	      "owner_doc": "Plans/storage-plan.md",
+L00002442	      "producer": ["terminal and editor projectors"],
+L00002443	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002444	      "schema_version": "1.0.0",
+L00002445	      "encoding": "messagepack_canonical",
+L00002446	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_pane_id", "terminal_tab_id", "pane_kind", "parent_pane_id", "child_pane_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002447	      "optional_fields": ["split_axis", "size_fraction"],
+L00002448	      "nullable_fields": ["parent_pane_id", "split_axis", "size_fraction"],
+L00002449	      "replay_behavior": "Restores split tree layout; leaf liveness remains runtime-validated and is never inferred from this value.",
+L00002450	      "migration": "Splits legacy pane-tree blobs into one row per pane.",
+L00002451	      "retention_compaction": "Retain while referenced by terminal_tab_record; compact orphaned panes after child/leaf rows expire.",
+L00002452	      "redaction_no_secret_rule": "Stores layout shape only, with no terminal buffer or process environment.",
+L00002453	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002454	      "value_schema": {
+L00002455	        "type": "object",
+L00002456	        "additionalProperties": false,
+L00002457	        "required": ["schema_id", "schema_version", "project_id", "terminal_pane_id", "terminal_tab_id", "pane_kind", "parent_pane_id", "child_pane_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002458	        "properties": {
+L00002459	          "schema_id": {"const": "pm.storage_value.terminal_pane_record.v1"},
+L00002460	          "schema_version": {"const": "1.0.0"},
+L00002461	          "project_id": {"type": "string", "minLength": 1},
+L00002462	          "terminal_pane_id": {"type": "string", "minLength": 1},
+L00002463	          "terminal_tab_id": {"type": "string", "minLength": 1},
+L00002464	          "pane_kind": {"type": "string", "enum": ["split", "leaf"]},
+L00002465	          "parent_pane_id": {"type": ["string", "null"]},
+L00002466	          "child_pane_ids": {"type": "array", "items": {"type": "string"}},
+L00002467	          "split_axis": {"type": ["string", "null"], "enum": ["horizontal", "vertical", null]},
+L00002468	          "size_fraction": {"type": ["number", "null"]},
+L00002469	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002470	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002471	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002472	        }
+L00002473	      }
+L00002474	    },
+L00002475	    {
+L00002476	      "family_id": "terminal_leaf_pane_record",
+L00002477	      "storage_kind": "redb",
+L00002478	      "status": "materialized",
+L00002479	      "tier": "later_gui_or_feature_projection",
+L00002480	      "key_shape": "terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}",
+L00002481	      "value_schema_id": "pm.storage_value.terminal_leaf_pane_record.v1",
+L00002482	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_leaf_pane_record/value_schema",
+L00002483	      "owner_doc": "Plans/storage-plan.md",
+L00002484	      "producer": ["terminal and editor projectors"],
+L00002485	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002486	      "schema_version": "1.0.0",
+L00002487	      "encoding": "messagepack_canonical",
+L00002488	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_leaf_pane_id", "terminal_pane_id", "terminal_session_id", "cwd_ref", "shell_profile_ref", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002489	      "optional_fields": ["last_command_block_id", "title"],
+L00002490	      "nullable_fields": ["last_command_block_id"],
+L00002491	      "replay_behavior": "Restores the leaf pane's last known session reference for history; runtime must revalidate or relaunch any process separately.",
+L00002492	      "migration": "Splits terminal leaves from legacy terminal pane blobs.",
+L00002493	      "retention_compaction": "Retain while pane/session references exist; compact display-only titles after session history expires.",
+L00002494	      "redaction_no_secret_rule": "cwd and shell profile are refs only; raw paths with secrets, env values, and output buffers are forbidden.",
+L00002495	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002496	      "value_schema": {
+L00002497	        "type": "object",
+L00002498	        "additionalProperties": false,
+L00002499	        "required": ["schema_id", "schema_version", "project_id", "terminal_leaf_pane_id", "terminal_pane_id", "terminal_session_id", "cwd_ref", "shell_profile_ref", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002500	        "properties": {
+L00002501	          "schema_id": {"const": "pm.storage_value.terminal_leaf_pane_record.v1"},
+L00002502	          "schema_version": {"const": "1.0.0"},
+L00002503	          "project_id": {"type": "string", "minLength": 1},
+L00002504	          "terminal_leaf_pane_id": {"type": "string", "minLength": 1},
+L00002505	          "terminal_pane_id": {"type": "string", "minLength": 1},
+L00002506	          "terminal_session_id": {"type": "string", "minLength": 1},
+L00002507	          "cwd_ref": {"type": "string", "minLength": 1},
+L00002508	          "shell_profile_ref": {"type": "string", "minLength": 1},
+L00002509	          "last_command_block_id": {"type": ["string", "null"]},
+L00002510	          "title": {"type": "string"},
+L00002511	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002512	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002513	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002514	        }
+L00002515	      }
+L00002516	    },
+L00002517	    {
+L00002518	      "family_id": "terminal_workgroup_record",
+L00002519	      "storage_kind": "redb",
+L00002520	      "status": "materialized",
+L00002521	      "tier": "later_gui_or_feature_projection",
+L00002522	      "key_shape": "terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}",
+L00002523	      "value_schema_id": "pm.storage_value.terminal_workgroup_record.v1",
+L00002524	      "value_schema_ref": "Plans/storage_value_registry.json#/families/terminal_workgroup_record/value_schema",
+L00002525	      "owner_doc": "Plans/storage-plan.md",
+L00002526	      "producer": ["terminal and editor projectors"],
+L00002527	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002528	      "schema_version": "1.0.0",
+L00002529	      "encoding": "messagepack_canonical",
+L00002530	      "required_fields": ["schema_id", "schema_version", "project_id", "terminal_workgroup_id", "title", "workspace_tab_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002531	      "optional_fields": ["description"],
+L00002532	      "nullable_fields": [],
+L00002533	      "replay_behavior": "Restores named terminal workgroups as GUI grouping metadata only.",
+L00002534	      "migration": "Imports any legacy terminal workgroup metadata into explicit workgroup rows.",
+L00002535	      "retention_compaction": "Retain while any workspace tab id remains live; compact empty historical groups after policy retention.",
+L00002536	      "redaction_no_secret_rule": "Workgroup metadata must not include command output, credentials, or raw shell environment.",
+L00002537	      "legacy_canonical_crosswalk_status": "materialized_from_deferred_terminal_group",
+L00002538	      "value_schema": {
+L00002539	        "type": "object",
+L00002540	        "additionalProperties": false,
+L00002541	        "required": ["schema_id", "schema_version", "project_id", "terminal_workgroup_id", "title", "workspace_tab_ids", "created_at_utc", "updated_at_utc", "redaction_profile"],
+L00002542	        "properties": {
+L00002543	          "schema_id": {"const": "pm.storage_value.terminal_workgroup_record.v1"},
+L00002544	          "schema_version": {"const": "1.0.0"},
+L00002545	          "project_id": {"type": "string", "minLength": 1},
+L00002546	          "terminal_workgroup_id": {"type": "string", "minLength": 1},
+L00002547	          "title": {"type": "string"},
+L00002548	          "description": {"type": "string"},
+L00002549	          "workspace_tab_ids": {"type": "array", "items": {"type": "string"}},
+L00002550	          "created_at_utc": {"type": "string", "format": "date-time"},
+L00002551	          "updated_at_utc": {"type": "string", "format": "date-time"},
+L00002552	          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+L00002553	        }
+L00002554	      }
+L00002555	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=2556-2567 >>>
+L00002556	    {
+L00002557	      "family_id": "editor_terminal_panel_state",
+L00002558	      "storage_kind": "redb",
+L00002559	      "status": "materialized",
+L00002560	      "tier": "later_gui_or_feature_projection",
+L00002561	      "key_shape": "editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}",
+L00002562	      "value_schema_id": "pm.storage_value.editor_terminal_panel_state.v1",
+L00002563	      "value_schema_ref": "Plans/storage_value_registry.json#/families/editor_terminal_panel_state/value_schema",
+L00002564	      "owner_doc": "Plans/storage-plan.md",
+L00002565	      "producer": ["terminal and editor projectors"],
+L00002566	      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+L00002567	      "schema_version": "1.0.0",

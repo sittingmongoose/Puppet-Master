@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-000949-EXACT-WIN-6F4A920A9252-0004",
+  "attempt_id": "attempt-0001",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      1098,
+      1109
+    ],
+    [
+      1433,
+      1444
+    ]
+  ],
+  "core_range": [
+    1110,
+    1432
+  ],
+  "core_sha256": "01a180816981603e4655d3b449440417f6d367328ebe7ecd32c730e6c0adb01e",
+  "document_path": "Plans/CLI_Bridged_Providers.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/da/daeada10eebceee2b1136af528bd7bb8f45eba66f3a2a7f6845fa4c94296bacc.txt",
+  "source_excerpt_sha256": "daeada10eebceee2b1136af528bd7bb8f45eba66f3a2a7f6845fa4c94296bacc",
+  "source_sha256": "6338c16cdf5330860d80a33ddb5a125a0918d121a634853d0f623f3de034fae9",
+  "window_id": "WIN-6F4A920A9252-0004"
+}

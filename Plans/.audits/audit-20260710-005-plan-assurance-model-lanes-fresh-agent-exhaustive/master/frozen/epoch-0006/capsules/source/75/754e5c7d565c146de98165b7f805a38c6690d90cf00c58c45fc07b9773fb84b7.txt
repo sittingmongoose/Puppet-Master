@@ -1,0 +1,409 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-394 >>>
+L00000001	# FileSafe -- Implementation Plan
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	
+L00000007	**Date:** 2026-02-19  
+L00000008	**Priority:** CRITICAL  
+L00000009	**Status:** Plan Document Only
+L00000010	
+L00000011	## DRY Method Compliance
+L00000012	
+L00000013	**CRITICAL:** All code in this plan MUST follow DRY principles.
+L00000014	
+L00000015	- ✅ **ALWAYS** tag reusable functions: `// DRY:FN:<name> -- Description`
+L00000016	- ✅ **ALWAYS** tag reusable data structures: `// DRY:DATA:<name> -- Description`
+L00000017	- ✅ **ALWAYS** tag reusable helpers: `// DRY:HELPER:<name> -- Description`
+L00000018	- ✅ **ALWAYS** use `platform_specs::` functions for platform data (never hardcode)
+L00000019	- ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI widgets
+L00000020	
+L00000021	---
+L00000022	
+L00000023	## Rewrite alignment (2026-02-21)
+L00000024	
+L00000025	This plan remains authoritative for **FileSafe safety policy only**. As the rewrite lands, FileSafe is implemented primarily through:
+L00000026	- the **central tool registry + policy engine** for permissions, validation, and normalized tool outcomes
+L00000027	- the **patch/apply/verify/rollback pipeline** rather than ad-hoc guardrails in UI code
+L00000028	- emitting guard decisions, violations, and remediation into the canonical seglog event stream
+L00000029	
+L00000030	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000031	
+L00000032	Context compilation, delta-context selection, cache heuristics, marker files, skill bundling, and compaction strategy are owned by `Plans/Prompt_Pipeline.md`. FileSafe may reference those flows only to define where safety checks run against compiled output.
+L00000033	
+L00000034	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
+L00000035	
+L00000036	Any UI or storage examples in this plan are illustrative unless they describe guard behavior, fail-closed execution, canonical logging, or explicit FileSafe-owned payload contracts.
+L00000037	
+L00000038	Plans review synthesis informs FileSafe applicability without creating a new process artifact owner: `plans_review_findings` and `plans_review_summaries` recorded highest-confidence strengths in FileManager shared-buffer `/file-tree` behavior, preview `/file-type` behavior, source-canonical editors, and local LSP/editor coverage, while the FileSafe-owned reconciliation `/gaps` are the incomplete mutation contract across user edits, agent edits, preview edits, and FileSafe, plus under-specified remote `/cache/offline/LSP/degraded-state`, `/watchers/degraded-state`, stale `/snapshot` wording, and preview `/trust/fallback` rules. FileSafe consumes `/FinalGUISpec/storage-plan` and FileManager open/reveal ownership as adjacent contracts; it only owns whether mutations, restore-before-rerun, and guard outcomes fail closed against those contracts.
+L00000039	
+L00000040	File rename, delete, duplicate, bulk file-manager operations, refresh-after-operation, and `/transaction/conflict` handling are FileSafe-relevant when they mutate workspace files or claim rollback. Session view-state prompts such as `Don't ask again` remain shell/UI state, but FileSafe must treat any saved preference that changes mutation or restore prompting as auditable guard input rather than invisible view-state.
+L00000041	
+L00000042	FileSafe implementation guidance keeps a hard boundary between portable product ideas and implementation patterns tied to Electron/DOM-heavy stacks. Guard logic, canonicalization, mutation-safety, /durability, atomic write, optimistic concurrency, and event logging must remain safe for a Rust + Slint, macOS/Linux/Windows product instead of depending on DOM process, browser storage, or Electron-only lifecycle behavior.
+L00000043	
+L00000044	External implementation-reference findings refine this boundary without creating FileSafe ownership over FileManager, FinalGUI, preview/browser, terminal, platform-adapter, diff/review, SSH/remote, preview/media, drag/drop, or file explorer correctness. FileSafe consumes those adjacent contracts only when they provide guard-visible inputs for mutation authorization, rollback, reveal/open routing, runtime dispatch, recovery, or event logging; durable workspace identity, generated-vs-workspace state, and gitignore-aware traversal must be supplied by their owner docs before FileSafe treats an action as safe.
+L00000045	
+L00000046	Guard-visible inputs include typed resource identity, `/open/reveal/save`, `/dirty/recovery/on-disk`, external-change detection, grouped `/undo` / `/redo`, `/symlink/case-sensitivity`, `/IME/accessibility`, `/browser/session`, `/webview`, search-in-diff, heat-map, `/change-marker`, and requested-vs-effective/degraded-state evidence from remote, preview/runtime, terminal, and LSP/indexing seams. FileSafe must fail closed when those inputs are absent or stale, but packet-level elaboration stays non-authoritative until the owner docs expose guard-ready contracts.
+L00000047	
+L00000048	Cross-surface commands such as `cmd.orchestrator.open_in_source_control` are meaningful UX actions only when their arguments derive from the shared route schema; FileSafe treats custom arg shapes as guard-visible inputs, not a separate command contract.
+L00000049	
+L00000050	Projection trust and hostability are guard-visible when FileSafe-relevant actions launch from `FinalGUISpec`, `Widget_System.md`, or `Orchestrator_Page.md`: the reusable `trust-state` UI contract must cover projection-backed tabs, `/widgets/panels`, terminal widget identity, `/Dashboard`/Progress hostability, page/tab/global and `/tab/global` filters, `focused-run` scope, and widget-local display config before FileSafe treats the action context as safe.
+L00000051	
+L00000052	Orchestrator `live-status` dependencies must bind FileSafe-relevant actions through canonical runtime blocked identity: request-centric `HITL` bindings and blocked-projection bindings cannot compete or decide recovery authority independently.
+L00000053	
+L00000054	Routing/open seams stay owner-doc inputs but become FileSafe verification inputs when they gate mutation or reveal behavior: `route_target` must not carry `source-buffer` realization details, `/file/evidence` and `/attempt/generated` surfaces must expose first-class project/attempt/generated identity, and `/open-by-identity` plus `/wiring` normalization must come from owner-doc contracts rather than addendum-only concepts.
+L00000055	
+L00000056	FileSafe treats the routing/open-by-identity tranche as ordered reconciliation rather than broad invention: first close the one owner-doc structural gap, then the one command/wiring normalization gap, and only then accept the bounded set of stale consumer reconciliations as guard-ready inputs.
+L00000057	
+L00000058	`runtime-era` concepts in adjacent docs are not sufficient until registration/verification/routing owners expose them as guard-ready contracts; if owner docs lag, FileSafe records the seam as a `/verification/routing` or `spec-integrity` failure instead of accepting broad claims from `Orchestrator_Page.md`, runtime-artifact schemas, or command catalog references.
+L00000059	
+L00000060	An advertised missing section in `Orchestrator_Page.md` is a `spec-integrity` failure, not merely a content gap, when FileSafe must rely on that owner claim for guard-visible routing or verification.
+L00000061	
+L00000062	`Decision_Policy.md` (`Decision_Policy`) remains the authority for who can acknowledge concerns, revoke promotions, confirm corroboration outcomes, or own blocked states under the overseer model; FileSafe consumes that authority before allowing guard recovery or promotion-related actions.
+L00000063	
+L00000064	Shell/view restore fields such as `active_subview`, compare target, widget configuration, panel docking state, split ratios, and per-project restore state are shell-state inputs layered under canonical routing; FileSafe may audit them only when they change mutation prompting, recovery, or guard-visible destination state.
+L00000065	
+L00000066	Execution/runtime transport remains a separate seam with explicit request/response/error ownership before spawn. FileSafe may block terminal-first, Unix-native, single-snippet, and `/browser-runner` flows that depend on direct `/bin/sh`, Unix signals, VTE/TTY, `/input/cursor/selection`, IME, platform-specific `/reveal`, `/compile`, runtime `/auth` or `/polling`, asset serving, persistence, remote `/bootstrap`, packaging/startup, or macOS/Linux/Windows portability assumptions when those paths would bypass canonical scope, recovery, or event logging.
+L00000067	
+L00000068	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md
+L00000069	
+L00000070	## Executive Summary
+L00000071	
+L00000072	FileSafe is the canonical guardrail layer that blocks destructive commands before execution, constrains write scope, filters sensitive file access, validates compiled prompt content, and records guard outcomes in the canonical event stream.
+L00000073	
+L00000074	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000075	
+L00000076	Prompt/context compilation is adjacent but separately owned. `Plans/Prompt_Pipeline.md` owns run/work-package/node/attempt-scoped context selection, delta compilation, cache heuristics, skill bundling, and compaction behavior. FileSafe consumes the compiled prompt, structured attachments, and run/node/attempt identity as safety inputs; it does not own those rewrite-era algorithms or classify guard policy by legacy execution hierarchy.
+L00000077	
+L00000078	Doc-change mutation surfaces are narrowed to the shared `Plans/Contracts_V0.md` payload contract plus FileSafe guard outcomes; other docs may consume those records but must not mint a competing doc-change authority.
+L00000079	
+L00000080	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
+L00000081	
+L00000082	### Part A -- FileSafe
+L00000083	
+L00000084	
+L00000085	1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands before they run.
+L00000086	2. **FileSafe: Write scope** -- Restricts writes to the canonical allowed-file scope for the execution.
+L00000087	3. **FileSafe: Security filter** -- Blocks access to sensitive files and secrets.
+L00000088	4. **Compiled prompt checking** -- Scans the fully assembled prompt before provider dispatch.
+L00000089	5. **Verification and override integration** -- Allows only explicitly authorized override paths and records them canonically.
+L00000090	
+L00000091	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+L00000092	
+L00000093	### Part B -- Compiled-context safety boundary
+L00000094	
+L00000095	- FileSafe checks the fully compiled prompt **after** Prompt Pipeline assembly and **before** provider dispatch.
+L00000096	- FileSafe validates structured attachments, forwarded document selections, and file references against security and write-scope policy.
+L00000097	- FileSafe emits structured allow/block outcomes for these checks into seglog.
+L00000098	- Prompt/free-text command and path extraction is advisory defense-in-depth only; free-text extraction is advisory, not authoritative. Layer-1 enforcement is the structured tool/command invocation, normalized command identity, resolved path scope, and security-filter decision. A free-text extraction hit may block, warn, or ask for clarification, but a free-text extraction miss never authorizes command execution or file mutation.
+L00000099	
+L00000100	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000101	
+L00000102	### P0 fail-closed security resolution (2026-07-07)
+L00000103	
+L00000104	This section is the active FileSafe security decision for FABLE `fable-20260706-p0-filesafe-fail-open-and-allowlist-security`. Earlier examples that appear to disable guards, match approved commands by prefix, treat empty allowlists as warn-only, or make `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` sufficient authority are retired source-lineage only unless this section explicitly restates them as live behavior.
+L00000105	
+L00000106	Canonical requirements:
+L00000107	- FileSafe, BashGuard, FileGuard, and SecurityFilter initialization failures fail closed. The affected startup/runtime path blocks guarded command execution, file mutation, and sensitive-file access until the diagnostic is resolved.
+L00000108	- Disabled guard states are valid only for explicit, authenticated, auditable operator configuration that narrows or intentionally suspends one named guard for a scoped run/project/worktree duration. Initialization failure must never create a disabled guard.
+L00000109	- Approved command matching is exact after normalization. Normalization trims leading/trailing whitespace, collapses internal ASCII whitespace runs to one space, preserves token order and shell metacharacters, and does not split or concatenate authorization across command segments.
+L00000110	- Command identity is the whole normalized segment that would be dispatched after policy expansion and before spawn. For multi-line or chained invocations using newline, `&&`, `;`, `||`, or `|`, each dispatch segment is normalized and checked independently; the invocation is allowed only if every segment is independently allowed and none is blocked. An approval for `git status` does not approve `git status && rm -rf /`.
+L00000111	- Prefix, substring, `starts_with`, shell-fragment, fuzzy, prompt-expanded, and concatenated-command approval are forbidden. Mismatches emit `filesafe.command_denied` with `denial_code = approved_command_identity_mismatch`.
+L00000112	- Missing or empty command/path allowlists fail closed whenever the corresponding guard is enabled. `strict_mode=false` can soften non-authoritative advisory reporting only after a safe enforcement baseline is present; it cannot permit writes, reads, or commands when the authoritative allowlist, baseline, root, or guard input is absent.
+L00000113	- `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` is only a request signal. It is not sufficient authority by itself. A destructive override requires an authenticated operator grant with auth realm, operator identity, reason, scope, duration/expiry, project/run/worktree binding, and an emitted security event and receipt before any destructive command can run.
+L00000114	- Prompt/free-text command or path extraction is never the sole enforcement boundary. Structured tool arguments, final command segments, and resolved path scopes remain mandatory checks.
+L00000115	- Source-lineage snippets that preserve old fail-open, prefix-match, or disabled-fallback examples must be explicitly fenced as retired/noncanonical and must include a copy-prevention note saying they are not implementation guidance.
+L00000116	
+L00000117	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+L00000118	
+L00000119	---
+L00000120	
+L00000121	## Table of Contents
+L00000122	
+L00000123	**Part A -- FileSafe**  
+L00000124	1. Architecture Overview - 2. Implementation Details (guards) - 3. Integration with Platform Runner - 4. Pattern File - 5. Configuration - 6. Event Logging - 7. Error Messages - 8. Testing - 9. Implementation Checklist - 10. Relationship to Other Plans - 10a. FileSafe and Assistant YOLO mode - 11. Additional FileSafe Features (Write scope, Security filter, Prompt checking, Verification gates) - 12. Gaps and Potential Issues - 13. Enhancements
+L00000125	
+L00000126	**Part B -- Historical note on moved context-compilation canon**  
+L00000127	14. Historical note on moved context-compilation canon
+L00000128	
+L00000129	**Integration & References**  
+L00000130	15. System Integration Analysis - 16. References - **17. Implementation Order and Dependencies**
+L00000131	
+L00000132	---
+L00000133	
+L00000134	## 1. Architecture Overview
+L00000135	
+L00000136	### 1.1 Three-Layer Defense
+L00000137	
+L00000138	| Layer | Type | When It Fires | Reliability |
+L00000139	|-------|------|---------------|-------------|
+L00000140	| **Pre-execution guard** | Rust module | Before every Bash/command call | Deterministic (regex match) |
+L00000141	| **Agent prompt rules** | Behavioral guidance | When agent reads instructions | Probabilistic (model compliance) |
+L00000142	| **Post-execution audit** | Event log check | After command execution | Deterministic but reactive |
+L00000143	
+L00000144	**Layer 1 is the fix.** It blocks destructive commands before they execute, regardless of what the model decides to do.
+L00000145	
+L00000146	### 1.1A Runtime and GUI configuration boundary
+L00000147	
+L00000148	FileSafe GUI configuration recomputes predicted requested/effective state for effective-runtime interactions when the user changes provider/account/model/threshold/effort settings, preserving the `/account/model/threshold/effort` context instead of showing stale state.
+L00000149	
+L00000150	Configuration rendering keeps `inherit/override`, `requested/effective`, and provider `honored/skipped/clamped` states visually distinct; `/override`, `/effective`, and `/skipped/clamped` labels must not be collapsed into one toggle state.
+L00000151	
+L00000152	Runtime snapshots may include `/model/auth/account` credentials, but FileSafe also records non-provider operational identities when write-scope, prompt-safety, or recovery behavior depends on the account, instruction bundle, runtime binding, lane, or policy layer that sits beside those credentials.
+L00000153	
+L00000154	Model and provider enforcement is lane-aware: e.g., a Security Lane may require a specific model from `Plans/Models_System.md` (`/Models_System.md`) before FileSafe allows execution.
+L00000155	
+L00000156	Identity normalization for `provider_account_id` is cross-doc; FileSafe consumes the shared identity contract instead of minting local provider/account IDs for guard logs or runtime snapshots.
+L00000157	
+L00000158	Execution correlation must not drift back to tier-era labels: `tier_id` is human-readable grouping metadata only, and treating it as a canonical execution key is surface-drift.
+L00000159	
+L00000160	Worktree strategy is resolved by `Plans/WorktreeGitImprovement.md`: source labels such as `chain-wizard-flexibility` / `chain-wizard-flexibility.md`, explicit `no-worktrees`, and per-subtask worktrees cannot override FileSafe's guard-visible isolation contract.
+L00000161	
+L00000162	FileSafe write scope is multi-node and role-specific: sharded node scopes under `puppet-master/project/plan_graph/` and `/project/plan_graph/` map by `/Task/Subtask/Iteration`, active node/work package, and allowed-file metadata rather than one monolithic `puppet-master` plan file.
+L00000163	
+L00000164	Agent-Config shell ownership remains in `Plans/FinalGUISpec.md`, but FileSafe configuration must carry the fuller `/account/instruction/runtime` contract when write-scope or prompt-safety decisions depend on account, instruction bundle, or runtime binding.
+L00000165	
+L00000166	provider-specific divergence requires an explicit `Manual Override` toggle before FileSafe allows behavior that departs from the shared state model. provider-specific GUI wording/flows are reconciliation cleanup against the now-frozen account/runtime model, not a reason to fork FileSafe policy.
+L00000167	
+L00000168	### 1.2 Integration Point
+L00000169	
+L00000170	
+L00000171	The guard integrates into `BaseRunner::execute_command()` in `puppet-master-rs/src/platforms/runner.rs`:
+L00000172	
+L00000173	ContractRef: CodePath:puppet-master-rs/src/platforms/runner.rs#BaseRunner::execute_command
+L00000174	
+L00000175	```rust
+L00000176	// Before spawning the process (line ~266)
+L00000177	// Add guard check here
+L00000178	if let Err(e) = self.bash_guard.check_command(&full_command_string) {
+L00000179	    return Err(anyhow!("Destructive command blocked: {}", e));
+L00000180	}
+L00000181	```
+L00000182	
+L00000183	---
+L00000184	
+L00000185	## 2. Implementation Details
+L00000186	
+L00000187	
+L00000188	### 2.0 Initialization Flow
+L00000189	
+L00000190	**Complete initialization sequence:**
+L00000191	
+L00000192	1. **At application startup:**
+L00000193	   - load `GuiConfig` (or defaults)
+L00000194	   - extract `FileSafeConfig`
+L00000195	   - validate fail-closed guard prerequisites and store the validated config in app state
+L00000196	
+L00000197	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+L00000198	
+L00000199	2. **When orchestrator starts:**
+L00000200	   - build runtime config from the validated GUI config
+L00000201	   - resolve FileSafe guard inputs and canonical roots
+L00000202	   - pass the resulting FileSafe config into runner construction
+L00000203	
+L00000204	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+L00000205	
+L00000206	3. **When `BaseRunner` is created:**
+L00000207	   - initialize `BashGuard` with canonical destructive-pattern sources
+L00000208	   - initialize `FileGuard` with an empty allowed-file set until request scope is known
+L00000209	   - initialize `SecurityFilter` with canonical sensitive-path rules
+L00000210	   - store guards as shared runtime objects only after initialization succeeds
+L00000211	
+L00000212	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+L00000213	
+L00000214	4. **Per `ExecutionRequest`:**
+L00000215	   - bind the request's canonical allowed-file scope
+L00000216	   - resolve the canonical root and path mode needed for scope/security checks
+L00000217	   - run FileSafe checks before provider process spawn or tool dispatch
+L00000218	   - emit structured allow/block outcomes to the canonical event stream
+L00000219	
+L00000220	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000221	
+L00000222	**Fail-closed error handling:**
+L00000223	- if a guard cannot initialize, PM surfaces a structured startup/runtime error and blocks the affected execution path rather than creating a disabled guard
+L00000224	- if a configured external pattern source is unreadable, PM may continue only with a bundled canonical baseline; if no trustworthy baseline exists, destructive-command execution remains blocked
+L00000225	- if canonical-root or scope resolution fails for a request, that request fails closed rather than guessing a case mode or write scope
+L00000226	- invalid config may normalize only to a stricter safe default; it MUST NOT silently widen authority
+L00000227	
+L00000228	ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
+L00000229	
+L00000230	### 2.1 Module Structure
+L00000231	
+L00000232	Create the FileSafe module under `crates/puppet-master-core/src/filesafe/`.
+L00000233	
+L00000234	```
+L00000235	crates/puppet-master-core/src/filesafe/
+L00000236	├── mod.rs        # Module declaration + re-exports
+L00000237	├── types.rs      # Shared FileSafe data types
+L00000238	├── scope.rs      # Scope and canonical-path enforcement
+L00000239	├── bash_guard.rs # Command-pattern guard logic
+L00000240	├── snapshot.rs   # Snapshot and optimistic-concurrency helpers
+L00000241	└── validator.rs  # Shared validation helpers
+L00000242	```
+L00000243	
+L00000244	**Pattern File Location:**
+L00000245	- **Bundled:** packaged FileSafe baseline patterns (source-controlled)
+L00000246	- **Runtime:** Bundled with binary or located relative to executable
+L00000247	- **Project-specific:** `.puppet-master/destructive-commands.local.txt` (optional override)
+L00000248	- **Resolution order:** Custom path → Project-specific → Bundled baseline; if no trustworthy baseline exists, fail closed
+L00000249	
+L00000250	**Module Declaration (`crates/puppet-master-core/src/filesafe/mod.rs`):**
+L00000251	```rust
+L00000252	//! FileSafe — guards for preventing destructive operations
+L00000253	//!
+L00000254	//! This module provides guards that block destructive commands, file writes,
+L00000255	//! and sensitive file access before execution.
+L00000256	
+L00000257	pub mod bash_guard;
+L00000258	pub mod scope;
+L00000259	pub mod snapshot;
+L00000260	pub mod types;
+L00000261	pub mod validator;
+L00000262	
+L00000263	pub use bash_guard::{BashGuard, GuardError};
+L00000264	```
+L00000265	
+L00000266	### 2.2 Core Types
+L00000267	
+L00000268	```rust
+L00000269	// crates/puppet-master-core/src/filesafe/bash_guard.rs
+L00000270	
+L00000271	use regex::Regex;
+L00000272	use std::path::PathBuf;
+L00000273	use anyhow::{Result, Context};
+L00000274	
+L00000275	// DRY:DATA:BashGuard — FileSafe command blocklist: blocks destructive CLI commands
+L00000276	/// FileSafe command blocklist: blocks destructive CLI commands
+L00000277	pub struct BashGuard {
+L00000278	    patterns: Vec<Regex>,
+L00000279	    enabled: bool,
+L00000280	    approved_commands: Vec<String>,  // Whitelist from settings (Assistant chat approvals)
+L00000281	    destructive_override: Option<DestructiveOverrideGrant>,
+L00000282	}
+L00000283	
+L00000284	pub struct DestructiveOverrideGrant {
+L00000285	    auth_realm: String,
+L00000286	    operator_identity: String,
+L00000287	    reason: String,
+L00000288	    scope: DestructiveOverrideScope,
+L00000289	    expires_at: DateTime<Utc>,
+L00000290	    receipt_id: String,
+L00000291	}
+L00000292	
+L00000293	pub struct DestructiveOverrideScope {
+L00000294	    project_id: String,
+L00000295	    run_id: Option<String>,
+L00000296	    worktree_id: Option<String>,
+L00000297	}
+L00000298	
+L00000299	#[derive(Debug, Clone)]
+L00000300	pub enum GuardError {
+L00000301	    GuardInitFailed {
+L00000302	        guard_type: String,
+L00000303	        diagnostic_code: String,
+L00000304	        reason: String,
+L00000305	    },
+L00000306	    DestructiveCommand {
+L00000307	        command: String,
+L00000308	        pattern: String,
+L00000309	    },
+L00000310	    CommandDenied {
+L00000311	        command_preview: String,
+L00000312	        denial_code: String,
+L00000313	    },
+L00000314	    FileNotInPlan {
+L00000315	        file: PathBuf,
+L00000316	    },
+L00000317	    PathDenied {
+L00000318	        file: PathBuf,
+L00000319	        denial_code: String,
+L00000320	    },
+L00000321	    SensitiveFileAccess {
+L00000322	        file: PathBuf,
+L00000323	        pattern: String,
+L00000324	    },
+L00000325	    ParseError {
+L00000326	        message: String,
+L00000327	    },
+L00000328	}
+L00000329	
+L00000330	impl BashGuard {
+L00000331	    // DRY:FN:new — Create a new guard instance
+L00000332	    /// Create a new guard instance
+L00000333	    ///
+L00000334	    /// # Arguments
+L00000335	    ///
+L00000336	    /// * `config_path` - Optional path to custom patterns file. If None, uses default bundled patterns.
+L00000337	    ///
+L00000338	    /// # Pattern File Resolution
+L00000339	    ///
+L00000340	    /// 1. If `config_path` provided and exists: use it
+L00000341	    /// 2. Check project-specific: `.puppet-master/destructive-commands.local.txt`
+L00000342	    /// 3. Check bundled: `puppet-master-rs/config/destructive-commands.txt` (relative to binary/exe)
+L00000343	    /// 4. If no trustworthy baseline exists: return initialization error (fail closed)
+L00000344	    pub fn new(config_path: Option<PathBuf>) -> Result<Self> {
+L00000345	        // 1. Resolve destructive override request into an authenticated, scoped grant.
+L00000346	        // PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is a request signal only; it is never sufficient authority.
+L00000347	        let destructive_override = resolve_authenticated_destructive_override()?;
+L00000348	        
+L00000349	        // 2. Determine pattern file path
+L00000350	        let pattern_file = if let Some(custom_path) = config_path {
+L00000351	            if custom_path.exists() {
+L00000352	                custom_path
+L00000353	            } else {
+L00000354	                // Try project-specific local patterns
+L00000355	                let local_path = PathBuf::from(".puppet-master/destructive-commands.local.txt");
+L00000356	                if local_path.exists() {
+L00000357	                    local_path
+L00000358	                } else {
+L00000359	                    // Fall back to bundled patterns
+L00000360	                    Self::find_bundled_patterns_file()?
+L00000361	                }
+L00000362	            }
+L00000363	        } else {
+L00000364	            // Try project-specific first, then bundled
+L00000365	            let local_path = PathBuf::from(".puppet-master/destructive-commands.local.txt");
+L00000366	            if local_path.exists() {
+L00000367	                local_path
+L00000368	            } else {
+L00000369	                Self::find_bundled_patterns_file()?
+L00000370	            }
+L00000371	        };
+L00000372	        
+L00000373	        // 3. Load patterns
+L00000374	        let patterns = if pattern_file.exists() {
+L00000375	            load_patterns(&pattern_file)
+L00000376	                .context(format!("Failed to load patterns from {}", pattern_file.display()))?
+L00000377	        } else {
+L00000378	            return Err(anyhow!(
+L00000379	                "Pattern file not found: {}. Fail closed until a trustworthy baseline is available.",
+L00000380	                pattern_file.display()
+L00000381	            ));
+L00000382	        };
+L00000383	        
+L00000384	        // 4. Check config file for bash_guard setting (if config available)
+L00000385	        // This will be wired when config system is integrated
+L00000386	        let enabled = true; // Default: enabled
+L00000387	        
+L00000388	        Ok(Self {
+L00000389	            patterns,
+L00000390	            enabled,
+L00000391	            approved_commands: Vec::new(),  // Populated from FileSafeConfig
+L00000392	            destructive_override,
+L00000393	        })
+L00000394	    }
+
+<<< CONTEXT_AFTER canonical_document_lines=395-406 >>>
+L00000395	    
+L00000396	    // DRY:FN:find_bundled_patterns_file — Locate bundled pattern file
+L00000397	    /// Find the bundled destructive-commands.txt file
+L00000398	    ///
+L00000399	    /// Searches in order:
+L00000400	    /// 1. `puppet-master-rs/config/destructive-commands.txt` (dev/build)
+L00000401	    /// 2. `../config/destructive-commands.txt` (relative to binary)
+L00000402	    /// 3. `config/destructive-commands.txt` (relative to binary)
+L00000403	    fn find_bundled_patterns_file() -> Result<PathBuf> {
+L00000404	        // Try multiple locations
+L00000405	        let candidates = vec![
+L00000406	            PathBuf::from("puppet-master-rs/config/destructive-commands.txt"),

@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE canonical_document_lines=21873-21884 >>>
+L00021873	- "all runnable nodes are blocked"
+L00021874	- "persistent blocked-state banner or card"
+L00021875	negative_constraints:
+L00021876	- "GUI surfaces must not treat undeclared all-blocked runtime events as canonical."
+L00021877	compatibility_only_notes: []
+L00021878	stale_retired_dispositions: []
+L00021879	owner_boundary_notes:
+L00021880	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021881	owner_hints:
+L00021882	- "Plans/FinalGUISpec.md"
+L00021883	```
+L00021884	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=21885-22254 >>>
+L00021885	### F3-340 - Canonical Blocked Recovery GUI Summary Boundary
+L00021886	
+L00021887	```yaml
+L00021888	plan_unit_id: F3-340
+L00021889	unit_type: requirement
+L00021890	status: accepted
+L00021891	owner_doc: Plans/FinalGUISpec.md
+L00021892	canonical_text: >-
+L00021893	  The Canonical Blocked/Recovery Behavior section is the canonical GUI summary for blocked and
+L00021894	  recovery surfaces, and superseded scheduler or blocked addenda remain subordinate to that
+L00021895	  summary.
+L00021896	gui_related: true
+L00021897	gui_classification_reason: >-
+L00021898	  This unit defines visible FinalGUISpec GUI behavior.
+L00021899	split_recommended: false
+L00021900	depends_on: []
+L00021901	unblocks: []
+L00021902	acceptance_criteria:
+L00021903	- "The covered source span remains losslessly available for exact-text audit."
+L00021904	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021905	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021906	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021907	validation_surfaces:
+L00021908	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021909	- "python3 scripts/pm-plan-index.py validate"
+L00021910	risk_class: finalgui_drift
+L00021911	reasoning_tier: standard
+L00021912	context_scope: finalgui_standardization
+L00021913	implementation_surfaces:
+L00021914	- "Plans/FinalGUISpec.md"
+L00021915	node_compile_hint:
+L00021916	  mode: canonical_blocked_recovery_gui_summary_boundary
+L00021917	  create_worknodes: false
+L00021918	source_lineage:
+L00021919	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0216"
+L00021920	preserved_exact_tokens:
+L00021921	- "Canonical Blocked/Recovery Behavior"
+L00021922	- "canonical GUI summary for blocked and recovery surfaces"
+L00021923	- "Superseded"
+L00021924	negative_constraints: []
+L00021925	compatibility_only_notes: []
+L00021926	stale_retired_dispositions: []
+L00021927	owner_boundary_notes:
+L00021928	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021929	owner_hints:
+L00021930	- "Plans/FinalGUISpec.md"
+L00021931	```
+L00021932	
+L00021933	### F3-341 - Blocked Payload Actions Distinct Episodes And Command Binding
+L00021934	
+L00021935	```yaml
+L00021936	plan_unit_id: F3-341
+L00021937	unit_type: requirement
+L00021938	status: accepted
+L00021939	owner_doc: Plans/FinalGUISpec.md
+L00021940	canonical_text: >-
+L00021941	  Blocked and recovery UI binds to canonical blocked projections and HITL records; blocked
+L00021942	  payloads use ordered allowed_action_ids[]; blocked episodes remain distinct when more than
+L00021943	  one is active; labels may vary by surface but command binding resolves through the shared
+L00021944	  runtime command catalog; blocked cards preserve highest severity and blocked counts.
+L00021945	gui_related: true
+L00021946	gui_classification_reason: >-
+L00021947	  This unit defines visible FinalGUISpec GUI behavior.
+L00021948	split_recommended: true
+L00021949	depends_on: []
+L00021950	unblocks: []
+L00021951	acceptance_criteria:
+L00021952	- "The covered source span remains losslessly available for exact-text audit."
+L00021953	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021954	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021955	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021956	validation_surfaces:
+L00021957	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021958	- "python3 scripts/pm-plan-index.py validate"
+L00021959	risk_class: finalgui_drift
+L00021960	reasoning_tier: standard
+L00021961	context_scope: finalgui_standardization
+L00021962	implementation_surfaces:
+L00021963	- "Plans/FinalGUISpec.md"
+L00021964	node_compile_hint:
+L00021965	  mode: blocked_payload_actions_distinct_episodes_and_command_binding
+L00021966	  create_worknodes: false
+L00021967	source_lineage:
+L00021968	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0217"
+L00021969	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0225"
+L00021970	preserved_exact_tokens:
+L00021971	- "canonical blocked projections"
+L00021972	- "HITL records"
+L00021973	- "allowed_action_ids[]"
+L00021974	- "blocked episodes remain distinct"
+L00021975	- "shared runtime command catalog"
+L00021976	- "highest severity"
+L00021977	- "blocked counts"
+L00021978	- "Multiple concurrent blocked episodes MUST NOT be collapsed into a single notification"
+L00021979	negative_constraints:
+L00021980	- "Multiple concurrent blocked episodes must not be collapsed into a single notification."
+L00021981	compatibility_only_notes: []
+L00021982	stale_retired_dispositions: []
+L00021983	owner_boundary_notes:
+L00021984	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021985	owner_hints:
+L00021986	- "Plans/FinalGUISpec.md"
+L00021987	```
+L00021988	
+L00021989	### F3-342 - No Surface-Specific Blocked Schema Synthesis
+L00021990	
+L00021991	```yaml
+L00021992	plan_unit_id: F3-342
+L00021993	unit_type: requirement
+L00021994	status: accepted
+L00021995	owner_doc: Plans/FinalGUISpec.md
+L00021996	canonical_text: >-
+L00021997	  The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate
+L00021998	  retry classes for specific surfaces, and shared blocked/remediation taxonomy preserves
+L00021999	  actor-specific state machines and object identities without collapsing assistant,
+L00022000	  interview/builder, runtime, and Orchestrator lifecycles.
+L00022001	gui_related: true
+L00022002	gui_classification_reason: >-
+L00022003	  This unit defines visible FinalGUISpec GUI behavior.
+L00022004	split_recommended: false
+L00022005	depends_on: []
+L00022006	unblocks: []
+L00022007	acceptance_criteria:
+L00022008	- "The covered source span remains losslessly available for exact-text audit."
+L00022009	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00022010	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00022011	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00022012	validation_surfaces:
+L00022013	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00022014	- "python3 scripts/pm-plan-index.py validate"
+L00022015	risk_class: finalgui_drift
+L00022016	reasoning_tier: standard
+L00022017	context_scope: finalgui_standardization
+L00022018	implementation_surfaces:
+L00022019	- "Plans/FinalGUISpec.md"
+L00022020	node_compile_hint:
+L00022021	  mode: no_surface_specific_blocked_schema_synthesis
+L00022022	  create_worknodes: false
+L00022023	source_lineage:
+L00022024	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0219"
+L00022025	preserved_exact_tokens:
+L00022026	- "alternate blocked schemas"
+L00022027	- "alternate action arrays"
+L00022028	- "alternate retry classes"
+L00022029	- "actor-specific state machines"
+L00022030	- "assistant, interview/builder, runtime, and Orchestrator actors"
+L00022031	negative_constraints:
+L00022032	- "The GUI must not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces."
+L00022033	compatibility_only_notes: []
+L00022034	stale_retired_dispositions: []
+L00022035	owner_boundary_notes:
+L00022036	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00022037	owner_hints:
+L00022038	- "Plans/FinalGUISpec.md"
+L00022039	```
+L00022040	
+L00022041	### F3-343 - Blocked Visual Distinction And Per-Episode Controls
+L00022042	
+L00022043	```yaml
+L00022044	plan_unit_id: F3-343
+L00022045	unit_type: requirement
+L00022046	status: accepted
+L00022047	owner_doc: Plans/FinalGUISpec.md
+L00022048	canonical_text: >-
+L00022049	  Blocked episodes are visually distinct from ordinary paused or idle states; multiple
+L00022050	  simultaneous blocked episodes show per-episode controls and a count summary where
+L00022051	  appropriate; and remediation-ceiling-exceeded and validation-blocked use the shared
+L00022052	  blocked-payload contract rather than bespoke one-off UI treatment.
+L00022053	gui_related: true
+L00022054	gui_classification_reason: >-
+L00022055	  This unit defines visible FinalGUISpec GUI behavior.
+L00022056	split_recommended: false
+L00022057	depends_on: []
+L00022058	unblocks: []
+L00022059	acceptance_criteria:
+L00022060	- "The covered source span remains losslessly available for exact-text audit."
+L00022061	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00022062	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00022063	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00022064	validation_surfaces:
+L00022065	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00022066	- "python3 scripts/pm-plan-index.py validate"
+L00022067	risk_class: finalgui_drift
+L00022068	reasoning_tier: standard
+L00022069	context_scope: finalgui_standardization
+L00022070	implementation_surfaces:
+L00022071	- "Plans/FinalGUISpec.md"
+L00022072	node_compile_hint:
+L00022073	  mode: blocked_visual_distinction_and_per_episode_controls
+L00022074	  create_worknodes: false
+L00022075	source_lineage:
+L00022076	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0220"
+L00022077	preserved_exact_tokens:
+L00022078	- "visually distinct"
+L00022079	- "paused/idle states"
+L00022080	- "per-episode controls"
+L00022081	- "count summary"
+L00022082	- "remediation-ceiling-exceeded"
+L00022083	- "validation-blocked"
+L00022084	- "blocked-payload contract"
+L00022085	negative_constraints: []
+L00022086	compatibility_only_notes: []
+L00022087	stale_retired_dispositions: []
+L00022088	owner_boundary_notes:
+L00022089	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00022090	owner_hints:
+L00022091	- "Plans/FinalGUISpec.md"
+L00022092	```
+L00022093	
+L00022094	### F3-344 - Safe-Point Recovery Control Language
+L00022095	
+L00022096	```yaml
+L00022097	plan_unit_id: F3-344
+L00022098	unit_type: requirement
+L00022099	status: accepted
+L00022100	owner_doc: Plans/FinalGUISpec.md
+L00022101	canonical_text: >-
+L00022102	  Safe points are runtime recovery anchors and must not be presented as user-facing restore
+L00022103	  points; retry controls distinguish Retry from safe point from Start fresh attempt; and Retry
+L00022104	  from safe point is disabled with an explanation when no valid safe point exists.
+L00022105	gui_related: true
+L00022106	gui_classification_reason: >-
+L00022107	  This unit defines visible FinalGUISpec GUI behavior.
+L00022108	split_recommended: false
+L00022109	depends_on: []
+L00022110	unblocks: []
+L00022111	acceptance_criteria:
+L00022112	- "The covered source span remains losslessly available for exact-text audit."
+L00022113	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00022114	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00022115	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00022116	validation_surfaces:
+L00022117	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00022118	- "python3 scripts/pm-plan-index.py validate"
+L00022119	risk_class: finalgui_drift
+L00022120	reasoning_tier: standard
+L00022121	context_scope: finalgui_standardization
+L00022122	implementation_surfaces:
+L00022123	- "Plans/FinalGUISpec.md"
+L00022124	node_compile_hint:
+L00022125	  mode: safe_point_recovery_control_language
+L00022126	  create_worknodes: false
+L00022127	source_lineage:
+L00022128	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0222"
+L00022129	preserved_exact_tokens:
+L00022130	- "safe points"
+L00022131	- "runtime recovery anchors"
+L00022132	- "MUST NOT be presented as user-facing restore points"
+L00022133	- "Retry from safe point"
+L00022134	- "Start fresh attempt"
+L00022135	- "disabled with an explanation"
+L00022136	negative_constraints:
+L00022137	- "Safe points must not be presented as user-facing restore points."
+L00022138	compatibility_only_notes: []
+L00022139	stale_retired_dispositions: []
+L00022140	owner_boundary_notes:
+L00022141	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00022142	owner_hints:
+L00022143	- "Plans/FinalGUISpec.md"
+L00022144	```
+L00022145	
+L00022146	### F3-345 - Seam Review Output Presentation
+L00022147	
+L00022148	```yaml
+L00022149	plan_unit_id: F3-345
+L00022150	unit_type: requirement
+L00022151	status: accepted
+L00022152	owner_doc: Plans/FinalGUISpec.md
+L00022153	canonical_text: >-
+L00022154	  Seam review outputs show a review verdict, failure classes with severity, evidence bundle or
+L00022155	  rationale, remediation-node or graph-patch recommendations, and corroboration
+L00022156	  requirement/outcome when invoked.
+L00022157	gui_related: true
+L00022158	gui_classification_reason: >-
+L00022159	  This unit defines visible seam-review output presentation; the source span inference is
+L00022160	  corrected from false to GUI-related true.
+L00022161	split_recommended: false
+L00022162	depends_on: []
+L00022163	unblocks: []
+L00022164	acceptance_criteria:
+L00022165	- "The covered source span remains losslessly available for exact-text audit."
+L00022166	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00022167	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00022168	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00022169	validation_surfaces:
+L00022170	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00022171	- "python3 scripts/pm-plan-index.py validate"
+L00022172	risk_class: finalgui_drift
+L00022173	reasoning_tier: standard
+L00022174	context_scope: finalgui_standardization
+L00022175	implementation_surfaces:
+L00022176	- "Plans/FinalGUISpec.md"
+L00022177	node_compile_hint:
+L00022178	  mode: seam_review_output_presentation
+L00022179	  create_worknodes: false
+L00022180	source_lineage:
+L00022181	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0222"
+L00022182	preserved_exact_tokens:
+L00022183	- "Seam review outputs"
+L00022184	- "review verdict"
+L00022185	- "failure classes with severity"
+L00022186	- "evidence bundle/rationale"
+L00022187	- "remediation-node or graph-patch recommendations"
+L00022188	- "corroboration requirement/outcome"
+L00022189	negative_constraints: []
+L00022190	compatibility_only_notes: []
+L00022191	stale_retired_dispositions: []
+L00022192	owner_boundary_notes:
+L00022193	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00022194	owner_hints:
+L00022195	- "Plans/FinalGUISpec.md"
+L00022196	```
+L00022197	
+L00022198	### F3-346 - Blocked Badge Visual Mapping
+L00022199	
+L00022200	```yaml
+L00022201	plan_unit_id: F3-346
+L00022202	unit_type: requirement
+L00022203	status: accepted
+L00022204	owner_doc: Plans/FinalGUISpec.md
+L00022205	canonical_text: >-
+L00022206	  Dashboard cards, thread badges, and Run Graph View node badges use the canonical visual
+L00022207	  mapping for attention_required, blocked, and waiting_approval, preserving badge color, icon,
+L00022208	  label text, tooltip meaning, and the escalation distinction between attention_required and
+L00022209	  blocked.
+L00022210	gui_related: true
+L00022211	gui_classification_reason: >-
+L00022212	  This unit defines visible FinalGUISpec GUI behavior.
+L00022213	split_recommended: false
+L00022214	depends_on: []
+L00022215	unblocks: []
+L00022216	acceptance_criteria:
+L00022217	- "The covered source span remains losslessly available for exact-text audit."
+L00022218	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00022219	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00022220	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00022221	validation_surfaces:
+L00022222	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00022223	- "python3 scripts/pm-plan-index.py validate"
+L00022224	risk_class: finalgui_drift
+L00022225	reasoning_tier: standard
+L00022226	context_scope: finalgui_standardization
+L00022227	implementation_surfaces:
+L00022228	- "Plans/FinalGUISpec.md"
+L00022229	node_compile_hint:
+L00022230	  mode: blocked_badge_visual_mapping
+L00022231	  create_worknodes: false
+L00022232	source_lineage:
+L00022233	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0224"
+L00022234	preserved_exact_tokens:
+L00022235	- "attention_required"
+L00022236	- "blocked"
+L00022237	- "waiting_approval"
+L00022238	- "Amber"
+L00022239	- "Red"
+L00022240	- "Blue"
+L00022241	- "Needs input"
+L00022242	- "Blocked"
+L00022243	- "Awaiting approval"
+L00022244	- "Dashboard cards, thread badges, and Run Graph View node badges"
+L00022245	negative_constraints:
+L00022246	- "attention_required and blocked must remain visually distinct."
+L00022247	compatibility_only_notes: []
+L00022248	stale_retired_dispositions: []
+L00022249	owner_boundary_notes:
+L00022250	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00022251	owner_hints:
+L00022252	- "Plans/FinalGUISpec.md"
+L00022253	```
+L00022254	
+
+<<< CONTEXT_AFTER canonical_document_lines=22255-22266 >>>
+L00022255	### F3-347 - Concurrent Blocked Episodes List UX
+L00022256	
+L00022257	```yaml
+L00022258	plan_unit_id: F3-347
+L00022259	unit_type: requirement
+L00022260	status: accepted
+L00022261	owner_doc: Plans/FinalGUISpec.md
+L00022262	canonical_text: >-
+L00022263	  When multiple nodes are blocked simultaneously, the dashboard shows a blocked count badge,
+L00022264	  opens a filtered blocked-node list sorted by blocked_sequence descending, displays node
+L00022265	  name, blocked_reason_code label, time since blocked, and primary allowed_action_ids[]
+L00022266	  actions for each item, allows expansion into full blocked detail including detail_ref and

@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE canonical_document_lines=11952-11963 >>>
+L00011952	- provider_scrape
+L00011953	negative_constraints: []
+L00011954	preserved_contractrefs:
+L00011955	- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions'
+L00011956	compatibility_only_notes:
+L00011957	- Legacy `web_input` normalizes to `operation_input`.
+L00011958	- provider_scrape is persisted only with the proposed-extension caveat from Plans/Contracts_V0.md.
+L00011959	stale_retired_dispositions: []
+L00011960	owner_hints:
+L00011961	- Plans/storage-plan.md
+L00011962	```
+L00011963	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=11964-12312 >>>
+L00011964	### SP-165 - Receipt Refs Route Open Precedence And Permission Carry-Through
+L00011965	
+L00011966	```yaml
+L00011967	plan_unit_id: SP-165
+L00011968	unit_type: requirement
+L00011969	status: accepted
+L00011970	owner_doc: Plans/storage-plan.md
+L00011971	canonical_text: Receipt refs remain inspection and provenance links rather than route/open surrogates, bridge-field precedence stays explicit, and effective actor/account identity survives into activity payloads.
+L00011972	gui_related: false
+L00011973	gui_classification_reason: This unit preserves backend receipt ref, route/open precedence, and permission carry-through semantics.
+L00011974	split_recommended: false
+L00011975	depends_on:
+L00011976	- PDS-003
+L00011977	- PDS-004
+L00011978	- PDS-005
+L00011979	- PNC-001
+L00011980	unblocks: []
+L00011981	acceptance_criteria:
+L00011982	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011983	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011984	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011985	validation_surfaces:
+L00011986	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011987	- python3 scripts/pm-plan-index.py validate
+L00011988	risk_class: storage_plan_drift
+L00011989	reasoning_tier: standard
+L00011990	context_scope: storage_batch_178_chat_runtime_state
+L00011991	implementation_surfaces:
+L00011992	- Plans/storage-plan.md
+L00011993	node_compile_hint:
+L00011994	  mode: receipt_refs_route_open_precedence_and_permission_carry_through
+L00011995	  create_worknodes: false
+L00011996	source_lineage:
+L00011997	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0094
+L00011998	preserved_exact_tokens:
+L00011999	- receipt refs
+L00012000	- inspection and provenance links
+L00012001	- route/open surrogates
+L00012002	- Inspection refs
+L00012003	- route/open contracts
+L00012004	- Bridge-field precedence
+L00012005	- effective actor
+L00012006	- account identity
+L00012007	- activity payloads
+L00012008	negative_constraints:
+L00012009	- Receipt refs remain inspection and provenance links rather than route/open surrogates.
+L00012010	- Bridge-field precedence must be explicit rather than inferred.
+L00012011	preserved_contractrefs: []
+L00012012	compatibility_only_notes: []
+L00012013	stale_retired_dispositions: []
+L00012014	owner_hints:
+L00012015	- Plans/storage-plan.md
+L00012016	```
+L00012017	
+L00012018	### SP-166 - Inline Visualizer Source Metadata And Sandbox Bridge Storage
+L00012019	
+L00012020	```yaml
+L00012021	plan_unit_id: SP-166
+L00012022	unit_type: requirement
+L00012023	status: accepted
+L00012024	owner_doc: Plans/storage-plan.md
+L00012025	canonical_text: Inline visualizer persistence stores only PM-managed source, metadata, outputs, render config, and approved host-mediated bridge metadata for sandboxed visual-module cards, not arbitrary bridge calls, direct DOM reach-through, client heap state, or generic send-message payloads.
+L00012026	gui_related: true
+L00012027	gui_classification_reason: This unit preserves user-visible inline visualizer source, render, and sandbox bridge persistence.
+L00012028	split_recommended: false
+L00012029	depends_on:
+L00012030	- PDS-003
+L00012031	- PDS-004
+L00012032	- PDS-005
+L00012033	- PNC-001
+L00012034	unblocks: []
+L00012035	acceptance_criteria:
+L00012036	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012037	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012038	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012039	validation_surfaces:
+L00012040	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012041	- python3 scripts/pm-plan-index.py validate
+L00012042	risk_class: storage_plan_drift
+L00012043	reasoning_tier: standard
+L00012044	context_scope: storage_batch_178_chat_runtime_state
+L00012045	implementation_surfaces:
+L00012046	- Plans/storage-plan.md
+L00012047	node_compile_hint:
+L00012048	  mode: inline_visualizer_source_metadata_and_sandbox_bridge_storage
+L00012049	  create_worknodes: false
+L00012050	source_lineage:
+L00012051	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0095
+L00012052	preserved_exact_tokens:
+L00012053	- Inline visualizer persistence
+L00012054	- PM-managed source
+L00012055	- metadata
+L00012056	- PM-owned outputs
+L00012057	- source fragment
+L00012058	- title
+L00012059	- type/kind
+L00012060	- version
+L00012061	- HTML/JS/CSS
+L00012062	- /JS
+L00012063	- width
+L00012064	- height
+L00012065	- /design
+L00012066	- /auto-height
+L00012067	- visual-module
+L00012068	- open-link
+L00012069	- in-module
+L00012070	- send-message
+L00012071	- /interactive
+L00012072	- /scripts
+L00012073	- version-pinned
+L00012074	- integrity-recorded
+L00012075	- policy-allowed
+L00012076	negative_constraints:
+L00012077	- Arbitrary bridge calls, direct DOM reach-through, and client heap state are not durable storage.
+L00012078	- Question-flow embedded visuals persist PM-managed draft-state outputs instead of generic send-message bridge payloads.
+L00012079	preserved_contractrefs:
+L00012080	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+L00012081	compatibility_only_notes: []
+L00012082	stale_retired_dispositions: []
+L00012083	owner_hints:
+L00012084	- Plans/storage-plan.md
+L00012085	```
+L00012086	
+L00012087	### SP-167 - Inline Visualizer Replay Snapshot Fallback And Display State
+L00012088	
+L00012089	```yaml
+L00012090	plan_unit_id: SP-167
+L00012091	unit_type: requirement
+L00012092	status: accepted
+L00012093	owner_doc: Plans/storage-plan.md
+L00012094	canonical_text: Inline visualizer replay and export review re-render from persisted source, title/type metadata, render config, and PM-managed state outputs, using screenshot or snapshot fallback only when re-render is impractical and storing visible fallback/error state as PM-owned display state.
+L00012095	gui_related: true
+L00012096	gui_classification_reason: This unit preserves visible inline visualizer replay, snapshot fallback, and error-state behavior.
+L00012097	split_recommended: false
+L00012098	depends_on:
+L00012099	- PDS-003
+L00012100	- PDS-004
+L00012101	- PDS-005
+L00012102	- PNC-001
+L00012103	unblocks: []
+L00012104	acceptance_criteria:
+L00012105	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012106	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012107	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012108	validation_surfaces:
+L00012109	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012110	- python3 scripts/pm-plan-index.py validate
+L00012111	risk_class: storage_plan_drift
+L00012112	reasoning_tier: standard
+L00012113	context_scope: storage_batch_178_chat_runtime_state
+L00012114	implementation_surfaces:
+L00012115	- Plans/storage-plan.md
+L00012116	node_compile_hint:
+L00012117	  mode: inline_visualizer_replay_snapshot_fallback_and_display_state
+L00012118	  create_worknodes: false
+L00012119	source_lineage:
+L00012120	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0095
+L00012121	preserved_exact_tokens:
+L00012122	- screenshot
+L00012123	- /snapshot
+L00012124	- scroll-back
+L00012125	- thread reload/export review
+L00012126	- re-renders from the persisted source fragment
+L00012127	- title/type metadata
+L00012128	- render config
+L00012129	- PM-managed state outputs
+L00012130	- screenshot fallback
+L00012131	- arbitrary JS heap state is not persisted
+L00012132	- replay or reload
+L00012133	- visible fallback and error state
+L00012134	- PM-owned display state
+L00012135	negative_constraints:
+L00012136	- Arbitrary JS heap state is not persisted.
+L00012137	preserved_contractrefs:
+L00012138	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+L00012139	compatibility_only_notes: []
+L00012140	stale_retired_dispositions: []
+L00012141	owner_hints:
+L00012142	- Plans/storage-plan.md
+L00012143	```
+L00012144	
+L00012145	### SP-168 - Persistence Gap Owner-Aligned State Boundary
+L00012146	
+L00012147	```yaml
+L00012148	plan_unit_id: SP-168
+L00012149	unit_type: requirement
+L00012150	status: accepted
+L00012151	owner_doc: Plans/storage-plan.md
+L00012152	canonical_text: Remaining persistence gaps for the rewrite shell resolve through explicit owner-aligned state rather than feature-local ad hoc blobs.
+L00012153	gui_related: false
+L00012154	gui_classification_reason: This unit preserves backend storage owner alignment for remaining persistence gaps.
+L00012155	split_recommended: false
+L00012156	depends_on:
+L00012157	- PDS-003
+L00012158	- PDS-004
+L00012159	- PDS-005
+L00012160	- PNC-001
+L00012161	unblocks: []
+L00012162	acceptance_criteria:
+L00012163	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012164	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012165	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012166	validation_surfaces:
+L00012167	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012168	- python3 scripts/pm-plan-index.py validate
+L00012169	risk_class: storage_plan_drift
+L00012170	reasoning_tier: standard
+L00012171	context_scope: storage_batch_178_chat_runtime_state
+L00012172	implementation_surfaces:
+L00012173	- Plans/storage-plan.md
+L00012174	node_compile_hint:
+L00012175	  mode: persistence_gap_owner_aligned_state_boundary
+L00012176	  create_worknodes: false
+L00012177	source_lineage:
+L00012178	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0096
+L00012179	preserved_exact_tokens:
+L00012180	- persistence gaps
+L00012181	- rewrite shell
+L00012182	- owner-aligned state
+L00012183	- feature-local ad hoc blobs
+L00012184	negative_constraints:
+L00012185	- Remaining persistence gaps are not addressed by feature-local ad hoc blobs.
+L00012186	preserved_contractrefs: []
+L00012187	compatibility_only_notes: []
+L00012188	stale_retired_dispositions: []
+L00012189	owner_hints:
+L00012190	- Plans/storage-plan.md
+L00012191	```
+L00012192	
+L00012193	### SP-169 - Unsaved Editor Recovery Required Shared-Buffer Lifecycle
+L00012194	
+L00012195	```yaml
+L00012196	plan_unit_id: SP-169
+L00012197	unit_type: requirement
+L00012198	status: accepted
+L00012199	owner_doc: Plans/storage-plan.md
+L00012200	canonical_text: 'Unsaved editor recovery is required MVP live shared-buffer storage: checklist delivery cannot downgrade it to later, recovery starts on first dirty buffer capture, ends only on save/discard/resolution, and multi-view editor surfaces share recovery, restore, and redo lineage.'
+L00012201	gui_related: true
+L00012202	gui_classification_reason: This unit preserves user-visible unsaved editor recovery, banner, restore, and conflict lifecycle.
+L00012203	split_recommended: false
+L00012204	depends_on:
+L00012205	- PDS-003
+L00012206	- PDS-004
+L00012207	- PDS-005
+L00012208	- PNC-001
+L00012209	unblocks: []
+L00012210	acceptance_criteria:
+L00012211	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012212	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012213	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012214	validation_surfaces:
+L00012215	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012216	- python3 scripts/pm-plan-index.py validate
+L00012217	risk_class: storage_plan_drift
+L00012218	reasoning_tier: standard
+L00012219	context_scope: storage_batch_178_chat_runtime_state
+L00012220	implementation_surfaces:
+L00012221	- Plans/storage-plan.md
+L00012222	node_compile_hint:
+L00012223	  mode: unsaved_editor_recovery_required_shared_buffer_lifecycle
+L00012224	  create_worknodes: false
+L00012225	source_lineage:
+L00012226	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0097
+L00012227	preserved_exact_tokens:
+L00012228	- Unsaved editor recovery
+L00012229	- live shared-buffer storage contract
+L00012230	- /checklist
+L00012231	- /later
+L00012232	- first dirty buffer state
+L00012233	- /ends
+L00012234	- save, discard, or explicit recovery resolution
+L00012235	- multi-view
+L00012236	- /editor
+L00012237	- /restore
+L00012238	- /redo
+L00012239	- recover-unsaved
+L00012240	- required MVP behavior
+L00012241	- local and remote-backed buffers
+L00012242	- remote-backed recovery banners
+L00012243	- Recovered local edits — remote destination not yet synchronized
+L00012244	- save success
+L00012245	- effective destination
+L00012246	negative_constraints:
+L00012247	- The checklist may track delivery work, but it must not downgrade recover-unsaved to /later.
+L00012248	- Save success is only claimed after the effective destination confirms the write.
+L00012249	preserved_contractrefs:
+L00012250	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'
+L00012251	compatibility_only_notes: []
+L00012252	stale_retired_dispositions: []
+L00012253	owner_hints:
+L00012254	- Plans/storage-plan.md
+L00012255	```
+L00012256	
+L00012257	### SP-170 - Editor Recovery Key Snapshot Restore And Conflict Handling
+L00012258	
+L00012259	```yaml
+L00012260	plan_unit_id: SP-170
+L00012261	unit_type: requirement
+L00012262	status: accepted
+L00012263	owner_doc: Plans/storage-plan.md
+L00012264	canonical_text: Editor recovery stores editor_state.v1:{project_id}:{file_path_hash}, cursor, scroll, selection ranges, undo stack reference, unsaved changes flag, and session-restore/conflict-handling behavior that reloads state before focus and shows diffs on disk changes.
+L00012265	gui_related: true
+L00012266	gui_classification_reason: This unit preserves user-visible editor state restoration and conflict resolution behavior.
+L00012267	split_recommended: false
+L00012268	depends_on:
+L00012269	- PDS-003
+L00012270	- PDS-004
+L00012271	- PDS-005
+L00012272	- PNC-001
+L00012273	unblocks: []
+L00012274	acceptance_criteria:
+L00012275	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012276	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012277	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012278	validation_surfaces:
+L00012279	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012280	- python3 scripts/pm-plan-index.py validate
+L00012281	risk_class: storage_plan_drift
+L00012282	reasoning_tier: standard
+L00012283	context_scope: storage_batch_178_chat_runtime_state
+L00012284	implementation_surfaces:
+L00012285	- Plans/storage-plan.md
+L00012286	node_compile_hint:
+L00012287	  mode: editor_recovery_key_snapshot_restore_and_conflict_handling
+L00012288	  create_worknodes: false
+L00012289	source_lineage:
+L00012290	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0097
+L00012291	preserved_exact_tokens:
+L00012292	- editor_state.v1:{project_id}:{file_path_hash}
+L00012293	- cursor position
+L00012294	- scroll offset
+L00012295	- selection ranges
+L00012296	- undo stack reference
+L00012297	- unsaved changes flag
+L00012298	- recovery trigger
+L00012299	- session restore
+L00012300	- restoring focus
+L00012301	- conflict handling
+L00012302	- file changed on disk
+L00012303	- show a diff
+L00012304	negative_constraints: []
+L00012305	preserved_contractrefs:
+L00012306	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'
+L00012307	compatibility_only_notes: []
+L00012308	stale_retired_dispositions: []
+L00012309	owner_hints:
+L00012310	- Plans/storage-plan.md
+L00012311	```
+L00012312	
+
+<<< CONTEXT_AFTER canonical_document_lines=12313-12324 >>>
+L00012313	### SP-171 - Requested Effective Runtime Visibility Distinctions
+L00012314	
+L00012315	```yaml
+L00012316	plan_unit_id: SP-171
+L00012317	unit_type: requirement
+L00012318	status: accepted
+L00012319	owner_doc: Plans/storage-plan.md
+L00012320	canonical_text: The persistence model stores requested versus effective browser runtime/capabilities, LSP enablement/server set, freshness versus health versus write availability, and restore outcomes for historical Search, LSP, browser, and editor recovery surfaces.
+L00012321	gui_related: true
+L00012322	gui_classification_reason: This unit preserves user-visible requested/effective runtime disclosure and restoration honesty.
+L00012323	split_recommended: false
+L00012324	depends_on:

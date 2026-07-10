@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2242-2253 >>>
+L00002242	negative_constraints:
+L00002243	- thread-scoped cost usage does not open a chat side-panel usage surface.
+L00002244	- the artifact does not create a second token or cost model outside the canonical usage schema.
+L00002245	preserved_contractrefs:
+L00002246	- 'ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md'
+L00002247	- 'ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
+L00002248	compatibility_only_notes: []
+L00002249	stale_retired_dispositions: []
+L00002250	owner_hints:
+L00002251	- Plans/usage-feature.md
+L00002252	```
+L00002253	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2254-2632 >>>
+L00002254	### UF-026 - OpenCode Product Pipeline Reference
+L00002255	
+L00002256	```yaml
+L00002257	plan_unit_id: UF-026
+L00002258	unit_type: requirement
+L00002259	status: accepted
+L00002260	owner_doc: Plans/usage-feature.md
+L00002261	canonical_text: OpenCode product usage flow is a non-binding reference for provider response to usage normalization to message and usage.event storage; Puppet Master does not replicate it exactly and instead normalizes all providers and transports to the same usage.event/message usage shape.
+L00002262	gui_related: true
+L00002263	gui_classification_reason: The unit preserves user-visible usage-message reference behavior and storage normalization boundary.
+L00002264	split_recommended: false
+L00002265	depends_on:
+L00002266	- PDS-003
+L00002267	- PDS-004
+L00002268	- PDS-005
+L00002269	- PNC-001
+L00002270	unblocks: []
+L00002271	acceptance_criteria:
+L00002272	- UF-026 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002273	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002274	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002275	validation_surfaces:
+L00002276	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002277	- python3 scripts/pm-plan-index.py validate
+L00002278	risk_class: usage_feature_drift
+L00002279	reasoning_tier: standard
+L00002280	context_scope: usage_feature_batch_194
+L00002281	implementation_surfaces:
+L00002282	- Plans/usage-feature.md
+L00002283	node_compile_hint:
+L00002284	  mode: opencode_product_pipeline_reference
+L00002285	  create_worknodes: false
+L00002286	source_lineage:
+L00002287	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0037
+L00002288	preserved_exact_tokens:
+L00002289	- provider response
+L00002290	- LanguageModelV2Usage
+L00002291	- getUsage
+L00002292	- Session.getUsage
+L00002293	- finish-step
+L00002294	- message
+L00002295	- usage.event
+L00002296	- Puppet Master does not replicate this exactly
+L00002297	- all providers
+L00002298	negative_constraints: []
+L00002299	preserved_contractrefs:
+L00002300	- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md\xA72"
+L00002301	compatibility_only_notes: []
+L00002302	stale_retired_dispositions: []
+L00002303	owner_hints:
+L00002304	- Plans/usage-feature.md
+L00002305	```
+L00002306	
+L00002307	### UF-027 - Backend Input Hierarchy
+L00002308	
+L00002309	```yaml
+L00002310	plan_unit_id: UF-027
+L00002311	unit_type: requirement
+L00002312	status: accepted
+L00002313	owner_doc: Plans/usage-feature.md
+L00002314	canonical_text: Usage backend inputs follow a hierarchy of canonical usage projections and redb rollups over seglog first, supported provider/runtime outputs second, and compatibility mirrors such as usage.jsonl or retired side files only as noncanonical migration/debug inputs.
+L00002315	gui_related: false
+L00002316	gui_classification_reason: The unit preserves backend storage/input hierarchy and source attribution rather than visual presentation.
+L00002317	split_recommended: true
+L00002318	depends_on:
+L00002319	- PDS-003
+L00002320	- PDS-004
+L00002321	- PDS-005
+L00002322	- PNC-001
+L00002323	unblocks: []
+L00002324	acceptance_criteria:
+L00002325	- UF-027 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002326	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002327	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002328	validation_surfaces:
+L00002329	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002330	- python3 scripts/pm-plan-index.py validate
+L00002331	risk_class: usage_feature_drift
+L00002332	reasoning_tier: standard
+L00002333	context_scope: usage_feature_batch_195
+L00002334	implementation_surfaces:
+L00002335	- Plans/usage-feature.md
+L00002336	node_compile_hint:
+L00002337	  mode: backend_input_hierarchy
+L00002338	  create_worknodes: false
+L00002339	source_lineage:
+L00002340	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0038
+L00002341	preserved_exact_tokens:
+L00002342	- canonical usage projections
+L00002343	- redb rollups
+L00002344	- seglog
+L00002345	- usage.jsonl
+L00002346	- active-subagents.json
+L00002347	- side-file
+L00002348	- live-state
+L00002349	- 'change_status: "new"'
+L00002350	- URL
+L00002351	- UsageRecord
+L00002352	- signal weighting
+L00002353	negative_constraints:
+L00002354	- active-subagents.json and other side-file/live-state mirrors must not be presented as canonical or endorsed usage enrichment sources after side-file retirement.
+L00002355	preserved_contractrefs:
+L00002356	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md'
+L00002357	- "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md\xA72"
+L00002358	compatibility_only_notes:
+L00002359	- usage.jsonl may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
+L00002360	stale_retired_dispositions:
+L00002361	- Retired subagent side files remain compatibility projections only.
+L00002362	owner_hints:
+L00002363	- Plans/usage-feature.md
+L00002364	```
+L00002365	
+L00002366	### UF-028 - Usage Linked Planning Widget Consumer Boundary
+L00002367	
+L00002368	```yaml
+L00002369	plan_unit_id: UF-028
+L00002370	unit_type: requirement
+L00002371	status: accepted
+L00002372	owner_doc: Plans/usage-feature.md
+L00002373	canonical_text: Usage-linked planning widgets consume sticky-card and execution-tracker contracts after approval with read-mostly status badges, item-focus navigation, and post-approval edit restrictions, without becoming a second plan state owner.
+L00002374	gui_related: true
+L00002375	gui_classification_reason: The unit governs user-visible planning widget status badges and navigation in Usage-linked surfaces.
+L00002376	split_recommended: false
+L00002377	depends_on:
+L00002378	- PDS-003
+L00002379	- PDS-004
+L00002380	- PDS-005
+L00002381	- PNC-001
+L00002382	unblocks: []
+L00002383	acceptance_criteria:
+L00002384	- UF-028 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002385	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002386	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002387	validation_surfaces:
+L00002388	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002389	- python3 scripts/pm-plan-index.py validate
+L00002390	risk_class: usage_feature_drift
+L00002391	reasoning_tier: standard
+L00002392	context_scope: usage_feature_batch_195
+L00002393	implementation_surfaces:
+L00002394	- Plans/usage-feature.md
+L00002395	node_compile_hint:
+L00002396	  mode: usage_linked_planning_widget_consumer_boundary
+L00002397	  create_worknodes: false
+L00002398	source_lineage:
+L00002399	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0038
+L00002400	preserved_exact_tokens:
+L00002401	- sticky-card
+L00002402	- execution-tracker
+L00002403	- read-mostly status badges
+L00002404	- item-focus navigation
+L00002405	- post-approval edit restrictions
+L00002406	- second plan state owner
+L00002407	negative_constraints:
+L00002408	- Usage-linked planning widgets must not become a second plan state owner.
+L00002409	preserved_contractrefs:
+L00002410	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md'
+L00002411	- "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md\xA72"
+L00002412	compatibility_only_notes: []
+L00002413	stale_retired_dispositions: []
+L00002414	owner_hints:
+L00002415	- Plans/usage-feature.md
+L00002416	```
+L00002417	
+L00002418	### UF-029 - Canonical Usage Placement And Exclusions
+L00002419	
+L00002420	```yaml
+L00002421	plan_unit_id: UF-029
+L00002422	unit_type: requirement
+L00002423	status: accepted
+L00002424	owner_doc: Plans/usage-feature.md
+L00002425	canonical_text: 'Usage placement is fixed: app-wide Usage is its own page or view, compact usage appears in shell/status surfaces, thread-scoped context detail lives in chat via the context circle plus editor-tab Context Detail Pane, and artifact/chat deep-links land on canonical surfaces by scope.'
+L00002426	gui_related: true
+L00002427	gui_classification_reason: The unit defines user-visible Usage placement and excludes competing detailed surfaces.
+L00002428	split_recommended: false
+L00002429	depends_on:
+L00002430	- PDS-003
+L00002431	- PDS-004
+L00002432	- PDS-005
+L00002433	- PNC-001
+L00002434	unblocks: []
+L00002435	acceptance_criteria:
+L00002436	- UF-029 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002437	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002438	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002439	validation_surfaces:
+L00002440	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002441	- python3 scripts/pm-plan-index.py validate
+L00002442	risk_class: usage_feature_drift
+L00002443	reasoning_tier: standard
+L00002444	context_scope: usage_feature_batch_195
+L00002445	implementation_surfaces:
+L00002446	- Plans/usage-feature.md
+L00002447	node_compile_hint:
+L00002448	  mode: canonical_usage_placement_and_exclusions
+L00002449	  create_worknodes: false
+L00002450	source_lineage:
+L00002451	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0039
+L00002452	preserved_exact_tokens:
+L00002453	- app-wide Usage
+L00002454	- shell and status surfaces
+L00002455	- context circle
+L00002456	- editor-tab Context Detail Pane
+L00002457	- artifact deep-links
+L00002458	- chat usage activation
+L00002459	- thread Usage
+L00002460	- detached usage pop-out
+L00002461	- tab or panel or pop-out
+L00002462	negative_constraints:
+L00002463	- Thread Usage in the chat shell or side panel is not the primary detailed surface.
+L00002464	- Detached usage pop-out is not the canonical thread detail model.
+L00002465	- Direct click on the context circle must not open the detail pane without the hover/click split.
+L00002466	- Unresolved `tab or panel or pop-out` phrasing must not leave implementation guessing.
+L00002467	preserved_contractrefs:
+L00002468	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md'
+L00002469	- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md'
+L00002470	compatibility_only_notes: []
+L00002471	stale_retired_dispositions: []
+L00002472	owner_hints:
+L00002473	- Plans/usage-feature.md
+L00002474	```
+L00002475	
+L00002476	### UF-030 - Canonical Usage Event Pipeline
+L00002477	
+L00002478	```yaml
+L00002479	plan_unit_id: UF-030
+L00002480	unit_type: requirement
+L00002481	status: accepted
+L00002482	owner_doc: Plans/usage-feature.md
+L00002483	canonical_text: Usage events flow into immutable UsageRecord data for tokens, costs, tool calls, API calls, helper/background usage, and parent run/thread plus concrete invocation attribution.
+L00002484	gui_related: false
+L00002485	gui_classification_reason: The unit preserves backend UsageRecord event pipeline behavior.
+L00002486	split_recommended: false
+L00002487	depends_on:
+L00002488	- PDS-003
+L00002489	- PDS-004
+L00002490	- PDS-005
+L00002491	- PNC-001
+L00002492	unblocks: []
+L00002493	acceptance_criteria:
+L00002494	- UF-030 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002495	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002496	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002497	validation_surfaces:
+L00002498	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002499	- python3 scripts/pm-plan-index.py validate
+L00002500	risk_class: usage_feature_drift
+L00002501	reasoning_tier: standard
+L00002502	context_scope: usage_feature_batch_195
+L00002503	implementation_surfaces:
+L00002504	- Plans/usage-feature.md
+L00002505	node_compile_hint:
+L00002506	  mode: canonical_usage_event_pipeline
+L00002507	  create_worknodes: false
+L00002508	source_lineage:
+L00002509	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0041
+L00002510	preserved_exact_tokens:
+L00002511	- Usage events
+L00002512	- UsageRecord
+L00002513	- tokens
+L00002514	- costs
+L00002515	- tool calls
+L00002516	- API calls
+L00002517	- immutable
+L00002518	- explicit versioning
+L00002519	- helper/background
+L00002520	- parent run/thread
+L00002521	negative_constraints:
+L00002522	- Usage records are immutable once committed; corrections require a new record with explicit versioning.
+L00002523	preserved_contractrefs: []
+L00002524	compatibility_only_notes: []
+L00002525	stale_retired_dispositions: []
+L00002526	owner_hints:
+L00002527	- Plans/usage-feature.md
+L00002528	```
+L00002529	
+L00002530	### UF-031 - Debug Investigation Phase Attribution
+L00002531	
+L00002532	```yaml
+L00002533	plan_unit_id: UF-031
+L00002534	unit_type: requirement
+L00002535	status: accepted
+L00002536	owner_doc: Plans/usage-feature.md
+L00002537	canonical_text: Usage analytics may group Debug Mode work by investigation lifecycle phase labels such as instrumenting, reproducing, collecting_evidence, analyzing, and applying_fix without making Usage the owner of Debug runtime state-machine semantics.
+L00002538	gui_related: false
+L00002539	gui_classification_reason: The unit preserves analytics attribution dimensions rather than GUI presentation.
+L00002540	split_recommended: false
+L00002541	depends_on:
+L00002542	- PDS-003
+L00002543	- PDS-004
+L00002544	- PDS-005
+L00002545	- PNC-001
+L00002546	unblocks: []
+L00002547	acceptance_criteria:
+L00002548	- UF-031 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002549	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002550	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002551	validation_surfaces:
+L00002552	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002553	- python3 scripts/pm-plan-index.py validate
+L00002554	risk_class: usage_feature_drift
+L00002555	reasoning_tier: standard
+L00002556	context_scope: usage_feature_batch_195
+L00002557	implementation_surfaces:
+L00002558	- Plans/usage-feature.md
+L00002559	node_compile_hint:
+L00002560	  mode: debug_investigation_phase_attribution
+L00002561	  create_worknodes: false
+L00002562	source_lineage:
+L00002563	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0042
+L00002564	preserved_exact_tokens:
+L00002565	- instrumenting
+L00002566	- reproducing
+L00002567	- collecting_evidence
+L00002568	- analyzing
+L00002569	- applying_fix
+L00002570	- Debug runtime state-machine
+L00002571	negative_constraints:
+L00002572	- Usage does not own Debug runtime state-machine semantics.
+L00002573	preserved_contractrefs: []
+L00002574	compatibility_only_notes: []
+L00002575	stale_retired_dispositions: []
+L00002576	owner_hints:
+L00002577	- Plans/usage-feature.md
+L00002578	```
+L00002579	
+L00002580	### UF-032 - Billing Attribution Family And Pricing Metadata
+L00002581	
+L00002582	```yaml
+L00002583	plan_unit_id: UF-032
+L00002584	unit_type: requirement
+L00002585	status: accepted
+L00002586	owner_doc: Plans/usage-feature.md
+L00002587	canonical_text: Usage preserves billing identity, provider usage billing evidence, shared attribution family, run/attempt/thread/node/artifact/provider/usage anchors, rate cards, and surcharges as attribution and pressure evidence without replacing canonical usage_record, entitlement, or billing-entity contracts.
+L00002588	gui_related: false
+L00002589	gui_classification_reason: The unit preserves backend billing and attribution metadata semantics.
+L00002590	split_recommended: false
+L00002591	depends_on:
+L00002592	- PDS-003
+L00002593	- PDS-004
+L00002594	- PDS-005
+L00002595	- PNC-001
+L00002596	unblocks: []
+L00002597	acceptance_criteria:
+L00002598	- UF-032 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00002599	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002600	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002601	validation_surfaces:
+L00002602	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002603	- python3 scripts/pm-plan-index.py validate
+L00002604	risk_class: usage_feature_drift
+L00002605	reasoning_tier: standard
+L00002606	context_scope: usage_feature_batch_195
+L00002607	implementation_surfaces:
+L00002608	- Plans/usage-feature.md
+L00002609	node_compile_hint:
+L00002610	  mode: billing_attribution_family_and_pricing_metadata
+L00002611	  create_worknodes: false
+L00002612	source_lineage:
+L00002613	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0043
+L00002614	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0045
+L00002615	preserved_exact_tokens:
+L00002616	- /billing
+L00002617	- /usage/billing
+L00002618	- usage_record
+L00002619	- entitlement
+L00002620	- billing entity
+L00002621	- run/attempt/thread/node/artifact/provider/usage anchors
+L00002622	- rate cards
+L00002623	- surcharges
+L00002624	negative_constraints:
+L00002625	- Provider `/billing` and `/usage/billing` metadata remains attribution and pressure evidence; it does not replace canonical contracts.
+L00002626	preserved_contractrefs: []
+L00002627	compatibility_only_notes: []
+L00002628	stale_retired_dispositions: []
+L00002629	owner_hints:
+L00002630	- Plans/usage-feature.md
+L00002631	```
+L00002632	
+
+<<< CONTEXT_AFTER canonical_document_lines=2633-2644 >>>
+L00002633	### UF-033 - Artifact Bridge And Inspector Routing
+L00002634	
+L00002635	```yaml
+L00002636	plan_unit_id: UF-033
+L00002637	unit_type: requirement
+L00002638	status: accepted
+L00002639	owner_doc: Plans/usage-feature.md
+L00002640	canonical_text: Artifact drill-through and receipt lineage use attempt_id, provider_attempt_ref, usage_event_ref, receipt refs, and explicit inspector_target values for details/evidence/usage/lineage, avoiding timestamp heuristics, tier_id pivots, eager deref, and feature-local routing semantics.
+L00002641	gui_related: true
+L00002642	gui_classification_reason: The unit governs user-visible inspector routing and artifact drill-through behavior.
+L00002643	split_recommended: true
+L00002644	depends_on:

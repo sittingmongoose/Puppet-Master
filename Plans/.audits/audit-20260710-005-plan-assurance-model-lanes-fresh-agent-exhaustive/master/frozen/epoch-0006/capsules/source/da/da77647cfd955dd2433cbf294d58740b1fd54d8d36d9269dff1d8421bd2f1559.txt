@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=478-489 >>>
+L00000478	- Replay and idempotency use `event_id`, `idempotency_key`, `sequence_id`, and `replay_policy`. Duplicate delivery returns the original append/projection result when `event_id` or `idempotency_key` matches the policy; timestamp equality is not a dedupe rule.
+L00000479	- Retention and compaction never rewrite closed seglog segments in place. Compaction may rebuild redb projections, lookup rows, JSONL mirrors, and Tantivy indexes; canonical EventRecord values are retained or migrated through append-only successor records plus governed retention/legal-hold policy.
+L00000480	- Raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, and local machine secrets are invalid in EventRecord envelope or payload content. Secret-bearing operational data is represented only by non-secret refs governed by permission/account custody.
+L00000481	- Legacy `EventEnvelopeV1` values with `ts`, `seq`, `type`, and `payload` are accepted by readers only as compatibility input. Upgraders map `type` to `event_type`, populate required identity/version/idempotency/redaction/replay/migration fields, and record `migration.compatibility_event_type`; new writers MUST emit EventRecord.
+L00000482	- This Tier 0C-1 boundary records partial closure for EventRecord persistence only. It does not claim `attempt_record`, `receipt`, `lane`, `worktree`, provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral acceptance, or all redb value schemas are complete.
+L00000483	
+L00000484	ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/event_record.schema.json, SchemaID:pm.event.v0
+L00000485	
+L00000486	### 2.3 redb: schema, migrations, key patterns
+L00000487	
+L00000488	
+L00000489	#### 2.3.1 Storage value-schema registry (Tier 0C-2)
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=490-874 >>>
+L00000490	
+L00000491	`Plans/storage_value_registry.json` is the canonical machine-readable registry for storage value families named in this document. `Plans/storage_value_registry.schema.json` owns the registry file shape. Key templates in this section are inventory and routing aids only; a persisted value family is implementation-authoritative only when the registry row identifies its key shape, value schema id/ref, owner doc, producer, consumers, schema version, encoding, required/optional/nullability fields, replay behavior, migration rule, retention/compaction rule, redaction/no-secret rule, and legacy/canonical crosswalk status.
+L00000492	
+L00000493	Tier 0 launch-critical registry rows are fully materialized for:
+L00000494	- `approved_plan_pack`
+L00000495	- `plan_approved_outbox`
+L00000496	- `plan_compile_run`
+L00000497	- `compiler_wave_contract`
+L00000498	- `workgraph_draft`
+L00000499	- `worknode_request`
+L00000500	- `executor_intake_report`
+L00000501	- `attempt_receipt`
+L00000502	- `event_record_index`
+L00000503	- `blocked_projection`
+L00000504	- `goal_receipt`
+L00000505	
+L00000506	Later GUI, analytics, provider, terminal, browser, worktree/lane, project-state, coordination debug mirror export, permission/safe-point, and feature projection families remain inventoried with `status = deferred_not_build_blocking` or `status = compatibility_alias`, an owner, a reason, and a reopen condition. They are not allowed to rely on prose-only key templates as implementation authority; their rows must be promoted to materialized value schemas before a buildability claim can depend on them.
+L00000507	
+L00000508	All persisted values require `schema_version`. Stored values must not contain raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets. Secret-bearing or sensitive data is represented only by redacted refs, masked metadata, hashes, evidence refs, or external custody refs. Replay must reject unsupported schema ids/versions rather than inferring value shape from a key template.
+L00000509	
+L00000510	This Tier 0C-2 registry is partial persistence-materialization progress only. It does not close provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundary, behavioral acceptance, or broad redb-family blockers; it does not create WorkNodes, NodeSeeds, candidates, executable queues, manifests, implementation files, runtime launches, or product build tasks; and `buildability_gate_passed` remains false.
+L00000511	
+L00000512	ContractRef: SchemaID:pm.storage_value_registry.v1, ContractName:Plans/storage_value_registry.json, ContractName:Plans/storage_value_registry.schema.json, ContractName:Plans/storage-plan.md
+L00000513	
+L00000514	#### 2.3.2 Coordination record, projection, and mirror export families
+L00000515	
+L00000516	Storage owns the durable coordination record/projection boundary used by Orchestrator and crew surfaces. Canonical coordination state is not a JSON file family. It is the `EventRecord` seglog coordination family folded into redb read models with explicit projector checkpoints.
+L00000517	
+L00000518	Canonical seglog record families:
+L00000519	- `coordination.agent_registered` records registration before execution.
+L00000520	- `coordination.agent_status_updated` records status/lifecycle changes.
+L00000521	- `coordination.agent_operation_updated` records current operation/progress state.
+L00000522	- `coordination.agent_file_ownership_updated` records file-activity claims for warnings and scheduling inputs; it is not a FileSafe lock or exclusive lease.
+L00000523	- `coordination.agent_unregistered` records normal terminal/unregister behavior.
+L00000524	- `coordination.agent_crashed` records crash, heartbeat-expiry, process-loss, or worktree-loss resolution.
+L00000525	- `coordination.agent_aborted` records parent/user/runtime abort resolution.
+L00000526	- `coordination.debug_mirror_exported` records optional mirror export attempts, source checkpoint, result, and corruption/recovery metadata.
+L00000527	
+L00000528	Authoritative redb projections and checkpoints:
+L00000529	- `coordination_agent_projection.v1:{project_id}:{agent_id}` carries latest lifecycle/status, runtime/platform identity, worktree binding, current operation ref, active file claims, `agent_revision`, and `last_applied_event_id`.
+L00000530	- `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}` carries file-activity claims used for conflict warnings.
+L00000531	- `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}` carries current operation text/progress, source refs, and operation timing.
+L00000532	- `coordination_snapshot_projection.v1:{project_id}:{projection_scope}` carries the scheduler/prompt-injection read model for a run, lane, node, worktree, or full project scope.
+L00000533	- `projector.checkpoint.coordination:{project_id}` proves the seglog sequence consumed by coordination projections.
+L00000534	
+L00000535	Concurrency and atomicity rules:
+L00000536	- The supported v1 concurrency envelope is up to 32 active agents across multiple worktrees. Above that bound, schedulers must queue, throttle, or require an explicit higher-capacity contract.
+L00000537	- A coordination mutation is admitted only through the PM-owned append API. Writers provide an idempotency key plus expected `agent_revision` or `last_applied_event_id`; the append and projection result are one logical append/CAS boundary.
+L00000538	- The projector advances `coordination_*_projection.v1` rows and `projector.checkpoint.coordination:{project_id}` in one redb transaction. Readers that require authority must verify checkpoint coverage for the needed seglog sequence.
+L00000539	- Lost updates are prohibited: a stale expected revision returns a coordination conflict diagnostic, and the caller reloads projections before appending a successor event.
+L00000540	- Read-modify-write of `.puppet-master/state/*.json` is prohibited for canonical coordination state. Whole-file writes are allowed only in the debug/export mirror writer after a projection commit.
+L00000541	
+L00000542	Mirror contract:
+L00000543	- PM-owned projection/export code is the only writer for `.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` when those files exist.
+L00000544	- Mirrors may lag canonical storage, be absent in headless/clean-room runs, and expose source sequence/checkpoint metadata when present.
+L00000545	- Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures. PM quarantines or overwrites the mirror from seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.
+L00000546	- Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions. Authoritative consumers use `coordination_snapshot_projection.v1` or the narrower agent/file/operation projections.
+L00000547	
+L00000548	ContractRef: ContractName:Plans/Contracts_V0.md#Stable-active-agent-coordination-event-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections, SchemaID:pm.storage_value.coordination_event_records.v1
+L00000549	
+L00000550	#### Canonical records baseline
+L00000551	
+L00000552	
+L00000553	- Canonical records are the single source of truth for run, node, lane, and execution state.
+L00000554	- Canonical records are immutable once committed; corrections require a new record with explicit lineage.
+L00000555	- All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit.
+L00000556	
+L00000557	### Concern record and lifecycle canon
+L00000558	
+L00000559	
+L00000560	- Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.
+L00000561	- Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata.
+L00000562	- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics.
+L00000563	- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section.
+L00000564	- Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable.
+L00000565	
+L00000566	#### Required redb keys baseline
+L00000567	
+L00000568	The following baseline key templates are inventoried in `Plans/storage_value_registry.json`. Legacy baseline rows are deferred or migration-read until their registry entries are promoted to materialized schemas.
+L00000569	
+L00000570	- `run:<run_id>`: Run context and policy.
+L00000571	- `node:<node_id>`: Node definition and execution state.
+L00000572	- `lane:<lane_id>`: Lane lifecycle and worktree allocation.
+L00000573	- `execution_unit:<execution_unit_id>`: Execution unit context and identity.
+L00000574	- `receipt:<receipt_id>`: Execution receipt and artifact linkage.
+L00000575	
+L00000576	### Historical semantic consistency
+L00000577	- Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed.
+L00000578	- Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict.
+L00000579	- Historical terms stay shared across concern, receipt, artifact, worktree, and usage families without collapsing family-local workflow states.
+L00000580	
+L00000581	#### Cross-surface receipt record baseline
+L00000582	
+L00000583	
+L00000584	- Receipt records bind execution results to canonical run, node, and lane identity.
+L00000585	- Receipts include `execution_unit_id`, `result_summary`, `artifacts`, and `evidence_ref`.
+L00000586	- Dashboard, CLI, and API surfaces query receipt records to display execution results.
+L00000587	
+L00000588	#### Projection freshness, health, and startup rehydration baseline
+L00000589	- Projections are derived from canonical records and events.
+L00000590	- Projection freshness is tracked per projection type; stale projections are recomputed at startup.
+L00000591	- Startup rehydration restores projections from seglog and redb canonical records.
+L00000592	
+L00000593	#### Account pressure, history, and runtime attribution baseline
+L00000594	
+L00000595	
+L00000596	- Account pressure metrics are stored per account and updated at node/lane boundaries.
+L00000597	- History records (account-level and execution-level) are immutable and linked to canonical run/node identity.
+L00000598	- Runtime attribution tracks which actor/role executed each node or phase.
+L00000599	
+L00000600	#### Artifacts index, export manifests, and route/open linkage baseline
+L00000601	- Artifacts are indexed by artifact ID and linked to run, node, and receipt records.
+L00000602	- Export manifests bind artifact collections to project deliverables.
+L00000603	- Route/open linkage documents which route args and open contracts were active during execution.
+L00000604	
+L00000605	#### Worktree/lane lifecycle, handshake, and cleanup lineage baseline
+L00000606	
+L00000607	
+L00000608	- Worktree lifecycle records track allocation, usage, and reclamation events.
+L00000609	- Handshake records document the Source Control → Orchestrator worktree allocation contract.
+L00000610	- Cleanup lineage ensures stale worktrees are eventually removed and audited.
+L00000611	
+L00000612	#### Naming and migration rules baseline
+L00000613	
+L00000614	
+L00000615	- Schema keys follow `entity_type:entity_id:sub_key` patterns for consistency.
+L00000616	- Migrations are versioned and idempotent; old schema versions must be supported for at least one major release.
+L00000617	- Deprecation is explicit and documented in migration notes.
+L00000618	
+L00000619	### Canonicalization order
+L00000620	- Apply owner-doc corrections before consumer and mirror cleanup.
+L00000621	- Rerun fidelity audit only after owner and consumer corrections are in place.
+L00000622	- Storage-owner sequencing follows the same order: canonical owner records first, dependent projections and mirrors second, and fidelity rerun evidence only after both are complete.
+L00000623	
+L00000624	### Canonical records (runtime/storage families)
+L00000625	Storage owns one shared record envelope with canonical lineage refs plus artifact/evidence refs. Record objects remain distinct from rendered views, mirrors, exports, and summaries.
+L00000626	
+L00000627	Required record families include:
+L00000628	- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
+L00000629	- `blocked_projection.v1:{project_id}:{node_id}`
+L00000630	- `concern_record.v1:{project_id}:{concern_id}`
+L00000631	- `worktree_record.v1:{project_id}:{worktree_id}`
+L00000632	- `worktree_projection.v1:{project_id}:{worktree_id}`
+L00000633	- `thread_state:{thread_id}:worktree_binding`
+L00000634	- `thread_state:{thread_id}:persona_override`
+L00000635	- `worktree_binding_reverse:{worktree_id}`
+L00000636	- `lane_record.v1:{project_id}:{lane_id}`
+L00000637	- `lane_projection.v1:{project_id}:{lane_id}`
+L00000638	- `project_summary.v1:{project_id}`
+L00000639	- `project_attention_item.v1:{project_id}:{attention_item_id}`
+L00000640	- `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
+L00000641	- `account_switch_event.v1:{provider_id}:{event_id}`
+L00000642	
+L00000643	Concern canon:
+L00000644	- concern is a first-class durable record distinct from review findings, annotations, blocked episodes, and graph patch requests
+L00000645	- lifecycle states are `active`, `acknowledged`, `resolved`, and `dismissed`
+L00000646	- `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`
+L00000647	- source-event refs, concern records, and concern projections are separate structural layers rather than one collapsed object
+L00000648	
+L00000649	Historical vocabulary stays explicit: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, and `removed` are shared storage terms, while family-local workflow states remain family-local.
+L00000650	
+L00000651	### Required redb keys (project/runtime families)
+L00000652	The value-family authority for these keys is `Plans/storage_value_registry.json`; `attempt_record.v1:{project_id}:{node_id}:{attempt_number}` is inventoried as deferred until runtime lifecycle evidence exists, and `blocked_projection.v1:{project_id}:{node_id}` is materialized as registry family `blocked_projection`.
+L00000653	
+L00000654	- `artifacts_index.v1:{project_id}:{artifact_id}`
+L00000655	- `artifacts_project_state.v1:{project_id}`
+L00000656	- `projector.checkpoint.runtime_artifacts:{project_id}`
+L00000657	- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
+L00000658	- `blocked_projection.v1:{project_id}:{node_id}`
+L00000659	- `concern_record.v1:{project_id}:{concern_id}`
+L00000660	- `project_summary.v1:{project_id}`
+L00000661	- `project_attention_item.v1:{project_id}:{attention_item_id}`
+L00000662	- `worktree_record.v1:{project_id}:{worktree_id}`
+L00000663	- `worktree_projection.v1:{project_id}:{worktree_id}`
+L00000664	- `thread_state:{thread_id}:worktree_binding`
+L00000665	- `thread_state:{thread_id}:persona_override`
+L00000666	- `worktree_binding_reverse:{worktree_id}`
+L00000667	- `lane_record.v1:{project_id}:{lane_id}`
+L00000668	- `lane_projection.v1:{project_id}:{lane_id}`
+L00000669	- `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
+L00000670	- `account_switch_event.v1:{provider_id}:{event_id}`
+L00000671	
+L00000672	### Cross-surface receipt record (required fields)
+L00000673	Required fields:
+L00000674	- `attempt_id`
+L00000675	- `provider_attempt_ref`
+L00000676	- `usage_event_ref`
+L00000677	- `workflow_refs`
+L00000678	- `docker_refs`
+L00000679	- `kubernetes_refs`
+L00000680	- `auditor_cycle_report`
+L00000681	- legacy `validation_pass_report` mirror only when `compatibility_only: true` and `cycle_report_ref` points to `auditor_cycle_report`
+L00000682	- `workflow_run_id`
+L00000683	- `run_id`
+L00000684	- `pass_verdict`
+L00000685	- `phase_plan_ref`
+L00000686	- `requirements_quality_report_ref`
+L00000687	
+L00000688	Rules:
+L00000689	- `attempt_id` is the primary local anchor.
+L00000690	- `provider_attempt_ref` is the provider/runtime bridge, `usage_event_ref` is the usage bridge, and receipt refs are the external side-effect lineage bridge; none of them replace the local key.
+L00000691	- Runtime artifacts are attempt-native by default and stay joinable to receipts, usage, workflow, and validation lineage.
+L00000692	- Artifact open flows resolve by `artifact_id` first and then by linked envelope refs.
+L00000693	
+L00000694	#### Command alert and incident timeline records
+L00000695	
+L00000696	Command-originated alerts are durable incident timeline records. Cascade failures use `parent_incident_id` / `parent-incident` bundling so one primary alert owns the `root_cause_key`, child issues attach as related consequences, and CTAs prioritize root-cause repair before derivative failures.
+L00000697	
+L00000698	Required alert timeline fields are `raised_at`, `source_surface`, `severity`, `root_cause_key`, `owning_surface`, `acknowledged/snoozed state`, `resolved_at`, and linked receipt/run/worktree/workflow/container/workload ids (`receipt_id`, `run_id`, `worktree_id`, `workflow_run_id`, `container_id`, `workload_id`). The compact lineage key `/run/worktree/workflow/container/workload` is preserved alongside `/snoozed` state so historical records can answer what alerted, where the user acted, and whether it cleared.
+L00000699	
+L00000700	Active attention rows carry both `attention_key` and `root_cause_key`. `attention_key` identifies the user-visible attention thread and owning route, while `root_cause_key` identifies the durable causal cluster for `/coalescing`. Repeated events with the same `root_cause_key` update one active alert thread; interruptive notifications retrigger only on severity or state transition.
+L00000701	
+L00000702	Attention routing precedence is canonical: run-blocking issues route to Orchestrator and its CTA stack; branch and workflow issues route to GitHub Actions; runtime, `/container/rollout`, and Kubernetes issues route to Docker Manager; global degraded infrastructure routes to the status bar plus Dashboard. Mirrored surfaces store deep-link payloads to the primary owner instead of minting parallel remediation records.
+L00000703	
+L00000704	The cross-shell `attention-routing` record stores delivery class and escalation state separately from owner routing. Delivery classes are `blocking_modal`, `interruptive_toast`, `persistent_banner_or_card`, and `badge_only`; active-project issues may interrupt when severity requires it, while `non-active-project` issues default to compact global attention until selected. Waiting states include `waiting`, `waiting_long`, and `attention_waiting`; pinned workflow `/run/failed`, Docker, and `/Kubernetes` failures coalesce by root cause and only retrigger interruptive delivery when severity or state changes.
+L00000705	
+L00000706	#### Project attention and execution-owner reconciliation state
+L00000707	
+L00000708	Project attention records MUST NOT collapse user attention into only `orchestrator status`: the `idle/running/paused` activity enum and any `/running/paused` display value are activity_state hints, not the primary reason a project needs attention. Severity uses `info`, `warning`, `attention_required`, and `blocked` with stable meaning: an advisory concern with no execution effect is usually `info` or `warning`; a concern tied to weak integration but not yet `completion-blocking` is `warning` or `attention_required`; a concern that blocks seam completion, promotion, or recovery is `blocked`.
+L00000709	
+L00000710	Historical and lifecycle terms stay `family-local`. `archived`, `removed`, and `deleted` remain distinct storage states, and generic `resolved` labels do not overwrite the owner-specific `remediation.resolved` contract; that conflict is a real reconciliation item. Boundary schemas migrate from `tier_boundary` to a versioned `governance_boundary`, with any compatibility alias documented as migration-only rather than as a peer canonical key.
+L00000711	
+L00000712	Trust and attention projections treat auth, `/scope/rate-limit`, account pressure, and provider limits as `concern-aware` and `trust-aware` storage facts rather than UI-only error strings. Remaining reconciliation seams include `/glossary` ownership, `route-payload` normalization, `attention-item` versus `project-summary` projection ownership, and `/worktree` lifecycle split; those are storage/schema cleanup items, not fresh design proposals.
+L00000713	
+L00000714	Projection records carry enough freshness and lineage to be trusted after restart: `projection_freshness`, `projection_health`, `last_projected_at_utc`, `source_seq` or an equivalent `/cursor`, `degraded_reason_code`, and `refresh_in_progress`. Mutating actions must read those fields before trusting a derived view.
+L00000715	
+L00000716	Execution ownership migrations are storage-visible. `Prompt_Pipeline.md` / `Prompt_Pipeline` still consumes `persona_override_owner_id`, but `tier_id` is a legacy scope for Orchestrator execution identity and must migrate toward `/node/attempt/subagent-owned` ownership. `Executor_Protocol.md` / `Executor_Protocol` and `orchestrator-subagent-integration.md` / `orchestrator-subagent-integration` must define the mint and `/ownership` rules for `blocked_sequence`, the `startup-recovery` to first `scheduler-pass` handshake using `startup_recovered`, `execution_role`, reviewer `/corroboration`, and the way `active-agent`, `TierContext`, and `/decomposition` records join to `attempt-keyed` runtime records.
+L00000717	
+L00000718	Source Control remains the worktree owner surface, but storage owns durable joins. `worktree_id` is the durable storage key, `/path` is a resolver/display attribute, `/source-control` owns Git-facing operations, and `base-branch` ownership must be reconciled before Source Control or UI code mint competing base-branch fields.
+L00000719	
+L00000720	#### Evidence, receipt, redaction, and bulk-action provenance
+L00000721	
+L00000722	Persisted or `/exported` evidence and `/receipt` summaries that include result state or spawned attempt/remediation refs carry derivation provenance fields: `source_event_ids[]`, `source_event_ids`, `blob_ref?`, `blob_ref`, `derived_by_projector`, `projector_version`, `redaction_profile_id`, and `derived_at`.
+L00000723	
+L00000724	Consumers distinguish source facts from projected summaries. `source_event_ids[]` and `blob_ref?` point to source observations, while `derived_by_projector`, `projector_version`, `redaction_profile_id`, and `derived_at` identify the projector and policy that produced the summary.
+L00000725	
+L00000726	Evidence refs declare exactly one stability class: `embedded_snapshot`, `local_blob_ref`, `external_live_ref`, or `external_missing`. Exports and history mark a record as not `self-contained` when remote evidence was not snapshotted, including `/exported` views and historical receipt views.
+L00000727	
+L00000728	Persisted/exported audit items include `mandatory_scrub_applied`, `heuristic_redaction_enabled`, `redaction_policy_version`, and `display_may_hide_details` so consumers can distinguish source absence from post-processing omissions. The provenance packet is also attached to bulk action families that cover stage/unstage/discard (`/unstage/discard`), rerun/cancel, cleanup/prune (`/prune`), apply/delete, and pin/unpin. Stored bulk outcomes preserve target preview reference, scope summary/count (`/count`), result state, `partial-success`, `per-target` failure list, spawned attempt/remediation refs, and rollback/undo expectations where possible.
+L00000729	
+L00000730	Audit/export bundles are provenance-preserving manifests, not copied folders with lost lineage. Each package records `exported_at`, `source_scope`, `source_seglog_range`, `included_event_count`, `/checksums`, `redaction_policy_version`, `missing_external_refs[]`, `missing_external_refs`, filtered item counts, and a `/rationale` when evidence is omitted or transformed. Export manifests include `command_invocation_id` when generated from a command and keep `blocked_resolution_record` links when a blocked episode, remediation, or recovery action contributed to the bundle. `hold_state` applies to runs, receipts, evidence, blocked episodes, and linked blobs/artifacts; a hold suspends pruning, cleanup, export garbage-collection, and linked-graph deletion until explicitly released.
+L00000731	
+L00000732	Structured-copy contracts use canonical reason/state keys and typed placeholders rather than ad hoc English concatenation. Copy payloads store target identity, missing capability, blocked step, recovery action, timestamp, source event refs, and redaction profile so localized UI text can be regenerated from durable state without weakening audit facts.
+L00000733	
+L00000734	#### External operation evidence, privileged sessions, and sensitive metadata
+L00000735	
+L00000736	Runtime and provider evidence separates ephemeral in-memory view, scrubbed persisted blob, and `user-exported` file. Container/Kubernetes logs, inspect output, diff blobs, workflow YAML previews, manifest diffs, `/diffs/receipts`, and provider-bound summaries store the evidence class, data-class label, redaction profile, and whether `scrub-before-persist` and `scrub-before-index` ran before any local persistence or indexing. Provider-facing `/AI` or `LLM` features must receive only already-scrubbed payload refs and may not treat a local scrub as provider consent.
+L00000737	
+L00000738	Privileged-session evidence for `docker exec/attach`, `kubectl exec`, `kubectl port-forward`, remote SCM-over-SSH mutation sessions, and browser/device auth handoffs stores bounded metadata only: actor, target, started and `/ended` timestamps, credential realm, transport, local bind address/port when relevant, requested vs effective state, and the owning attempt/action id. The durable store does not persist interactive transcript or `/stdin` by default; if a user explicitly exports session material, it is a `user-exported` artifact with an export profile rather than canonical runtime history.
+L00000739	
+L00000740	Build/deploy secret-handling storage uses `no-persist` and `/no-echo` flags for docker build secrets, build args, compose env files, registry auth helpers, kube Secret manifests, and generated deployment `YAML` containing sensitive values. Preview, diff, receipt, `/deploy`, drift, and publish records compare and persist non-secret metadata only; redaction happens before display persistence as well as before storage. SCM, GitHub Actions, Docker, Kubernetes, and Orchestrator receipts must carry enough provenance to prove redaction and omission policy without echoing secret-bearing fields.
+L00000741	
+L00000742	Sensitive metadata persistence and export defaults cover remote URLs, private repo names, registry namespaces, Docker Hub account identity, account handles, namespace ownership, kube user/context names, namespace/workload names, SSH usernames/host aliases, discovered service URLs, port-forward endpoints, and screenshot-visible values. Local history may keep masked references for joinability, but exports, evidence bundles, and screenshots default to masked values unless the selected export profile explicitly permits fuller disclosure. Account-identity redaction is governed by `/redaction` policy and applies before help/copy text, screenshots, exported receipts, and provider-bound summaries reuse stored evidence. Logout, unlink, and project-delete cleanup invalidates non-secret residue such as validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts.
+L00000743	
+L00000744	Kubernetes `Secret` resources are never rendered back in full, never indexed, and never included in receipts or `/evidence` beyond kind, `/name/namespace`, and redacted status. `ConfigMap` resources use a separate configurable redaction policy because they may contain sensitive plaintext even when they are not Kubernetes Secrets. Review mode, history compare, conflict assistant, run-to-repo lineage, `/diff/export`, and `/file` evidence may persist raw `changed-line` content only when the selected evidence class allows it; otherwise they persist commit/file metadata and scrubbed snippets. Cached diff blobs follow the same scrub, `/TTL/export`, and auto-export policy as logs. `Open app` and `access-intelligence` storage treats URLs and `/endpoints` as sensitive metadata by default.
+L00000745	
+L00000746	### Scope split (durable store boundaries)
+L00000747	
+L00000748	
+L00000749	| Scope | Store | What belongs here |
+L00000750	|---|---|---|
+L00000751	| Secret | OS credential store only | GitHub API tokens, Docker PATs, browser-login derived credentials, registry/helper secrets |
+L00000752	| Global app state | redb | shared Source Control defaults, Actions defaults, Docker Manager defaults, hidden-subview policy |
+L00000753	| Project state | redb | selected repo/worktree, panel subviews, pinned workflows, selected runtime/context, requested auth mode, template repo state |
+L00000754	| Event ledger | seglog | auth validation, blocked/recovery outcomes, workflow actions, publish results, runtime receipts, cross-surface linkage |
+L00000755	
+L00000756	### Projection freshness, health, and startup rehydration (operational rules)
+L00000757	
+L00000758	
+L00000759	Required rules:
+L00000760	- Use active_run_id/focused_run_id with focus_mode = live | historical
+L00000761	- Keep cross-tab deep links and search pivots coherent on the focused run
+L00000762	- Split projection_freshness from projection_health
+L00000763	- Reserve trust_tier for preview/browser semantics and tie action gating to both axes
+L00000764	
+L00000765	Canonical storage rules:
+L00000766	- Project state stores `active_run_id`, `focused_run_id`, and `focus_mode = live | historical` so live dashboards, historical inspectors, and restart rehydration all resolve the same focused run.
+L00000767	- Cross-tab deep links and search pivots MUST target the focused run context; switching tabs or reopening the app does not silently retarget links back to the active run when `focus_mode = historical`.
+L00000768	- `projection_freshness` remains the recency axis and `projection_health` remains the integrity/availability axis; storage and consumers MUST NOT collapse them into a single trust field.
+L00000769	- Sensitive action gating evaluates both axes together: stale-but-healthy projections can require refresh, degraded projections can fall back to canonical record reads, and unavailable projections block projection-dependent actions.
+L00000770	- `trust_tier` is retired as canonical projection vocabulary and is reserved only for preview/browser semantics where UI transport trust must still be disclosed without replacing freshness or health.
+L00000771	
+L00000772	### Account pressure, history, and runtime attribution (ownership split)
+L00000773	
+L00000774	Required rules:
+L00000775	- Introduce execution_unit_context as canonical runtime-facing context object
+L00000776	- Demote TierContext to a derived or compatibility-only selection/decomposition helper
+L00000777	- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context
+L00000778	- Let Contracts_V0 own cross-family attribution packet shape
+L00000779	- Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
+L00000780	
+L00000781	Canonical ownership split:
+L00000782	- `execution_unit_context` is the Executor-owned canonical runtime-facing context object defined in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; storage persists the packet or packet refs for account pressure episodes, switch history, runtime artifacts, receipts, and usage joins without redefining the field set.
+L00000783	- Any `TierContext` or `tier_id` decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity.
+L00000784	- Worker spawn, recovery, remediation, coordination, and UI inspection all resolve runtime identity from `execution_unit_context` so restart flows and inspectors reuse the same run/node/attempt/account anchors.
+L00000785	- Executor_Protocol owns the execution_unit_context schema; Contracts_V0 owns cross-family envelope behavior that consumes that schema, including run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity.
+L00000786	- storage-plan owns persistence and projection of the attempt/usage/receipt/artifact joins that materialize that packet for history, audit, and inspector consumers.
+L00000787	- Persisted storage payloads MUST NOT embed `execution_unit_context` without `schema_version`, and the payload must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+L00000788	- Remaining storage/event cleanup is doc-by-doc reconciliation of these frozen placement rules, not invention of new storage concepts.
+L00000789	
+L00000790	### Artifacts index, export manifests, and route/open linkage (ownership split)
+L00000791	- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage.
+L00000792	- Resolve artifact open flows by artifact_id and then by linked envelope refs.
+L00000793	- Let Contracts_V0 own canonical route_target and OpenSubject contracts.
+L00000794	- Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based.
+L00000795	- Export manifests and artifact indices carry route/open linkage by reference rather than redefining route payload shapes locally.
+L00000796	
+L00000797	### Worktree/lane lifecycle, handshake, and cleanup lineage (ownership split)
+L00000798	- Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator.
+L00000799	- Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows.
+L00000800	- Register worktree_record/worktree_projection and lane_record/lane_projection families.
+L00000801	- Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity.
+L00000802	- Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families.
+L00000803	- Handshake and cleanup history remain lineage-bearing storage records instead of ad hoc UI-only summaries.
+L00000804	
+L00000805	### Naming and migration rules (forward-only storage policy)
+L00000806	
+L00000807	
+L00000808	Storage migrations are forward-only and monotonic.
+L00000809	
+L00000810	Required rules:
+L00000811	- new fields are additive first; destructive renames require a migration note in the same section that introduces them
+L00000812	- stable semantic names stay aligned across runtime, persistence, and events unless an explicit translation layer is defined
+L00000813	- account/profile-backed runtime records and server-profile-backed runtime records stay distinct durable shapes even when surfaced through one GUI ontology
+L00000814	- consumer docs follow owner-first reconciliation order: owner correction here first, then consumer propagation, then fidelity audit rerun
+L00000815	
+L00000816	### Canonical records (owner reconciliation)
+L00000817	Storage owns discoverable record families for runtime, receipt, and projection truth.
+L00000818	
+L00000819	### Required redb keys (owner reconciliation)
+L00000820	- `artifacts_index.v1:{project_id}:{artifact_id}`
+L00000821	- `artifacts_project_state.v1:{project_id}`
+L00000822	- `projector.checkpoint.runtime_artifacts:{project_id}`
+L00000823	- `worktree_record.v1:{project_id}:{worktree_id}`
+L00000824	- `lane_record.v1:{project_id}:{lane_id}`
+L00000825	- `worktree_projection.v1:{project_id}:{worktree_id}`
+L00000826	- `thread_state:{thread_id}:worktree_binding`
+L00000827	- `worktree_binding_reverse:{worktree_id}`
+L00000828	- `lane_projection.v1:{project_id}:{lane_id}`
+L00000829	- `orchestrator.project_state.{project_id}`
+L00000830	
+L00000831	### Cross-surface receipt record (storage rules)
+L00000832	Required fields:
+L00000833	- `attempt_id`
+L00000834	- `provider_attempt_ref`
+L00000835	- `usage_event_ref`
+L00000836	- `workflow_refs`
+L00000837	- `docker_refs`
+L00000838	- `kubernetes_refs`
+L00000839	- `auditor_cycle_report`
+L00000840	- legacy `validation_pass_report` mirror only when `compatibility_only: true` and `cycle_report_ref` points to `auditor_cycle_report`
+L00000841	- `workflow_run_id`
+L00000842	- `run_id`
+L00000843	- `pass_verdict`
+L00000844	- `phase_plan_ref`
+L00000845	- `requirements_quality_report_ref`
+L00000846	
+L00000847	Rules:
+L00000848	- Receipt fields remain lineage-bearing rather than summary prose.
+L00000849	- Runtime artifacts, worktree records, lane records, and project-state keys stay storage owned.
+L00000850	
+L00000851	#### Temporal receipt fields, crash-critical persistence, and retention-window anchor semantics
+L00000852	
+L00000853	Storage owns durable temporal fields used by receipts, blocked states, stream views, and projections. These fields are crash-critical overrides to debounced persistence where noted.
+L00000854	
+L00000855	Required fields on any receipt or blocked-state record that involves a wait, timeout, scheduled observation, reconnect, or stale observation:
+L00000856	- `timeout_class?`
+L00000857	- `wait_state_class?`
+L00000858	- `source_timer_ref?`
+L00000859	- `scheduled_workflow_ref?`
+L00000860	- `last_observation_at_utc?`
+L00000861	- `transitioned_at_utc`
+L00000862	- `retention_anchor_kind`
+L00000863	- `retention_anchor_at_utc`
+L00000864	
+L00000865	Rules:
+L00000866	- Receipts and blocked states retain `timeout_class` because recovery differs for `hard execution timeout`, `inactivity timeout`, `polling timeout`, `reconnect timeout`, and `user-visible wait timer expiry`.
+L00000867	- Active receipt/session lifecycle changes flush immediately or on lifecycle transition, not only on debounce.
+L00000868	- Blocked episode creation/resolution flushes immediately or on lifecycle transition, not only on debounce.
+L00000869	- Follow-mode intent flushes immediately when changed and remains separate from source liveness; restored `follow` still requires source revalidation before a new live stream session is claimed.
+L00000870	- Last inspected run/node/log context, including `/node/log`, flushes immediately when it changes so crash recovery can restore the inspector without inventing continuity.
+L00000871	- Retention-window anchor semantics are explicit per family: receipts use `creation time` unless a stronger legal-hold or preservation rule applies; log tails and watch buffers use `last observation`; explorer snapshots and stale caches use `last access`; run-scoped completion artifacts use `run completion`.
+L00000872	- Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both `retention_anchor_kind` and `retention_anchor_at_utc`; implementations MUST NOT infer the anchor from file mtime alone.
+L00000873	
+L00000874	#### Freshness, stale-window, and watch-mode projection rules
+
+<<< CONTEXT_AFTER canonical_document_lines=875-886 >>>
+L00000875	
+L00000876	Storage records freshness policy separately from retention. Any record family used for `/watch`, follow-mode, log tails, explorer snapshots, stale caches, or remote runtime projections declares `stale_window_policy`, `stale_window_expires_at_utc`, and the post-expiry behavior: `actionable`, `refresh-first`, or `read-only`.
+L00000877	
+L00000878	Required stale-window families:
+L00000879	- Actions readiness snapshot: stale data may remain visible, but workflow generation, apply, rerun, cancel, and pin/unpin actions require `refresh-first`.
+L00000880	- Workflow run list/detail: stale rows may be inspected as historical evidence; live log follow and run mutation require `refresh-first`.
+L00000881	- Docker runtime snapshot: stale container/image/compose state is read-only until refresh; lifecycle actions require `refresh-first`.
+L00000882	- Kubernetes workload/watch state: stale workload, rollout, log, exec, and port-forward state is read-only until refresh; rollout mutation requires `refresh-first`.
+L00000883	- Orchestrator lineage/receipt stitching: stale receipt/lineage views remain inspectable, but run-blocking recovery or CTA actions require canonical revalidation before execution.
+L00000884	
+L00000885	Default stale-window thresholds are explicit and may be tightened by a surface owner, but may not be silently lengthened without a persisted policy version:
+L00000886	

@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3329-3340 >>>
+L00003329	| **BeforeTier/AfterTier hooks** | Native hooks + orchestrator | CLI/provider bridge hooks + orchestrator | Native hooks + orchestrator | Native hooks + orchestrator | Orchestrator only | Orchestrator + platform hooks |
+L00003330	| **Handoff validation** | JSON parse | JSONL parse | JSON parse | JSON parse | Text parse | Platform-specific parser |
+L00003331	| **Remediation loop** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+L00003332	| **Cross-session memory** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+L00003333	| **Active agent tracking** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+L00003334	| **Safe error handling** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+L00003335	| **Lazy lifecycle** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+L00003336	| **Contract enforcement** | JSON validation | JSONL validation | JSON validation | JSON validation | Text validation | Platform-specific validator |
+L00003337	
+L00003338	**Key insight:** Most features are **orchestrator-level** (platform-agnostic). Only handoff validation and contract enforcement need platform-specific parsers (JSON vs JSONL vs text). Hooks can leverage platform-native hooks where available (Cursor, Claude, Gemini) but also work via orchestrator-level middleware for all platforms.
+L00003339	
+L00003340	### Integration with Start/End Verification
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3341-3732 >>>
+L00003341	
+L00003342	These lifecycle and quality features **complement** the existing start/end verification:
+L00003343	
+L00003344	- **BeforeTier hook** runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes state).
+L00003345	- **AfterTier hook** runs **after** `verify_tier_end` (validates handoff format, tracks completion, safe error handling).
+L00003346	- **Remediation loop** extends the existing "required reviewer subagent" -- reviewer outputs structured findings; orchestrator enforces remediation.
+L00003347	- **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
+L00003348	- **Active agent tracking** enhances logging and debugging (shows which subagent ran at each tier).
+L00003349	
+L00003350	### Additional Gaps and Potential Issues for Lifecycle and Quality Features
+L00003351	
+L00003352	**Gap #14: Platform-native hook registration and discovery**
+L00003353	
+L00003354	**Issue:** How do we discover and register platform-native hooks (Cursor `.cursor/hooks.json`, Claude `.claude/settings.json`)? Gemini is a Direct API provider and does not use a platform-native hook config file. Should Puppet Master auto-discover hooks or require explicit configuration?
+L00003355	
+L00003356	**Mitigation:**
+L00003357	- **Auto-discovery:** Scan for hook config files in project root and home directory on startup. Register discovered hooks as adapters.
+L00003358	- **Explicit config:** Add `platform_hooks` section to `PuppetMasterConfig`:
+L00003359	  ```yaml
+L00003360	  platform_hooks:
+L00003361	    cursor:
+L00003362	      enabled: true
+L00003363	      config_path: ".cursor/hooks.json"
+L00003364	    claude:
+L00003365	      enabled: true
+L00003366	      config_path: ".claude/settings.json"
+L00003367	    gemini:
+L00003368	      enabled: false
+L00003369	      # Gemini is a Direct API provider; hooks are orchestrator-level only
+L00003370	  ```
+L00003371	- **Fallback:** If platform-native hooks fail or are unavailable, fall back to orchestrator-level hooks (always available).
+L00003372	
+L00003373	**Gap #15: Hook execution order and dependencies**
+L00003374	
+L00003375	**Issue:** When multiple hooks are registered (built-in + platform-native), what is the execution order? Can hooks depend on each other? What if one hook blocks execution?
+L00003376	
+L00003377	**Mitigation:**
+L00003378	- **Execution order:** Built-in hooks run first (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook), then platform-native hooks, then custom hooks.
+L00003379	- **Dependencies:** Hooks should be independent. If a hook needs data from another hook, use shared context (`BeforeUnitContext`/`AfterUnitContext`).
+L00003380	- **Blocking:** First hook that blocks stops execution. Log which hook blocked and why.
+L00003381	
+L00003382	**Gap #16: Structured output parsing reliability**
+L00003383	
+L00003384	**Issue:** Platform output formats may vary (JSON vs JSONL vs text). Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
+L00003385	
+L00003386	**Mitigation:**
+L00003387	- **Multi-pass parsing:** Try JSON parse first, then JSONL, then text extraction. Use best-effort parsing with fallbacks.
+L00003388	- **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing). Mark tier as "complete with warnings."
+L00003389	- **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
+L00003390	- **Parser versioning:** Track parser version and platform CLI version. Update parsers when platform CLI changes.
+L00003391	
+L00003392	**Gap #17: Remediation loop infinite retry risk**
+L00003393	
+L00003394	**Issue:** Remediation loop could retry indefinitely if findings never resolve (e.g., false positives, unrelated failures). How do we detect and break infinite loops?
+L00003395	
+L00003396	**Mitigation:**
+L00003397	- **Max retries:** Hard limit (default: 3) on remediation retries per tier.
+L00003398	- **Progress detection:** Compare findings between retries. If findings unchanged after 2 retries, escalate (don't retry again).
+L00003399	- **Escalation threshold:** After max retries, escalate to parent-tier orchestrator. Parent-tier can decide to skip, fix manually, or re-plan.
+L00003400	- **Timeout:** Remediation loop has overall timeout (e.g., 30 minutes). If timeout exceeded, escalate.
+L00003401	
+L00003402	**Gap #18: Memory persistence conflicts and staleness**
+L00003403	
+L00003404	**Issue:** Memory files may become stale (outdated decisions), conflict between runs (different decisions), or grow unbounded. How do we manage memory lifecycle?
+L00003405	
+L00003406	**Mitigation:**
+L00003407	- **Versioning:** Each memory entry has timestamp. Load only recent entries (e.g., last 30 days) unless explicitly requested.
+L00003408	- **Conflict resolution:** When loading memory, detect conflicts (e.g., "Rust + Actix" vs "Python + FastAPI"). Prompt user or use most recent decision.
+L00003409	- **Pruning:** Prune old memory entries (older than threshold, e.g., 90 days) unless marked as "persistent."
+L00003410	- **Size limits:** Limit memory file sizes (e.g., max 10MB per file). Rotate or archive old entries.
+L00003411	
+L00003412	**Gap #19: Active subagent tracking accuracy**
+L00003413	
+L00003414	**Issue:** Active subagent tracking may be inaccurate if subagent selection changes mid-tier, or if platform-native hooks override selection. How do we ensure tracking reflects reality?
+L00003415	
+L00003416	**Mitigation:**
+L00003417	- **Single source of truth:** `ExecutionUnitContext.active_subagent` is set by BeforeUnit hook (built-in ActiveSubagentTrackerHook). Platform-native hooks can override but must update `ExecutionUnitContext`.
+L00003418	- **Validation:** AfterUnit hook validates that tracked subagent matches actual execution (check platform logs or output for subagent name).
+L00003419	- **Fallback:** If tracking fails, infer subagent from output patterns (e.g., "rust-engineer" if output mentions Rust-specific patterns).
+L00003420	
+L00003421	**Gap #20: Safe error handling performance overhead**
+L00003422	
+L00003423	**Issue:** Wrapping every hook/verification function in `safe_hook_main` adds overhead. Could impact performance for high-frequency operations.
+L00003424	
+L00003425	**Mitigation:**
+L00003426	- **Selective wrapping:** Only wrap hooks and verification functions that could panic or fail unpredictably. Trusted functions (e.g., simple getters) don't need wrapping.
+L00003427	- **Lazy evaluation:** Use `Result` types instead of panics where possible. Only wrap functions that could panic.
+L00003428	- **Performance testing:** Benchmark wrapped vs unwrapped functions. If overhead > 5%, optimize or remove wrapping for hot paths.
+L00003429	
+L00003430	**Gap #21: Lazy lifecycle state directory permissions**
+L00003431	
+L00003432	**Issue:** Lazy creation of state directories may fail due to permissions (e.g., `.puppet-master/verification/` not writable). How do we handle permission errors gracefully?
+L00003433	
+L00003434	**Mitigation:**
+L00003435	- **Permission check:** Before creating directories, check write permissions. If not writable, log error and continue (state won't be persisted but execution continues).
+L00003436	- **Fallback location:** If default location not writable, try fallback (e.g., `/tmp/puppet-master-<user>/`).
+L00003437	- **User notification:** Log clear error message with instructions (e.g., "Cannot create state directory. Run: chmod 755 .puppet-master").
+L00003438	
+L00003439	**Gap #22: Structured handoff contract enforcement prompt injection**
+L00003440	
+L00003441	**Issue:** Subagents may ignore structured output format instructions in prompts. Runtime validation catches this, but retry may also fail if subagent doesn't understand format requirement.
+L00003442	
+L00003443	**Mitigation:**
+L00003444	- **Explicit format examples:** Include JSON schema example in prompt:
+L00003445	  ```
+L00003446	  Required output format:
+L00003447	  {
+L00003448	    "task_report": "What I did...",
+L00003449	    "downstream_context": "Info for next tier...",
+L00003450	    "findings": [{"severity": "critical", "category": "security", ...}]
+L00003451	  }
+L00003452	  ```
+L00003453	- **Platform-specific instructions:** For Copilot (text-only), provide markdown format example instead of JSON.
+L00003454	- **Validation feedback:** If retry fails, include validation error in retry prompt: "Your output was missing 'task_report' field. Please include it."
+L00003455	- **Fail-safe:** After retry fails, extract partial output (best-effort) and proceed with warnings.
+L00003456	
+L00003457	**Gap #23: Cross-platform hook adapter complexity**
+L00003458	
+L00003459	**Issue:** Platform-native hook adapters (CursorNativeHookAdapter, ClaudeNativeHookAdapter, GeminiNativeHookAdapter) must handle different hook formats, communication protocols (JSON stdin/stdout, exit codes), and error handling. This adds complexity.
+L00003460	
+L00003461	**Mitigation:**
+L00003462	- **Unified adapter trait:** Define `PlatformHookAdapter` trait with common interface:
+L00003463	  ```rust
+L00003464	  trait PlatformHookAdapter: Send + Sync {
+L00003465	      fn execute_before_unit(&self, ctx: &BeforeUnitContext) -> Result<BeforeTierResult>;
+L00003466	      fn execute_after_unit(&self, ctx: &AfterUnitContext) -> Result<AfterTierResult>;
+L00003467	      fn platform(&self) -> Platform;
+L00003468	  }
+L00003469	  ```
+L00003470	- **Platform-specific implementations:** Each platform adapter handles its own format/protocol internally.
+L00003471	- **Testing:** Test each adapter with mock hook scripts. Verify JSON parsing, exit code handling, error cases.
+L00003472	- **Documentation:** Document hook format for each platform in `docs/platform-hooks.md`.
+L00003473	
+L00003474	**Gap #24: Memory extraction from Phase 1 output**
+L00003475	
+L00003476	**Issue:** How do we extract architectural decisions, patterns, tech choices, and pitfalls from Phase 1 (Planning/Architecture) output? Phase 1 output is unstructured text, not structured JSON.
+L00003477	
+L00003478	**Mitigation:**
+L00003479	- **Pattern matching:** Use regex/pattern matching to extract decisions (e.g., "We chose Rust + Actix" → save as architectural decision).
+L00003480	- **LLM extraction:** Run a lightweight extraction subagent (e.g., `knowledge-synthesizer` if promoted, otherwise a workflow-resolved drafting/synthesis Persona such as `general-purpose` or a retained specialty) on Phase 1 output to extract structured memory entries. Do not require a protected core `document-writer` Persona.
+L00003481	- **Manual tagging:** Allow Phase 1 subagent to explicitly tag decisions (e.g., `<memory:architecture>Rust + Actix</memory:architecture>`).
+L00003482	- **Best-effort:** Extract what we can. Missing extractions don't block execution; memory is enhancement, not requirement.
+L00003483	
+L00003484	**Gap #25: Remediation loop subagent re-execution context**
+L00003485	
+L00003486	**Issue:** When remediation loop re-runs overseer/reviewer subagents, do they get the same context (prompt, files, state) as original execution, or modified context (remediation prompt, updated files)?
+L00003487	
+L00003488	**Mitigation:**
+L00003489	- **Modified context:** Re-run with remediation prompt appended, but include original context (files, state) so subagent has full picture.
+L00003490	- **Incremental fixes:** Each retry builds on previous fixes. Include previous iteration's output in context.
+L00003491	- **State preservation:** Don't reset tier state between remediation retries. Preserve progress (e.g., files modified, tests run).
+L00003492	
+L00003493	**Gap #26: Hook performance impact on tier execution time**
+L00003494	
+L00003495	**Issue:** Hooks add overhead to tier execution (BeforeUnit hooks run before every tier start, AfterUnit hooks run after every tier completion). Could slow down fast tiers significantly.
+L00003496	
+L00003497	**Mitigation:**
+L00003498	- **Async hooks:** Run hooks asynchronously where possible (e.g., StaleStatePrunerHook can run in background).
+L00003499	- **Selective execution:** Skip hooks for Iteration tier (too frequent) or only run critical hooks (ActiveSubagentTrackerHook, HandoffValidatorHook).
+L00003500	- **Caching:** Cache hook results when inputs unchanged (e.g., TierContextInjectorHook can cache injected context for same tier type).
+L00003501	- **Performance monitoring:** Track hook execution time. If hooks > 10% of tier time, optimize or skip non-critical hooks.
+L00003502	
+L00003503	**Gap #27: Structured output validation false positives**
+L00003504	
+L00003505	**Issue:** Validation may incorrectly reject valid output (false positive) if parser is too strict, or accept invalid output (false negative) if parser is too lenient.
+L00003506	
+L00003507	**Mitigation:**
+L00003508	- **Lenient validation:** Accept partial output (e.g., missing `downstream_context` is OK, missing `task_report` is not). Only reject if critical fields missing.
+L00003509	- **Parser testing:** Test with real platform outputs to tune validation strictness. Aim for < 1% false positive rate.
+L00003510	- **User feedback:** If validation fails, log raw output for debugging. Allow users to report false positives.
+L00003511	- **Parser updates:** Update parsers based on user feedback and platform CLI changes.
+L00003512	
+L00003513	### Implementation Notes
+L00003514	
+L00003515	- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence; extend `SubagentOutput` in `src/types/` for structured handoff.
+L00003516	- **What:** Implement `BeforeUnitHook` and `AfterUnitHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
+L00003517	- **When:** Hooks run automatically at tier boundaries; memory persists at Phase completion and loads at run start; remediation loop runs when Critical/Major findings detected.
+L00003518	
+L00003519	---
+L00003520	
+L00003521	## Considerations
+L00003522	
+L00003523	1. **Performance:** Subagent detection should be cached, not recomputed every iteration
+L00003524	2. **Fallbacks:** Always have fallback subagents if detection fails
+L00003525	3. **Multiple Subagents:** Support parallel subagent invocation when appropriate
+L00003526	4. **Configuration Overrides:** Allow manual overrides for edge cases
+L00003527	5. **Language Detection:** Handle multi-language projects (e.g., Rust + TypeScript)
+L00003528	6. **Subagent Availability:** Check if subagent files exist before selection
+L00003529	
+L00003530	## Platform capability next steps
+L00003531	
+L00003532	1. Review and approve this plan
+L00003533	2. Implement Phase 1 (Project Context Detection)
+L00003534	3. Implement Phase 2 (Subagent Selector)
+L00003535	4. Integrate with orchestrator
+L00003536	5. Test with real projects
+L00003537	
+L00003538	---
+L00003539	
+L00003540	### Implementation Notes
+L00003541	
+L00003542	- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence; extend `SubagentOutput` in `src/types/` for structured handoff.
+L00003543	- **What:** Implement `BeforeUnitHook` and `AfterUnitHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
+L00003544	- **When:** Hooks run automatically at tier boundaries; memory persists at Phase completion and loads at run start; remediation loop runs when Critical/Major findings detected.
+L00003545	
+L00003546	---
+L00003547	
+L00003548	## Considerations
+L00003549	
+L00003550	1. **Performance:** Subagent detection should be cached, not recomputed every iteration
+L00003551	2. **Fallbacks:** Always have fallback subagents if detection fails
+L00003552	3. **Multiple Subagents:** Support parallel subagent invocation when appropriate
+L00003553	4. **Configuration Overrides:** Allow manual overrides for edge cases
+L00003554	5. **Language Detection:** Handle multi-language projects (e.g., Rust + TypeScript)
+L00003555	6. **Subagent Availability:** Check if subagent files exist before selection
+L00003556	
+L00003557	## Platform capability next steps
+L00003558	
+L00003559	1. Review and approve this plan
+L00003560	2. Implement Phase 1 (Project Context Detection)
+L00003561	3. Implement Phase 2 (Subagent Selector)
+L00003562	4. Integrate with orchestrator
+L00003563	5. Test with real projects
+L00003564	
+L00003565	---
+L00003566	
+L00003567	## Implementation Notes (Where Code Lives and What to Add)
+L00003568	
+L00003569	Short notes so implementers know where to put code and what the orchestrator already provides.
+L00003570	
+L00003571	### Phase 1: Project Context Detection
+L00003572	
+L00003573	- **Where:** New module e.g. `src/core/subagent_selector.rs` or `src/core/project_context.rs`; language/framework detection can live there or in a small `src/core/detection/` (e.g. `language.rs`, `framework.rs`).
+L00003574	- **What:** Implement `ProjectContext`, `DetectedLanguage`, and detection that scans workspace paths (Cargo.toml, package.json, etc.). Cache results per workspace path (or in-memory for the run) so Phase 2 and the orchestrator do not recompute every time. Expose a function like `detect_project_context(workspace: &Path) -> Result<ProjectContext>`.
+L00003575	
+L00003576	### Phase 2: Subagent Selector
+L00003577	
+L00003578	- **Where:** Same module as Phase 1 or `src/core/subagent_selector.rs`; use the **Known subagent names** table (Gaps §4) as the canonical list; consider `DRY:DATA:subagent_names` in a shared constant or `subagent_registry` module.
+L00003579	- **What:** `SubagentSelector::new(project_context)`, `select_for_tier(tier_type, tier_context) -> Vec<String>`, and the language/framework/domain mappings from the Tier-Level Subagent Strategy. No platform calls yet; pure logic. If SubagentManager is used, it may come from another plan (e.g. interview); otherwise treat it as optional for v1 (or a thin wrapper that just holds workspace path).
+L00003580	
+L00003581	### Phase 3: Orchestrator Integration
+L00003582	
+L00003583	- **Where:** `src/core/orchestrator.rs`. The orchestrator already has `tier_config_for(tier_type) -> &TierConfig` (platform, model, plan_mode, etc.); use it for subagent runs.
+L00003584	- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Append agent registration** before execution (see "Agent Coordination and Communication"). (4) **Read coordination context from the projection** and inject it into the prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (6) **Append status/operation/file-activity updates** during execution. (7) **Append unregister/crash/abort resolution** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
+L00003585	
+L00003586	### Phase 4: Error Pattern Detection
+L00003587	
+L00003588	- **Where:** In the orchestrator or in a small helper that parses iteration output (e.g. stderr/stdout). Update `ExecutionUnitContext.has_errors` or `error_patterns` from the result of the last iteration so the next selection can add debugger/security-auditor etc.
+L00003589	- **What:** Define how to detect "compilation error," "test failure," "security issue" (e.g. regex on stderr or exit codes). Keep it simple for v1 (e.g. non-zero exit + keyword in stderr).
+L00003590	
+L00003591	### SubagentManager
+L00003592	
+L00003593	- The plan references `SubagentManager` "from interview plan." If that module exists, use it for whatever it provides (e.g. loading agent definitions from disk). If it does not exist, implement only what Phase 3 needs: subagent selection and invocation via the existing runner; no separate "manager" is strictly required for v1.
+L00003594	
+L00003595	### Config-wiring validation (Phase / Task / Subtask / Iteration)
+L00003596	
+L00003597	- **Where:** New module e.g. `src/core/config_wiring.rs` or `src/verification/config_wiring.rs` (or split: `config_wiring/orchestrator.rs` and `config_wiring/interview.rs`). The main orchestrator calls the validator from `src/core/orchestrator.rs` at each tier boundary; the interview orchestrator calls an interview-specific validator from `src/interview/orchestrator.rs` at phase (and any sub-tier) start.
+L00003598	- **What:** Implement `validate_config_wiring_for_tier(tier_type, config_snapshot, context) -> Result<(), WiringError>` (or equivalent) that checks: for **Phase** -- phase tier config present, plan_mode/orchestrator flags applied, interview config fields present when in interview run; for **Task** -- task tier config present, subagent config present and applied; for **Subtask** -- subtask tier config present, subagent list from config; for **Iteration** -- iteration tier config present, request built from tier config. See the **"Config-Wiring Validation: Required vs Optional Fields (Resolved)"** table in the Build Queue checklist above for the fail vs warn policy per field.
+L00003599	- **When called:** Immediately before the orchestrator builds execution context or spawns the agent for that tier (i.e. at Phase start, Task start, Subtask start, Iteration start). Do not skip validation for "fast path" or tests unless explicitly gated (e.g. env var to disable for a specific test).
+L00003600	
+L00003601	### Start and end verification (wiring + readiness + quality)
+L00003602	
+L00003603	- **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `verify_tier_start` when entering a Phase/Task/Subtask (after or as part of config-wiring) and `verify_tier_end` when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
+L00003604	- **What:** Start: config-wiring (existing) + wiring/readiness checklist (GUI updated? backend updated? steps make sense? known gaps?). End: wiring re-check + existing acceptance gate + quality verification. Quality verification is **both** (1) required reviewer subagent (code-reviewer) at end-of-tier, on retry, and when gate fails; (2) gate criteria (clippy, tests, etc.). Parent-tier orchestrator addresses unrelated failures. See **"Start and End Verification at Phase, Task, and Subtask"** for the table and gaps. Define per-tier quality checklist (e.g. Phase: docs; Task: design; Subtask: code + tests + clippy) in code or config.
+L00003605	- **When called:** Start at Phase/Task/Subtask entry; end at Phase/Task/Subtask completion (before marking tier complete). Iteration can use tier-level checks only (no separate iteration start/end verification unless needed).
+L00003606	- **Integration with hooks:** BeforeUnit hook runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes stale state). AfterUnit hook runs **after** `verify_tier_end` (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
+L00003607	
+L00003608	### Agent coordination
+L00003609	
+L00003610	- **Where:** New module `src/core/agent_coordination.rs` for cross-platform coordination over canonical runtime state. Platform runners read projected coordination state and consume injected coordination context; optional debug mirrors may exist, but they are not the source of truth.
+L00003611	- **What:** (1) **Canonical coordination projection (cross-platform):** Implement `AgentCoordinator` over child-run state, lineage, current file activity, and platform/runtime metadata projected from seglog/redb. Register agents before execution, update status during execution from hooks/provider events/tool activity, unregister or terminally resolve after execution. **This enables cross-platform coordination** without making `active-agents.json` the canon. (2) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (3) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks/provider events) and update canonical coordination state periodically. (4) **Conflict prevention:** Check projected coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected.
+L00003612	- **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution by resolving the child run through canonical status projection. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
+L00003613	
+L00003614	### Lifecycle hooks and quality features
+L00003615	
+L00003616	- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
+L00003617	- **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and canonical coordination projection. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; retry on malformed output; fail-safe after retry.
+L00003618	- **When called:** Hooks run automatically at unit boundaries (before `verify_tier_start`, after `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
+L00003619	
+L00003620	### Considerations #6 (Subagent availability / files)
+L00003621	
+L00003622	- "Check if subagent files exist before selection" is optional for v1. Cursor and other platforms may resolve subagent names internally (e.g. built-in or workspace config). If we later support custom agent files (e.g. under `.cursor/agents/` or similar), add a check then; for now, treat the canonical list as valid and let the platform CLI fail if a name is unsupported.
+L00003623	
+L00003624	---
+L00003625	
+L00003626	## Parallel Execution & Subagent Integration
+L00003627	
+L00003628	
+L00003629	### Current Parallel Execution Capabilities
+L00003630	
+L00003631	The orchestrator already supports parallel execution of subtasks:
+L00003632	
+L00003633	1. **Dependency Analysis**: Uses `DependencyAnalyzer` with Kahn's topological sort to build execution levels
+L00003634	2. **Parallel Executor (`ParallelExecutor`)**: Executes subtasks concurrently within dependency levels
+L00003635	3. **Worktree Isolation**: Each parallel subtask runs in its own git worktree
+L00003636	4. **Dependency-Aware**: Respects `TierNode.dependencies` to determine execution order
+L00003637	
+L00003638	**Execution Flow:**
+L00003639	```
+L00003640	Level 0: [Subtask A, Subtask B] → Run in parallel (no dependencies)
+L00003641	Level 1: [Subtask C] → Runs after A and B complete
+L00003642	Level 2: [Subtask D] → Runs after C completes
+L00003643	```
+L00003644	
+L00003645	### Subagent Selection for Parallel Subtasks
+L00003646	
+L00003647	When subtasks run in parallel, each subtask can have **different subagents** selected independently:
+L00003648	
+L00003649	**Example Scenario:**
+L00003650	- **Subtask A** (Rust backend API): `rust-engineer` + `backend-developer`
+L00003651	- **Subtask B** (React frontend UI): `react-specialist` + `frontend-developer`
+L00003652	- Both run in parallel (Level 0), each with their own specialized subagents
+L00003653	
+L00003654	**Implementation:**
+L00003655	
+L00003656	```rust
+L00003657	// src/core/orchestrator.rs (modifications to execute_subtasks_parallel)
+L00003658	
+L00003659	async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<Result<()>>> {
+L00003660	    // ... existing dependency analysis ...
+L00003661	
+L00003662	    // Get parallelizable groups
+L00003663	    let groups = self.dependency_analyzer.get_parallelizable_groups(dependencies)?;
+L00003664	
+L00003665	    // Execute each group sequentially
+L00003666	    for group in groups {
+L00003667	        // Create worktrees for each subtask
+L00003668	        for id in &group {
+L00003669	            let _ = self.create_subtask_worktree(id).await?;
+L00003670	        }
+L00003671	
+L00003672	        // Execute subtasks in parallel, each with its own subagent selection
+L00003673	        let results = join_all(group.iter().map(|id| async {
+L00003674	            let tree = self.tier_tree.lock().unwrap();
+L00003675	            let tier_node = tree.find_by_id(id).unwrap();
+L00003676	
+L00003677	            // Build context for this specific subtask
+L00003678	            let tier_context = self.build_tier_context(&tier_node, &context)?;
+L00003679	
+L00003680	            // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry — NEVER hardcode subagent names
+L00003681	            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
+L00003682	            // Select subagents for THIS subtask (independent of others)
+L00003683	            let subagent_names = self.subagent_selector.select_for_tier(
+L00003684	                TierType::Subtask,
+L00003685	                &tier_context,
+L00003686	            );
+L00003687	            // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
+L00003688	            for name in &subagent_names {
+L00003689	                if !subagent_registry::is_valid_subagent_name(name) {
+L00003690	                    log::warn!("Invalid subagent name selected: {}", name);
+L00003691	                }
+L00003692	            }
+L00003693	
+L00003694	            // DRY REQUIREMENT: execute_tier_with_subagents MUST use platform_specs for platform-specific invocation
+L00003695	            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
+L00003696	            // Execute with selected subagents
+L00003697	            self.execute_tier_with_subagents(&tier_node, &tier_context, &subagent_names).await
+L00003698	        })).await;
+L00003699	
+L00003700	        // ... cleanup ...
+L00003701	    }
+L00003702	}
+L00003703	```
+L00003704	
+L00003705	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00003706	
+L00003707	### Context Flow Through Dependency Chains
+L00003708	
+L00003709	Subagents can inherit context from completed dependencies:
+L00003710	
+L00003711	**Dependency Chain Example:**
+L00003712	```
+L00003713	Subtask A (rust-engineer) → Subtask B (rust-engineer + test-automator)
+L00003714	```
+L00003715	
+L00003716	**Implementation:**
+L00003717	
+L00003718	```rust
+L00003719	// src/core/subagent_selector.rs (additions)
+L00003720	
+L00003721	impl SubagentSelector {
+L00003722	    // DRY:FN:select_with_dependency_context — Select subagents with dependency context
+L00003723	    // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
+L00003724	    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
+L00003725	    /// Select subagents with dependency context
+L00003726	    pub fn select_with_dependency_context(
+L00003727	        &self,
+L00003728	        tier_node: &TierNode,
+L00003729	        completed_dependencies: &[TierNode],
+L00003730	        execution_unit_context: &ExecutionUnitContext,
+L00003731	    ) -> Vec<String> {
+L00003732	        let mut subagents = self.select_for_tier(tier_node.tier_type, execution_unit_context);
+
+<<< CONTEXT_AFTER canonical_document_lines=3733-3744 >>>
+L00003733	
+L00003734	        // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
+L00003735	        ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
+L00003736	        // Inherit language/domain from completed dependencies
+L00003737	        for dep in completed_dependencies {
+L00003738	            if let Some(dep_context) = self.get_tier_context(dep) {
+L00003739	                // Inherit language if not already set
+L00003740	                if execution_unit_context.primary_language.is_none() {
+L00003741	                    if let Some(lang) = &dep_context.primary_language {
+L00003742	                        // DRY: Use subagent_registry — DO NOT call self.language_to_subagent which may hardcode mappings
+L00003743	                        if let Some(subagent) = subagent_registry::get_subagent_for_language(lang) {
+L00003744	                            if !subagents.contains(&subagent) {

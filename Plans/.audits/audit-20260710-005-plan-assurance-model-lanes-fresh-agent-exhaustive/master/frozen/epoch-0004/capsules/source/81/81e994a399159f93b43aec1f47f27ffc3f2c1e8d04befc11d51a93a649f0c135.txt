@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE 778-789 >>>
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+## Counter Relationships and Event Ordering Addendum
+
+### Counter relationships
+
+```
+attempt_count = automatic_retry_count
+             + prerequisite_resume_count
+             + manual_resume_count
+             + remediation_retry_count
+             + 1 (initial attempt)
+```
+
+<<< AUTHORITATIVE_CORE 790-1180 >>>
+
+- `attempt_count` is the total number of attempts for a node across all causes.
+- Each sub-counter tracks attempts triggered by a specific cause.
+- The sum of all sub-counters plus the initial attempt MUST equal `attempt_count`.
+- Each sub-counter increments at attempt start, not at completion.
+- Independent policy counters MUST NOT be inferred by subtracting from `attempt_count`.
+
+Debug-mode verification records a `verification_summary` with `adapter_kind`, `attempt_count`, `passed`, `heuristic_version`, optional `latest_receipt_ref`, and optional `notes[]`. Agent-session verification passes only when the prior `failure_class`, `blocked_reason_code`, or tool error signature does not recur and the rerun reaches the expected terminal state for that adapter.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Event ordering guarantees
+
+1. **Per-node sequential**: All events for a given `node_id` MUST be processed in emission order. The event bus MUST NOT reorder events within a single node's event stream.
+2. **Cross-node eventual**: Events from different nodes have no guaranteed relative order. Consumers MUST be idempotent and tolerate out-of-order delivery across nodes.
+3. **Deduplication**: The event bus MUST deduplicate events by `(event_name, node_id, attempt_id, ts)` tuple. Duplicate deliveries are silently dropped.
+4. **Wakeup coalescing**: Multiple wakeup triggers arriving within a single scheduler pass window are coalesced into one scheduler pass. The `wake_reason` for the pass records the first trigger; additional triggers are logged but do not cause additional passes.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
+### Replan generation lifecycle
+
+`replan_generation` is a per-run monotonic `u32` counter starting at `0` for the initial graph.
+
+- Increments by exactly 1 each time a replan is applied and the canonical graph is updated via `run.graph_canonical_locked`.
+- A replan is defined as any structural change to the canonical graph (adding/removing/reordering nodes or edges).
+- Attempts, safe points, and blocked projections created under generation N become stale when generation increments to N+1.
+- Stale attempts remain queryable for audit but are never resumable.
+- There is no practical maximum value.
+
+ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+## Execution Context: Worktree Handoff
+
+PM-native `Open With` stays inside the file/editor surface and carries the same worktree handoff context as other executor file operations. Any later OS handoff must be a separate explicit command such as `cmd.file.open_in_system_default`, so system-default launching does not dilute PM-native target selection, blocked/recovery semantics, or worktree-scoped file identity.
+
+
+When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes the Executor-owned `execution_unit_context` packet plus safe-point or source-control context refs when branch/snapshot recovery data is needed. `execution_unit_context` owns `working_directory` and `worktree_id`; branch, HEAD, dirty-state, and worktree-mode booleans belong to safe-point/source-control/worktree-binding context rather than the closed execution-unit packet.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+The execution context MUST include:
+- `execution_unit_context.working_directory`: set to worktree root path (not project root) when a worktree is bound
+- `execution_unit_context.worktree_id`: identifier of the target worktree
+- `execution_unit_context.source_control_context_ref` or safe-point payload refs when branch, HEAD, dirty-state, or worktree snapshot data is required for recovery
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+**Caller responsibilities:**
+- Orchestrator sets these fields when launching a DAE in a lane-owned worktree
+- Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
+- If `execution_unit_context.worktree_id` is absent and no bound safe-point/worktree context exists, execution defaults to project root
+
+For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_binding`, populates `execution_unit_context.worktree_id` and `working_directory`, and freezes both values for that turn. Mid-turn unbind changes apply only to the next turn or rotated follow-up. The executor propagates the frozen `working_directory` to FileSafe checks, tool invocations, bash/shell `cwd`, MCP tools, `@file` resolution, auto-retrieval scope context, and provider CLI or DAE execution-context JSON payloads. This is a cwd-based execution contract; it does not require separate prompt-only worktree injection.
+
+**Executor responsibilities:**
+- File operations resolve relative to `working_directory`
+- Git operations target the worktree, not the main repo
+- Terminal sessions start in `working_directory`
+- LSP root identity uses the worktree path when the execution-unit worktree binding or safe-point context identifies a worktree
+- File mutation logs store absolute paths. If `cmd.chat.revert` targets an edit from a removed worktree, for example `/project/.puppet-master/worktrees/thread-abc/src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+
+ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+
+Required fields:
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+- blocked_sequence
+- approval_scope_key
+
+Canonical terms and values:
+- execution_unit_context
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+- blocked_sequence
+- approval_scope_key
+
+Labels:
+- execution unit context
+- blocked episode
+
+Behavioral rules:
+- Execution protocol must define runtime scope through execution-unit context rather than tier roots.
+- Blocked-episode identity must remain explicit in execution-relevant recovery paths.
+
+Permission carry-through:
+- effective account, execution role, and blocked-episode approval scope must survive execution handoff
+### Mode interaction
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:
+- Ask mode: read-only context from worktree files
+- Agent mode: file edits go to worktree
+- Plan/Deep Plan mode: plans execute in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Executor_Protocol.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### EP-002 - Doc Authority, Compliance, And Scope
+
+```yaml
+plan_unit_id: EP-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Executor Protocol owns deterministic plan_graph execution ordering and completion semantics for self-build and user-project sharded plan graph artifacts, while preserving owner-section authority, compliance, and compatibility-only vocabulary boundaries.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: doc_authority_compliance_and_scope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0004
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0005
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0007
+preserved_exact_tokens:
+- Overseer Protocol (Canonical)
+- Canonical owner-section requirements
+- Compatibility-only source vocabulary is noncanonical
+- Puppet Master
+- plan_graph
+- Plans/plan_graph.json
+- .puppet-master/project/plan_graph/
+- .puppet-master/project/plan_graph/index.json
+- monolithic export is optional/non-canonical
+- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md'
+negative_constraints: []
+compatibility_only_notes:
+- Compatibility-only source vocabulary is noncanonical; live wording uses owner terminology.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-003 - Execution Actor Role Definitions
+
+```yaml
+plan_unit_id: EP-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Executor Protocol defines Builder/node worker, Verifier/reviewer/corroborator, Package Overseer, and Seam Overseer roles without making execution-support actors the scheduler.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: execution_actor_role_definitions
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0008
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0010
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0011
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0012
+preserved_exact_tokens:
+- Builder / node worker
+- Verifier / reviewer / corroborator
+- Package Overseer
+- Seam Overseer
+- Work Package
+- Feature Seam
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-004 - Runtime Scheduler Authority And Dual Overseer Boundary
+
+```yaml
+plan_unit_id: EP-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Runtime scheduler owns readiness, blocked state, transitions, retry budgets, wakeups, and dispatch; overseers remain governance actors and are not hidden second schedulers.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: runtime_scheduler_authority_and_dual_overseer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+preserved_exact_tokens:
+- Runtime scheduler
+- readiness
+- blocked state
+- transitions
+- retry budgets
+- wakeups
+- dispatch
+- overseers are governance actors, not hidden second schedulers
+- /control
+- dual-overseer model
+- package and seam overseers
+negative_constraints:
+- Overseers are governance actors, not hidden second schedulers.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-005 - Scheduler Durable State And Tier Compatibility Retirement
+
+```yaml
+plan_unit_id: EP-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Runtime scheduling consumes durable package/seam/lane and sharded-node state; tier-era terms, TierType, TierContext, active-agents, tier_tree, Tiers, PuppetMasterEvent streams, and related labels are compatibility inputs only.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: scheduler_durable_state_and_tier_compatibility_retirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+preserved_exact_tokens:
+- package/seam/lane
+- seglog/redb-backed projections
+- active-agents
+- TierType
+- TierContext
+- /seams
+- tier
+- subtask
+- run.tier_
+- run.tier_*
+- tier_tree
+- Tiers
+- PuppetMasterEvent
+- PuppetMasterEvent::*
+negative_constraints: []
+compatibility_only_notes:
+- Tier-era vocabulary is compatibility or derived-view vocabulary only.
+stale_retired_dispositions:
+- Cleanup /reconciliation moves stale /tier consumers to worktree/package/seam-aware routing and effective account/runtime identity displays.
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-006 - Runtime Object Opening And Projection Consumers
+
+```yaml
+plan_unit_id: EP-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Runtime objects open through route_target and OpenSubject consumers; projection-backed actions show projection_health and projection_freshness before mutating blocked episodes, seams, packages, or overseer targets.
+gui_related: true
+gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: runtime_object_opening_and_projection_consumers
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+preserved_exact_tokens:
+- route_target
+- OpenSubject
+- projection_health
+- projection_freshness
+- blocked-episode
+- Feature Seam
+- Work Package
+- Seam Overseer
+- Package Overseer
+- /layout/help/glossary
+negative_constraints:
+- Projection-backed actions must not mutate runtime objects without health/freshness context.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+
+<<< CONTEXT_AFTER 1181-1192 >>>
+### EP-007 - Canonical Node State Readiness Source
+
+```yaml
+plan_unit_id: EP-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: Overseer reads execution state from canonical node documents in self-build or user-project sharded graph storage and must not infer execution state from index metadata alone.
+gui_related: false
+gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+split_recommended: false
+depends_on: []

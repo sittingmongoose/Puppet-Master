@@ -1,0 +1,174 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-173 >>>
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.web_policy_negative_fixtures.schema.v1",
+L00000004	  "title": "Puppet Master Web Policy Negative Fixtures",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "purpose",
+L00000010	    "egress_assertions",
+L00000011	    "permission_scope_assertions",
+L00000012	    "run_mode_assertions",
+L00000013	    "crawl_policy_assertions",
+L00000014	    "redaction_assertions",
+L00000015	    "negative_cases"
+L00000016	  ],
+L00000017	  "properties": {
+L00000018	    "schema_id": {"type": "string", "const": "pm.web_policy_negative_fixtures.v1"},
+L00000019	    "purpose": {"type": "string", "minLength": 1},
+L00000020	    "egress_assertions": {
+L00000021	      "type": "array",
+L00000022	      "minItems": 1,
+L00000023	      "items": {"$ref": "#/$defs/EgressAssertion"}
+L00000024	    },
+L00000025	    "permission_scope_assertions": {
+L00000026	      "type": "array",
+L00000027	      "minItems": 1,
+L00000028	      "items": {"$ref": "#/$defs/PermissionScopeAssertion"}
+L00000029	    },
+L00000030	    "run_mode_assertions": {
+L00000031	      "type": "array",
+L00000032	      "minItems": 1,
+L00000033	      "items": {"$ref": "#/$defs/RunModeAssertion"}
+L00000034	    },
+L00000035	    "crawl_policy_assertions": {
+L00000036	      "type": "array",
+L00000037	      "minItems": 1,
+L00000038	      "items": {"$ref": "#/$defs/CrawlPolicyAssertion"}
+L00000039	    },
+L00000040	    "redaction_assertions": {
+L00000041	      "type": "array",
+L00000042	      "minItems": 1,
+L00000043	      "items": {"$ref": "#/$defs/RedactionAssertion"}
+L00000044	    },
+L00000045	    "negative_cases": {
+L00000046	      "type": "array",
+L00000047	      "minItems": 1,
+L00000048	      "items": {"$ref": "#/$defs/NegativeCase"}
+L00000049	    }
+L00000050	  },
+L00000051	  "$defs": {
+L00000052	    "EgressAssertion": {
+L00000053	      "type": "object",
+L00000054	      "additionalProperties": false,
+L00000055	      "required": ["case_id", "input_url", "expected_host_class", "expected_decision", "expected_reason"],
+L00000056	      "properties": {
+L00000057	        "case_id": {"type": "string", "minLength": 1},
+L00000058	        "input_url": {"type": "string", "minLength": 1},
+L00000059	        "expected_host_class": {"type": "string", "enum": ["public", "localhost", "private_or_metadata", "file_scheme"]},
+L00000060	        "resolved_ip": {"type": "string"},
+L00000061	        "expected_resolved_host_class": {"type": "string", "enum": ["public", "localhost", "private_or_metadata"]},
+L00000062	        "dns_rebind_detected": {"type": "boolean"},
+L00000063	        "redirect_target_url": {"type": "string"},
+L00000064	        "expected_redirect_host_class": {"type": "string", "enum": ["public", "localhost", "private_or_metadata", "file_scheme"]},
+L00000065	        "expected_redirect_decision": {"type": "string", "enum": ["allow", "ask", "deny"]},
+L00000066	        "expected_decision": {"type": "string", "enum": ["allow", "ask", "deny"]},
+L00000067	        "expected_reason": {"type": "string", "minLength": 1}
+L00000068	      }
+L00000069	    },
+L00000070	    "PermissionScopeAssertion": {
+L00000071	      "type": "object",
+L00000072	      "additionalProperties": false,
+L00000073	      "required": ["case_id", "tool_id", "expected_scope"],
+L00000074	      "properties": {
+L00000075	        "case_id": {"type": "string", "minLength": 1},
+L00000076	        "tool_id": {"type": "string", "enum": ["websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap"]},
+L00000077	        "input_text": {"type": "string"},
+L00000078	        "input_url": {"type": "string"},
+L00000079	        "root_url": {"type": "string"},
+L00000080	        "expected_scope": {"type": "string", "minLength": 1}
+L00000081	      }
+L00000082	    },
+L00000083	    "RunModeAssertion": {
+L00000084	      "type": "object",
+L00000085	      "additionalProperties": false,
+L00000086	      "required": ["case_id", "run_mode", "network_policy", "tool_id", "expected_decision", "must_show_card"],
+L00000087	      "properties": {
+L00000088	        "case_id": {"type": "string", "minLength": 1},
+L00000089	        "run_mode": {"type": "string", "enum": ["ask", "plan", "regular", "yolo"]},
+L00000090	        "effective_overlay": {"type": "string", "enum": ["none", "ask", "plan", "deep_plan", "debug", "interview", "brainstorm", "crew"]},
+L00000091	        "normalized_runtime_mode": {"type": "string", "enum": ["ask", "plan", "regular", "yolo"]},
+L00000092	        "network_policy": {"type": "string", "enum": ["ask", "deny"]},
+L00000093	        "tool_id": {"type": "string", "enum": ["websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap"]},
+L00000094	        "expected_decision": {"type": "string", "enum": ["ask", "deny"]},
+L00000095	        "expected_reason": {"type": "string"},
+L00000096	        "must_show_card": {"type": "boolean"}
+L00000097	      }
+L00000098	    },
+L00000099	    "CrawlPolicyAssertion": {
+L00000100	      "type": "object",
+L00000101	      "additionalProperties": false,
+L00000102	      "required": ["case_id", "tool_id", "root_url", "expected_decision", "expected_reason"],
+L00000103	      "properties": {
+L00000104	        "case_id": {"type": "string", "minLength": 1},
+L00000105	        "tool_id": {"type": "string", "enum": ["webcrawl", "webmap"]},
+L00000106	        "root_url": {"type": "string", "minLength": 1},
+L00000107	        "respect_robots": {"type": "boolean"},
+L00000108	        "robots_allowed": {"type": "boolean"},
+L00000109	        "requested_max_pages": {"type": "integer", "minimum": 0},
+L00000110	        "policy_fanout_limit": {"type": "integer", "minimum": 0},
+L00000111	        "requested_max_depth": {"type": "integer", "minimum": 0},
+L00000112	        "policy_max_depth": {"type": "integer", "minimum": 0},
+L00000113	        "expected_decision": {"type": "string", "enum": ["deny", "partial_or_denied"]},
+L00000114	        "expected_reason": {"type": "string", "enum": ["robots_denied", "fanout_capped", "depth_capped"]}
+L00000115	      }
+L00000116	    },
+L00000117	    "RedactionAssertion": {
+L00000118	      "type": "object",
+L00000119	      "additionalProperties": false,
+L00000120	      "required": ["case_id", "surface", "expected_error"],
+L00000121	      "properties": {
+L00000122	        "case_id": {"type": "string", "minLength": 1},
+L00000123	        "surface": {"type": "string", "enum": ["url_query", "browser_artifact"]},
+L00000124	        "input_url": {"type": "string"},
+L00000125	        "expected_redacted_url": {"type": "string"},
+L00000126	        "forbidden_tokens": {"type": "array", "items": {"type": "string"}},
+L00000127	        "artifact_kind": {"type": "string", "enum": ["browser_screenshot", "browser_pdf", "console", "network"]},
+L00000128	        "redaction_status": {"type": ["string", "null"], "enum": ["not_needed", "applied", "blocked", "failed", null]},
+L00000129	        "expected_error": {"type": "string", "minLength": 1}
+L00000130	      }
+L00000131	    },
+L00000132	    "NegativeCase": {
+L00000133	      "type": "object",
+L00000134	      "additionalProperties": false,
+L00000135	      "required": ["case_id", "surface"],
+L00000136	      "properties": {
+L00000137	        "case_id": {"type": "string", "minLength": 1},
+L00000138	        "surface": {"type": "string", "minLength": 1},
+L00000139	        "input_kind": {"type": "string"},
+L00000140	        "must_reject": {"type": "array", "items": {"type": "string"}},
+L00000141	        "expected_error": {"type": "string"},
+L00000142	        "input_url": {"type": "string"},
+L00000143	        "expected_decision": {"type": "string"},
+L00000144	        "expected_reason": {"type": "string"},
+L00000145	        "run_mode": {"type": "string"},
+L00000146	        "network_policy": {"type": "string"},
+L00000147	        "tool_id": {"type": "string"},
+L00000148	        "must_show_card": {"type": "boolean"},
+L00000149	        "input_text": {"type": "string"},
+L00000150	        "expected_scope": {"type": "string"},
+L00000151	        "forbidden_scope": {"type": "string"},
+L00000152	        "root_url": {"type": "string"},
+L00000153	        "respect_robots": {"type": "boolean"},
+L00000154	        "max_pages": {"type": "integer"},
+L00000155	        "max_depth": {"type": "integer"},
+L00000156	        "must_record_evidence": {"type": "boolean"},
+L00000157	        "cache_state": {"type": "string"},
+L00000158	        "must_require": {"type": "array", "items": {"type": "string"}},
+L00000159	        "must_equal": {"type": "object"},
+L00000160	        "requested_runtime": {"type": "string"},
+L00000161	        "runtime_state": {"type": "string"},
+L00000162	        "must_not": {"type": "array", "items": {"type": "string"}},
+L00000163	        "evidence_kind": {"type": "string"},
+L00000164	        "snippet_only": {"type": "boolean"},
+L00000165	        "invocation_source": {"type": "string"},
+L00000166	        "must_require_one_of": {"type": "array", "items": {"type": "string"}},
+L00000167	        "forbidden_tokens": {"type": "array", "items": {"type": "string"}},
+L00000168	        "artifact_kind": {"type": "string"},
+L00000169	        "redaction_status": {"type": ["string", "null"]}
+L00000170	      }
+L00000171	    }
+L00000172	  }
+L00000173	}

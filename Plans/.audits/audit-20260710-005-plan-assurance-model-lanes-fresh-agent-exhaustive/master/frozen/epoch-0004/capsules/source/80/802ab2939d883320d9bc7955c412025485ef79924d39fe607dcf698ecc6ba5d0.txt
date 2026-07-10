@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 749-760 >>>
+- Plans/Run_Graph_View.md
+- Plans/Multi-Account.md
+- Plans/Contracts_V0.md
+- Plans/Executor_Protocol.md
+- Plans/usage-feature.md
+owner_adjudication:
+  candidate_owners: [Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Executor_Protocol.md, Plans/usage-feature.md, Plans/Run_Graph_View.md]
+  evidence: The source spans explicitly name missing account, role, schema, usage, and runtime scheduler authority that Run Graph can consume only after owner-doc repair.
+```
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+
+<<< AUTHORITATIVE_CORE 761-1141 >>>
+### RGV-010 - Run Graph Validation And Coverage
+
+```yaml
+plan_unit_id: RGV-010
+unit_type: validation_rule
+status: accepted
+owner_doc: Plans/Run_Graph_View.md
+canonical_text: Run Graph validation checks payload fidelity, owner routing, missing context, projection trust disclosure, stale tier cleanup, focused-run coherence, and command-catalog alignment. Phase 2A coverage keeps original spans mapped without creating WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+gui_related: false
+gui_classification_reason: This unit defines validation and migration proof rules rather than GUI implementation work.
+depends_on: [RGV-002, RGV-003, RGV-004, RGV-005, RGV-006, RGV-007, RGV-008, RGV-009]
+unblocks: []
+acceptance_criteria:
+- Route/open checks verify payload fidelity, owner routing, and missing context.
+- Focused-run, historical-mode, and cross-tab coherence are validation targets.
+- Projection trust and live-action affordances disclose stale/degraded state before claiming live truth.
+- Phase 2A coverage artifacts map every pre-edit Run Graph span to fine-grained PlanUnits, preserved source, or explicit disposition.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py generate
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: validation_coverage
+reasoning_tier: standard
+context_scope: migration_and_run_graph_validation
+implementation_surfaces:
+- Plans/Run_Graph_View.md
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- Plans/.plan_index
+node_compile_hint:
+  mode: validation_metadata
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0011
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0012
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0013
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0014
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0015
+- Plans/Run_Graph_View.md:43
+- Plans/Run_Graph_View.md:130-139
+- Plans/Run_Graph_View.md:141-253
+preserved_exact_tokens:
+- Route/open auditing
+- Acceptance carry-through
+- Owner / Consumer Map
+- Migration Coverage
+negative_constraints:
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this phase.
+owner_hints:
+- Plans/Run_Graph_View.md
+- Plans/Plan_Document_System.md
+- Plans/Bootstrap_Planning_Migration.md
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## Migration Coverage
+
+Original hash: `ae46a77348397a81370e97493b38f8997311c540607466ad3571d87c62785bef`.
+
+Run-scoped proof artifacts:
+- Phase 1 source-preserving bridge: `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- Phase 1 source-preserving bridge: `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- Phase 1 source-preserving bridge: `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- Phase 2A atomization: `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- Phase 2A atomization: `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- Phase 2A atomization: `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- Phase 2A atomization: `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 1 original spans from `Run_Graph_View-S0001` through `Run_Graph_View-S0011` remain preserved by `pds-20260611-001-standardize-plans`. Phase 2A pre-edit spans from `Run_Graph_View-S0001` through `Run_Graph_View-S0015`, including the former coarse source-preserving bridge PlanUnit, are preserved by `pds-20260611-002-atomize-planunits` and mapped in that run's coverage map to fine-grained PlanUnits, preserved source sections, or explicit replacement disposition. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### RGV-011 - Historical Run Focus Mode Persistence
+
+```yaml
+plan_unit_id: RGV-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Graph_View.md
+canonical_text: >-
+  Selecting a historical run puts Run Graph into explicit `historical_run` focus mode rather than
+  reusing live-run mode implicitly. Focus state persists as `orchestrator.project_state.{project_id}`
+  with focused_run_ref, mode, selected node/attempt refs, run_id, run snapshot/version, project/run
+  identity, route object, live-vs-historical indicator, trust/freshness disclosure, allowed actions,
+  read-only replay/inspection boundary, comparison target, restore/return-to-live path,
+  restore/back-stack metadata, and stale-data warning semantics. Historical mode blocks live mutation
+  actions unless an explicit route/action revalidates against current runtime state.
+gui_related: true
+gui_classification_reason: Historical run focus mode, available actions, and restore behavior are user-visible Run Graph page behavior.
+depends_on: [RGV-002, RGV-010, CV-283]
+unblocks: []
+acceptance_criteria:
+  - Historical run selection creates explicit `historical_run` mode with focused_run_ref persistence.
+  - Historical focus discloses run snapshot/version, live-vs-historical indicator, comparison target, stale-data warnings, and trust/freshness.
+  - Restore/back-stack behavior uses the shared route object and project state key.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: historical_run_mode_ambiguity
+reasoning_tier: high
+context_scope: run_graph_historical_focus_mode
+implementation_surfaces: [Plans/Run_Graph_View.md, Plans/FinalGUISpec.md, Plans/orchestrator-subagent-integration.md, Plans/Orchestrator_Page.md, Plans/storage-plan.md]
+node_compile_hint: {mode: run_graph_historical_focus_mode, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0094
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0095
+preserved_exact_tokens: ["Orchestrator Historical Run Mode", "Run_Graph_View.md:75-76", "orchestrator.project_state.{project_id}", "focused_run_ref", "historical_run", "run_id", "run snapshot/version", "live-vs-historical indicator", "allowed actions", "read-only replay/inspection boundary", "comparison target", "restore/return-to-live path", "stale-data warning semantics", "historical-run UI/state", "historical selection display", "restore/return-to-live controls", "stale-data warning presentation"]
+negative_constraints:
+  - Do not treat a selected historical run as the live current run.
+  - Do not enable live mutation actions from historical focus without revalidation.
+  - Do not hide stale-data warnings or restore/return-to-live controls outside the persisted focus-mode model.
+owner_hints: [Plans/Run_Graph_View.md, Plans/FinalGUISpec.md, Plans/orchestrator-subagent-integration.md, Plans/Orchestrator_Page.md, Plans/storage-plan.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### RGV-012 - Orchestrator WorkGraph And Verification Overlays
+
+```yaml
+plan_unit_id: RGV-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Graph_View.md
+canonical_text: >-
+  Run Graph must display GoalRun WorkGraph structure, WorkNode status, SubagentWave membership, VerificationCycle overlays, repair/retry markers, blocked/replan-required states, receipt refs, and evidence refs. For Plan/PlanUnit-originated graph preparation, the Node Graph and Run Graph views may show readiness, blockers, gui_related, receipt status, and compiler contract state only as projections. The view remains a projection over Goal Runtime, Executor, Contracts, storage, Plan_Document_System, and Plan_To_Node_Compilation records; it must not decide WorkNode readiness, capacity, compiler artifact creation, or completion authority.
+gui_related: true
+gui_classification_reason: WorkGraph nodes, verification overlays, repair markers, and evidence refs are visible Run Graph UI.
+depends_on:
+  - RGV-011
+  - OP-022
+  - GRS-026
+  - GRS-027
+  - CV-288
+  - SP-215
+  - PDS-006
+  - PNC-009
+unblocks: []
+acceptance_criteria:
+  - Run Graph can render GoalRun WorkGraph, WorkNode status, SubagentWave membership, and VerificationCycle overlays.
+  - Repair/retry, blocked, and replan-required states are visible in the graph view.
+  - Receipt and evidence refs are drillable through owner projections.
+  - Plan/PlanUnit graph-preparation overlays show readiness, blockers, gui_related, receipt status, and compiler contract state without creating executable artifacts.
+  - The view does not replace Executor readiness, capacity, dispatch, or Goal Runtime completion authority.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Run Graph GoalRun overlay review
+risk_class: run_graph_runtime_projection_drift
+reasoning_tier: high
+context_scope: goalrun_workgraph_view
+implementation_surfaces:
+  - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Plan_Document_System.md
+  - Plans/Plan_To_Node_Compilation.md
+node_compile_hint:
+  mode: goalrun_workgraph_overlay
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0016
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0056
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0058
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0070
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0074
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0077
+preserved_exact_tokens:
+  - "WorkGraph"
+  - "WorkNode"
+  - "SubagentWave"
+  - "VerificationCycle"
+  - "repair"
+  - "retry"
+  - "blocked"
+  - "replan-required"
+  - "PlanUnit"
+  - "Node Graph"
+  - "Run Graph"
+  - "readiness"
+  - "blockers"
+  - "gui_related"
+  - "receipt status"
+  - "compiler contract"
+negative_constraints:
+  - Do not let Run Graph decide dispatch or completion authority.
+  - Do not hide failed verification cycles or repair markers.
+owner_hints:
+  - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Plan_Document_System.md
+  - Plans/Plan_To_Node_Compilation.md
+```
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### RGV-013 - Plans-To-Code Execution Progress Projection
+
+```yaml
+plan_unit_id: RGV-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Graph_View.md
+canonical_text: >-
+  Run Graph consumes plans-to-code execution progress after Executor intake by projecting queued WorkNodes, active WorkNodes, blocked WorkNodes, completed WorkNodes, dependency edges, model lanes, worktrees, safe points, test runs, browser/device sessions, repair loops, Auditor status, GitHub PR/Actions when configured, receipt refs, and final certification progress. The Run Graph remains an execution projection and does not own Plan Compile tab progress, PlanCompile state, Executor dispatch authority, or GoalCompletionReceipt certification authority.
+  Run Graph shows Executor execution progress only after intake and does not replace Plan Compile tab scope.
+gui_related: true
+gui_classification_reason: Execution graph nodes, model lanes, worktrees, safe points, tests, repairs, GitHub status, and certification progress are visible graph UI.
+depends_on: [RGV-012, OP-024, EP-103, GRS-030, RAP-029]
+unblocks: []
+acceptance_criteria:
+  - Run Graph projects WorkNode execution progress after Executor intake.
+  - It shows source-control, test, repair, Auditor, GitHub, receipt, and certification progress where records exist.
+  - It does not replace Plan Compile tab or runtime/certification authority.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Run Graph plans-to-code execution projection review
+risk_class: execution_projection_authority_drift
+reasoning_tier: standard
+context_scope: plans_to_code_run_graph
+implementation_surfaces: [Plans/Run_Graph_View.md, Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: plans_to_code_execution_projection, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0052
+  - pldg-20260617-001-plans-to-code-handoff:atom-0053
+  - pldg-20260617-001-plans-to-code-handoff:dec-0022
+  - pldg-20260617-001-plans-to-code-handoff:corr-0007
+preserved_exact_tokens:
+  - "queued WorkNodes"
+  - "active WorkNodes"
+  - "worktrees"
+  - "safe points"
+  - "test runs"
+  - "repair loops"
+  - "final certification"
+negative_constraints:
+  - Do not let Run Graph own PlanCompile state, Executor dispatch, or completion certification.
+owner_hints:
+  - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Executor_Protocol.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### RGV-014 - Plan Compile Draft Graph Projection
+
+```yaml
+plan_unit_id: RGV-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Graph_View.md
+canonical_text: 'Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Run_Graph_View.md
+- Plans/Orchestrator_Page.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0152
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+source_atom_ids:
+- atom-0152
+decision_refs: []
+correction_refs: []
+preserved_exact_tokens:
+- Plan Compile tab
+- stage timeline
+- subagent assignments
+- WorkNodeRequest count
+negative_constraints: []
+owner_hints:
+- Plans/Orchestrator_Page.md
+- Plans/FinalGUISpec.md
+- Plans/Run_Graph_View.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime Run Graph rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-e9a741e787bc73207fc9b89a`: run-graph interaction commands are `cmd.run_graph.pan`, `cmd.run_graph.zoom`, `cmd.run_graph.drag_node`, `cmd.run_graph.open_minimap_target`, `cmd.run_graph.open_context_menu`, `cmd.run_graph.keyboard_navigate`, and `cmd.run_graph.set_selection`. Disabled reasons are `graph_unloaded`, `modal_capture`, `read_only_layout`, `selection_locked`, and `permission_denied`.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+
+These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 365` (explicitly_deferred; source line 1227; `sfk-e9a741e787bc73207fc9b89a`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: core DAG interactions (pan, zoom, drag, minimap click, right-click, keyboard nav, multi-select) are narrative "should" statements only zero command IDs or enabled/disabled logic anywhere; confirms Orchestrator_Page.md does not close this gap either (chec
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds Run Graph usage/cost overlays to UsageRecord identity. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### RGV-016 - Usage Cost Overlay Identity Contract
+
+```yaml
+plan_unit_id: RGV-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Run_Graph_View.md
+canonical_text: >-
+  Run Graph usage and cost overlays consume UsageRecord projection packets. Node, attempt, edge, and detail-panel usage rows carry usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, dedupe_key, parent_usage_record_id, source_class, source_confidence, source_authority, settlement_status, cost_status, quota_state, projection_freshness, projection_health, and counting_semantics where available. `View in Usage` routes by object_kind = usage_event and object_id from usage_event_ref; run_id, thread_id, tier_id, and timestamp remain filters, labels, or degraded fallback only.
+gui_related: true
+gui_classification_reason: Run Graph overlays and detail-panel usage actions are visible GUI.
+depends_on: [RGV-006, UF-087, UF-088, CV-316, RAP-044]
+unblocks: []
+acceptance_criteria:
+  - Run Graph usage rows show source_class, source_confidence, settlement_status, projection_freshness, and cost/quota unknown or hidden states beside visible totals.
+  - "`View in Usage` emits route_target.object_kind = usage_event when usage_event_ref is present and preserves attempt/provider/trace/receipt refs."
+  - Partial, aborted, retried, escalated, adjusted, and failed attempts preserve child usage refs and dedupe_key without double-counting the graph rollup.
+  - Graph fixtures fail tier_id, timestamp, run-only, or thread-only primary usage routing when usage_event_ref is available.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future Run Graph Usage overlay fixture suite
+risk_class: run_graph_usage_identity_drift
+reasoning_tier: high
+context_scope: run_graph_usage_overlay
+implementation_surfaces:
+  - Plans/Run_Graph_View.md
+  - Plans/usage-feature.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: run_graph_usage_overlay_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Run_Graph_View.md:325-333"
+  - "Plans/Run_Graph_View.md:491-535"
+  - "Plans/usage-feature.md:5412-5605"
+  - "Plans/Runtime_Artifacts_Panel.md:281-316"
+preserved_exact_tokens:
+  - View in Usage
+  - usage_event_ref
+  - provider_attempt_ref
+  - dedupe_key
+  - settlement_status
+  - counting_semantics
+negative_constraints:
+  - Do not let Run Graph mint usage authority or recompute provider costs.
+  - Do not use tier_id, timestamp, run_id, or thread_id as primary usage route identity when usage_event_ref exists.
+  - Do not hide partial/aborted/retried child usage refs behind parent-only totals.
+owner_hints:
+  - Plans/Run_Graph_View.md
+  - Plans/usage-feature.md
+  - Plans/Runtime_Artifacts_Panel.md
+```

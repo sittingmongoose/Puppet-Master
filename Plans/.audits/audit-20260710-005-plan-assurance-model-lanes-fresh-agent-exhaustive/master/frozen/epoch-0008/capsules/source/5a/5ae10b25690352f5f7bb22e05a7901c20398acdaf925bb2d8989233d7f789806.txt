@@ -1,0 +1,422 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5849-5860 >>>
+L00005849	  - "Open chat"
+L00005850	  - "pre-send"
+L00005851	  - "Context Lens"
+L00005852	  - "full-document"
+L00005853	negative_constraints:
+L00005854	  - "selection-to-chat and document-selection always create chat-visible pending composer chips; they must not silently inject hidden messages or mutate a thread before the user sends."
+L00005855	  - "Do not create a document-selection-only /tray or a separate document-only strip."
+L00005856	owner_hints:
+L00005857	  - Plans/assistant-chat-design.md
+L00005858	  - Plans/Prompt_Pipeline.md
+L00005859	```
+L00005860	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5861-6253 >>>
+L00005861	### ACD-052 - Selection Target Privacy And GUI Drawer
+L00005862	
+L00005863	```yaml
+L00005864	plan_unit_id: ACD-052
+L00005865	unit_type: requirement
+L00005866	status: accepted
+L00005867	owner_doc: Plans/assistant-chat-design.md
+L00005868	canonical_text: >-
+L00005869	  Selection target resolution stays on the owning thread or surface, honors
+L00005870	  FileSafe privacy and sensitivity statuses, and exposes reusable annotation
+L00005871	  drawer, palette, filter, overlay, and ghost-preview GUI affordances.
+L00005872	gui_related: true
+L00005873	gui_classification_reason: Target badges, drawer filters, palettes, overlays, and ghost-preview styling are visible GUI behavior.
+L00005874	depends_on: [ACD-051]
+L00005875	unblocks: []
+L00005876	acceptance_criteria:
+L00005877	  - Explicit user-selected targets win before page-owned chat or new-thread fallback.
+L00005878	  - No silent cross-thread fallback is allowed.
+L00005879	  - Blocked, expired, or scrubbed chips stay visible with statuses and reason codes.
+L00005880	validation_surfaces:
+L00005881	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005882	  - python3 scripts/pm-plan-index.py validate
+L00005883	risk_class: selection_target_privacy
+L00005884	reasoning_tier: high
+L00005885	context_scope: document_selection
+L00005886	implementation_surfaces:
+L00005887	  - Plans/assistant-chat-design.md
+L00005888	  - Plans/FileSafe.md
+L00005889	  - Plans/FinalGUISpec.md
+L00005890	node_compile_hint:
+L00005891	  mode: selection_target_privacy_gui
+L00005892	  create_worknodes: false
+L00005893	source_lineage:
+L00005894	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+L00005895	preserved_exact_tokens:
+L00005896	  - "cross-thread"
+L00005897	  - "/privacy"
+L00005898	  - "/statuses"
+L00005899	  - "/palette"
+L00005900	  - "Open / Addressed / Resolved"
+L00005901	  - "/overlays"
+L00005902	  - "ghost-preview"
+L00005903	negative_constraints:
+L00005904	  - "no silent `cross-thread` fallback is allowed"
+L00005905	owner_hints:
+L00005906	  - Plans/assistant-chat-design.md
+L00005907	  - Plans/FileSafe.md
+L00005908	```
+L00005909	
+L00005910	### ACD-053 - Post-Plan Approval Actions
+L00005911	
+L00005912	```yaml
+L00005913	plan_unit_id: ACD-053
+L00005914	unit_type: requirement
+L00005915	status: accepted
+L00005916	owner_doc: Plans/assistant-chat-design.md
+L00005917	canonical_text: >-
+L00005918	  Post-plan approval requires explicit user action and presents exactly four
+L00005919	  primary choices after Plan or Deep Plan output: Accept the plan and build with
+L00005920	  Yolo, Accept the plan and build on default permissions, Exit plan, and Suggest
+L00005921	  plan changes.
+L00005922	gui_related: true
+L00005923	gui_classification_reason: Post-plan action choices are user-visible Assistant Chat controls.
+L00005924	depends_on: [ACD-032, ACD-046]
+L00005925	unblocks: [ACD-054]
+L00005926	acceptance_criteria:
+L00005927	  - Planning output never auto-executes.
+L00005928	  - The four primary post-plan choices remain present after Plan or Deep Plan output.
+L00005929	  - Crew execution configuration cannot replace the four primary choices.
+L00005930	validation_surfaces:
+L00005931	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005932	  - python3 scripts/pm-plan-index.py validate
+L00005933	risk_class: execution_approval_boundary
+L00005934	reasoning_tier: high
+L00005935	context_scope: post_plan_handoff
+L00005936	implementation_surfaces:
+L00005937	  - Plans/assistant-chat-design.md
+L00005938	  - Plans/Run_Modes.md
+L00005939	  - Plans/FinalGUISpec.md
+L00005940	node_compile_hint:
+L00005941	  mode: post_plan_approval_actions
+L00005942	  create_worknodes: false
+L00005943	source_lineage:
+L00005944	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0042
+L00005945	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0044
+L00005946	preserved_exact_tokens:
+L00005947	  - "Accept the plan and build with Yolo"
+L00005948	  - "Accept the plan and build on default permissions"
+L00005949	  - "Exit plan"
+L00005950	  - "Suggest plan changes"
+L00005951	negative_constraints:
+L00005952	  - "Planning output never auto-executes."
+L00005953	  - "Crew execution may be selected through execution configuration or a crew-specific flow, but it must not replace the four primary post-plan choices."
+L00005954	owner_hints:
+L00005955	  - Plans/assistant-chat-design.md
+L00005956	```
+L00005957	
+L00005958	### ACD-054 - Accepted Plan Execution Handoff
+L00005959	
+L00005960	```yaml
+L00005961	plan_unit_id: ACD-054
+L00005962	unit_type: requirement
+L00005963	status: accepted
+L00005964	owner_doc: Plans/assistant-chat-design.md
+L00005965	canonical_text: >-
+L00005966	  Accepted plans freeze planning artifact and TODO state, switch out of Plan or
+L00005967	  Deep Plan into the correct execution mode and persona, and start or queue
+L00005968	  execution using regular by default or yolo only when explicitly selected.
+L00005969	gui_related: false
+L00005970	gui_classification_reason: Execution handoff, freezing, mode switching, and runtime posture are workflow/runtime behavior, not GUI presentation.
+L00005971	depends_on: [ACD-053, ACD-043]
+L00005972	unblocks: []
+L00005973	acceptance_criteria:
+L00005974	  - Approval freezes the planning artifact and TODO state as the execution starting point.
+L00005975	  - Execution uses regular by default and yolo only when explicitly selected.
+L00005976	  - If another run is active in the same thread, accepted execution may queue behind it through Queue Execution.
+L00005977	validation_surfaces:
+L00005978	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005979	  - python3 scripts/pm-plan-index.py validate
+L00005980	risk_class: execution_handoff
+L00005981	reasoning_tier: high
+L00005982	context_scope: post_plan_handoff
+L00005983	implementation_surfaces:
+L00005984	  - Plans/assistant-chat-design.md
+L00005985	  - Plans/Run_Modes.md
+L00005986	  - Plans/storage-plan.md
+L00005987	node_compile_hint:
+L00005988	  mode: accepted_plan_execution_handoff
+L00005989	  create_worknodes: false
+L00005990	source_lineage:
+L00005991	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0042
+L00005992	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0044
+L00005993	preserved_exact_tokens:
+L00005994	  - "Queue Execution"
+L00005995	  - "regular"
+L00005996	  - "yolo"
+L00005997	  - "frozen as the execution starting point"
+L00005998	negative_constraints:
+L00005999	  - "Execution starts only after explicit approval and uses `regular` or `yolo`, never `plan`."
+L00006000	owner_hints:
+L00006001	  - Plans/assistant-chat-design.md
+L00006002	  - Plans/Run_Modes.md
+L00006003	```
+L00006004	
+L00006005	### ACD-055 - Planning Wizard Escalation
+L00006006	
+L00006007	```yaml
+L00006008	plan_unit_id: ACD-055
+L00006009	unit_type: requirement
+L00006010	status: accepted
+L00006011	owner_doc: Plans/assistant-chat-design.md
+L00006012	canonical_text: >-
+L00006013	  Planning overlays may recommend the Planning Wizard when work is better treated
+L00006014	  as feature or enhancement specification plus adaptive interview/orchestrator
+L00006015	  flow. Deep Plan must perform the wizard-escalation check before final
+L00006016	  execute-first recommendations, but the recommendation is a CTA, not a forced
+L00006017	  redirect.
+L00006018	gui_related: true
+L00006019	gui_classification_reason: Wizard recommendations and CTAs are visible planning UI behavior.
+L00006020	depends_on: [ACD-038, ACD-040]
+L00006021	unblocks: []
+L00006022	acceptance_criteria:
+L00006023	  - Standard Plan may recommend Planning Wizard when signals are strong.
+L00006024	  - Deep Plan performs a wizard-escalation check before final execute-first recommendations.
+L00006025	  - Recommendations are user-facing suggestions and not automatic redirects.
+L00006026	validation_surfaces:
+L00006027	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006028	  - python3 scripts/pm-plan-index.py validate
+L00006029	risk_class: planning_escalation
+L00006030	reasoning_tier: standard
+L00006031	context_scope: planning_overlay
+L00006032	implementation_surfaces:
+L00006033	  - Plans/assistant-chat-design.md
+L00006034	  - Plans/chain-wizard-flexibility.md
+L00006035	node_compile_hint:
+L00006036	  mode: planning_wizard_escalation
+L00006037	  create_worknodes: false
+L00006038	source_lineage:
+L00006039	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0043
+L00006040	preserved_exact_tokens:
+L00006041	  - "Planning Wizard"
+L00006042	  - "UI + data + security + deployment"
+L00006043	negative_constraints:
+L00006044	  - "Recommendation is a user-facing suggestion/CTA, not an automatic forced redirect."
+L00006045	stale_retired_dispositions:
+L00006046	  - "Chain Wizard is a legacy source token for this span; current product prose and UI use Planning Wizard."
+L00006047	owner_hints:
+L00006048	  - Plans/assistant-chat-design.md
+L00006049	  - Plans/chain-wizard-flexibility.md
+L00006050	```
+L00006051	
+L00006052	### ACD-056 - File Reference Handoff
+L00006053	
+L00006054	```yaml
+L00006055	plan_unit_id: ACD-056
+L00006056	unit_type: requirement
+L00006057	status: accepted
+L00006058	owner_doc: Plans/assistant-chat-design.md
+L00006059	canonical_text: >-
+L00006060	  Chat file references are explicit visible composer chips inserted through the
+L00006061	  canonical add-file-reference command, file-only for MVP, and never hidden
+L00006062	  full-file context injection.
+L00006063	gui_related: true
+L00006064	gui_classification_reason: File chips, pickers, and Add to Assistant Chat handoff are visible chat/file-manager UI behavior.
+L00006065	depends_on: [ACD-025]
+L00006066	unblocks: []
+L00006067	acceptance_criteria:
+L00006068	  - "@ mention and picker flows insert visible chips rather than hidden file content."
+L00006069	  - File Manager Add to Assistant Chat uses cmd.chat.add_file_reference.
+L00006070	  - Folder insertion remains out of MVP scope.
+L00006071	validation_surfaces:
+L00006072	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006073	  - python3 scripts/pm-plan-index.py validate
+L00006074	risk_class: hidden_file_context
+L00006075	reasoning_tier: high
+L00006076	context_scope: file_reference
+L00006077	implementation_surfaces:
+L00006078	  - Plans/assistant-chat-design.md
+L00006079	  - Plans/FileManager.md
+L00006080	  - Plans/UI_Command_Catalog.md
+L00006081	  - Plans/FinalGUISpec.md
+L00006082	node_compile_hint:
+L00006083	  mode: file_reference_handoff
+L00006084	  create_worknodes: false
+L00006085	source_lineage:
+L00006086	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+L00006087	preserved_exact_tokens:
+L00006088	  - "@"
+L00006089	  - "cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }"
+L00006090	  - "file-only in MVP"
+L00006091	negative_constraints:
+L00006092	  - "File Manager `Add to Assistant Chat` uses that command to insert a visible canonical file reference into the active composer/thread context; it must not inline full file contents as a hidden side effect."
+L00006093	owner_hints:
+L00006094	  - Plans/assistant-chat-design.md
+L00006095	  - Plans/FileManager.md
+L00006096	```
+L00006097	
+L00006098	### ACD-057 - Chat Revert Restore Boundary
+L00006099	
+L00006100	```yaml
+L00006101	plan_unit_id: ACD-057
+L00006102	unit_type: constraint
+L00006103	status: accepted
+L00006104	owner_doc: Plans/assistant-chat-design.md
+L00006105	canonical_text: >-
+L00006106	  cmd.chat.revert is the canonical entrypoint for Revert last agent edit and
+L00006107	  file-mutation restore, while cmd.chat.rewind remains conversation-history
+L00006108	  rewind only.
+L00006109	gui_related: false
+L00006110	gui_classification_reason: Restore and rewind boundaries are command/runtime behavior, not GUI implementation.
+L00006111	depends_on: []
+L00006112	unblocks: []
+L00006113	acceptance_criteria:
+L00006114	  - Omitted target_message_id resolves to the latest assistant turn with persisted file mutations.
+L00006115	  - Multi-file turn reverts apply to the whole turn across affected files.
+L00006116	  - Deleted worktree paths fail inline rather than recreating missing directories or resolving through the current working_directory.
+L00006117	validation_surfaces:
+L00006118	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006119	  - python3 scripts/pm-plan-index.py validate
+L00006120	risk_class: restore_boundary
+L00006121	reasoning_tier: high
+L00006122	context_scope: file_restore
+L00006123	implementation_surfaces:
+L00006124	  - Plans/assistant-chat-design.md
+L00006125	  - Plans/FileSafe.md
+L00006126	  - Plans/GitHub_Integration.md
+L00006127	node_compile_hint:
+L00006128	  mode: chat_revert_restore_boundary
+L00006129	  create_worknodes: false
+L00006130	source_lineage:
+L00006131	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+L00006132	preserved_exact_tokens:
+L00006133	  - "cmd.chat.revert"
+L00006134	  - "cmd.chat.rewind"
+L00006135	  - "Revert last agent edit"
+L00006136	  - "target_message_id"
+L00006137	  - "/project/.puppet-master/worktrees/thread-abc/src/main.rs"
+L00006138	  - "working_directory"
+L00006139	negative_constraints:
+L00006140	  - "cmd.chat.rewind remains conversation-history rewind only"
+L00006141	  - "fails with a file-not-found style inline error instead of recreating missing directories"
+L00006142	owner_hints:
+L00006143	  - Plans/assistant-chat-design.md
+L00006144	  - Plans/FileSafe.md
+L00006145	```
+L00006146	
+L00006147	### ACD-058 - Chat Diff Source Control Consumer
+L00006148	
+L00006149	```yaml
+L00006150	plan_unit_id: ACD-058
+L00006151	unit_type: requirement
+L00006152	status: accepted
+L00006153	owner_doc: Plans/assistant-chat-design.md
+L00006154	canonical_text: >-
+L00006155	  Assistant Chat is a review-oriented Source Control consumer. It may preview,
+L00006156	  summarize, annotate, or collect review comments, while review, compare,
+L00006157	  conflict, stage, commit, worktree, graph, and source-control mutations route
+L00006158	  to the owning surfaces and command catalog entries.
+L00006159	gui_related: true
+L00006160	gui_classification_reason: Chat diff cards, review CTAs, and source-control deep links are user-visible GUI behavior.
+L00006161	depends_on: [ACD-057]
+L00006162	unblocks: [ACD-059]
+L00006163	acceptance_criteria:
+L00006164	  - Chat does not own hunk-level stage, unstage, discard, conflict-review, or commit operations.
+L00006165	  - Chat CTAs call the canonical source-control and git worktree commands.
+L00006166	  - Generated commit text is not persisted as history before acceptance.
+L00006167	validation_surfaces:
+L00006168	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006169	  - python3 scripts/pm-plan-index.py validate
+L00006170	risk_class: source_control_owner_drift
+L00006171	reasoning_tier: high
+L00006172	context_scope: source_control_consumer
+L00006173	implementation_surfaces:
+L00006174	  - Plans/assistant-chat-design.md
+L00006175	  - Plans/FileSafe.md
+L00006176	  - Plans/GitHub_Integration.md
+L00006177	  - Plans/Wiring_Matrix.md
+L00006178	node_compile_hint:
+L00006179	  mode: chat_diff_source_control_consumer
+L00006180	  create_worknodes: false
+L00006181	source_lineage:
+L00006182	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+L00006183	preserved_exact_tokens:
+L00006184	  - "Review mode"
+L00006185	  - "Open Review Mode"
+L00006186	  - "cmd.source_control.open_review"
+L00006187	  - "cmd.source_control.set_compare_target"
+L00006188	  - "cmd.source_control.toggle_generated_filter"
+L00006189	  - "cmd.source_control.suggest_commit_groups"
+L00006190	  - "cmd.source_control.accept_commit_group"
+L00006191	  - "cmd.source_control.generate_commit_message"
+L00006192	  - "cmd.git.worktree.open|compare|recover|prune|focus_lineage"
+L00006193	  - "/event/storage"
+L00006194	  - "/tradeoffs"
+L00006195	negative_constraints:
+L00006196	  - "Chat may preview diffs and edit counts, but it must not own hunk-level stage/unstage/discard controls, conflict-review state, or chat-local review mutations."
+L00006197	owner_hints:
+L00006198	  - Plans/assistant-chat-design.md
+L00006199	  - Plans/GitHub_Integration.md
+L00006200	```
+L00006201	
+L00006202	### ACD-059 - Files Touched SCM Projection
+L00006203	
+L00006204	```yaml
+L00006205	plan_unit_id: ACD-059
+L00006206	unit_type: requirement
+L00006207	status: accepted
+L00006208	owner_doc: Plans/assistant-chat-design.md
+L00006209	canonical_text: >-
+L00006210	  Files-touched strips, worktree cards, and completed-work cards are aggregate
+L00006211	  chat projections that deep-link to source, diff/review, Source Control, Run
+L00006212	  Graph, Orchestrator, and evidence contexts without owning SCM truth.
+L00006213	gui_related: true
+L00006214	gui_classification_reason: Files-touched rows, completed-work cards, labels, and deep links are visible chat UI.
+L00006215	depends_on: [ACD-058]
+L00006216	unblocks: []
+L00006217	acceptance_criteria:
+L00006218	  - Clicking file-preview rows opens the canonical source file or diff/review owner surface.
+L00006219	  - Worktree and completed-work cards show SCM context as a consumer projection.
+L00006220	  - Tier-level, run-scoped, or completed-work SCM ownership badges are not treated as canonical ownership.
+L00006221	validation_surfaces:
+L00006222	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006223	  - python3 scripts/pm-plan-index.py validate
+L00006224	risk_class: scm_projection_drift
+L00006225	reasoning_tier: standard
+L00006226	context_scope: source_control_consumer
+L00006227	implementation_surfaces:
+L00006228	  - Plans/assistant-chat-design.md
+L00006229	  - Plans/Run_Graph_View.md
+L00006230	  - Plans/Orchestrator_Page.md
+L00006231	  - Plans/Runtime_Artifacts_Panel.md
+L00006232	node_compile_hint:
+L00006233	  mode: files_touched_scm_projection
+L00006234	  create_worknodes: false
+L00006235	source_lineage:
+L00006236	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+L00006237	preserved_exact_tokens:
+L00006238	  - "files-touched"
+L00006239	  - "Read:"
+L00006240	  - "Edited:"
+L00006241	  - "/branch/worktree"
+L00006242	  - "/worktree/run"
+L00006243	  - "Open in Source Control"
+L00006244	  - "Compare run output"
+L00006245	  - "GITHUB ACTIONS"
+L00006246	  - "Git (GitHub)"
+L00006247	negative_constraints:
+L00006248	  - "Chat never treats tier-level, run-scoped, or completed-work SCM /ownership badges as canonical ownership."
+L00006249	owner_hints:
+L00006250	  - Plans/assistant-chat-design.md
+L00006251	  - Plans/Run_Graph_View.md
+L00006252	```
+L00006253	
+
+<<< CONTEXT_AFTER canonical_document_lines=6254-6265 >>>
+L00006254	### ACD-060 - Chat Search Owner Boundary
+L00006255	
+L00006256	```yaml
+L00006257	plan_unit_id: ACD-060
+L00006258	unit_type: constraint
+L00006259	status: accepted
+L00006260	owner_doc: Plans/assistant-chat-design.md
+L00006261	canonical_text: >-
+L00006262	  Chat search and history retrieval are chat-domain retrieval only; project-wide
+L00006263	  find and replace remain Search side-panel owned, and semantic symbol or
+L00006264	  reference lookup remains editor/LSP owned even when chat launches it.
+L00006265	gui_related: true

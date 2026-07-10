@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9989-10000 >>>
+L00009989	      "local_or_demo_markers": [],
+L00009990	      "accessibility_gaps": [
+L00009991	        "custom_click_target_missing_role"
+L00009992	      ],
+L00009993	      "disposition": "concept_only_owner_adjudicated",
+L00009994	      "canonical_command_id": null,
+L00009995	      "wiring_matrix_key": null,
+L00009996	      "notes": [
+L00009997	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00009998	      ],
+L00009999	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010000	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10001-10389 >>>
+L00010001	    {
+L00010002	      "inventory_id": "pmconcept.l11064.0349",
+L00010003	      "line": 11064,
+L00010004	      "tag": "div",
+L00010005	      "html_id": null,
+L00010006	      "name": null,
+L00010007	      "role": null,
+L00010008	      "class": "orch-tier-node selected",
+L00010009	      "ui_location": "orch-tier-children",
+L00010010	      "label": "\u25b6 Node-readiness 0/1 1 pass Running",
+L00010011	      "attrs": {
+L00010012	        "data-tier": "2.2"
+L00010013	      },
+L00010014	      "inline_handlers": {},
+L00010015	      "command_tokens": [],
+L00010016	      "local_or_demo_markers": [],
+L00010017	      "accessibility_gaps": [
+L00010018	        "custom_click_target_missing_role"
+L00010019	      ],
+L00010020	      "disposition": "concept_only_owner_adjudicated",
+L00010021	      "canonical_command_id": null,
+L00010022	      "wiring_matrix_key": null,
+L00010023	      "notes": [
+L00010024	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010025	      ],
+L00010026	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010027	    },
+L00010028	    {
+L00010029	      "inventory_id": "pmconcept.l11071.0350",
+L00010030	      "line": 11071,
+L00010031	      "tag": "div",
+L00010032	      "html_id": null,
+L00010033	      "name": null,
+L00010034	      "role": null,
+L00010035	      "class": "orch-tier-node",
+L00010036	      "ui_location": "orch-tier-children",
+L00010037	      "label": "\u25b6 Orchestrator handoff Pending",
+L00010038	      "attrs": {
+L00010039	        "data-tier": "2.3"
+L00010040	      },
+L00010041	      "inline_handlers": {},
+L00010042	      "command_tokens": [],
+L00010043	      "local_or_demo_markers": [],
+L00010044	      "accessibility_gaps": [
+L00010045	        "custom_click_target_missing_role"
+L00010046	      ],
+L00010047	      "disposition": "concept_only_owner_adjudicated",
+L00010048	      "canonical_command_id": null,
+L00010049	      "wiring_matrix_key": null,
+L00010050	      "notes": [
+L00010051	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010052	      ],
+L00010053	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010054	    },
+L00010055	    {
+L00010056	      "inventory_id": "pmconcept.l11085.0351",
+L00010057	      "line": 11085,
+L00010058	      "tag": "a",
+L00010059	      "html_id": null,
+L00010060	      "name": null,
+L00010061	      "role": null,
+L00010062	      "class": "orch-tier-link",
+L00010063	      "ui_location": "orch-tier-detail-meta",
+L00010064	      "label": "CompileReport 2.2 (10:38)",
+L00010065	      "attrs": {
+L00010066	        "href": "#"
+L00010067	      },
+L00010068	      "inline_handlers": {},
+L00010069	      "command_tokens": [],
+L00010070	      "local_or_demo_markers": [],
+L00010071	      "accessibility_gaps": [],
+L00010072	      "disposition": "concept_only_owner_adjudicated",
+L00010073	      "canonical_command_id": null,
+L00010074	      "wiring_matrix_key": null,
+L00010075	      "notes": [
+L00010076	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010077	      ],
+L00010078	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010079	    },
+L00010080	    {
+L00010081	      "inventory_id": "pmconcept.l11092.0352",
+L00010082	      "line": 11092,
+L00010083	      "tag": "div",
+L00010084	      "html_id": "orch-panel-node_graph",
+L00010085	      "name": null,
+L00010086	      "role": null,
+L00010087	      "class": "orch-tab-content",
+L00010088	      "ui_location": "orch-content",
+L00010089	      "label": "No active run. Start an orchestrator run to see the graph. Start Run run-abc12ef 2026-03-09 Running 10:32 \u2014 \u2014 12m 34s 5 passed, 2 running, 1 failed Layered L-R Layered T-B Compact Grouped by Phase Critical Path + \u2212 Fit 100% State: All Runni",
+L00010090	      "attrs": {
+L00010091	        "data-tab": "node_graph"
+L00010092	      },
+L00010093	      "inline_handlers": {},
+L00010094	      "command_tokens": [],
+L00010095	      "local_or_demo_markers": [],
+L00010096	      "accessibility_gaps": [
+L00010097	        "custom_click_target_missing_role"
+L00010098	      ],
+L00010099	      "disposition": "concept_only_owner_adjudicated",
+L00010100	      "canonical_command_id": null,
+L00010101	      "wiring_matrix_key": null,
+L00010102	      "notes": [
+L00010103	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010104	      ],
+L00010105	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010106	    },
+L00010107	    {
+L00010108	      "inventory_id": "pmconcept.l11096.0353",
+L00010109	      "line": 11096,
+L00010110	      "tag": "button",
+L00010111	      "html_id": "orchGraphStartBtn",
+L00010112	      "name": null,
+L00010113	      "role": null,
+L00010114	      "class": "wizard-btn primary",
+L00010115	      "ui_location": "orchGraphPlaceholder",
+L00010116	      "label": "Start Run",
+L00010117	      "attrs": {},
+L00010118	      "inline_handlers": {},
+L00010119	      "command_tokens": [],
+L00010120	      "local_or_demo_markers": [],
+L00010121	      "accessibility_gaps": [],
+L00010122	      "disposition": "concept_only_owner_adjudicated",
+L00010123	      "canonical_command_id": null,
+L00010124	      "wiring_matrix_key": null,
+L00010125	      "notes": [
+L00010126	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010127	      ],
+L00010128	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010129	    },
+L00010130	    {
+L00010131	      "inventory_id": "pmconcept.l11106.0354",
+L00010132	      "line": 11106,
+L00010133	      "tag": "select",
+L00010134	      "html_id": null,
+L00010135	      "name": null,
+L00010136	      "role": null,
+L00010137	      "class": "orch-rungraph-layout",
+L00010138	      "ui_location": "orch-rungraph-topbar",
+L00010139	      "label": "Layered L-R Layered T-B Compact Grouped by Phase Critical Path",
+L00010140	      "attrs": {
+L00010141	        "title": "Layout preset",
+L00010142	        "aria-label": "Layout preset"
+L00010143	      },
+L00010144	      "inline_handlers": {},
+L00010145	      "command_tokens": [],
+L00010146	      "local_or_demo_markers": [],
+L00010147	      "accessibility_gaps": [],
+L00010148	      "disposition": "concept_only_owner_adjudicated",
+L00010149	      "canonical_command_id": null,
+L00010150	      "wiring_matrix_key": null,
+L00010151	      "notes": [
+L00010152	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010153	      ],
+L00010154	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010155	    },
+L00010156	    {
+L00010157	      "inventory_id": "pmconcept.l11113.0355",
+L00010158	      "line": 11113,
+L00010159	      "tag": "button",
+L00010160	      "html_id": null,
+L00010161	      "name": null,
+L00010162	      "role": null,
+L00010163	      "class": "orch-rungraph-zoom",
+L00010164	      "ui_location": "orch-rungraph-topbar",
+L00010165	      "label": "+",
+L00010166	      "attrs": {
+L00010167	        "type": "button",
+L00010168	        "title": "Zoom in"
+L00010169	      },
+L00010170	      "inline_handlers": {},
+L00010171	      "command_tokens": [],
+L00010172	      "local_or_demo_markers": [],
+L00010173	      "accessibility_gaps": [],
+L00010174	      "disposition": "concept_only_owner_adjudicated",
+L00010175	      "canonical_command_id": null,
+L00010176	      "wiring_matrix_key": null,
+L00010177	      "notes": [
+L00010178	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010179	      ],
+L00010180	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010181	    },
+L00010182	    {
+L00010183	      "inventory_id": "pmconcept.l11114.0356",
+L00010184	      "line": 11114,
+L00010185	      "tag": "button",
+L00010186	      "html_id": null,
+L00010187	      "name": null,
+L00010188	      "role": null,
+L00010189	      "class": "orch-rungraph-zoom",
+L00010190	      "ui_location": "orch-rungraph-topbar",
+L00010191	      "label": "\u2212",
+L00010192	      "attrs": {
+L00010193	        "type": "button",
+L00010194	        "title": "Zoom out"
+L00010195	      },
+L00010196	      "inline_handlers": {},
+L00010197	      "command_tokens": [],
+L00010198	      "local_or_demo_markers": [],
+L00010199	      "accessibility_gaps": [],
+L00010200	      "disposition": "concept_only_owner_adjudicated",
+L00010201	      "canonical_command_id": null,
+L00010202	      "wiring_matrix_key": null,
+L00010203	      "notes": [
+L00010204	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010205	      ],
+L00010206	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010207	    },
+L00010208	    {
+L00010209	      "inventory_id": "pmconcept.l11115.0357",
+L00010210	      "line": 11115,
+L00010211	      "tag": "button",
+L00010212	      "html_id": null,
+L00010213	      "name": null,
+L00010214	      "role": null,
+L00010215	      "class": "orch-rungraph-fit",
+L00010216	      "ui_location": "orch-rungraph-topbar",
+L00010217	      "label": "Fit",
+L00010218	      "attrs": {
+L00010219	        "type": "button",
+L00010220	        "title": "Fit to screen"
+L00010221	      },
+L00010222	      "inline_handlers": {},
+L00010223	      "command_tokens": [],
+L00010224	      "local_or_demo_markers": [],
+L00010225	      "accessibility_gaps": [],
+L00010226	      "disposition": "concept_only_owner_adjudicated",
+L00010227	      "canonical_command_id": null,
+L00010228	      "wiring_matrix_key": null,
+L00010229	      "notes": [
+L00010230	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010231	      ],
+L00010232	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010233	    },
+L00010234	    {
+L00010235	      "inventory_id": "pmconcept.l11117.0358",
+L00010236	      "line": 11117,
+L00010237	      "tag": "select",
+L00010238	      "html_id": null,
+L00010239	      "name": null,
+L00010240	      "role": null,
+L00010241	      "class": "orch-rungraph-filter",
+L00010242	      "ui_location": "orch-rungraph-topbar",
+L00010243	      "label": "State: All Running Passed Failed",
+L00010244	      "attrs": {
+L00010245	        "aria-label": "Filter by state"
+L00010246	      },
+L00010247	      "inline_handlers": {},
+L00010248	      "command_tokens": [],
+L00010249	      "local_or_demo_markers": [],
+L00010250	      "accessibility_gaps": [],
+L00010251	      "disposition": "concept_only_owner_adjudicated",
+L00010252	      "canonical_command_id": null,
+L00010253	      "wiring_matrix_key": null,
+L00010254	      "notes": [
+L00010255	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010256	      ],
+L00010257	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010258	    },
+L00010259	    {
+L00010260	      "inventory_id": "pmconcept.l11118.0359",
+L00010261	      "line": 11118,
+L00010262	      "tag": "input",
+L00010263	      "html_id": null,
+L00010264	      "name": null,
+L00010265	      "role": null,
+L00010266	      "class": "orch-rungraph-search",
+L00010267	      "ui_location": "orch-rungraph-topbar",
+L00010268	      "label": "Search nodes",
+L00010269	      "attrs": {
+L00010270	        "type": "text",
+L00010271	        "placeholder": "Search nodes...",
+L00010272	        "aria-label": "Search nodes"
+L00010273	      },
+L00010274	      "inline_handlers": {},
+L00010275	      "command_tokens": [],
+L00010276	      "local_or_demo_markers": [],
+L00010277	      "accessibility_gaps": [],
+L00010278	      "disposition": "concept_only_owner_adjudicated",
+L00010279	      "canonical_command_id": null,
+L00010280	      "wiring_matrix_key": null,
+L00010281	      "notes": [
+L00010282	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010283	      ],
+L00010284	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010285	    },
+L00010286	    {
+L00010287	      "inventory_id": "pmconcept.l11120.0360",
+L00010288	      "line": 11120,
+L00010289	      "tag": "button",
+L00010290	      "html_id": null,
+L00010291	      "name": null,
+L00010292	      "role": null,
+L00010293	      "class": "orch-rungraph-toggle",
+L00010294	      "ui_location": "orch-rungraph-toggles",
+L00010295	      "label": "Hide completed",
+L00010296	      "attrs": {
+L00010297	        "type": "button",
+L00010298	        "title": "Hide completed nodes",
+L00010299	        "aria-label": "Hide completed nodes"
+L00010300	      },
+L00010301	      "inline_handlers": {},
+L00010302	      "command_tokens": [],
+L00010303	      "local_or_demo_markers": [],
+L00010304	      "accessibility_gaps": [],
+L00010305	      "disposition": "concept_only_owner_adjudicated",
+L00010306	      "canonical_command_id": null,
+L00010307	      "wiring_matrix_key": null,
+L00010308	      "notes": [
+L00010309	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010310	      ],
+L00010311	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010312	    },
+L00010313	    {
+L00010314	      "inventory_id": "pmconcept.l11121.0361",
+L00010315	      "line": 11121,
+L00010316	      "tag": "button",
+L00010317	      "html_id": null,
+L00010318	      "name": null,
+L00010319	      "role": null,
+L00010320	      "class": "orch-rungraph-toggle",
+L00010321	      "ui_location": "orch-rungraph-toggles",
+L00010322	      "label": "Blocked only",
+L00010323	      "attrs": {
+L00010324	        "type": "button",
+L00010325	        "title": "Show blocked only",
+L00010326	        "aria-label": "Show blocked nodes only"
+L00010327	      },
+L00010328	      "inline_handlers": {},
+L00010329	      "command_tokens": [],
+L00010330	      "local_or_demo_markers": [],
+L00010331	      "accessibility_gaps": [],
+L00010332	      "disposition": "concept_only_owner_adjudicated",
+L00010333	      "canonical_command_id": null,
+L00010334	      "wiring_matrix_key": null,
+L00010335	      "notes": [
+L00010336	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010337	      ],
+L00010338	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010339	    },
+L00010340	    {
+L00010341	      "inventory_id": "pmconcept.l11160.0362",
+L00010342	      "line": 11160,
+L00010343	      "tag": "button",
+L00010344	      "html_id": null,
+L00010345	      "name": null,
+L00010346	      "role": null,
+L00010347	      "class": "orch-rungraph-qf",
+L00010348	      "ui_location": "orch-rungraph-quickfilters",
+L00010349	      "label": "Failed",
+L00010350	      "attrs": {
+L00010351	        "type": "button"
+L00010352	      },
+L00010353	      "inline_handlers": {},
+L00010354	      "command_tokens": [],
+L00010355	      "local_or_demo_markers": [],
+L00010356	      "accessibility_gaps": [],
+L00010357	      "disposition": "concept_only_owner_adjudicated",
+L00010358	      "canonical_command_id": null,
+L00010359	      "wiring_matrix_key": null,
+L00010360	      "notes": [
+L00010361	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010362	      ],
+L00010363	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010364	    },
+L00010365	    {
+L00010366	      "inventory_id": "pmconcept.l11161.0363",
+L00010367	      "line": 11161,
+L00010368	      "tag": "button",
+L00010369	      "html_id": null,
+L00010370	      "name": null,
+L00010371	      "role": null,
+L00010372	      "class": "orch-rungraph-qf",
+L00010373	      "ui_location": "orch-rungraph-quickfilters",
+L00010374	      "label": "Blocked",
+L00010375	      "attrs": {
+L00010376	        "type": "button"
+L00010377	      },
+L00010378	      "inline_handlers": {},
+L00010379	      "command_tokens": [],
+L00010380	      "local_or_demo_markers": [],
+L00010381	      "accessibility_gaps": [],
+L00010382	      "disposition": "concept_only_owner_adjudicated",
+L00010383	      "canonical_command_id": null,
+L00010384	      "wiring_matrix_key": null,
+L00010385	      "notes": [
+L00010386	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00010387	      ],
+L00010388	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00010389	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=10390-10401 >>>
+L00010390	    {
+L00010391	      "inventory_id": "pmconcept.l11162.0364",
+L00010392	      "line": 11162,
+L00010393	      "tag": "button",
+L00010394	      "html_id": null,
+L00010395	      "name": null,
+L00010396	      "role": null,
+L00010397	      "class": "orch-rungraph-qf",
+L00010398	      "ui_location": "orch-rungraph-quickfilters",
+L00010399	      "label": "Running",
+L00010400	      "attrs": {
+L00010401	        "type": "button"

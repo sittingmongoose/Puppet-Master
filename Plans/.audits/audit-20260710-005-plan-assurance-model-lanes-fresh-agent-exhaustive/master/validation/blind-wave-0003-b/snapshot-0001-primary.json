@@ -1,0 +1,120 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "counts": {
+    "accepted": 8,
+    "assignments": 8,
+    "pending": 0,
+    "quarantined": 0
+  },
+  "credited_assignment_ids": [
+    "A005-001021-EXACT-WIN-7414C6C901F8-0013",
+    "A005-001022-ADVERSARIAL-WIN-7414C6C901F8-0013",
+    "A005-001023-EXACT-WIN-7414C6C901F8-0014",
+    "A005-001024-ADVERSARIAL-WIN-7414C6C901F8-0014",
+    "A005-001025-EXACT-WIN-7414C6C901F8-0015",
+    "A005-001026-ADVERSARIAL-WIN-7414C6C901F8-0015",
+    "A005-001027-EXACT-WIN-7414C6C901F8-0016",
+    "A005-001028-ADVERSARIAL-WIN-7414C6C901F8-0016"
+  ],
+  "results": [
+    {
+      "assignment_id": "A005-001021-EXACT-WIN-7414C6C901F8-0013",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 20,
+      "result_bytes": 27951,
+      "result_sha256": "2ada244f2a083d17ca86e1c348a81e2e5471b5a782653808724d1d9496d7a360",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001021_exact_0013_attempt_0009_terminal",
+      "terminal_seal_sha256": "6a83105d8cdfdf9eb316a93268ae8aab380250aeb6c0f8c0f6ee23ba84143c5b"
+    },
+    {
+      "assignment_id": "A005-001022-ADVERSARIAL-WIN-7414C6C901F8-0013",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 20,
+      "result_bytes": 32723,
+      "result_sha256": "8663ae70e042bea85285a45c061c7e188842ce628fa9f98e614f78051cff23e7",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001022_adversarial_0013_attempt_0009_terminal",
+      "terminal_seal_sha256": "0f31255eb8607cb2c09419d99107bef67cfa4a5855afc7dabcbbe1b9add14aa0"
+    },
+    {
+      "assignment_id": "A005-001023-EXACT-WIN-7414C6C901F8-0014",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 21,
+      "result_bytes": 26006,
+      "result_sha256": "8fb3432edae064af9520903e87e08852b6e4474c62cff34f97998a2881857989",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001023_exact_0014_attempt_0009_terminal",
+      "terminal_seal_sha256": "446eb25e591b91b0e7a9aa4bb36fa38908b2f9ac5c53b1ad9d7c1ca339e31df7"
+    },
+    {
+      "assignment_id": "A005-001024-ADVERSARIAL-WIN-7414C6C901F8-0014",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 16,
+      "result_bytes": 33173,
+      "result_sha256": "05c1b36f692115f2685e2ec0154a7f65c10a9a51fad404ea17c676e2b87a2eee",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001024_adversarial_0014_attempt_0009_terminal",
+      "terminal_seal_sha256": "e090f0328c3c4bb8facc777fe83b7ff3819d5934f067e9029b240279a6d68521"
+    },
+    {
+      "assignment_id": "A005-001025-EXACT-WIN-7414C6C901F8-0015",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 23,
+      "result_bytes": 45992,
+      "result_sha256": "cc688e055a178c01e05a1a17073c443ee8fda53db7232cce954df92f42619eda",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001025_exact_0015_attempt_0009_terminal",
+      "terminal_seal_sha256": "2c8ef4d1baf9d76bfae2b7a0db00f96b24ab350d02cb865f1c9e471916e2cdee"
+    },
+    {
+      "assignment_id": "A005-001026-ADVERSARIAL-WIN-7414C6C901F8-0015",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 19,
+      "result_bytes": 35171,
+      "result_sha256": "3a5ce991da0a15e1b88b2c9b552add70926b82d45ebdfa4c804d4d72ae216a1c",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001026_adversarial_0015_attempt_0009_terminal",
+      "terminal_seal_sha256": "4390ad68377a5cac936ed0fe977257190f24c2aa35ef62c535b808872525d3f0"
+    },
+    {
+      "assignment_id": "A005-001027-EXACT-WIN-7414C6C901F8-0016",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 19,
+      "result_bytes": 33613,
+      "result_sha256": "db5238b2a3977f77202d05a7c49d07e3f5f2ffcebba77c02fb3d23bac8413770",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001027_exact_0016_attempt_0009_terminal",
+      "terminal_seal_sha256": "ee48764f31d757900c1d910755529903734135c607fe355cd6115e2bd2653314"
+    },
+    {
+      "assignment_id": "A005-001028-ADVERSARIAL-WIN-7414C6C901F8-0016",
+      "attempt_id": "attempt-0009",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 22,
+      "result_bytes": 39649,
+      "result_sha256": "6ffc4a2c51b6a04f6a2a69d3dbc2f921077d23ca68415e7b2941ee8499c9d87e",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001028_adversarial_0016_attempt_0009_terminal",
+      "terminal_seal_sha256": "f2fe7229ca16e9339b73e8344ce6504f83510f670c0c34502651c947ce23259e"
+    }
+  ],
+  "status": "pass",
+  "validator": "wave_primary_v1",
+  "wave_id": "blind-wave-0003-b"
+}

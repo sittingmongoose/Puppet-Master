@@ -250,34 +250,163 @@
   };
 
   /* ================= wizard facade ================= */
+  /* requirements-slice helpers (S.wizard.reqs) */
+  function reqsEmit() { emit('wizard.reqs', { reqs: S.wizard.reqs }); }
+  function reqsFill(ids, prov) {
+    (ids || []).forEach(function (sid) {
+      if (!S.wizard.reqs.filled[sid]) S.wizard.reqs.filled[sid] = prov;
+    });
+  }
+  function reqsReadiness() {
+    var rq = S.wizard.reqs;
+    var anyDoc = rq.docs.some(function (d) { return d.status === 'parsed' || d.status === 'parsed_warn'; });
+    var anyTurn = Object.keys(rq.answers).length > 0;
+    rq.readiness = (anyDoc || anyTurn) ? 'ready_with_warnings' : 'blocked';
+  }
   var wizardFacade = {
     openTopic: function (id) {
       var t = S.wizard.topics[id];
       if (!t) return { toast: 'Unknown topic.' };
       S.wizard.activeTopic = id;
       if (t.state === 'not_started') { t.state = 'active'; }
+      if (t.thread && !t.thread.length && t.intro) {
+        var firstOpen = null;
+        t.questions.forEach(function (x) { if (!firstOpen && !x.answer) firstOpen = x; });
+        if (firstOpen) {
+          t.thread.push({ role: 'agent', text: t.intro });
+          t.thread.push({ role: 'agent', qid: firstOpen.id, question: true, text: firstOpen.text });
+        }
+      }
       emit('wizard.topic', { topic: t, opened: true });
       logBeat('wizard.openTopic', { id: id });
+      return { ok: true };
+    },
+    uploadDoc: function (id) {
+      var rq = S.wizard.reqs;
+      var spec = null;
+      if (id) {
+        DATA.wizard.reqs.sampleDocs.forEach(function (d) { if (d.id === id) spec = d; });
+        if (!spec) return { toast: 'That file is outside the demo intake set.' };
+        if (rq.docs.some(function (x) { return x.id === spec.id; })) return { disabled: true, reason: 'already_done' };
+      } else {
+        /* a drop of anything attaches the next un-attached sample doc */
+        DATA.wizard.reqs.sampleDocs.forEach(function (d) {
+          if (spec) return;
+          if (!rq.docs.some(function (x) { return x.id === d.id; })) spec = d;
+        });
+        if (!spec) return { disabled: true, reason: 'already_done' };
+      }
+      var doc = { id: spec.id, name: spec.name, kind: spec.kind, size: spec.size, hash: spec.hash,
+                  atoms: spec.atoms, warnings: spec.warnings || null, receipt: spec.receipt,
+                  status: 'preflight', security: 'untrusted' };
+      rq.docs.push(doc);
+      logBeat('wizard.uploadDoc', { id: doc.id });
+      reqsEmit();
+      var live = function () { return S.wizard.reqs.docs.indexOf(doc) !== -1; };
+      var finish = function () {
+        if (!live()) return;
+        doc.status = spec.finalStatus;
+        doc.security = 'cleared';
+        reqsFill(spec.fills, 'reconciled from ' + spec.name);
+        reqsReadiness();
+        reqsEmit();
+      };
+      if (S.ffwd || reducedMotion()) { finish(); return { ok: true }; }
+      var sp = S.clock.speed || 1;
+      setTimeout(function () { if (!live() || doc.status !== 'preflight') return; doc.status = 'extracting'; reqsEmit(); }, 900 / sp);
+      setTimeout(function () { if (!live() || doc.security !== 'untrusted') return; doc.security = 'cleared'; reqsEmit(); }, 1700 / sp);
+      setTimeout(finish, 2600 / sp);
+      return { ok: true };
+    },
+    prdChat: function (turnId, value) {
+      var rq = S.wizard.reqs;
+      var list = DATA.wizard.reqs.builderTurns;
+      var idx = -1;
+      list.forEach(function (t, i) { if (t.id === turnId) idx = i; });
+      if (idx === -1) idx = rq.turnIdx;
+      var turn = list[idx];
+      if (!turn) return { toast: 'The PRD builder has no open question right now.' };
+      if (rq.answers[turn.id]) return { disabled: true, reason: 'already_done' };
+      value = String(value == null ? '' : value).trim() || (turn.chips && turn.chips[0]) || '';
+      if (!rq.turns.some(function (en) { return en.role === 'agent' && en.turnId === turn.id && !en.ack; })) {
+        rq.turns.push({ role: 'agent', turnId: turn.id, text: turn.agent });
+      }
+      rq.turns.push({ role: 'user', turnId: turn.id, text: value });
+      rq.answers[turn.id] = value;
+      var ack = (turn.ackAlt && value === 'Decide now') ? turn.ackAlt : turn.ack;
+      rq.turns.push({ role: 'agent', turnId: turn.id, ack: true, text: ack });
+      reqsFill(turn.fills, 'from builder turn ' + (idx + 1));
+      if (idx >= rq.turnIdx) rq.turnIdx = idx + 1;
+      var next = list[rq.turnIdx];
+      if (next && !rq.answers[next.id] && !rq.turns.some(function (en) { return en.role === 'agent' && en.turnId === next.id && !en.ack; })) {
+        rq.turns.push({ role: 'agent', turnId: next.id, text: next.agent });
+      }
+      reqsReadiness();
+      logBeat('wizard.prdChat', { turn: turn.id, value: value.slice(0, 60) });
+      reqsEmit();
+      return { ok: true };
+    },
+    approvePrd: function () {
+      var rq = S.wizard.reqs;
+      if (rq.prd.approved) return { disabled: true, reason: 'already_done' };
+      if (rq.readiness === 'blocked') return { disabled: true, reason: 'blocked_by_gate' };
+      rq.prd.approved = true;
+      rq.prd.packId = DATA.wizard.reqs.prd.packId;
+      rq.prd.version = DATA.wizard.reqs.prd.version;
+      logBeat('wizard.approvePrd', { packId: rq.prd.packId, version: rq.prd.version });
+      reqsEmit();
+      say('Approved PRD Pack v1 sealed — immutable handoff snapshot created.');
+      return { ok: true };
+    },
+    enterWorkspace: function () {
+      S.wizard.stage = 'interview';
+      if (!S.wizard._ambient) {
+        S.wizard._ambient = true;
+        trackStart('wizard-ambient', WIZ_BEATS);
+      }
+      logBeat('wizard.enterWorkspace', {});
+      emit('wizard.state', wizardSnapshot());
       return { ok: true };
     },
     answer: function (topicId, qId, value) {
       var t = S.wizard.topics[topicId];
       if (!t) return { toast: 'Unknown topic.' };
       var q = null;
-      t.questions.forEach(function (x) { if (x.id === qId || !qId) q = q || x; });
+      t.questions.forEach(function (x) { if (q) return; if (qId ? x.id === qId : !x.answer) q = x; });
       if (!q) return { toast: 'No open question on that topic.' };
       if (q.answer && t.state === 'ready') return { disabled: true, reason: 'already_done' };
       q.answer = value || q.chips[0];
+      if (!t.thread) t.thread = [];
+      t.thread.push({ role: 'user', qid: q.id, text: q.answer });
+      t.thread.push({ role: 'note', qid: q.id, text: 'writing decision to the planning ledger…' });
       logBeat('wizard.answer', { topic: topicId, q: q.id, value: q.answer });
+      var open = null;
+      t.questions.forEach(function (x) { if (!open && !x.answer) open = x; });
+      if (open) {
+        /* more product calls left on this topic — ack and ask the next one */
+        t.thread.push({ role: 'agent', qid: q.id, text: 'Recorded — pinned to the topic ledger.' });
+        t.thread.push({ role: 'agent', qid: open.id, question: true, text: open.text });
+        emit('wizard.topic', { topic: t, answered: q });
+        return { ok: true };
+      }
+      t.thread.push({ role: 'agent', qid: q.id, text: 'Recorded — that was the last open call. Compiling and auditing this topic now.' });
       emit('wizard.topic', { topic: t, answered: q });
+      var closing = function () {
+        t.thread.push({ role: 'agent', text: 'Compiled and audited — this topic is Ready.' });
+      };
       var steps = [
         [0,    { id: topicId, state: 'ledger_syncing', progress: 'writing decision to the planning ledger' }],
         [1500, { id: topicId, state: 'compiling', progress: 'recompiling Topic Plan Draft' }],
         [3500, { id: topicId, state: 'auditing', progress: 'audit pass 1 of 2 · 0 findings' }],
         [6000, { id: topicId, state: 'ready', progress: null }]
       ];
-      if (S.ffwd || reducedMotion()) { t.state = 'ready'; t.progress = null; emit('wizard.topic', { topic: t }); }
-      else steps.forEach(function (st) { setTimeout(function () { M['wizard.topicState'](st[1], false); }, st[0] / (S.clock.speed || 1)); });
+      if (S.ffwd || reducedMotion()) { closing(); t.state = 'ready'; t.progress = null; emit('wizard.topic', { topic: t }); }
+      else steps.forEach(function (st) {
+        setTimeout(function () {
+          if (st[1].state === 'ready') closing();
+          M['wizard.topicState'](st[1], false);
+        }, st[0] / (S.clock.speed || 1));
+      });
       return { ok: true };
     },
     acceptTopic: function (id) {
@@ -337,16 +466,20 @@
       return { ok: true };
     },
     replay: function () {
-      /* Rewind ONLY the wizard slice back to the interview; ambient run/git/docker/usage state untouched (run #47 stays live) */
+      /* Rewind ONLY the wizard slice back to pristine; ambient run/git/docker/usage state untouched (run #47 stays live).
+         Churn does NOT restart here — it re-arms on the next enterWorkspace. */
       S.wizard.replayed = true;
       S.wizard.pack = null; S.wizard.approved = false;
       S.wizard.stage = 'interview'; S.wizard.activeTopic = null;
+      S.wizard.reqs = pristineReqs();
+      S.wizard._ambient = false;
       S.wizard.topics = {};
-      DATA.wizard.topics.forEach(function (t) { S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' }; });
-      trackKill('wizard-ambient'); trackStart('wizard-ambient', WIZ_BEATS);
+      DATA.wizard.topics.forEach(function (t) { S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, intro: t.intro || null, thread: [], questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' }; });
+      trackKill('wizard-ambient');
       logBeat('wizard.replay', {});
       emit('wizard.replay', { runId: S.run.id || 'pcr-47' });
       emit('wizard.state', wizardSnapshot());
+      reqsEmit();
       return { ok: true };
     }
   };
@@ -636,21 +769,31 @@
           }
           tabs.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
           tab.classList.add('active');
-          gutter.innerHTML = '';
-          code.innerHTML = '';
-          TEXT.files[path].forEach(function (lineHtml, i) {
-            var g = document.createElement('div');
-            g.className = 'gutter-line';
-            var num = document.createElement('span');
-            num.className = 'gutter-line-num';
-            num.textContent = i + 1;
-            g.appendChild(num);
-            gutter.appendChild(g);
-            var span = document.createElement('span');
-            span.className = 'code-line';
-            span.innerHTML = '<span class="diff-prefix">&nbsp;</span>' + (lineHtml || '&nbsp;');
-            code.appendChild(span);
-          });
+          /* rich shared renderer (pm6-js-dashboard) when present; inline fallback
+             below handles BOTH data shapes: plain array or { lines, diffs } */
+          var rendered = false;
+          if (window.PM6_RENDER_FILE) {
+            try { rendered = !!window.PM6_RENDER_FILE(path, 'pane1'); } catch (e1) { rendered = false; }
+          }
+          if (!rendered) {
+            var body = TEXT.files[path];
+            var lines = (body && body.lines) ? body.lines : body;
+            gutter.innerHTML = '';
+            code.innerHTML = '';
+            lines.forEach(function (lineHtml, i) {
+              var g = document.createElement('div');
+              g.className = 'gutter-line';
+              var num = document.createElement('span');
+              num.className = 'gutter-line-num';
+              num.textContent = i + 1;
+              g.appendChild(num);
+              gutter.appendChild(g);
+              var span = document.createElement('span');
+              span.className = 'code-line';
+              span.innerHTML = '<span class="diff-prefix">&nbsp;</span>' + (lineHtml || '&nbsp;');
+              code.appendChild(span);
+            });
+          }
         } else {
           say('Opened ' + path);
         }
@@ -831,6 +974,15 @@
     return wizardFacade.answer(a[0], a[1], a.slice(2).join('|'));
   });
   reg('wizard.accept_topic', function (ctx) { return wizardFacade.acceptTopic(argOf(ctx)); });
+  reg('wizard.upload_doc', function (ctx) { return wizardFacade.uploadDoc(argOf(ctx)); });
+  reg('wizard.prd_chat', function (ctx) {
+    var a = argOf(ctx); /* turnId|value */
+    var i = a.indexOf('|');
+    if (i === -1) return wizardFacade.prdChat(a, '');
+    return wizardFacade.prdChat(a.slice(0, i), a.slice(i + 1));
+  });
+  reg('wizard.approve_prd', function () { return wizardFacade.approvePrd(); });
+  reg('wizard.enter_workspace', function () { return wizardFacade.enterWorkspace(); });
   reg('wizard.integrate', function () { return wizardFacade.integrate(); });
   reg('wizard.approve_and_build', function () { return wizardFacade.approveAndBuild(); });
   reg('wizard.replay', function () { return wizardFacade.replay(); });
@@ -953,7 +1105,8 @@
     } catch (e) {}
     try { document.addEventListener('visibilitychange', onVisibility); } catch (e) {}
     trackStart('ambient', AMBIENT_BEATS);
-    trackStart('wizard-ambient', WIZ_BEATS);
+    /* wizard-ambient churn is NOT started here — wizardFacade.enterWorkspace arms it
+       when the user opens the topic workspace (chapter jumps are covered by BACKFILL) */
     trackStart('web', WEB_BEATS); /* research run: queued → read receipts → citations */
     setInterval(safe(clockTick, 'clock'), 250);
     emit('demo.ready', { version: PM_DEMO.version });

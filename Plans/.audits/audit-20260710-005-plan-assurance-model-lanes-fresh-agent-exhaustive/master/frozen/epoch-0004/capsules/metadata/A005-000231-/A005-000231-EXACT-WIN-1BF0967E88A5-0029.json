@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-000231-EXACT-WIN-1BF0967E88A5-0029",
+  "attempt_id": "attempt-0004",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      10562,
+      10573
+    ],
+    [
+      10936,
+      10947
+    ]
+  ],
+  "core_range": [
+    10574,
+    10935
+  ],
+  "core_sha256": "1fd1a36f811c2e5abcc5d565febd092ec4991aa592e176ee4b9bd6b474c88193",
+  "document_path": "Plans/orchestrator-subagent-integration.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/f0/f02e6b036ac625b0bf4daef740aa70e9de33f223f8981e109c6733d8e0063db4.txt",
+  "source_excerpt_sha256": "f02e6b036ac625b0bf4daef740aa70e9de33f223f8981e109c6733d8e0063db4",
+  "source_sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a",
+  "window_id": "WIN-1BF0967E88A5-0029"
+}

@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2464-2475 >>>
+L00002464	negative_constraints:
+L00002465	- Consumer docs must not re-describe a competing full model when owner docs carry the canon.
+L00002466	compatibility_only_notes: []
+L00002467	stale_retired_dispositions:
+L00002468	- Stale canon should be rewritten outright when leaving it in place would remain misleading.
+L00002469	owner_boundary_notes: []
+L00002470	owner_hints:
+L00002471	- Plans/00-plans-index.md
+L00002472	preserved_contractrefs:
+L00002473	- 'ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Progression_Gates.md'
+L00002474	```
+L00002475	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2476-2858 >>>
+L00002476	### 0PI-033 - Shard Governance Boundaries
+L00002477	
+L00002478	```yaml
+L00002479	plan_unit_id: 0PI-033
+L00002480	unit_type: requirement
+L00002481	status: accepted
+L00002482	owner_doc: Plans/00-plans-index.md
+L00002483	canonical_text: The shard index governance text preserves regeneration and check commands, declares Plans/_shards/** and Plans/.evidence/**
+L00002484	  regen-only after canonical doc edits, forbids hand-editing them during packetization or transfer work, keeps post-edit validation
+L00002485	  required, validates Plans/Spec_Lock.json through verify-spec-lock, manages Plans/auto_decisions.jsonl as a deterministic
+L00002486	  log, and treats stale packet-decision references as source-lineage only.
+L00002487	gui_related: false
+L00002488	gui_classification_reason: The unit covers generated governance artifact handling rather than GUI behavior.
+L00002489	split_recommended: false
+L00002490	depends_on: []
+L00002491	unblocks: []
+L00002492	acceptance_criteria:
+L00002493	- Covered source spans remain losslessly available for exact-text audit.
+L00002494	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002495	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002496	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002497	validation_surfaces:
+L00002498	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002499	- python3 scripts/pm-plan-index.py validate
+L00002500	risk_class: shard_governance_boundaries
+L00002501	reasoning_tier: standard
+L00002502	context_scope: plans_index_standardization
+L00002503	implementation_surfaces:
+L00002504	- Plans/00-plans-index.md
+L00002505	node_compile_hint:
+L00002506	  mode: shard_governance_boundaries
+L00002507	  create_worknodes: false
+L00002508	source_lineage:
+L00002509	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0018
+L00002510	preserved_exact_tokens:
+L00002511	- Shard indexes
+L00002512	- python3 scripts/pm-shard-plans.py --generate
+L00002513	- python3 scripts/pm-shard-plans.py --check
+L00002514	- Plans/_shards/**
+L00002515	- Plans/.evidence/**
+L00002516	- do not hand-edit
+L00002517	- Plans/Spec_Lock.json
+L00002518	- python3 scripts/pm-plans-verify.py verify-spec-lock
+L00002519	- Plans/auto_decisions.jsonl
+L00002520	- packet-decision
+L00002521	- source-lineage only
+L00002522	negative_constraints:
+L00002523	- Plans/_shards/** and Plans/.evidence/** must not be hand-edited during packetization or transfer work.
+L00002524	compatibility_only_notes:
+L00002525	- Stale packet-decision references are source-lineage only, not live packet doc intents.
+L00002526	stale_retired_dispositions: []
+L00002527	owner_boundary_notes: []
+L00002528	owner_hints:
+L00002529	- Plans/00-plans-index.md
+L00002530	preserved_contractrefs: []
+L00002531	```
+L00002532	
+L00002533	### 0PI-034 - Shard Index Routing Table
+L00002534	
+L00002535	```yaml
+L00002536	plan_unit_id: 0PI-034
+L00002537	unit_type: requirement
+L00002538	status: accepted
+L00002539	owner_doc: Plans/00-plans-index.md
+L00002540	canonical_text: The shard index table preserves every Source doc to Plans/_shards/<doc-slug>/00-index.md mapping in the index, including
+L00002541	  orchestrator subagents, FinalGUISpec, bootstrap, prompt, wiring, GUI checklist, widget, and 00-plans-index.md shard entries.
+L00002542	gui_related: false
+L00002543	gui_classification_reason: The unit records document-to-shard routing metadata, not GUI behavior.
+L00002544	split_recommended: false
+L00002545	depends_on: []
+L00002546	unblocks: []
+L00002547	acceptance_criteria:
+L00002548	- Covered source spans remain losslessly available for exact-text audit.
+L00002549	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002550	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002551	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002552	validation_surfaces:
+L00002553	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002554	- python3 scripts/pm-plan-index.py validate
+L00002555	risk_class: shard_index_routing_table
+L00002556	reasoning_tier: standard
+L00002557	context_scope: plans_index_standardization
+L00002558	implementation_surfaces:
+L00002559	- Plans/00-plans-index.md
+L00002560	node_compile_hint:
+L00002561	  mode: shard_index_routing_table
+L00002562	  create_worknodes: false
+L00002563	source_lineage:
+L00002564	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0018
+L00002565	preserved_exact_tokens:
+L00002566	- Source doc
+L00002567	- Shard index
+L00002568	- orchestrator-subagent-integration.md
+L00002569	- FinalGUISpec.md
+L00002570	- Planning_Ledger_System.md
+L00002571	- Plan_Document_System.md
+L00002572	- Plan_To_Node_Compilation.md
+L00002573	- Bootstrap_Planning_Migration.md
+L00002574	- Prompt_Pipeline.md
+L00002575	- Wiring_Matrix.md
+L00002576	- GUI_Rebuild_Requirements_Checklist.md
+L00002577	- Widget_System.md
+L00002578	- 00-plans-index.md
+L00002579	negative_constraints: []
+L00002580	compatibility_only_notes: []
+L00002581	stale_retired_dispositions: []
+L00002582	owner_boundary_notes:
+L00002583	- The table is an index routing aid and does not replace the listed source docs.
+L00002584	owner_hints:
+L00002585	- Plans/00-plans-index.md
+L00002586	preserved_contractrefs: []
+L00002587	```
+L00002588	
+L00002589	### 0PI-035 - Containers Registry Unraid Owner Scope
+L00002590	
+L00002591	```yaml
+L00002592	plan_unit_id: 0PI-035
+L00002593	unit_type: requirement
+L00002594	status: accepted
+L00002595	owner_doc: Plans/00-plans-index.md
+L00002596	canonical_text: The 2026-03-07 containers, registry, and Unraid addendum registers Plans/Containers_Registry_and_Unraid.md
+L00002597	  as the canonical SSOT for first-class DockerHub image publishing, container runtime management, managed Unraid template
+L00002598	  repositories, ca_profile.xml behavior, protected repo creation, managed template-repo defaults, ca_profile.xml scope/editability,
+L00002599	  and maintainer-asset handling.
+L00002600	gui_related: false
+L00002601	gui_classification_reason: The unit records container/registry owner scope and operational canon rather than visual presentation.
+L00002602	split_recommended: false
+L00002603	depends_on: []
+L00002604	unblocks: []
+L00002605	acceptance_criteria:
+L00002606	- Covered source spans remain losslessly available for exact-text audit.
+L00002607	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002608	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002609	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002610	validation_surfaces:
+L00002611	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002612	- python3 scripts/pm-plan-index.py validate
+L00002613	risk_class: containers_registry_unraid_owner_scope
+L00002614	reasoning_tier: standard
+L00002615	context_scope: plans_index_standardization
+L00002616	implementation_surfaces:
+L00002617	- Plans/00-plans-index.md
+L00002618	node_compile_hint:
+L00002619	  mode: containers_registry_unraid_owner_scope
+L00002620	  create_worknodes: false
+L00002621	source_lineage:
+L00002622	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0019
+L00002623	preserved_exact_tokens:
+L00002624	- 2026-03-07 addendum — containers, registry, and Unraid
+L00002625	- Plans/Containers_Registry_and_Unraid.md
+L00002626	- canonical SSOT
+L00002627	- first-class DockerHub image publishing
+L00002628	- managed Unraid template repositories
+L00002629	- ca_profile.xml
+L00002630	- protected repo creation
+L00002631	- managed template-repo defaults
+L00002632	- maintainer-asset handling
+L00002633	negative_constraints: []
+L00002634	compatibility_only_notes: []
+L00002635	stale_retired_dispositions: []
+L00002636	owner_boundary_notes:
+L00002637	- Plans/Containers_Registry_and_Unraid.md owns the canonical container, registry, and Unraid behavior.
+L00002638	owner_hints:
+L00002639	- Plans/00-plans-index.md
+L00002640	preserved_contractrefs: []
+L00002641	```
+L00002642	
+L00002643	### 0PI-036 - Docker Manager Auth UX Routing
+L00002644	
+L00002645	```yaml
+L00002646	plan_unit_id: 0PI-036
+L00002647	unit_type: requirement
+L00002648	status: accepted
+L00002649	owner_doc: Plans/00-plans-index.md
+L00002650	canonical_text: The containers, registry, and Unraid addendum preserves contextual Docker management UI and Docker Manager
+L00002651	  UI routing, including DockerHub browser/PAT auth UX, requested vs effective auth capability, Publish / Unraid, project-focused
+L00002652	  Kubernetes placement, and contextual Docker Manager UI scope.
+L00002653	gui_related: true
+L00002654	gui_classification_reason: The unit covers Docker Manager UI, auth UX, and user-facing placement surfaces.
+L00002655	split_recommended: false
+L00002656	depends_on: []
+L00002657	unblocks: []
+L00002658	acceptance_criteria:
+L00002659	- Covered source spans remain losslessly available for exact-text audit.
+L00002660	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002661	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002662	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002663	validation_surfaces:
+L00002664	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002665	- python3 scripts/pm-plan-index.py validate
+L00002666	risk_class: docker_manager_auth_ux_routing
+L00002667	reasoning_tier: standard
+L00002668	context_scope: plans_index_standardization
+L00002669	implementation_surfaces:
+L00002670	- Plans/00-plans-index.md
+L00002671	node_compile_hint:
+L00002672	  mode: docker_manager_auth_ux_routing
+L00002673	  create_worknodes: false
+L00002674	source_lineage:
+L00002675	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0019
+L00002676	preserved_exact_tokens:
+L00002677	- contextual Docker management UI
+L00002678	- Docker Manager UI
+L00002679	- DockerHub browser/PAT auth UX
+L00002680	- requested vs effective auth capability
+L00002681	- Publish / Unraid
+L00002682	- project-focused Kubernetes placement
+L00002683	negative_constraints: []
+L00002684	compatibility_only_notes: []
+L00002685	stale_retired_dispositions: []
+L00002686	owner_boundary_notes:
+L00002687	- Plans/Containers_Registry_and_Unraid.md owns Docker Manager operational subviews and related UI canon.
+L00002688	owner_hints:
+L00002689	- Plans/00-plans-index.md
+L00002690	preserved_contractrefs: []
+L00002691	```
+L00002692	
+L00002693	### 0PI-037 - Runtime Packet Owner Routing
+L00002694	
+L00002695	```yaml
+L00002696	plan_unit_id: 0PI-037
+L00002697	unit_type: requirement
+L00002698	status: accepted
+L00002699	owner_doc: Plans/00-plans-index.md
+L00002700	canonical_text: The Runtime Packet Index Coverage Consolidation Addendum preserves owner routing for scheduler semantics and
+L00002701	  queue analysis, event/contracts and storage for attempts, safe points, and remediation lineage, provider/auth/permission
+L00002702	  mappings into runtime taxonomy, glossary ownership for runtime terms, canonical events/enums/identities/action fields, scheduler
+L00002703	  semantics, attempt lifecycle, graph-lock behavior, persistence, and restart rules.
+L00002704	gui_related: false
+L00002705	gui_classification_reason: The unit records runtime contract and owner routing rather than rendering or UI behavior.
+L00002706	split_recommended: false
+L00002707	depends_on: []
+L00002708	unblocks: []
+L00002709	acceptance_criteria:
+L00002710	- Covered source spans remain losslessly available for exact-text audit.
+L00002711	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002712	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002713	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002714	validation_surfaces:
+L00002715	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002716	- python3 scripts/pm-plan-index.py validate
+L00002717	risk_class: runtime_packet_owner_routing
+L00002718	reasoning_tier: standard
+L00002719	context_scope: plans_index_standardization
+L00002720	implementation_surfaces:
+L00002721	- Plans/00-plans-index.md
+L00002722	node_compile_hint:
+L00002723	  mode: runtime_packet_owner_routing
+L00002724	  create_worknodes: false
+L00002725	source_lineage:
+L00002726	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0020
+L00002727	preserved_exact_tokens:
+L00002728	- Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)
+L00002729	- scheduler semantics and queue analysis
+L00002730	- event/contracts and storage
+L00002731	- attempts, safe points, and remediation lineage
+L00002732	- provider/auth/permission mappings
+L00002733	- runtime taxonomy
+L00002734	- Glossary.md
+L00002735	- canonical events, enums, identities, and action fields
+L00002736	- graph-lock behavior
+L00002737	negative_constraints: []
+L00002738	compatibility_only_notes: []
+L00002739	stale_retired_dispositions: []
+L00002740	owner_boundary_notes:
+L00002741	- Runtime contracts, executor protocol, storage, and glossary docs own their respective details.
+L00002742	owner_hints:
+L00002743	- Plans/00-plans-index.md
+L00002744	preserved_contractrefs:
+L00002745	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md,
+L00002746	  ContractName:Plans/Glossary.md'
+L00002747	```
+L00002748	
+L00002749	### 0PI-038 - Runtime Rendering And Blocked UX
+L00002750	
+L00002751	```yaml
+L00002752	plan_unit_id: 0PI-038
+L00002753	unit_type: requirement
+L00002754	status: accepted
+L00002755	owner_doc: Plans/00-plans-index.md
+L00002756	canonical_text: The Runtime Packet Index Coverage Consolidation Addendum preserves blocked-state UX and recovery actions plus
+L00002757	  rendering and interaction routing through Plans/Run_Graph_View.md, Plans/Orchestrator_Page.md, and Plans/FinalGUISpec.md,
+L00002758	  with planning-state semantics consumed by chain wizard, assistant chat, and interview subagent docs.
+L00002759	gui_related: true
+L00002760	gui_classification_reason: The unit covers blocked-state UX, recovery actions, rendering, and interaction surfaces.
+L00002761	split_recommended: false
+L00002762	depends_on: []
+L00002763	unblocks: []
+L00002764	acceptance_criteria:
+L00002765	- Covered source spans remain losslessly available for exact-text audit.
+L00002766	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002767	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002768	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002769	validation_surfaces:
+L00002770	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002771	- python3 scripts/pm-plan-index.py validate
+L00002772	risk_class: runtime_rendering_and_blocked_ux
+L00002773	reasoning_tier: standard
+L00002774	context_scope: plans_index_standardization
+L00002775	implementation_surfaces:
+L00002776	- Plans/00-plans-index.md
+L00002777	node_compile_hint:
+L00002778	  mode: runtime_rendering_and_blocked_ux
+L00002779	  create_worknodes: false
+L00002780	source_lineage:
+L00002781	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0020
+L00002782	preserved_exact_tokens:
+L00002783	- blocked-state UX and recovery actions
+L00002784	- Plans/Run_Graph_View.md
+L00002785	- Plans/Orchestrator_Page.md
+L00002786	- Plans/FinalGUISpec.md
+L00002787	- rendering and interaction
+L00002788	- Plans/chain-wizard-flexibility.md
+L00002789	- Plans/assistant-chat-design.md
+L00002790	- Plans/interview-subagent-integration.md
+L00002791	negative_constraints: []
+L00002792	compatibility_only_notes: []
+L00002793	stale_retired_dispositions: []
+L00002794	owner_boundary_notes:
+L00002795	- Rendering and blocked-state UX consumers must defer to runtime and GUI owner docs.
+L00002796	owner_hints:
+L00002797	- Plans/00-plans-index.md
+L00002798	preserved_contractrefs:
+L00002799	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md,
+L00002800	  ContractName:Plans/Glossary.md'
+L00002801	```
+L00002802	
+L00002803	### 0PI-039 - Source Control Actions Docker Owner Split
+L00002804	
+L00002805	```yaml
+L00002806	plan_unit_id: 0PI-039
+L00002807	unit_type: requirement
+L00002808	status: accepted
+L00002809	owner_doc: Plans/00-plans-index.md
+L00002810	canonical_text: 'The 2026-03-12 source control, GitHub Actions, and Docker Manager addendum preserves the owner split: Plans/GitHub_Integration.md
+L00002811	  owns Git-first Source Control and GitHub Actions, Plans/WorktreeGitImprovement.md owns worktree correctness and runtime
+L00002812	  alignment, Plans/Containers_Registry_and_Unraid.md owns Docker Manager, Plans/newtools.md owns Docker/Actions doctor and
+L00002813	  result minima, and Contracts, storage, Permissions, and usage are anti-drift companions.'
+L00002814	gui_related: false
+L00002815	gui_classification_reason: The unit records owner-doc routing and runtime/worktree/container responsibilities rather than
+L00002816	  visual presentation.
+L00002817	split_recommended: false
+L00002818	depends_on: []
+L00002819	unblocks: []
+L00002820	acceptance_criteria:
+L00002821	- Covered source spans remain losslessly available for exact-text audit.
+L00002822	- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+L00002823	- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+L00002824	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002825	validation_surfaces:
+L00002826	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002827	- python3 scripts/pm-plan-index.py validate
+L00002828	risk_class: source_control_actions_docker_owner_split
+L00002829	reasoning_tier: standard
+L00002830	context_scope: plans_index_standardization
+L00002831	implementation_surfaces:
+L00002832	- Plans/00-plans-index.md
+L00002833	node_compile_hint:
+L00002834	  mode: source_control_actions_docker_owner_split
+L00002835	  create_worknodes: false
+L00002836	source_lineage:
+L00002837	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0021
+L00002838	preserved_exact_tokens:
+L00002839	- 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager
+L00002840	- Git-first Source Control
+L00002841	- GitHub Actions
+L00002842	- Plans/WorktreeGitImprovement.md
+L00002843	- worktree correctness and runtime alignment
+L00002844	- Docker Manager
+L00002845	- Docker/Actions doctor and result minima
+L00002846	- anti-drift companions
+L00002847	negative_constraints: []
+L00002848	compatibility_only_notes: []
+L00002849	stale_retired_dispositions: []
+L00002850	owner_boundary_notes:
+L00002851	- Feature-owner docs own their surfaces; anti-drift companions must be read alongside them.
+L00002852	owner_hints:
+L00002853	- Plans/00-plans-index.md
+L00002854	preserved_contractrefs:
+L00002855	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md,
+L00002856	  ContractName:Plans/storage-plan.md'
+L00002857	```
+L00002858	
+
+<<< CONTEXT_AFTER canonical_document_lines=2859-2870 >>>
+L00002859	### 0PI-040 - Visible Source-Control Surface Routing
+L00002860	
+L00002861	```yaml
+L00002862	plan_unit_id: 0PI-040
+L00002863	unit_type: requirement
+L00002864	status: accepted
+L00002865	owner_doc: Plans/00-plans-index.md
+L00002866	canonical_text: The source control, GitHub Actions, and Docker Manager restart-pass owner map preserves FinalGUISpec ownership
+L00002867	  of activity-bar and side-panel vocabulary, Source Control, GitHub Actions, Docker Manager, cross-surface deep links, blocked-state
+L00002868	  presentation, mirror/owner attention behavior, GitHub Actions Current Branch / Workflows / Settings, secrets, variables,
+L00002869	  /environments, rerun/cancel/pin, workflow authoring help, Docker Manager operational subviews, /auth/Unraid, Publish / Unraid,
+L00002870	  Kubernetes placement, Orchestrator receipts, and deep links into owner surfaces.

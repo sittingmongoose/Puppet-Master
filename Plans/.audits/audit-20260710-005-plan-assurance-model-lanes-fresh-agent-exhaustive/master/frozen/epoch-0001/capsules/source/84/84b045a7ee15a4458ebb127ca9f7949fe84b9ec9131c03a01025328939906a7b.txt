@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE 11140-11151 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0077
+preserved_exact_tokens:
+  - "multi-model coordination overlay"
+  - "child-run system"
+negative_constraints:
+  - "Crew mode does not replace child cards, child history, or parent-owned synthesis."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+
+<<< AUTHORITATIVE_CORE 11152-11512 >>>
+### ACD-164 - Attributable Crew Board
+
+```yaml
+plan_unit_id: ACD-164
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Default crew behavior uses same task framing, often same Persona, model and
+  provider diversity, an explicit attributable crew board, and parent-owned
+  final synthesis; crew boards are inspectable on demand, not hidden memory or
+  capability grants.
+gui_related: true
+gui_classification_reason: Crew boards and inspectable attribution are visible coordination UI.
+depends_on: [ACD-163]
+unblocks: []
+acceptance_criteria:
+  - Crew members share task framing unless configured otherwise.
+  - Diversity comes primarily from model/provider choice.
+  - Crew board attribution is inspectable on demand.
+  - Crew boards do not become hidden memory or capability grants.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_board
+reasoning_tier: standard
+context_scope: crew_mode
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: attributable_crew_board
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0077
+preserved_exact_tokens:
+  - "Persona"
+  - "explicit attributable crew board"
+  - "not hidden memory"
+  - "do not grant capabilities"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+```
+
+### ACD-165 - Plan Crew Child Run Alignment
+
+```yaml
+plan_unit_id: ACD-165
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Plan-mode and crew-mode rules align with the PM child-run contract.
+gui_related: false
+gui_classification_reason: Plan/Crew alignment is runtime contract behavior.
+depends_on: [ACD-163]
+unblocks: [ACD-166, ACD-167]
+acceptance_criteria:
+  - Plan-mode delegated work follows child-run contracts.
+  - Crew-mode delegated work follows child-run contracts.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_crew_alignment
+reasoning_tier: standard
+context_scope: crew_mode
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: plan_crew_child_run_alignment
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0078
+preserved_exact_tokens:
+  - "Plan Mode + Crew Mode"
+  - "PM child-run contract"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-166 - Ask Plan Readonly Children
+
+```yaml
+plan_unit_id: ACD-166
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  `ask` and `plan` may launch delegated child runs only for read-only research
+  or analysis; parent mode is a hard ceiling, children may narrow but not widen
+  parent authority, and unresolved required planning children keep the plan
+  provisional rather than falsely complete.
+gui_related: false
+gui_classification_reason: Parent/child authority ceilings are run-mode and permission semantics.
+depends_on: [ACD-165]
+unblocks: [ACD-167]
+acceptance_criteria:
+  - Ask and Plan delegated children remain read-only research or analysis.
+  - Children cannot widen parent mode authority.
+  - Unresolved required planning children keep plans provisional.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_mode_delegation
+reasoning_tier: high
+context_scope: run_modes
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/Permissions_System.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: ask_plan_readonly_children
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0079
+preserved_exact_tokens:
+  - "ask"
+  - "plan"
+  - "read-only research or analysis"
+  - "parent mode is a hard ceiling"
+negative_constraints:
+  - "No code-writing, file mutation, or execution child may be launched from ask or plan."
+  - "A child may narrow but must not widen parent authority."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-167 - Crew Mode Parent Ceiling Inheritance
+
+```yaml
+plan_unit_id: ACD-167
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Crew is an overlay, not a new runtime-mode enum; a crew launched from `plan`
+  remains read-only, and a crew launched from `regular` or `yolo` inherits
+  those parent ceilings and guardrails.
+gui_related: false
+gui_classification_reason: Crew parent ceiling inheritance is run-mode authority behavior.
+depends_on: [ACD-163, ACD-166]
+unblocks: [ACD-168]
+acceptance_criteria:
+  - Crew mode does not define a separate runtime-mode enum.
+  - Plan-launched crews remain read-only.
+  - Regular/yolo-launched crews inherit parent ceilings and guardrails.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_parent_ceiling
+reasoning_tier: high
+context_scope: crew_mode
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/Models_System.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: crew_mode_parent_ceiling_inheritance
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0080
+preserved_exact_tokens:
+  - "plan"
+  - "regular"
+  - "yolo"
+negative_constraints:
+  - "Crew is an overlay, not a new runtime-mode enum."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-168 - Crew Selection Provider Resolution
+
+```yaml
+plan_unit_id: ACD-168
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  When crew mode is first invoked for a relevant scope, PM asks whether to use
+  a valid default crew, otherwise asks which models to use, confirms
+  provider/runtime mapping where ambiguity or restriction-sensitive mapping
+  exists, and normalizes any Copilot member to a crew-level Copilot provider
+  constraint.
+gui_related: true
+gui_classification_reason: Crew selection prompts and provider confirmation are visible user flows.
+depends_on: [ACD-163]
+unblocks: []
+acceptance_criteria:
+  - Valid default crew prompts are offered first.
+  - Model selection occurs when no valid default crew exists.
+  - Ambiguous or restriction-sensitive provider/runtime mapping is confirmed.
+  - Copilot crew members normalize the crew to a Copilot provider constraint.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: crew_selection
+reasoning_tier: standard
+context_scope: crew_mode
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: crew_selection_provider_resolution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0081
+preserved_exact_tokens:
+  - "default crew"
+  - "Copilot"
+  - "crew-level provider constraint"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+```
+
+### ACD-169 - Interview Shared Question System Bridge
+
+```yaml
+plan_unit_id: ACD-169
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Interview mode uses the same shared question system that powers assistant clarification flows and builder clarification flows.
+gui_related: true
+gui_classification_reason: Interview mode question flows are visible chat UI.
+depends_on: []
+unblocks: [ACD-170, ACD-171, ACD-172]
+acceptance_criteria:
+  - Interview mode uses the shared question system.
+  - Assistant clarification and builder clarification flows share the same baseline question behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: interview_question_bridge
+reasoning_tier: standard
+context_scope: interview_chat
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: interview_shared_question_system_bridge
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0082
+preserved_exact_tokens:
+  - "Interview"
+  - "shared question system"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-170 - Shared Question Card Baseline Fields
+
+```yaml
+plan_unit_id: ACD-170
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Question flows show question text, suggested options as buttons/chips when
+  provided, a mandatory `Something else` or freeform path when freeform is
+  allowed, and current draft answer state.
+gui_related: true
+gui_classification_reason: Question text, buttons/chips, freeform path, and draft state are visible question UI.
+depends_on: [ACD-169]
+unblocks: [ACD-171, ACD-172]
+acceptance_criteria:
+  - Question flows show question text and suggested options.
+  - Something else/freeform path is mandatory when freeform is allowed.
+  - Current draft answer state remains visible.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_card_baseline
+reasoning_tier: standard
+context_scope: interview_chat
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: shared_question_card_baseline_fields
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0083
+preserved_exact_tokens:
+  - "Something else"
+  - "freeform"
+  - "current draft answer state"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-171 - Questionnaire Order Optional Dismissed State
+
+```yaml
+plan_unit_id: ACD-171
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Interview question UI is the reusable baseline for Assistant, Interviewer,
+  and requirements/document-builder question cards; questions are required
+  unless explicitly optional, multiple-question questionnaires may be answered
+  or revised in any order, and dismissal pauses the branch with explicit
+  dismissed state rather than fabricated submission.
+gui_related: true
+gui_classification_reason: Questionnaire order, revision, and dismissed state are visible question-flow UI.
+depends_on: [ACD-170]
+unblocks: [ACD-172]
+acceptance_criteria:
+  - Question UI baseline is shared across Assistant, Interviewer, and builder flows.
+  - Multiple questions can be answered and revised in any order.
+  - Dismissal pauses the branch with explicit dismissed state.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: questionnaire_state
+reasoning_tier: high
+context_scope: interview_chat
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: questionnaire_order_optional_dismissed_state
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0083
+preserved_exact_tokens:
+  - "Assistant"
+  - "Interviewer"
+  - "requirements/document-builder"
+  - "dismissed state"
+negative_constraints:
+  - "Dismissing a questionnaire pauses that conversational branch and returns an explicit dismissed state; it does not fabricate a submitted answer set."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+
+<<< CONTEXT_AFTER 11513-11524 >>>
+### ACD-172 - Clarification Questionnaire Identity Resume
+
+```yaml
+plan_unit_id: ACD-172
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Structured clarification flows preserve question identity and deterministic
+  resume; `clarification_request` may point at a multi-question questionnaire,
+  `question_ids[]` remain canonical cross-surface identifiers, and thread or
+  wizard resume restores the same outstanding questionnaire state or resolved

@@ -351,10 +351,9 @@
       display: block;
       width: 100%;
       padding: 5px 8px;
-      border: none;
-      border-left: 2px solid var(--accent-primary);
+      border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, var(--border));
       border-radius: var(--radius-sm);
-      background: none;
+      background: color-mix(in srgb, var(--accent-primary) 8%, transparent);
       color: var(--text-primary);
       font-size: var(--fs-xs);
       font-family: var(--body-font);
@@ -363,7 +362,7 @@
       margin-bottom: 2px;
     }
     .pm6-status-note:hover { background: var(--accent-soft); }
-    .pm6-status-note.pm6-note-warn { border-left-color: var(--accent-orange); }
+    .pm6-status-note.pm6-note-warn { background: color-mix(in srgb, var(--accent-orange) 8%, transparent); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
     .pm6-status-note.pm6-note-read { opacity: .55; }
     .pm6-status-note .pm6-status-note-meta { display: block; font-size: var(--fs-2xs); color: var(--text-muted); }
     .pm6-status-lsp-row { cursor: pointer; padding: 2px 0; }
@@ -382,7 +381,6 @@
       color: var(--text-primary);
       background: var(--surface-elevated);
       border: var(--border-width) solid var(--border-light);
-      border-left: 3px solid var(--accent-primary);
       border-radius: var(--radius-md);
       box-shadow: var(--elev-2);
       animation: pm6-toast-in var(--motion-med) var(--ease-spring);
@@ -417,23 +415,39 @@
     [data-theme^="retro"] .pm6-status-badge { border-radius: 0; }
     [data-theme^="retro"] .pm6-bottom-empty-title { font-family: var(--mono-font); }
 
+    /* popover + toast float above the sheet = reading plates */
     [data-theme^="glass"] .pm6-status-pop {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-plate);
       border-color: var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge), var(--elev-3);
     }
     [data-theme^="glass"] .pm-toast {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-plate);
       border-color: var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge), var(--elev-2);
     }
     [data-theme^="glass"] .pm6-session-chip,
     [data-theme^="glass"] .pm6-status-chip:hover,
-    [data-theme^="glass"] .pm6-status-item:hover { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)); }
+    [data-theme^="glass"] .pm6-status-item:hover { background: var(--pm6-glass-step-2); }
 
     [data-theme^="basic"] .pm6-status-pop,
     [data-theme^="basic"] .pm-toast { box-shadow: none; }
     [data-theme^="basic"] .pm6-status-orch .pm6-status-dot { animation: none; }
+
+    /* friendly cozy: frosted drawer internals + lavender branch/worktree accents */
+    [data-theme^="friendly"] .bottom-tabs { background: transparent; }
+    [data-theme^="friendly"] .fm-wt-breadcrumb {
+      background: transparent;
+      border-bottom-color: color-mix(in srgb, var(--pm6-cozy-lav) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
+    }
+    [data-theme^="friendly"] .fm-wt-breadcrumb .fm-wt-branch { color: var(--accent-magenta); }
+    [data-theme^="friendly"] .fm-wt-breadcrumb .fm-wt-icon { color: var(--accent-magenta); }
+    [data-theme^="friendly"] .pm6-status-branch { color: var(--accent-magenta); }
+    [data-theme^="friendly"] .pm-toast {
+      border-radius: var(--radius-md);
+      border-color: var(--border);
+      box-shadow: var(--elev-3);
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .pm-toast,

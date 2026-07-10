@@ -1,0 +1,315 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3020-3031 >>>
+L00003020	preserved_exact_tokens:
+L00003021	  - "role/function axis"
+L00003022	  - "stack axis"
+L00003023	  - "operation type"
+L00003024	  - "fullstack-developer"
+L00003025	  - "governance/review/corroboration Personas"
+L00003026	negative_constraints:
+L00003027	  - "Governance/review/corroboration Personas do not collapse into implementation Personas merely because repository language hints are strong."
+L00003028	owner_hints:
+L00003029	  - Plans/Personas.md
+L00003030	```
+L00003031	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3032-3317 >>>
+L00003032	### P-052 - Specialty Browser Resolution Presentation
+L00003033	
+L00003034	```yaml
+L00003035	plan_unit_id: P-052
+L00003036	unit_type: requirement
+L00003037	status: accepted
+L00003038	owner_doc: Plans/Personas.md
+L00003039	canonical_text: >-
+L00003040	  The specialty browser uses grouping and auto-resolution together: top-level group, specialty within group, optional stack/framework refinement, then project/global override.
+L00003041	gui_related: true
+L00003042	gui_classification_reason: This unit defines user-visible specialty browser ordering and presentation.
+L00003043	split_recommended: false
+L00003044	depends_on:
+L00003045	  - P-047
+L00003046	  - P-051
+L00003047	unblocks: []
+L00003048	acceptance_criteria:
+L00003049	  - Browser presentation starts at the top-level group.
+L00003050	  - Specialty within group and optional stack/framework refinement are represented before project/global override.
+L00003051	  - Browser grouping remains aligned with auto-resolution behavior.
+L00003052	validation_surfaces:
+L00003053	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003054	  - python3 scripts/pm-plan-index.py validate
+L00003055	risk_class: specialty_browser_resolution_drift
+L00003056	reasoning_tier: standard
+L00003057	context_scope: personas_specialty_resolution
+L00003058	implementation_surfaces:
+L00003059	  - Plans/Personas.md
+L00003060	node_compile_hint:
+L00003061	  mode: requirement
+L00003062	  create_worknodes: false
+L00003063	source_lineage:
+L00003064	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0058
+L00003065	preserved_exact_tokens:
+L00003066	  - "top-level group"
+L00003067	  - "specialty within group"
+L00003068	  - "optional stack/framework refinement"
+L00003069	  - "project/global override"
+L00003070	negative_constraints:
+L00003071	  - "No additional negative constraints beyond the canonical text."
+L00003072	owner_hints:
+L00003073	  - Plans/Personas.md
+L00003074	```
+L00003075	
+L00003076	### P-001 - Personas Retired Source-Preserving Bridge
+L00003077	
+L00003078	```yaml
+L00003079	plan_unit_id: P-001
+L00003080	unit_type: compatibility_disposition
+L00003081	status: retired
+L00003082	owner_doc: Plans/Personas.md
+L00003083	canonical_text: >-
+L00003084	  P-001 is a retired source-preserving bridge for generated PDS Owner / Consumer Map, PlanUnits, and Migration Coverage audit material. Product prose from Personas-S0001 through Personas-S0058 is covered by fine-grained P-002 through P-052; Personas-S0059, Personas-S0060, and Personas-S0062 are generated structural/audit metadata, and Personas-S0061 is retired bridge lineage. No residual source_preserving_planunit product coverage remains for Plans/Personas.md.
+L00003085	gui_related: false
+L00003086	gui_classification_reason: The live retired bridge is migration/audit metadata only; the historical bridge span preserved GUI-related source tokens in span_map and coverage_map.
+L00003087	split_recommended: false
+L00003088	depends_on:
+L00003089	  - P-002
+L00003090	  - P-003
+L00003091	  - P-004
+L00003092	  - P-005
+L00003093	  - P-006
+L00003094	  - P-007
+L00003095	  - P-008
+L00003096	  - P-009
+L00003097	  - P-010
+L00003098	  - P-011
+L00003099	  - P-012
+L00003100	  - P-013
+L00003101	  - P-014
+L00003102	  - P-015
+L00003103	  - P-016
+L00003104	  - P-017
+L00003105	  - P-018
+L00003106	  - P-019
+L00003107	  - P-020
+L00003108	  - P-021
+L00003109	  - P-022
+L00003110	  - P-023
+L00003111	  - P-024
+L00003112	  - P-025
+L00003113	  - P-026
+L00003114	  - P-027
+L00003115	  - P-028
+L00003116	  - P-029
+L00003117	  - P-030
+L00003118	  - P-031
+L00003119	  - P-032
+L00003120	  - P-033
+L00003121	  - P-034
+L00003122	  - P-035
+L00003123	  - P-036
+L00003124	  - P-037
+L00003125	  - P-038
+L00003126	  - P-039
+L00003127	  - P-040
+L00003128	  - P-041
+L00003129	  - P-042
+L00003130	  - P-043
+L00003131	  - P-044
+L00003132	  - P-045
+L00003133	  - P-046
+L00003134	  - P-047
+L00003135	  - P-048
+L00003136	  - P-049
+L00003137	  - P-050
+L00003138	  - P-051
+L00003139	  - P-052
+L00003140	unblocks: []
+L00003141	acceptance_criteria:
+L00003142	  - P-001 does not override P-002 through P-052 for Personas-S0001 through Personas-S0058.
+L00003143	  - Retired generated bridge and Migration Coverage spans remain available for exact-text audit.
+L00003144	  - Plans/Personas.md has no residual source_preserving_planunit product coverage after this bridge retirement.
+L00003145	  - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition.
+L00003146	validation_surfaces:
+L00003147	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003148	  - python3 scripts/pm-plan-index.py validate
+L00003149	risk_class: residual_bridge_overreach
+L00003150	reasoning_tier: standard
+L00003151	context_scope: personas_residual_bridge
+L00003152	implementation_surfaces:
+L00003153	  - Plans/Personas.md
+L00003154	node_compile_hint:
+L00003155	  mode: retired_source_preserving_bridge
+L00003156	  create_worknodes: false
+L00003157	source_lineage:
+L00003158	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0059
+L00003159	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0060
+L00003160	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0061
+L00003161	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0062
+L00003162	preserved_exact_tokens:
+L00003163	  - "P-001"
+L00003164	  - "Personas (Canonical SSOT) Source-Preserving PlanUnit"
+L00003165	  - "source_preserving_planunit"
+L00003166	  - "retired_source_preserving_bridge"
+L00003167	  - "source_preserving_bridge_retired"
+L00003168	  - "source-preserving"
+L00003169	  - "Owner / Consumer Map"
+L00003170	  - "PlanUnits"
+L00003171	  - "Migration Coverage"
+L00003172	  - "P-002"
+L00003173	  - "P-052"
+L00003174	negative_constraints:
+L00003175	  - "P-001 must not be used as implementation-ready product coverage for spans now mapped to P-002 through P-052."
+L00003176	  - "Do not remap Personas-S0001 through Personas-S0058 back to P-001."
+L00003177	owner_hints:
+L00003178	  - Plans/Personas.md
+L00003179	```
+L00003180	
+L00003181	## Migration Coverage
+L00003182	
+L00003183	Original hash: `9dfc2723f4722146795000e263279f793663e43bd65205bfa071930aba45f9a5`.
+L00003184	
+L00003185	Run-scoped proof artifacts:
+L00003186	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00003187	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00003188	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00003189	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00003190	
+L00003191	Original spans from `Personas-S0001` through `Personas-S0058` are preserved in place and atomized into fine-grained PlanUnits `P-002` through `P-052`. Generated structural/audit spans `Personas-S0059` through `Personas-S0062` are explicitly dispositioned; `P-001` is retired as bridge lineage and no residual `source_preserving_planunit` product coverage remains for `Plans/Personas.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+L00003192	
+L00003193	## Ledger Compile Addendum - pldg-20260614-001
+L00003194	
+L00003195	### P-053 - Persona Registry Mutability And Subagent Binding Compile Addendum
+L00003196	
+L00003197	```yaml
+L00003198	plan_unit_id: P-053
+L00003199	unit_type: requirement
+L00003200	status: accepted
+L00003201	owner_doc: Plans/Personas.md
+L00003202	canonical_text: >-
+L00003203	  Personas.md owns Persona identity, Persona body storage, persona_registry semantics, protected core Personas,
+L00003204	  tweakable built-in Personas, and user-created Personas. Subagent launch records may bind to Personas, but the
+L00003205	  subagent_registry is a runnable delegation registry and must not store canonical Persona prompt bodies. Protected
+L00003206	  platform Personas are locked for platform safety, tweakable built-ins preserve shipped defaults for upgrade and restore,
+L00003207	  and user-created Personas may be edited and bound to user-created subagent entries after validation.
+L00003208	gui_related: true
+L00003209	gui_classification_reason: Persona mutability includes user-visible Persona library/editor and protected/tweakable/user-created UI behavior.
+L00003210	depends_on: [P-005, P-009, P-013, P-021, P-022, P-023, P-046]
+L00003211	unblocks: [OSI-425, OSI-426, F3-388]
+L00003212	acceptance_criteria:
+L00003213	  - The protected v1 Persona list remains assistant, general-purpose, overseer, bash, teacher, collaborator, researcher, deep-researcher, and explorer.
+L00003214	  - Subagent configuration stores selection, visibility, and launch binding only; Persona body edits persist through Persona storage.
+L00003215	  - Tweakable built-ins keep a shipped default target so reset, upgrade merge, and conflict display remain deterministic.
+L00003216	validation_surfaces:
+L00003217	  - python3 scripts/pm-plan-index.py validate
+L00003218	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit
+L00003219	risk_class: persona_registry_drift
+L00003220	reasoning_tier: standard
+L00003221	context_scope: persona_to_subagent_boundary
+L00003222	implementation_surfaces: [Plans/Personas.md, Plans/orchestrator-subagent-integration.md, Plans/FinalGUISpec.md]
+L00003223	node_compile_hint: {mode: persona_registry_boundary, create_worknodes: false}
+L00003224	source_lineage:
+L00003225	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0022
+L00003226	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0023
+L00003227	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0024
+L00003228	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0030
+L00003229	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0031
+L00003230	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0032
+L00003231	  - source_ref:chat:start-subagent-persona-cluster
+L00003232	  - source_ref:chat:persona-simple-v1-advanced-mutability
+L00003233	  - source_ref:chat:protected-persona-list-complete
+L00003234	preserved_exact_tokens: ["Personas", "Persona", "persona_registry", "subagent_registry", "protected", "tweakable", "user-created", "assistant", "general-purpose", "overseer", "bash", "teacher", "collaborator", "researcher", "deep-researcher", "explorer"]
+L00003235	negative_constraints:
+L00003236	  - Do not store canonical Persona body overrides inside SubagentGuiConfig.
+L00003237	  - Do not allow raw subagent registry controls to mutate protected platform Personas.
+L00003238	  - Do not treat provider-native agent directories as canonical Persona storage.
+L00003239	owner_hints: [Plans/Personas.md, Plans/orchestrator-subagent-integration.md, Plans/FinalGUISpec.md]
+L00003240	```
+L00003241	
+L00003242	
+L00003243	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00003244	
+L00003245	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00003246	
+L00003247	### P-054 - Planning Product Collaborator Profiles And Specialist Roles
+L00003248	
+L00003249	```yaml
+L00003250	plan_unit_id: P-054
+L00003251	unit_type: requirement
+L00003252	status: accepted
+L00003253	owner_doc: Plans/Personas.md
+L00003254	canonical_text: 'PRD Builder uses the protected Collaborator Persona with workflow_behavior_profile prd_builder for discovery, source-aware clarification, conflict surfacing, and planning-intake document co-creation. Topic conversations use the Collaborator Persona with workflow_behavior_profile planning_wizard, asking topic-local implementation-readiness questions while preserving a cooperative, technically serious interaction style. Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
+L00003255	gui_related: false
+L00003256	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00003257	depends_on: []
+L00003258	unblocks: []
+L00003259	acceptance_criteria:
+L00003260	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00003261	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00003262	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00003263	validation_surfaces:
+L00003264	- python3 scripts/pm-plan-index.py validate
+L00003265	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00003266	risk_class: owner_drift
+L00003267	reasoning_tier: standard
+L00003268	context_scope: ledger_to_plans_compile
+L00003269	implementation_surfaces:
+L00003270	- Plans/Personas.md
+L00003271	- Plans/PRD_Builder.md
+L00003272	- Plans/assistant-chat-design.md
+L00003273	- Plans/Planning_Wizard.md
+L00003274	- Plans/Models_System.md
+L00003275	- Plans/Plan_To_Node_Compilation.md
+L00003276	node_compile_hint:
+L00003277	  mode: canonical_planunit_from_bootstrap_ledger
+L00003278	  create_worknodes: false
+L00003279	  create_nodeseeds: false
+L00003280	source_lineage:
+L00003281	- pldg-20260618-001-prd-planning-wizard:atom-0013
+L00003282	- pldg-20260618-001-prd-planning-wizard:atom-0014
+L00003283	- pldg-20260618-001-prd-planning-wizard:atom-0015
+L00003284	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00003285	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00003286	source_atom_ids:
+L00003287	- atom-0013
+L00003288	- atom-0014
+L00003289	- atom-0015
+L00003290	decision_refs:
+L00003291	- dec-0005
+L00003292	correction_refs: []
+L00003293	preserved_exact_tokens:
+L00003294	- Collaborator Persona
+L00003295	- 'workflow_behavior_profile: prd_builder'
+L00003296	- 'workflow_behavior_profile: planning_wizard'
+L00003297	- Overseer
+L00003298	- Auditor
+L00003299	- High-Effort Worker
+L00003300	- sole canonical writer
+L00003301	negative_constraints:
+L00003302	- Do not add an unnecessary protected PRDBuilder Persona when workflow behavior can specialize Collaborator.
+L00003303	- Do not let read-only subagents mutate canonical ledgers, PRDs, Plans, WorkGraphs, or runtime records.
+L00003304	owner_hints:
+L00003305	- Plans/Personas.md
+L00003306	- Plans/PRD_Builder.md
+L00003307	- Plans/assistant-chat-design.md
+L00003308	- Plans/Planning_Wizard.md
+L00003309	- Plans/Models_System.md
+L00003310	- Plans/Plan_To_Node_Compilation.md
+L00003311	```
+L00003312	
+L00003313	
+L00003314	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00003315	
+L00003316	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00003317	
+
+<<< CONTEXT_AFTER canonical_document_lines=3318-3329 >>>
+L00003318	### P-055 - Teacher Persona Teach Boundary
+L00003319	
+L00003320	```yaml
+L00003321	plan_unit_id: P-055
+L00003322	unit_type: requirement
+L00003323	status: accepted
+L00003324	owner_doc: Plans/Personas.md
+L00003325	canonical_text: Teacher is a protected Persona used by Teach, not a standalone feature. Teacher stays in teaching/help
+L00003326	  mode, explains PM concepts and workflows, cites source groups or missing coverage, avoids guessing, and hands
+L00003327	  off when the user asks for implementation/build work, high-reasoning architecture decisions, audit/repair, external
+L00003328	  research beyond available sources, direct execution, or specialty tooling. Handoff cards explain why, suggested
+L00003329	  destination Persona/mode, context to carry forward, and whether a stronger model is recommended.

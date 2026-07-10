@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE canonical_document_lines=31316-31327 >>>
+L00031316	      "inline_handlers": {},
+L00031317	      "command_tokens": [],
+L00031318	      "local_or_demo_markers": [],
+L00031319	      "accessibility_gaps": [],
+L00031320	      "disposition": "concept_only_owner_adjudicated",
+L00031321	      "canonical_command_id": null,
+L00031322	      "wiring_matrix_key": null,
+L00031323	      "notes": [
+L00031324	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031325	      ],
+L00031326	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031327	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=31328-31707 >>>
+L00031328	    {
+L00031329	      "inventory_id": "pmconcept.l15312.1180",
+L00031330	      "line": 15312,
+L00031331	      "tag": "div",
+L00031332	      "html_id": null,
+L00031333	      "name": null,
+L00031334	      "role": null,
+L00031335	      "class": "chat-thread-item role-assistant",
+L00031336	      "ui_location": "floatingChat",
+L00031337	      "label": "8m Debug: Login 401 Loop Investigating auth token refresh failure. Phase: Root Cause \u00b7 DAP attached",
+L00031338	      "attrs": {
+L00031339	        "data-thread": "thread-debug1",
+L00031340	        "onclick": "switchToChatThread('thread-debug1')"
+L00031341	      },
+L00031342	      "inline_handlers": {
+L00031343	        "onclick": "switchToChatThread('thread-debug1')"
+L00031344	      },
+L00031345	      "command_tokens": [],
+L00031346	      "local_or_demo_markers": [],
+L00031347	      "accessibility_gaps": [
+L00031348	        "custom_click_target_missing_role",
+L00031349	        "click_handler_without_keyboard_parity"
+L00031350	      ],
+L00031351	      "disposition": "concept_only_owner_adjudicated",
+L00031352	      "canonical_command_id": null,
+L00031353	      "wiring_matrix_key": null,
+L00031354	      "notes": [
+L00031355	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031356	      ],
+L00031357	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031358	    },
+L00031359	    {
+L00031360	      "inventory_id": "pmconcept.l15322.1181",
+L00031361	      "line": 15322,
+L00031362	      "tag": "button",
+L00031363	      "html_id": null,
+L00031364	      "name": null,
+L00031365	      "role": null,
+L00031366	      "class": "thread-action-btn",
+L00031367	      "ui_location": "floatingChat",
+L00031368	      "label": "Archive",
+L00031369	      "attrs": {
+L00031370	        "title": "Archive"
+L00031371	      },
+L00031372	      "inline_handlers": {},
+L00031373	      "command_tokens": [],
+L00031374	      "local_or_demo_markers": [],
+L00031375	      "accessibility_gaps": [],
+L00031376	      "disposition": "concept_only_owner_adjudicated",
+L00031377	      "canonical_command_id": null,
+L00031378	      "wiring_matrix_key": null,
+L00031379	      "notes": [
+L00031380	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031381	      ],
+L00031382	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031383	    },
+L00031384	    {
+L00031385	      "inventory_id": "pmconcept.l15323.1182",
+L00031386	      "line": 15323,
+L00031387	      "tag": "button",
+L00031388	      "html_id": null,
+L00031389	      "name": null,
+L00031390	      "role": null,
+L00031391	      "class": "thread-action-btn",
+L00031392	      "ui_location": "floatingChat",
+L00031393	      "label": "More...",
+L00031394	      "attrs": {
+L00031395	        "title": "More..."
+L00031396	      },
+L00031397	      "inline_handlers": {},
+L00031398	      "command_tokens": [],
+L00031399	      "local_or_demo_markers": [],
+L00031400	      "accessibility_gaps": [],
+L00031401	      "disposition": "concept_only_owner_adjudicated",
+L00031402	      "canonical_command_id": null,
+L00031403	      "wiring_matrix_key": null,
+L00031404	      "notes": [
+L00031405	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031406	      ],
+L00031407	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031408	    },
+L00031409	    {
+L00031410	      "inventory_id": "pmconcept.l15327.1183",
+L00031411	      "line": 15327,
+L00031412	      "tag": "div",
+L00031413	      "html_id": null,
+L00031414	      "name": null,
+L00031415	      "role": null,
+L00031416	      "class": "chat-thread-item role-assistant",
+L00031417	      "ui_location": "floatingChat",
+L00031418	      "label": "2m Refactor: Auth Module 3 subagents: OAuth2, session adapter, tests feat/oauth2-pkce \u00b7 2 running",
+L00031419	      "attrs": {
+L00031420	        "data-thread": "thread-subagents",
+L00031421	        "onclick": "switchToChatThread('thread-subagents')"
+L00031422	      },
+L00031423	      "inline_handlers": {
+L00031424	        "onclick": "switchToChatThread('thread-subagents')"
+L00031425	      },
+L00031426	      "command_tokens": [],
+L00031427	      "local_or_demo_markers": [],
+L00031428	      "accessibility_gaps": [
+L00031429	        "custom_click_target_missing_role",
+L00031430	        "click_handler_without_keyboard_parity"
+L00031431	      ],
+L00031432	      "disposition": "concept_only_owner_adjudicated",
+L00031433	      "canonical_command_id": null,
+L00031434	      "wiring_matrix_key": null,
+L00031435	      "notes": [
+L00031436	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031437	      ],
+L00031438	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031439	    },
+L00031440	    {
+L00031441	      "inventory_id": "pmconcept.l15337.1184",
+L00031442	      "line": 15337,
+L00031443	      "tag": "button",
+L00031444	      "html_id": null,
+L00031445	      "name": null,
+L00031446	      "role": null,
+L00031447	      "class": "thread-action-btn",
+L00031448	      "ui_location": "floatingChat",
+L00031449	      "label": "Archive",
+L00031450	      "attrs": {
+L00031451	        "title": "Archive"
+L00031452	      },
+L00031453	      "inline_handlers": {},
+L00031454	      "command_tokens": [],
+L00031455	      "local_or_demo_markers": [],
+L00031456	      "accessibility_gaps": [],
+L00031457	      "disposition": "concept_only_owner_adjudicated",
+L00031458	      "canonical_command_id": null,
+L00031459	      "wiring_matrix_key": null,
+L00031460	      "notes": [
+L00031461	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031462	      ],
+L00031463	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031464	    },
+L00031465	    {
+L00031466	      "inventory_id": "pmconcept.l15338.1185",
+L00031467	      "line": 15338,
+L00031468	      "tag": "button",
+L00031469	      "html_id": null,
+L00031470	      "name": null,
+L00031471	      "role": null,
+L00031472	      "class": "thread-action-btn",
+L00031473	      "ui_location": "floatingChat",
+L00031474	      "label": "More...",
+L00031475	      "attrs": {
+L00031476	        "title": "More..."
+L00031477	      },
+L00031478	      "inline_handlers": {},
+L00031479	      "command_tokens": [],
+L00031480	      "local_or_demo_markers": [],
+L00031481	      "accessibility_gaps": [],
+L00031482	      "disposition": "concept_only_owner_adjudicated",
+L00031483	      "canonical_command_id": null,
+L00031484	      "wiring_matrix_key": null,
+L00031485	      "notes": [
+L00031486	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031487	      ],
+L00031488	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031489	    },
+L00031490	    {
+L00031491	      "inventory_id": "pmconcept.l15341.1186",
+L00031492	      "line": 15341,
+L00031493	      "tag": "div",
+L00031494	      "html_id": null,
+L00031495	      "name": null,
+L00031496	      "role": null,
+L00031497	      "class": "chat-thread-item role-assistant",
+L00031498	      "ui_location": "floatingChat",
+L00031499	      "label": "3m Crew: API Design Review 3-model crew deliberation Architect + Security + API \u00b7 consensus reached",
+L00031500	      "attrs": {
+L00031501	        "data-thread": "thread-crew",
+L00031502	        "onclick": "switchToChatThread('thread-crew')"
+L00031503	      },
+L00031504	      "inline_handlers": {
+L00031505	        "onclick": "switchToChatThread('thread-crew')"
+L00031506	      },
+L00031507	      "command_tokens": [],
+L00031508	      "local_or_demo_markers": [],
+L00031509	      "accessibility_gaps": [
+L00031510	        "custom_click_target_missing_role",
+L00031511	        "click_handler_without_keyboard_parity"
+L00031512	      ],
+L00031513	      "disposition": "concept_only_owner_adjudicated",
+L00031514	      "canonical_command_id": null,
+L00031515	      "wiring_matrix_key": null,
+L00031516	      "notes": [
+L00031517	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031518	      ],
+L00031519	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031520	    },
+L00031521	    {
+L00031522	      "inventory_id": "pmconcept.l15351.1187",
+L00031523	      "line": 15351,
+L00031524	      "tag": "button",
+L00031525	      "html_id": null,
+L00031526	      "name": null,
+L00031527	      "role": null,
+L00031528	      "class": "thread-action-btn",
+L00031529	      "ui_location": "floatingChat",
+L00031530	      "label": "Archive",
+L00031531	      "attrs": {
+L00031532	        "title": "Archive"
+L00031533	      },
+L00031534	      "inline_handlers": {},
+L00031535	      "command_tokens": [],
+L00031536	      "local_or_demo_markers": [],
+L00031537	      "accessibility_gaps": [],
+L00031538	      "disposition": "concept_only_owner_adjudicated",
+L00031539	      "canonical_command_id": null,
+L00031540	      "wiring_matrix_key": null,
+L00031541	      "notes": [
+L00031542	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031543	      ],
+L00031544	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031545	    },
+L00031546	    {
+L00031547	      "inventory_id": "pmconcept.l15352.1188",
+L00031548	      "line": 15352,
+L00031549	      "tag": "button",
+L00031550	      "html_id": null,
+L00031551	      "name": null,
+L00031552	      "role": null,
+L00031553	      "class": "thread-action-btn",
+L00031554	      "ui_location": "floatingChat",
+L00031555	      "label": "More...",
+L00031556	      "attrs": {
+L00031557	        "title": "More..."
+L00031558	      },
+L00031559	      "inline_handlers": {},
+L00031560	      "command_tokens": [],
+L00031561	      "local_or_demo_markers": [],
+L00031562	      "accessibility_gaps": [],
+L00031563	      "disposition": "concept_only_owner_adjudicated",
+L00031564	      "canonical_command_id": null,
+L00031565	      "wiring_matrix_key": null,
+L00031566	      "notes": [
+L00031567	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031568	      ],
+L00031569	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031570	    },
+L00031571	    {
+L00031572	      "inventory_id": "pmconcept.l15355.1189",
+L00031573	      "line": 15355,
+L00031574	      "tag": "div",
+L00031575	      "html_id": null,
+L00031576	      "name": null,
+L00031577	      "role": null,
+L00031578	      "class": "chat-thread-item role-assistant",
+L00031579	      "ui_location": "floatingChat",
+L00031580	      "label": "5m Multi-Tenant Migration Merge pending \u00b7 1 test failing feat/multi-tenant \u00b7 squash to main",
+L00031581	      "attrs": {
+L00031582	        "data-thread": "thread-worktree-merge",
+L00031583	        "onclick": "switchToChatThread('thread-worktree-merge')"
+L00031584	      },
+L00031585	      "inline_handlers": {
+L00031586	        "onclick": "switchToChatThread('thread-worktree-merge')"
+L00031587	      },
+L00031588	      "command_tokens": [],
+L00031589	      "local_or_demo_markers": [],
+L00031590	      "accessibility_gaps": [
+L00031591	        "custom_click_target_missing_role",
+L00031592	        "click_handler_without_keyboard_parity"
+L00031593	      ],
+L00031594	      "disposition": "concept_only_owner_adjudicated",
+L00031595	      "canonical_command_id": null,
+L00031596	      "wiring_matrix_key": null,
+L00031597	      "notes": [
+L00031598	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031599	      ],
+L00031600	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031601	    },
+L00031602	    {
+L00031603	      "inventory_id": "pmconcept.l15365.1190",
+L00031604	      "line": 15365,
+L00031605	      "tag": "button",
+L00031606	      "html_id": null,
+L00031607	      "name": null,
+L00031608	      "role": null,
+L00031609	      "class": "thread-action-btn",
+L00031610	      "ui_location": "floatingChat",
+L00031611	      "label": "Archive",
+L00031612	      "attrs": {
+L00031613	        "title": "Archive"
+L00031614	      },
+L00031615	      "inline_handlers": {},
+L00031616	      "command_tokens": [],
+L00031617	      "local_or_demo_markers": [],
+L00031618	      "accessibility_gaps": [],
+L00031619	      "disposition": "concept_only_owner_adjudicated",
+L00031620	      "canonical_command_id": null,
+L00031621	      "wiring_matrix_key": null,
+L00031622	      "notes": [
+L00031623	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031624	      ],
+L00031625	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031626	    },
+L00031627	    {
+L00031628	      "inventory_id": "pmconcept.l15366.1191",
+L00031629	      "line": 15366,
+L00031630	      "tag": "button",
+L00031631	      "html_id": null,
+L00031632	      "name": null,
+L00031633	      "role": null,
+L00031634	      "class": "thread-action-btn",
+L00031635	      "ui_location": "floatingChat",
+L00031636	      "label": "More...",
+L00031637	      "attrs": {
+L00031638	        "title": "More..."
+L00031639	      },
+L00031640	      "inline_handlers": {},
+L00031641	      "command_tokens": [],
+L00031642	      "local_or_demo_markers": [],
+L00031643	      "accessibility_gaps": [],
+L00031644	      "disposition": "concept_only_owner_adjudicated",
+L00031645	      "canonical_command_id": null,
+L00031646	      "wiring_matrix_key": null,
+L00031647	      "notes": [
+L00031648	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031649	      ],
+L00031650	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031651	    },
+L00031652	    {
+L00031653	      "inventory_id": "pmconcept.l15369.1192",
+L00031654	      "line": 15369,
+L00031655	      "tag": "div",
+L00031656	      "html_id": null,
+L00031657	      "name": null,
+L00031658	      "role": null,
+L00031659	      "class": "chat-thread-item role-assistant",
+L00031660	      "ui_location": "floatingChat",
+L00031661	      "label": "4m Test Suite Parallelization 25 subagents: 8 done, 11 running, 2 failed ~2 min remaining",
+L00031662	      "attrs": {
+L00031663	        "data-thread": "thread-batch-fanout",
+L00031664	        "onclick": "switchToChatThread('thread-batch-fanout')"
+L00031665	      },
+L00031666	      "inline_handlers": {
+L00031667	        "onclick": "switchToChatThread('thread-batch-fanout')"
+L00031668	      },
+L00031669	      "command_tokens": [],
+L00031670	      "local_or_demo_markers": [],
+L00031671	      "accessibility_gaps": [
+L00031672	        "custom_click_target_missing_role",
+L00031673	        "click_handler_without_keyboard_parity"
+L00031674	      ],
+L00031675	      "disposition": "concept_only_owner_adjudicated",
+L00031676	      "canonical_command_id": null,
+L00031677	      "wiring_matrix_key": null,
+L00031678	      "notes": [
+L00031679	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031680	      ],
+L00031681	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031682	    },
+L00031683	    {
+L00031684	      "inventory_id": "pmconcept.l15379.1193",
+L00031685	      "line": 15379,
+L00031686	      "tag": "button",
+L00031687	      "html_id": null,
+L00031688	      "name": null,
+L00031689	      "role": null,
+L00031690	      "class": "thread-action-btn",
+L00031691	      "ui_location": "floatingChat",
+L00031692	      "label": "Archive",
+L00031693	      "attrs": {
+L00031694	        "title": "Archive"
+L00031695	      },
+L00031696	      "inline_handlers": {},
+L00031697	      "command_tokens": [],
+L00031698	      "local_or_demo_markers": [],
+L00031699	      "accessibility_gaps": [],
+L00031700	      "disposition": "concept_only_owner_adjudicated",
+L00031701	      "canonical_command_id": null,
+L00031702	      "wiring_matrix_key": null,
+L00031703	      "notes": [
+L00031704	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00031705	      ],
+L00031706	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00031707	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=31708-31719 >>>
+L00031708	    {
+L00031709	      "inventory_id": "pmconcept.l15380.1194",
+L00031710	      "line": 15380,
+L00031711	      "tag": "button",
+L00031712	      "html_id": null,
+L00031713	      "name": null,
+L00031714	      "role": null,
+L00031715	      "class": "thread-action-btn",
+L00031716	      "ui_location": "floatingChat",
+L00031717	      "label": "More...",
+L00031718	      "attrs": {
+L00031719	        "title": "More..."

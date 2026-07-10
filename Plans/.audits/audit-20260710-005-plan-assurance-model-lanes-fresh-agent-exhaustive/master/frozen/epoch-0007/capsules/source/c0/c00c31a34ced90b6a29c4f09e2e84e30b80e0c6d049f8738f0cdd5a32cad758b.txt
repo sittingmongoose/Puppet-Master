@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5691-5702 >>>
+L00005691	pub enum TaskStatus {
+L00005692	    NotStarted,      // ⬜
+L00005693	    InProgress,      // 🔄
+L00005694	    Completed,       // ✅ (verified by inspector)
+L00005695	    Incomplete,      // 🔴 (requires rework)
+L00005696	    Skipped,         // ⏸️
+L00005697	}
+L00005698	
+L00005699	pub struct ProgressTracker {
+L00005700	    tasks: Vec<TaskProgress>,
+L00005701	    current_phase: String,
+L00005702	}
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5703-6096 >>>
+L00005703	
+L00005704	impl ProgressTracker {
+L00005705	    /// Prioritize incomplete tasks
+L00005706	    pub fn get_next_task(&self) -> Option<&TaskProgress> {
+L00005707	        // First: incomplete tasks in current phase
+L00005708	        self.tasks.iter()
+L00005709	            .filter(|t| t.phase == self.current_phase)
+L00005710	            .find(|t| matches!(t.status, TaskStatus::Incomplete))
+L00005711	            // Then: not started tasks in current phase
+L00005712	            .or_else(|| {
+L00005713	                self.tasks.iter()
+L00005714	                    .filter(|t| t.phase == self.current_phase)
+L00005715	                    .find(|t| matches!(t.status, TaskStatus::NotStarted))
+L00005716	            })
+L00005717	    }
+L00005718	}
+L00005719	```
+L00005720	
+L00005721	#### 2. Three-Tier QA System
+L00005722	
+L00005723	**Current State**: Orchestrator has verification gates between tiers
+L00005724	**Enhancement**: Add per-task and per-phase inspection
+L00005725	
+L00005726	```rust
+L00005727	// src/core/qa_system.rs (new)
+L00005728	
+L00005729	pub struct QASystem {
+L00005730	    preflight_runner: PreflightRunner,
+L00005731	    task_inspector: TaskInspector,
+L00005732	    phase_inspector: PhaseInspector,
+L00005733	}
+L00005734	
+L00005735	impl QASystem {
+L00005736	    /// Tier 1: Preflight checks (run by subagent before marking complete)
+L00005737	    pub async fn run_preflight(&self, execution_unit_context: &ExecutionUnitContext) -> Result<PreflightResult> {
+L00005738	        // Existing preflight logic
+L00005739	    }
+L00005740	
+L00005741	    /// Tier 2: Task Inspector (run after each task completion)
+L00005742	    pub async fn inspect_task(
+L00005743	        &self,
+L00005744	        task_id: &str,
+L00005745	        task_file: &Path,
+L00005746	        commit_hash: &str,
+L00005747	    ) -> TaskInspectionResult {
+L00005748	        // Review commit changes
+L00005749	        // Verify acceptance criteria met
+L00005750	        // Check test coverage
+L00005751	        // Return: Complete or Incomplete with feedback
+L00005752	    }
+L00005753	
+L00005754	    /// Tier 3: Phase Inspector (run when phase completes)
+L00005755	    pub async fn inspect_phase(
+L00005756	        &self,
+L00005757	        phase_name: &str,
+L00005758	        phase_tasks: &[String],
+L00005759	    ) -> PhaseInspectionResult {
+L00005760	        // Review all phase commits
+L00005761	        // Verify phase-level acceptance criteria
+L00005762	        // Check integration between tasks
+L00005763	        // Generate validation report
+L00005764	    }
+L00005765	}
+L00005766	```
+L00005767	
+L00005768	#### 3. Task Inspector Integration
+L00005769	
+L00005770	**Enhancement**: Add automatic task inspection after subagent completion
+L00005771	
+L00005772	```rust
+L00005773	// src/core/orchestrator.rs (modifications)
+L00005774	
+L00005775	impl Orchestrator {
+L00005776	    async fn execute_tier_with_subagents(
+L00005777	        &self,
+L00005778	        tier_node: &TierNode,
+L00005779	        context: &OrchestratorContext,
+L00005780	    ) -> Result<()> {
+L00005781	        // ... existing subagent selection and execution ...
+L00005782	
+L00005783	        // Execute subagent
+L00005784	        let result = self.execute_with_subagent(...).await?;
+L00005785	
+L00005786	        // Tier 2: Task Inspector (automatic after completion)
+L00005787	        if tier_node.tier_type == TierType::Subtask {
+L00005788	            let inspection = self.qa_system.inspect_task(
+L00005789	                &tier_node.id,
+L00005790	                &task_file_path,
+L00005791	                &latest_commit_hash,
+L00005792	            ).await?;
+L00005793	
+L00005794	            match inspection.status {
+L00005795	                InspectionStatus::Complete => {
+L00005796	                    // Mark as ✅ Completed
+L00005797	                    self.progress_tracker.mark_completed(&tier_node.id).await?;
+L00005798	                }
+L00005799	                InspectionStatus::Incomplete { feedback } => {
+L00005800	                    // Mark as 🔴 Incomplete with feedback
+L00005801	                    self.progress_tracker.mark_incomplete(
+L00005802	                        &tier_node.id,
+L00005803	                        feedback,
+L00005804	                    ).await?;
+L00005805	
+L00005806	                    // Prepend feedback to task file for next iteration
+L00005807	                    self.prepend_task_feedback(&tier_node.id, feedback).await?;
+L00005808	                }
+L00005809	            }
+L00005810	        }
+L00005811	
+L00005812	        Ok(())
+L00005813	    }
+L00005814	}
+L00005815	```
+L00005816	
+L00005817	#### 4. Phase Inspector
+L00005818	
+L00005819	**Enhancement**: Add phase-level validation
+L00005820	
+L00005821	```rust
+L00005822	// src/core/orchestrator.rs (additions)
+L00005823	
+L00005824	impl Orchestrator {
+L00005825	    async fn check_phase_completion(&self, phase_id: &str) -> Result<()> {
+L00005826	        let all_tasks_complete = self.progress_tracker
+L00005827	            .phase_tasks_complete(phase_id)?;
+L00005828	
+L00005829	        if all_tasks_complete {
+L00005830	            // Tier 3: Phase Inspector
+L00005831	            let phase_report = self.qa_system.inspect_phase(
+L00005832	                phase_id,
+L00005833	                &self.progress_tracker.get_phase_tasks(phase_id)?,
+L00005834	            ).await?;
+L00005835	
+L00005836	            // Advance to next phase
+L00005837	            self.progress_tracker.advance_phase().await?;
+L00005838	        }
+L00005839	
+L00005840	        Ok(())
+L00005841	    }
+L00005842	}
+L00005843	```
+L00005844	
+L00005845	#### 5. Pause Mechanism
+L00005846	
+L00005847	**Enhancement**: Add `PAUSE.md` file check before each iteration
+L00005848	
+L00005849	```rust
+L00005850	// src/core/orchestrator.rs (additions)
+L00005851	
+L00005852	impl Orchestrator {
+L00005853	    async fn check_pause_gate(&self) -> Result<bool> {
+L00005854	        let pause_file = self.config.paths.workspace
+L00005855	            .join(".puppet-master")
+L00005856	            .join("PAUSE.md");
+L00005857	
+L00005858	        if pause_file.exists() {
+L00005859	            log::info!("Pause gate active - orchestrator halted");
+L00005860	            // Emit event for GUI
+L00005861	            return Ok(true);
+L00005862	        }
+L00005863	
+L00005864	        Ok(false)
+L00005865	    }
+L00005866	
+L00005867	    async fn run_loop(&self) -> Result<()> {
+L00005868	        loop {
+L00005869	            // Check pause gate first
+L00005870	            if self.check_pause_gate().await? {
+L00005871	                return Ok(()); // Exit loop, wait for resume
+L00005872	            }
+L00005873	
+L00005874	            // ... rest of loop ...
+L00005875	        }
+L00005876	    }
+L00005877	}
+L00005878	```
+L00005879	
+L00005880	#### 6. Commit Strategy for Rework
+L00005881	
+L00005882	**Enhancement**: Amend commits for incomplete task rework
+L00005883	
+L00005884	```rust
+L00005885	// src/core/orchestrator.rs (modifications)
+L00005886	
+L00005887	impl Orchestrator {
+L00005888	    async fn commit_tier_progress(
+L00005889	        &self,
+L00005890	        node_id: &str,
+L00005891	        tier_type: TierType,
+L00005892	        iteration: u32,
+L00005893	        is_rework: bool,
+L00005894	    ) -> Result<()> {
+L00005895	        let message = if is_rework {
+L00005896	            // For rework, amend previous commit
+L00005897	            format!("node: {} iteration {} (after review)", node_id, iteration)
+L00005898	        } else {
+L00005899	            format!("node: {} iteration {} complete", node_id, iteration)
+L00005900	        };
+L00005901	
+L00005902	        if is_rework {
+L00005903	            // Amend previous commit
+L00005904	            self.git_manager.commit_amend(&message).await?;
+L00005905	        } else {
+L00005906	            // New commit
+L00005907	            self.git_manager.commit(&message).await?;
+L00005908	        }
+L00005909	
+L00005910	        Ok(())
+L00005911	    }
+L00005912	}
+L00005913	```
+L00005914	
+L00005915	### Updated Orchestrator Loop
+L00005916	
+L00005917	```rust
+L00005918	// Enhanced orchestrator loop with autonomous QA loop patterns
+L00005919	
+L00005920	async fn run_enhanced_loop(&self) -> Result<()> {
+L00005921	    loop {
+L00005922	        // Step 0: Check pause gate
+L00005923	        if self.check_pause_gate().await? {
+L00005924	            return Ok(()); // Paused
+L00005925	        }
+L00005926	
+L00005927	        // Step 1: Read progress
+L00005928	        let progress = self.progress_tracker.read().await?;
+L00005929	
+L00005930	        // Step 2: Get next task (prioritize incomplete)
+L00005931	        let next_task = match progress.get_next_task() {
+L00005932	            Some(task) => task,
+L00005933	            None => {
+L00005934	                // All tasks complete
+L00005935	                break;
+L00005936	            }
+L00005937	        };
+L00005938	
+L00005939	        // Step 3: Execute with subagent
+L00005940	        // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry
+L00005941	        let subagents = self.subagent_selector.select_for_tier(
+L00005942	            next_task.tier_type,
+L00005943	            &tier_context,
+L00005944	        );
+L00005945	        // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
+L00005946	
+L00005947	        // DRY REQUIREMENT: execute_with_subagents MUST use platform_specs for platform-specific invocation
+L00005948	        ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
+L00005949	        let result = self.execute_with_subagents(
+L00005950	            &next_task.tier_node,
+L00005951	            &subagents,
+L00005952	        ).await?;
+L00005953	
+L00005954	        // Step 4: Run preflight (Tier 1 QA)
+L00005955	        let preflight_result = self.qa_system.run_preflight(&next_task.id).await?;
+L00005956	        if !preflight_result.passed {
+L00005957	            self.progress_tracker.mark_incomplete(
+L00005958	                &next_task.id,
+L00005959	                format!("Preflight failed: {}", preflight_result.errors.join(", ")),
+L00005960	            ).await?;
+L00005961	            continue;
+L00005962	        }
+L00005963	
+L00005964	        // Step 5: Task Inspector (Tier 2 QA)
+L00005965	        let inspection = self.qa_system.inspect_task(
+L00005966	            &next_task.id,
+L00005967	            &next_task.file_path,
+L00005968	            &result.commit_hash,
+L00005969	        ).await?;
+L00005970	
+L00005971	        match inspection.status {
+L00005972	            InspectionStatus::Complete => {
+L00005973	                self.progress_tracker.mark_completed(&next_task.id).await?;
+L00005974	            }
+L00005975	            InspectionStatus::Incomplete { feedback } => {
+L00005976	                self.progress_tracker.mark_incomplete(
+L00005977	                    &next_task.id,
+L00005978	                    feedback.clone(),
+L00005979	                ).await?;
+L00005980	                self.prepend_task_feedback(&next_task.id, feedback).await?;
+L00005981	                continue; // Re-loop to fix incomplete task
+L00005982	            }
+L00005983	        }
+L00005984	
+L00005985	        // Step 6: Check phase completion
+L00005986	        if self.progress_tracker.phase_complete(&next_task.phase)? {
+L00005987	            // Tier 3: Phase Inspector
+L00005988	            let phase_report = self.qa_system.inspect_phase(
+L00005989	                &next_task.phase,
+L00005990	                &self.progress_tracker.get_phase_tasks(&next_task.phase)?,
+L00005991	            ).await?;
+L00005992	
+L00005993	            // Advance to next phase
+L00005994	            self.progress_tracker.advance_phase().await?;
+L00005995	        }
+L00005996	    }
+L00005997	
+L00005998	    Ok(())
+L00005999	}
+L00006000	```
+L00006001	
+L00006002	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00006003	
+L00006004	### Benefits of Autonomous QA Loop Integration
+L00006005	
+L00006006	1. **Better Quality Assurance**: Three-tier QA catches issues at multiple levels
+L00006007	2. **Clear Progress Visibility**: Visual status symbols make progress obvious
+L00006008	3. **Rework Prioritization**: Incomplete tasks are fixed before new work
+L00006009	4. **Safe Pausing**: PAUSE.md allows safe editing of tasks/progress
+L00006010	5. **Better Commit History**: Amended commits for rework keep history clean
+L00006011	6. **Phase Discipline**: Prevents jumping ahead to next phase prematurely
+L00006012	
+L00006013	### Autonomous QA loop implementation considerations
+L00006014	
+L00006015	1. **Progress File Format**: Use Markdown with status symbols for readability
+L00006016	2. **Inspector Feedback**: Prepend feedback to task files so subagents see it first
+L00006017	3. **Pause File Location**: `.puppet-master/PAUSE.md` for easy access
+L00006018	4. **Commit Amending**: Track which commits are reworks vs new work
+L00006019	5. **Inspector Subagents**: Could use specialized subagents for inspection (code-reviewer, qa-expert)
+L00006020	
+L00006021	### Updated Configuration
+L00006022	
+L00006023	```yaml
+L00006024	# .puppet-master/config.yaml (additions)
+L00006025	
+L00006026	orchestrator:
+L00006027	  # Autonomous QA loop enhancements
+L00006028	  enableAutonomousQaLoopPatterns: true
+L00006029	
+L00006030	  # Three-tier QA system
+L00006031	  qaSystem:
+L00006032	    enablePreflight: true
+L00006033	    enableTaskInspector: true
+L00006034	    enablePhaseInspector: true
+L00006035	
+L00006036	  # Progress tracking
+L00006037	  progressTracking:
+L00006038	    useVisualStatus: true  # ⬜ 🔄 ✅ 🔴
+L00006039	    trackInspectorFeedback: true
+L00006040	    prependFeedbackToTasks: true
+L00006041	
+L00006042	  # Commit strategy
+L00006043	  commits:
+L00006044	    amendForRework: true
+L00006045	    conventionalFormat: true
+L00006046	```
+L00006047	
+L00006048	## Change Summary
+L00006049	
+L00006050	- 2026-02-26: Added capability introspection and media-generation gating requirement: Orchestrator MUST call `capabilities.get` before dispatching `media.generate`; gates execution on real-time capability state. SSOT: `Plans/Media_Generation_and_Capabilities.md`. ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+L00006051	- 2026-02-24: Updated **plan graph consumption (user projects)** so Puppet Master orchestrator consumes **SHARDED-ONLY** plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` + `.puppet-master/project/plan_graph/nodes/<node_id>.json`.
+L00006052	- 2026-02-24: Locked decision: no canonical `.puppet-master/project/plan_graph.json`; monolithic derived export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`; the sharded representation is the sole canonical choice.
+L00006053	- 2026-02-24: Made required user-project artifacts explicit under `.puppet-master/project/` (requirements.md, contracts/, plan.md, plan_graph shards, acceptance_manifest.json, auto_decisions.jsonl) and reaffirmed canonical persistence in seglog.
+L00006054	- 2026-02-24: Added sharding/consumption rules (deterministic `node_id`, minimum required fields for `index.json` and node shards, and `edges.json` consistency validation).
+L00006055	## Persona and Effective Runtime Resolution Addendum (2026-03-06)
+L00006056	
+L00006057	This addendum was written in tier-era Persona language. Phase/Task/Subtask/Iteration tokens remain compatibility labels for older Persona defaulting prose only; live runtime execution uses the node/package/seam graph and requested/effective Persona runtime records.
+L00006058	
+L00006059	### Compatibility tier reminder
+L00006060	
+L00006061	The retired Persona tier labels were:
+L00006062	- Phase
+L00006063	- Task
+L00006064	- Subtask
+L00006065	- Iteration
+L00006066	
+L00006067	Resolved compatibility reminder: **Iteration** was the lowest legacy tier label. Persona switching must not introduce new tiers and must not restore Phase/Task/Subtask/Iteration as live runtime canon.
+L00006068	
+L00006069	### Tier-specific Persona defaults
+L00006070	
+L00006071	Tier-specific Persona defaults are represented by the `tier_personas` map below. Leaving a tier unset means auto resolution falls back to the Persona registry and operation frame; it does not create an implicit overseer Persona or a provider-native agent-file default.
+L00006072	
+L00006073	### Orchestrator Persona config contract
+L00006074	
+L00006075	Orchestrator MUST persist one canonical Persona-resolution config object separate from delegated-subagent registry data.
+L00006076	
+L00006077	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Personas.md
+L00006078	
+L00006079	Minimum fields:
+L00006080	- `mode` (`manual | auto | hybrid`)
+L00006081	- `tier_personas`
+L00006082	  - `phase`
+L00006083	  - `task`
+L00006084	  - `subtask`
+L00006085	  - `iteration`
+L00006086	- `operation_frame_personas`
+L00006087	  - `planning`
+L00006088	  - `execution`
+L00006089	  - `review`
+L00006090	  - `verification`
+L00006091	- optional per-tier platform/model overrides
+L00006092	- optional next-run explicit override
+L00006093	  - `requested_persona`
+L00006094	  - optional `requested_platform`
+L00006095	  - optional `requested_model`
+L00006096	  - `expires_after_run_start` (bool)
+
+<<< CONTEXT_AFTER canonical_document_lines=6097-6108 >>>
+L00006097	
+L00006098	Rules:
+L00006099	- `tier_personas` expresses the default Persona per tier when no higher-precedence override wins.
+L00006100	- `operation_frame_personas` refines same-tier switching without creating new tiers.
+L00006101	- All configured Persona IDs MUST validate against `persona_registry`, not only `subagent_registry`.
+L00006102	  ContractRef: ContractName:Plans/Personas.md
+L00006103	- Delegated child-run validation still uses `subagent_registry`; surface-level runtime selection uses `persona_registry`.
+L00006104	
+L00006105	The orchestrator must support Persona defaults and/or auto Persona resolution per tier.
+L00006106	
+L00006107	Examples:
+L00006108	- **Phase:** strategic/planning Personas such as `collaborator`, `overseer`, `architect-reviewer`

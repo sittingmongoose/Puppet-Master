@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE 2623-2634 >>>
+- "$HOME"
+- "start of a pattern"
+- "literal characters"
+negative_constraints:
+- "Mid-pattern ~ and $HOME occurrences must be treated as literal characters."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2635-3011 >>>
+### PS-026 - External Directory Guard And Allowlist
+
+```yaml
+plan_unit_id: PS-026
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Any tool invocation referencing a path outside active project working roots triggers the external_directory permission key with default ask, except paths on the external directory allowlist, whose entries support wildcard syntax."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-014
+- PS-024
+- PS-025
+unblocks: []
+acceptance_criteria:
+- "PS-026 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: external_directory_guard_allowlist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0026
+preserved_exact_tokens:
+- "External directory guard"
+- "EXTERNAL-DIR-GUARD"
+- "external_directory"
+- "Default: ask"
+- "external directory allowlist"
+- "~/.cargo/**"
+- "/usr/local/include/**"
+negative_constraints:
+- "Paths outside active project working roots must not bypass the external_directory guard unless covered by the allowlist."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-027 - Always Approval Pattern Suggestions
+
+```yaml
+plan_unit_id: PS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "An always approval derives a suggested scope from invocation context for bash, edit/read/glob/grep, webfetch/websearch, and webextract/webresearch/webcrawl/webmap, presents scope-bound choices, and binds canonical approval to approval_scope_key plus blocked-episode identity."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-005
+- PS-023
+- PS-026
+unblocks: []
+acceptance_criteria:
+- "PS-027 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: always_approval_pattern_suggestion
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0027
+preserved_exact_tokens:
+- "Pattern suggestion contract (\"always\" approval)"
+- "PATTERN-SUGGESTION"
+- "always"
+- "bash"
+- "edit/read/glob/grep"
+- "webfetch/websearch"
+- "webextract/webresearch/webcrawl/webmap"
+- "https://<domain>/*"
+- "https://<actual-host>/*"
+- "approval_scope_key"
+- "blocked-episode identity"
+negative_constraints:
+- "The system must not silently mint a session-wide allow."
+- "The canonical approval anchor is approval_scope_key plus blocked-episode identity rather than a UI session id."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-028 - Web Operation Derived Key Taxonomy
+
+```yaml
+plan_unit_id: PS-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Web operation permission keys derive from normalized domains and query categories rather than raw user-entered URLs, with explicit webextract, webresearch, webcrawl, webmap, and broad web*:* authoring vocabulary."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-023
+- PS-024
+- PS-027
+unblocks: []
+acceptance_criteria:
+- "PS-028 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: web_operation_key_derivation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0028
+preserved_exact_tokens:
+- "Web-operation permission-key derivation"
+- "webextract:{domain}"
+- "webresearch:{query_category}"
+- "webcrawl:{domain}"
+- "webmap:{domain}"
+- "query_category ∈ {general, code, docs, news}"
+- "web*:*"
+- "registrable domain"
+- "docs.example.com"
+- "example.com"
+negative_constraints:
+- "Concrete approvals must resolve to normalized derived web permission keys."
+- "Wildcard family authoring does not change the requirement that concrete approvals resolve to normalized derived keys."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Tools.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-029 - Web Operation Approval Visibility
+
+```yaml
+plan_unit_id: PS-029
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Default web-operation posture remains ask where network web tools are enabled, six web tools stay explicit, and extract/crawl/map fan-out is visible in permission cards and audit payloads rather than hidden behind generic webfetch."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-028
+unblocks: []
+acceptance_criteria:
+- "PS-029 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: web_operation_approval_visibility
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0028
+preserved_exact_tokens:
+- "Default web-operation posture remains ask"
+- "webextract"
+- "webresearch"
+- "webcrawl"
+- "webmap"
+- "webfetch"
+- "websearch"
+- "advanced matcher"
+- "Crawl/map fan-out"
+- "permission cards"
+- "audit payloads"
+negative_constraints:
+- "Crawl/map fan-out must not be hidden behind generic webfetch."
+- "Query/task pattern rules require a separate advanced-matcher owner contract before use."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+compatibility_only_notes:
+- "Search/research may use query/task pattern rules only after the advanced matcher has an owner-defined contract and validation evidence."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-030 - Web Approval Summary Templates
+
+```yaml
+plan_unit_id: PS-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Approval cards render tool-specific summaries for websearch, webfetch/webextract, webresearch, and webcrawl/webmap using query preview, target host or URL, task summary, estimated source count, root URL, and page/depth caps."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-028
+- PS-029
+unblocks: []
+acceptance_criteria:
+- "PS-030 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: web_approval_summary_templates
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0028
+preserved_exact_tokens:
+- "websearch summary shows tool name + query preview"
+- "webfetch/webextract summary shows tool name + target host/URL"
+- "webresearch summary shows tool name + task summary + estimated source count when available"
+- "webcrawl/webmap summary shows tool name + root URL + page/depth caps"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-031 - Web Session Approval Semantics
+
+```yaml
+plan_unit_id: PS-031
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Web Once, For Session, Always, and Deny approvals preserve host-scoped follow-ons, wildcard-only MVP search/research, durable rule creation, and reject-all-pending cascade behavior under approval_scope_key and blocked-episode identity."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-005
+- PS-027
+- PS-028
+unblocks: []
+acceptance_criteria:
+- "PS-031 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: web_session_approval_semantics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0028
+preserved_exact_tokens:
+- "Once"
+- "For Session"
+- "Always"
+- "Deny"
+- "reject-all-pending"
+- "approval_scope_key"
+- "https://host.example/*"
+- "https://docs.example.com/*"
+- "MVP uses wildcard session approval for search/research"
+- "Approving webcrawl For Session auto-approves crawl/map/extract/fetch"
+negative_constraints:
+- "For Session websearch and webresearch wildcard behavior does not permit unrelated file, shell, or network mutation tools."
+- "Approving webresearch For Session does not create broad allow for unrelated tools."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-032 - Browser Capture And Auth Session Permission Boundary
+
+```yaml
+plan_unit_id: PS-032
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Browser capture requests for screenshot or pdf require session_granted approval, browser permission storage values remain canonical while UI/source aliases are lineage only, and auth_session follows normal capture/share/clipboard permission disclosure."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-010
+- PS-022
+- PS-031
+unblocks: []
+acceptance_criteria:
+- "PS-032 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: browser_capture_permission_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0028
+preserved_exact_tokens:
+- "screenshot"
+- "pdf"
+- "session_granted"
+- "always_allowed"
+- "explicit_confirmation"
+- "always-allowed"
+- "session-granted"
+- "explicit-confirmation"
+- "trust-tier"
+- "auth_session"
+- "/copy/paste"
+- "/share"
+negative_constraints:
+- "Do not revive the retired preview/browser trust-tier matrix."
+- "Browser implementation-readiness details stay with browser owner docs, not Permissions implementation ownership."
+preserved_contractrefs: []
+compatibility_only_notes:
+- "UI/source aliases always-allowed, session-granted, and explicit-confirmation are lineage labels only."
+stale_retired_dispositions:
+- "Retired preview/browser trust-tier matrix is not revived by browser-session permission tiers."
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 3012-3023 >>>
+### PS-033 - Special Guard Synthetic Key Family
+
+```yaml
+plan_unit_id: PS-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Special guards are synthetic permission keys tied to behavioral conditions rather than specific tools and are evaluated in addition to tool-specific permissions."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

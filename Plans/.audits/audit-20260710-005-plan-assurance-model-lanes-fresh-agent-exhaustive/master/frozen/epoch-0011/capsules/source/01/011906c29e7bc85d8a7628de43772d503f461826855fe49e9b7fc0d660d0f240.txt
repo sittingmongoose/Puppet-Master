@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=20186-20197 >>>
+L00020186	source_lineage:
+L00020187	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0164
+L00020188	preserved_exact_tokens:
+L00020189	  - "Multiple matches → highest priority"
+L00020190	  - "Persisted command overrides auto-detection"
+L00020191	  - "Clear setting"
+L00020192	negative_constraints: []
+L00020193	owner_hints:
+L00020194	  - Plans/assistant-chat-design.md
+L00020195	  - Plans/storage-plan.md
+L00020196	```
+L00020197	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=20198-20582 >>>
+L00020198	### ACD-373 - Pre Merge Test Detection First Run UX
+L00020199	
+L00020200	```yaml
+L00020201	plan_unit_id: ACD-373
+L00020202	unit_type: requirement
+L00020203	status: accepted
+L00020204	owner_doc: Plans/assistant-chat-design.md
+L00020205	canonical_text: First run shows auto-detected command prefilled with `Change`; no detection while enabled shows info row, Settings link, skips tests, and does not block merge.
+L00020206	gui_related: true
+L00020207	gui_classification_reason: First-run prefill, Change link, info row, and Settings link are visible merge dialog UI.
+L00020208	depends_on: [ACD-371, ACD-372]
+L00020209	unblocks: [ACD-376]
+L00020210	acceptance_criteria:
+L00020211	  - First run shows the auto-detected test command prefilled.
+L00020212	  - User can change the command from the first-run UI.
+L00020213	  - No detection while enabled shows info row and Settings link, skips test step, and does not block merge.
+L00020214	validation_surfaces:
+L00020215	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020216	  - python3 scripts/pm-plan-index.py validate
+L00020217	risk_class: pre_merge_test_ui
+L00020218	reasoning_tier: standard
+L00020219	context_scope: gui
+L00020220	implementation_surfaces:
+L00020221	  - Plans/assistant-chat-design.md
+L00020222	  - Plans/FinalGUISpec.md
+L00020223	node_compile_hint:
+L00020224	  mode: pre_merge_test_detection_first_run_ux
+L00020225	  create_worknodes: false
+L00020226	source_lineage:
+L00020227	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0164
+L00020228	preserved_exact_tokens:
+L00020229	  - "First run"
+L00020230	  - "Change"
+L00020231	  - "No test command detected"
+L00020232	  - "Settings"
+L00020233	  - "merge NOT blocked"
+L00020234	negative_constraints: []
+L00020235	owner_hints:
+L00020236	  - Plans/assistant-chat-design.md
+L00020237	  - Plans/FinalGUISpec.md
+L00020238	```
+L00020239	
+L00020240	### ACD-374 - Merged Result Test Gate Execution
+L00020241	
+L00020242	```yaml
+L00020243	plan_unit_id: ACD-374
+L00020244	unit_type: requirement
+L00020245	status: accepted
+L00020246	owner_doc: Plans/assistant-chat-design.md
+L00020247	canonical_text: "`merged_result` test gate preserves Squash, Merge, and Rebase execution order and the no-commit invariant before committing."
+L00020248	gui_related: false
+L00020249	gui_classification_reason: Test-gate execution ordering is backend Git behavior.
+L00020250	depends_on: [ACD-369, ACD-371]
+L00020251	unblocks: [ACD-377]
+L00020252	acceptance_criteria:
+L00020253	  - Squash, Merge, and Rebase merged-result strategies run tests before the merge result is committed.
+L00020254	  - Merge uses explicit `--no-commit`, while Squash leaves the result staged and uncommitted.
+L00020255	  - Rebase tests the post-rebase worktree before main repo fast-forward merge.
+L00020256	validation_surfaces:
+L00020257	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020258	  - python3 scripts/pm-plan-index.py validate
+L00020259	risk_class: pre_merge_test
+L00020260	reasoning_tier: high
+L00020261	context_scope: git
+L00020262	implementation_surfaces:
+L00020263	  - Plans/assistant-chat-design.md
+L00020264	  - Plans/WorktreeGitImprovement.md
+L00020265	  - Plans/Contracts_V0.md
+L00020266	node_compile_hint:
+L00020267	  mode: merged_result_test_gate_execution
+L00020268	  create_worknodes: false
+L00020269	source_lineage:
+L00020270	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0165
+L00020271	preserved_exact_tokens:
+L00020272	  - "git merge --squash"
+L00020273	  - "--no-ff --no-commit"
+L00020274	  - "git rebase {target}"
+L00020275	  - "git merge --ff-only"
+L00020276	  - "git reset --hard HEAD"
+L00020277	  - "git merge --abort"
+L00020278	  - "git rebase --abort"
+L00020279	negative_constraints:
+L00020280	  - "Squash/Merge test gate must not commit before tests pass."
+L00020281	owner_hints:
+L00020282	  - Plans/assistant-chat-design.md
+L00020283	  - Plans/WorktreeGitImprovement.md
+L00020284	```
+L00020285	
+L00020286	### ACD-375 - Branch Only Test Gate
+L00020287	
+L00020288	```yaml
+L00020289	plan_unit_id: ACD-375
+L00020290	unit_type: constraint
+L00020291	status: accepted
+L00020292	owner_doc: Plans/assistant-chat-design.md
+L00020293	canonical_text: "`branch_only` tests run against the branch as-is before merge/rebase mutation; failure blocks merge with override."
+L00020294	gui_related: false
+L00020295	gui_classification_reason: Branch-only test target is backend merge behavior.
+L00020296	depends_on: [ACD-370, ACD-371]
+L00020297	unblocks: [ACD-376]
+L00020298	acceptance_criteria:
+L00020299	  - "`branch_only` tests run in the worktree before any merge or rebase operation."
+L00020300	  - Rebase plus branch_only runs tests before rebase begins.
+L00020301	  - Failure blocks merge while preserving override behavior.
+L00020302	validation_surfaces:
+L00020303	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020304	  - python3 scripts/pm-plan-index.py validate
+L00020305	risk_class: pre_merge_test
+L00020306	reasoning_tier: high
+L00020307	context_scope: git
+L00020308	implementation_surfaces:
+L00020309	  - Plans/assistant-chat-design.md
+L00020310	  - Plans/WorktreeGitImprovement.md
+L00020311	node_compile_hint:
+L00020312	  mode: branch_only_test_gate
+L00020313	  create_worknodes: false
+L00020314	source_lineage:
+L00020315	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0165
+L00020316	preserved_exact_tokens:
+L00020317	  - "branch_only"
+L00020318	  - "BEFORE any merge/rebase operation"
+L00020319	  - "/rebase"
+L00020320	negative_constraints:
+L00020321	  - "`branch_only` must not test an already mutated merge/rebase state."
+L00020322	owner_hints:
+L00020323	  - Plans/assistant-chat-design.md
+L00020324	  - Plans/WorktreeGitImprovement.md
+L00020325	```
+L00020326	
+L00020327	### ACD-376 - Pre Merge Test Dialog UX
+L00020328	
+L00020329	```yaml
+L00020330	plan_unit_id: ACD-376
+L00020331	unit_type: requirement
+L00020332	status: accepted
+L00020333	owner_doc: Plans/assistant-chat-design.md
+L00020334	canonical_text: Test dialog transitions in-place to read-only test phase with live output, cancel, pass auto-proceed, failure/timeout/process-error UI, `Merge Anyway`, and seglog override.
+L00020335	gui_related: true
+L00020336	gui_classification_reason: Test phase, output region, pass/fail UI, override, and cancel behavior are visible dialog UI.
+L00020337	depends_on: [ACD-373, ACD-374, ACD-375]
+L00020338	unblocks: [ACD-377, ACD-378, ACD-394]
+L00020339	acceptance_criteria:
+L00020340	  - Merge dialog transitions in-place to read-only test phase with live output.
+L00020341	  - Passing tests auto-proceed to commit with a brief passed indicator.
+L00020342	  - Failure, timeout, and process error show failure UI with Merge Anyway and Cancel; override is recorded in seglog.
+L00020343	validation_surfaces:
+L00020344	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020345	  - python3 scripts/pm-plan-index.py validate
+L00020346	risk_class: pre_merge_test_ui
+L00020347	reasoning_tier: standard
+L00020348	context_scope: gui
+L00020349	implementation_surfaces:
+L00020350	  - Plans/assistant-chat-design.md
+L00020351	  - Plans/FinalGUISpec.md
+L00020352	  - Plans/storage-plan.md
+L00020353	node_compile_hint:
+L00020354	  mode: pre_merge_test_dialog_ux
+L00020355	  create_worknodes: false
+L00020356	source_lineage:
+L00020357	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0166
+L00020358	preserved_exact_tokens:
+L00020359	  - "~200px max-height"
+L00020360	  - "Tests passed"
+L00020361	  - "Tests failed"
+L00020362	  - "Merge Anyway"
+L00020363	  - "Cancel"
+L00020364	  - "seglog records override"
+L00020365	negative_constraints: []
+L00020366	owner_hints:
+L00020367	  - Plans/assistant-chat-design.md
+L00020368	  - Plans/FinalGUISpec.md
+L00020369	```
+L00020370	
+L00020371	### ACD-377 - Pre Merge Test Clean Abort
+L00020372	
+L00020373	```yaml
+L00020374	plan_unit_id: ACD-377
+L00020375	unit_type: constraint
+L00020376	status: accepted
+L00020377	owner_doc: Plans/assistant-chat-design.md
+L00020378	canonical_text: Clean abort paths keep repos out of half-committed state using strategy-specific cleanup.
+L00020379	gui_related: false
+L00020380	gui_classification_reason: Abort cleanup is backend Git state management.
+L00020381	depends_on: [ACD-374, ACD-376]
+L00020382	unblocks: [ACD-379, ACD-394]
+L00020383	acceptance_criteria:
+L00020384	  - Squash cleanup uses `git reset --hard HEAD`.
+L00020385	  - Merge cleanup uses `git merge --abort`.
+L00020386	  - Rebase cleanup uses `git rebase --abort`.
+L00020387	validation_surfaces:
+L00020388	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020389	  - python3 scripts/pm-plan-index.py validate
+L00020390	risk_class: pre_merge_test
+L00020391	reasoning_tier: high
+L00020392	context_scope: git
+L00020393	implementation_surfaces:
+L00020394	  - Plans/assistant-chat-design.md
+L00020395	  - Plans/WorktreeGitImprovement.md
+L00020396	node_compile_hint:
+L00020397	  mode: pre_merge_test_clean_abort
+L00020398	  create_worknodes: false
+L00020399	source_lineage:
+L00020400	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0166
+L00020401	preserved_exact_tokens:
+L00020402	  - "git reset --hard HEAD"
+L00020403	  - "git merge --abort"
+L00020404	  - "git rebase --abort"
+L00020405	negative_constraints:
+L00020406	  - "Clean abort paths must keep the repo out of a half-committed state."
+L00020407	owner_hints:
+L00020408	  - Plans/assistant-chat-design.md
+L00020409	  - Plans/WorktreeGitImprovement.md
+L00020410	```
+L00020411	
+L00020412	### ACD-378 - Pre Merge Test Execution Environment
+L00020413	
+L00020414	```yaml
+L00020415	plan_unit_id: ACD-378
+L00020416	unit_type: requirement
+L00020417	status: accepted
+L00020418	owner_doc: Plans/assistant-chat-design.md
+L00020419	canonical_text: Test execution environment uses strategy/target working directory, platform shell command, no PM environment injection, merged stdout/stderr, remote host execution, and output normalization/caps.
+L00020420	gui_related: false
+L00020421	gui_classification_reason: Test execution environment and output handling are backend runtime behavior.
+L00020422	depends_on: [ACD-376]
+L00020423	unblocks: [ACD-379, ACD-397]
+L00020424	acceptance_criteria:
+L00020425	  - Test working directory depends on strategy and target.
+L00020426	  - Unix and Windows shells use the specified command wrappers.
+L00020427	  - Output handling merges stdout/stderr, caps output, strips ANSI, decodes UTF-8 lossily, and normalizes CRLF.
+L00020428	  - Remote SSH executes on the remote host.
+L00020429	validation_surfaces:
+L00020430	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020431	  - python3 scripts/pm-plan-index.py validate
+L00020432	risk_class: pre_merge_test
+L00020433	reasoning_tier: high
+L00020434	context_scope: runtime
+L00020435	implementation_surfaces:
+L00020436	  - Plans/assistant-chat-design.md
+L00020437	  - Plans/storage-plan.md
+L00020438	  - Plans/Executor_Protocol.md
+L00020439	node_compile_hint:
+L00020440	  mode: pre_merge_test_execution_environment
+L00020441	  create_worknodes: false
+L00020442	source_lineage:
+L00020443	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0166
+L00020444	preserved_exact_tokens:
+L00020445	  - "/bin/sh -c \"{command}\""
+L00020446	  - "cmd /c \"{command}\""
+L00020447	  - "No PM environment injection"
+L00020448	  - "1MB cap"
+L00020449	  - "ANSI stripped"
+L00020450	  - "UTF-8 lossy decode"
+L00020451	  - "CRLF normalized to LF"
+L00020452	  - "Remote SSH"
+L00020453	negative_constraints:
+L00020454	  - "PM must not inject environment variables into the test command."
+L00020455	owner_hints:
+L00020456	  - Plans/assistant-chat-design.md
+L00020457	  - Plans/Executor_Protocol.md
+L00020458	```
+L00020459	
+L00020460	### ACD-379 - Pre Merge Test Recovery And PR Exclusion
+L00020461	
+L00020462	```yaml
+L00020463	plan_unit_id: ACD-379
+L00020464	unit_type: constraint
+L00020465	status: accepted
+L00020466	owner_doc: Plans/assistant-chat-design.md
+L00020467	canonical_text: Crash recovery handles orphaned test process and transitional repo state via WorktreeManager reconciliation; test gate does not apply to PR creation.
+L00020468	gui_related: false
+L00020469	gui_classification_reason: Crash recovery and PR exclusion are backend runtime boundaries.
+L00020470	depends_on: [ACD-377, ACD-378]
+L00020471	unblocks: []
+L00020472	acceptance_criteria:
+L00020473	  - WorktreeManager reconciliation detects merge or rebase transitional state on next launch.
+L00020474	  - Test gate does not apply to PR creation.
+L00020475	validation_surfaces:
+L00020476	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020477	  - python3 scripts/pm-plan-index.py validate
+L00020478	risk_class: pre_merge_test
+L00020479	reasoning_tier: high
+L00020480	context_scope: recovery
+L00020481	implementation_surfaces:
+L00020482	  - Plans/assistant-chat-design.md
+L00020483	  - Plans/WorktreeGitImprovement.md
+L00020484	  - Plans/GitHub_Integration.md
+L00020485	node_compile_hint:
+L00020486	  mode: pre_merge_test_recovery_pr_exclusion
+L00020487	  create_worknodes: false
+L00020488	source_lineage:
+L00020489	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0166
+L00020490	preserved_exact_tokens:
+L00020491	  - ".git/MERGE_HEAD"
+L00020492	  - ".git/rebase-merge/"
+L00020493	  - "Test gate does NOT apply to PR creation"
+L00020494	negative_constraints:
+L00020495	  - "Pre-merge test gate does not gate PR creation."
+L00020496	owner_hints:
+L00020497	  - Plans/assistant-chat-design.md
+L00020498	  - Plans/WorktreeGitImprovement.md
+L00020499	```
+L00020500	
+L00020501	### ACD-380 - Worktree Binding Seglog Events
+L00020502	
+L00020503	```yaml
+L00020504	plan_unit_id: ACD-380
+L00020505	unit_type: requirement
+L00020506	status: accepted
+L00020507	owner_doc: Plans/assistant-chat-design.md
+L00020508	canonical_text: Binding lifecycle seglog events preserve bound, unbound, renamed, and create-failed event schemas.
+L00020509	gui_related: false
+L00020510	gui_classification_reason: Seglog event schemas are storage/audit behavior.
+L00020511	depends_on: [ACD-326]
+L00020512	unblocks: []
+L00020513	acceptance_criteria:
+L00020514	  - Binding lifecycle events preserve type names and required fields for bound, unbound, renamed, and create-failed events.
+L00020515	validation_surfaces:
+L00020516	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020517	  - python3 scripts/pm-plan-index.py validate
+L00020518	risk_class: seglog
+L00020519	reasoning_tier: standard
+L00020520	context_scope: storage
+L00020521	implementation_surfaces:
+L00020522	  - Plans/assistant-chat-design.md
+L00020523	  - Plans/storage-plan.md
+L00020524	  - Plans/Contracts_V0.md
+L00020525	node_compile_hint:
+L00020526	  mode: worktree_binding_seglog_events
+L00020527	  create_worknodes: false
+L00020528	source_lineage:
+L00020529	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0167
+L00020530	preserved_exact_tokens:
+L00020531	  - "chat.thread_worktree_bound"
+L00020532	  - "chat.thread_worktree_unbound"
+L00020533	  - "chat.thread_worktree_renamed"
+L00020534	  - "chat.thread_worktree_create_failed"
+L00020535	negative_constraints: []
+L00020536	owner_hints:
+L00020537	  - Plans/assistant-chat-design.md
+L00020538	  - Plans/storage-plan.md
+L00020539	```
+L00020540	
+L00020541	### ACD-381 - Worktree Merge PR Seglog Events
+L00020542	
+L00020543	```yaml
+L00020544	plan_unit_id: ACD-381
+L00020545	unit_type: requirement
+L00020546	status: accepted
+L00020547	owner_doc: Plans/assistant-chat-design.md
+L00020548	canonical_text: Merge and PR seglog events preserve merged, merge failed, PR created, and PR failed schemas.
+L00020549	gui_related: false
+L00020550	gui_classification_reason: Merge/PR event schemas are storage/audit behavior.
+L00020551	depends_on: [ACD-347, ACD-365]
+L00020552	unblocks: []
+L00020553	acceptance_criteria:
+L00020554	  - Merge and PR lifecycle events preserve their type names and fields.
+L00020555	  - PR failure events preserve push/api phase values.
+L00020556	validation_surfaces:
+L00020557	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020558	  - python3 scripts/pm-plan-index.py validate
+L00020559	risk_class: seglog
+L00020560	reasoning_tier: standard
+L00020561	context_scope: storage
+L00020562	implementation_surfaces:
+L00020563	  - Plans/assistant-chat-design.md
+L00020564	  - Plans/storage-plan.md
+L00020565	  - Plans/GitHub_Integration.md
+L00020566	node_compile_hint:
+L00020567	  mode: worktree_merge_pr_seglog_events
+L00020568	  create_worknodes: false
+L00020569	source_lineage:
+L00020570	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0167
+L00020571	preserved_exact_tokens:
+L00020572	  - "chat.thread_worktree_merged"
+L00020573	  - "chat.thread_worktree_merge_failed"
+L00020574	  - "chat.thread_worktree_pr_created"
+L00020575	  - "chat.thread_worktree_pr_failed"
+L00020576	  - "phase"
+L00020577	negative_constraints: []
+L00020578	owner_hints:
+L00020579	  - Plans/assistant-chat-design.md
+L00020580	  - Plans/storage-plan.md
+L00020581	```
+L00020582	
+
+<<< CONTEXT_AFTER canonical_document_lines=20583-20594 >>>
+L00020583	### ACD-382 - Worktree Pre Merge Test Seglog Events
+L00020584	
+L00020585	```yaml
+L00020586	plan_unit_id: ACD-382
+L00020587	unit_type: requirement
+L00020588	status: accepted
+L00020589	owner_doc: Plans/assistant-chat-design.md
+L00020590	canonical_text: Pre-merge test seglog events preserve started, passed, and failed schemas including duration and override state.
+L00020591	gui_related: false
+L00020592	gui_classification_reason: Pre-merge test event schemas are storage/audit behavior.
+L00020593	depends_on: [ACD-369, ACD-376]
+L00020594	unblocks: []

@@ -1,0 +1,321 @@
+<<< CONTEXT_BEFORE 283-294 >>>
+## 5. Integration with Our Editor (FileManager / Rewrite)
+
+The editor integrates with LSP through a shared authoritative document store and a host-aware session supervisor.
+
+Rules:
+- the shared document store is the sole authority for open-document text
+- LSP document sync, hover, definition, references, completion, signature help, diagnostics, code actions, rename, and format all operate against that authoritative document state
+- feature requests are gated behind sync barriers so stale document versions do not leak into the UI
+- workspace edits from rename/format/code action flow through the same FileSafe-backed mutation path as other file edits
+- LSP never becomes the owner of Search, diff/review, or chat restore semantics
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/assistant-chat-design.md
+
+<<< AUTHORITATIVE_CORE 295-586 >>>
+
+UI integration rules:
+- breadcrumbs, outline, go-to-symbol, hover, references, and code actions are editor/LSP-owned affordances
+- diagnostics feed editor markers and Problems, but Problems remains the owner of aggregated problem presentation
+- when LSP is unavailable, fallback navigation/index behavior is explicit and MUST NOT masquerade as healthy LSP state
+- remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem
+- The PM-owned orchestration layer must `/discover` an effective server, `/restart/disable` sessions, bind project `/worktree/root`, sync open `/change/save` document events, and route diagnostics, `/symbols`, and `/navigation/results` into GUI and AI context without turning LSP into a separate AI surface.
+
+Fallback, index, and cross-reference rules:
+- Retrieval, `/search/autodetect`, `/search/chat`, and framework/project auto-detection treat project-detection output, code-index freshness/availability, and LSP session health/availability as separate inputs. A detected-language badge is a hint, not exact attached-server truth.
+- The code index remains a SEPARATE `/state-owning` subsystem from LSP: it is per-project, `/indexer` backed, watcher-driven, and useful for large-workspace navigation even when LSP is disabled, unavailable, or degraded; per-file LSP sessions attach through the editor document lifecycle and feed editing, diagnostics, semantic navigation, and code-action context. Index feeds search; LSP feeds editing.
+- When LSP is unavailable, Puppet Master falls back to code index/text search, `/regex` or heuristic outline where available, and optional `/download` or install hints. The fallback path must not claim diagnostics, semantic features, or healthy attached-server state.
+- Stale references to `FileManager.md §12.1.4`, `§12.1.4`, `§12.2.7`, `§12.4`, `§12.5`, `§12.6`, `§11`, `TOC`, and `Projects (§7.3)` / `§7.3` are legacy cross-reference residue. `FinalGUISpec` and FileManager consumers must route to the current FileManager §10 navigation/fallback contract or this LSPSupport section rather than keeping anchors that do not exist.
+- The semantic requirements formerly named `§12.1.4 Symbol search without LSP` and `§12.2.7 Symbol index staleness` are retained here as live obligations: fallback symbol search supports regex / heuristic outline and optional indexed-symbol paths; stale index labels, rebuild expectations, and remote degraded/unavailable interactions must be visible in the command palette, Go to symbol, Problems, Search, and chat consumers.
+- The LSP indexing/autodetect seam is research-locked around distinct GUI state layers. PM must keep `detected_languages` / project badges, selected preset, requested LSP enablement and server overrides, effective attached LSP sessions, and code index freshness/health separate in product language and state; a detected-language badge is advisory/project-scoped and must not collapse into "LSP ready." Later re-detection happens on project add/open and later project-signal changes, but actual attach remains `/path/root/context-driven`, based on extension, requirement/availability, root discovery, and primary/supplementary conflict resolution. `/cross-reference` consumers must distinguish `/opening` detection from later refresh, optional tool-download guidance, and `/retrieval/index` freshness.
+- The FileManager editor-surface map is explicit for LSP consumers: `§10.1 Breadcrumbs / outline` owns the breadcrumb strip and outline, with LSP using `documentSymbol` and fallback using heuristic / regex outline; `§10.2 Go to symbol` owns command-palette and quick-open symbols, with LSP using `documentSymbol` and `workspace/symbol`, while the legacy `§12.1.4` name survives only as a compatibility pointer to this fallback rule. `§10.10 LSP support (MVP)` is the editor-side owner for diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, definition/references, `/rename/applyEdit`, format, `document/workspace symbols`, editor/chat adjacency, and the finer `§10.10.5`, `§10.10.6`, `§10.10.7`, and `§10.10.8` responsibility split. FileManager remains the visible editor owner; LSPSupport owns the LSP protocol/client constraints.
+- Search remains text-first. The Search side panel consumes content-search / project code-search output with stable path, `/range/snippet`, and snippet identity, then routes open and `/highlight` through the same shell/editor path as chat, `/file-manager/LSP`, and LSP navigation opens. LSP symbol mode stays in Go to symbol, breadcrumbs, and semantic navigation; the Search panel must not become a second default symbol browser.
+- Status-bar /search-language copy in `Plans/LSPSupport.md` (`/LSPSupport.md`) keeps symbol search and regex grep non-conflicting: LSP may report server health, symbol navigation, and fallback state, while `grep` and Search regex acceleration remain text-search vocabulary and must not be labeled as LSP symbol health.
+- LSP command routing is route-aware and `/navigation-aware`: a flat `element -> command -> handler` contract is insufficient once diagnostics, symbols, references, code actions, and chat links open through route-target, navigation, and editor owners.
+- Storage and runtime consumers must not lag the execution-core rewrite: `storage-plan` and `storage-plan.md` record families consumed by LSP evidence, diagnostics, and apply-edit flows use current execution identity rather than stale route-only or tier-only records.
+- Orchestrator consumers of LSP data use `Orchestrator_Page`, `Orchestrator_Page.md`, `/event`, `Seams`, and `/package/seam/lane-native` execution objects; `Tiers` and tier-keyed widgets or event rows are compatibility inputs only.
+- rewrite-alignment references are routing inputs, not new LSP owners: `Decision_Log`, `Decision_Log.md`, `rewrite-tie-in-memo`, `rewrite-tie-in-memo.md`, `/packages/lanes/overseers`, `feature-list`, `feature-list.md`, `newfeatures.md`, projection-trust, `/effective`, promoted-feature, and tier-era wording must not misroute LSP or implementation readers.
+- Widget layout compatibility is narrow: keep `widget_layout:v1:dashboard`, `widget_layout:v1:usage`, and `widget_layout:v1:orchestrator:progress`; deprecate or remove `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, and `widget_layout:v1:orchestrator:ledger` when LSP-facing Orchestrator surfaces project progress or diagnostics.
+- Event/addendum supersession is explicit: `/addendum` records cannot require implementers to diff multiple addenda to know the final field set for LSP event, diagnostic, evidence, or apply-edit flows.
+- External audit convergence did not invalidate the LSP direction; it reinforces collapsing overlapping canon and fixing exact broken references, payloads, and command contracts before implementation.
+- cross-doc LSP consumers must not inherit stale Orchestrator UI ownership: `Widget_System`, `Widget_System.md`, `Run_Graph_View`, `Run_Graph_View.md`, `Orchestrator_Page`, and `Orchestrator_Page.md` references to `Tiers` or `/task/subtask` trees are compatibility inputs only; LSP-facing UI and diagnostics route through native `/specialized` tab surfaces and must carry `/corroboration/promotion/patch` lineage instead of under-specifies concern, corroboration, promotion, or patch provenance.
+- GUI and `FinalGUISpec.md` consumers of LSP status or Problems data must treat seam, package, and `/package/node` surfaces as first-class rewrite-era owners. Dashboard, Appendix C, and any 12-widget rewrite-era Progress set wording may remain source-lineage for `/task/subtask` and `Tiers`, but it cannot define the concrete LSP presentation home.
+- Runtime artifact and code-open consumers keep identity and location separate. `Runtime_Artifacts_Panel` / `Runtime_Artifacts_Panel.md` compatibility `task_id` vocabulary must resolve to `node_id`, package, seam, lane, and attempt identity before LSP evidence or diagnostics are attached; file/code open uses `OpenFile { path, line, range }` for concrete workspace `/code` locations, while route/open identity stays with the owning route contract.
+- Rewrite owner routing remains traceable before LSP consumers cite it: `Decision_Log`, `Decision_Log.md`, `Crosswalk.md`, and `/Crosswalk` provide the owner-traceability path for high-impact rewrite decisions, while LSPSupport records only how those decisions constrain language-intelligence consumers.
+- Runtime identity for LSP-facing execution context keys from node, `/packages/lanes`, package, seam, lane, and higher-level `/runtime` identity rather than active-tier heuristics. `/model/account`, execution-role, and operational-identity disclosure stay visible in diagnostics, Assistant context, and evidence joins when those joins affect attribution.
+- Project `/status` labels exposed beside LSP availability must not stay setup-centric. Project health/status, code-index state, LSP attach state, and runtime capability state remain separate so install/setup readiness does not masquerade as current project health or semantic intelligence.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+### 5.1 Chat LSP
+
+Chat LSP provides language intelligence features within the chat and assistant context.
+
+Purpose:
+- provide language intelligence features within the chat and assistant context
+- let the assistant surface code understanding without requiring the user to leave the chat flow
+
+Capabilities:
+- code completion suggestions in chat input
+- symbol resolution in code blocks
+- hover info for code references in messages
+- go-to-definition from chat code blocks
+
+Activation:
+- Chat LSP activates when a chat thread has an associated project with LSP servers running
+- chat messages containing code blocks are analyzed by the appropriate LSP server based on language detection
+
+Limitations:
+- Chat LSP provides read-only intelligence only; no refactoring and no code actions are exposed through this surface
+- it uses the same LSP server instances as the editor rather than spawning a separate chat-only server pool
+
+Integration:
+- code blocks that map to project files use those real file URIs; other code blocks use the virtual-document contract in §14.8
+- when the relevant server is unavailable or degraded, chat surfaces must disclose that reduced state explicitly
+- GUI `/placement` stays explicit: `/Problems` is the canonical multi-file diagnostics panel, the status-bar indicator owns current session/runtime health, and chat is a context/navigation consumer. Chat may show diagnostics summaries, `@ symbol` results, code-block hover, `/definition` and `/go-to-definition` affordances, and a Problems footer link, but `/conflicts`, `/empty/error`, `/remote/status/chat`, and degraded states resolve back to editor, Problems, status-bar, or SSH reconnect destinations rather than creating another diagnostics owner.
+
+Diagnostic-to-chat pipeline behavior is a context-packaging contract, not a second diagnostics owner. The `to-chat` payload uses the same diagnostic entry shape as §17.2 (`path`, `line`, `character`, `severity`, `message`, `source`, optional `code`) plus refs to the originating LSP session and URI; severity mapping preserves `Error`, `Warning`, `Info`, and `Hint` labels when chat summarizes or filters diagnostics. Chat LSP remains read-only for MVP; when a separate later-phase chat workflow surfaces a quick fix, code action, rename, or workspace edit from this diagnostic context, it opens explicit preview/confirmation and applies only through FileSafe-backed `workspace/applyEdit`, preserving the code action approval flow rather than mutating directly from the message.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+## 6. Scope and Phasing
+
+- **In scope for LSP MVP (this plan):** All features in §1, §5, and **§5.1 (LSP in the Chat Window)**, including: diagnostics, hover, completion, navigation (definition, references, symbol outline), inlay hints, semantic highlighting, code actions, code lens, signature help, request timeout/cancellation, LSP status in UI, per-server enable/disable, fallback when LSP unavailable (heuristic + optional install hint), **diagnostics in Assistant/Interview context**, **@ symbol with LSP workspace/symbol**, **code blocks in chat with hover and go-to-definition**, **Problems link from Chat**, and optional **inline diagnostics hint for @'d files**. Design and research for client-only integration: protocol usage, OpenCode-style server registry and lifecycle, Rust crates, and how it plugs into the File Manager and Chat.
+- **Out of scope here:** Full editor implementation details (tabs, buffers, presets) -- those stay in FileManager.md; this doc only covers LSP-specific bits.
+- **Phasing:** **LSP is MVP** -- implement with the desktop editor and Chat from the start. Use LSP when available; fallback to text-based/heuristic navigation and optional project index (FileManager §10.2) when LSP is disabled or unavailable.
+
+---
+
+## 7. Resolved design decisions and implementation constraints
+
+### 7.1 Registration-before-spawn invariant
+
+An LSP server MUST be registered in the session map (keyed by `(host_id, server_id, root_identity)`) before its process is spawned. Spawning before registration creates a window where the process exists but cannot be found, tracked, or shut down.
+
+Any asynchronous LSP startup goroutine or background initialization task is lifecycle-tracked BEFORE spawn: it must register a cancellable `lifecycle-tracker` handle before subprocess creation or watcher launch, and failed handshakes must either mark the existing record `failed` or tear the handle down.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+Required sequence:
+1. Acquire the session-map write lock.
+2. Insert the session record with status `starting`.
+3. Release the write lock.
+4. Spawn the subprocess.
+5. Transition the record to `ready` or `failed` after handshake completion.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+If spawn fails after registration, the session record is cleaned up or marked `failed` so the slot does not remain permanently occupied.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
+
+## 8. Potential issues and mitigations
+
+Each mitigation is **actionable**: who does what, and when.
+
+| Issue | Mitigation (who, what, when) |
+|-------|------------------------------|
+| **Server crash or exit** | **Client (LSP layer):** On process exit or broken pipe (e.g. when writing to stdin fails), (1) mark that server's state as Error, (2) clear all diagnostics for documents owned by that server (DiagnosticsCache), (3) notify UI to refresh Problems panel and gutter. **UI:** Show "Error" in status bar for that server; offer "Restart language server" button (or auto-restart with exponential backoff, e.g. 1s, 2s, 4s, cap 30s). **Logging:** Log exit code and stderr tail for debugging. |
+| **Server slow or unresponsive** | **Client:** Apply request timeouts (§14.4); on timeout, discard response and show "Timed out". Send LSP cancel on user navigate/edit. **UI:** While a request is in flight and no response yet, show "Waiting for language server..." in status bar; never block UI thread on LSP. **Optional (client):** After N timeouts for a server in a session, throttle or disable heavy features (e.g. workspace symbol) for that server until next restart. |
+| **Many open documents** | **Client:** Limit documents pushed to each server (e.g. only currently open tabs, or N most recent per root). **Editor/FileManager:** When a buffer is evicted (FileManager §12.2.1), **client** sends `didClose` for that URI so the server can free memory. **Config:** Optional cap (e.g. max 50 open docs per server) in Settings. |
+| **Large workspace at init** | **Client:** At initialize, send only roots that have at least one open document, capped at 10 (§7, §14.6). **When:** During `initialize` request; do not send thousands of paths. |
+| **didChange flood** | **Client:** Debounce `didChange` (default 100 ms after last edit; §7, §14.4). When server supports incremental sync, send only `contentChanges`; otherwise full content. **When:** On every buffer edit, start/reset debounce timer; on timer fire, send one `didChange`. |
+| **Symbol index staleness (without LSP)** | **FileManager:** fallback symbol navigation lives in §10.2. **When LSP present:** Diagnostics and symbols come from server. **When LSP disabled or unavailable:** Keep regex/heuristic symbol path (FileManager §10.2); optional install hint. **Client:** No action for index; fallback is editor/FileManager responsibility. |
+| **TCP-only servers (e.g. Godot)** | **User:** Configures a **command** (e.g. `npx godot-lsp-stdio-bridge`) that speaks stdio to the app and TCP to the real server. **Client:** Spawn that command as the LSP server process; no change to client transport (stdio only). **Docs:** Document bridge pattern in user-facing docs; see §10. |
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
+
+---
+
+## 9. MVP LSP features (summary)
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope. The canonical tool surface is nine read-only operations plus one write/approval-gated `rename`; the packetization label `10 read-only + 1 write-gated (lsp_rename)` is reconciled here by treating `lsp_rename` as a legacy alias for `rename`, not a second operation. `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` / `lsp_rename` requires `path` + `position` + `newName` with approval gating.
+- `obl-064` owns this MVP LSP features summary and requires the missing-result envelope `status: ok | partial | unavailable | error`; stale aliases, short names, or ad hoc result envelopes are retired in favor of this section.
+
+Fields:
+- operation
+- query
+- path
+- position
+- newName
+- status
+
+Labels and values:
+- goToDefinition
+- findReferences
+- hover
+- documentSymbol
+- workspaceSymbol
+- goToImplementation
+- prepareCallHierarchy
+- incomingCalls
+- outgoingCalls
+- rename
+
+Rules:
+- ok | partial | unavailable | error
+- `workspaceSymbol` requires `query`
+- Position-based operations use `path` + `position` (line/character).
+- `rename` requires `path` + `position` + `newName`.
+- `rename` is approval-gated because it applies edits.
+## 10. Transport alternatives and bridge pattern
+
+Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some use **TCP** (e.g. Godot's GDScript LSP on port 6005). Tools like OpenCode and Cursor typically expect stdio only, so TCP-only servers don't work without a bridge.
+
+### 10.1 Godot LSP bridge (reference)
+
+- **Context:** [Reddit: Made a Godot LSP bridge because it wasn't working with OpenCode](https://www.reddit.com/r/godot/comments/1qumbhq/made_a_godot_lsp_bridge_because_it_wasnt_working/) -- Godot uses TCP; OpenCode expects stdio; connection kept failing.
+- **Project:** [godot-lsp-stdio-bridge](https://github.com/code-xhyun/godot-lsp-stdio-bridge) -- stdio-to-TCP bridge so AI coding tools (OpenCode, Claude Code, Cursor) can use Godot's GDScript LSP. Run with `npx godot-lsp-stdio-bridge`; configure as the LSP "command" for `.gd` / `.gdshader`.
+- **Features:** Binary-safe buffers (no data loss on large files); auto port discovery (6005, 6007, 6008); auto reconnection when Godot restarts; Windows URI normalization (`C:\path` → `/C:/path`); notification buffering until initialize response (handles Godot's non-standard ordering); memory limits (10 MB buffer, 1000 message queue); graceful shutdown. Zero dependencies (Node.js).
+- **Takeaway for us:** If we support a **custom command** per server (like OpenCode's `lsp.<id>.command`), users can plug in **bridge processes** for TCP (or other) servers. We only speak stdio to the child process; the bridge translates to/from TCP. No need to implement TCP in our client for MVP; document that "use a bridge" is the supported pattern for TCP-only servers.
+
+### 10.2 Our stance
+
+- **MVP:** Client talks stdio only (spawn server process, or spawn a bridge that talks stdio to us and TCP/other to the real server).
+- **Native TCP/socket:** **Out of scope for MVP.** No implementation required. Implementer must document the bridge pattern only (e.g. Godot via godot-lsp-stdio-bridge). Later (optional): native TCP client for already-running servers; lower priority.
+
+---
+
+## 11. References
+
+- [LSP Specification (3.17)](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/)
+- [OpenCode LSP docs](https://opencode.ai/docs/lsp/) -- official; built-in servers, config, how it works
+- [OpenCode server.ts](https://github.com/anomalyco/opencode/blob/dev/packages/opencode/src/lsp/server.ts) -- server registry, root discovery, spawn, 30+ languages
+- [lsp-types](https://docs.rs/lsp-types/), [lsp-client](https://docs.rs/lsp-client/), [async_lsp_client](https://docs.rs/async_lsp_client/)
+- [LSP timeout responsibility (client)](https://github.com/microsoft/language-server-protocol/issues/1916)
+- [LSP stale response / versioning](https://github.com/microsoft/language-server-protocol/issues/584)
+- [Godot LSP bridge (Reddit)](https://www.reddit.com/r/godot/comments/1qumbhq/made_a_godot_lsp_bridge_because_it_wasnt_working/) -- TCP vs stdio; bridge pattern for OpenCode/Cursor/Claude Code
+- [godot-lsp-stdio-bridge](https://github.com/code-xhyun/godot-lsp-stdio-bridge) -- stdio↔TCP bridge, port discovery, reconnection, binary-safe buffers
+- [ESLint](https://github.com/eslint/eslint) -- ECMAScript/JavaScript (and TS) linter; v10.0.x flat config only; LSP via vscode-eslint/server or project eslint dep. See §3.3.
+- [ESLint v10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0) -- flat config, Node requirements.
+- [slint-lsp](https://crates.io/crates/slint-lsp) -- LSP server for Slint (.slint); stdio; diagnostics, completion, goto definition, live-preview. See §3.3.1.
+- [Slint tooling (slint-lsp, fmt)](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp) -- setup, config, formatting.
+- Plans/FileManager.md (§6 out of scope, §10 editor navigation and fallback symbol search, §11 file-tree actions and presets)
+- Plans/FinalGUISpec.md (placeholder for linter/build errors when LSP added)
+
+---
+
+## 12. Implementation checklist (when phased in)
+
+### 12.1 Implementation order (phases and dependencies)
+
+Recommended ordering so an implementer can build incrementally with clear dependencies. **Dependencies:** each phase assumes the previous phase is done; within a phase, items are ordered by dependency where applicable.
+
+- **Phase 1 -- Core LSP (must ship first):**
+  - **Prerequisites:** Rust LSP client crate (lsp-types + stdio-capable client), config schema (OpenCode-aligned; §14.4).
+  - **Client + registry:** Server registry (id, extensions, root finder, spawn); config (disabled, command, env, initialization). Include all built-in servers §3.2 + slint-lsp (§3.3.1); reinforce eslint (§3.3). *Depends on: Prerequisites.*
+  - **Document sync:** didOpen / didChange (debounced, incremental when supported) / didClose / didSave; version tracking (§7, §14.2, §14.3). *Depends on: Client + registry.*
+  - **Diagnostics:** Subscribe to publishDiagnostics; map to editor underlines + gutter; **Problems panel** (FinalGUISpec §7.20). *Depends on: Document sync.*
+  - **Hover:** textDocument/hover at cursor; show tooltip; timeout and stale discard (§1.1, §7). *Depends on: Document sync.*
+  - **Completion:** textDocument/completion on trigger; render list and apply on select; timeout and stale discard. *Depends on: Document sync.*
+  - **LSP status in UI:** Status bar (server name, Initializing/Ready/Error); §8 crash/restart behavior. *Depends on: Client + registry.*
+  - **Fallback when LSP unavailable:** Heuristic symbol search, no diagnostics; optional install hint (FileManager §10.2). *Depends on: Editor/FileManager.*
+  - **Phase 1 outcome:** User can open files, see diagnostics in editor and Problems panel, get hover and completion; status bar shows LSP state; fallback when no server.
+
+- **Phase 2 -- Editor navigation + Chat LSP:**
+  - **Navigation (editor):** documentSymbol (outline, breadcrumbs, Go to symbol), textDocument/definition; then **textDocument/references** (Find references → References panel), **textDocument/rename** (Rename with FileSafe), **textDocument/formatting** (Format document/selection). *Depends on: Phase 1.*
+  - **Inlay hints, semantic highlighting, code actions, code lens, signature help** in editor. *Depends on: Phase 1.*
+  - **Request timeout and cancellation; per-server enable/disable; Settings > LSP** (§7.4.2); server lifecycle (restart on crash, backoff); bridge pattern. *Depends on: Phase 1.*
+  - **Chat LSP (§5.1):** Diagnostics in Assistant/Interview context; @ symbol with LSP workspace/symbol; code-block hover and click-to-definition; Problems link from Chat; optional inline diagnostics hint for @'d files. *Depends on: Phase 1 (diagnostics, hover, definition).*
+  - **Diagnostics for LLM/Assistant** in context. *Depends on: Phase 1 diagnostics.*
+  - **Phase 2 outcome:** Full editor LSP (definition, references, rename, format, code actions, code lens, signature help, inlay hints); Chat has LSP-aware @ symbol, code-block hover/definition, Problems link; Settings > LSP and fallbacks in place.
+
+- **Phase 3 -- Additional enhancements (§9.1):**
+  - **Recommended (high value):** Find references, Rename symbol, Format document (if not already in Phase 2); LSP diagnostics verification gate (optional); LSP snapshot in evidence (optional); Chat "Fix all" / "Rename" / "Where is this used?" / "Format file"; promote lsp tool (Tools.md).
+  - **Optional (as capacity allows):** Go to type definition, Go to implementation, document links, call hierarchy, folding range, selection range, document highlight; Interview "structure of file" (documentSymbol); subagent selection from LSP; code lens "Run test" / "N references" click → References panel.
+  - **Phase 3 outcome:** Optional verification gates, evidence snapshots, and Chat/Interview/agent-facing enhancements implemented per §9.1 acceptance criteria.
+
+**Summary:** Phase 1 = core client, doc sync, diagnostics, hover, completion, Problems panel, status, fallback. Phase 2 = navigation (definition, references, rename, format), inlay/semantic/code actions/code lens/signature help, Chat LSP (§5.1), timeouts, Settings > LSP. Phase 3 = §9.1 optional/recommended items.
+
+**Edge cases and fallback:** For each checklist item below, success/failure behavior, edge cases (timeout, server crash, stale response), and **fallback when LSP unavailable** are defined in §1.1 (Purpose), §5 (Editor), §5.1 (Chat), §8 (mitigations), and §13 (GUI). Config keys: §14.4.
+
+---
+
+- [ ] Choose and integrate Rust LSP client crate (lsp-types + stdio-capable client).
+- [ ] Implement server registry: id, extensions, root finder, spawn; config (disabled, command, extensions, env, initialization). **Include all built-in servers** from §3.2 (OpenCode-aligned table **plus slint-lsp** for `.slint`). **Reinforce eslint** for ECMAScript/JavaScript/TypeScript (§3.3); **include slint-lsp** for Slint UI (§3.3.1); root discovery via package.json or eslint.config.* (v10 flat config), and for .slint via file directory or Cargo.toml root.
+- [ ] Document sync: didOpen / didChange (debounced, incremental when supported) / didClose / didSave; version tracking.
+- [ ] Diagnostics: subscribe to publishDiagnostics; map to editor UI and optional Problems panel.
+- [ ] Hover: textDocument/hover on cursor position; show tooltip.
+- [ ] Completion: textDocument/completion on trigger; render list and apply on select.
+- [ ] Navigation: documentSymbol (outline/breadcrumbs), textDocument/definition, **textDocument/references** (Find references → References panel), **textDocument/rename** (Rename symbol with FileSafe), **textDocument/typeDefinition**, **textDocument/implementation** (when server supports).
+- [ ] Inlay hints: textDocument/inlayHint; render as inline decorations.
+- [ ] Semantic highlighting: textDocument/semanticTokens when supported; fall back to syntax-only.
+- [ ] Code actions: textDocument/codeAction; context menu/lightbulb; apply via workspace/applyEdit (FileSafe).
+- [ ] Code lens: textDocument/codeLens; render and invoke actionable links.
+- [ ] Signature help: textDocument/signatureHelp when cursor in a call.
+- [ ] Request timeout and cancellation; discard or re-request on stale document version.
+- [ ] LSP status in UI: status bar or indicator (server name, Initializing/Ready/Error).
+- [ ] Per-server enable/disable: honor lsp.<id>.disabled and lsp: false. **GUI:** Settings > LSP: all built-in servers listed with Enable toggle (default on); user can turn any off. Global "Disable automatic LSP server downloads" toggle; per-server env and initialization options; custom LSP servers (add/edit/remove: command, extensions, env, initialization). See FinalGUISpec §7.4.2.
+- [ ] Server lifecycle: spawn on first file open for `(host_id, server_id, root_identity)`; restart on crash with backoff.
+- [ ] Support bridge pattern: custom command can be a stdio↔TCP bridge (e.g. Godot); document for users.
+- [ ] Fallback: when LSP disabled or server missing, keep heuristic symbol search and no diagnostics; optional install hint (FileManager §10.2).
+- [ ] Diagnostics for LLM/Assistant: include current LSP diagnostics in context fed to Assistant/Interview.
+- [ ] **Additional enhancements (§9.1):** textDocument/formatting (format document/selection); textDocument/documentLink (clickable imports); optional: LSP diagnostics verification gate, LSP snapshot in evidence, Chat "Fix all" / "Rename" / "Where is this used?" / "Format file"; promote lsp tool when ready.
+
+---
+
+## 13. GUI requirements and cross-references
+
+Settings > LSP is a searchable registry-management surface, not a flat toggle list.
+
+It MUST allow the user to:
+- globally enable or disable LSP
+- search and filter the full support catalog
+- enable or disable catalog entries
+- inspect source/classification badges and effective overlap resolution
+- add custom servers
+- inspect requested vs effective attach state per server and project context
+- `Settings > LSP lists all servers and custom entries with validation`; that phrase is a product requirement, not a placeholder. The GUI includes a global master toggle, a searchable `/filterable` full-catalog list, per-server enable/disable, add custom server `/form`, edit custom server action, `/built-in` override/reset behavior, malformed command/config validation, visible distinction among catalog/built-in server, built-in server with user override, user-added custom server, disabled/enabled/misconfigured/unavailable states, command plus args, handled extensions/selectors, env/init options, root-discovery mode, install `/provisioning` notes, and global vs project-scope override. Requested state and effective state must both be shown when a global enablement is masked by a project override or missing binary.
+- Registry rows expose `/languages`, `/selectors`, source badges (`Microsoft`, `OpenCode`, `PM`, `Custom`), classification badges (`Default managed`, `Manual/toolchain`, `Experimental`), `/install` and `/toolchain` provenance, explicit `/effective-state`, path and `/exclusion` controls, and built-in `Override` plus `Reset to catalog defaults` actions. Custom rows keep full edit and remove controls; built-in rows keep read-only catalog metadata except for allowed overrides.
+- The LSP registry participates in the GUI Settings `/inspectors` pattern and the `two-level` Settings navigation model. Registry `/filtering` and `/filter/grouping` cover at least `/ecosystem`, language, source, requested state, effective state, support classification, and lifecycle state. Detail panes show canonical `/names`, aliases/source names, `/install/download/legal` and `/provisioning` posture, platform restrictions, command/env/init fields, and validation errors without turning Settings into the SSOT for runtime attachment.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+Cross-surface rules:
+- File Manager and editor consume LSP state for semantic affordances
+- Search remains the owner of text search and replace-in-files
+- Problems remains the owner of aggregated diagnostics display
+- status surfaces disclose freshness, health, and effective capability state rather than hiding degraded attach conditions
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+## 14. Technical implementation (implementation guide source)
+
+### 14.1 Worktree root_identity handling
+
+LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the canonical on-host worktree path, not a raw path copied across hosts.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+**Behavior:**
+- When a thread with a bound worktree is active and the user opens files from that worktree, LSP sessions use `root_identity = worktree_path`
+- If an LSP session for `(host_id, server_id, worktree_path)` does not exist, one is started (warm-start on worktree creation if feasible)
+- When the worktree is removed, the associated LSP session is shut down gracefully
+- Multiple worktrees may each have their own LSP session for the same server_id (each with a different root_identity)
+
+**Thread switch behavior:**
+- Switching threads does NOT kill LSP sessions for the previous thread's worktree — they remain available for background diagnostics and are reused if the user switches back
+- LSP session lifecycle is tied to worktree existence, not thread focus
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+### 14.1.1 Remote LSP over SSH transport
+
+Remote LSP uses SSH as a stdio tunnel instead of a port-forwarded secondary protocol.
+
+<<< CONTEXT_AFTER 587-598 >>>
+
+Rules:
+- transport is stdio over SSH; the remote LSP server stdin/stdout are tunneled through the SSH connection rather than exposed by port forwarding
+- connection lifecycle is: SSH connection established → remote LSP server spawned → stdio streams connected → initialize handshake → ready
+- multiple LSP servers may share the same SSH connection via multiplexed channels
+- Remote paths preserve the user-visible SSH authority: examples such as `user@host:/path/to/project` and `/path/to/project` describe the same remote project identity, not a local mirror. Remote LSP is MVP for remote edit intelligence and diagnostics, but remote run/debug remains outside FileManager's edit contract unless another runtime owner enables it. On connection-loss, LSP state follows the FileManager/GUI pattern: show `Connection lost`, offer `Reconnect` or `Work offline (cached files only)` when a validated cache exists, keep credentials in system keychain/agent flows rather than config, and expose keep-alive/backoff state through `ssh_connections` compatibility lineage or the current SSH remote profile model.
+- if SSH disconnects, all remote LSP servers on that connection are marked `degraded`, reconnect is attempted, servers are re-initialized, and pending requests are replayed when safe
+- remote LSP has higher latency by design; PM applies a timeout multiplier for remote operations (default `3x`)
+- remote LSP uses the remote filesystem directly; there is no hidden local sync or mirror for LSP operations
+
+Remote identity, SSH ownership, and degraded-state locks:
+- Remote LSP is part of the `remote-mode-project` model, not a `remote-edit-only` feature and not a broad-sweep local editor patch. This seam is research-locked for implementation transfer. `GitHub_Integration.md §C` is the SSH `/ownership` anchor for `/edit/test/remove`, validation `/auth/host-key`, add-existing-project, remote terminal, remote agents, remote `/providers`, and remote runtime execution. `GitHub_Integration.md §C.3-C.4` / `C.3-C.4` is the operational reconnect authority: keep the 30s keepalive, allow one bounded auto-retry (`one-auto-retry` in older notes), then require explicit `Reconnect`.

@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 1141-1152 >>>
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0015
+preserved_exact_tokens:
+  - "assistant_memory.redb"
+  - "Enqueue Tantivy + USearch index updates"
+  - "asynchronously"
+negative_constraints:
+  - "Index failures must be recoverable without data loss."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1153-1551 >>>
+### AMS-014 - Memory Verification Rules
+
+```yaml
+plan_unit_id: AMS-014
+unit_type: validation_rule
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Memory injection eligibility is Verified by default; verification_state is Unverified, Verified, or Discarded, and a gist transitions to Verified only when deterministic evidence rules pass.
+gui_related: false
+gui_classification_reason: Verification rules are backend validation and prompt-eligibility behavior.
+depends_on: [AMS-006, AMS-008, AMS-011]
+unblocks: [AMS-015, AMS-016, AMS-018, AMS-019]
+acceptance_criteria:
+  - Only verification_state = Verified gists are eligible for capsule and retrieval injection by default.
+  - Verification states remain Unverified, Verified, and Discarded.
+  - A gist transitions to Verified only when one of the deterministic evidence rules holds.
+  - A gist never transitions to Verified when evidence_refs is empty.
+  - Discarded gists are excluded from automatic injection and default search results.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_verification
+reasoning_tier: high
+context_scope: validation
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/Decision_Policy.md
+node_compile_hint:
+  mode: memory_verification_rules
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0016
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0017
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0021
+preserved_exact_tokens:
+  - "verification_state"
+  - "Unverified"
+  - "Verified"
+  - "Discarded"
+  - "Commit { hash, repo_id }"
+  - "exit_code == 0"
+  - "assistant.memory.allow_manual_verify_without_evidence"
+negative_constraints:
+  - "A gist MUST NOT transition to `Verified` if `evidence_refs[]` is empty."
+  - "Discarded gists MUST be excluded from automatic injection and default search results."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-015 - AutoRunBoundary Memory Trigger
+
+```yaml
+plan_unit_id: AMS-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: AutoRunBoundary runs exactly once at Assistant run end, creates or updates at most one gist, deduplicates by embed_text_hash plus normalized EvidenceRefs, verifies deterministically, and respects assistant.memory.auto_save_unverified.
+gui_related: false
+gui_classification_reason: AutoRunBoundary is an Assistant run-end backend trigger.
+depends_on: [AMS-014]
+unblocks: [AMS-016]
+acceptance_criteria:
+  - AutoRunBoundary runs once at the end of each Assistant run.
+  - AutoRunBoundary creates or updates at most one MemoryGist per run.
+  - Candidate deduplication uses embed_text_hash plus normalized EvidenceRefs.
+  - Unverified persistence respects assistant.memory.auto_save_unverified.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_trigger
+reasoning_tier: high
+context_scope: runtime
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: autorunboundary_memory_trigger
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0018
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0019
+preserved_exact_tokens:
+  - "AutoRunBoundary"
+  - "exactly once"
+  - "at most one"
+  - "embed_text_hash"
+  - "normalized EvidenceRefs"
+  - "assistant.memory.auto_save_unverified"
+negative_constraints:
+  - "AutoRunBoundary must not create multiple gists for a single Assistant run."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-016 - AutoMilestone Memory Trigger
+
+```yaml
+plan_unit_id: AMS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: AutoMilestone is an idempotent promotion trigger rate-limited to once per run, deduplicated per gist/evidence pair, able to create or promote one Outcome gist, and ordered before AutoRunBoundary persistence.
+gui_related: false
+gui_classification_reason: AutoMilestone trigger ordering and idempotence are backend runtime behavior.
+depends_on: [AMS-014, AMS-015]
+unblocks: [AMS-017]
+acceptance_criteria:
+  - AutoMilestone is idempotent per gist_id and evidence_ref pair.
+  - AutoMilestone is rate-limited to at most once per run.
+  - AutoMilestone may create or promote one Outcome gist per run.
+  - AutoMilestone executes before AutoRunBoundary persistence when triggered in a run.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_trigger
+reasoning_tier: high
+context_scope: runtime
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: automilestone_memory_trigger
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+preserved_exact_tokens:
+  - "AutoMilestone"
+  - "(gist_id, evidence_ref)"
+  - "at most **once per run**"
+  - "Outcome"
+  - "before AutoRunBoundary persistence"
+negative_constraints:
+  - "AutoMilestone must not reprocess the same gist/evidence pair more than once."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-017 - AutoMilestone GUI Done Source
+
+```yaml
+plan_unit_id: AMS-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: User confirmation of done through a GUI action is a valid AutoMilestone milestone source alongside tests, commits, PRs, and artifacts.
+gui_related: true
+gui_classification_reason: User confirms done via GUI action is a user-visible trigger source.
+depends_on: [AMS-016]
+unblocks: []
+acceptance_criteria:
+  - User confirms done via GUI action remains a valid AutoMilestone milestone source.
+  - The GUI source does not replace other milestone sources such as tests, commits, PRs, or artifacts.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_gui
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: automilestone_gui_done_source
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0020
+preserved_exact_tokens:
+  - "user confirms “done” via GUI action"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-018 - Memory Capsule Injection Boundary
+
+```yaml
+plan_unit_id: AMS-018
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Memory is continuity and project state, not rules; the always-loaded capsule uses a default 350-token hard cap, fixed section order, and Verified-only eligibility by default.
+gui_related: false
+gui_classification_reason: Capsule assembly and prompt boundaries are backend prompt behavior.
+depends_on: [AMS-003, AMS-005, AMS-009, AMS-014]
+unblocks: [AMS-019, AMS-021]
+acceptance_criteria:
+  - Memory remains a distinct context source separate from rules pipeline output.
+  - Capsule budget default remains 350 tokens.
+  - Capsule sections preserve fixed order.
+  - Capsule assembly enforces the hard token cap before sending any Assistant prompt.
+  - Capsule assembly excludes non-Verified gists by default.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prompt_injection
+reasoning_tier: high
+context_scope: prompt
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/assistant-chat-design.md
+  - Plans/agent-rules-context.md
+node_compile_hint:
+  mode: memory_capsule_injection_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0022
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0023
+preserved_exact_tokens:
+  - "Memory is continuity and project state. Memory is not rules."
+  - "350"
+  - "Project Capsule bullets"
+  - "Current Thread paragraph"
+  - "Recent decisions"
+  - "Recent blockers"
+  - "Verified-only"
+negative_constraints:
+  - "Unverified gists may be included only by explicit user action."
+  - "Pinned Unverified gists must not be auto-included unless assistant.memory.allow_pinned_unverified_injection = true."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-019 - Per Turn Memory Retrieval Injection
+
+```yaml
+plan_unit_id: AMS-019
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Per-turn retrieval injection runs lexical and semantic search, merges and reranks results, injects up to the default five gists, and remains summary-only and Verified-only unless explicitly allowed by configuration or user action.
+gui_related: false
+gui_classification_reason: Retrieval injection is backend prompt assembly behavior.
+depends_on: [AMS-012, AMS-014, AMS-018]
+unblocks: [AMS-020]
+acceptance_criteria:
+  - Per-turn retrieval executes Tantivy lexical search plus USearch semantic search.
+  - Retrieval results are merged and reranked.
+  - Default max injected gists per turn remains five.
+  - Retrieval injection is summary-only.
+  - Retrieval injection excludes non-Verified gists by default.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prompt_injection
+reasoning_tier: high
+context_scope: prompt
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: per_turn_memory_retrieval_injection
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0024
+preserved_exact_tokens:
+  - "Tantivy"
+  - "USearch"
+  - "N default `5`"
+  - "summary-only"
+  - "Verified-only"
+negative_constraints:
+  - "Retrieval injection MUST NOT exceed max item count and MUST remain summary-only."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-020 - Memory Activation Scoring
+
+```yaml
+plan_unit_id: AMS-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Activation scoring includes pinned boost, kind/status weighting, recency decay, access signals, and BM25 plus ANN retrieval blend; Done status applies a 0.5 half-life multiplier.
+gui_related: false
+gui_classification_reason: Activation scoring is backend retrieval/ranking behavior.
+depends_on: [AMS-012, AMS-019]
+unblocks: []
+acceptance_criteria:
+  - Activation scoring includes pinned, kind/status, recency, access, and retrieval blend components.
+  - Retrieval blend includes BM25 and ANN scores.
+  - Done-status gists apply effective_half_life_days = half_life_days * 0.5.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_retrieval
+reasoning_tier: standard
+context_scope: search
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: memory_activation_scoring
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0025
+preserved_exact_tokens:
+  - "pinned"
+  - "kind/status weighting"
+  - "recency decay"
+  - "access_count"
+  - "last_access_at"
+  - "BM25 + ANN scores"
+  - "effective_half_life_days = half_life_days * 0.5"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-021 - Gist Review Panel
+
+```yaml
+plan_unit_id: AMS-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: The GUI exposes a Gist Review panel adjacent to Memory and Rules panels, with filters, default Unverified review filter, auto-save toggle, gist actions, half-life controls, capsule preview, and maintenance actions.
+gui_related: true
+gui_classification_reason: Gist Review panel, filters, actions, toggles, and previews are user-visible GUI requirements.
+depends_on: [AMS-010, AMS-014, AMS-018]
+unblocks: [AMS-023]
+acceptance_criteria:
+  - Gist Review appears adjacent to Memory and Rules panels.
+  - Panel filters include kind, status, tags, pinned, and verification_state.
+  - Opening the panel defaults to verification_state = Unverified until explicit user action changes filters.
+  - Verify, Edit, Pin/Unpin, Discard, half-life controls, capsule preview, and maintenance actions are exposed.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_gui
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: gist_review_panel
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0003
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0026
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0027
+preserved_exact_tokens:
+  - "Gist Review"
+  - "Memory + Rules panels"
+  - "verification_state = Unverified"
+  - "assistant.memory.auto_save_unverified"
+  - "Verify"
+  - "Edit"
+  - "Pin/Unpin"
+  - "Discard"
+  - "What's in capsule now"
+negative_constraints:
+  - "Any non-default filter state must be the result of explicit user action."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-022 - Memory Maintenance Operations
+
+```yaml
+plan_unit_id: AMS-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Memory maintenance operations include Tantivy rebuild, USearch rebuild, verification sweep, dedup sweep, monthly summarize/compress, and prune/archive, all in-process with no external services and pinned gists protected from deletion.
+gui_related: false
+gui_classification_reason: Maintenance operation semantics are backend storage/index behavior.
+depends_on: [AMS-004, AMS-013]
+unblocks: [AMS-023]
+acceptance_criteria:
+  - Required maintenance operations are preserved.
+  - Maintenance operations run in-process and do not depend on external services.
+  - Prune/archive never deletes pinned gists.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_maintenance
+reasoning_tier: standard
+context_scope: storage
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: memory_maintenance_operations
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0028
+preserved_exact_tokens:
+  - "Rebuild Tantivy index"
+  - "Rebuild USearch index"
+  - "Verification sweep"
+  - "Dedup sweep"
+  - "Monthly summarize/compress"
+  - "Prune/archive"
+negative_constraints:
+  - "All maintenance operations MUST run in-process and MUST NOT depend on external services."
+  - "Prune/archive must never delete pinned gists."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+
+<<< CONTEXT_AFTER 1552-1563 >>>
+### AMS-023 - Memory Maintenance GUI Invocation
+
+```yaml
+plan_unit_id: AMS-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Memory maintenance operations are user-invokable in the GUI and callable by internal maintenance jobs with explicit success and failure status.
+gui_related: true
+gui_classification_reason: User-invokable GUI maintenance actions and success/failure status are visible UI behavior.
+depends_on: [AMS-021, AMS-022]
+unblocks: []

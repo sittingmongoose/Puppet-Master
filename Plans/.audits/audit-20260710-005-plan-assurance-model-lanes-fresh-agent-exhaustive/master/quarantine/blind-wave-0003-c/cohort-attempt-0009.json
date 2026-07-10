@@ -1,0 +1,31 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "blind-wave-0003-c",
+  "attempt_id": "attempt-0009",
+  "status": "cohort_quarantined_zero_credit",
+  "reason": "Dispatcher resolved relative receipt paths against the repository root rather than the authorized audit root.",
+  "cohort_dispatcher_thread_id": "019f4dfc-d0c2-7882-b197-76ffb318c02f",
+  "cohort_dispatcher_turn_id": "019f4dfc-d157-7792-b938-293d8014aa11",
+  "cohort_dispatcher_agent_path": "/root/a005_blind_wave_0003_c_cohort_dispatcher_attempt_0009",
+  "cohort_dispatcher_status": "interrupted_by_master_safety_gate",
+  "spawned_assignment_ids": [
+    "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+    "A005-001030-ADVERSARIAL-WIN-7414C6C901F8-0017",
+    "A005-001031-EXACT-WIN-7414C6C901F8-0018",
+    "A005-001032-ADVERSARIAL-WIN-7414C6C901F8-0018"
+  ],
+  "unspawned_assignment_ids": [
+    "A005-001033-EXACT-WIN-7414C6C901F8-0019",
+    "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+    "A005-001035-EXACT-WIN-749F06E4B796-0001",
+    "A005-001036-ADVERSARIAL-WIN-749F06E4B796-0001"
+  ],
+  "spawned_leaf_count": 4,
+  "valid_official_receipt_count": 0,
+  "result_count": 0,
+  "terminal_seal_count": 0,
+  "misdirected_receipts_preserved_byte_exact_inside_audit_quarantine": true,
+  "unauthorized_repo_root_receipts_removed_after_preservation": true,
+  "retry_requires_new_epoch_and_fresh_dispatcher_and_leaf_identities": true,
+  "coverage_credit": 0
+}

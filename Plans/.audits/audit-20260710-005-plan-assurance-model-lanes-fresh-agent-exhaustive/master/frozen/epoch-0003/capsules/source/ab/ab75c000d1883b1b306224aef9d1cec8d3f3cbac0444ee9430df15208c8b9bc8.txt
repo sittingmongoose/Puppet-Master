@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 4532-4543 >>>
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/storage-plan.md"
+- "Plans/Contracts_V0.md"
+- "Plans/human-in-the-loop.md"
+- "Plans/Section15_MVP_Promoted_Features_Spec.md"
+- "Plans/assistant-chat-design.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 4544-4916 >>>
+### PS-061 - Debug Profile Run Scoped Grant Boundary
+
+```yaml
+plan_unit_id: PS-061
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Debug Automation Profile grants are run-scoped and investigation-scoped rather than durable global/static permission layers, and expire unless a separate durable permission rule is explicitly approved."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-055
+- PS-060
+unblocks: []
+acceptance_criteria:
+- "PS-061 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: debug_profile_run_scope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0048
+preserved_exact_tokens:
+- "Debug profile target binding and reason codes"
+- "run-scoped"
+- "/static"
+- "front-door approval"
+- "resume revalidation"
+- "no grant"
+- "global"
+- "project"
+- "Persona"
+- "default profile layers"
+negative_constraints:
+- "The Debug Automation Profile must not be appended to global, project, Persona, or default profile layers as durable static policy."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-062 - Debug Profile Target Binding And Verification Disclosure
+
+```yaml
+plan_unit_id: PS-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Debug Investigation Context records stop, attention, blocked, and budget reason codes; target binding is deterministic, unresolved same-tier ties enter attention_required, strong verification is required for automated debug resolution, and remote/dev-session sections disclose requested/effective capability differences."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-061
+- PS-049
+unblocks: []
+acceptance_criteria:
+- "PS-062 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: debug_profile_target_binding
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0048
+preserved_exact_tokens:
+- "stop_reason_code"
+- "attention_required_reason_code"
+- "blocked_reason_code"
+- "budget_kind"
+- "target_selection_required"
+- "verification_strength=strong"
+- "/prototyping"
+- "/output"
+- "attention_required"
+- "failed"
+- "failed_cleanup"
+negative_constraints:
+- "PM must not guess a target under the Debug Automation Profile."
+- "Weaker or missing verification remains attention_required, failed, or failed_cleanup according to investigation state."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Section15_MVP_Promoted_Features_Spec.md"
+- "Plans/assistant-chat-design.md"
+```
+
+### PS-063 - Dedicated Permissions Settings Tab
+
+```yaml
+plan_unit_id: PS-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Settings includes a dedicated Permissions tab whose sections are provided as collapsible cards."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-059
+unblocks: []
+acceptance_criteria:
+- "PS-063 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permissions_tab_structure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0049
+preserved_exact_tokens:
+- "Dedicated Permissions tab"
+- "Permissions"
+- "Settings"
+- "collapsible cards"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-064 - Global Defaults And Per Tool Overrides UI
+
+```yaml
+plan_unit_id: PS-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The Permissions UI includes a global wildcard default dropdown and a per-tool overrides table with tool category, action dropdown, granular expand affordance, and inline inherited, overridden, and effective provenance."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-038
+- PS-055
+- PS-063
+unblocks: []
+acceptance_criteria:
+- "PS-064 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permissions_global_tool_overrides
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0050
+preserved_exact_tokens:
+- "Global defaults + per-tool overrides"
+- "Allow"
+- "Ask"
+- "Deny"
+- "Global wildcard default"
+- "Per-tool overrides"
+- "category badge"
+- "expand chevron"
+- "Inherited"
+- "Overridden"
+- "Effective"
+- "/inheritance/fallback"
+negative_constraints:
+- "Override display is inline, not modal-only."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Tools.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-065 - Granular Rule Editor UI
+
+```yaml
+plan_unit_id: PS-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Expanded tool rows expose an ordered granular rule editor with pattern/action entries, Add rule, reorder handles, delete controls, wildcard input help, and last-match-wins ordering."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-023
+- PS-024
+- PS-064
+unblocks: []
+acceptance_criteria:
+- "PS-065 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: granular_rule_editor
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0051
+preserved_exact_tokens:
+- "Granular rule editor"
+- "{pattern, action}"
+- "Add rule"
+- "Ask"
+- "Drag handles"
+- "last-match-wins"
+- "Delete button"
+- "*"
+- "?"
+- "wildcard syntax"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-066 - Permission Preset Approval Contract
+
+```yaml
+plan_unit_id: PS-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission preset surfaces preserve the four-tier approval ladder, HITL-gated question default allow, independently visible ask-gated web tools, strict read_only/no-network denial options, and blocked/unavailable payload fields."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-019
+- PS-040
+- PS-041
+- PS-042
+unblocks: []
+acceptance_criteria:
+- "PS-066 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_preset_approval_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0052
+preserved_exact_tokens:
+- "Presets"
+- "four-tier approval ladder"
+- "question default `allow` only when HITL is available"
+- "six web tools"
+- "ask-gated"
+- "read_only/no-network"
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "status: \"unavailable\""
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/human-in-the-loop.md"
+```
+
+### PS-067 - Read Only And Full Preset Key Matrix
+
+```yaml
+plan_unit_id: PS-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Read-only and full presets preserve explicit allow, ask, and deny key families across read/search/skill/lsp/question/todo/web/task/media/import tools and keep preset tables aligned with mode-override text."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:
+- PS-038
+- PS-047
+- PS-066
+unblocks: []
+acceptance_criteria:
+- "PS-067 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_preset_key_matrix
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0052
+preserved_exact_tokens:
+- "Read-only preset reconciliation"
+- "Full preset reconciliation"
+- "read_only"
+- "plan"
+- "webfetch"
+- "websearch"
+- "webextract"
+- "webresearch"
+- "webcrawl"
+- "webmap"
+- "lsp(ro)"
+- "/question/todoread/todowrite/capabilities.get"
+- "repo.import"
+- "media.generate"
+negative_constraints:
+- "Plan-mode wording must not imply blanket denial of tools expected during planning or research."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< CONTEXT_AFTER 4917-4928 >>>
+### PS-068 - External Directory Allowlist Manager UI
+
+```yaml
+plan_unit_id: PS-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "The external directory allowlist manager provides a scrollable wildcard path list, Add path input with optional native directory picker, per-row delete, and resolved home expansion display."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings UI, GUI controls, or copy behavior."
+split_recommended: false
+depends_on:

@@ -1,0 +1,741 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000044-ADVERSARIAL-WIN-18D335791D83-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_c_parallel_dispatcher_epoch_0013/leaf_0044_adversarial_attempt_0013",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Orchestrator_Page.md",
+    "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
+    "core_sha256": "62e42c9b785adcfed4af7827da326d6ce2e7b604005b1b7ebe84bc7de5c1e3bf",
+    "core_range": [1, 310]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000044-G001",
+      "item_type": "gap",
+      "title": "Pending Plan Compile launch has no terminal failure or recovery contract",
+      "statement": "The launch text covers projection lag and eventual binding, but it does not define a reconciliation deadline, unreachable-publication state, retry ownership, user cancellation, or recovery receipt when local approval succeeds and a durable PlanCompileRun never becomes observable.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "The GUI can remain indefinitely pending or invite unsafe operator workarounds after a split local/publication failure.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 48,
+          "line_end": 48,
+          "exact_quote": "Orchestrator Plan Compile consumes the Planning Wizard `Approve And Build` approval transaction; it does not create a second ordinary build launch. When `cmd.planning_wizard.approve_and_build` succeeds locally, Orchestrator opens `Plan Compile` with either the returned durable `plan_compile_run_id` or a pending-launch projection tied to the approval command and idempotency key. If `PlanApproved` publication or projection reconciliation lags, the tab displays pending-launch status and then binds to the durable `PlanCompileRun` without creating a duplicate.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G002",
+      "item_type": "gap",
+      "title": "Concern mutations lack optimistic-concurrency and idempotency requirements",
+      "statement": "Actor, confirmation, rationale, reversibility, and audit metadata are required, but the action contract does not require an expected record version, transition precondition, mutation idempotency key, or conflict result. Multiple authorized creators and resolvers can race and silently overwrite or duplicate lifecycle decisions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_race",
+      "impact": "Concurrent acknowledge, dismiss, resolve, merge, or split operations can lose lineage or produce contradictory canonical state.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 60,
+          "line_end": 60,
+          "exact_quote": "Concern actions expose audit_fields and action metadata: resulting_status_or_lineage, confirmation_level, rationale_required, allowed_actor_kinds, and reversibility are mandatory fields for action audit and display.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 118,
+          "line_end": 118,
+          "exact_quote": "Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and graph patch logic may create canonical concerns, while workers nominate concerns rather than minting canonical concern records directly.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G003",
+      "item_type": "gap",
+      "title": "Freshness revalidation is vulnerable to time-of-check/time-of-use races",
+      "statement": "The spec requires current data or direct revalidation but does not bind the returned generation, version, or source-event token atomically to the subsequent mutation. Data can become stale after revalidation and before command commit.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_race",
+      "impact": "A mutation can execute against state that no longer satisfies the freshness gate while the UI still presents it as revalidated.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 196,
+          "line_end": 196,
+          "exact_quote": "- Freshness is buildable state: mutation-capable projections carry `projection_state`, `last_observed_at`, `source_event_ref`, and `revalidation_route`; `stale`, `degraded`, and `unavailable` disable mutation unless the owner surface performs current direct revalidation first.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G004",
+      "item_type": "gap",
+      "title": "Bulk concern actions omit per-item authorization and partial-result semantics",
+      "statement": "Bulk acknowledge, archive, and remove operations preserve object identity, yet no contract defines per-item authority checks, atomic versus best-effort execution, partial success receipts, retry safety, or what selection remains after failures.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "A mixed-authority selection can partially mutate without a reconstructable recovery path or can encourage unsafe whole-batch retries.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 96,
+          "line_end": 96,
+          "exact_quote": "Bulk concern actions include `/concerns`, `/remove`, History, Evidence, and Ledger targets; selected items must keep routeable object identity when acknowledging, archiving, removing, or opening retained views.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 211,
+          "line_end": 211,
+          "exact_quote": "- Bulk actions default to navigation and triage rather than live execution mutation.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G005",
+      "item_type": "gap",
+      "title": "Account history has no privacy or data-lifecycle boundary",
+      "statement": "Concrete effective-account identifiers and append-only pressure/switch events are displayed and shared across four consumers, but retention, access control, redaction, export, deletion, pseudonymization, and support-log handling are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Durable identity and provider-pressure history may be disclosed too broadly or retained indefinitely without a user or administrator remedy.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 120,
+          "line_end": 120,
+          "exact_quote": "Runtime account examples preserve their literal display shape: `Account policy: Auto switch (Project policy)`, `Effective account: gemini-oauth-2`, `Switch reason: rate_limit_pressure`, gemini-oauth-2, and rate_limit_pressure.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 260,
+          "line_end": 260,
+          "exact_quote": "- Orchestrator stores append-only `account_pressure_episode` and `account_switch_event` families.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G006",
+      "item_type": "gap",
+      "title": "Self-initiated web evidence lacks hostile-content controls",
+      "statement": "Permission and capability gates authorize read-only web operations, but the contract does not define prompt-injection isolation, content sanitization, provenance trust levels, secret-bearing request restrictions, redirect/download handling, or quarantining of untrusted instructions before evidence affects a blocked-state decision.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_input",
+      "impact": "Hostile external content can steer orchestration decisions or induce data disclosure even though the operation is nominally read-only.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 234,
+          "line_end": 234,
+          "exact_quote": "- Orchestrator may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only when orchestration needs current or external source verification, issue/PR/docs currentness, or visual/dynamic browser evidence. These calls route through the PM WebOperation/BrowserAction dispatcher, not through slash-help-only command discovery, and use `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader` with `invocation_source = goal`, required `agent_reason`, permission/capability gates, visible operation cards, and `orchestrator_evidence_receipts`. Orchestrator web evidence does not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks; it records source/evidence receipts for the current GoalRun or blocked-state decision.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G007",
+      "item_type": "gap",
+      "title": "Indeterminate remote outcomes have no retry and liveness policy",
+      "statement": "The requested, transport_lost, and reconciled states plus a refresh action are useful, but no maximum reconciliation age, background retry schedule, idempotency requirement, escalation route, or rule against repeating a possibly-completed mutation is specified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "failure_recovery",
+      "impact": "Operators may duplicate remote side effects or wait forever when the remote system cannot establish the original outcome.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 240,
+          "line_end": 240,
+          "exact_quote": "- External side-effect receipts distinguish local-vs-remote and vs-remote outcomes. `indeterminate_remote_outcome` records `requested`, `transport_lost`, and later `reconciled` state plus a `Refresh remote state` CTA. Capability-level degradation and the local-vs-remote degraded-mode split keep local work available where safe: local Git can continue during hosted-degraded GitHub state, Docker local runtime can continue during registry outage, and manifest editing can continue while cluster access is offline.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G008",
+      "item_type": "gap",
+      "title": "Owned-target override has no concrete authority or rollback contract",
+      "statement": "The text permits an explicit override or control fork and records its source, but it does not say which actors may override each target class, required confirmation and rationale, safe-point preconditions, lease transfer atomicity, or compensation when the manual mutation partially succeeds.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_and_recovery",
+      "impact": "A manual operation can seize or corrupt a run-owned worktree, container, or workload without a deterministic recovery owner.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 241,
+          "line_end": 241,
+          "exact_quote": "- Mutable targets owned by an active run carry `owned_by_run`; manual mutation of owned worktrees, preview containers, or rollout-associated workloads blocks, requires explicit override, or forks control explicitly. Receipts record the override source and resulting ownership.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G009",
+      "item_type": "gap",
+      "title": "Cancel/complete precedence is example-based rather than total and monotonic",
+      "statement": "Three race examples are named, but there is no normative total ordering for simultaneous provider observations, revision changes, duplicated terminal events, or reconciliation reversals, nor a version/finality token that prevents a later stale receipt from changing the chosen terminal state.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_state_transition",
+      "impact": "Different owner surfaces can derive different terminal outcomes from the same event set and oscillate after reconciliation.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 242,
+          "line_end": 242,
+          "exact_quote": "- Terminal-state precedence rules for cancel/complete races are explicit; examples: cancel requested after a remote run already completed, container stop requested after the container already exited or restarted, and rollout cancel requested after a new revision already became ready. The receipt reconciles to an informational terminal state such as `completed_before_cancel`, `already_stopped`, or `already_replaced` instead of overwriting the completed outcome as failed.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G010",
+      "item_type": "gap",
+      "title": "Legacy worktree aliases have no versioned migration or retirement rule",
+      "statement": "The document enumerates legacy tier-shaped aliases and current authority, but it does not define a schema/version discriminator, ambiguous-route resolution, telemetry for remaining consumers, migration transform, or removal threshold.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Old and new payloads can be misinterpreted indefinitely, and compatibility fields may silently regain execution authority.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 128,
+          "line_end": 128,
+          "exact_quote": "Worktree legacy compatibility is explicit: `WorktreeGitImprovement.md`, `/tier`, `/node`, tier_id, `/storage`, `/package`, `/worktree`, get_tier_worktree, get_tier_worktree(tier_id), owner run/tier, tier-keyed, tier-based branch/worktree naming, and older `Progress, Tiers, History, and Node Graph` labels are retained as compatibility fields, not execution-canonical authority over lane/package/node attempts. The active shell remains `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G011",
+      "item_type": "gap",
+      "title": "Dense and virtualized GUI surfaces have no accessibility contract",
+      "statement": "The core mandates dense-tab virtualization and many status/action surfaces without specifying keyboard traversal, focus restoration across virtualized rows, screen-reader row semantics, live-region behavior, non-color state cues, zoom/reflow, or accessible names for badges and icon actions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility",
+      "impact": "Core Orchestrator workflows can be unusable or misleading for keyboard-only, low-vision, and assistive-technology users.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 287,
+          "line_end": 287,
+          "exact_quote": "- Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across dense tabs.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G012",
+      "item_type": "gap",
+      "title": "Literal English UI taxonomies are not localization-ready",
+      "statement": "The specification freezes English action labels, status labels, and literal account display text but gives no localization keys, parameterized message contract, pluralization, date/time/number formatting, locale-aware search aliases, or stable machine-code versus translated-label separation.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "localization",
+      "impact": "Translated clients risk parsing display strings as protocol values or presenting partially localized operational states.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 228,
+          "line_end": 228,
+          "exact_quote": "- Progress labels/taxonomy transfer with the catalog: state labels `queued|running|attention_required|blocked|recovering|degraded|complete`; action labels `Inspect|Focus run|Open evidence|Request approval|Acknowledge|Dismiss|Resolve|Retry recovery`; alert taxonomy `advisory|attention_required|blocked|escalated|degraded_projection`; event taxonomy `run_started|node_started|node_completed|concern_opened|approval_requested|approval_decided|recovery_started|recovery_completed|artifact_published|account_switched`; condition-aging keeps advisory warnings quietable, resurfaces `attention_required`, and never auto-quiets `blocked` or `escalated`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G013",
+      "item_type": "gap",
+      "title": "Scale strategy lacks measurable limits and consistency rules",
+      "statement": "Virtualization and slice loading are mandatory, but there are no maximum row/event volumes, slice sizes, memory budgets, update coalescing or backpressure rules, stable pagination snapshot semantics, latency targets, or overload degradation behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Implementations cannot be tested for supported scale and may drop, duplicate, reorder, or starve live rows under load.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 287,
+          "line_end": 287,
+          "exact_quote": "- Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across dense tabs.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 288,
+          "line_end": 288,
+          "exact_quote": "- Scale is a cross-tab contract rather than a graph-tab-only concern.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G014",
+      "item_type": "gap",
+      "title": "Design-open authority seams remain in execution-critical fields",
+      "statement": "Concrete-account selection, actor role, pressure/switch history, projection-freshness ownership, and concern-transition authority are explicitly left open. These are not harmless presentation choices; they determine who can mutate state and which projection can authorize a command.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "cross_document_authority_seam",
+      "impact": "Implementers can choose incompatible owners and transition rules, producing conflicting canonical records and privilege boundaries.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 176,
+          "line_end": 176,
+          "exact_quote": "Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/ownership, and concern-transition authority splits retain design-open status until their owning docs close them. Usage and account projections stay project-scoped by default; multi-project aggregation is a separate later concern, and per-project Orchestrator storage `/projection` remains the active direction.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G015",
+      "item_type": "gap",
+      "title": "Cross-surface mirroring and scale requirements lack falsifiable oracles",
+      "statement": "The core says owner surfaces mirror the same blocked episode and that virtualization is mandatory, but it does not define fixture inputs, observable equality fields and timing, convergence bounds, test datasets, or pass/fail performance thresholds.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Two implementations can claim conformance while disagreeing on mirrored state or failing under realistic dense-tab load.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 237,
+          "line_end": 237,
+          "exact_quote": "- Orchestrator remains the page-level recovery owner for blocked flows, while Source Control, GitHub Actions, Docker Manager, and Docker Manager Kubernetes views mirror the same blocked episode, same `blocked_reason_code`, same ordered `allowed_action_ids[]`, same requested/effective state, and same explanation text.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 287,
+          "line_end": 287,
+          "exact_quote": "- Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across dense tabs.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G016",
+      "item_type": "gap",
+      "title": "Concern sighting heuristics do not define a durable deduplication key",
+      "statement": "Source/scope/category/lineage-aware heuristics are named, but ordering, time window, normalization, collision handling, durable uniqueness, and concurrent upsert behavior are absent.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_race",
+      "impact": "Concurrent equivalent sightings can create duplicate canonical concerns or merge unrelated incidents unpredictably.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 278,
+          "line_end": 278,
+          "exact_quote": "- Repeated sightings use source/scope/category/lineage-aware heuristics to decide whether to update an existing concern or mint a new concern record.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G017",
+      "item_type": "gap",
+      "title": "Remove, archive, dismiss, and override lack concrete destructive-action semantics",
+      "statement": "Generic confirmation and reversibility classification is required, but the document does not define what remove versus archive deletes, retention and restore windows, cascade behavior, evidence preservation, undo receipts, or which operations are irrevocable.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "destructive_action",
+      "impact": "Users cannot predict whether audit lineage or dependent references will survive a destructive action, and recovery cannot be implemented consistently.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 96,
+          "line_end": 96,
+          "exact_quote": "Bulk concern actions include `/concerns`, `/remove`, History, Evidence, and Ledger targets; selected items must keep routeable object identity when acknowledging, archiving, removing, or opening retained views.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 140,
+          "line_end": 140,
+          "exact_quote": "Every mutating action is classified by confirmation level and reversibility so the UI can separate low-risk navigation from irreversible or high-confirmation mutations.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G018",
+      "item_type": "gap",
+      "title": "Multi-surface escalation has no deduplication or acknowledgement convergence rule",
+      "statement": "A shared ladder and resurfacing are specified, but 'meaningful change' and persistence are undefined, and there is no event deduplication key, storm budget, cross-surface acknowledgement convergence, or ordering rule for badges, banners, and notifications.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_and_notification",
+      "impact": "One blocker can flood surfaces, remain acknowledged on only some consumers, or resurface inconsistently after replay.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 283,
+          "line_end": 283,
+          "exact_quote": "- One escalation ladder is shared across Orchestrator, Dashboard, thread badges, and notifications.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 284,
+          "line_end": 284,
+          "exact_quote": "- `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-G019",
+      "item_type": "gap",
+      "title": "Receipt-rich operation model lacks supportability and telemetry boundaries",
+      "statement": "Receipt linkage and workflow/job/step correlation exist, but the core does not require end-to-end correlation identifiers, trace/log/metric fields, support export, redaction policy, health SLOs, dropped-event detection, or diagnostic retention limits.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Operators may see a blocked state without enough safe, correlated telemetry to diagnose propagation or prove that all consumers converged.",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 244,
+          "line_end": 244,
+          "exact_quote": "- Feature-complete blocked-state wiring uses domain payload schemas. SCM blocked payloads include `dirty_worktree` and `worktree_conflict`; Actions payloads include auth expired, missing scope, no GitHub remote, rate-limited, and environment waiting for review; Docker/Kubernetes payloads include runtime unavailable, repo missing, Buildx/Bake unavailable, compose invalid, cluster unreachable, and namespace/workload missing. Actions health/failures/readiness blockers have a Dashboard/Orchestrator widget contract that carries workflow/job/step correlation, code pivots, `/job/step`, `/failures/readiness`, and `Replay from last known good` context into GitHub Actions rather than leaving Orchestrator with panel-local summaries. Orchestrator must not dispatch an Actions-dependent step from a stale readiness snapshot; it revalidates or routes to GitHub Actions before the mutation.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N001",
+      "item_type": "explicit_non_gap",
+      "title": "Account-history consumers are explicitly enumerated",
+      "statement": "The durable account event family names all four consumers, so this window does not leave its immediate caller/consumer set implicit.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 261,
+          "line_end": 261,
+          "exact_quote": "- Usage, History, Ledger, and Orchestrator all consume the same durable event family.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N002",
+      "item_type": "explicit_non_gap",
+      "title": "Wait, stale observation, and timeout presentation are separated",
+      "statement": "The core explicitly prevents normal future waits from becoming stall failures and routes actual expiry through retained timeout classes and receipts.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 201,
+          "line_end": 201,
+          "exact_quote": "- Known future-timestamp waits, environment wait timers, approval waits, queue waits, and other long-governance-wait states do not produce stall banners and do not invoke auto-pause behavior meant for `deadlock/stall`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 202,
+          "line_end": 202,
+          "exact_quote": "- When a timer actually expires, the visible card shows the retained `timeout_class` (`hard execution timeout`, `inactivity timeout`, `polling timeout`, `reconnect timeout`, or `user-visible wait timer expiry`) and routes recovery through the stored blocked episode or receipt.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N003",
+      "item_type": "explicit_non_gap",
+      "title": "Missing downstream links and uncertain containers remain visible",
+      "statement": "The GUI is required to display missing-link and uncertainty states rather than omit them or pretend a running container exists.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 238,
+          "line_end": 238,
+          "exact_quote": "- Run history and blocked cards expose publish-capable chains directly: build result, Docker publish result, `publish_result_id`, template repo status/id, follow-on event refs, deployment refs, and workload refs. Missing downstream links are shown as `missing-link` explanations with `not-attempted`, blocked, failed, stale, or unknown state rather than being omitted.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 239,
+          "line_end": 239,
+          "exact_quote": "- `Open running container` resolves into Docker Manager `Containers` only when a real container exists. If container URL, port, health, logs, shell, or stats discovery is uncertain, the Orchestrator card opens the Docker Manager asset row with the same uncertainty and recommended validation action.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N004",
+      "item_type": "explicit_non_gap",
+      "title": "Network degradation preserves explicitly safe local capabilities",
+      "statement": "The local-versus-remote degraded split keeps specific local operations available and gives indeterminate remote outcomes a visible state and refresh pivot.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 240,
+          "line_end": 240,
+          "exact_quote": "- External side-effect receipts distinguish local-vs-remote and vs-remote outcomes. `indeterminate_remote_outcome` records `requested`, `transport_lost`, and later `reconciled` state plus a `Refresh remote state` CTA. Capability-level degradation and the local-vs-remote degraded-mode split keep local work available where safe: local Git can continue during hosted-degraded GitHub state, Docker local runtime can continue during registry outage, and manifest editing can continue while cluster access is offline.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N005",
+      "item_type": "explicit_non_gap",
+      "title": "Debug resume rejects stale or invented target identity",
+      "statement": "Resume revalidates all linked session and authority identities and selects explicit attention-required states instead of silently rebinding.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 257,
+          "line_end": 257,
+          "exact_quote": "- Before Orchestrator resumes a Debug investigation, it revalidates the linked `dev_session_id`, `browser_session_id`, DAP session identity, and remote authority against the stored route and runtime identity. If any linked identity is stale but recoverable, the run stays in `attention_required` with `attention_required_reason_code = session_reconnect_required`; if the linked identity no longer exists and no deterministic rebinding target exists, it stays in `attention_required` with `attention_required_reason_code = target_selection_required`. Orchestrator must not silently mint or infer a different target identity to continue execution.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N006",
+      "item_type": "explicit_non_gap",
+      "title": "Owner-surface mutation authority is explicitly bounded",
+      "statement": "Orchestrator routes to domain owner surfaces and is expressly forbidden from minting panel-local mutation semantics; runtime mutation remains behind ordered runtime action identifiers.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 248,
+          "line_end": 248,
+          "exact_quote": "Orchestrator UICommand exposure for recovery and navigation is delegated to `Plans/UI_Command_Catalog.md`. Orchestrator may surface `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, `cmd.orchestrator.open_kubernetes`, and `cmd.orchestrator.open_receipt` only as route-open pivots into owner surfaces with the same `run_id`, `node_id?`, `blocked_sequence?`, `receipt_ref?`, and target owner context carried by the blocked episode or artifact receipt. Runtime mutation recovery still maps through ordered `allowed_action_ids[]` to `cmd.runtime.*`; Orchestrator MUST NOT mint panel-local mutation semantics for Source Control, GitHub Actions, Docker Manager, Kubernetes, evidence, or artifact actions.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N007",
+      "item_type": "explicit_non_gap",
+      "title": "Focused historical routing preserves run identity",
+      "statement": "The live-versus-historical mode and focused run are explicit, and cross-tab pivots are forbidden from implicitly jumping back to the active run.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 253,
+          "line_end": 253,
+          "exact_quote": "- Orchestrator uses `active_run_id` / `focused_run_id` together with `focus_mode = live | historical`.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 254,
+          "line_end": 254,
+          "exact_quote": "- Cross-tab deep links and search pivots stay coherent on the focused run rather than jumping back to the active run implicitly.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000044-N008",
+      "item_type": "explicit_non_gap",
+      "title": "Summary precedence and attention consumers are explicit",
+      "statement": "Canonical blocked episodes override weaker warnings, and the same attention row is deliberately consumed across Orchestrator, Dashboard, and notifications.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 292,
+          "line_end": 292,
+          "exact_quote": "- Canonical blocked episodes override weaker derived warnings in summary rollups.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "line_start": 296,
+          "line_end": 296,
+          "exact_quote": "- The same attention row is consumable across Orchestrator, Dashboard, and notifications.",
+          "source_sha256": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "addressed",
+      "summary": "Immediate consumers and domain owner surfaces are explicitly named for the reviewed families.",
+      "evidence_item_ids": ["A005-000044-N001", "A005-000044-N006", "A005-000044-N008"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Wait and debug states are careful, but pending launch, concern deduplication, and cross-system terminal precedence remain incomplete.",
+      "evidence_item_ids": ["A005-000044-G001", "A005-000044-G009", "A005-000044-G016", "A005-000044-N002", "A005-000044-N005"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Concern mutation, projection revalidation, bulk execution, remote reconciliation, terminal events, and concern upsert all lack complete conflict semantics.",
+      "evidence_item_ids": ["A005-000044-G002", "A005-000044-G003", "A005-000044-G004", "A005-000044-G007", "A005-000044-G009", "A005-000044-G016"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Split launch publication, mixed bulk mutations, and indeterminate remote effects have no complete partial-result protocol.",
+      "evidence_item_ids": ["A005-000044-G001", "A005-000044-G004", "A005-000044-G007"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "The window provides several recovery pivots but leaves rollback and compensation undefined for launch, bulk, override, and destructive flows.",
+      "evidence_item_ids": ["A005-000044-G001", "A005-000044-G004", "A005-000044-G007", "A005-000044-G008", "A005-000044-G017", "A005-000044-N002"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Owner-surface routing is strong, but override authority and several identity, freshness, and concern-transition owners remain open.",
+      "evidence_item_ids": ["A005-000044-G002", "A005-000044-G008", "A005-000044-G014", "A005-000044-N006"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Concrete account history and external evidence have no retention, redaction, disclosure, or deletion boundary.",
+      "evidence_item_ids": ["A005-000044-G005", "A005-000044-G006", "A005-000044-G019"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Self-initiated external evidence ingestion lacks hostile-content and prompt-injection controls.",
+      "evidence_item_ids": ["A005-000044-G006"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Missing links, uncertainty, waits, and stale targets are presented honestly, but a never-reconciled Plan Compile launch can remain misleadingly pending.",
+      "evidence_item_ids": ["A005-000044-G001", "A005-000044-N002", "A005-000044-N003", "A005-000044-N005"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "The local-versus-remote degraded split is explicit, but indeterminate remote outcomes lack bounded reconciliation and retry safety.",
+      "evidence_item_ids": ["A005-000044-G007", "A005-000044-N004"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Virtualization is mandated without measurable capacity, consistency, latency, or overload limits.",
+      "evidence_item_ids": ["A005-000044-G013"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "No accessibility behavior is defined for dense, virtualized, status-heavy operational surfaces.",
+      "evidence_item_ids": ["A005-000044-G011"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Literal English labels are specified without a locale-neutral message and formatting contract.",
+      "evidence_item_ids": ["A005-000044-G012"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Legacy aliases are identified but have no versioned transform, ambiguity resolution, telemetry, or retirement gate.",
+      "evidence_item_ids": ["A005-000044-G010"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Receipts and correlation pivots are extensive, but support export, telemetry fields, redaction, retention, SLOs, and convergence diagnostics are absent.",
+      "evidence_item_ids": ["A005-000044-G018", "A005-000044-G019", "A005-000044-N003"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Generic confirmation and reversibility metadata do not define deletion, archive, override, cascade, restore, or compensation semantics.",
+      "evidence_item_ids": ["A005-000044-G008", "A005-000044-G017"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Delegation to owner surfaces is explicit, yet execution-critical ownership questions are intentionally unresolved.",
+      "evidence_item_ids": ["A005-000044-G014", "A005-000044-G015", "A005-000044-N006"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Mirroring and scale requirements lack fixtures, convergence bounds, quantitative thresholds, and observable pass/fail criteria.",
+      "evidence_item_ids": ["A005-000044-G015"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "gap_found",
+      "summary": "The highest residual systemic risk is the interaction among unresolved authority, stale projection races, cross-surface escalation, and externally sourced evidence.",
+      "evidence_item_ids": ["A005-000044-G003", "A005-000044-G006", "A005-000044-G014", "A005-000044-G018"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

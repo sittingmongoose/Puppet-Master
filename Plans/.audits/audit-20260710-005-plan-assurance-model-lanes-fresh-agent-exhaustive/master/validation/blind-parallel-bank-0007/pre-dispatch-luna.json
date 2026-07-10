@@ -1,0 +1,22 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "luna-independent-parallel-bank-gate-v1",
+  "parallel_bank_id": "blind-parallel-bank-0007",
+  "epoch_id": "epoch-0013",
+  "status": "pass",
+  "controller_lane_thread_id": "019f4d26-0582-7f71-8aa9-57bcfc354488",
+  "controller_lane_turn_id": "019f4e31-f456-7a12-929d-4f72f53b9d8a",
+  "fresh_child_thread_id": "019f4e32-2dbe-73f0-aacf-fae45e803703",
+  "fresh_child_required": true,
+  "read_only": true,
+  "global_semantic_concurrency_max": 48,
+  "maximum_concurrent_cohort_count": 6,
+  "companion_receipt_count": 24,
+  "companion_assignment_count": 24,
+  "bank_assignment_count": 24,
+  "combined_assignment_count": 48,
+  "bank_receipt_count_at_gate": 0,
+  "bank_result_count_at_gate": 0,
+  "error_count": 0,
+  "errors": []
+}

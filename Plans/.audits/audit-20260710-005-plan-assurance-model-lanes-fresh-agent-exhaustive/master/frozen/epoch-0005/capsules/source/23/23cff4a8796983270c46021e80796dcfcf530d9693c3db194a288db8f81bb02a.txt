@@ -1,0 +1,404 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14100-14111 >>>
+L00014100	- "> 1600px"
+L00014101	- "2 columns"
+L00014102	- "3 columns"
+L00014103	- "4 columns"
+L00014104	negative_constraints: []
+L00014105	compatibility_only_notes: []
+L00014106	stale_retired_dispositions: []
+L00014107	owner_boundary_notes: []
+L00014108	owner_hints:
+L00014109	- "Plans/FinalGUISpec.md"
+L00014110	```
+L00014111	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14112-14486 >>>
+L00014112	### F3-198 - Activity Bar Responsive Navigation
+L00014113	
+L00014114	```yaml
+L00014115	plan_unit_id: F3-198
+L00014116	unit_type: requirement
+L00014117	status: accepted
+L00014118	owner_doc: Plans/FinalGUISpec.md
+L00014119	canonical_text: >-
+L00014120	  The Activity bar remains 48px at all breakpoints and becomes primary navigation below 720px
+L00014121	  with panels opening as overlay drawers; shared binder and document-review surfaces keep
+L00014122	  document switching/status on the left binder rail, annotation management on the right
+L00014123	  rail/drawer, selection actions inline, and chat separate.
+L00014124	gui_related: true
+L00014125	gui_classification_reason: >-
+L00014126	  This unit defines Activity Bar responsive navigation and shared binder responsive rules.
+L00014127	split_recommended: false
+L00014128	depends_on: []
+L00014129	unblocks: []
+L00014130	acceptance_criteria:
+L00014131	- "The covered source span remains losslessly available for exact-text audit."
+L00014132	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014133	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014134	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014135	validation_surfaces:
+L00014136	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014137	- "python3 scripts/pm-plan-index.py validate"
+L00014138	risk_class: finalgui_drift
+L00014139	reasoning_tier: standard
+L00014140	context_scope: finalgui_standardization
+L00014141	implementation_surfaces:
+L00014142	- "Plans/FinalGUISpec.md"
+L00014143	node_compile_hint:
+L00014144	  mode: activity_bar_responsive_navigation
+L00014145	  create_worknodes: false
+L00014146	source_lineage:
+L00014147	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0133"
+L00014148	preserved_exact_tokens:
+L00014149	- "Activity bar"
+L00014150	- "48px"
+L00014151	- "< 720px"
+L00014152	- "overlay drawers"
+L00014153	- "/binder"
+L00014154	- "left binder rail"
+L00014155	- "right binder rail"
+L00014156	- "AnnotationActionMenu"
+L00014157	- "ContextChipStrip"
+L00014158	- "chat itself remains a separate panel"
+L00014159	negative_constraints: []
+L00014160	compatibility_only_notes: []
+L00014161	stale_retired_dispositions: []
+L00014162	owner_boundary_notes: []
+L00014163	owner_hints:
+L00014164	- "Plans/FinalGUISpec.md"
+L00014165	```
+L00014166	
+L00014167	### F3-199 - Binder Review Placement And Chat Separation
+L00014168	
+L00014169	```yaml
+L00014170	plan_unit_id: F3-199
+L00014171	unit_type: constraint
+L00014172	status: accepted
+L00014173	owner_doc: Plans/FinalGUISpec.md
+L00014174	canonical_text: >-
+L00014175	  Concept lineage from `Concepts/PuppetMasterDashComp.html` narrows wizard binder placement
+L00014176	  without making that concept file a live owner: the left rail contains `wizard-doc-pill`,
+L00014177	  central content is `wizard-binder-view`, the top toolbar is `wizard-binder-toolbar`,
+L00014178	  annotation UI is right-side/drawer/overlay, and chat remains the separate `#chatPanel` /
+L00014179	  `chatPanel` side panel with `ContextChipStrip` send-to-chat chips.
+L00014180	gui_related: true
+L00014181	gui_classification_reason: >-
+L00014182	  This unit preserves concept-lineage placement constraints without making the concept file a
+L00014183	  live owner.
+L00014184	split_recommended: false
+L00014185	depends_on: []
+L00014186	unblocks: []
+L00014187	acceptance_criteria:
+L00014188	- "The covered source span remains losslessly available for exact-text audit."
+L00014189	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014190	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014191	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014192	validation_surfaces:
+L00014193	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014194	- "python3 scripts/pm-plan-index.py validate"
+L00014195	risk_class: finalgui_drift
+L00014196	reasoning_tier: standard
+L00014197	context_scope: finalgui_standardization
+L00014198	implementation_surfaces:
+L00014199	- "Plans/FinalGUISpec.md"
+L00014200	node_compile_hint:
+L00014201	  mode: binder_review_placement_and_chat_separation
+L00014202	  create_worknodes: false
+L00014203	source_lineage:
+L00014204	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0133"
+L00014205	preserved_exact_tokens:
+L00014206	- "Concepts/PuppetMasterDashComp.html"
+L00014207	- "/PuppetMasterDashComp.html"
+L00014208	- "wizard-doc-pill"
+L00014209	- "wizard-binder-view"
+L00014210	- "wizard-binder-toolbar"
+L00014211	- "annotation-review"
+L00014212	- "#chatPanel"
+L00014213	- "chatPanel"
+L00014214	- "queued-intervention"
+L00014215	- "send-to-chat"
+L00014216	- "ContextChipStrip"
+L00014217	negative_constraints:
+L00014218	- "Annotation UI must not live in the left document rail or in a browser-style `annotation-review` modal."
+L00014219	- "Chat must remain a separate side panel, not embedded inside the binder review surface."
+L00014220	compatibility_only_notes: []
+L00014221	stale_retired_dispositions: []
+L00014222	owner_boundary_notes:
+L00014223	- "The concept file is lineage only and is not a live owner."
+L00014224	owner_hints:
+L00014225	- "Plans/FinalGUISpec.md"
+L00014226	```
+L00014227	
+L00014228	### F3-200 - Basic Theme Accessibility Option
+L00014229	
+L00014230	```yaml
+L00014231	plan_unit_id: F3-200
+L00014232	unit_type: requirement
+L00014233	status: accepted
+L00014234	owner_doc: Plans/FinalGUISpec.md
+L00014235	canonical_text: >-
+L00014236	  The Basic theme is the primary accessibility-friendly option, with no decorative effects,
+L00014237	  WCAG AA 4.5:1 minimum contrast, screen-readable system fonts, minimum 14px body text, 1.6
+L00014238	  line height, 0.02em letter spacing, 4px border radius, no hard shadows, and reduced-motion
+L00014239	  respect.
+L00014240	gui_related: true
+L00014241	gui_classification_reason: >-
+L00014242	  This unit defines the visible Basic accessibility theme.
+L00014243	split_recommended: false
+L00014244	depends_on: []
+L00014245	unblocks: []
+L00014246	acceptance_criteria:
+L00014247	- "The covered source span remains losslessly available for exact-text audit."
+L00014248	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014249	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014250	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014251	validation_surfaces:
+L00014252	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014253	- "python3 scripts/pm-plan-index.py validate"
+L00014254	risk_class: finalgui_drift
+L00014255	reasoning_tier: standard
+L00014256	context_scope: finalgui_standardization
+L00014257	implementation_surfaces:
+L00014258	- "Plans/FinalGUISpec.md"
+L00014259	node_compile_hint:
+L00014260	  mode: basic_theme_accessibility_option
+L00014261	  create_worknodes: false
+L00014262	source_lineage:
+L00014263	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0135"
+L00014264	preserved_exact_tokens:
+L00014265	- "Basic theme"
+L00014266	- "pixel grid"
+L00014267	- "paper texture"
+L00014268	- "scanlines"
+L00014269	- "WCAG AA"
+L00014270	- "4.5:1"
+L00014271	- "14px"
+L00014272	- "1.6 line height"
+L00014273	- "0.02em letter spacing"
+L00014274	- "4px border radius"
+L00014275	- "prefers-reduced-motion"
+L00014276	negative_constraints: []
+L00014277	compatibility_only_notes: []
+L00014278	stale_retired_dispositions: []
+L00014279	owner_boundary_notes: []
+L00014280	owner_hints:
+L00014281	- "Plans/FinalGUISpec.md"
+L00014282	```
+L00014283	
+L00014284	### F3-201 - Focus Indicator Theme Rules
+L00014285	
+L00014286	```yaml
+L00014287	plan_unit_id: F3-201
+L00014288	unit_type: requirement
+L00014289	status: accepted
+L00014290	owner_doc: Plans/FinalGUISpec.md
+L00014291	canonical_text: >-
+L00014292	  All themes show visible focus indicators: Retro Dark/Light use an ACID_LIME 2px border, and
+L00014293	  Basic uses a high-contrast 2px ring with 2px offset in accent-blue.
+L00014294	gui_related: true
+L00014295	gui_classification_reason: >-
+L00014296	  This unit defines visible focus indicators despite the source inference being false.
+L00014297	split_recommended: false
+L00014298	depends_on: []
+L00014299	unblocks: []
+L00014300	acceptance_criteria:
+L00014301	- "The covered source span remains losslessly available for exact-text audit."
+L00014302	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014303	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014304	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014305	validation_surfaces:
+L00014306	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014307	- "python3 scripts/pm-plan-index.py validate"
+L00014308	risk_class: finalgui_drift
+L00014309	reasoning_tier: standard
+L00014310	context_scope: finalgui_standardization
+L00014311	implementation_surfaces:
+L00014312	- "Plans/FinalGUISpec.md"
+L00014313	node_compile_hint:
+L00014314	  mode: focus_indicator_theme_rules
+L00014315	  create_worknodes: false
+L00014316	source_lineage:
+L00014317	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0136"
+L00014318	preserved_exact_tokens:
+L00014319	- "Retro Dark/Light"
+L00014320	- "ACID_LIME"
+L00014321	- "2px border"
+L00014322	- "Basic"
+L00014323	- "High-contrast 2px ring"
+L00014324	- "2px offset"
+L00014325	- "accent-blue"
+L00014326	negative_constraints: []
+L00014327	compatibility_only_notes: []
+L00014328	stale_retired_dispositions: []
+L00014329	owner_boundary_notes: []
+L00014330	owner_hints:
+L00014331	- "Plans/FinalGUISpec.md"
+L00014332	```
+L00014333	
+L00014334	### F3-202 - Keyboard Navigation Contract
+L00014335	
+L00014336	```yaml
+L00014337	plan_unit_id: F3-202
+L00014338	unit_type: requirement
+L00014339	status: accepted
+L00014340	owner_doc: Plans/FinalGUISpec.md
+L00014341	canonical_text: >-
+L00014342	  All interactive elements are reachable by Tab; focus order follows Activity bar to primary
+L00014343	  content to side panel to bottom panel to status bar; lists, tables, and trees support
+L00014344	  Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate.
+L00014345	gui_related: true
+L00014346	gui_classification_reason: >-
+L00014347	  This unit defines keyboard navigation and focus order.
+L00014348	split_recommended: false
+L00014349	depends_on: []
+L00014350	unblocks: []
+L00014351	acceptance_criteria:
+L00014352	- "The covered source span remains losslessly available for exact-text audit."
+L00014353	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014354	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014355	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014356	validation_surfaces:
+L00014357	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014358	- "python3 scripts/pm-plan-index.py validate"
+L00014359	risk_class: finalgui_drift
+L00014360	reasoning_tier: standard
+L00014361	context_scope: finalgui_standardization
+L00014362	implementation_surfaces:
+L00014363	- "Plans/FinalGUISpec.md"
+L00014364	node_compile_hint:
+L00014365	  mode: keyboard_navigation_contract
+L00014366	  create_worknodes: false
+L00014367	source_lineage:
+L00014368	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0137"
+L00014369	preserved_exact_tokens:
+L00014370	- "Tab navigation"
+L00014371	- "Activity bar -> primary content -> side panel -> bottom panel -> status bar"
+L00014372	- "Up/Down arrow navigation"
+L00014373	- "Enter"
+L00014374	- "Escape"
+L00014375	- "Home/End"
+L00014376	- "Type-ahead filtering"
+L00014377	- "thread list"
+L00014378	- "project list"
+L00014379	- "file tree"
+L00014380	negative_constraints: []
+L00014381	compatibility_only_notes: []
+L00014382	stale_retired_dispositions: []
+L00014383	owner_boundary_notes: []
+L00014384	owner_hints:
+L00014385	- "Plans/FinalGUISpec.md"
+L00014386	```
+L00014387	
+L00014388	### F3-203 - Screen Reader Mitigation Contract
+L00014389	
+L00014390	```yaml
+L00014391	plan_unit_id: F3-203
+L00014392	unit_type: requirement
+L00014393	status: accepted
+L00014394	owner_doc: Plans/FinalGUISpec.md
+L00014395	canonical_text: >-
+L00014396	  Because Slint screen reader support is limited, interactive components set `accessible-role`
+L00014397	  and `accessible-label` where available in current stable Slint, panel dock/floating state and theme
+L00014398	  name are exposed to assistive technology, and keyboard shortcuts are discoverable via
+L00014399	  command palette.
+L00014400	gui_related: true
+L00014401	gui_classification_reason: >-
+L00014402	  This unit defines Slint accessibility mitigations.
+L00014403	split_recommended: false
+L00014404	depends_on: []
+L00014405	unblocks: []
+L00014406	acceptance_criteria:
+L00014407	- "The covered source span remains losslessly available for exact-text audit."
+L00014408	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014409	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014410	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014411	validation_surfaces:
+L00014412	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014413	- "python3 scripts/pm-plan-index.py validate"
+L00014414	risk_class: finalgui_drift
+L00014415	reasoning_tier: standard
+L00014416	context_scope: finalgui_standardization
+L00014417	implementation_surfaces:
+L00014418	- "Plans/FinalGUISpec.md"
+L00014419	node_compile_hint:
+L00014420	  mode: screen_reader_mitigation_contract
+L00014421	  create_worknodes: false
+L00014422	source_lineage:
+L00014423	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0138"
+L00014424	preserved_exact_tokens:
+L00014425	- "Slint 1.17.1"
+L00014426	- "accessible-role"
+L00014427	- "accessible-label"
+L00014428	- "docked/floating"
+L00014429	- "Theme name"
+L00014430	- "assistive technology"
+L00014431	- "command palette"
+L00014432	negative_constraints: []
+L00014433	compatibility_only_notes: []
+L00014434	stale_retired_dispositions: []
+L00014435	owner_boundary_notes: []
+L00014436	owner_hints:
+L00014437	- "Plans/FinalGUISpec.md"
+L00014438	```
+L00014439	
+L00014440	### F3-204 - Minimum Touch And Click Targets
+L00014441	
+L00014442	```yaml
+L00014443	plan_unit_id: F3-204
+L00014444	unit_type: requirement
+L00014445	status: accepted
+L00014446	owner_doc: Plans/FinalGUISpec.md
+L00014447	canonical_text: >-
+L00014448	  All clickable and draggable controls are at least 24px in height and width for reliable
+L00014449	  interaction.
+L00014450	gui_related: true
+L00014451	gui_classification_reason: >-
+L00014452	  This unit defines visible control hit-target sizing despite the source inference being
+L00014453	  false.
+L00014454	split_recommended: false
+L00014455	depends_on: []
+L00014456	unblocks: []
+L00014457	acceptance_criteria:
+L00014458	- "The covered source span remains losslessly available for exact-text audit."
+L00014459	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00014460	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00014461	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00014462	validation_surfaces:
+L00014463	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00014464	- "python3 scripts/pm-plan-index.py validate"
+L00014465	risk_class: finalgui_drift
+L00014466	reasoning_tier: standard
+L00014467	context_scope: finalgui_standardization
+L00014468	implementation_surfaces:
+L00014469	- "Plans/FinalGUISpec.md"
+L00014470	node_compile_hint:
+L00014471	  mode: minimum_touch_and_click_targets
+L00014472	  create_worknodes: false
+L00014473	source_lineage:
+L00014474	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0139"
+L00014475	preserved_exact_tokens:
+L00014476	- "clickable/draggable controls"
+L00014477	- "24px"
+L00014478	- "height/width"
+L00014479	negative_constraints: []
+L00014480	compatibility_only_notes: []
+L00014481	stale_retired_dispositions: []
+L00014482	owner_boundary_notes: []
+L00014483	owner_hints:
+L00014484	- "Plans/FinalGUISpec.md"
+L00014485	```
+L00014486	
+
+<<< CONTEXT_AFTER canonical_document_lines=14487-14498 >>>
+L00014487	### F3-205 - Slint Root Widgets And Views Layout
+L00014488	
+L00014489	```yaml
+L00014490	plan_unit_id: F3-205
+L00014491	unit_type: requirement
+L00014492	status: accepted
+L00014493	owner_doc: Plans/FinalGUISpec.md
+L00014494	canonical_text: >-
+L00014495	  The Slint UI tree includes `build.rs`, `ui/app.slint`, `ui/theme.slint`, reusable
+L00014496	  `ui/widgets/*` components, and `ui/views/*` page-level views including dashboard, settings,
+L00014497	  wizard, interview, nodes, evidence, metrics, history, memory, ledger, coverage, projects,
+L00014498	  setup, usage, file_editor, agent_activity, and not_found.

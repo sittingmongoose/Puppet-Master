@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 3589-3600 >>>
+- resolved-only
+negative_constraints:
+- Draft research-packet artifacts, verifier reports, and other pipeline files are process artifacts, not packet docs and not
+  canonical evidence.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 3601-3962 >>>
+### 0PI-051 - A2A Impacted-Doc Taxonomy
+
+```yaml
+plan_unit_id: 0PI-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: 'The A2A/OpenCode packet map preserves the considered and narrowed doc taxonomy: 31 docs considered, final
+  impacted-doc set of 27, 16 clearly implicated owner docs, 5 cross-doc reconciliation seams, 6 verification-only drift watchers,
+  4 adjacent docs not bucketed, plus intermediate owner/consumer categories for runtime/orchestration, tool/provider/MCP,
+  mutation/durability, usage/event/protocol, chat/auth/UI consumers, and resolved packet-only blockers.'
+gui_related: true
+gui_classification_reason: The taxonomy includes chat/auth/UI consumers and GUI-related FinalGUISpec/WorktreeGit surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: a2a_impacted_doc_taxonomy
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: a2a_impacted_doc_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0023
+preserved_exact_tokens:
+- '31'
+- '27'
+- '16'
+- '5'
+- '6'
+- '4'
+- Run_Modes.md
+- Permissions_System.md
+- Tools.md
+- CLI_Bridged_Providers.md
+- Models_System.md
+- usage-feature.md
+- Contracts_V0.md
+- FileSafe.md
+- storage-plan.md
+- Prompt_Pipeline.md
+- orchestrator-subagent-integration.md
+- GitHub_API_Auth_and_Flows.md
+- LSPSupport.md
+- Executor_Protocol.md
+- Architecture_Invariants.md
+- Plugins_System.md
+- Crosswalk.md
+- OpenCode_Coverage_Matrix.md
+- WorktreeGitImprovement.md
+- FinalGUISpec.md
+- Provider_OpenCode.md
+- GitHub_Integration.md
+- UI_Command_Catalog.md
+- FileManager.md
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Docs not bucketed remain downstream consumers or already defer to actual owners unless a MUST VERIFY check fails.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-052 - A2A Cleanup And Final Narrowing
+
+```yaml
+plan_unit_id: 0PI-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: 'The A2A/OpenCode packet map preserves packetization-ready cleanup and final narrowing: remove direct packet
+  intents for Permissions_System and Provider_Stream_Mapping_External_Reference_A2A, demote Contracts_V0 to verify-only unless
+  a fresh schema conflict appears, retarget stale packet anchors in orchestrator-subagent-integration, CLI_Bridged_Providers,
+  storage-plan, and assistant-chat-design, keep verifier reports out of packet buckets, drop over-coverage for Run_Modes,
+  storage-plan, Contracts_V0#Billing entity field contract, and FileSafe#9 unless fresh contradictions appear, and narrow
+  the final remaining packet surface to the 4 owner-doc set Run_Modes, FileSafe, storage-plan, and Contracts_V0.'
+gui_related: false
+gui_classification_reason: The unit records packet cleanup, owner narrowing, and verification boundaries rather than UI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: a2a_cleanup_and_final_narrowing
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: a2a_cleanup_and_final_narrowing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0023
+preserved_exact_tokens:
+- Packetization-ready cleanup
+- remove direct packet intents
+- Plans/Permissions_System.md
+- Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+- verify-only
+- fresh schema conflict
+- retarget packet anchors
+- orchestrator-subagent-integration.md
+- CLI_Bridged_Providers.md
+- storage-plan.md
+- assistant-chat-design.md
+- over-coverage cleanup
+- Plans/Run_Modes.md
+- Plans/Contracts_V0.md#Billing entity field contract
+- Plans/FileSafe.md#9. Implementation Checklist
+- '4'
+- Plans/Run_Modes.md
+- Plans/FileSafe.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+negative_constraints:
+- Verifier reports stay out of packet buckets while preserving auditability.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The final narrowed remaining packet surface is the four owner-doc set Run_Modes, FileSafe, storage-plan, and Contracts_V0.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-053 - A2A Evidence And Anchor Exactness
+
+```yaml
+plan_unit_id: 0PI-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The A2A/OpenCode packet map preserves that all active fidelity blockers consumed by the reconciliation result
+  must land as explicit owner-doc fixes in MUST CHANGE or dependent consumer /mirror alignment in MUST RECONCILE, none may
+  remain implicit or MUST VERIFY-only, validation artifacts and packet-shape reports are process evidence rather than packet
+  doc intents or Project Plan Package outputs, ledger_fidelity_report.txt ending <ledger_fidelity_blocked/> and fidelity_recovery_plan.txt
+  ending <recovery_plan_ready/> are run-scoped process-readiness markers, LFA-001 is CONFIRMED RESOLVED by live Contracts_V0.md#4.1
+  null-padding / omission semantics, and packet section coverage is anchor-exact rather than path-only.
+gui_related: false
+gui_classification_reason: The unit records evidence, validation, and anchor-exact governance rather than GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: a2a_evidence_and_anchor_exactness
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: a2a_evidence_and_anchor_exactness
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0023
+preserved_exact_tokens:
+- MUST CHANGE
+- MUST RECONCILE
+- MUST VERIFY-only
+- Validation artifacts
+- packet-shape reports
+- process evidence
+- Project Plan Package outputs
+- ledger_fidelity_report.txt
+- <ledger_fidelity_blocked/>
+- fidelity_recovery_plan.txt
+- <recovery_plan_ready/>
+- ledger_fidelity_blocked
+- recovery_plan_ready
+- LFA-001
+- CONFIRMED RESOLVED
+- Contracts_V0.md#4.1
+- null-padding / omission semantics
+- anchor-exact
+- not path-only
+- '### HTTP/status to failure-class mapping'
+- '### Stream cancellation and replay safety'
+- '### Normalized usage event minimum fields'
+- '### 15.12 Integration Checklist'
+- lock-path
+- storage-root
+- '### 2.3 Post-filter integrity rules'
+negative_constraints:
+- All active fidelity blockers consumed by this reconciliation result must not remain implicit or MUST VERIFY-only.
+- Validation artifacts and packet-shape reports are process evidence, not packet doc intents or Project Plan Package outputs.
+- ledger_fidelity_blocked and recovery_plan_ready do not become permission states or UI labels.
+- Packet section coverage is anchor-exact, not path-only.
+compatibility_only_notes:
+- Plans/.pipeline/ledger_fidelity_report.txt and /.pipeline/ledger_fidelity_report.txt are source-lineage paths only and do
+  not become Plans/Personas.md persona schema canon.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-054 - Standardization Owner Consumer Boundary
+
+```yaml
+plan_unit_id: 0PI-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The Owner / Consumer Map section preserves that source-preserving standardization keeps the owner and consumer
+  boundaries stated in the original document body, keeps Plans/00-plans-index.md as owner for the behavior described by its
+  preserved sections during the batch, and routes cross-doc ownership through the ContractRefs and boundary notes already
+  present in the original text.
+gui_related: false
+gui_classification_reason: The unit records plan standardization owner/consumer boundaries rather than GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: standardization_owner_consumer_boundary
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: standardization_owner_consumer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0024
+preserved_exact_tokens:
+- Owner / Consumer Map
+- source-preserving standardization
+- owner and consumer boundaries
+- Plans/00-plans-index.md
+- ContractRefs
+- boundary notes
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/00-plans-index.md preserves index-body behavior while cross-doc ownership follows ContractRefs and boundary notes.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+```
+
+### 0PI-055 - Goal Runtime System Owner Map
+
+```yaml
+plan_unit_id: 0PI-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md registers the Native Goal Runtime owner split compiled from ledger pldg-20260616-001-goal-runtime-system. Plans/Goal_Runtime_System.md owns native Goal Mode runtime/control-plane behavior; assistant-chat-design owns visible Assistant Chat Goal UI and thread surfaces; FinalGUISpec owns Settings GUI placement for separate worker and verifier/adjudicator model selectors; Planning_Wizard owns current Planning Wizard flow semantics while chain-wizard-flexibility remains a legacy compatibility/source-lineage consumer; Contracts_V0, storage-plan, and Permissions_System own shared envelope, persistence, and approval-scope registration; Runtime_Artifacts_Panel consumes Goal Runtime evidence/receipt identities while Project_Output_Artifacts remains a project-output boundary reference only; Models_System and Multi-Account own concrete model/account resolution, while provider-specific docs such as Provider_OpenCode own existing provider capability/model discovery surfaces and do not define Goal Runtime provider-default tier mappings unless promoted by a later provider hook; Planning_Ledger_System, Plan_Document_System, and Plan_To_Node_Compilation retain ledger, PlanUnit, generated index, and readiness-only compiler boundaries.
+gui_related: false
+gui_classification_reason: This unit records index owner routing metadata; GUI owner docs are referenced but not implemented here.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - The Plan map names Plans/Goal_Runtime_System.md as the canonical Goal Runtime owner doc.
+  - Assistant Chat and Final GUI are recorded as consumers for visible controls and settings placement.
+  - Planning Wizard, legacy Chain Wizard compatibility, contract, storage, permission, runtime artifact, project-output boundary, model, account, and provider owner/consumer refs are recorded without moving Goal Runtime behavior out of Goal_Runtime_System.
+  - The index preserves the no-WorkNode boundary and separates ledger compile, explicit PlanUnit indexing, and later explicit governance seal phases.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
+risk_class: owner_map_drift
+reasoning_tier: standard
+context_scope: plans_index_goal_runtime_map
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
+node_compile_hint:
+  mode: goal_runtime_owner_map
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0080
+  - pldg-20260616-001-goal-runtime-system:atom-0082
+  - pldg-20260616-001-goal-runtime-system:atom-0083
+  - pldg-20260616-001-goal-runtime-system:atom-0103
+  - pldg-20260616-001-goal-runtime-system:atom-0104
+  - pldg-20260616-001-goal-runtime-system:atom-0105
+  - pldg-20260616-001-goal-runtime-system:dec-0012
+preserved_exact_tokens:
+  - "Goal_Runtime_System.md"
+  - "Native Goal Runtime Map"
+  - "pldg-20260616-001-goal-runtime-system"
+  - "worker model"
+  - "verifier/adjudicator model"
+  - "chain-wizard-flexibility.md"
+  - "Contracts_V0.md"
+  - "storage-plan.md"
+  - "Permissions_System.md"
+  - "Runtime_Artifacts_Panel.md"
+  - "Project_Output_Artifacts.md"
+  - "Models_System.md"
+  - "Multi-Account.md"
+  - "Provider_OpenCode.md"
+  - "WorkNodes"
+  - "NodeSeeds"
+  - "Spec_Lock"
+  - "evidence bundles"
+negative_constraints:
+  - Do not treat Plans/00-plans-index.md as the owner for Goal Runtime behavior.
+  - Do not create WorkNodes, NodeSeeds, or governance seal artifacts during the pre-seal compile phase.
+  - Do not conflate ledger compile, PlanUnit indexing, and governance seal phases.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
+```
+
+
+<<< CONTEXT_AFTER 3963-3974 >>>
+### 0PI-056 - Orchestrator Goal Runtime Flow Owner Map
+
+```yaml
+plan_unit_id: 0PI-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Plans/00-plans-index.md registers the Orchestrator Goal Runtime Flow owner split. Goal_Runtime_System owns the shared Goal Runtime engine and repair-loop policy; Orchestrator_Page owns GoalRun control and projection; Executor_Protocol owns WorkNode readiness, backoff, capacity, dispatch, retries, and classification; orchestrator-subagent-integration owns bounded SubagentWave and parent/child supervision; Plan_To_Node_Compilation owns runtime-object and compiler-boundary readiness without creating WorkNodes; Contracts_V0, storage-plan, Permissions_System, Models_System, Multi-Account, provider-specific docs, Planning_Ledger_System, and Plan_Document_System own their contract, persistence, approval, model/account/provider, ledger, and PlanUnit/index boundaries. Run_Graph_View, FinalGUISpec, Assistant Chat, Chain Wizard, Runtime Artifacts, WorktreeGitImprovement, UI_Command_Catalog, Wiring_Matrix, usage-feature, and Glossary consume or mirror the flow through their owner surfaces, and consumer mirrors may retain old fixed-hierarchy labels only as compatibility/search aliases while owner docs keep active terminology on GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt. Compile-readiness records may state accepted recommendations, no remaining open design questions, and live repo backlink audit requirements for ledger-to-Plans compile, but not direct implementation readiness. The pre-seal compile phase may regenerate allowed Plans/.plan_index outputs only; a later explicit governance seal may refresh Spec_Lock, generated shards, evidence bundles, plan_graph, and auto_decisions without creating NodeSeeds, WorkNodes, executable queues, final node manifests, final build tasks, production build tasks, or final node queues.
+gui_related: false
+gui_classification_reason: This unit records canonical owner routing metadata; GUI docs are referenced as consumers but not implemented here.
+depends_on:

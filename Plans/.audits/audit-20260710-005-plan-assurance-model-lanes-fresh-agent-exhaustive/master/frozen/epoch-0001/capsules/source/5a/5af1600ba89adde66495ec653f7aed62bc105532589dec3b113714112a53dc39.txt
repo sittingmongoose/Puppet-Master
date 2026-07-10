@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE 7564-7575 >>>
+  - "unified normalized stream"
+  - "`requested_platform`"
+  - "`effective_platform`"
+  - "`provider_entry_id`"
+  - "ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md"
+negative_constraints:
+  - "Consumers must not branch on transport class."
+  - "Vocabulary-safe persisted contracts must not replace requested_platform or effective_platform with provider_entry_id."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7576-7958 >>>
+### CV-097 - Tool Invoked Attribution Payload
+
+```yaml
+plan_unit_id: CV-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  tool.invoked persisted payloads carry runtime/tool/artifact attribution
+  directly, including attempt_id as the canonical local runtime anchor and
+  explicit subordinate bridge refs such as provider_attempt_ref and
+  usage_event_ref.
+gui_related: false
+gui_classification_reason: This unit defines persisted tool invocation payload identity rather than GUI presentation.
+split_recommended: true
+depends_on: [CV-038, CV-060, CV-078]
+unblocks: [CV-111]
+acceptance_criteria:
+  - tool.invoked payloads preserve node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, tool_use_id, provider_attempt_ref, and usage_event_ref.
+  - Analytics-thin tool events are rejected as insufficient.
+  - Requested identity fields may accompany effective identity without replacing effective_account_id or operational_identity.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tool_invoked_attribution_underkeying
+reasoning_tier: high
+context_scope: tool_invoked_attribution_payload
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: tool_event_payload_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+preserved_exact_tokens:
+  - "`tool.invoked`"
+  - "`node_id`"
+  - "`attempt_id`"
+  - "`tool_use_id`"
+  - "`provider_attempt_ref`"
+  - "`usage_event_ref`"
+  - "`requested_account_id?`"
+  - "`actor_kind`"
+  - "ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md"
+  - "ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+negative_constraints:
+  - "Analytics-thin tool events are no longer sufficient."
+  - "Provider-side bridge refs must stay subordinate to attempt_id."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-098 - Tool Denied Attribution Payload
+
+```yaml
+plan_unit_id: CV-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  tool.denied payloads preserve the same runtime/tool/artifact attribution
+  envelope for denied actions so permission and policy denials remain
+  explainable without consumer-local actor or account fields.
+gui_related: false
+gui_classification_reason: This unit defines denied tool event payload identity rather than visual presentation.
+split_recommended: true
+depends_on: [CV-038, CV-078, CV-097]
+unblocks: [CV-111]
+acceptance_criteria:
+  - tool.denied payloads preserve node_id, attempt_id, lane_id, package_id, execution_role, effective_account_id, operational_identity, tool_use_id, provider_attempt_ref, and usage_event_ref.
+  - Permission and denial surfaces expose effective actor and account identity.
+  - Requested account, permission, or policy routing fields preserve the rejected request envelope.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tool_denied_attribution_loss
+reasoning_tier: high
+context_scope: tool_denied_attribution_payload
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: tool_denied_payload_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+preserved_exact_tokens:
+  - "`tool.denied`"
+  - "`effective_account_id`"
+  - "`operational_identity`"
+  - "`requested_account_binding?`"
+  - "`actor_ref?`"
+  - "ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+negative_constraints:
+  - "Denial consumers must not invent local actor fields."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-099 - Auditor Cycle Report Event Payload
+
+```yaml
+plan_unit_id: CV-099
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Requirements-quality workflow state persists as stable event payload fields
+  anchored to auditor_cycle_report and launch handoff lineage. Legacy
+  validation_pass_report records are compatibility mirrors only with
+  compatibility_only true and cycle_report_ref, and pass_verdict supports
+  skipped where the compatibility flow requires it.
+gui_related: false
+gui_classification_reason: This unit defines persisted validation workflow event payloads.
+split_recommended: true
+depends_on: [CV-039, CV-060]
+unblocks: []
+acceptance_criteria:
+  - auditor_cycle_report, workflow_run_id, pass_verdict, and verdict_reason fields are canonical.
+  - Legacy validation_pass_report mirrors preserve pass_number and pass_name only with compatibility_only true and cycle_report_ref.
+  - Phase plan, staged bundle, requirements quality report, runtime identity, and run lineage fields are preserved.
+  - pass_verdict supports skipped where the flow requires it.
+  - Accepted or final pass output bridges into launched execution.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: validation_pass_event_lineage_loss
+reasoning_tier: high
+context_scope: auditor_cycle_report_event_payload
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: validation_pass_event_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+preserved_exact_tokens:
+  - "`auditor_cycle_report`"
+  - "`validation_pass_report`"
+  - "`cycle_report_ref`"
+  - "`compatibility_only`"
+  - "`workflow_run_id`"
+  - "`pass_number`"
+  - "`pass_verdict`"
+  - "`phase_plan_ref`"
+  - "`staged_bundle_ref`"
+  - "`requirements_quality_report_ref`"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+negative_constraints:
+  - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
+  - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-100 - Inspection Refs And Resume Transport Boundary
+
+```yaml
+plan_unit_id: CV-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Inspection and provenance refs stay attached to persisted events and records,
+  while resume_url is transport-only serialized route_target and must not
+  replace route/open navigation identity or become interchangeable with
+  detail_ref and report_ref.
+gui_related: false
+gui_classification_reason: This unit defines event reference and route transport boundaries.
+split_recommended: true
+depends_on: [CV-057, CV-069, CV-070]
+unblocks: []
+acceptance_criteria:
+  - detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, and kubernetes_refs stay event/record payload fields.
+  - route/open contracts own navigation identity.
+  - resume_url remains transport-only serialized resume/open handoff.
+  - detail_ref, report_ref, and resume_url are not treated as interchangeable open-this-thing fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: inspection_ref_route_transport_confusion
+reasoning_tier: high
+context_scope: inspection_refs_resume_transport
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: inspection_ref_route_boundary_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0037
+preserved_exact_tokens:
+  - "`detail_ref`"
+  - "`report_ref`"
+  - "`evidence_ref`"
+  - "`workflow_refs`"
+  - "`docker_refs`"
+  - "`kubernetes_refs`"
+  - "`resume_url`"
+  - "`route_target`"
+  - "ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#7.3 `route_target`"
+negative_constraints:
+  - "detail_ref, report_ref, and resume_url are not interchangeable open-this-thing fields."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-101 - Tool-Specific Payload Extension Owner And Lineage
+
+```yaml
+plan_unit_id: CV-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts owns tool-specific payload extensions for /Runtime, /web,
+  /tools/chat, and /section consumers, preserving transfer lineage and
+  obligations while retaining /retire lineage only as evidence when stale
+  aliases are replaced.
+gui_related: false
+gui_classification_reason: This unit defines tool payload extension ownership and migration lineage.
+split_recommended: true
+depends_on: [CV-078]
+unblocks: [CV-102, CV-103, CV-107, CV-111, CV-115]
+acceptance_criteria:
+  - Tool-specific payload extension ownership for /Runtime, /web, /tools/chat, and /section is preserved.
+  - Transfer lineage tokens for assistant worktree, common web output, question schema, and listed obligations remain audit-visible.
+  - /retire lineage is evidence only when stale aliases are replaced.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tool_payload_extension_owner_drift
+reasoning_tier: standard
+context_scope: tool_specific_payload_extension_owner
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: tool_payload_extension_owner_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0038
+preserved_exact_tokens:
+  - "`/Runtime`"
+  - "`/web`"
+  - "`/tools/chat`"
+  - "`/section`"
+  - "`obl-043`"
+  - "`obl-044`"
+  - "`obl-054`"
+  - "`obl-055`"
+  - "`obl-056`"
+  - "`obl-066`"
+  - "`obl-068`"
+  - "`obl-009`"
+  - "`obl-021`"
+  - "`obl-040`"
+compatibility_only_notes:
+  - "/retire lineage is retained only as evidence when stale aliases are replaced."
+negative_constraints:
+  - "Retired aliases are not live canon."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-102 - WebAction Carry-Through Compatibility Fields
+
+```yaml
+plan_unit_id: CV-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  /WebAction/web-output/error carry-through keeps question responses, WebAction
+  output, and web error payloads aligned on the canonical fields answers,
+  answer_text?, value?, description?, tool_use_id, and adapter_id rather than
+  creating separate local schemas.
+gui_related: false
+gui_classification_reason: This unit defines shared payload compatibility fields.
+split_recommended: true
+depends_on: [CV-101]
+unblocks: []
+acceptance_criteria:
+  - 'answers[] remains compatibility shorthand for answers: Array<{question_id, values: string[]}>.'
+  - 'answer_text?, value?: string, description?: string, tool_use_id, and adapter_id remain canonical payload fields.'
+  - Compatibility shorthand is normalized before persistence.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: webaction_payload_schema_fork
+reasoning_tier: standard
+context_scope: webaction_carry_through_fields
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: webaction_compatibility_payload_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0038
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0044
+preserved_exact_tokens:
+  - "`/WebAction/web-output/error`"
+  - "`answers[]`"
+  - "`answers: Array<{question_id, values: string[]}>`"
+  - "`answer_text?`"
+  - "`value?: string`"
+  - "`description?: string`"
+  - "`tool_use_id`"
+  - "`adapter_id`"
+compatibility_only_notes:
+  - "answers[] is compatibility shorthand for answers: Array<{question_id, values: string[]}>."
+negative_constraints:
+  - "Compatibility shorthand must not persist as a separate schema."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-103 - Common Web Provenance Provider And Execution Path Fields
+
+```yaml
+plan_unit_id: CV-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Common web payloads carry provenance, provider, adapter, cache/rate-limit,
+  support metadata, and execution_path facts so routing and audit consumers can
+  distinguish provider and PM execution paths without inferring execution from
+  display labels.
+gui_related: true
+gui_classification_reason: This unit affects web activity displays and user-visible provenance badges.
+split_recommended: true
+depends_on: [CV-101]
+unblocks: [CV-104, CV-105, CV-111]
+acceptance_criteria:
+  - source_refs[], citation_refs[], provenance_refs[], requested_provider, effective_provider, adapter_id, provider_attempt_ref?, cache_state, and rate_limit_state are preserved.
+  - /batch, anti-bot, and /stability support metadata are preserved when providers expose those facts.
+  - execution_path?: string preserves the listed provider and PM execution paths.
+  - Routing and audit consumers do not infer execution from display labels.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_provenance_execution_path_loss
+reasoning_tier: high
+context_scope: common_web_provenance_execution_path
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: web_provenance_provider_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+preserved_exact_tokens:
+  - "`source_refs[]`"
+  - "`citation_refs[]`"
+  - "`provenance_refs[]`"
+  - "`requested_provider`"
+  - "`effective_provider`"
+  - "`adapter_id`"
+  - "`cache_state`"
+  - "`rate_limit_state`"
+  - "`provider_search_native`"
+  - "`pm_research_composed`"
+negative_constraints:
+  - "Routing and audit consumers must not infer execution from display labels."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 7959-7970 >>>
+### CV-104 - Provider-Backed Web Fields And Firecrawl Alias Retirement
+
+```yaml
+plan_unit_id: CV-104
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Provider-backed web adapters may report subordinate provider fields, while
+  Firecrawl-specific fields remain PM web output payload extensions and legacy
+  scrape_id is retired as an incorrect alias rather than becoming a separate
+  Firecrawl-owned event family.

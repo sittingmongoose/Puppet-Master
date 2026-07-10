@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE canonical_document_lines=371-382 >>>
+L00000371	  - pldg-20260610-001-ledger-plan-system:atom-0035
+L00000372	  - source_ref:chat:implementation-readiness-review
+L00000373	source_atom_ids:
+L00000374	  - atom-0001
+L00000375	preserved_exact_tokens: ["manifest.json", "events.jsonl", "records/design_atoms.jsonl", "records/decisions.jsonl", "records/questions.jsonl", "records/blockers.jsonl", "records/corrections.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "state/operating_capsule.json", "validation/ledger_health.json", "ledger_registry.json", "Use the PM Bootstrap Planning Ledger for this feature.", "Feature: <feature name>", "Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>.", "Once the ledger is initialized, ask me what we are working on and begin the planning conversation."]
+L00000376	negative_constraints:
+L00000377	  - Do not treat legacy working_ledger.md files as the v2 active ledger format.
+L00000378	owner_hints: [Plans/Planning_Ledger_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md]
+L00000379	```
+L00000380	
+L00000381	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/bootstrap/Bootstrap_Planning_Workflow.md
+L00000382	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=383-762 >>>
+L00000383	### PLS-010 - Bootstrap Ledger Validator And Projection Contract
+L00000384	
+L00000385	```yaml
+L00000386	plan_unit_id: PLS-010
+L00000387	unit_type: requirement
+L00000388	status: accepted
+L00000389	owner_doc: Plans/Planning_Ledger_System.md
+L00000390	canonical_text: The bootstrap ledger validator must fail on structural drift, including invalid JSON/JSONL, missing required files, duplicate record IDs, manifest count mismatch, current/handoff/health disagreement, stale last-event cursors, missing gui_related booleans, compile queue/source atom mismatch, PlanUnit YAML parse errors, duplicate YAML keys, PlanUnit schema misses, and missing governance registration for canonical targets. Standard plan run-gates intentionally exclude the full bootstrap-ledger matrix; the dedicated `validate-bootstrap-ledgers` smoke check validates every selected `Plans/ledgers/v2/pldg-*` ledger, including historical sealed ledgers.
+L00000391	gui_related: false
+L00000392	gui_classification_reason: Validator behavior is not GUI implementation work.
+L00000393	depends_on: [PLS-005, PLS-006, PLS-009, PDS-003]
+L00000394	unblocks: [BPM-003, BPM-005]
+L00000395	acceptance_criteria:
+L00000396	  - Validator output reports exact errors and warnings instead of allowing false completion.
+L00000397	  - Validator checks canonical targets against sharding_config, Spec_Lock, and plan_graph coverage after seal.
+L00000398	  - Duplicate PlanUnit YAML keys are rejected so overwritten fields cannot hide drift.
+L00000399	validation_surfaces:
+L00000400	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>
+L00000401	  - python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers
+L00000402	  - python3 scripts/pm-shard-plans.py --check
+L00000403	risk_class: false_completion
+L00000404	reasoning_tier: high
+L00000405	context_scope: ledger_and_governance
+L00000406	implementation_surfaces: [scripts/pm-bootstrap-ledger-validate.py, scripts/pm-plans-verify.py, Plans/ledgers/v2/schemas/plan_unit.schema.json, Plans/sharding_config.json, Plans/Spec_Lock.json, Plans/plan_graph.json]
+L00000407	node_compile_hint: {mode: validator_contract, create_worknodes: false}
+L00000408	source_lineage:
+L00000409	  - pldg-20260610-001-ledger-plan-system:atom-0036
+L00000410	  - source_ref:chat:implementation-readiness-review
+L00000411	preserved_exact_tokens: ["duplicate YAML keys", "manifest count mismatch", "current/handoff/health disagreement", "last_event_id", "gui_related", "validate-bootstrap-ledgers", "sharding_config", "Spec_Lock", "plan_graph"]
+L00000412	negative_constraints:
+L00000413	  - Do not rely on ordinary plan gates alone to prove ledger/PlanUnit health.
+L00000414	  - Do not treat run-gates as proof that every historical bootstrap ledger validates.
+L00000415	owner_hints: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
+L00000416	```
+L00000417	
+L00000418	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+L00000419	
+L00000420	## Ledger Compile Addendum - pldg-20260616-002
+L00000421	
+L00000422	### PLS-011 - Compile Queue Fidelity And Governance-Seal Boundary
+L00000423	
+L00000424	```yaml
+L00000425	plan_unit_id: PLS-011
+L00000426	unit_type: requirement
+L00000427	status: accepted
+L00000428	owner_doc: Plans/Planning_Ledger_System.md
+L00000429	canonical_text: >-
+L00000430	  A v2 ledger compile queue must preserve accepted atom dispositions, target owner docs, compile_queue.items, candidate_compile_plan, compiled_plan_unit_ids, duplicate/deferred/non-applicable rationale, validation commands, and governance status without writing Spec_Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks during ordinary ledger-to-Plans compile. After canonical docs and allowed plan indexes change, the ledger status is compiled pending governance seal until an explicit seal phase refreshes governance artifacts; Bootstrap_Planning_Migration/BPM-005 owns governance seal timing while this PlanUnit owns compile-queue fidelity and ledger status projection. Compile-readiness projections may record accepted recommendations, no remaining open design questions, and live repo backlink audit requirements, but they must not treat plan-compile readiness as direct code implementation readiness.
+L00000431	gui_related: false
+L00000432	gui_classification_reason: Compile queue fidelity and governance seal state are planning/governance metadata, not GUI behavior.
+L00000433	depends_on:
+L00000434	  - PLS-009
+L00000435	  - PLS-010
+L00000436	  - BPM-005
+L00000437	unblocks: []
+L00000438	acceptance_criteria:
+L00000439	  - Compile queue state records per-atom dispositions, compile_queue.items, candidate_compile_plan, compiled PlanUnit ids, and compiled_plan_unit_ids.
+L00000440	  - Duplicate, deferred, and non-applicable atoms preserve rationale instead of disappearing.
+L00000441	  - Ordinary compile does not update Spec_Lock, shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, final build tasks, or production build tasks.
+L00000442	  - Governance status is pending_seal after canonical docs or allowed plan indexes change.
+L00000443	  - Compile readiness can record accepted recommendations, no remaining open design questions, and live repo backlink audit requirements without implying code implementation readiness.
+L00000444	validation_surfaces:
+L00000445	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>
+L00000446	  - python3 scripts/pm-plan-index.py validate
+L00000447	risk_class: compile_queue_false_completion
+L00000448	reasoning_tier: high
+L00000449	context_scope: bootstrap_ledger_compile_queue
+L00000450	implementation_surfaces:
+L00000451	  - Plans/Planning_Ledger_System.md
+L00000452	  - Plans/ledgers/v2/*/state/compile_queue.json
+L00000453	  - Plans/ledgers/v2/*/records/design_atoms.jsonl
+L00000454	  - Plans/ledgers/v2/*/manifest.json
+L00000455	  - Plans/Bootstrap_Planning_Migration.md
+L00000456	node_compile_hint:
+L00000457	  mode: compile_queue_fidelity
+L00000458	  create_worknodes: false
+L00000459	source_lineage:
+L00000460	  - pldg-20260703-001-feature-intake:atom-0002
+L00000461	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
+L00000462	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
+L00000463	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0096
+L00000464	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0099
+L00000465	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0104
+L00000466	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0016
+L00000467	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0027
+L00000468	  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0029
+L00000469	source_atom_ids:
+L00000470	  - atom-0002
+L00000471	preserved_exact_tokens:
+L00000472	  - "compile_queue"
+L00000473	  - "compile_queue.items"
+L00000474	  - "candidate_compile_plan"
+L00000475	  - "compiled PlanUnit ids"
+L00000476	  - "compiled_plan_unit_ids"
+L00000477	  - "ledger-to-Plans compile"
+L00000478	  - "accepted"
+L00000479	  - "no remaining open design questions"
+L00000480	  - "live repo backlink audit"
+L00000481	  - "pending governance seal"
+L00000482	  - "Bootstrap_Planning_Migration"
+L00000483	  - "BPM-005"
+L00000484	  - "Spec_Lock"
+L00000485	  - "generated shards"
+L00000486	  - "evidence bundles"
+L00000487	  - "plan_graph"
+L00000488	  - "auto_decisions"
+L00000489	  - "WorkNodes"
+L00000490	  - "NodeSeeds"
+L00000491	  - "executable queues"
+L00000492	  - "final build tasks"
+L00000493	  - "Do not write canonical Plans yet."
+L00000494	  - "Do not write canonical Plans until Jared explicitly asks to compile the ledger."
+L00000495	  - "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions."
+L00000496	negative_constraints:
+L00000497	  - Do not mark a ledger sealed during ordinary compile.
+L00000498	  - Do not create executable build tasks before the WorkNode compiler contract exists.
+L00000499	  - Do not create fake compiled_plan_unit_ids before Plans are compiled.
+L00000500	  - Do not create executable WorkNodes or NodeSeeds during ledger compile.
+L00000501	  - Do not skip the live repo backlink audit at compile time.
+L00000502	  - Do not treat plan-compile readiness as direct code implementation readiness.
+L00000503	  - Do not recreate the removed legacy Iced app.
+L00000504	owner_hints:
+L00000505	  - Plans/Planning_Ledger_System.md
+L00000506	  - Plans/Plan_Document_System.md
+L00000507	  - Plans/Bootstrap_Planning_Migration.md
+L00000508	```
+L00000509	
+L00000510	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000511	
+L00000512	## Semantic Audit Closure Addendum - 2026-06-17
+L00000513	
+L00000514	### PLS-012 - Semantic Closure Registry And Reopen Contract
+L00000515	
+L00000516	```yaml
+L00000517	plan_unit_id: PLS-012
+L00000518	unit_type: requirement
+L00000519	status: accepted
+L00000520	owner_doc: Plans/Planning_Ledger_System.md
+L00000521	canonical_text: >-
+L00000522	  Deep semantic audit and repair cycles use the global
+L00000523	  Plans/.audits/_semantic_closure_registry.jsonl registry to make audit
+L00000524	  findings durable across runs. Registry rows preserve closure_id, finding_key,
+L00000525	  finding_family, ledger_id, audit_ids, source_atom_ids, plan_unit_ids,
+L00000526	  owner_docs, consumer_docs, detail_keys, exact_tokens, closure_status,
+L00000527	  closure_evidence, closure_reason, hashes, created_at, updated_at,
+L00000528	  closed_by_audit_id, and reopen_conditions. Audit findings carry
+L00000529	  repair_required:boolean and finding_level:blocker|warning|observation.
+L00000530	  BLOCKED is reserved for repair_required=true findings, validator failures or
+L00000531	  validator state mutation, forbidden artifacts, or required user decisions.
+L00000532	  PASS_WITH_WARNINGS is terminal when all findings have repair_required=false;
+L00000533	  PASS means no findings. Audits read the registry before emitting new semantic
+L00000534	  risks; if an unchanged finding is already closed with valid evidence and
+L00000535	  hashes, the audit classifies it as previously_closed with repair_required=false
+L00000536	  rather than a new warning. A finding reopens only when the source atom hash,
+L00000537	  PlanUnit hash, owner evidence hash, or closure evidence hash changes, or when
+L00000538	  the current closure_status is blocked_requires_user_decision or reopened.
+L00000539	  Before semantic review, each audit writes audit_scope_manifest.jsonl with
+L00000540	  stable check_id rows for every compiled atom detail, compile target,
+L00000541	  added/changed PlanUnit claim, reciprocal source_lineage claim,
+L00000542	  owner/consumer route, schema/contract identity, depends_on/unblocks edge,
+L00000543	  synchronized ledger projection field, index/governance check, and
+L00000544	  forbidden-artifact check. Audit completion requires every manifest row to be
+L00000545	  classified. Every emitted audit finding carries finding_family, ledger_id,
+L00000546	  source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens,
+L00000547	  repair_required, finding_level, and deterministic sfk finding_key; audit-id,
+L00000548	  row-number, or prose-order keys are invalid.
+L00000549	  Audits record subject_ref as the latest substantive commit touching live
+L00000550	  Plans, target-ledger governing state, .plan_index, governance, or process
+L00000551	  scripts, excluding Plans/.audits/** and closure-registry-only or hygiene
+L00000552	  commits; HEAD is recorded separately as observation_ref. Ledger latest_audit_*
+L00000553	  tracks the latest state-certifying audit or repair that changed or validated
+L00000554	  canonical Plans, ledger governing state, index, or governance. Audit-only
+L00000555	  observations and hygiene repairs do not stale or restamp ledger projections.
+L00000556	  Deep audits may schema-check prior audit artifacts but must not emit
+L00000557	  semantic/currentness findings about old report wording, review/commit text, or
+L00000558	  missing pointers to audit-only runs. Chat-sourced semantic closure support is
+L00000559	  recorded as source-lineage process support unless a v2 ledger atom or decision
+L00000560	  explicitly owns it. Before editing, repair writes repair_impact_matrix.jsonl
+L00000561	  mapping every actionable finding to synchronized files, PlanUnits, schemas,
+L00000562	  dependency edges, owner refs, ledger projection fields, index artifacts, and
+L00000563	  governance artifacts. Repair then runs an internal post-repair semantic audit
+L00000564	  over the original audit scope plus every impact row, adds any newly discovered
+L00000565	  actionable findings to the same scope/impact set, and continues repair until
+L00000566	  repair_required_count is zero or a true user decision is required. Passing
+L00000567	  validators alone are not semantic closure. Only after internal closure may
+L00000568	  repair update the global registry, regenerate PlanUnit indexes or governance
+L00000569	  artifacts, seal governance, or write REPAIR_CERTIFICATION.md.
+L00000570	gui_related: false
+L00000571	gui_classification_reason: Audit closure durability and reopen policy are process/governance behavior, not GUI implementation work.
+L00000572	depends_on:
+L00000573	  - PLS-005
+L00000574	  - PLS-010
+L00000575	unblocks:
+L00000576	  - PDS-014
+L00000577	acceptance_criteria:
+L00000578	  - The global closure registry exists at Plans/.audits/_semantic_closure_registry.jsonl.
+L00000579	  - Deep audits treat unchanged closed findings as previously_closed, not new semantic_risks.
+L00000580	  - Every new audit finding records repair_required:boolean and finding_level:blocker|warning|observation.
+L00000581	  - audit_scope_manifest.jsonl exists before semantic review and has stable check_id coverage for compiled atom details, compile targets, PlanUnit claims, reciprocal source_lineage, owner/consumer routes, schema identity, dependency edges, ledger projections, index/governance checks, and forbidden-artifact checks.
+L00000582	  - Audit completion requires every audit_scope_manifest.jsonl row to be classified.
+L00000583	  - Every audit finding carries finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, repair_required, finding_level, and deterministic sfk finding_key.
+L00000584	  - PASS_WITH_WARNINGS is terminal when every finding has repair_required=false.
+L00000585	  - subject_ref excludes Plans/.audits/** and closure-registry-only or hygiene commits; observation_ref records HEAD separately.
+L00000586	  - latest_audit_* projections track only state-certifying audits or repairs, not audit-only observations or hygiene repairs.
+L00000587	  - Planning Wizard, PlanCompile, and WorkNode audit findings reuse closed registry rows when evidence has not changed.
+L00000588	  - Reopen decisions are based on changed source atom, PlanUnit, owner evidence, or closure evidence hashes, or on blocked/reopened closure status.
+L00000589	  - Closure rows preserve the allowed statuses repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, blocked_requires_user_decision, and reopened.
+L00000590	  - Chat-sourced closure-support PlanUnits are not represented as outputs of a target ledger compile unless their source_lineage names that ledger atom or decision.
+L00000591	  - repair_impact_matrix.jsonl exists before repair edits when actionable findings exist and maps synchronized files, PlanUnits, schemas, dependency edges, owner refs, ledger projections, index artifacts, and governance artifacts.
+L00000592	  - Repair runs an internal post-repair semantic audit over the original scope plus impact rows and finishes only with repair_required_count=0 or a true user decision.
+L00000593	  - New repair-discovered actionable findings are added to the same scope/impact set and closed in the same Goal.
+L00000594	  - Registry updates, PlanUnit index regeneration, governance seal, and REPAIR_CERTIFICATION.md happen only after internal semantic closure.
+L00000595	validation_surfaces:
+L00000596	  - python3 scripts/pm-audit-closure.py validate
+L00000597	  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
+L00000598	  - python3 -m unittest tests/test_pm_audit_closure.py
+L00000599	risk_class: repeated_audit_loop
+L00000600	reasoning_tier: high
+L00000601	context_scope: bootstrap_audit_repair
+L00000602	implementation_surfaces:
+L00000603	  - Plans/.audits/_semantic_closure_registry.jsonl
+L00000604	  - Plans/.audits/audit-*/audit_scope_manifest.jsonl
+L00000605	  - Plans/.audits/audit-*/repair_impact_matrix.jsonl
+L00000606	  - Plans/.audits/audit-*/repair_closure_matrix.jsonl
+L00000607	  - Plans/bootstrap/Codex_Prompts.md
+L00000608	  - scripts/pm-audit-closure.py
+L00000609	  - tests/test_pm_audit_closure.py
+L00000610	node_compile_hint:
+L00000611	  mode: audit_registry_process
+L00000612	  create_worknodes: false
+L00000613	source_lineage:
+L00000614	  - pldg-20260617-001-plans-to-code-handoff:atom-0054
+L00000615	  - source_ref:chat:2026-06-17-semantic-closure-registry-support
+L00000616	preserved_exact_tokens:
+L00000617	  - "Plans/.audits/_semantic_closure_registry.jsonl"
+L00000618	  - "Planning Wizard"
+L00000619	  - "Plan Wizard"
+L00000620	  - "closure_id"
+L00000621	  - "finding_key"
+L00000622	  - "finding_family"
+L00000623	  - "ledger_id"
+L00000624	  - "audit_ids"
+L00000625	  - "source_atom_ids"
+L00000626	  - "plan_unit_ids"
+L00000627	  - "owner_docs"
+L00000628	  - "consumer_docs"
+L00000629	  - "detail_keys"
+L00000630	  - "exact_tokens"
+L00000631	  - "closure_status"
+L00000632	  - "closure_evidence"
+L00000633	  - "closure_reason"
+L00000634	  - "hashes"
+L00000635	  - "created_at"
+L00000636	  - "updated_at"
+L00000637	  - "closed_by_audit_id"
+L00000638	  - "reopen_conditions"
+L00000639	  - "previously_closed"
+L00000640	  - "repair_required"
+L00000641	  - "finding_level"
+L00000642	  - "audit_scope_manifest.jsonl"
+L00000643	  - "check_id"
+L00000644	  - "repair_impact_matrix.jsonl"
+L00000645	  - "REPAIR_CERTIFICATION.md"
+L00000646	  - "subject_ref"
+L00000647	  - "observation_ref"
+L00000648	  - "PASS_WITH_WARNINGS"
+L00000649	  - "source-lineage process support"
+L00000650	compatibility_only_notes:
+L00000651	  - Plan Wizard is a retired compatibility/search term; active audit prose uses Planning Wizard.
+L00000652	stale_retired_dispositions:
+L00000653	  - Plan Wizard is retained only as compatibility/source-lineage terminology and not as the current product name.
+L00000654	negative_constraints:
+L00000655	  - Do not re-emit unchanged closed findings as new warnings.
+L00000656	  - Do not require repair closure rows for previously_closed, exact_present, equivalent_with_evidence, repair_required=false warnings, ordinary validator warnings, or audit-artifact wording.
+L00000657	  - Do not accept audit-specific finding_key values based on audit_id, row number, or prose order.
+L00000658	  - Do not finish an audit with unclassified audit_scope_manifest.jsonl rows.
+L00000659	  - Do not start repair edits before mapping actionable findings in repair_impact_matrix.jsonl.
+L00000660	  - Do not claim repair completion until the internal post-repair semantic audit over original scope plus impact rows reaches repair_required_count=0 or a true user decision.
+L00000661	  - Do not stale ledger latest_audit_* projections because of audit-only observations or hygiene-only commits.
+L00000662	  - Do not hide a finding when source/canonical/owner/closure evidence hashes changed.
+L00000663	  - Do not update the global closure registry, regenerate indexes, seal governance, or write REPAIR_CERTIFICATION.md before internal semantic closure.
+L00000664	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from audit closure state.
+L00000665	  - Do not place chat-sourced closure-support PlanUnits under a target-ledger compile addendum as though they were compiled from that ledger.
+L00000666	owner_hints:
+L00000667	  - Plans/Planning_Ledger_System.md
+L00000668	  - Plans/Plan_Document_System.md
+L00000669	```
+L00000670	
+L00000671	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+L00000672	
+L00000673	## 3. Compilation Coverage
+L00000674	
+L00000675	| Ledger atom | Disposition |
+L00000676	| --- | --- |
+L00000677	| atom-0001 | PLS-001 |
+L00000678	| atom-0002 | PLS-002 |
+L00000679	| atom-0003 | PLS-003 |
+L00000680	| atom-0004 | PLS-004 |
+L00000681	| atom-0005 | PLS-003 |
+L00000682	| atom-0006 | PLS-005 |
+L00000683	| atom-0007 | PLS-006 |
+L00000684	| atom-0008 | PLS-005 |
+L00000685	| atom-0009 | PLS-001, PLS-007 |
+L00000686	| atom-0010 | PLS-007 |
+L00000687	| atom-0012 | PLS-002, PLS-006 |
+L00000688	| atom-0016 | PLS-001; creation of this owner doc fulfills the broad owner-doc atom. |
+L00000689	| atom-0028 | PLS-001 preserves the stale/retired boundary; BPM-006 owns migration handling. |
+L00000690	| atom-0029 | PLS-008 |
+L00000691	| atom-0032 | PLS-005; PDS-003 and PNC-005 consume it. |
+L00000692	| atom-0035 | PLS-009 |
+L00000693	| atom-0036 | PLS-010 |
+L00000694	| atom-0042 | PLS-001 |
+L00000695	| source_ref:chat:2026-06-17-semantic-closure-registry-support | PLS-012; PDS-014 owns deterministic finding_key and validator-facing closure matrix checks. |
+L00000696	
+L00000697	ContractRef: ContractName:Plans/Planning_Ledger_System.md
+L00000698	
+L00000699	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00000700	
+L00000701	### PLS-013 - Implementation Readiness And Doc Impact Matrix Compile Inputs
+L00000702	
+L00000703	```yaml
+L00000704	plan_unit_id: PLS-013
+L00000705	unit_type: requirement
+L00000706	status: accepted
+L00000707	owner_doc: Plans/Planning_Ledger_System.md
+L00000708	canonical_text: >-
+L00000709	  A v2 planning ledger may declare implementation_readiness_matrix.json and doc_impact_matrix.json as required compile inputs when a ledger-to-Plans compile must produce implementation-ready PlanUnits and reference coverage. implementation_readiness_matrix maps design areas to required PlanUnits, schemas, fields, acceptance criteria, validators, owner docs, consumer docs, and no-build boundaries. doc_impact_matrix maps primary owner docs, direct consumer docs, reference/index/UI docs, search tokens, required update types, deferred update handling, and per-doc no-update evidence. The ledger remains source/planning memory; canonical truth is established only by live non-pipeline Plans docs and schema drafts after compile.
+L00000710	  The doc_impact_matrix rule forbids owner-only repairs: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs.
+L00000711	gui_related: false
+L00000712	gui_classification_reason: Matrix input handling is ledger/process behavior, not GUI implementation.
+L00000713	depends_on: [PLS-010, PDS-015]
+L00000714	unblocks: []
+L00000715	acceptance_criteria:
+L00000716	  - Matrix refs in compact state are treated as required compile inputs when present.
+L00000717	  - Implementation readiness covers PlanUnits, schemas, fields, acceptance, validators, owner/consumer docs, and no-build boundaries.
+L00000718	  - Doc impact covers owner, consumer, reference/index/UI docs, search terms, required updates, no-update evidence, and deferred updates.
+L00000719	  - The ledger remains source memory rather than canonical product prose.
+L00000720	validation_surfaces:
+L00000721	  - python3 scripts/pm-plans-verify.py run-gates
+L00000722	  - future bootstrap ledger validate matrix checks
+L00000723	risk_class: vague_compile_output
+L00000724	reasoning_tier: high
+L00000725	context_scope: bootstrap_ledger_compile_inputs
+L00000726	implementation_surfaces: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md]
+L00000727	node_compile_hint: {mode: compile_input_matrix_contract, create_worknodes: false}
+L00000728	source_lineage:
+L00000729	  - pldg-20260617-001-plans-to-code-handoff:atom-0061
+L00000730	  - pldg-20260617-001-plans-to-code-handoff:atom-0062
+L00000731	  - pldg-20260617-001-plans-to-code-handoff:dec-0026
+L00000732	  - pldg-20260617-001-plans-to-code-handoff:corr-0010
+L00000733	preserved_exact_tokens:
+L00000734	  - "implementation_readiness_matrix"
+L00000735	  - "required PlanUnits"
+L00000736	  - "schemas"
+L00000737	  - "fields"
+L00000738	  - "acceptance criteria"
+L00000739	  - "validators"
+L00000740	  - "owner docs"
+L00000741	  - "consumer docs"
+L00000742	  - "no-build boundaries"
+L00000743	  - "doc_impact_matrix"
+L00000744	  - "reference docs"
+L00000745	  - "search tokens"
+L00000746	  - "no-update evidence"
+L00000747	  - "deferred rename"
+L00000748	negative_constraints:
+L00000749	  - Do not compile vague roadmap prose that leaves future agents to infer the contracts.
+L00000750	  - Do not update only obvious owner docs while leaving direct stale references unaccounted for.
+L00000751	owner_hints:
+L00000752	  - Plans/Planning_Ledger_System.md
+L00000753	  - Plans/Plan_Document_System.md
+L00000754	```
+L00000755	
+L00000756	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+L00000757	
+L00000758	
+L00000759	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00000760	
+L00000761	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00000762	
+
+<<< CONTEXT_AFTER canonical_document_lines=763-774 >>>
+L00000763	### PLS-014 - Planning Product Ledger Synchronization And Compile Boundary
+L00000764	
+L00000765	```yaml
+L00000766	plan_unit_id: PLS-014
+L00000767	unit_type: requirement
+L00000768	status: accepted
+L00000769	owner_doc: Plans/Planning_Ledger_System.md
+L00000770	canonical_text: 'Every substantive PRD Builder exchange must append an event and update affected PRD atoms, decisions, assumptions, constraints, questions, conflicts, annotations, projections, and handoff state before the turn is complete. Every substantive Planning Wizard exchange must append an event and update topic-scoped planning atoms plus any affected global decisions, constraints, dependencies, invalidations, amendments, questions, and handoff state before the turn is complete. If the required end-of-turn ledger write fails, mark the active thread ledger_sync_blocked and disable topic advance, compile, approval, and downstream handoff until durable synchronization is repaired. The durable PRD ledger is working memory and source lineage; the visible PRD is a versioned human-readable projection of accepted ledger atoms and must not become the only source of truth. Material functional requirements and acceptance criteria receive
+L00000771	  stable identifiers such as FR-001 and AC-001, with stable internal atom IDs and source lineage. Large documents must be divided into bounded, source-addressable slices that preserve page, heading, paragraph, table, image, and offset lineage so agents never need to ingest the entire corpus at once. Each intake subagent emits bounded candidate requirement atoms, source spans, confidence, ambiguity, conflicts, duplicates, and extraction warnings; only the controller or assigned owner may reduce and write the canonical PRD ledger and draft. Conflicting inputs create durable conflict records and are resolved using explicit current user instruction, accepted PRD Builder decisions, source recency/authority, and recorded assumptions; overridden claims remain traceable. Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree.
+L00000772	  The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. After canonical owner and consumer docs are stable, regenerate allowed PlanUnit indexes, then shards, evidence, Spec Lock, plan graph, and governance decisions in the established separate phases. The deep-audit Goal uses many bounded read-only subagents in parallel for atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance, forbidden artifacts, and validator mutability, with the main agent writing audit artifacts. The repair Goal builds a closure matrix only for repair_required=true findings, repairs or adjudicates those actionable rows, updates the semantic closure registry only for actionable closures, uses bounded read-only specialist subagents, and no-ops when no actionable rows exist. Passing validators alone are insufficient when repair_required=true rows remain unclosed. Ledger-to-Plans compilation writes
+L00000773	  or updates canonical Plans and allowed PlanUnit indexes only in their proper phases; it does not start Plan Compile, create WorkNodes, launch GoalRuns, modify implementation code, or start an Orchestrator build.'
+L00000774	gui_related: true

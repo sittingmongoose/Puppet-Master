@@ -1,0 +1,411 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1907-1918 >>>
+L00001907	  - "Handoff"
+L00001908	  - "Note"
+L00001909	  - "Decision"
+L00001910	  - "Preference"
+L00001911	  - "Landmine"
+L00001912	  - "status = Done"
+L00001913	  - "0.5"
+L00001914	negative_constraints: []
+L00001915	owner_hints:
+L00001916	  - Plans/assistant-memory-subsystem.md
+L00001917	```
+L00001918	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1919-2300 >>>
+L00001919	### AMS-032 - Verification Default Configuration
+L00001920	
+L00001921	```yaml
+L00001922	plan_unit_id: AMS-032
+L00001923	unit_type: constraint
+L00001924	status: accepted
+L00001925	owner_doc: Plans/assistant-memory-subsystem.md
+L00001926	canonical_text: Verification defaults set new gists to Unverified, default injection eligibility to Verified-only, pinned-Unverified auto-injection to false, auto-save unverified to true, and manual verify without evidence to false.
+L00001927	gui_related: false
+L00001928	gui_classification_reason: Verification defaults are backend configuration and prompt eligibility rules.
+L00001929	depends_on: [AMS-014, AMS-029, AMS-030]
+L00001930	unblocks: []
+L00001931	acceptance_criteria:
+L00001932	  - New gists default to Unverified.
+L00001933	  - Verified-only auto-injection remains default even when unverified auto-save is enabled.
+L00001934	  - Pinned Unverified auto-injection and manual verify without evidence default to false.
+L00001935	validation_surfaces:
+L00001936	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001937	  - python3 scripts/pm-plan-index.py validate
+L00001938	risk_class: memory_defaults
+L00001939	reasoning_tier: high
+L00001940	context_scope: config
+L00001941	implementation_surfaces:
+L00001942	  - Plans/assistant-memory-subsystem.md
+L00001943	node_compile_hint:
+L00001944	  mode: verification_default_configuration
+L00001945	  create_worknodes: false
+L00001946	source_lineage:
+L00001947	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0036
+L00001948	preserved_exact_tokens:
+L00001949	  - "Unverified"
+L00001950	  - "Verified-only"
+L00001951	  - "assistant.memory.allow_pinned_unverified_injection = false"
+L00001952	  - "assistant.memory.auto_save_unverified = true"
+L00001953	  - "assistant.memory.allow_manual_verify_without_evidence = false"
+L00001954	negative_constraints:
+L00001955	  - "Verified-only auto-injection must remain the default behavior even when unverified auto-save is enabled."
+L00001956	owner_hints:
+L00001957	  - Plans/assistant-memory-subsystem.md
+L00001958	```
+L00001959	
+L00001960	### AMS-033 - Project Scoped Memory Config Keys
+L00001961	
+L00001962	```yaml
+L00001963	plan_unit_id: AMS-033
+L00001964	unit_type: requirement
+L00001965	status: accepted
+L00001966	owner_doc: Plans/assistant-memory-subsystem.md
+L00001967	canonical_text: Assistant memory configuration preserves all assistant.memory keys and deterministic project-scoped resolution for memory behavior.
+L00001968	gui_related: false
+L00001969	gui_classification_reason: Memory config keys and project-scoped resolution are backend configuration behavior.
+L00001970	depends_on: [AMS-029, AMS-030]
+L00001971	unblocks: [AMS-034]
+L00001972	acceptance_criteria:
+L00001973	  - All assistant.memory config keys in the source span remain preserved.
+L00001974	  - Config resolution is deterministic.
+L00001975	  - Config resolution is project-scoped for memory behavior.
+L00001976	validation_surfaces:
+L00001977	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001978	  - python3 scripts/pm-plan-index.py validate
+L00001979	risk_class: memory_defaults
+L00001980	reasoning_tier: standard
+L00001981	context_scope: config
+L00001982	implementation_surfaces:
+L00001983	  - Plans/assistant-memory-subsystem.md
+L00001984	  - Plans/Decision_Policy.md
+L00001985	node_compile_hint:
+L00001986	  mode: project_scoped_memory_config_keys
+L00001987	  create_worknodes: false
+L00001988	source_lineage:
+L00001989	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+L00001990	preserved_exact_tokens:
+L00001991	  - "assistant.memory.enabled"
+L00001992	  - "assistant.memory.capsule_budget_tokens"
+L00001993	  - "assistant.memory.max_injected_items_per_turn"
+L00001994	  - "assistant.memory.done_decay_multiplier"
+L00001995	  - "assistant.memory.default_half_life_days.<kind>"
+L00001996	  - "assistant.memory.retrieval.blend.bm25_weight"
+L00001997	  - "assistant.memory.retrieval.blend.ann_weight"
+L00001998	  - "assistant.memory.auto_save_unverified"
+L00001999	  - "assistant.memory.allow_manual_verify_without_evidence"
+L00002000	  - "assistant.memory.allow_pinned_unverified_injection"
+L00002001	negative_constraints: []
+L00002002	owner_hints:
+L00002003	  - Plans/assistant-memory-subsystem.md
+L00002004	```
+L00002005	
+L00002006	### AMS-034 - Memory Compression Threshold Override Note
+L00002007	
+L00002008	```yaml
+L00002009	plan_unit_id: AMS-034
+L00002010	unit_type: constraint
+L00002011	status: accepted
+L00002012	owner_doc: Plans/assistant-memory-subsystem.md
+L00002013	canonical_text: Gemini CLI provider-native model.compressionThreshold default 0.5 is distinct from any PM-exposed or stored 90 percent assistant memory compression threshold, which is an intentional PM override.
+L00002014	gui_related: false
+L00002015	gui_classification_reason: Compression threshold distinction is provider/config policy, not UI behavior.
+L00002016	depends_on: [AMS-033]
+L00002017	unblocks: []
+L00002018	acceptance_criteria:
+L00002019	  - Gemini CLI provider-native model.compressionThreshold default 0.5 is preserved.
+L00002020	  - PM 90 percent assistant memory compression threshold is treated as intentional override if exposed or stored.
+L00002021	  - The override note does not imply alignment with provider-native defaults.
+L00002022	validation_surfaces:
+L00002023	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002024	  - python3 scripts/pm-plan-index.py validate
+L00002025	risk_class: provider_config
+L00002026	reasoning_tier: standard
+L00002027	context_scope: config
+L00002028	implementation_surfaces:
+L00002029	  - Plans/assistant-memory-subsystem.md
+L00002030	node_compile_hint:
+L00002031	  mode: memory_compression_threshold_override_note
+L00002032	  create_worknodes: false
+L00002033	source_lineage:
+L00002034	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0037
+L00002035	preserved_exact_tokens:
+L00002036	  - "model.compressionThreshold"
+L00002037	  - "0.5"
+L00002038	  - "90%"
+L00002039	  - "intentional PM override"
+L00002040	negative_constraints:
+L00002041	  - "PM override must not be treated as alignment with provider-native defaults."
+L00002042	owner_hints:
+L00002043	  - Plans/assistant-memory-subsystem.md
+L00002044	```
+L00002045	
+L00002046	### AMS-035 - Backend Memory Acceptance Criteria
+L00002047	
+L00002048	```yaml
+L00002049	plan_unit_id: AMS-035
+L00002050	unit_type: validation_rule
+L00002051	status: accepted
+L00002052	owner_doc: Plans/assistant-memory-subsystem.md
+L00002053	canonical_text: Backend acceptance criteria cover provider routing, Verified-only gating, unverified-save behavior, trigger correctness and deduplication, storage layout, canonical data model persistence, summary cache coherence, decay, project isolation, index rebuild equivalence, rules separation, and deterministic completion.
+L00002054	gui_related: false
+L00002055	gui_classification_reason: These acceptance criteria validate backend memory behavior and persistence.
+L00002056	depends_on: [AMS-014, AMS-015, AMS-016, AMS-030, AMS-031, AMS-032, AMS-033]
+L00002057	unblocks: []
+L00002058	acceptance_criteria:
+L00002059	  - Acceptance criteria 1 through 6 are preserved for provider routing, gating, triggers, and deduplication.
+L00002060	  - Acceptance criteria 8 through 9 are preserved for storage layout and canonical data model persistence.
+L00002061	  - Acceptance criteria 11 through 15 are preserved for cache coherence, decay, project isolation, rebuild equivalence, and rules separation.
+L00002062	  - The completion rule requires deterministic verification of all acceptance criteria.
+L00002063	validation_surfaces:
+L00002064	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002065	  - python3 scripts/pm-plan-index.py validate
+L00002066	risk_class: memory_acceptance
+L00002067	reasoning_tier: high
+L00002068	context_scope: validation
+L00002069	implementation_surfaces:
+L00002070	  - Plans/assistant-memory-subsystem.md
+L00002071	  - Plans/Progression_Gates.md
+L00002072	node_compile_hint:
+L00002073	  mode: backend_memory_acceptance_criteria
+L00002074	  create_worknodes: false
+L00002075	source_lineage:
+L00002076	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+L00002077	preserved_exact_tokens:
+L00002078	  - "Assistant-only enforcement"
+L00002079	  - "Verified-only gating"
+L00002080	  - "Trigger correctness (no plan edits)"
+L00002081	  - "Trigger dedup"
+L00002082	  - "Storage layout"
+L00002083	  - "Canonical data model"
+L00002084	  - "Summary cache coherence"
+L00002085	  - "Project isolation"
+L00002086	  - "Index rebuild equivalence"
+L00002087	  - "Rules separation"
+L00002088	negative_constraints:
+L00002089	  - "AutoRunBoundary and AutoMilestone operate from run artifacts/evidence refs without requiring edits to Plans/SSOT documents."
+L00002090	owner_hints:
+L00002091	  - Plans/assistant-memory-subsystem.md
+L00002092	```
+L00002093	
+L00002094	### AMS-036 - GUI Memory Acceptance Criteria
+L00002095	
+L00002096	```yaml
+L00002097	plan_unit_id: AMS-036
+L00002098	unit_type: validation_rule
+L00002099	status: accepted
+L00002100	owner_doc: Plans/assistant-memory-subsystem.md
+L00002101	canonical_text: GUI acceptance criteria cover Verify enforcement, capsule preview token/truncation display, and default Gist Review Unverified filtering.
+L00002102	gui_related: true
+L00002103	gui_classification_reason: Verify enforcement, capsule preview, and Gist Review filtering are user-visible GUI behavior.
+L00002104	depends_on: [AMS-021, AMS-023, AMS-035]
+L00002105	unblocks: []
+L00002106	acceptance_criteria:
+L00002107	  - Attempting to mark a gist Verified without satisfiable EvidenceRefs is rejected unless the manual override config is true.
+L00002108	  - GUI capsule preview shows token estimate and truncation indicator.
+L00002109	  - Opening Gist Review defaults to verification_state = Unverified until explicit user filter changes.
+L00002110	validation_surfaces:
+L00002111	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002112	  - python3 scripts/pm-plan-index.py validate
+L00002113	risk_class: memory_acceptance
+L00002114	reasoning_tier: standard
+L00002115	context_scope: gui
+L00002116	implementation_surfaces:
+L00002117	  - Plans/assistant-memory-subsystem.md
+L00002118	  - Plans/Progression_Gates.md
+L00002119	node_compile_hint:
+L00002120	  mode: gui_memory_acceptance_criteria
+L00002121	  create_worknodes: false
+L00002122	source_lineage:
+L00002123	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0038
+L00002124	preserved_exact_tokens:
+L00002125	  - "GUI Verify enforcement"
+L00002126	  - "Capsule cap enforcement"
+L00002127	  - "Default review filter behavior"
+L00002128	  - "verification_state = Unverified"
+L00002129	negative_constraints: []
+L00002130	owner_hints:
+L00002131	  - Plans/assistant-memory-subsystem.md
+L00002132	```
+L00002133	
+L00002134	### AMS-037 - Assistant Memory Non Goals
+L00002135	
+L00002136	```yaml
+L00002137	plan_unit_id: AMS-037
+L00002138	unit_type: constraint
+L00002139	status: accepted
+L00002140	owner_doc: Plans/assistant-memory-subsystem.md
+L00002141	canonical_text: Assistant memory non-goals prohibit memory exposure to non-Assistant agents, replacement of seglog/redb/Tantivy storage contracts, external vector DB services, and markdown-file-bank requirements.
+L00002142	gui_related: false
+L00002143	gui_classification_reason: Non-goals are backend architecture and storage boundaries.
+L00002144	depends_on: [AMS-003, AMS-004, AMS-026]
+L00002145	unblocks: []
+L00002146	acceptance_criteria:
+L00002147	  - Non-Assistant agents receive no Assistant memory exposure.
+L00002148	  - Storage contracts are not replaced.
+L00002149	  - External vector DB service is out of scope.
+L00002150	  - Memory is not required to be markdown-file based.
+L00002151	validation_surfaces:
+L00002152	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002153	  - python3 scripts/pm-plan-index.py validate
+L00002154	risk_class: memory_boundary
+L00002155	reasoning_tier: high
+L00002156	context_scope: architecture
+L00002157	implementation_surfaces:
+L00002158	  - Plans/assistant-memory-subsystem.md
+L00002159	  - Plans/rewrite-tie-in-memo.md
+L00002160	  - Plans/storage-plan.md
+L00002161	  - Plans/agent-rules-context.md
+L00002162	node_compile_hint:
+L00002163	  mode: assistant_memory_non_goals
+L00002164	  create_worknodes: false
+L00002165	source_lineage:
+L00002166	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0039
+L00002167	preserved_exact_tokens:
+L00002168	  - "No memory exposure to non-Assistant agents."
+L00002169	  - "No replacement of seglog/redb/Tantivy system storage contracts."
+L00002170	  - "No external vector DB service."
+L00002171	  - "No file-bank style requirement that memory must be markdown-file based."
+L00002172	negative_constraints:
+L00002173	  - "Implementations MUST keep these non-goals intact."
+L00002174	owner_hints:
+L00002175	  - Plans/assistant-memory-subsystem.md
+L00002176	```
+L00002177	
+L00002178	### AMS-038 - Runtime Owner Reference Map
+L00002179	
+L00002180	```yaml
+L00002181	plan_unit_id: AMS-038
+L00002182	unit_type: requirement
+L00002183	status: accepted
+L00002184	owner_doc: Plans/assistant-memory-subsystem.md
+L00002185	canonical_text: Assistant memory runtime alignment is maintained through explicit evidence_refs and preserved owner-document reference sets, not hidden orchestration memory.
+L00002186	gui_related: false
+L00002187	gui_classification_reason: Runtime owner reference mapping is source-lineage and owner-boundary behavior.
+L00002188	depends_on: [AMS-024]
+L00002189	unblocks: [AMS-039]
+L00002190	acceptance_criteria:
+L00002191	  - Runtime alignment uses explicit evidence_refs.
+L00002192	  - Owner-document reference sets in the Runtime Owner Reference Map remain preserved for audit lineage.
+L00002193	  - Hidden orchestration memory is not introduced.
+L00002194	validation_surfaces:
+L00002195	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002196	  - python3 scripts/pm-plan-index.py validate
+L00002197	risk_class: owner_boundary
+L00002198	reasoning_tier: high
+L00002199	context_scope: governance
+L00002200	implementation_surfaces:
+L00002201	  - Plans/assistant-memory-subsystem.md
+L00002202	node_compile_hint:
+L00002203	  mode: runtime_owner_reference_map
+L00002204	  create_worknodes: false
+L00002205	source_lineage:
+L00002206	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0040
+L00002207	preserved_exact_tokens:
+L00002208	  - "evidence_refs"
+L00002209	  - "hidden orchestration memory"
+L00002210	  - "Runtime Owner Reference Map"
+L00002211	  - "Plans/Models_System.md:58-80"
+L00002212	  - "Plans/Executor_Protocol.md:134-178"
+L00002213	  - "Plans/Contracts_V0.md:649"
+L00002214	negative_constraints:
+L00002215	  - "Assistant memory must not use hidden orchestration memory for runtime alignment."
+L00002216	owner_hints:
+L00002217	  - Plans/assistant-memory-subsystem.md
+L00002218	```
+L00002219	
+L00002220	### AMS-039 - Plan Local Obligation Boundary
+L00002221	
+L00002222	```yaml
+L00002223	plan_unit_id: AMS-039
+L00002224	unit_type: constraint
+L00002225	status: accepted
+L00002226	owner_doc: Plans/assistant-memory-subsystem.md
+L00002227	canonical_text: Plan-local event and command obligations belong in canonical state, event, and command owners before memory consumes them; NullMemoryProvider remains the durable boundary for memory prohibition versus stateful orchestration, and Gemini-only docs may still contain active owner gaps.
+L00002228	gui_related: false
+L00002229	gui_classification_reason: Plan-local obligation routing is owner-boundary and governance behavior.
+L00002230	depends_on: [AMS-038]
+L00002231	unblocks: []
+L00002232	acceptance_criteria:
+L00002233	  - plan-local event and command obligations route to canonical owner docs before memory consumption.
+L00002234	  - NullMemoryProvider remains the durable memory-prohibition boundary.
+L00002235	  - Gemini-only docs warning remains preserved as active owner-gap caution.
+L00002236	validation_surfaces:
+L00002237	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002238	  - python3 scripts/pm-plan-index.py validate
+L00002239	risk_class: owner_boundary
+L00002240	reasoning_tier: high
+L00002241	context_scope: governance
+L00002242	implementation_surfaces:
+L00002243	  - Plans/assistant-memory-subsystem.md
+L00002244	node_compile_hint:
+L00002245	  mode: plan_local_obligation_boundary
+L00002246	  create_worknodes: false
+L00002247	source_lineage:
+L00002248	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0040
+L00002249	preserved_exact_tokens:
+L00002250	  - "plan-local"
+L00002251	  - "/event/command"
+L00002252	  - "NullMemoryProvider"
+L00002253	  - "Remaining Gemini-only docs are not low-value leftovers"
+L00002254	negative_constraints:
+L00002255	  - "Plan-local obligations in memory are narrow and must not bypass canonical state/event/command owners."
+L00002256	owner_hints:
+L00002257	  - Plans/assistant-memory-subsystem.md
+L00002258	```
+L00002259	
+L00002260	### AMS-040 - Assistant Memory Owner Consumer Map
+L00002261	
+L00002262	```yaml
+L00002263	plan_unit_id: AMS-040
+L00002264	unit_type: constraint
+L00002265	status: accepted
+L00002266	owner_doc: Plans/assistant-memory-subsystem.md
+L00002267	canonical_text: Assistant-memory-subsystem remains owner for behavior described by its preserved sections, while cross-doc ownership follows preserved ContractRefs and owner/consumer boundary notes.
+L00002268	gui_related: false
+L00002269	gui_classification_reason: Owner/consumer preservation is plan governance behavior.
+L00002270	depends_on: []
+L00002271	unblocks: []
+L00002272	acceptance_criteria:
+L00002273	  - Assistant Memory remains owner for behavior described by preserved sections.
+L00002274	  - Cross-doc ownership follows preserved ContractRefs and boundary notes.
+L00002275	  - ContractRefs to Plan_Document_System and Bootstrap_Planning_Migration remain preserved.
+L00002276	validation_surfaces:
+L00002277	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002278	  - python3 scripts/pm-plan-index.py validate
+L00002279	risk_class: owner_boundary
+L00002280	reasoning_tier: standard
+L00002281	context_scope: governance
+L00002282	implementation_surfaces:
+L00002283	  - Plans/assistant-memory-subsystem.md
+L00002284	  - Plans/Plan_Document_System.md
+L00002285	  - Plans/Bootstrap_Planning_Migration.md
+L00002286	node_compile_hint:
+L00002287	  mode: assistant_memory_owner_consumer_map
+L00002288	  create_worknodes: false
+L00002289	source_lineage:
+L00002290	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0041
+L00002291	preserved_exact_tokens:
+L00002292	  - "Owner / Consumer Map"
+L00002293	  - "Plans/assistant-memory-subsystem.md"
+L00002294	  - "ContractName:Plans/Plan_Document_System.md"
+L00002295	  - "ContractName:Plans/Bootstrap_Planning_Migration.md"
+L00002296	negative_constraints: []
+L00002297	owner_hints:
+L00002298	  - Plans/assistant-memory-subsystem.md
+L00002299	```
+L00002300	
+
+<<< CONTEXT_AFTER canonical_document_lines=2301-2312 >>>
+L00002301	### AMS-041 - Assistant Memory PlanUnits Section Anchor
+L00002302	
+L00002303	```yaml
+L00002304	plan_unit_id: AMS-041
+L00002305	unit_type: constraint
+L00002306	status: accepted
+L00002307	owner_doc: Plans/assistant-memory-subsystem.md
+L00002308	canonical_text: The PlanUnits section heading is preserved as structural coverage for the standardized Assistant Memory PlanUnits section and introduces no product behavior.
+L00002309	gui_related: false
+L00002310	gui_classification_reason: PlanUnits heading coverage is structural plan formatting, not UI behavior.
+L00002311	depends_on: []
+L00002312	unblocks: []

@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE 1400-1411 >>>
+negative_constraints:
+- Implementations MUST use exactly the canonical disabled-reason strings.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2'
+```
+
+
+<<< AUTHORITATIVE_CORE 1412-1788 >>>
+### MGAC-007 - Disabled Reason Precedence
+
+```yaml
+plan_unit_id: MGAC-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: When multiple disabled causes apply, capabilities.get returns exactly one disabled_reason using the deterministic precedence BACKEND_UNSUPPORTED, NOT_CONFIGURED, RATE_LIMITED, QUOTA_EXCEEDED, ADMIN_DISABLED, then MODEL_UNAVAILABLE.
+gui_related: false
+gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-007 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: disabled_reason_precedence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0008
+preserved_exact_tokens:
+- Disabled-reason evaluation precedence
+- exactly one `disabled_reason`
+- highest to lowest
+- BACKEND_UNSUPPORTED
+- NOT_CONFIGURED
+- RATE_LIMITED
+- QUOTA_EXCEEDED
+- ADMIN_DISABLED
+- MODEL_UNAVAILABLE
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2'
+```
+
+### MGAC-008 - Media Capability IDs
+
+```yaml
+plan_unit_id: MGAC-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Media capabilities include media.image, media.video, media.tts, and media.music with descriptions for image generation, video generation, text-to-speech, and music/audio generation.
+gui_related: true
+gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-008 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: media_capability_ids
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0009
+preserved_exact_tokens:
+- Media capabilities
+- media.image
+- Image generation
+- media.video
+- Video generation
+- media.tts
+- Text-to-speech synthesis
+- media.music
+- Music/audio generation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md'
+split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### MGAC-009 - Provider Tool Capability Category
+
+```yaml
+plan_unit_id: MGAC-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: The provider_tool category is the umbrella for all non-media Puppet Master tool capabilities, including registered provider-exposed tools and internal tools, reported with the same enabled, disabled_reason, and setup_hint shape using tool-registry conventions.
+gui_related: false
+gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-009 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: provider_tool_capability_category
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0009
+preserved_exact_tokens:
+- Provider tool capabilities
+- provider_tool
+- umbrella bucket
+- non-media tool capabilities
+- registered provider-exposed tools
+- OpenCode tools
+- existing internal tools
+- read/grep/write/task
+- enabled
+- disabled_reason
+- setup_hint
+- Tool IDs follow existing tool-registry conventions
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md'
+split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### MGAC-010 - Persona Capability Inquiry Rule
+
+```yaml
+plan_unit_id: MGAC-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Assistant, Interviewer, and PRD Builder workflows must call capabilities.get when users ask about available capabilities, features, or what Puppet Master can do, so answers reflect real-time enabled state, reasons, and setup guidance.
+gui_related: false
+gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-010 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: persona_capability_inquiry_rule
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0010
+preserved_exact_tokens:
+- Assistant
+- Interviewer
+- MUST call `capabilities.get`
+- available capabilities
+- features
+- what Puppet Master can do
+- Requirements Doc Builder
+- accurate, real-time answer
+- what is enabled and what is not
+- reasons and setup guidance
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Requirements Doc Builder is retained here only as a legacy source token for the former workflow; current product prose uses PRD Builder.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md'
+```
+
+### MGAC-011 - Runtime Registry Snapshot Merge
+
+```yaml
+plan_unit_id: MGAC-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: capabilities.get is computed from the current runtime registry snapshot by merging built-in internal tools, enabled healthy MCP-discovered tools, provider-exposed active-backend tools, and media capabilities evaluated through the disabled-reason and media routing rules.
+gui_related: false
+gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-011 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: runtime_registry_snapshot_merge
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0011
+preserved_exact_tokens:
+- current runtime registry snapshot
+- built-in internal tools
+- canonical tool registry
+- currently enabled MCP-discovered tools
+- server/provider bridge is healthy
+- provider-exposed tools
+- active backend
+- media capabilities
+- §§1.3–1.5
+- §2.4
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### MGAC-012 - Runtime Derived No Stale Capability Cache
+
+```yaml
+plan_unit_id: MGAC-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Capability state is runtime-derived rather than a separately persisted database; Settings saves, provider switches, MCP adapter refreshes, and Doctor or preflight remediation invalidate the previous snapshot and force recomputation on the next call.
+gui_related: false
+gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-012 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: runtime_derived_no_stale_capability_cache
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0011
+preserved_exact_tokens:
+- runtime-derived
+- not a separately persisted capability database
+- Settings save
+- provider switch
+- MCP adapter refresh
+- Doctor/preflight remediation
+- invalidates the previous snapshot
+- next `capabilities.get` call MUST recompute
+- MUST NOT rely on stale cached enablement
+negative_constraints:
+- Capability state must not become a separately persisted capability database.
+- The next capabilities.get call MUST recompute from live state and MUST NOT rely on stale cached enablement.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+### MGAC-013 - Capability Tool Telemetry
+
+```yaml
+plan_unit_id: MGAC-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: capabilities.get uses the standard tool event pipeline and emits canonical tool telemetry with tool_name capabilities.get, latency, and success/failure rather than defining a separate persistent capability-state event stream.
+gui_related: false
+gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through MGAC-013 instead of broad MGAC-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_generation_contract_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: capability_tool_telemetry
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0012
+preserved_exact_tokens:
+- standard tool event pipeline
+- Plans/Contracts_V0.md
+- Plans/Tools.md
+- does **not** define a separate persistent capability-state event stream
+- canonical tool telemetry
+- tool_name = "capabilities.get"
+- latency
+- success/failure
+negative_constraints:
+- capabilities.get must not define a separate persistent capability-state event stream.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md'
+split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
+```
+
+
+<<< CONTEXT_AFTER 1789-1800 >>>
+### MGAC-014 - Capability Availability Refresh Visibility
+
+```yaml
+plan_unit_id: MGAC-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Settings or provider state changes become visible on the next capabilities.get invocation or UI refresh instead of through a dedicated durable capability changed event.
+gui_related: true
+gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
+split_recommended: true
+depends_on: []

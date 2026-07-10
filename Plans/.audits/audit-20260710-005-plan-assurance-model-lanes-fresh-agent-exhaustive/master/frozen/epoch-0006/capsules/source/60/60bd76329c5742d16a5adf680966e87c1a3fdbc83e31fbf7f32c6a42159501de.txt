@@ -1,0 +1,385 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1271-1282 >>>
+L00001271	- can view runs but cannot dispatch
+L00001272	- can dispatch but cannot manage secrets
+L00001273	negative_constraints:
+L00001274	- Deleted workflow definitions never silently bind to a different current workflow with the same filename.
+L00001275	- Capability limitations are shown as effective capability state, not hidden controls.
+L00001276	compatibility_only_notes: []
+L00001277	stale_retired_dispositions: []
+L00001278	owner_boundary_notes: []
+L00001279	owner_hints:
+L00001280	- Plans/GitHub_Integration.md
+L00001281	```
+L00001282	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1283-1638 >>>
+L00001283	### GI-022 - Runtime Outcome Taxonomy And Bridge Status Cross-refs
+L00001284	
+L00001285	```yaml
+L00001286	plan_unit_id: GI-022
+L00001287	unit_type: requirement
+L00001288	status: accepted
+L00001289	owner_doc: Plans/GitHub_Integration.md
+L00001290	canonical_text: GitHub Integration consumes runtime status, bridge classification, tool dispatch, FileSafe, and storage startup contracts via explicit cross-ref anchors, displays canonical runtime outcomes, and treats legacy stop.* wording only as stale or compatibility input when it conflicts with kill.* and done.* families.
+L00001291	gui_related: true
+L00001292	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001293	split_recommended: true
+L00001294	depends_on: []
+L00001295	unblocks: []
+L00001296	acceptance_criteria:
+L00001297	- The covered source span remains losslessly available for exact-text audit.
+L00001298	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001299	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001300	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001301	validation_surfaces:
+L00001302	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001303	- python3 scripts/pm-plan-index.py validate
+L00001304	risk_class: github_integration_drift
+L00001305	reasoning_tier: standard
+L00001306	context_scope: github_integration_standardization
+L00001307	implementation_surfaces:
+L00001308	- Plans/GitHub_Integration.md
+L00001309	node_compile_hint:
+L00001310	  mode: runtime_outcome_taxonomy_bridge_status_crossrefs
+L00001311	  create_worknodes: false
+L00001312	source_lineage:
+L00001313	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0009
+L00001314	preserved_exact_tokens:
+L00001315	- HTTP/status to failure-class mapping
+L00001316	- Universal kill conditions
+L00001317	- HTE-specific kill conditions
+L00001318	- Startup and shutdown
+L00001319	- Potential problems and solutions
+L00001320	- Integration Checklist
+L00001321	- kill.*
+L00001322	- done.*
+L00001323	- stop.*
+L00001324	negative_constraints:
+L00001325	- Actions, Source Control, and hosted-repo controls must not invent local status taxonomies.
+L00001326	- GitHub UI labels must not collapse kill/done classes into generic failure.
+L00001327	compatibility_only_notes: []
+L00001328	stale_retired_dispositions: []
+L00001329	owner_boundary_notes: []
+L00001330	owner_hints:
+L00001331	- Plans/GitHub_Integration.md
+L00001332	preserved_contractrefs:
+L00001333	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+L00001334	```
+L00001335	
+L00001336	### GI-023 - Hosted Mutation Gates And Usage Cost Display Deferral
+L00001337	
+L00001338	```yaml
+L00001339	plan_unit_id: GI-023
+L00001340	unit_type: requirement
+L00001341	status: accepted
+L00001342	owner_doc: Plans/GitHub_Integration.md
+L00001343	canonical_text: Hosted mutation dispatch, rerun, cancel, admin mutation, and Source Control hosted actions respect Tools listener, OAuth/listener failure semantics, FileSafe path checks, storage logical roots/startup locks/read-only degradation, and usage/cost display rules owned by FinalGUISpec.
+L00001344	gui_related: true
+L00001345	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001346	split_recommended: true
+L00001347	depends_on: []
+L00001348	unblocks: []
+L00001349	acceptance_criteria:
+L00001350	- The covered source span remains losslessly available for exact-text audit.
+L00001351	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001352	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001353	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001354	validation_surfaces:
+L00001355	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001356	- python3 scripts/pm-plan-index.py validate
+L00001357	risk_class: github_integration_drift
+L00001358	reasoning_tier: standard
+L00001359	context_scope: github_integration_standardization
+L00001360	implementation_surfaces:
+L00001361	- Plans/GitHub_Integration.md
+L00001362	node_compile_hint:
+L00001363	  mode: hosted_mutation_gates_usage_cost_display_deferral
+L00001364	  create_worknodes: false
+L00001365	source_lineage:
+L00001366	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0009
+L00001367	preserved_exact_tokens:
+L00001368	- Tools /listener
+L00001369	- OAuth/listener failure semantics
+L00001370	- FileSafe path checks
+L00001371	- storage logical-root selection
+L00001372	- startup lock-path
+L00001373	- read-only degraded state
+L00001374	- adaptive sub-dollar precision
+L00001375	- /truncation
+L00001376	negative_constraints:
+L00001377	- Hosted mutation must respect tool, file-safety, storage, and degraded-state gates before execution.
+L00001378	- GitHub Integration must not invent alternate usage rounding.
+L00001379	compatibility_only_notes: []
+L00001380	stale_retired_dispositions: []
+L00001381	owner_boundary_notes: []
+L00001382	owner_hints:
+L00001383	- Plans/GitHub_Integration.md
+L00001384	preserved_contractrefs:
+L00001385	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+L00001386	```
+L00001387	
+L00001388	### GI-024 - GitHub Route Open Resource Propagation And Object Jump Identity
+L00001389	
+L00001390	```yaml
+L00001391	plan_unit_id: GI-024
+L00001392	unit_type: requirement
+L00001393	status: accepted
+L00001394	owner_doc: Plans/GitHub_Integration.md
+L00001395	canonical_text: GitHub Integration consumes route_target and OpenSubject semantics, resolves github:// resources and concerns into active routes and orchestrator concern records, preserves stable object identity for /jump/search-result routes, and treats Orchestrator references as supersession pointers rather than override evidence.
+L00001396	gui_related: true
+L00001397	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001398	split_recommended: true
+L00001399	depends_on: []
+L00001400	unblocks: []
+L00001401	acceptance_criteria:
+L00001402	- The covered source span remains losslessly available for exact-text audit.
+L00001403	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001404	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001405	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001406	validation_surfaces:
+L00001407	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001408	- python3 scripts/pm-plan-index.py validate
+L00001409	risk_class: github_integration_drift
+L00001410	reasoning_tier: standard
+L00001411	context_scope: github_integration_standardization
+L00001412	implementation_surfaces:
+L00001413	- Plans/GitHub_Integration.md
+L00001414	node_compile_hint:
+L00001415	  mode: github_route_open_resource_propagation_object_jump_identity
+L00001416	  create_worknodes: false
+L00001417	source_lineage:
+L00001418	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0010
+L00001419	preserved_exact_tokens:
+L00001420	- route_target
+L00001421	- OpenSubject
+L00001422	- github://owner/repo/file.md
+L00001423	- github://owner/repo/issues/123
+L00001424	- /jump
+L00001425	- stable object identity
+L00001426	- Orchestrator_Page.md
+L00001427	- same-file supersession pointers
+L00001428	negative_constraints:
+L00001429	- GitHub /jump and search-result routes must not degrade into text-search, path-only, or page-local jump state.
+L00001430	- Outdated page specs cannot override live route, concern, or Source Control consumer contracts.
+L00001431	compatibility_only_notes: []
+L00001432	stale_retired_dispositions: []
+L00001433	owner_boundary_notes: []
+L00001434	owner_hints:
+L00001435	- Plans/GitHub_Integration.md
+L00001436	```
+L00001437	
+L00001438	### GI-025 - Graph Patch Review Records And Apply Exposure
+L00001439	
+L00001440	```yaml
+L00001441	plan_unit_id: GI-025
+L00001442	unit_type: requirement
+L00001443	status: accepted
+L00001444	owner_doc: Plans/GitHub_Integration.md
+L00001445	canonical_text: Graph patch flows use explicit graph_patch_request and graph_patch_result records carrying patch point, concern refs, structural change summary, affected generation, and requester identity before GitHub Integration exposes review or apply actions.
+L00001446	gui_related: true
+L00001447	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001448	split_recommended: true
+L00001449	depends_on: []
+L00001450	unblocks: []
+L00001451	acceptance_criteria:
+L00001452	- The covered source span remains losslessly available for exact-text audit.
+L00001453	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001454	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001455	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001456	validation_surfaces:
+L00001457	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001458	- python3 scripts/pm-plan-index.py validate
+L00001459	risk_class: github_integration_drift
+L00001460	reasoning_tier: standard
+L00001461	context_scope: github_integration_standardization
+L00001462	implementation_surfaces:
+L00001463	- Plans/GitHub_Integration.md
+L00001464	node_compile_hint:
+L00001465	  mode: graph_patch_review_records_apply_exposure
+L00001466	  create_worknodes: false
+L00001467	source_lineage:
+L00001468	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0010
+L00001469	preserved_exact_tokens:
+L00001470	- graph_patch_request
+L00001471	- graph_patch_result
+L00001472	- patch point
+L00001473	- triggering /concern refs
+L00001474	- requested structural change summary
+L00001475	- affected generation
+L00001476	- requester identity
+L00001477	- review or apply actions
+L00001478	negative_constraints: []
+L00001479	compatibility_only_notes: []
+L00001480	stale_retired_dispositions: []
+L00001481	owner_boundary_notes: []
+L00001482	owner_hints:
+L00001483	- Plans/GitHub_Integration.md
+L00001484	```
+L00001485	
+L00001486	### GI-026 - Approval HITL Compatibility And Actions Observation Freshness
+L00001487	
+L00001488	```yaml
+L00001489	plan_unit_id: GI-026
+L00001490	unit_type: requirement
+L00001491	status: accepted
+L00001492	owner_doc: Plans/GitHub_Integration.md
+L00001493	canonical_text: GitHub workflow approval and observation consumers preserve approval_scope, approval_id, PR review ID, execution_unit_id, compatibility HITL/tier-boundary inputs, blocked runtime overlays, and wait/timeout timestamps while scheduled workflows remain stale or unknown until concrete hosted observation exists.
+L00001494	gui_related: true
+L00001495	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001496	split_recommended: true
+L00001497	depends_on: []
+L00001498	unblocks: []
+L00001499	acceptance_criteria:
+L00001500	- The covered source span remains losslessly available for exact-text audit.
+L00001501	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001502	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001503	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001504	validation_surfaces:
+L00001505	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001506	- python3 scripts/pm-plan-index.py validate
+L00001507	risk_class: github_integration_drift
+L00001508	reasoning_tier: standard
+L00001509	context_scope: github_integration_standardization
+L00001510	implementation_surfaces:
+L00001511	- Plans/GitHub_Integration.md
+L00001512	node_compile_hint:
+L00001513	  mode: approval_hitl_compatibility_actions_observation_freshness
+L00001514	  create_worknodes: false
+L00001515	source_lineage:
+L00001516	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0010
+L00001517	preserved_exact_tokens:
+L00001518	- approval_scope
+L00001519	- require_approval
+L00001520	- approval_id
+L00001521	- GitHub PR review ID
+L00001522	- execution_unit_id
+L00001523	- HITL
+L00001524	- tier-boundary
+L00001525	- blocked /runtime overlay
+L00001526	- wait_state_class?
+L00001527	- timeout_class?
+L00001528	- stale or unknown
+L00001529	negative_constraints:
+L00001530	- Absence of a fresh Actions observation MUST NOT by itself mark the workflow skipped/failed.
+L00001531	compatibility_only_notes: []
+L00001532	stale_retired_dispositions: []
+L00001533	owner_boundary_notes: []
+L00001534	owner_hints:
+L00001535	- Plans/GitHub_Integration.md
+L00001536	```
+L00001537	
+L00001538	### GI-027 - Security Carry-through Path Guard SSH Reconnect And Remote Search Authority
+L00001539	
+L00001540	```yaml
+L00001541	plan_unit_id: GI-027
+L00001542	unit_type: requirement
+L00001543	status: accepted
+L00001544	owner_doc: Plans/GitHub_Integration.md
+L00001545	canonical_text: GitHub remote, SSH, Actions, and repository operations carry FileSafe, permission, credential, redaction, projection-trust, hard_gate, remote path guard, SSH keepalive/reconnect, and storage-owned remote-search authority instead of bypassing gates or defining alternate remote search behavior locally.
+L00001546	gui_related: false
+L00001547	gui_classification_reason: This unit defines runtime, security, ownership, identity, or transport behavior, not GUI presentation.
+L00001548	split_recommended: true
+L00001549	depends_on: []
+L00001550	unblocks: []
+L00001551	acceptance_criteria:
+L00001552	- The covered source span remains losslessly available for exact-text audit.
+L00001553	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001554	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001555	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001556	validation_surfaces:
+L00001557	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001558	- python3 scripts/pm-plan-index.py validate
+L00001559	risk_class: github_integration_drift
+L00001560	reasoning_tier: standard
+L00001561	context_scope: github_integration_standardization
+L00001562	implementation_surfaces:
+L00001563	- Plans/GitHub_Integration.md
+L00001564	node_compile_hint:
+L00001565	  mode: security_carrythrough_path_guard_ssh_reconnect_remote_search_authority
+L00001566	  create_worknodes: false
+L00001567	source_lineage:
+L00001568	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0010
+L00001569	preserved_exact_tokens:
+L00001570	- FID-04
+L00001571	- hard_gate
+L00001572	- starts_with(project_root)
+L00001573	- starts_with(cache_root)
+L00001574	- cache_root
+L00001575	- project_root
+L00001576	- file-change
+L00001577	- dirty-staging
+L00001578	- 30s keepalive
+L00001579	- one-auto-retry
+L00001580	- Reconnect
+L00001581	- remote-search
+L00001582	- staging, verification, and re-anchor
+L00001583	negative_constraints:
+L00001584	- No GitHub consumer flow may bypass FileSafe, permission, credential, redaction, or projection-trust gates merely because the action is initiated from a GitHub surface.
+L00001585	- Remote-search is transport-only in GitHub Integration and must not define alternate remote-search layout, dirty-layer clearing, or search-snapshot authority locally.
+L00001586	compatibility_only_notes: []
+L00001587	stale_retired_dispositions: []
+L00001588	owner_boundary_notes: []
+L00001589	owner_hints:
+L00001590	- Plans/GitHub_Integration.md
+L00001591	```
+L00001592	
+L00001593	### GI-028 - Remote Project Search Acceleration Disclosure
+L00001594	
+L00001595	```yaml
+L00001596	plan_unit_id: GI-028
+L00001597	unit_type: requirement
+L00001598	status: accepted
+L00001599	owner_doc: Plans/GitHub_Integration.md
+L00001600	canonical_text: Remote Git/non-Git search acceleration is remote-admin/user-visible transport; GitHub Integration owns remote cache/admin disclosure, consumes storage-owned staging/verification/re-anchor/remote-admin contracts, and keeps no-silent-local-fallback mandatory.
+L00001601	gui_related: true
+L00001602	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001603	split_recommended: false
+L00001604	depends_on: []
+L00001605	unblocks: []
+L00001606	acceptance_criteria:
+L00001607	- The covered source span remains losslessly available for exact-text audit.
+L00001608	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001609	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001610	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001611	validation_surfaces:
+L00001612	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001613	- python3 scripts/pm-plan-index.py validate
+L00001614	risk_class: github_integration_drift
+L00001615	reasoning_tier: standard
+L00001616	context_scope: github_integration_standardization
+L00001617	implementation_surfaces:
+L00001618	- Plans/GitHub_Integration.md
+L00001619	node_compile_hint:
+L00001620	  mode: remote_project_search_acceleration_disclosure
+L00001621	  create_worknodes: false
+L00001622	source_lineage:
+L00001623	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0011
+L00001624	preserved_exact_tokens:
+L00001625	- /staging/verification/re-anchor/remote-admin
+L00001626	- remote cache/admin disclosure
+L00001627	- no-silent-local-fallback
+L00001628	- remote Git/non-Git search acceleration
+L00001629	negative_constraints:
+L00001630	- Remote search acceleration is not a fallback path.
+L00001631	- no-silent-local-fallback remains mandatory.
+L00001632	compatibility_only_notes: []
+L00001633	stale_retired_dispositions: []
+L00001634	owner_boundary_notes: []
+L00001635	owner_hints:
+L00001636	- Plans/GitHub_Integration.md
+L00001637	```
+L00001638	
+
+<<< CONTEXT_AFTER canonical_document_lines=1639-1650 >>>
+L00001639	### GI-029 - Remote Tool Execution Context And Verification Anchors
+L00001640	
+L00001641	```yaml
+L00001642	plan_unit_id: GI-029
+L00001643	unit_type: requirement
+L00001644	status: accepted
+L00001645	owner_doc: Plans/GitHub_Integration.md
+L00001646	canonical_text: Remote tool/provider execution uses GitHub remote context, remote SSH/reconnect budget, path guard, and storage verification anchors before mutating or reporting search/cache state.
+L00001647	gui_related: false
+L00001648	gui_classification_reason: This unit defines runtime, security, ownership, identity, or transport behavior, not GUI presentation.
+L00001649	split_recommended: true
+L00001650	depends_on: []

@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE canonical_document_lines=16382-16393 >>>
+L00016382	          "requirement": "cmd.nav.focus_route has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016383	        },
+L00016384	        {
+L00016385	          "test_id": "wiring.catalog.nav_focus_route.accessibility",
+L00016386	          "evidence_kind": "accessibility_regression",
+L00016387	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016388	        }
+L00016389	      ],
+L00016390	      "event_test_requirements": [
+L00016391	        "Assert cmd.nav.focus_route records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016392	      ]
+L00016393	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=16394-16755 >>>
+L00016394	    "catalog.nav_open_subject": {
+L00016395	      "ui_element_id": "catalog.nav_open_subject",
+L00016396	      "ui_location": "Nav surface > Open Subject",
+L00016397	      "ui_command_id": "cmd.nav.open_subject",
+L00016398	      "handler_location": "handlers::nav::open_subject",
+L00016399	      "expected_event_types": [],
+L00016400	      "acceptance_checks": [
+L00016401	        "cmd.nav.open_subject must be registered in the UICommand dispatcher with typed args and result contract",
+L00016402	        "cmd.nav.open_subject must expose projected state selector and disabled reason before dispatch",
+L00016403	        "cmd.nav.open_subject dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016404	        "cmd.nav.open_subject must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016405	        "cmd.nav.open_subject must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016406	      ],
+L00016407	      "evidence_required": "Production wiring contract for cmd.nav.open_subject; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016408	      "state_selector": "state.commands.nav_open_subject.availability",
+L00016409	      "disabled_reason_projection": "state.commands.nav_open_subject.disabled_reason",
+L00016410	      "effect_contract": {
+L00016411	        "effect_kind": "receipt",
+L00016412	        "description": "cmd.nav.open_subject has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016413	        "receipt_or_event_refs": [
+L00016414	          "cmd.nav.open_subject.dispatch_receipt"
+L00016415	        ]
+L00016416	      },
+L00016417	      "accessibility_contract": {
+L00016418	        "role_or_semantics": "catalog.nav_open_subject exposes a stable role/name/description matching cmd.nav.open_subject.",
+L00016419	        "keyboard_access": "catalog.nav_open_subject is reachable and activatable by keyboard where the control is visible.",
+L00016420	        "focus_management": "catalog.nav_open_subject preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016421	        "disabled_announcement": "catalog.nav_open_subject surfaces state.commands.nav_open_subject.disabled_reason to assistive technology when unavailable."
+L00016422	      },
+L00016423	      "test_evidence": [
+L00016424	        {
+L00016425	          "test_id": "wiring.catalog.nav_open_subject.dispatcher",
+L00016426	          "evidence_kind": "dispatcher_fixture",
+L00016427	          "requirement": "Dispatching cmd.nav.open_subject reaches handlers::nav::open_subject with typed args/result contract."
+L00016428	        },
+L00016429	        {
+L00016430	          "test_id": "wiring.catalog.nav_open_subject.state_projection",
+L00016431	          "evidence_kind": "state_projection",
+L00016432	          "requirement": "Availability reads state.commands.nav_open_subject.availability and disabled copy reads state.commands.nav_open_subject.disabled_reason."
+L00016433	        },
+L00016434	        {
+L00016435	          "test_id": "wiring.catalog.nav_open_subject.effect",
+L00016436	          "evidence_kind": "receipt_or_event_assertion",
+L00016437	          "requirement": "cmd.nav.open_subject has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016438	        },
+L00016439	        {
+L00016440	          "test_id": "wiring.catalog.nav_open_subject.accessibility",
+L00016441	          "evidence_kind": "accessibility_regression",
+L00016442	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016443	        }
+L00016444	      ],
+L00016445	      "event_test_requirements": [
+L00016446	        "Assert cmd.nav.open_subject records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016447	      ]
+L00016448	    },
+L00016449	    "catalog.nav_open_usage_subject": {
+L00016450	      "ui_element_id": "catalog.nav_open_usage_subject",
+L00016451	      "ui_location": "Nav surface > Open Usage Subject",
+L00016452	      "ui_command_id": "cmd.nav.open_usage_subject",
+L00016453	      "handler_location": "handlers::nav::open_usage_subject",
+L00016454	      "expected_event_types": [],
+L00016455	      "acceptance_checks": [
+L00016456	        "cmd.nav.open_usage_subject must be registered in the UICommand dispatcher with typed route_target and OpenSubject args/result contract",
+L00016457	        "cmd.nav.open_usage_subject must expose projected state selector and disabled reason before dispatch",
+L00016458	        "cmd.nav.open_usage_subject dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
+L00016459	        "cmd.nav.open_usage_subject must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+L00016460	        "cmd.nav.open_usage_subject must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id"
+L00016461	      ],
+L00016462	      "evidence_required": "Production route/open wiring contract for cmd.nav.open_usage_subject; certification requires render/control evidence, dispatcher fixture, typed route_target/OpenSubject payload assertion, usage_event object-kind proof, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, and regression test evidence.",
+L00016463	      "state_selector": "state.commands.nav_open_usage_subject.availability",
+L00016464	      "disabled_reason_projection": "state.commands.nav_open_usage_subject.disabled_reason",
+L00016465	      "effect_contract": {
+L00016466	        "effect_kind": "route_open",
+L00016467	        "description": "cmd.nav.open_usage_subject opens or focuses a Usage/Ledger subject through canonical route/open identity; when usage_event_ref is present, route_target.object_kind is usage_event and route_target.object_id is the canonical usage event id.",
+L00016468	        "receipt_or_event_refs": [
+L00016469	          "cmd.nav.open_usage_subject.route_open_receipt"
+L00016470	        ]
+L00016471	      },
+L00016472	      "accessibility_contract": {
+L00016473	        "role_or_semantics": "catalog.nav_open_usage_subject exposes a stable role/name/description matching cmd.nav.open_usage_subject.",
+L00016474	        "keyboard_access": "catalog.nav_open_usage_subject is reachable and activatable by keyboard where the control is visible.",
+L00016475	        "focus_management": "catalog.nav_open_usage_subject preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016476	        "disabled_announcement": "catalog.nav_open_usage_subject surfaces state.commands.nav_open_usage_subject.disabled_reason to assistive technology when unavailable."
+L00016477	      },
+L00016478	      "test_evidence": [
+L00016479	        {
+L00016480	          "test_id": "wiring.catalog.nav_open_usage_subject.dispatcher",
+L00016481	          "evidence_kind": "dispatcher_fixture",
+L00016482	          "requirement": "Dispatching cmd.nav.open_usage_subject reaches handlers::nav::open_usage_subject with typed args/result contract."
+L00016483	        },
+L00016484	        {
+L00016485	          "test_id": "wiring.catalog.nav_open_usage_subject.state_projection",
+L00016486	          "evidence_kind": "state_projection",
+L00016487	          "requirement": "Availability reads state.commands.nav_open_usage_subject.availability and disabled copy reads state.commands.nav_open_usage_subject.disabled_reason."
+L00016488	        },
+L00016489	        {
+L00016490	          "test_id": "wiring.catalog.nav_open_usage_subject.accessibility",
+L00016491	          "evidence_kind": "accessibility_regression",
+L00016492	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016493	        },
+L00016494	        {
+L00016495	          "test_id": "wiring.catalog.nav_open_usage_subject.route_open",
+L00016496	          "evidence_kind": "route_open_fixture",
+L00016497	          "requirement": "Dispatching cmd.nav.open_usage_subject with usage_event_ref yields route_target.object_kind=usage_event, stable object_id, OpenSubject, and full UsageRecord/provider/runtime correlation passthrough."
+L00016498	        },
+L00016499	        {
+L00016500	          "test_id": "wiring.catalog.nav_open_usage_subject.effect",
+L00016501	          "evidence_kind": "receipt_or_event_assertion",
+L00016502	          "requirement": "cmd.nav.open_usage_subject records route/open receipt cmd.nav.open_usage_subject.route_open_receipt and emits no fabricated domain event."
+L00016503	        }
+L00016504	      ],
+L00016505	      "event_test_requirements": [
+L00016506	        "Assert cmd.nav.open_usage_subject records route/open receipt cmd.nav.open_usage_subject.route_open_receipt and preserves route_target/OpenSubject plus UsageRecord correlation fields.",
+L00016507	        "Assert cmd.nav.open_usage_subject rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id."
+L00016508	      ],
+L00016509	      "route_contract": {
+L00016510	        "route_target_required": true,
+L00016511	        "open_subject_required": true,
+L00016512	        "route_target_object_kind_when_usage_event_ref": "usage_event",
+L00016513	        "correlation_passthrough": [
+L00016514	          "usage_event_ref",
+L00016515	          "usage_record_id",
+L00016516	          "provider_attempt_ref",
+L00016517	          "attempt_id",
+L00016518	          "node_id",
+L00016519	          "tool_call_id",
+L00016520	          "trace_ref",
+L00016521	          "receipt_ref",
+L00016522	          "receipt_refs",
+L00016523	          "raw_payload_ref",
+L00016524	          "artifact_id",
+L00016525	          "run_id",
+L00016526	          "thread_id",
+L00016527	          "source_class",
+L00016528	          "source_confidence",
+L00016529	          "source_authority",
+L00016530	          "settlement_status",
+L00016531	          "projection_freshness",
+L00016532	          "projection_health"
+L00016533	        ]
+L00016534	      }
+L00016535	    },
+L00016536	    "catalog.notifications_destination_create": {
+L00016537	      "ui_element_id": "catalog.notifications_destination_create",
+L00016538	      "ui_location": "Notifications surface > Destination > Create",
+L00016539	      "ui_command_id": "cmd.notifications.destination.create",
+L00016540	      "handler_location": "handlers::notifications::destination_create",
+L00016541	      "expected_event_types": [],
+L00016542	      "acceptance_checks": [
+L00016543	        "cmd.notifications.destination.create must be registered in the UICommand dispatcher with typed args and result contract",
+L00016544	        "cmd.notifications.destination.create must expose projected state selector and disabled reason before dispatch",
+L00016545	        "cmd.notifications.destination.create dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016546	        "cmd.notifications.destination.create must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016547	        "cmd.notifications.destination.create must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016548	      ],
+L00016549	      "evidence_required": "Production wiring contract for cmd.notifications.destination.create; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016550	      "state_selector": "state.commands.notifications_destination_create.availability",
+L00016551	      "disabled_reason_projection": "state.commands.notifications_destination_create.disabled_reason",
+L00016552	      "effect_contract": {
+L00016553	        "effect_kind": "receipt",
+L00016554	        "description": "cmd.notifications.destination.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016555	        "receipt_or_event_refs": [
+L00016556	          "cmd.notifications.destination.create.dispatch_receipt"
+L00016557	        ]
+L00016558	      },
+L00016559	      "accessibility_contract": {
+L00016560	        "role_or_semantics": "catalog.notifications_destination_create exposes a stable role/name/description matching cmd.notifications.destination.create.",
+L00016561	        "keyboard_access": "catalog.notifications_destination_create is reachable and activatable by keyboard where the control is visible.",
+L00016562	        "focus_management": "catalog.notifications_destination_create preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016563	        "disabled_announcement": "catalog.notifications_destination_create surfaces state.commands.notifications_destination_create.disabled_reason to assistive technology when unavailable."
+L00016564	      },
+L00016565	      "test_evidence": [
+L00016566	        {
+L00016567	          "test_id": "wiring.catalog.notifications_destination_create.dispatcher",
+L00016568	          "evidence_kind": "dispatcher_fixture",
+L00016569	          "requirement": "Dispatching cmd.notifications.destination.create reaches handlers::notifications::destination_create with typed args/result contract."
+L00016570	        },
+L00016571	        {
+L00016572	          "test_id": "wiring.catalog.notifications_destination_create.state_projection",
+L00016573	          "evidence_kind": "state_projection",
+L00016574	          "requirement": "Availability reads state.commands.notifications_destination_create.availability and disabled copy reads state.commands.notifications_destination_create.disabled_reason."
+L00016575	        },
+L00016576	        {
+L00016577	          "test_id": "wiring.catalog.notifications_destination_create.effect",
+L00016578	          "evidence_kind": "receipt_or_event_assertion",
+L00016579	          "requirement": "cmd.notifications.destination.create has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016580	        },
+L00016581	        {
+L00016582	          "test_id": "wiring.catalog.notifications_destination_create.accessibility",
+L00016583	          "evidence_kind": "accessibility_regression",
+L00016584	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016585	        }
+L00016586	      ],
+L00016587	      "event_test_requirements": [
+L00016588	        "Assert cmd.notifications.destination.create records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016589	      ]
+L00016590	    },
+L00016591	    "catalog.notifications_destination_delete": {
+L00016592	      "ui_element_id": "catalog.notifications_destination_delete",
+L00016593	      "ui_location": "Notifications surface > Destination > Delete",
+L00016594	      "ui_command_id": "cmd.notifications.destination.delete",
+L00016595	      "handler_location": "handlers::notifications::destination_delete",
+L00016596	      "expected_event_types": [],
+L00016597	      "acceptance_checks": [
+L00016598	        "cmd.notifications.destination.delete must be registered in the UICommand dispatcher with typed args and result contract",
+L00016599	        "cmd.notifications.destination.delete must expose projected state selector and disabled reason before dispatch",
+L00016600	        "cmd.notifications.destination.delete dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016601	        "cmd.notifications.destination.delete must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016602	        "cmd.notifications.destination.delete must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016603	      ],
+L00016604	      "evidence_required": "Production wiring contract for cmd.notifications.destination.delete; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016605	      "state_selector": "state.commands.notifications_destination_delete.availability",
+L00016606	      "disabled_reason_projection": "state.commands.notifications_destination_delete.disabled_reason",
+L00016607	      "effect_contract": {
+L00016608	        "effect_kind": "receipt",
+L00016609	        "description": "cmd.notifications.destination.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016610	        "receipt_or_event_refs": [
+L00016611	          "cmd.notifications.destination.delete.dispatch_receipt"
+L00016612	        ]
+L00016613	      },
+L00016614	      "accessibility_contract": {
+L00016615	        "role_or_semantics": "catalog.notifications_destination_delete exposes a stable role/name/description matching cmd.notifications.destination.delete.",
+L00016616	        "keyboard_access": "catalog.notifications_destination_delete is reachable and activatable by keyboard where the control is visible.",
+L00016617	        "focus_management": "catalog.notifications_destination_delete preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016618	        "disabled_announcement": "catalog.notifications_destination_delete surfaces state.commands.notifications_destination_delete.disabled_reason to assistive technology when unavailable."
+L00016619	      },
+L00016620	      "test_evidence": [
+L00016621	        {
+L00016622	          "test_id": "wiring.catalog.notifications_destination_delete.dispatcher",
+L00016623	          "evidence_kind": "dispatcher_fixture",
+L00016624	          "requirement": "Dispatching cmd.notifications.destination.delete reaches handlers::notifications::destination_delete with typed args/result contract."
+L00016625	        },
+L00016626	        {
+L00016627	          "test_id": "wiring.catalog.notifications_destination_delete.state_projection",
+L00016628	          "evidence_kind": "state_projection",
+L00016629	          "requirement": "Availability reads state.commands.notifications_destination_delete.availability and disabled copy reads state.commands.notifications_destination_delete.disabled_reason."
+L00016630	        },
+L00016631	        {
+L00016632	          "test_id": "wiring.catalog.notifications_destination_delete.effect",
+L00016633	          "evidence_kind": "receipt_or_event_assertion",
+L00016634	          "requirement": "cmd.notifications.destination.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016635	        },
+L00016636	        {
+L00016637	          "test_id": "wiring.catalog.notifications_destination_delete.accessibility",
+L00016638	          "evidence_kind": "accessibility_regression",
+L00016639	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016640	        }
+L00016641	      ],
+L00016642	      "event_test_requirements": [
+L00016643	        "Assert cmd.notifications.destination.delete records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016644	      ]
+L00016645	    },
+L00016646	    "catalog.notifications_destination_test": {
+L00016647	      "ui_element_id": "catalog.notifications_destination_test",
+L00016648	      "ui_location": "Notifications surface > Destination > Test",
+L00016649	      "ui_command_id": "cmd.notifications.destination.test",
+L00016650	      "handler_location": "handlers::notifications::destination_test",
+L00016651	      "expected_event_types": [],
+L00016652	      "acceptance_checks": [
+L00016653	        "cmd.notifications.destination.test must be registered in the UICommand dispatcher with typed args and result contract",
+L00016654	        "cmd.notifications.destination.test must expose projected state selector and disabled reason before dispatch",
+L00016655	        "cmd.notifications.destination.test dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016656	        "cmd.notifications.destination.test must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016657	        "cmd.notifications.destination.test must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016658	      ],
+L00016659	      "evidence_required": "Production wiring contract for cmd.notifications.destination.test; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016660	      "state_selector": "state.commands.notifications_destination_test.availability",
+L00016661	      "disabled_reason_projection": "state.commands.notifications_destination_test.disabled_reason",
+L00016662	      "effect_contract": {
+L00016663	        "effect_kind": "receipt",
+L00016664	        "description": "cmd.notifications.destination.test has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016665	        "receipt_or_event_refs": [
+L00016666	          "cmd.notifications.destination.test.dispatch_receipt"
+L00016667	        ]
+L00016668	      },
+L00016669	      "accessibility_contract": {
+L00016670	        "role_or_semantics": "catalog.notifications_destination_test exposes a stable role/name/description matching cmd.notifications.destination.test.",
+L00016671	        "keyboard_access": "catalog.notifications_destination_test is reachable and activatable by keyboard where the control is visible.",
+L00016672	        "focus_management": "catalog.notifications_destination_test preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016673	        "disabled_announcement": "catalog.notifications_destination_test surfaces state.commands.notifications_destination_test.disabled_reason to assistive technology when unavailable."
+L00016674	      },
+L00016675	      "test_evidence": [
+L00016676	        {
+L00016677	          "test_id": "wiring.catalog.notifications_destination_test.dispatcher",
+L00016678	          "evidence_kind": "dispatcher_fixture",
+L00016679	          "requirement": "Dispatching cmd.notifications.destination.test reaches handlers::notifications::destination_test with typed args/result contract."
+L00016680	        },
+L00016681	        {
+L00016682	          "test_id": "wiring.catalog.notifications_destination_test.state_projection",
+L00016683	          "evidence_kind": "state_projection",
+L00016684	          "requirement": "Availability reads state.commands.notifications_destination_test.availability and disabled copy reads state.commands.notifications_destination_test.disabled_reason."
+L00016685	        },
+L00016686	        {
+L00016687	          "test_id": "wiring.catalog.notifications_destination_test.effect",
+L00016688	          "evidence_kind": "receipt_or_event_assertion",
+L00016689	          "requirement": "cmd.notifications.destination.test has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016690	        },
+L00016691	        {
+L00016692	          "test_id": "wiring.catalog.notifications_destination_test.accessibility",
+L00016693	          "evidence_kind": "accessibility_regression",
+L00016694	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016695	        }
+L00016696	      ],
+L00016697	      "event_test_requirements": [
+L00016698	        "Assert cmd.notifications.destination.test records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016699	      ]
+L00016700	    },
+L00016701	    "catalog.notifications_destination_toggle": {
+L00016702	      "ui_element_id": "catalog.notifications_destination_toggle",
+L00016703	      "ui_location": "Notifications surface > Destination > Toggle",
+L00016704	      "ui_command_id": "cmd.notifications.destination.toggle",
+L00016705	      "handler_location": "handlers::notifications::destination_toggle",
+L00016706	      "expected_event_types": [],
+L00016707	      "acceptance_checks": [
+L00016708	        "cmd.notifications.destination.toggle must be registered in the UICommand dispatcher with typed args and result contract",
+L00016709	        "cmd.notifications.destination.toggle must expose projected state selector and disabled reason before dispatch",
+L00016710	        "cmd.notifications.destination.toggle dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016711	        "cmd.notifications.destination.toggle must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016712	        "cmd.notifications.destination.toggle must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016713	      ],
+L00016714	      "evidence_required": "Production wiring contract for cmd.notifications.destination.toggle; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016715	      "state_selector": "state.commands.notifications_destination_toggle.availability",
+L00016716	      "disabled_reason_projection": "state.commands.notifications_destination_toggle.disabled_reason",
+L00016717	      "effect_contract": {
+L00016718	        "effect_kind": "receipt",
+L00016719	        "description": "cmd.notifications.destination.toggle has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016720	        "receipt_or_event_refs": [
+L00016721	          "cmd.notifications.destination.toggle.dispatch_receipt"
+L00016722	        ]
+L00016723	      },
+L00016724	      "accessibility_contract": {
+L00016725	        "role_or_semantics": "catalog.notifications_destination_toggle exposes a stable role/name/description matching cmd.notifications.destination.toggle.",
+L00016726	        "keyboard_access": "catalog.notifications_destination_toggle is reachable and activatable by keyboard where the control is visible.",
+L00016727	        "focus_management": "catalog.notifications_destination_toggle preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016728	        "disabled_announcement": "catalog.notifications_destination_toggle surfaces state.commands.notifications_destination_toggle.disabled_reason to assistive technology when unavailable."
+L00016729	      },
+L00016730	      "test_evidence": [
+L00016731	        {
+L00016732	          "test_id": "wiring.catalog.notifications_destination_toggle.dispatcher",
+L00016733	          "evidence_kind": "dispatcher_fixture",
+L00016734	          "requirement": "Dispatching cmd.notifications.destination.toggle reaches handlers::notifications::destination_toggle with typed args/result contract."
+L00016735	        },
+L00016736	        {
+L00016737	          "test_id": "wiring.catalog.notifications_destination_toggle.state_projection",
+L00016738	          "evidence_kind": "state_projection",
+L00016739	          "requirement": "Availability reads state.commands.notifications_destination_toggle.availability and disabled copy reads state.commands.notifications_destination_toggle.disabled_reason."
+L00016740	        },
+L00016741	        {
+L00016742	          "test_id": "wiring.catalog.notifications_destination_toggle.effect",
+L00016743	          "evidence_kind": "receipt_or_event_assertion",
+L00016744	          "requirement": "cmd.notifications.destination.toggle has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016745	        },
+L00016746	        {
+L00016747	          "test_id": "wiring.catalog.notifications_destination_toggle.accessibility",
+L00016748	          "evidence_kind": "accessibility_regression",
+L00016749	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016750	        }
+L00016751	      ],
+L00016752	      "event_test_requirements": [
+L00016753	        "Assert cmd.notifications.destination.toggle records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016754	      ]
+L00016755	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=16756-16767 >>>
+L00016756	    "catalog.notifications_destination_update": {
+L00016757	      "ui_element_id": "catalog.notifications_destination_update",
+L00016758	      "ui_location": "Notifications surface > Destination > Update",
+L00016759	      "ui_command_id": "cmd.notifications.destination.update",
+L00016760	      "handler_location": "handlers::notifications::destination_update",
+L00016761	      "expected_event_types": [],
+L00016762	      "acceptance_checks": [
+L00016763	        "cmd.notifications.destination.update must be registered in the UICommand dispatcher with typed args and result contract",
+L00016764	        "cmd.notifications.destination.update must expose projected state selector and disabled reason before dispatch",
+L00016765	        "cmd.notifications.destination.update dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016766	        "cmd.notifications.destination.update must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016767	        "cmd.notifications.destination.update must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE canonical_document_lines=19232-19243 >>>
+L00019232	- "requirements builder progress/status UI"
+L00019233	- "orchestrator activity and run inspection surfaces"
+L00019234	- "subagent inline blocks"
+L00019235	- "multi-pass reviewer status rows"
+L00019236	negative_constraints: []
+L00019237	compatibility_only_notes: []
+L00019238	stale_retired_dispositions: []
+L00019239	owner_boundary_notes: []
+L00019240	owner_hints:
+L00019241	- "Plans/FinalGUISpec.md"
+L00019242	```
+L00019243	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=19244-19614 >>>
+L00019244	### F3-291 - Agent Trace Summary Operator Card Fields
+L00019245	
+L00019246	```yaml
+L00019247	plan_unit_id: F3-291
+L00019248	unit_type: requirement
+L00019249	status: accepted
+L00019250	owner_doc: Plans/FinalGUISpec.md
+L00019251	canonical_text: >-
+L00019252	  Debug and run activity surfaces expose `agent_trace_summary` with subagent, tool span,
+L00019253	  failed attempt, and artifact reference counts so cards summarize agent work without
+L00019254	  expanding raw traces by default.
+L00019255	gui_related: true
+L00019256	gui_classification_reason: >-
+L00019257	  This unit defines operator-facing agent trace summary card fields.
+L00019258	split_recommended: false
+L00019259	depends_on: []
+L00019260	unblocks: []
+L00019261	acceptance_criteria:
+L00019262	- "The covered source span remains losslessly available for exact-text audit."
+L00019263	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019264	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019265	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019266	validation_surfaces:
+L00019267	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019268	- "python3 scripts/pm-plan-index.py validate"
+L00019269	risk_class: finalgui_drift
+L00019270	reasoning_tier: standard
+L00019271	context_scope: finalgui_standardization
+L00019272	implementation_surfaces:
+L00019273	- "Plans/FinalGUISpec.md"
+L00019274	node_compile_hint:
+L00019275	  mode: agent_trace_summary_operator_card_fields
+L00019276	  create_worknodes: false
+L00019277	source_lineage:
+L00019278	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0173"
+L00019279	preserved_exact_tokens:
+L00019280	- "agent_trace_summary"
+L00019281	- "subagent_count"
+L00019282	- "tool_span_count"
+L00019283	- "failed_attempt_count"
+L00019284	- "artifact_refs[]"
+L00019285	- "operator-facing cards"
+L00019286	- "raw traces"
+L00019287	negative_constraints: []
+L00019288	compatibility_only_notes: []
+L00019289	stale_retired_dispositions: []
+L00019290	owner_boundary_notes: []
+L00019291	owner_hints:
+L00019292	- "Plans/FinalGUISpec.md"
+L00019293	```
+L00019294	
+L00019295	### F3-292 - Natural Language Persona Invocation Feedback
+L00019296	
+L00019297	```yaml
+L00019298	plan_unit_id: F3-292
+L00019299	unit_type: requirement
+L00019300	status: accepted
+L00019301	owner_doc: Plans/FinalGUISpec.md
+L00019302	canonical_text: >-
+L00019303	  Natural-language Persona requests render explicit feedback such as `Persona: Collaborator
+L00019304	  (User requested)`, session-lock variants, turn-scoped clearing, and child-run/delegation
+L00019305	  feedback for subagent-only Persona requests such as Explorer or Bash.
+L00019306	gui_related: true
+L00019307	gui_classification_reason: >-
+L00019308	  This unit defines visible natural-language Persona invocation feedback.
+L00019309	split_recommended: false
+L00019310	depends_on: []
+L00019311	unblocks: []
+L00019312	acceptance_criteria:
+L00019313	- "The covered source span remains losslessly available for exact-text audit."
+L00019314	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019315	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019316	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019317	validation_surfaces:
+L00019318	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019319	- "python3 scripts/pm-plan-index.py validate"
+L00019320	risk_class: finalgui_drift
+L00019321	reasoning_tier: standard
+L00019322	context_scope: finalgui_standardization
+L00019323	implementation_surfaces:
+L00019324	- "Plans/FinalGUISpec.md"
+L00019325	node_compile_hint:
+L00019326	  mode: natural_language_persona_invocation_feedback
+L00019327	  create_worknodes: false
+L00019328	source_lineage:
+L00019329	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0174"
+L00019330	preserved_exact_tokens:
+L00019331	- "Persona: Collaborator (User requested)"
+L00019332	- "Persona: Researcher (User requested, session lock)"
+L00019333	- "turn-scoped"
+L00019334	- "previous/auto state"
+L00019335	- "Explorer"
+L00019336	- "Bash"
+L00019337	- "child-run/delegation feedback"
+L00019338	- "direct chat Persona locks"
+L00019339	negative_constraints: []
+L00019340	compatibility_only_notes: []
+L00019341	stale_retired_dispositions: []
+L00019342	owner_boundary_notes: []
+L00019343	owner_hints:
+L00019344	- "Plans/FinalGUISpec.md"
+L00019345	```
+L00019346	
+L00019347	### F3-293 - Provider Gap Disclosure Locations
+L00019348	
+L00019349	```yaml
+L00019350	plan_unit_id: F3-293
+L00019351	unit_type: requirement
+L00019352	status: accepted
+L00019353	owner_doc: Plans/FinalGUISpec.md
+L00019354	canonical_text: >-
+L00019355	  GUI never implies that a provider honored a Persona control when it did not; skipped
+L00019356	  controls are disclosed in inline status text, tooltip, activity detail popover, or run
+L00019357	  detail/history panel.
+L00019358	gui_related: true
+L00019359	gui_classification_reason: >-
+L00019360	  This unit defines where skipped Persona controls are disclosed.
+L00019361	split_recommended: false
+L00019362	depends_on: []
+L00019363	unblocks: []
+L00019364	acceptance_criteria:
+L00019365	- "The covered source span remains losslessly available for exact-text audit."
+L00019366	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019367	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019368	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019369	validation_surfaces:
+L00019370	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019371	- "python3 scripts/pm-plan-index.py validate"
+L00019372	risk_class: finalgui_drift
+L00019373	reasoning_tier: standard
+L00019374	context_scope: finalgui_standardization
+L00019375	implementation_surfaces:
+L00019376	- "Plans/FinalGUISpec.md"
+L00019377	node_compile_hint:
+L00019378	  mode: provider_gap_disclosure_locations
+L00019379	  create_worknodes: false
+L00019380	source_lineage:
+L00019381	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0175"
+L00019382	preserved_exact_tokens:
+L00019383	- "provider honored a Persona control"
+L00019384	- "inline status text"
+L00019385	- "tooltip"
+L00019386	- "activity detail popover"
+L00019387	- "run detail/history panel"
+L00019388	negative_constraints:
+L00019389	- "The GUI must never imply that a provider honored a Persona control when it did not."
+L00019390	compatibility_only_notes: []
+L00019391	stale_retired_dispositions: []
+L00019392	owner_boundary_notes: []
+L00019393	owner_hints:
+L00019394	- "Plans/FinalGUISpec.md"
+L00019395	```
+L00019396	
+L00019397	### F3-294 - Disclosure Status Semantics And Payload
+L00019398	
+L00019399	```yaml
+L00019400	plan_unit_id: F3-294
+L00019401	unit_type: constraint
+L00019402	status: accepted
+L00019403	owner_doc: Plans/FinalGUISpec.md
+L00019404	canonical_text: >-
+L00019405	  Provider-gap disclosure semantics are `Honored`, `Skipped`, and `Clamped`, and every
+L00019406	  disclosure includes control name, requested value, effective value if any, and
+L00019407	  human-readable reason.
+L00019408	gui_related: false
+L00019409	gui_classification_reason: >-
+L00019410	  This unit defines provider-gap disclosure data semantics rather than visual placement.
+L00019411	split_recommended: false
+L00019412	depends_on: []
+L00019413	unblocks: []
+L00019414	acceptance_criteria:
+L00019415	- "The covered source span remains losslessly available for exact-text audit."
+L00019416	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019417	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019418	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019419	validation_surfaces:
+L00019420	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019421	- "python3 scripts/pm-plan-index.py validate"
+L00019422	risk_class: finalgui_drift
+L00019423	reasoning_tier: standard
+L00019424	context_scope: finalgui_standardization
+L00019425	implementation_surfaces:
+L00019426	- "Plans/FinalGUISpec.md"
+L00019427	node_compile_hint:
+L00019428	  mode: disclosure_status_semantics_and_payload
+L00019429	  create_worknodes: false
+L00019430	source_lineage:
+L00019431	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0176"
+L00019432	preserved_exact_tokens:
+L00019433	- "Honored"
+L00019434	- "Skipped"
+L00019435	- "Clamped"
+L00019436	- "control name"
+L00019437	- "requested value"
+L00019438	- "effective value"
+L00019439	- "human-readable reason"
+L00019440	negative_constraints: []
+L00019441	compatibility_only_notes: []
+L00019442	stale_retired_dispositions: []
+L00019443	owner_boundary_notes: []
+L00019444	owner_hints:
+L00019445	- "Plans/FinalGUISpec.md"
+L00019446	```
+L00019447	
+L00019448	### F3-295 - Disclosure Timing Placement And Provider Naming
+L00019449	
+L00019450	```yaml
+L00019451	plan_unit_id: F3-295
+L00019452	unit_type: requirement
+L00019453	status: accepted
+L00019454	owner_doc: Plans/FinalGUISpec.md
+L00019455	canonical_text: >-
+L00019456	  Known limitations render disabled or warning-badged in place before execution;
+L00019457	  runtime-discovered limitations surface inline and persist to run detail/history; disclosures
+L00019458	  name the provider explicitly.
+L00019459	gui_related: true
+L00019460	gui_classification_reason: >-
+L00019461	  This unit defines visible disclosure timing, placement, and provider-specific copy.
+L00019462	split_recommended: false
+L00019463	depends_on: []
+L00019464	unblocks: []
+L00019465	acceptance_criteria:
+L00019466	- "The covered source span remains losslessly available for exact-text audit."
+L00019467	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019468	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019469	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019470	validation_surfaces:
+L00019471	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019472	- "python3 scripts/pm-plan-index.py validate"
+L00019473	risk_class: finalgui_drift
+L00019474	reasoning_tier: standard
+L00019475	context_scope: finalgui_standardization
+L00019476	implementation_surfaces:
+L00019477	- "Plans/FinalGUISpec.md"
+L00019478	node_compile_hint:
+L00019479	  mode: disclosure_timing_placement_and_provider_naming
+L00019480	  create_worknodes: false
+L00019481	source_lineage:
+L00019482	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0176"
+L00019483	preserved_exact_tokens:
+L00019484	- "disabled"
+L00019485	- "warning-badged"
+L00019486	- "active surface"
+L00019487	- "run detail/history"
+L00019488	- "Claude Code ignored reasoning_effort=high; provider does not support that control on this model"
+L00019489	negative_constraints:
+L00019490	- "When a limitation is known before execution, do not let the user believe it is actionable."
+L00019491	compatibility_only_notes: []
+L00019492	stale_retired_dispositions: []
+L00019493	owner_boundary_notes: []
+L00019494	owner_hints:
+L00019495	- "Plans/FinalGUISpec.md"
+L00019496	```
+L00019497	
+L00019498	### F3-296 - Persona Mapping Editors
+L00019499	
+L00019500	```yaml
+L00019501	plan_unit_id: F3-296
+L00019502	unit_type: requirement
+L00019503	status: accepted
+L00019504	owner_doc: Plans/FinalGUISpec.md
+L00019505	canonical_text: >-
+L00019506	  Settings or surface-specific configuration supports Persona defaults mapped to Interview
+L00019507	  stages/phases, Requirements Builder steps/passes, Orchestrator node/package/lane/seam
+L00019508	  mappings, and Multi-Pass review passes, with per-mapping platform/model selection and
+L00019509	  compatibility warnings.
+L00019510	gui_related: true
+L00019511	gui_classification_reason: >-
+L00019512	  This unit defines surface-specific Persona mapping editors despite the source inference
+L00019513	  being false.
+L00019514	split_recommended: false
+L00019515	depends_on: []
+L00019516	unblocks: []
+L00019517	acceptance_criteria:
+L00019518	- "The covered source span remains losslessly available for exact-text audit."
+L00019519	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019520	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019521	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019522	validation_surfaces:
+L00019523	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019524	- "python3 scripts/pm-plan-index.py validate"
+L00019525	risk_class: finalgui_drift
+L00019526	reasoning_tier: standard
+L00019527	context_scope: finalgui_standardization
+L00019528	implementation_surfaces:
+L00019529	- "Plans/FinalGUISpec.md"
+L00019530	node_compile_hint:
+L00019531	  mode: persona_mapping_editors
+L00019532	  create_worknodes: false
+L00019533	source_lineage:
+L00019534	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0177"
+L00019535	preserved_exact_tokens:
+L00019536	- "Interview stages/phases"
+L00019537	- "Requirements Builder steps/passes"
+L00019538	- "Orchestrator node/package/lane/seam mappings"
+L00019539	- "Multi-Pass review passes"
+L00019540	- "platform/model selection"
+L00019541	- "compatibility warnings"
+L00019542	negative_constraints: []
+L00019543	compatibility_only_notes: []
+L00019544	stale_retired_dispositions: []
+L00019545	owner_boundary_notes: []
+L00019546	owner_hints:
+L00019547	- "Plans/FinalGUISpec.md"
+L00019548	```
+L00019549	
+L00019550	### F3-297 - Rendering Surface Scope And Inventory
+L00019551	
+L00019552	```yaml
+L00019553	plan_unit_id: F3-297
+L00019554	unit_type: requirement
+L00019555	status: accepted
+L00019556	owner_doc: Plans/FinalGUISpec.md
+L00019557	canonical_text: >-
+L00019558	  Rendering surface scope covers Markdown, Mermaid, HTML, SVG, and images in the Slint GUI and
+L00019559	  treats browser-capable rendering as shared across Chat Panel, File Editor, Embedded Document
+L00019560	  Pane, editor-tab Browser, detached preview/browser windows, automation/auth browser windows,
+L00019561	  and bottom-panel browser-adjacent surfaces.
+L00019562	gui_related: true
+L00019563	gui_classification_reason: >-
+L00019564	  This unit defines the rendering addendum and shared browser-capable surface inventory.
+L00019565	split_recommended: true
+L00019566	depends_on: []
+L00019567	unblocks: []
+L00019568	acceptance_criteria:
+L00019569	- "The covered source span remains losslessly available for exact-text audit."
+L00019570	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00019571	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00019572	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00019573	validation_surfaces:
+L00019574	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00019575	- "python3 scripts/pm-plan-index.py validate"
+L00019576	risk_class: finalgui_drift
+L00019577	reasoning_tier: standard
+L00019578	context_scope: finalgui_standardization
+L00019579	implementation_surfaces:
+L00019580	- "Plans/FinalGUISpec.md"
+L00019581	node_compile_hint:
+L00019582	  mode: rendering_surface_scope_and_inventory
+L00019583	  create_worknodes: false
+L00019584	source_lineage:
+L00019585	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0179"
+L00019586	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0180"
+L00019587	preserved_exact_tokens:
+L00019588	- "Rendering Surface Addendum (2026-03-07)"
+L00019589	- "Markdown"
+L00019590	- "Mermaid"
+L00019591	- "HTML"
+L00019592	- "SVG"
+L00019593	- "image rendering"
+L00019594	- "Chat Panel"
+L00019595	- "File Editor"
+L00019596	- "Embedded Document Pane"
+L00019597	- "Editor-tab Browser surface"
+L00019598	- "workspace_preview"
+L00019599	- "detached_preview"
+L00019600	- "automation_session"
+L00019601	- "auth_session"
+L00019602	- "Bottom-panel browser-adjacent surfaces"
+L00019603	- "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+L00019604	- "ContractName:Plans/FileManager.md"
+L00019605	- "ContractName:Plans/storage-plan.md"
+L00019606	negative_constraints:
+L00019607	- "Bottom-panel browser-adjacent surfaces do not own the canonical browsing session."
+L00019608	compatibility_only_notes: []
+L00019609	stale_retired_dispositions: []
+L00019610	owner_boundary_notes: []
+L00019611	owner_hints:
+L00019612	- "Plans/FinalGUISpec.md"
+L00019613	```
+L00019614	
+
+<<< CONTEXT_AFTER canonical_document_lines=19615-19626 >>>
+L00019615	### F3-298 - Browser Derived Chat Capture Chips
+L00019616	
+L00019617	```yaml
+L00019618	plan_unit_id: F3-298
+L00019619	unit_type: requirement
+L00019620	status: accepted
+L00019621	owner_doc: Plans/FinalGUISpec.md
+L00019622	canonical_text: >-
+L00019623	  Browser-derived capture chips appear in the Chat composer chip strip with bounded preview,
+L00019624	  page/source label, capture kind, remove/revoke affordance, and blocked/expired state; they
+L00019625	  serialize only on send through structured attachment paths.
+L00019626	gui_related: true

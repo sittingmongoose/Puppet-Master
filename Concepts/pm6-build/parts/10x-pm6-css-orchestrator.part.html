@@ -144,15 +144,14 @@
     .pm6-orch-cta {
       display: flex; align-items: center; gap: var(--md);
       padding: var(--md) var(--lg);
-      background: var(--surface-elevated);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent-warning);
+      background: color-mix(in srgb, var(--accent-warning) 8%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent-warning) 30%, var(--border));
       border-radius: var(--radius-md);
       box-shadow: var(--elev-1);
       animation: pm-enter-up var(--motion-med) var(--ease-default) both;
     }
-    .pm6-orch-cta[data-severity="blocked"] { border-left-color: var(--accent-error); }
-    .pm6-orch-cta[data-severity="info"] { border-left-color: var(--accent-primary); }
+    .pm6-orch-cta[data-severity="blocked"] { background: color-mix(in srgb, var(--accent-error) 8%, transparent); border-color: color-mix(in srgb, var(--accent-error) 30%, var(--border)); }
+    .pm6-orch-cta[data-severity="info"] { background: color-mix(in srgb, var(--accent-primary) 8%, transparent); border-color: color-mix(in srgb, var(--accent-primary) 30%, var(--border)); }
     .pm6-orch-cta .pm6-ico { color: var(--accent-warning); font-size: 18px; }
     .pm6-orch-cta[data-severity="blocked"] .pm6-ico { color: var(--accent-error); }
     .pm6-orch-cta-text { flex: 1; min-width: 0; }
@@ -599,7 +598,6 @@
     .pm6-orch-webop {
       background: var(--surface-elevated);
       border: var(--border-width) solid var(--border-light);
-      border-left: 3px solid var(--accent-primary);
       border-radius: var(--radius-md);
       padding: var(--sm) var(--lg);
       animation: pm-enter-up var(--motion-fast) var(--ease-default) both;
@@ -712,7 +710,7 @@
     /* ============================================================
        theme overrides
        ============================================================ */
-    /* glass: pre-baked rgba fills (no backdrop-filter — budget) */
+    /* glass: steps of the one sheet (no backdrop-filter — budget) */
     [data-theme^="glass"] .pm6-orch-widget,
     [data-theme^="glass"] .pm6-orch-seam-card,
     [data-theme^="glass"] .pm6-orch-pc-feedcol,
@@ -721,20 +719,27 @@
     [data-theme^="glass"] .pm6-orch-webop,
     [data-theme^="glass"] .pm6-orch-hist-row,
     [data-theme^="glass"] .pm6-orch-ledger-wrap,
-    [data-theme^="glass"] .pm6-orch-inspector,
-    [data-theme^="glass"] .pm6-orch-modal {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+    [data-theme^="glass"] .pm6-orch-inspector {
+      background: var(--pm6-glass-step-2);
+      border-color: var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-hairline);
     }
+    /* modal floats above the sheet = reading plate */
+    [data-theme^="glass"] .pm6-orch-modal {
+      background: var(--pm6-glass-plate);
+      border-color: var(--glass-hairline);
+      box-shadow: inset 0 1px 0 var(--glass-edge), var(--pm6-glass-drop);
+    }
+    /* graph canvas = clearest see-through region of the sheet */
     [data-theme^="glass"] .pm6-orch-graph-canvas {
       background:
         radial-gradient(circle at 1px 1px, var(--glass-hairline) 1px, transparent 1px) 0 0 / 26px 26px,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) - .12));
+        var(--pm6-glass-step-1);
     }
     [data-theme^="glass"] .pm6-orch-minimap,
     [data-theme^="glass"] .pm6-orch-legend,
     [data-theme^="glass"] .pm6-orch-table th {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18));
+      background: var(--pm6-glass-step-2);
     }
     /* retro: square corners, hard offsets, snap motion */
     [data-theme^="retro"] .pm6-orch-widget,
@@ -777,10 +782,20 @@
     [data-theme^="retro"] .pm6-orch-widget:hover { transform: none; }
     [data-theme^="retro"] .pm6-orch-row,
     [data-theme^="retro"] .pm6-orch-table td { border-bottom-width: var(--border-width-inner); }
-    /* friendly-light: keep boundaries visible on white cards */
-    [data-theme="friendly-light"] .pm6-orch-widget,
-    [data-theme="friendly-light"] .pm6-orch-hist-row,
-    [data-theme="friendly-light"] .pm6-orch-ev-row { border-color: var(--border); }
+    /* friendly cozy: sky-tinted orchestrator progress cards + rows;
+       lane bands go lavender (lanes/worktrees = lavender category) */
+    [data-theme^="friendly"] .pm6-orch-widget,
+    [data-theme^="friendly"] .pm6-orch-hist-row,
+    [data-theme^="friendly"] .pm6-orch-ev-row,
+    [data-theme^="friendly"] .pm6-orch-seam-card {
+      --pm6-sheen-accent: var(--pm6-cozy-sky);
+      background: color-mix(in srgb, var(--pm6-cozy-sky) var(--pm6-cozy-mix), var(--pm6-cozy-card-base));
+      border-color: color-mix(in srgb, var(--pm6-cozy-sky) var(--pm6-cozy-border-mix), var(--pm6-cozy-card-base));
+    }
+    [data-theme^="friendly"] .pm6-orch-glane-band {
+      fill: color-mix(in srgb, var(--pm6-cozy-lav) 22%, var(--pm6-cozy-card-base));
+      opacity: .55;
+    }
     /* basic: flat, minimal chrome */
     [data-theme^="basic"] .pm6-orch-widget,
     [data-theme^="basic"] .pm6-orch-seam-card,

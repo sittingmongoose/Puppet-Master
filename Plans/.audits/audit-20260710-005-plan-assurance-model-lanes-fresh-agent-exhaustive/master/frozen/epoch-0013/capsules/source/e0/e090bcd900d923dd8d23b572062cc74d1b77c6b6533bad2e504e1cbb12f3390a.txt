@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14153-14164 >>>
+L00014153	- later projections may summarize
+L00014154	- canonical pass history
+L00014155	- reconstructable
+L00014156	negative_constraints:
+L00014157	- Local-work-preserved blocked outcomes must be represented explicitly, not inferred from missing failure rows.
+L00014158	preserved_contractrefs: []
+L00014159	compatibility_only_notes: []
+L00014160	stale_retired_dispositions: []
+L00014161	owner_hints:
+L00014162	- Plans/storage-plan.md
+L00014163	```
+L00014164	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14165-14530 >>>
+L00014165	### SP-201 - Attempt Counter Semantics And Snapshot Lineage
+L00014166	
+L00014167	```yaml
+L00014168	plan_unit_id: SP-201
+L00014169	unit_type: requirement
+L00014170	status: accepted
+L00014171	owner_doc: Plans/storage-plan.md
+L00014172	canonical_text: Attempt counter semantics preserve attempt_count as ground truth, retry_count as derived display data, additive sub-counter decomposition, immutable attempt snapshots for permission/auth/approval/safe-point/revalidation changes, and lineage joins through attempt_id and immutable snapshots.
+L00014173	gui_related: false
+L00014174	gui_classification_reason: This unit preserves backend attempt counter and immutable snapshot lineage semantics.
+L00014175	split_recommended: true
+L00014176	depends_on:
+L00014177	- PDS-003
+L00014178	- PDS-004
+L00014179	- PDS-005
+L00014180	- PNC-001
+L00014181	unblocks: []
+L00014182	acceptance_criteria:
+L00014183	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014184	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014185	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014186	validation_surfaces:
+L00014187	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014188	- python3 scripts/pm-plan-index.py validate
+L00014189	risk_class: storage_plan_drift
+L00014190	reasoning_tier: standard
+L00014191	context_scope: storage_batch_179_body_tail
+L00014192	implementation_surfaces:
+L00014193	- Plans/storage-plan.md
+L00014194	node_compile_hint:
+L00014195	  mode: attempt_counter_semantics_and_snapshot_lineage
+L00014196	  create_worknodes: false
+L00014197	source_lineage:
+L00014198	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0117
+L00014199	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0118
+L00014200	preserved_exact_tokens:
+L00014201	- Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)
+L00014202	- without ambiguity
+L00014203	- Counter semantics
+L00014204	- attempt_count
+L00014205	- ground-truth count
+L00014206	- started attempts
+L00014207	- retry_count
+L00014208	- derived display data only
+L00014209	- max(attempt_count - 1, 0)
+L00014210	- sub-counter decomposition
+L00014211	- initial_attempts
+L00014212	- retry_attempts
+L00014213	- resume_attempts
+L00014214	- remediation_retry_attempts
+L00014215	- permission, auth, approval, safe-point, or revalidation changes
+L00014216	- new attempt snapshots/records
+L00014217	- do not mutate prior attempt counters in place
+L00014218	- attempt_id
+L00014219	- immutable attempt snapshot
+L00014220	negative_constraints:
+L00014221	- permission, auth, approval, safe-point, or revalidation changes produce new attempt snapshots/records; they do not mutate prior attempt counters in place.
+L00014222	preserved_contractrefs:
+L00014223	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md'
+L00014224	compatibility_only_notes: []
+L00014225	stale_retired_dispositions: []
+L00014226	owner_hints:
+L00014227	- Plans/storage-plan.md
+L00014228	```
+L00014229	
+L00014230	### SP-202 - Runtime Projection Historical State
+L00014231	
+L00014232	```yaml
+L00014233	plan_unit_id: SP-202
+L00014234	unit_type: requirement
+L00014235	status: accepted
+L00014236	owner_doc: Plans/storage-plan.md
+L00014237	canonical_text: Runtime projection historical state requires run-graph/orchestrator projections to resolve by attempt_id, preserves blocked projections as historical after resolution, keeps ready_since_utc only while continuously ready, and labels older-generation attempts stale and never resumable.
+L00014238	gui_related: false
+L00014239	gui_classification_reason: This unit preserves backend runtime projection historical state rules.
+L00014240	split_recommended: true
+L00014241	depends_on:
+L00014242	- PDS-003
+L00014243	- PDS-004
+L00014244	- PDS-005
+L00014245	- PNC-001
+L00014246	unblocks: []
+L00014247	acceptance_criteria:
+L00014248	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014249	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014250	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014251	validation_surfaces:
+L00014252	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014253	- python3 scripts/pm-plan-index.py validate
+L00014254	risk_class: storage_plan_drift
+L00014255	reasoning_tier: standard
+L00014256	context_scope: storage_batch_179_body_tail
+L00014257	implementation_surfaces:
+L00014258	- Plans/storage-plan.md
+L00014259	node_compile_hint:
+L00014260	  mode: runtime_projection_historical_state
+L00014261	  create_worknodes: false
+L00014262	source_lineage:
+L00014263	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0118
+L00014264	preserved_exact_tokens:
+L00014265	- run-graph and orchestrator projections
+L00014266	- attempt_id
+L00014267	- not only node_id
+L00014268	- blocked projections remain historical after resolution
+L00014269	- unblocking does not overwrite prior blocked rows
+L00014270	- ready_since_utc
+L00014271	- continuously ready
+L00014272	- older generations
+L00014273	- stale
+L00014274	- never resumable
+L00014275	negative_constraints: []
+L00014276	preserved_contractrefs:
+L00014277	- 'ContractRef: Plans/Widget_System.md#2. Hostability and data contracts, Plans/FinalGUISpec.md#10.6 Blocked and recovery surfaces'
+L00014278	compatibility_only_notes: []
+L00014279	stale_retired_dispositions:
+L00014280	- attempts from older generations remain queryable but are labeled stale and are never resumable.
+L00014281	owner_hints:
+L00014282	- Plans/storage-plan.md
+L00014283	```
+L00014284	
+L00014285	### SP-203 - Projection Freshness Health Fallback Surface
+L00014286	
+L00014287	```yaml
+L00014288	plan_unit_id: SP-203
+L00014289	unit_type: requirement
+L00014290	status: accepted
+L00014291	owner_doc: Plans/storage-plan.md
+L00014292	canonical_text: Projection trust metadata exposes freshness, health, projection time, lag, degraded reason, fallback policy, runtime_artifact terms, labels, direct-record degradation, and action gating before mutation actions.
+L00014293	gui_related: true
+L00014294	gui_classification_reason: This unit preserves user-visible projection freshness/health/fallback labels and backend trust fields.
+L00014295	split_recommended: true
+L00014296	depends_on:
+L00014297	- PDS-003
+L00014298	- PDS-004
+L00014299	- PDS-005
+L00014300	- PNC-001
+L00014301	unblocks: []
+L00014302	acceptance_criteria:
+L00014303	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014304	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014305	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014306	validation_surfaces:
+L00014307	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014308	- python3 scripts/pm-plan-index.py validate
+L00014309	risk_class: storage_plan_drift
+L00014310	reasoning_tier: standard
+L00014311	context_scope: storage_batch_179_body_tail
+L00014312	implementation_surfaces:
+L00014313	- Plans/storage-plan.md
+L00014314	node_compile_hint:
+L00014315	  mode: projection_freshness_health_fallback_surface
+L00014316	  create_worknodes: false
+L00014317	source_lineage:
+L00014318	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0118
+L00014319	preserved_exact_tokens:
+L00014320	- projection_freshness
+L00014321	- projection_health
+L00014322	- last_projected_at_utc
+L00014323	- projector_lag
+L00014324	- degraded_reason_code
+L00014325	- fallback_policy
+L00014326	- runtime_artifact.*
+L00014327	- projection freshness
+L00014328	- projection health
+L00014329	- fallback
+L00014330	- Projection freshness is not the same thing as action authority
+L00014331	- Projection-backed surfaces
+L00014332	- direct-record views
+L00014333	- trust drops
+L00014334	- Runtime-artifact projections
+L00014335	- canonical seglog events
+L00014336	- Permission carry-through
+L00014337	- action gating
+L00014338	- mutation actions
+L00014339	negative_constraints:
+L00014340	- Projection freshness is not the same thing as action authority.
+L00014341	- Action gating must respect projection trust before surfacing mutation actions.
+L00014342	preserved_contractrefs:
+L00014343	- 'ContractRef: Plans/Widget_System.md#2. Hostability and data contracts, Plans/FinalGUISpec.md#10.6 Blocked and recovery surfaces'
+L00014344	compatibility_only_notes: []
+L00014345	stale_retired_dispositions: []
+L00014346	owner_hints:
+L00014347	- Plans/storage-plan.md
+L00014348	```
+L00014349	
+L00014350	### SP-204 - Attempt Snapshot Refresh Rules
+L00014351	
+L00014352	```yaml
+L00014353	plan_unit_id: SP-204
+L00014354	unit_type: requirement
+L00014355	status: accepted
+L00014356	owner_doc: Plans/storage-plan.md
+L00014357	canonical_text: Snapshot refresh creates new attempt snapshots when permission, auth, approval, or replan resolution changes, and safe-point restore creates a new attempt record tied back by lineage rather than mutating the originating attempt.
+L00014358	gui_related: false
+L00014359	gui_classification_reason: This unit preserves backend attempt snapshot refresh and restore lineage rules.
+L00014360	split_recommended: false
+L00014361	depends_on:
+L00014362	- PDS-003
+L00014363	- PDS-004
+L00014364	- PDS-005
+L00014365	- PNC-001
+L00014366	unblocks: []
+L00014367	acceptance_criteria:
+L00014368	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014369	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014370	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014371	validation_surfaces:
+L00014372	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014373	- python3 scripts/pm-plan-index.py validate
+L00014374	risk_class: storage_plan_drift
+L00014375	reasoning_tier: standard
+L00014376	context_scope: storage_batch_179_body_tail
+L00014377	implementation_surfaces:
+L00014378	- Plans/storage-plan.md
+L00014379	node_compile_hint:
+L00014380	  mode: attempt_snapshot_refresh_rules
+L00014381	  create_worknodes: false
+L00014382	source_lineage:
+L00014383	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0119
+L00014384	preserved_exact_tokens:
+L00014385	- Snapshot refresh rules
+L00014386	- permission/auth/approval/replan resolution
+L00014387	- new attempt snapshot
+L00014388	- old attempt snapshots remain immutable
+L00014389	- safe-point restore
+L00014390	- does not mutate the originating attempt record in place
+L00014391	- new attempt record
+L00014392	- tied back by lineage
+L00014393	negative_constraints:
+L00014394	- Safe-point restore does not mutate the originating attempt record in place.
+L00014395	preserved_contractrefs: []
+L00014396	compatibility_only_notes: []
+L00014397	stale_retired_dispositions: []
+L00014398	owner_hints:
+L00014399	- Plans/storage-plan.md
+L00014400	```
+L00014401	
+L00014402	### SP-205 - Restart Historical Archived Removed Records
+L00014403	
+L00014404	```yaml
+L00014405	plan_unit_id: SP-205
+L00014406	unit_type: requirement
+L00014407	status: accepted
+L00014408	owner_doc: Plans/storage-plan.md
+L00014409	canonical_text: Runtime recovery restart history preserves historical, archived, removed, projection freshness/health, lineage refs, worktree/lane ids, owner ids, last seen time, and rules that keep historical/archived/removed distinct while missing worktrees or lanes remain historically inspectable.
+L00014410	gui_related: false
+L00014411	gui_classification_reason: This unit preserves backend restart history and stale historical record semantics.
+L00014412	split_recommended: true
+L00014413	depends_on:
+L00014414	- PDS-003
+L00014415	- PDS-004
+L00014416	- PDS-005
+L00014417	- PNC-001
+L00014418	unblocks: []
+L00014419	acceptance_criteria:
+L00014420	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014421	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014422	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014423	validation_surfaces:
+L00014424	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014425	- python3 scripts/pm-plan-index.py validate
+L00014426	risk_class: storage_plan_drift
+L00014427	reasoning_tier: standard
+L00014428	context_scope: storage_batch_179_body_tail
+L00014429	implementation_surfaces:
+L00014430	- Plans/storage-plan.md
+L00014431	node_compile_hint:
+L00014432	  mode: restart_historical_archived_removed_records
+L00014433	  create_worknodes: false
+L00014434	source_lineage:
+L00014435	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0120
+L00014436	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0121
+L00014437	preserved_exact_tokens:
+L00014438	- Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)
+L00014439	- Restart and stale history
+L00014440	- historical
+L00014441	- archived
+L00014442	- removed
+L00014443	- projection_freshness
+L00014444	- projection_health
+L00014445	- historical_lineage_refs[]
+L00014446	- worktree_id
+L00014447	- lane_id
+L00014448	- last_seen_at_utc
+L00014449	- owner_run_id
+L00014450	- owner_attempt_id
+L00014451	- Restart and cleanup
+L00014452	- distinct
+L00014453	- Missing live worktrees or lanes
+L00014454	- historically inspectable
+L00014455	- Projection trust
+L00014456	negative_constraints: []
+L00014457	preserved_contractrefs: []
+L00014458	compatibility_only_notes: []
+L00014459	stale_retired_dispositions:
+L00014460	- Restart and stale history remains an explicit historical record family.
+L00014461	owner_hints:
+L00014462	- Plans/storage-plan.md
+L00014463	```
+L00014464	
+L00014465	### SP-206 - Permission Snapshot Storage Binding
+L00014466	
+L00014467	```yaml
+L00014468	plan_unit_id: SP-206
+L00014469	unit_type: requirement
+L00014470	status: accepted
+L00014471	owner_doc: Plans/storage-plan.md
+L00014472	canonical_text: Permission snapshot storage binds durable permission_snapshot_record keys to immutable attempt_record.permission_snapshot_id references while Permissions_System owns schema/enums/surfaces; storage may cache query fields but must not redefine nested snapshot schema locally.
+L00014473	gui_related: false
+L00014474	gui_classification_reason: This unit preserves backend permission snapshot storage binding and owner boundary.
+L00014475	split_recommended: true
+L00014476	depends_on:
+L00014477	- PDS-003
+L00014478	- PDS-004
+L00014479	- PDS-005
+L00014480	- PNC-001
+L00014481	unblocks: []
+L00014482	acceptance_criteria:
+L00014483	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+L00014484	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00014485	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00014486	validation_surfaces:
+L00014487	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014488	- python3 scripts/pm-plan-index.py validate
+L00014489	risk_class: storage_plan_drift
+L00014490	reasoning_tier: standard
+L00014491	context_scope: storage_batch_179_body_tail
+L00014492	implementation_surfaces:
+L00014493	- Plans/storage-plan.md
+L00014494	node_compile_hint:
+L00014495	  mode: permission_snapshot_storage_binding
+L00014496	  create_worknodes: false
+L00014497	source_lineage:
+L00014498	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0122
+L00014499	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0123
+L00014500	preserved_exact_tokens:
+L00014501	- Permission Snapshot Storage and Safe-Point Namespace Addendum
+L00014502	- Permission snapshot storage
+L00014503	- Plans/storage-plan.md owns only the durable storage binding
+L00014504	- Plans/Permissions_System.md owns the snapshot schema
+L00014505	- enums
+L00014506	- approval-surface expectations
+L00014507	- blocked-action semantics
+L00014508	- permission_snapshot_record.v1:{project_id}:{snapshot_id}
+L00014509	- attempt_record.permission_snapshot_id
+L00014510	- blocked_family
+L00014511	- approval_scope_key
+L00014512	- approval_target_ref
+L00014513	- revalidation_required
+L00014514	- snapshot record
+L00014515	- durable/dispatchable
+L00014516	- immutable after creation
+L00014517	- Snapshot retention
+L00014518	- owner-doc schema
+L00014519	- competing schema copy
+L00014520	negative_constraints:
+L00014521	- projector/query fields MUST NOT redefine the nested snapshot schema locally.
+L00014522	- storage-plan MUST reference the owner-doc schema instead of embedding a competing schema copy.
+L00014523	preserved_contractrefs:
+L00014524	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md'
+L00014525	compatibility_only_notes: []
+L00014526	stale_retired_dispositions: []
+L00014527	owner_hints:
+L00014528	- Plans/storage-plan.md
+L00014529	```
+L00014530	
+
+<<< CONTEXT_AFTER canonical_document_lines=14531-14542 >>>
+L00014531	### SP-207 - Safe-Point Restore-Point Namespace Separation
+L00014532	
+L00014533	```yaml
+L00014534	plan_unit_id: SP-207
+L00014535	unit_type: requirement
+L00014536	status: accepted
+L00014537	owner_doc: Plans/storage-plan.md
+L00014538	canonical_text: Safe points and restore points use distinct prefixes, with sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id} for runtime-internal run/node/attempt scope and rp:{project_id}:{restore_point_id} for user-facing project scope; namespaces and queries must not overlap.
+L00014539	gui_related: false
+L00014540	gui_classification_reason: This unit preserves backend safe-point versus restore-point namespace separation.
+L00014541	split_recommended: false
+L00014542	depends_on:

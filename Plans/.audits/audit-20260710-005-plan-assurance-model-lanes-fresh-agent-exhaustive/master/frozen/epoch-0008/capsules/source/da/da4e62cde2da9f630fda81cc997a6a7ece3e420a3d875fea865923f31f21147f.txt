@@ -1,0 +1,370 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15435-15446 >>>
+L00015435	compatibility_only_notes:
+L00015436	- The Rust orchestrator integration snippet is plan evidence only, not an executable node output.
+L00015437	- >-
+L00015438	  Adjacent orphaned parser-tail lines 2573-2585 are preserved as non-standalone example coverage and not as a separate product
+L00015439	  requirement.
+L00015440	stale_retired_dispositions: []
+L00015441	owner_boundary_notes: []
+L00015442	owner_hints:
+L00015443	- Plans/orchestrator-subagent-integration.md
+L00015444	preserved_contractrefs: []
+L00015445	```
+L00015446	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15447-15787 >>>
+L00015447	### OSI-157 - Handoff Validation Failure Outcome Policy
+L00015448	
+L00015449	```yaml
+L00015450	plan_unit_id: OSI-157
+L00015451	unit_type: requirement
+L00015452	status: accepted
+L00015453	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015454	canonical_text: >-
+L00015455	  Handoff validation failure handling requests retry for JSON parse, missing field, and invalid severity failures, and after
+L00015456	  max retries proceeds with partial output while preserving complete-with-warnings source wording as a compatibility disposition.
+L00015457	gui_related: false
+L00015458	gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
+L00015459	  presentation.
+L00015460	split_recommended: false
+L00015461	depends_on:
+L00015462	- OSI-093
+L00015463	- OSI-094
+L00015464	- OSI-154
+L00015465	- OSI-156
+L00015466	unblocks: []
+L00015467	acceptance_criteria:
+L00015468	- Covered source lines remain losslessly available for exact-text audit.
+L00015469	- >-
+L00015470	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015471	  bridge.
+L00015472	- >-
+L00015473	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015474	  retain their own contracts.
+L00015475	- >-
+L00015476	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015477	  final node manifests, or production build tasks.
+L00015478	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015479	validation_surfaces:
+L00015480	- >-
+L00015481	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015482	- python3 scripts/pm-plan-index.py validate
+L00015483	reasoning_tier: standard
+L00015484	context_scope: orchestrator_subagent_standardization
+L00015485	implementation_surfaces:
+L00015486	- Plans/orchestrator-subagent-integration.md
+L00015487	risk_class: handoff_validation_failure_outcome_policy
+L00015488	node_compile_hint:
+L00015489	  mode: handoff_validation_failure_outcome_policy
+L00015490	  create_worknodes: false
+L00015491	source_lineage:
+L00015492	- >-
+L00015493	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015494	preserved_exact_tokens:
+L00015495	- JSON parse failure
+L00015496	- Missing field failure
+L00015497	- Invalid severity failure
+L00015498	- Max retries reached
+L00015499	- partial output
+L00015500	- complete with warnings
+L00015501	negative_constraints: []
+L00015502	compatibility_only_notes:
+L00015503	- >-
+L00015504	  The complete with warnings wording is preserved as source text and does not override OSI-093 retry/surface-error stale disposition.
+L00015505	stale_retired_dispositions: []
+L00015506	owner_boundary_notes: []
+L00015507	owner_hints:
+L00015508	- Plans/orchestrator-subagent-integration.md
+L00015509	preserved_contractrefs: []
+L00015510	```
+L00015511	
+L00015512	### OSI-158 - Codex JSONL Subagent Output Parser Example
+L00015513	
+L00015514	```yaml
+L00015515	plan_unit_id: OSI-158
+L00015516	unit_type: requirement
+L00015517	status: accepted
+L00015518	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015519	canonical_text: >-
+L00015520	  CodexOutputParser parses JSONL according to platform_specs, detects Turn/turn events and structured content, aggregates
+L00015521	  findings, and reports TextExtraction when no structured output is found.
+L00015522	gui_related: false
+L00015523	gui_classification_reason: This unit covers backend handoff validation, parser, and orchestration behavior rather than GUI
+L00015524	  presentation.
+L00015525	split_recommended: false
+L00015526	depends_on:
+L00015527	- OSI-151
+L00015528	- OSI-154
+L00015529	- OSI-093
+L00015530	- OSI-091
+L00015531	unblocks: []
+L00015532	acceptance_criteria:
+L00015533	- Covered source lines remain losslessly available for exact-text audit.
+L00015534	- >-
+L00015535	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015536	  bridge.
+L00015537	- >-
+L00015538	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015539	  retain their own contracts.
+L00015540	- >-
+L00015541	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015542	  final node manifests, or production build tasks.
+L00015543	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015544	validation_surfaces:
+L00015545	- >-
+L00015546	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015547	- python3 scripts/pm-plan-index.py validate
+L00015548	reasoning_tier: standard
+L00015549	context_scope: orchestrator_subagent_standardization
+L00015550	implementation_surfaces:
+L00015551	- Plans/orchestrator-subagent-integration.md
+L00015552	risk_class: codex_jsonl_subagent_output_parser_example
+L00015553	node_compile_hint:
+L00015554	  mode: codex_jsonl_subagent_output_parser_example
+L00015555	  create_worknodes: false
+L00015556	source_lineage:
+L00015557	- >-
+L00015558	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015559	preserved_exact_tokens:
+L00015560	- CodexOutputParser
+L00015561	- DRY:FN:parse_subagent_output_codex
+L00015562	- DO NOT hardcode "JSONL"
+L00015563	- platform_specs
+L00015564	- Turn
+L00015565	- turn
+L00015566	- content
+L00015567	- serde_json::from_value::<SubagentOutput>
+L00015568	- findings
+L00015569	- No structured output found in JSONL
+L00015570	negative_constraints:
+L00015571	- Output format detection MUST use platform_specs; DO NOT hardcode "JSONL" or output format.
+L00015572	compatibility_only_notes:
+L00015573	- The Rust Codex parser snippet is plan evidence only, not an executable node output.
+L00015574	- Line 2639 is a separator-only code boundary and has no standalone product semantics.
+L00015575	stale_retired_dispositions: []
+L00015576	owner_boundary_notes: []
+L00015577	owner_hints:
+L00015578	- Plans/orchestrator-subagent-integration.md
+L00015579	preserved_contractrefs:
+L00015580	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00015581	```
+L00015582	
+L00015583	### OSI-159 - Claude Structured Output Parser Example
+L00015584	
+L00015585	```yaml
+L00015586	plan_unit_id: OSI-159
+L00015587	unit_type: requirement
+L00015588	status: accepted
+L00015589	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015590	canonical_text: >-
+L00015591	  ClaudeOutputParser parses Claude structured output according to platform_specs, reads result.content or direct fields, attempts
+L00015592	  direct SubagentOutput parsing, and manually extracts task_report, downstream_context, and findings when needed.
+L00015593	gui_related: false
+L00015594	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00015595	split_recommended: false
+L00015596	depends_on:
+L00015597	- OSI-151
+L00015598	- OSI-154
+L00015599	- OSI-150
+L00015600	- OSI-093
+L00015601	- OSI-091
+L00015602	unblocks: []
+L00015603	acceptance_criteria:
+L00015604	- Covered source lines remain losslessly available for exact-text audit.
+L00015605	- >-
+L00015606	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015607	  bridge.
+L00015608	- >-
+L00015609	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015610	  retain their own contracts.
+L00015611	- >-
+L00015612	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015613	  final node manifests, or production build tasks.
+L00015614	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015615	validation_surfaces:
+L00015616	- >-
+L00015617	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015618	- python3 scripts/pm-plan-index.py validate
+L00015619	reasoning_tier: standard
+L00015620	context_scope: orchestrator_subagent_standardization
+L00015621	implementation_surfaces:
+L00015622	- Plans/orchestrator-subagent-integration.md
+L00015623	risk_class: claude_structured_output_parser_example
+L00015624	node_compile_hint:
+L00015625	  mode: claude_structured_output_parser_example
+L00015626	  create_worknodes: false
+L00015627	source_lineage:
+L00015628	- >-
+L00015629	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015630	preserved_exact_tokens:
+L00015631	- ClaudeOutputParser
+L00015632	- DRY:FN:parse_subagent_output_claude
+L00015633	- platform_specs
+L00015634	- --output-format json
+L00015635	- result.content
+L00015636	- serde_json::from_value::<SubagentOutput>
+L00015637	- task_report
+L00015638	- downstream_context
+L00015639	- findings
+L00015640	negative_constraints:
+L00015641	- >-
+L00015642	  Output format detection MUST use platform_specs; do not hardcode Claude output format or "--output-format json".
+L00015643	compatibility_only_notes:
+L00015644	- The Rust Claude parser snippet is plan evidence only, not an executable node output.
+L00015645	stale_retired_dispositions: []
+L00015646	owner_boundary_notes: []
+L00015647	owner_hints:
+L00015648	- Plans/orchestrator-subagent-integration.md
+L00015649	preserved_contractrefs:
+L00015650	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00015651	```
+L00015652	
+L00015653	### OSI-160 - Gemini Text-Wrapped JSON Parser Example
+L00015654	
+L00015655	```yaml
+L00015656	plan_unit_id: OSI-160
+L00015657	unit_type: requirement
+L00015658	status: accepted
+L00015659	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015660	canonical_text: >-
+L00015661	  GeminiOutputParser parses Gemini Direct API output according to platform_specs, extracts candidates[0].content.parts[0].text,
+L00015662	  tries to parse that text as SubagentOutput JSON, and reports TextExtraction when pattern extraction is required.
+L00015663	gui_related: false
+L00015664	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00015665	split_recommended: false
+L00015666	depends_on:
+L00015667	- OSI-151
+L00015668	- OSI-154
+L00015669	- OSI-150
+L00015670	- OSI-093
+L00015671	- OSI-091
+L00015672	unblocks: []
+L00015673	acceptance_criteria:
+L00015674	- Covered source lines remain losslessly available for exact-text audit.
+L00015675	- >-
+L00015676	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015677	  bridge.
+L00015678	- >-
+L00015679	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015680	  retain their own contracts.
+L00015681	- >-
+L00015682	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015683	  final node manifests, or production build tasks.
+L00015684	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015685	validation_surfaces:
+L00015686	- >-
+L00015687	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015688	- python3 scripts/pm-plan-index.py validate
+L00015689	reasoning_tier: standard
+L00015690	context_scope: orchestrator_subagent_standardization
+L00015691	implementation_surfaces:
+L00015692	- Plans/orchestrator-subagent-integration.md
+L00015693	risk_class: gemini_text_wrapped_json_parser_example
+L00015694	node_compile_hint:
+L00015695	  mode: gemini_text_wrapped_json_parser_example
+L00015696	  create_worknodes: false
+L00015697	source_lineage:
+L00015698	- >-
+L00015699	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015700	preserved_exact_tokens:
+L00015701	- GeminiOutputParser
+L00015702	- DRY:FN:parse_subagent_output_gemini
+L00015703	- candidates[0].content.parts[0].text
+L00015704	- serde_json::from_str::<SubagentOutput>(text)
+L00015705	- ValidationError::TextExtraction
+L00015706	- Gemini text output requires pattern extraction
+L00015707	- platform_specs
+L00015708	negative_constraints:
+L00015709	- >-
+L00015710	  Output format detection MUST use platform_specs; do not hardcode Gemini JSON behavior or "--output-format json".
+L00015711	compatibility_only_notes:
+L00015712	- The Rust Gemini parser snippet is plan evidence only, not an executable node output.
+L00015713	stale_retired_dispositions: []
+L00015714	owner_boundary_notes: []
+L00015715	owner_hints:
+L00015716	- Plans/orchestrator-subagent-integration.md
+L00015717	preserved_contractrefs:
+L00015718	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00015719	```
+L00015720	
+L00015721	### OSI-161 - Copilot Task And Downstream Text Section Parser
+L00015722	
+L00015723	```yaml
+L00015724	plan_unit_id: OSI-161
+L00015725	unit_type: requirement
+L00015726	status: accepted
+L00015727	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015728	canonical_text: >-
+L00015729	  CopilotOutputParser parses text according to platform_specs by combining stdout and stderr, extracting the Task Report section
+L00015730	  as required and Downstream Context as optional through regex section extraction.
+L00015731	gui_related: false
+L00015732	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00015733	split_recommended: false
+L00015734	depends_on:
+L00015735	- OSI-151
+L00015736	- OSI-154
+L00015737	- OSI-093
+L00015738	- OSI-091
+L00015739	unblocks: []
+L00015740	acceptance_criteria:
+L00015741	- Covered source lines remain losslessly available for exact-text audit.
+L00015742	- >-
+L00015743	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015744	  bridge.
+L00015745	- >-
+L00015746	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015747	  retain their own contracts.
+L00015748	- >-
+L00015749	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015750	  final node manifests, or production build tasks.
+L00015751	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015752	validation_surfaces:
+L00015753	- >-
+L00015754	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015755	- python3 scripts/pm-plan-index.py validate
+L00015756	reasoning_tier: standard
+L00015757	context_scope: orchestrator_subagent_standardization
+L00015758	implementation_surfaces:
+L00015759	- Plans/orchestrator-subagent-integration.md
+L00015760	risk_class: copilot_task_downstream_text_section_parser
+L00015761	node_compile_hint:
+L00015762	  mode: copilot_task_downstream_text_section_parser
+L00015763	  create_worknodes: false
+L00015764	source_lineage:
+L00015765	- >-
+L00015766	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015767	preserved_exact_tokens:
+L00015768	- CopilotOutputParser
+L00015769	- DRY:FN:parse_subagent_output_copilot
+L00015770	- combined = format!("{stdout}\n{stderr}")
+L00015771	- '## Task Report'
+L00015772	- Task Report section
+L00015773	- '## Downstream Context'
+L00015774	- regex section extraction
+L00015775	- platform_specs
+L00015776	negative_constraints:
+L00015777	- Output format detection MUST use platform_specs; do not hardcode Copilot text behavior.
+L00015778	compatibility_only_notes:
+L00015779	- The Rust Copilot task/downstream parser snippet is plan evidence only, not an executable node output.
+L00015780	stale_retired_dispositions: []
+L00015781	owner_boundary_notes: []
+L00015782	owner_hints:
+L00015783	- Plans/orchestrator-subagent-integration.md
+L00015784	preserved_contractrefs:
+L00015785	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00015786	```
+L00015787	
+
+<<< CONTEXT_AFTER canonical_document_lines=15788-15799 >>>
+L00015788	### OSI-162 - Copilot Findings Regex Parser Example
+L00015789	
+L00015790	```yaml
+L00015791	plan_unit_id: OSI-162
+L00015792	unit_type: requirement
+L00015793	status: accepted
+L00015794	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015795	canonical_text: >-
+L00015796	  Copilot findings parsing extracts Findings sections with severity, category, description, file, line, and suggestion fields,
+L00015797	  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput.
+L00015798	gui_related: false
+L00015799	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.

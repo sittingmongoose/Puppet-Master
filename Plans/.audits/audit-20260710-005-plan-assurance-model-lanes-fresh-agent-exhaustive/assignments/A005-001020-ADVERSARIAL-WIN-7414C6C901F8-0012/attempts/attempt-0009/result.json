@@ -1,0 +1,887 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001020-ADVERSARIAL-WIN-7414C6C901F8-0012",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001020_adversarial_0012_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "05cc0f49875564c03e04d929fda6665e511b04139ee1024640fde562639ad1cf",
+    "core_range": [
+      4073,
+      4466
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001020-GAP-001",
+      "item_type": "gap",
+      "title": "Trigger and refresh semantics lack executable state rules",
+      "statement": "LSPS-055 names completion, hover, inlay-hint, code-action, and signature-help triggers, but the core does not define capability gating, trigger-character mapping, refresh coalescing, diagnostic-version correlation, signature-help retrigger rules, or an observable result for each trigger path.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4080,
+          "line_end": 4080,
+          "exact_quote": "canonical_text: LSP triggers and refresh behavior cover completion trigger kinds, hover idle delay and cancellation, inlay hint refresh on document activity or visible range, code action requests from UI affordances with diagnostics context, and signature help trigger behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055"
+      ],
+      "gap_kind": "state_and_acceptance_contract",
+      "impact": "Implementations can disagree about when requests fire, what context they carry, and when a refresh is complete.",
+      "builder_discretion": "May choose internal scheduling primitives, but not user-visible trigger semantics or request/context correlation rules."
+    },
+    {
+      "item_id": "A005-001020-GAP-002",
+      "item_type": "gap",
+      "title": "Cancellation does not reject stale async responses",
+      "statement": "The hover constraint requires cancellation on cursor movement but does not specify generation/version checks, response discard behavior, ordering with a newly issued request, or what the GUI shows when cancellation is unsupported or races with completion.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4121,
+          "line_end": 4121,
+          "exact_quote": "- Hover requests must be delayed and canceled on cursor movement to avoid flooding.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055"
+      ],
+      "gap_kind": "concurrency_race",
+      "impact": "A late response can render hover content for the wrong cursor location or overwrite a newer result.",
+      "builder_discretion": "Cancellation mechanism is discretionary; stale-result rejection and GUI truth are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-003",
+      "item_type": "gap",
+      "title": "workspaceFolders cap and later-root policy are nondeterministic",
+      "statement": "LSPS-056 caps initialization at ten roots and says reinitialization is not required, but it does not define which ten roots win, ordering stability, duplicate or symlink identity, whether dynamic workspace-folder notifications are used, or how a later-opened excluded root reaches a matching session.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4138,
+          "line_end": 4138,
+          "exact_quote": "canonical_text: workspaceFolders initialization sends only roots with at least one open document, capped at ten roots, with single-root fallback when no files are open and no required reinitialize when later opening files in a new root.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-056"
+      ],
+      "gap_kind": "selection_and_transition_contract",
+      "impact": "The selected workspace set and routing behavior can vary across runs, starving roots or attaching documents to the wrong session.",
+      "builder_discretion": "Internal data structures are discretionary; deterministic selection and later-root handling require canonical rules."
+    },
+    {
+      "item_id": "A005-001020-GAP-004",
+      "item_type": "gap",
+      "title": "Virtual URI components lack validation and privacy rules",
+      "statement": "The virtual URI embeds language_id and permits message-id plus block index as the opaque identity, but the core does not constrain character encoding, URI injection, length, collision domains, redaction in logs/telemetry, or whether a message identifier is sensitive.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4213,
+          "line_end": 4213,
+          "exact_quote": "- puppet-master-virtual://chat/{language_id}/{opaque_id}",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4216,
+          "line_end": 4216,
+          "exact_quote": "- UUID or message-id + block index",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-057"
+      ],
+      "gap_kind": "untrusted_input_and_privacy",
+      "impact": "Malformed tags can create ambiguous URIs, while stable message identifiers can escape through server logs, diagnostics, or telemetry.",
+      "builder_discretion": "Choice of UUID format is discretionary only after validation, collision, and redaction requirements are fixed."
+    },
+    {
+      "item_id": "A005-001020-GAP-005",
+      "item_type": "gap",
+      "title": "Virtual-document cleanup races and recovery are unspecified",
+      "statement": "LSPS-058 names didClose triggers, idle cleanup, retention, immutability, and identity replacement, but does not define synchronization with in-flight requests, close-versus-reopen ordering, crash recovery, duplicate didOpen/didClose handling, retained-document eviction order, or late diagnostics for an evicted identity.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4241,
+          "line_end": 4241,
+          "exact_quote": "canonical_text: Chat virtual documents send didOpen only when a block needs LSP, send didClose on view eviction or idle cleanup, may retain a small recent set, do not send didChange for immutable blocks, and create a new opaque identity when edited content changes.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-058"
+      ],
+      "gap_kind": "lifecycle_failure_recovery",
+      "impact": "Servers can observe invalid lifecycle sequences and the UI can surface diagnostics for closed or superseded content.",
+      "builder_discretion": "Eviction implementation is discretionary; protocol ordering, late-result rejection, and recovery invariants are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-006",
+      "item_type": "gap",
+      "title": "ServerSpec lists fields without a machine-validatable schema",
+      "statement": "LSPS-059 enumerates a broad minimum field set but does not define field types, required-versus-optional status, defaults, identifier normalization, enum domains, cross-field constraints, schema versioning, unknown-field handling, or validation and quarantine of custom records.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4297,
+          "line_end": 4297,
+          "exact_quote": "canonical_text: ServerSpec is the canonical machine-friendly catalog record for built-in and custom LSP servers and includes server identity, provenance, language selectors, platform/requirement/root rules, selection metadata, support classification, enablement, provisioning, launch, initialization, host support, and degraded attach fields.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-059"
+      ],
+      "gap_kind": "data_contract",
+      "impact": "Catalog producers and consumers can accept incompatible records or launch untrusted custom configurations inconsistently.",
+      "builder_discretion": "Serialization format may be selected by builders, but validation, versioning, and invalid-record behavior need canonical definition."
+    },
+    {
+      "item_id": "A005-001020-GAP-007",
+      "item_type": "gap",
+      "title": "Catalog union has no deterministic merge or rollback contract",
+      "statement": "LSPS-060 defines a deduplicated union and overlays but omits the dedupe key, per-field precedence, provenance preservation on conflict, tombstones, atomic publication, behavior when a source is malformed or unavailable, and rollback to the last known-good catalog.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4362,
+          "line_end": 4362,
+          "exact_quote": "canonical_text: The effective support catalog is the deduplicated union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata; user enablement and custom server settings layer on top, and generated readable/settings/docs views do not replace the registry SSOT.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-060"
+      ],
+      "gap_kind": "partial_failure_and_recovery",
+      "impact": "The same inputs can resolve differently, and a bad upstream refresh can corrupt or partially publish effective catalog state.",
+      "builder_discretion": "Merge implementation is discretionary; identity, precedence, atomicity, and rollback semantics are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-008",
+      "item_type": "gap",
+      "title": "Effective-state resolution lacks a transition matrix and GUI truth contract",
+      "statement": "LSPS-061 names classification outcomes and input layers but does not define precedence conflicts, the complete effective-state enum, transition causes, pending and error states, replacement cycles, or how user-facing settings distinguish configured, available, degraded, disabled, and stale runtime state.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4417,
+          "line_end": 4417,
+          "exact_quote": "canonical_text: Support classification stays separate from server identity and effective state, using supported-by-registry, default-managed, toolchain-bound/manual, experimental/degraded, and deprecated/replaced outcomes layered through catalog base, global override, project override, runtime availability, and effective-state evaluation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-061"
+      ],
+      "gap_kind": "invalid_state_and_gui_truth",
+      "impact": "Consumers can report a server as supported or enabled while it is unavailable, superseded, or in a failed transition.",
+      "builder_discretion": "Presentation styling is discretionary; state vocabulary, precedence, and truthful pending/error rendering are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-009",
+      "item_type": "gap",
+      "title": "Override authority and custom-server trust are undefined",
+      "statement": "The global and project override layers and custom-server settings are named without identifying who may write each layer, project-trust gating, policy locks, validation before launch, conflict adjudication, or whether a lower layer may re-enable a server disabled by higher authority.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4392,
+          "line_end": 4392,
+          "exact_quote": "- custom-server settings layer on top",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4450,
+          "line_end": 4450,
+          "exact_quote": "- global override",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4451,
+          "line_end": 4451,
+          "exact_quote": "- project override",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "authority_boundary",
+      "impact": "Untrusted workspace data or ambiguous precedence can alter executable server configuration contrary to user or administrator intent.",
+      "builder_discretion": "Storage location is discretionary; authority, trust, and conflict rules are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-010",
+      "item_type": "gap",
+      "title": "Required dependencies are recorded as empty",
+      "statement": "The window defines identity before lifecycle and ServerSpec before catalog union and effective resolution, yet every unit declares empty depends_on and unblocks arrays, leaving compile ordering and required consumer relationships unrepresented.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4191,
+          "line_end": 4191,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4366,
+          "line_end": 4366,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4421,
+          "line_end": 4421,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-057",
+        "LSPS-058",
+        "LSPS-059",
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "missing_dependency_and_consumer",
+      "impact": "A future compiler can schedule consumers without their prerequisite identity, schema, or catalog contracts.",
+      "builder_discretion": "No discretion: semantic dependencies should be represented or explicitly justified as external."
+    },
+    {
+      "item_id": "A005-001020-GAP-011",
+      "item_type": "gap",
+      "title": "Validation surfaces cannot falsify runtime behavior",
+      "statement": "All units rely on migration and index validation plus traceability-oriented acceptance criteria; the core provides no protocol transcript tests, state-machine tests, fault injection, race or stale-response tests, merge fixtures, or GUI truth oracles for the specified behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4092,
+          "line_end": 4092,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4093,
+          "line_end": 4093,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055",
+        "LSPS-056",
+        "LSPS-057",
+        "LSPS-058",
+        "LSPS-059",
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "test_falsifiability",
+      "impact": "Governance checks can pass while trigger, lifecycle, merge, authority, and effective-state behavior is wrong.",
+      "builder_discretion": "Test framework is discretionary; externally observable oracles and adversarial cases are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-012",
+      "item_type": "gap",
+      "title": "Code-action affordances omit accessible invocation and announcements",
+      "statement": "The GUI-related trigger unit cites context-menu and lightbulb invocation but provides no keyboard-only equivalent, focus behavior, assistive-technology name/state, or announcement for loading, unavailable, canceled, or updated actions.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4116,
+          "line_end": 4116,
+          "exact_quote": "- context menu open",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4117,
+          "line_end": 4117,
+          "exact_quote": "- lightbulb click",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055"
+      ],
+      "gap_kind": "accessibility",
+      "impact": "Keyboard and screen-reader users may be unable to invoke or understand code-action state.",
+      "builder_discretion": "Shortcut choice and styling are discretionary; operability and state exposure are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-013",
+      "item_type": "gap",
+      "title": "User-visible server and support labels lack localization rules",
+      "statement": "ServerSpec includes display_name and the support model exposes named classifications, but the core does not distinguish stable machine keys from localizable labels, define fallback locale behavior, or constrain interpolation and truncation in generated settings/docs views.",
+      "severity": "low",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4324,
+          "line_end": 4324,
+          "exact_quote": "- display_name",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4444,
+          "line_end": 4444,
+          "exact_quote": "- supported-by-registry",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-059",
+        "LSPS-061"
+      ],
+      "gap_kind": "localization",
+      "impact": "Machine tokens may leak into user-visible UI or become unstable if translated in stored configuration.",
+      "builder_discretion": "Translation platform is discretionary; stable keys and localized-display boundaries are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-014",
+      "item_type": "gap",
+      "title": "Operational observability is absent",
+      "statement": "The core defines request triggers, session routing, virtual-document cleanup, catalog merging, and effective-state evaluation without specifying structured events, correlation identifiers, safe diagnostics, counters, support snapshots, or redaction boundaries needed to distinguish cancellation, routing, merge, and availability failures.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4187,
+          "line_end": 4187,
+          "exact_quote": "canonical_text: Chat code blocks not backed by project files use dedicated virtual-document URIs, one opaque block identity, language tags, and the effective host/root LSP session for that language; code blocks mapped to real project files use the real file URI instead.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4452,
+          "line_end": 4452,
+          "exact_quote": "- runtime availability",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055",
+        "LSPS-056",
+        "LSPS-057",
+        "LSPS-058",
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "observability_support",
+      "impact": "Support cannot safely determine why an LSP result is stale, missing, attached to the wrong root, or derived from a bad catalog layer.",
+      "builder_discretion": "Telemetry backend is discretionary; diagnosable events and privacy-safe correlation are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-015",
+      "item_type": "gap",
+      "title": "Network and host loss behavior is not defined",
+      "statement": "The window routes virtual documents to an effective host/root session and includes host_support and degraded_attach_rules in ServerSpec, but it does not define disconnect detection, request cancellation, buffering, reconnect and reinitialize, stale-result rejection, offline catalog behavior, or GUI status during host loss.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4219,
+          "line_end": 4219,
+          "exact_quote": "- effective host context",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4341,
+          "line_end": 4341,
+          "exact_quote": "- host_support",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4342,
+          "line_end": 4342,
+          "exact_quote": "- degraded_attach_rules",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-057",
+        "LSPS-059",
+        "LSPS-061"
+      ],
+      "gap_kind": "offline_network_loss",
+      "impact": "Remote or container-backed sessions can silently show stale results or lose lifecycle messages after a disconnect.",
+      "builder_discretion": "Reconnect mechanism is discretionary; state transitions, retry boundaries, and truthful GUI state are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-016",
+      "item_type": "gap",
+      "title": "Scale limits are isolated constants without overload behavior",
+      "statement": "The core preserves a ten-root cap, 300-second idle value, and last-five retention token, but does not define behavior under many documents, rapid scrolling, request storms, large catalogs, many custom servers, oversized code blocks, memory pressure, or how caps interact across multiple host sessions.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4165,
+          "line_end": 4165,
+          "exact_quote": "- capped at 10 roots",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4271,
+          "line_end": 4271,
+          "exact_quote": "- 300 s",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4272,
+          "line_end": 4272,
+          "exact_quote": "- last 5",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055",
+        "LSPS-056",
+        "LSPS-058",
+        "LSPS-059",
+        "LSPS-060"
+      ],
+      "gap_kind": "scale_limits",
+      "impact": "Overload can produce unbounded memory, request flooding, unfair eviction, or nondeterministic degradation despite nominal caps.",
+      "builder_discretion": "Internal capacity management is discretionary; overload invariants and user-visible degradation are not."
+    },
+    {
+      "item_id": "A005-001020-GAP-017",
+      "item_type": "gap",
+      "title": "Callers and propagation consumers are not bound to contracts",
+      "statement": "The core mentions UI affordances, generated readable/settings/docs views, and effective-state evaluation but does not identify the components that invoke each trigger, subscribe to catalog changes, invalidate derived views, consume effective state, or reject stale snapshots after an overlay update.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4393,
+          "line_end": 4393,
+          "exact_quote": "- derived prose tables",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4453,
+          "line_end": 4453,
+          "exact_quote": "- /effective-state",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055",
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "missing_callers_consumers",
+      "impact": "Catalog or runtime changes can fail to reach UI and documentation consumers, leaving contradictory states on screen.",
+      "builder_discretion": "Component names are discretionary; authoritative producer/consumer and invalidation relationships are not."
+    },
+    {
+      "item_id": "A005-001020-NG-001",
+      "item_type": "explicit_non_gap",
+      "title": "Virtual and real file identities are explicitly separated",
+      "statement": "The core explicitly prevents a virtual URI from pointing to disk and requires a real file URI for project-backed snippets, closing a major file-identity ambiguity.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4222,
+          "line_end": 4222,
+          "exact_quote": "- Virtual URI never points to disk and real project-file snippets use the real file URI instead.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-057"
+      ],
+      "gap_kind": "explicit_identity_boundary",
+      "impact": "Prevents virtual content from masquerading as a writable project file.",
+      "builder_discretion": "None for the stated boundary."
+    },
+    {
+      "item_id": "A005-001020-NG-002",
+      "item_type": "explicit_non_gap",
+      "title": "Immutable edit replacement is explicit",
+      "statement": "The core explicitly forbids didChange for virtual documents and treats edited message content as a new block identity, avoiding mutation of an already-open immutable block.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4278,
+          "line_end": 4278,
+          "exact_quote": "- Virtual document blocks are immutable for LSP sync; edited message content is treated as a new block identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-058"
+      ],
+      "gap_kind": "explicit_lifecycle_invariant",
+      "impact": "Prevents version ambiguity caused by editing a supposedly immutable virtual document.",
+      "builder_discretion": "None for immutability and replacement identity."
+    },
+    {
+      "item_id": "A005-001020-NG-003",
+      "item_type": "explicit_non_gap",
+      "title": "Catalog and classification identity guards are explicit",
+      "statement": "The core explicitly keeps generated views from becoming catalog SSOT and prevents support classifications from forking stable server_id identity.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4398,
+          "line_end": 4398,
+          "exact_quote": "- Derived prose tables and settings/docs views must not become the catalog SSOT.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4455,
+          "line_end": 4455,
+          "exact_quote": "- Support classification outcomes must not fork stable server_id identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "explicit_authority_and_identity_boundary",
+      "impact": "Prevents derived presentation and changing support labels from creating competing identities or sources of truth.",
+      "builder_discretion": "None for the stated SSOT and identity guards."
+    },
+    {
+      "item_id": "A005-001020-NG-004",
+      "item_type": "explicit_non_gap",
+      "title": "Destructive execution artifacts are excluded",
+      "statement": "Each PlanUnit explicitly prohibits creating WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks in this planning scope.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4090,
+          "line_end": 4090,
+          "exact_quote": "- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-055",
+        "LSPS-056",
+        "LSPS-057",
+        "LSPS-058",
+        "LSPS-059",
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "explicit_non_destructive_scope",
+      "impact": "Prevents this specification conversion from dispatching implementation work as a side effect.",
+      "builder_discretion": "None in this scope."
+    },
+    {
+      "item_id": "A005-001020-UNK-001",
+      "item_type": "unknown",
+      "title": "Split units may conceal additional coupled invariants",
+      "statement": "Several units are marked split_recommended while repeating broad source lineage, but this window does not reveal the omitted source span or resulting subunit boundaries; additional coupling, compatibility, or caller contracts therefore remain unknown rather than supportably assertable.",
+      "severity": "medium",
+      "confidence": "low",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4300,
+          "line_end": 4300,
+          "exact_quote": "split_recommended: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4352,
+          "line_end": 4352,
+          "exact_quote": "split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": [
+        "LSPS-057",
+        "LSPS-058",
+        "LSPS-059",
+        "LSPS-060",
+        "LSPS-061"
+      ],
+      "gap_kind": "unknown_unknowns",
+      "impact": "A future split may omit invariants that were only implicit in the larger source span.",
+      "builder_discretion": "Do not infer the missing contracts from this window."
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Callers, subscribers, invalidation propagation, and derived-view consumers are not bound to the trigger, catalog, and effective-state contracts.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-010",
+        "A005-001020-GAP-017"
+      ]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Trigger, workspace-root, virtual-document, and effective-state transitions lack complete state and ordering rules.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-001",
+        "A005-001020-GAP-003",
+        "A005-001020-GAP-005",
+        "A005-001020-GAP-008"
+      ]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Hover cancellation, virtual-document eviction, catalog publication, and late-result handling lack race invariants.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-002",
+        "A005-001020-GAP-005",
+        "A005-001020-GAP-007"
+      ]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Malformed or unavailable catalog sources, failed custom records, and partial host/session loss have no defined containment behavior.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-006",
+        "A005-001020-GAP-007",
+        "A005-001020-GAP-015"
+      ]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "The core omits reconnect/reinitialize recovery, virtual lifecycle repair, and rollback to a last known-good catalog.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-005",
+        "A005-001020-GAP-007",
+        "A005-001020-GAP-015"
+      ]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "SSOT and identity guards are explicit, but override writers, project trust, policy locks, and custom-server launch authority remain undefined.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-009",
+        "A005-001020-NG-003"
+      ]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Disk identity and immutable replacement are constrained, but message-derived URI identifiers, log redaction, retention, and post-close data disposal are not.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-004",
+        "A005-001020-GAP-005",
+        "A005-001020-NG-001",
+        "A005-001020-NG-002"
+      ]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "URI components and custom ServerSpec/catalog records lack validation, normalization, quarantine, and safe-launch requirements.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-004",
+        "A005-001020-GAP-006",
+        "A005-001020-GAP-009"
+      ]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Late hover/diagnostic results and unresolved effective-state transitions can present stale or overconfident GUI truth.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-002",
+        "A005-001020-GAP-005",
+        "A005-001020-GAP-008",
+        "A005-001020-GAP-017"
+      ]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Host loss, reconnect, request replay or rejection, offline catalog fallback, and GUI status are unspecified.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-015"
+      ]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Named constants do not define overload, fairness, memory pressure, or multi-session scaling behavior.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-016"
+      ]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "GUI code-action affordances lack keyboard, focus, assistive-name/state, and announcement requirements.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-012"
+      ]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Stable machine identifiers are not separated from localizable server and support labels, and fallback behavior is absent.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-013"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "ServerSpec schema evolution, catalog-source version skew, persisted override migration, replacement chains, and unknown fields are unspecified even though stable identity is protected.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-006",
+        "A005-001020-GAP-007",
+        "A005-001020-GAP-008",
+        "A005-001020-NG-003"
+      ]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "No privacy-safe operational events, correlation, counters, or support snapshot contract covers routing, cancellation, merge, and effective-state failures.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-014"
+      ]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "addressed",
+      "summary": "The planning units explicitly exclude executable work artifacts, and virtual-document identity explicitly prevents virtual content from masquerading as a disk path.",
+      "evidence_item_ids": [
+        "A005-001020-NG-001",
+        "A005-001020-NG-004"
+      ]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "ContractRefs preserve owner references, but empty semantic dependencies and absent producer/consumer propagation leave LSPS-057 through LSPS-061 and their owner-doc seams unresolved.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-010",
+        "A005-001020-GAP-017",
+        "A005-001020-UNK-001"
+      ]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Migration and index validators prove structure and traceability, not runtime protocol, race, failure, security, or GUI behavior.",
+      "evidence_item_ids": [
+        "A005-001020-GAP-011"
+      ]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Repeated broad source lineage and split recommendations may conceal coupled invariants outside this authorized window; no additional contracts are invented.",
+      "evidence_item_ids": [
+        "A005-001020-UNK-001"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

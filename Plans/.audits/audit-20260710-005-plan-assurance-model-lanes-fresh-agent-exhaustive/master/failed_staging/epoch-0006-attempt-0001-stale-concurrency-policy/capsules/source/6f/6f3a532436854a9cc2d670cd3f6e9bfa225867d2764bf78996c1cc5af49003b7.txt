@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE canonical_document_lines=778-789 >>>
+L00000778	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+L00000779	## Counter Relationships and Event Ordering Addendum
+L00000780	
+L00000781	### Counter relationships
+L00000782	
+L00000783	```
+L00000784	attempt_count = automatic_retry_count
+L00000785	             + prerequisite_resume_count
+L00000786	             + manual_resume_count
+L00000787	             + remediation_retry_count
+L00000788	             + 1 (initial attempt)
+L00000789	```
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=790-1180 >>>
+L00000790	
+L00000791	- `attempt_count` is the total number of attempts for a node across all causes.
+L00000792	- Each sub-counter tracks attempts triggered by a specific cause.
+L00000793	- The sum of all sub-counters plus the initial attempt MUST equal `attempt_count`.
+L00000794	- Each sub-counter increments at attempt start, not at completion.
+L00000795	- Independent policy counters MUST NOT be inferred by subtracting from `attempt_count`.
+L00000796	
+L00000797	Debug-mode verification records a `verification_summary` with `adapter_kind`, `attempt_count`, `passed`, `heuristic_version`, optional `latest_receipt_ref`, and optional `notes[]`. Agent-session verification passes only when the prior `failure_class`, `blocked_reason_code`, or tool error signature does not recur and the rerun reaches the expected terminal state for that adapter.
+L00000798	
+L00000799	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000800	
+L00000801	### Event ordering guarantees
+L00000802	
+L00000803	1. **Per-node sequential**: All events for a given `node_id` MUST be processed in emission order. The event bus MUST NOT reorder events within a single node's event stream.
+L00000804	2. **Cross-node eventual**: Events from different nodes have no guaranteed relative order. Consumers MUST be idempotent and tolerate out-of-order delivery across nodes.
+L00000805	3. **Deduplication**: The event bus MUST deduplicate events by `(event_name, node_id, attempt_id, ts)` tuple. Duplicate deliveries are silently dropped.
+L00000806	4. **Wakeup coalescing**: Multiple wakeup triggers arriving within a single scheduler pass window are coalesced into one scheduler pass. The `wake_reason` for the pass records the first trigger; additional triggers are logged but do not cause additional passes.
+L00000807	
+L00000808	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+L00000809	
+L00000810	### Replan generation lifecycle
+L00000811	
+L00000812	`replan_generation` is a per-run monotonic `u32` counter starting at `0` for the initial graph.
+L00000813	
+L00000814	- Increments by exactly 1 each time a replan is applied and the canonical graph is updated via `run.graph_canonical_locked`.
+L00000815	- A replan is defined as any structural change to the canonical graph (adding/removing/reordering nodes or edges).
+L00000816	- Attempts, safe points, and blocked projections created under generation N become stale when generation increments to N+1.
+L00000817	- Stale attempts remain queryable for audit but are never resumable.
+L00000818	- There is no practical maximum value.
+L00000819	
+L00000820	ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000821	
+L00000822	## Execution Context: Worktree Handoff
+L00000823	
+L00000824	PM-native `Open With` stays inside the file/editor surface and carries the same worktree handoff context as other executor file operations. Any later OS handoff must be a separate explicit command such as `cmd.file.open_in_system_default`, so system-default launching does not dilute PM-native target selection, blocked/recovery semantics, or worktree-scoped file identity.
+L00000825	
+L00000826	
+L00000827	When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes the Executor-owned `execution_unit_context` packet plus safe-point or source-control context refs when branch/snapshot recovery data is needed. `execution_unit_context` owns `working_directory` and `worktree_id`; branch, HEAD, dirty-state, and worktree-mode booleans belong to safe-point/source-control/worktree-binding context rather than the closed execution-unit packet.
+L00000828	
+L00000829	ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+L00000830	
+L00000831	The execution context MUST include:
+L00000832	- `execution_unit_context.working_directory`: set to worktree root path (not project root) when a worktree is bound
+L00000833	- `execution_unit_context.worktree_id`: identifier of the target worktree
+L00000834	- `execution_unit_context.source_control_context_ref` or safe-point payload refs when branch, HEAD, dirty-state, or worktree snapshot data is required for recovery
+L00000835	
+L00000836	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000837	
+L00000838	**Caller responsibilities:**
+L00000839	- Orchestrator sets these fields when launching a DAE in a lane-owned worktree
+L00000840	- Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
+L00000841	- If `execution_unit_context.worktree_id` is absent and no bound safe-point/worktree context exists, execution defaults to project root
+L00000842	
+L00000843	For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_binding`, populates `execution_unit_context.worktree_id` and `working_directory`, and freezes both values for that turn. Mid-turn unbind changes apply only to the next turn or rotated follow-up. The executor propagates the frozen `working_directory` to FileSafe checks, tool invocations, bash/shell `cwd`, MCP tools, `@file` resolution, auto-retrieval scope context, and provider CLI or DAE execution-context JSON payloads. This is a cwd-based execution contract; it does not require separate prompt-only worktree injection.
+L00000844	
+L00000845	**Executor responsibilities:**
+L00000846	- File operations resolve relative to `working_directory`
+L00000847	- Git operations target the worktree, not the main repo
+L00000848	- Terminal sessions start in `working_directory`
+L00000849	- LSP root identity uses the worktree path when the execution-unit worktree binding or safe-point context identifies a worktree
+L00000850	- File mutation logs store absolute paths. If `cmd.chat.revert` targets an edit from a removed worktree, for example `/project/.puppet-master/worktrees/thread-abc/src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
+L00000851	
+L00000852	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+L00000853	
+L00000854	ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+L00000855	
+L00000856	Required fields:
+L00000857	- run_id
+L00000858	- node_id
+L00000859	- attempt_id
+L00000860	- lane_id
+L00000861	- package_id
+L00000862	- seam_id
+L00000863	- execution_role
+L00000864	- requested_account_id
+L00000865	- effective_account_id
+L00000866	- operational_identity
+L00000867	- blocked_sequence
+L00000868	- approval_scope_key
+L00000869	
+L00000870	Canonical terms and values:
+L00000871	- execution_unit_context
+L00000872	- run_id
+L00000873	- node_id
+L00000874	- attempt_id
+L00000875	- lane_id
+L00000876	- package_id
+L00000877	- seam_id
+L00000878	- execution_role
+L00000879	- requested_account_id
+L00000880	- effective_account_id
+L00000881	- operational_identity
+L00000882	- blocked_sequence
+L00000883	- approval_scope_key
+L00000884	
+L00000885	Labels:
+L00000886	- execution unit context
+L00000887	- blocked episode
+L00000888	
+L00000889	Behavioral rules:
+L00000890	- Execution protocol must define runtime scope through execution-unit context rather than tier roots.
+L00000891	- Blocked-episode identity must remain explicit in execution-relevant recovery paths.
+L00000892	
+L00000893	Permission carry-through:
+L00000894	- effective account, execution role, and blocked-episode approval scope must survive execution handoff
+L00000895	### Mode interaction
+L00000896	
+L00000897	All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:
+L00000898	- Ask mode: read-only context from worktree files
+L00000899	- Agent mode: file edits go to worktree
+L00000900	- Plan/Deep Plan mode: plans execute in worktree context
+L00000901	- Debug mode: debug operations target worktree
+L00000902	
+L00000903	Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
+L00000904	
+L00000905	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+L00000906	
+L00000907	## Owner / Consumer Map
+L00000908	
+L00000909	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Executor_Protocol.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000910	
+L00000911	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000912	
+L00000913	## PlanUnits
+L00000914	
+L00000915	### EP-002 - Doc Authority, Compliance, And Scope
+L00000916	
+L00000917	```yaml
+L00000918	plan_unit_id: EP-002
+L00000919	unit_type: requirement
+L00000920	status: accepted
+L00000921	owner_doc: Plans/Executor_Protocol.md
+L00000922	canonical_text: Executor Protocol owns deterministic plan_graph execution ordering and completion semantics for self-build and user-project sharded plan graph artifacts, while preserving owner-section authority, compliance, and compatibility-only vocabulary boundaries.
+L00000923	gui_related: false
+L00000924	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00000925	split_recommended: false
+L00000926	depends_on: []
+L00000927	unblocks: []
+L00000928	acceptance_criteria:
+L00000929	- The covered source span remains losslessly available for exact-text audit.
+L00000930	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00000931	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00000932	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000933	validation_surfaces:
+L00000934	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000935	- python3 scripts/pm-plan-index.py validate
+L00000936	risk_class: executor_protocol_drift
+L00000937	reasoning_tier: standard
+L00000938	context_scope: executor_protocol_standardization
+L00000939	implementation_surfaces:
+L00000940	- Plans/Executor_Protocol.md
+L00000941	node_compile_hint:
+L00000942	  mode: doc_authority_compliance_and_scope
+L00000943	  create_worknodes: false
+L00000944	source_lineage:
+L00000945	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0001
+L00000946	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0002
+L00000947	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0003
+L00000948	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0004
+L00000949	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0005
+L00000950	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0006
+L00000951	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0007
+L00000952	preserved_exact_tokens:
+L00000953	- Overseer Protocol (Canonical)
+L00000954	- Canonical owner-section requirements
+L00000955	- Compatibility-only source vocabulary is noncanonical
+L00000956	- Puppet Master
+L00000957	- plan_graph
+L00000958	- Plans/plan_graph.json
+L00000959	- .puppet-master/project/plan_graph/
+L00000960	- .puppet-master/project/plan_graph/index.json
+L00000961	- monolithic export is optional/non-canonical
+L00000962	- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md'
+L00000963	negative_constraints: []
+L00000964	compatibility_only_notes:
+L00000965	- Compatibility-only source vocabulary is noncanonical; live wording uses owner terminology.
+L00000966	stale_retired_dispositions: []
+L00000967	owner_boundary_notes: []
+L00000968	owner_hints:
+L00000969	- Plans/Executor_Protocol.md
+L00000970	```
+L00000971	
+L00000972	### EP-003 - Execution Actor Role Definitions
+L00000973	
+L00000974	```yaml
+L00000975	plan_unit_id: EP-003
+L00000976	unit_type: requirement
+L00000977	status: accepted
+L00000978	owner_doc: Plans/Executor_Protocol.md
+L00000979	canonical_text: Executor Protocol defines Builder/node worker, Verifier/reviewer/corroborator, Package Overseer, and Seam Overseer roles without making execution-support actors the scheduler.
+L00000980	gui_related: false
+L00000981	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00000982	split_recommended: false
+L00000983	depends_on: []
+L00000984	unblocks: []
+L00000985	acceptance_criteria:
+L00000986	- The covered source span remains losslessly available for exact-text audit.
+L00000987	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00000988	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00000989	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000990	validation_surfaces:
+L00000991	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000992	- python3 scripts/pm-plan-index.py validate
+L00000993	risk_class: executor_protocol_drift
+L00000994	reasoning_tier: standard
+L00000995	context_scope: executor_protocol_standardization
+L00000996	implementation_surfaces:
+L00000997	- Plans/Executor_Protocol.md
+L00000998	node_compile_hint:
+L00000999	  mode: execution_actor_role_definitions
+L00001000	  create_worknodes: false
+L00001001	source_lineage:
+L00001002	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0008
+L00001003	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0009
+L00001004	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0010
+L00001005	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0011
+L00001006	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0012
+L00001007	preserved_exact_tokens:
+L00001008	- Builder / node worker
+L00001009	- Verifier / reviewer / corroborator
+L00001010	- Package Overseer
+L00001011	- Seam Overseer
+L00001012	- Work Package
+L00001013	- Feature Seam
+L00001014	negative_constraints: []
+L00001015	compatibility_only_notes: []
+L00001016	stale_retired_dispositions: []
+L00001017	owner_boundary_notes: []
+L00001018	owner_hints:
+L00001019	- Plans/Executor_Protocol.md
+L00001020	```
+L00001021	
+L00001022	### EP-004 - Runtime Scheduler Authority And Dual Overseer Boundary
+L00001023	
+L00001024	```yaml
+L00001025	plan_unit_id: EP-004
+L00001026	unit_type: requirement
+L00001027	status: accepted
+L00001028	owner_doc: Plans/Executor_Protocol.md
+L00001029	canonical_text: Runtime scheduler owns readiness, blocked state, transitions, retry budgets, wakeups, and dispatch; overseers remain governance actors and are not hidden second schedulers.
+L00001030	gui_related: false
+L00001031	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001032	split_recommended: false
+L00001033	depends_on: []
+L00001034	unblocks: []
+L00001035	acceptance_criteria:
+L00001036	- The covered source span remains losslessly available for exact-text audit.
+L00001037	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001038	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001039	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001040	validation_surfaces:
+L00001041	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001042	- python3 scripts/pm-plan-index.py validate
+L00001043	risk_class: executor_protocol_drift
+L00001044	reasoning_tier: standard
+L00001045	context_scope: executor_protocol_standardization
+L00001046	implementation_surfaces:
+L00001047	- Plans/Executor_Protocol.md
+L00001048	node_compile_hint:
+L00001049	  mode: runtime_scheduler_authority_and_dual_overseer_boundary
+L00001050	  create_worknodes: false
+L00001051	source_lineage:
+L00001052	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+L00001053	preserved_exact_tokens:
+L00001054	- Runtime scheduler
+L00001055	- readiness
+L00001056	- blocked state
+L00001057	- transitions
+L00001058	- retry budgets
+L00001059	- wakeups
+L00001060	- dispatch
+L00001061	- overseers are governance actors, not hidden second schedulers
+L00001062	- /control
+L00001063	- dual-overseer model
+L00001064	- package and seam overseers
+L00001065	negative_constraints:
+L00001066	- Overseers are governance actors, not hidden second schedulers.
+L00001067	compatibility_only_notes: []
+L00001068	stale_retired_dispositions: []
+L00001069	owner_boundary_notes: []
+L00001070	owner_hints:
+L00001071	- Plans/Executor_Protocol.md
+L00001072	```
+L00001073	
+L00001074	### EP-005 - Scheduler Durable State And Tier Compatibility Retirement
+L00001075	
+L00001076	```yaml
+L00001077	plan_unit_id: EP-005
+L00001078	unit_type: requirement
+L00001079	status: accepted
+L00001080	owner_doc: Plans/Executor_Protocol.md
+L00001081	canonical_text: Runtime scheduling consumes durable package/seam/lane and sharded-node state; tier-era terms, TierType, TierContext, active-agents, tier_tree, Tiers, PuppetMasterEvent streams, and related labels are compatibility inputs only.
+L00001082	gui_related: false
+L00001083	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001084	split_recommended: false
+L00001085	depends_on: []
+L00001086	unblocks: []
+L00001087	acceptance_criteria:
+L00001088	- The covered source span remains losslessly available for exact-text audit.
+L00001089	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001090	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001091	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001092	validation_surfaces:
+L00001093	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001094	- python3 scripts/pm-plan-index.py validate
+L00001095	risk_class: executor_protocol_drift
+L00001096	reasoning_tier: standard
+L00001097	context_scope: executor_protocol_standardization
+L00001098	implementation_surfaces:
+L00001099	- Plans/Executor_Protocol.md
+L00001100	node_compile_hint:
+L00001101	  mode: scheduler_durable_state_and_tier_compatibility_retirement
+L00001102	  create_worknodes: false
+L00001103	source_lineage:
+L00001104	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+L00001105	preserved_exact_tokens:
+L00001106	- package/seam/lane
+L00001107	- seglog/redb-backed projections
+L00001108	- active-agents
+L00001109	- TierType
+L00001110	- TierContext
+L00001111	- /seams
+L00001112	- tier
+L00001113	- subtask
+L00001114	- run.tier_
+L00001115	- run.tier_*
+L00001116	- tier_tree
+L00001117	- Tiers
+L00001118	- PuppetMasterEvent
+L00001119	- PuppetMasterEvent::*
+L00001120	negative_constraints: []
+L00001121	compatibility_only_notes:
+L00001122	- Tier-era vocabulary is compatibility or derived-view vocabulary only.
+L00001123	stale_retired_dispositions:
+L00001124	- Cleanup /reconciliation moves stale /tier consumers to worktree/package/seam-aware routing and effective account/runtime identity displays.
+L00001125	owner_boundary_notes: []
+L00001126	owner_hints:
+L00001127	- Plans/Executor_Protocol.md
+L00001128	```
+L00001129	
+L00001130	### EP-006 - Runtime Object Opening And Projection Consumers
+L00001131	
+L00001132	```yaml
+L00001133	plan_unit_id: EP-006
+L00001134	unit_type: requirement
+L00001135	status: accepted
+L00001136	owner_doc: Plans/Executor_Protocol.md
+L00001137	canonical_text: Runtime objects open through route_target and OpenSubject consumers; projection-backed actions show projection_health and projection_freshness before mutating blocked episodes, seams, packages, or overseer targets.
+L00001138	gui_related: true
+L00001139	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+L00001140	split_recommended: false
+L00001141	depends_on: []
+L00001142	unblocks: []
+L00001143	acceptance_criteria:
+L00001144	- The covered source span remains losslessly available for exact-text audit.
+L00001145	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001146	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001147	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001148	validation_surfaces:
+L00001149	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001150	- python3 scripts/pm-plan-index.py validate
+L00001151	risk_class: executor_protocol_drift
+L00001152	reasoning_tier: standard
+L00001153	context_scope: executor_protocol_standardization
+L00001154	implementation_surfaces:
+L00001155	- Plans/Executor_Protocol.md
+L00001156	node_compile_hint:
+L00001157	  mode: runtime_object_opening_and_projection_consumers
+L00001158	  create_worknodes: false
+L00001159	source_lineage:
+L00001160	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0013
+L00001161	preserved_exact_tokens:
+L00001162	- route_target
+L00001163	- OpenSubject
+L00001164	- projection_health
+L00001165	- projection_freshness
+L00001166	- blocked-episode
+L00001167	- Feature Seam
+L00001168	- Work Package
+L00001169	- Seam Overseer
+L00001170	- Package Overseer
+L00001171	- /layout/help/glossary
+L00001172	negative_constraints:
+L00001173	- Projection-backed actions must not mutate runtime objects without health/freshness context.
+L00001174	compatibility_only_notes: []
+L00001175	stale_retired_dispositions: []
+L00001176	owner_boundary_notes: []
+L00001177	owner_hints:
+L00001178	- Plans/Executor_Protocol.md
+L00001179	```
+L00001180	
+
+<<< CONTEXT_AFTER canonical_document_lines=1181-1192 >>>
+L00001181	### EP-007 - Canonical Node State Readiness Source
+L00001182	
+L00001183	```yaml
+L00001184	plan_unit_id: EP-007
+L00001185	unit_type: requirement
+L00001186	status: accepted
+L00001187	owner_doc: Plans/Executor_Protocol.md
+L00001188	canonical_text: Overseer reads execution state from canonical node documents in self-build or user-project sharded graph storage and must not infer execution state from index metadata alone.
+L00001189	gui_related: false
+L00001190	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001191	split_recommended: false
+L00001192	depends_on: []

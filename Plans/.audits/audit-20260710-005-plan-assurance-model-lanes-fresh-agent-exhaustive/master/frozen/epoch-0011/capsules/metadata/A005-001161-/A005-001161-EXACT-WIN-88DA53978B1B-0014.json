@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-001161-EXACT-WIN-88DA53978B1B-0014",
+  "attempt_id": "attempt-0011",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      4726,
+      4737
+    ]
+  ],
+  "core_range": [
+    4738,
+    5098
+  ],
+  "core_sha256": "2ffca51a65d4444c3a017ce8c089946e8a4c305fef915247a306efd30a1c72c4",
+  "document_path": "Plans/Prompt_Pipeline.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/9e/9e32a01599251c7cf35eefa5e2a9149b2643ddf930bf2f156488b676fa40023c.txt",
+  "source_excerpt_sha256": "9e32a01599251c7cf35eefa5e2a9149b2643ddf930bf2f156488b676fa40023c",
+  "source_sha256": "d853429e5967defde777fa8cdc1d79dc201ae4fde3a7165850a1d2dc8c724ea0",
+  "window_id": "WIN-88DA53978B1B-0014"
+}

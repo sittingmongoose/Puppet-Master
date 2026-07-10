@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE 6694-6705 >>>
+- size_bytes
+- logs_path
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 6706-7058 >>>
+### N2-118 - Build Output Examples And Commands
+
+```yaml
+plan_unit_id: N2-118
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Build output examples and commands preserve Linux installer outputs under installer/linux/, multi-platform installer helper concrete path reporting, and reserved canonical command IDs cmd.orchestrator.build_run and cmd.orchestrator.open_build_artifact.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: build_output_examples_commands
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: build_output_examples_commands
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0064
+preserved_exact_tokens:
+- installer/linux/
+- Multi-platform installer helper
+- cmd.orchestrator.build_run
+- cmd.orchestrator.open_build_artifact
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md'
+```
+
+### N2-119 - Docker Manager Runtime Auth Surface
+
+```yaml
+plan_unit_id: N2-119
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Docker support is expressed through the Docker Manager surface covering containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes. Docker is the default runtime mode and Podman is an alternate runtime mode inside the same surface; requested vs effective auth capability disclosure, protected missing-repository creation, and publish-side-effect separation remain required.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_manager_runtime_auth_surface
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: docker_manager_runtime_auth_surface
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0065
+preserved_exact_tokens:
+- Docker Manager
+- containers
+- images
+- compose
+- registries
+- build/bake
+- Publish / Unraid
+- project-focused Kubernetes
+- Docker as default runtime mode
+- Podman as alternate runtime mode
+- requested vs effective auth capability disclosure
+- protected missing-repository creation
+- publish-side-effect separation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Containers_Registry_and_Unraid.md owns the Preflight and approval ordering contract, Kubernetes enablement rules, Kubernetes doctor checks, Future-scope placeholders, project-focused K8s deep linkage, and the Event registration contract.
+- Plans/Contracts_V0.md remains the registration authority for Docker/Unraid events and Kubernetes event names.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+```
+
+### N2-120 - Docker Doctor Preflight And Deprecated Alias
+
+```yaml
+plan_unit_id: N2-120
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Docker doctor/preflight rules preserve doctor.docker.engine, doctor.docker.compose, doctor.docker.buildx, doctor.dockerhub.auth.capability, doctor.dockerhub.repo.access, and Kubernetes-specific runtime checks when Kubernetes subview actions are invoked. doctor.registry.auth is a deprecated alias for DockerHub-specific flows and MUST NOT remain the visible canonical term in surface docs.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_doctor_preflight_deprecated_alias
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: docker_doctor_preflight_deprecated_alias
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0065
+preserved_exact_tokens:
+- doctor.docker.engine
+- doctor.docker.compose
+- doctor.docker.buildx
+- doctor.dockerhub.auth.capability
+- doctor.dockerhub.repo.access
+- Kubernetes-specific runtime checks
+- doctor.registry.auth
+- deprecated alias
+- MUST NOT remain the visible canonical term
+negative_constraints:
+- doctor.registry.auth is a deprecated alias for DockerHub-specific flows and MUST NOT remain the visible canonical term in surface docs.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- doctor.registry.auth is deprecated for DockerHub-specific flows.
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/storage-plan.md'
+```
+
+### N2-121 - Docker Result Payload Minima
+
+```yaml
+plan_unit_id: N2-121
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: 'Docker result payload minima remain authoritative and must be reused by other docs: docker_auth_result, docker_publish_result, and unraid_template_result.'
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_result_payload_minima
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: docker_result_payload_minima
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0065
+preserved_exact_tokens:
+- docker_auth_result
+- docker_publish_result
+- unraid_template_result
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Result payload minima remain authoritative here and must be reused by other docs.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
+```
+
+### N2-122 - GitHub Actions Settings Controls
+
+```yaml
+plan_unit_id: N2-122
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Settings > Advanced coverage for GitHub Actions includes workflow template selection, trigger and matrix controls, required-secrets readiness checklist, and preview/apply generation flow.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_actions_settings_controls
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: github_actions_settings_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0066
+preserved_exact_tokens:
+- Settings > Advanced
+- workflow template selection
+- trigger and matrix controls
+- required-secrets readiness checklist
+- preview/apply generation flow
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+### N2-123 - GitHub Actions Surface Readiness Alignment
+
+```yaml
+plan_unit_id: N2-123
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Generated workflows are visible from the Workflows subview; current-branch run behavior and workflow dispatch use the same repository and branch context; admin readiness for secrets, variables, and environments reuses the live GitHub Actions Settings capability/auth model; doctor.actions.workflow-ready remains the canonical readiness gate.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_actions_surface_readiness_alignment
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: github_actions_surface_readiness_alignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0066
+preserved_exact_tokens:
+- Workflows
+- current-branch
+- workflow dispatch
+- same repository and branch context
+- secrets
+- variables
+- environments
+- doctor.actions.workflow-ready
+- canonical readiness gate
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+### N2-124 - GitHub Workflow Source Truth And Receipts
+
+```yaml
+plan_unit_id: N2-124
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Repository workflow files under .github/workflows/ / github/workflows/ are the runtime source of truth after preview /save or apply; generated-workflow and generated required-secrets /configuration lists are historical hints and must not override current repo /worktree workflow YAML, hosted /variables/environments, or GitHub Actions > Current Branch context. Repo-level Actions /admin operations create project-scoped /receipt records and may /link a run_id through github_api evidence but never store secret values or reversible value-derived material.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_workflow_source_truth_receipts
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: github_workflow_source_truth_receipts
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0066
+preserved_exact_tokens:
+- .github/workflows/
+- github/workflows/
+- /save
+- generated-workflow
+- /configuration
+- /worktree
+- YAML
+- /variables/environments
+- GitHub Actions > Current Branch
+- /admin
+- /receipt
+- /link
+- run_id
+- github_api
+- secret values
+- value-derived
+negative_constraints:
+- generated-workflow and generated required-secrets /configuration lists must not override current repo /worktree workflow YAML, hosted /variables/environments, or GitHub Actions > Current Branch context.
+- Receipts never store secret values or reversible value-derived material.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+
+<<< CONTEXT_AFTER 7059-7070 >>>
+### N2-125 - Iced To Slint Automation Migration Boundary
+
+```yaml
+plan_unit_id: N2-125
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The existing Iced automation implementation remains a reference pattern while rewrite deliverables target Slint runtime semantics. Migration preserves manifest/timeline/media evidence schema compatibility, introduces backend abstraction for Slint UI surfaces, supports both headless and visible modes, and preserves doctor/preflight checks for automation dependencies and media capture capability.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []

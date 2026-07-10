@@ -1,0 +1,381 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7757-7768 >>>
+L00007757	source_lineage:
+L00007758	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+L00007759	preserved_exact_tokens:
+L00007760	  - "usage.event"
+L00007761	  - "run.completed.usage"
+L00007762	  - "Investigation Context"
+L00007763	negative_constraints: []
+L00007764	owner_hints:
+L00007765	  - Plans/assistant-chat-design.md
+L00007766	  - Plans/Prompt_Pipeline.md
+L00007767	```
+L00007768	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7769-8120 >>>
+L00007769	### ACD-094 - Context Usage Runtime Source Boundary
+L00007770	
+L00007771	```yaml
+L00007772	plan_unit_id: ACD-094
+L00007773	unit_type: constraint
+L00007774	status: accepted
+L00007775	owner_doc: Plans/assistant-chat-design.md
+L00007776	canonical_text: >-
+L00007777	  The thread surface derives usage from canonical runtime records and must not
+L00007778	  invent a second chat-local cost model; hidden/background helper usage remains
+L00007779	  source-class inspectable, and truncation, redaction, and
+L00007780	  context-serialization state remain visible so omitted context is never
+L00007781	  presented as serialized.
+L00007782	gui_related: true
+L00007783	gui_classification_reason: Runtime usage source and omitted-context state affect user-visible usage/cost display.
+L00007784	depends_on: [ACD-091, ACD-093]
+L00007785	unblocks: []
+L00007786	acceptance_criteria:
+L00007787	  - Usage derives from canonical runtime records.
+L00007788	  - Hidden/background helper usage remains inspectable by source class.
+L00007789	  - Truncation, redaction, and serialization state remain visible.
+L00007790	  - Omitted context is never presented as serialized.
+L00007791	validation_surfaces:
+L00007792	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007793	  - python3 scripts/pm-plan-index.py validate
+L00007794	risk_class: cost_model_drift
+L00007795	reasoning_tier: high
+L00007796	context_scope: context_usage
+L00007797	implementation_surfaces:
+L00007798	  - Plans/assistant-chat-design.md
+L00007799	  - Plans/usage-feature.md
+L00007800	  - Plans/storage-plan.md
+L00007801	  - Plans/Contracts_V0.md
+L00007802	node_compile_hint:
+L00007803	  mode: context_usage_runtime_source_boundary
+L00007804	  create_worknodes: false
+L00007805	source_lineage:
+L00007806	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+L00007807	preserved_exact_tokens:
+L00007808	  - "MUST NOT invent a second chat-local cost model"
+L00007809	  - "UI MUST NOT silently present omitted context as if it were still serialized"
+L00007810	negative_constraints:
+L00007811	  - "MUST NOT invent a second chat-local cost model"
+L00007812	  - "UI MUST NOT silently present omitted context as if it were still serialized"
+L00007813	owner_hints:
+L00007814	  - Plans/assistant-chat-design.md
+L00007815	  - Plans/usage-feature.md
+L00007816	```
+L00007817	
+L00007818	### ACD-095 - Investigation Context Debug Surface Scope
+L00007819	
+L00007820	```yaml
+L00007821	plan_unit_id: ACD-095
+L00007822	unit_type: requirement
+L00007823	status: accepted
+L00007824	owner_doc: Plans/assistant-chat-design.md
+L00007825	canonical_text: >-
+L00007826	  Debug threads expose visible Investigation Context alongside normal
+L00007827	  context-usage affordances as a live bounded bundle of evidence, target
+L00007828	  metadata, instrumentation state, verification outcomes, and revalidation
+L00007829	  state.
+L00007830	gui_related: true
+L00007831	gui_classification_reason: Investigation Context is a visible debug-thread surface.
+L00007832	depends_on: [ACD-078, ACD-091]
+L00007833	unblocks: [ACD-096, ACD-097, ACD-098, ACD-099, ACD-100]
+L00007834	acceptance_criteria:
+L00007835	  - Debug threads expose Investigation Context as visible context.
+L00007836	  - Evidence, target metadata, instrumentation, verification, and revalidation state remain bounded.
+L00007837	  - Normal context usage affordances remain available alongside Investigation Context.
+L00007838	validation_surfaces:
+L00007839	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007840	  - python3 scripts/pm-plan-index.py validate
+L00007841	risk_class: debug_context_scope
+L00007842	reasoning_tier: standard
+L00007843	context_scope: investigation_context
+L00007844	implementation_surfaces:
+L00007845	  - Plans/assistant-chat-design.md
+L00007846	  - Plans/Runtime_Artifacts_Panel.md
+L00007847	  - Plans/Prompt_Pipeline.md
+L00007848	node_compile_hint:
+L00007849	  mode: investigation_context_debug_surface_scope
+L00007850	  create_worknodes: false
+L00007851	source_lineage:
+L00007852	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+L00007853	preserved_exact_tokens:
+L00007854	  - "Investigation Context"
+L00007855	  - "evidence"
+L00007856	  - "target metadata"
+L00007857	  - "instrumentation state"
+L00007858	  - "verification outcomes"
+L00007859	  - "revalidation state"
+L00007860	negative_constraints: []
+L00007861	owner_hints:
+L00007862	  - Plans/assistant-chat-design.md
+L00007863	  - Plans/Runtime_Artifacts_Panel.md
+L00007864	```
+L00007865	
+L00007866	### ACD-096 - Investigation Context Header Field Boundary
+L00007867	
+L00007868	```yaml
+L00007869	plan_unit_id: ACD-096
+L00007870	unit_type: constraint
+L00007871	status: accepted
+L00007872	owner_doc: Plans/assistant-chat-design.md
+L00007873	canonical_text: >-
+L00007874	  Assistant Chat consumes canonical Investigation Context header fields from
+L00007875	  Contracts_V0 without durable chat-local renaming; presentation labels may
+L00007876	  layer on top, but aliases such as `primary_target` and
+L00007877	  `final_or_intermediate_state` are retired.
+L00007878	gui_related: false
+L00007879	gui_classification_reason: Header field names and retired aliases are durable contract boundaries.
+L00007880	depends_on: [ACD-095]
+L00007881	unblocks: [ACD-097]
+L00007882	acceptance_criteria:
+L00007883	  - Assistant Chat consumes canonical Investigation Context header fields.
+L00007884	  - Presentation labels do not become durable chat-local field names.
+L00007885	  - Retired aliases remain retired.
+L00007886	validation_surfaces:
+L00007887	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007888	  - python3 scripts/pm-plan-index.py validate
+L00007889	risk_class: field_name_drift
+L00007890	reasoning_tier: high
+L00007891	context_scope: investigation_context
+L00007892	implementation_surfaces:
+L00007893	  - Plans/assistant-chat-design.md
+L00007894	  - Plans/Contracts_V0.md
+L00007895	node_compile_hint:
+L00007896	  mode: investigation_context_header_field_boundary
+L00007897	  create_worknodes: false
+L00007898	source_lineage:
+L00007899	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+L00007900	preserved_exact_tokens:
+L00007901	  - "investigation_id"
+L00007902	  - "target"
+L00007903	  - "requested_target?"
+L00007904	  - "effective_target?"
+L00007905	  - "display_label?"
+L00007906	  - "primary_target_summary"
+L00007907	  - "debug_target_kind"
+L00007908	  - "adapter_id?"
+L00007909	  - "investigation_phase"
+L00007910	  - "state"
+L00007911	  - "verification_state?"
+L00007912	  - "attention_reason_code?"
+L00007913	  - "blocked_reason_code?"
+L00007914	  - "revalidation_reason_code?"
+L00007915	  - "active_instrumentation_count"
+L00007916	  - "last_updated_at_utc"
+L00007917	  - "primary_target"
+L00007918	  - "final_or_intermediate_state"
+L00007919	negative_constraints:
+L00007920	  - "Assistant Chat must not durably rename canonical Investigation Context header fields."
+L00007921	owner_hints:
+L00007922	  - Plans/assistant-chat-design.md
+L00007923	  - Plans/Contracts_V0.md
+L00007924	```
+L00007925	
+L00007926	### ACD-097 - Investigation Context Item State Serialization Boundary
+L00007927	
+L00007928	```yaml
+L00007929	plan_unit_id: ACD-097
+L00007930	unit_type: constraint
+L00007931	status: accepted
+L00007932	owner_doc: Plans/assistant-chat-design.md
+L00007933	canonical_text: >-
+L00007934	  Investigation Context item states are `active`, `redacted`, `revoked`,
+L00007935	  `blocked`, `expired`, and `omitted`; only `active` and `redacted` items may
+L00007936	  serialize into prompt context, while the others remain audit-visible and must
+L00007937	  not serialize as successful context.
+L00007938	gui_related: false
+L00007939	gui_classification_reason: Serialization eligibility is prompt/runtime behavior; visible rendering is covered separately.
+L00007940	depends_on: [ACD-096]
+L00007941	unblocks: [ACD-098, ACD-100]
+L00007942	acceptance_criteria:
+L00007943	  - Item state values remain machine-readable and canonical.
+L00007944	  - Only active and redacted items serialize into prompt context.
+L00007945	  - Revoked, blocked, expired, and omitted items remain audit-visible without successful-context serialization.
+L00007946	validation_surfaces:
+L00007947	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007948	  - python3 scripts/pm-plan-index.py validate
+L00007949	risk_class: prompt_leak
+L00007950	reasoning_tier: high
+L00007951	context_scope: investigation_context
+L00007952	implementation_surfaces:
+L00007953	  - Plans/assistant-chat-design.md
+L00007954	  - Plans/Prompt_Pipeline.md
+L00007955	  - Plans/Contracts_V0.md
+L00007956	node_compile_hint:
+L00007957	  mode: investigation_context_item_state_serialization
+L00007958	  create_worknodes: false
+L00007959	source_lineage:
+L00007960	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+L00007961	preserved_exact_tokens:
+L00007962	  - "active"
+L00007963	  - "redacted"
+L00007964	  - "revoked"
+L00007965	  - "blocked"
+L00007966	  - "expired"
+L00007967	  - "omitted"
+L00007968	negative_constraints:
+L00007969	  - "Only active/redacted items may serialize into prompt context."
+L00007970	owner_hints:
+L00007971	  - Plans/assistant-chat-design.md
+L00007972	  - Plans/Prompt_Pipeline.md
+L00007973	```
+L00007974	
+L00007975	### ACD-098 - Debug Auto-Ingestion Visibility Boundary
+L00007976	
+L00007977	```yaml
+L00007978	plan_unit_id: ACD-098
+L00007979	unit_type: constraint
+L00007980	status: accepted
+L00007981	owner_doc: Plans/assistant-chat-design.md
+L00007982	canonical_text: >-
+L00007983	  Investigation Context is separate from ordinary browser/document composer
+L00007984	  chips; ordinary browser `/capture` remains explicit, and debug
+L00007985	  auto-ingestion or agent-fed evidence may enter only an active investigation
+L00007986	  as visible Investigation Context items, not hidden messages.
+L00007987	gui_related: true
+L00007988	gui_classification_reason: Auto-ingested debug evidence must remain visible in the user-facing Investigation Context surface.
+L00007989	depends_on: [ACD-095, ACD-097]
+L00007990	unblocks: []
+L00007991	acceptance_criteria:
+L00007992	  - Investigation Context remains separate from ordinary composer chips.
+L00007993	  - Ordinary browser /capture remains explicit.
+L00007994	  - Debug auto-ingestion and agent-fed evidence enter only active investigations as visible items.
+L00007995	  - Hidden message injection is prohibited.
+L00007996	validation_surfaces:
+L00007997	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007998	  - python3 scripts/pm-plan-index.py validate
+L00007999	risk_class: hidden_context_injection
+L00008000	reasoning_tier: high
+L00008001	context_scope: investigation_context
+L00008002	implementation_surfaces:
+L00008003	  - Plans/assistant-chat-design.md
+L00008004	  - Plans/Prompt_Pipeline.md
+L00008005	  - Plans/FinalGUISpec.md
+L00008006	node_compile_hint:
+L00008007	  mode: debug_auto_ingestion_visibility_boundary
+L00008008	  create_worknodes: false
+L00008009	source_lineage:
+L00008010	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+L00008011	preserved_exact_tokens:
+L00008012	  - "/capture"
+L00008013	  - "debug auto-ingestion"
+L00008014	  - "agent-fed evidence"
+L00008015	  - "not hidden messages"
+L00008016	negative_constraints:
+L00008017	  - "Debug auto-ingestion and agent-fed evidence must not enter as hidden messages."
+L00008018	owner_hints:
+L00008019	  - Plans/assistant-chat-design.md
+L00008020	  - Plans/Prompt_Pipeline.md
+L00008021	```
+L00008022	
+L00008023	### ACD-099 - Investigation Context Artifact Ownership Boundary
+L00008024	
+L00008025	```yaml
+L00008026	plan_unit_id: ACD-099
+L00008027	unit_type: constraint
+L00008028	status: accepted
+L00008029	owner_doc: Plans/assistant-chat-design.md
+L00008030	canonical_text: >-
+L00008031	  Runtime Artifacts owns raw logs, traces, screenshots, recordings, full
+L00008032	  transcripts, raw manifests, artifact bytes, and export/import schema;
+L00008033	  Investigation Context carries bounded summaries and stable refs, and
+L00008034	  revocation does not imply deletion of the underlying artifact record.
+L00008035	gui_related: false
+L00008036	gui_classification_reason: Artifact ownership and retention are storage/runtime boundaries.
+L00008037	depends_on: [ACD-095]
+L00008038	unblocks: [ACD-100]
+L00008039	acceptance_criteria:
+L00008040	  - Runtime Artifacts owns raw artifact payloads and export/import schema.
+L00008041	  - Investigation Context carries only bounded summaries and stable refs.
+L00008042	  - Revocation does not delete the underlying artifact record.
+L00008043	validation_surfaces:
+L00008044	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008045	  - python3 scripts/pm-plan-index.py validate
+L00008046	risk_class: artifact_ownership_drift
+L00008047	reasoning_tier: high
+L00008048	context_scope: investigation_context
+L00008049	implementation_surfaces:
+L00008050	  - Plans/assistant-chat-design.md
+L00008051	  - Plans/Runtime_Artifacts_Panel.md
+L00008052	  - Plans/storage-plan.md
+L00008053	node_compile_hint:
+L00008054	  mode: investigation_context_artifact_ownership_boundary
+L00008055	  create_worknodes: false
+L00008056	source_lineage:
+L00008057	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+L00008058	preserved_exact_tokens:
+L00008059	  - "Runtime Artifacts"
+L00008060	  - "bounded summaries"
+L00008061	  - "stable refs"
+L00008062	  - "revocation does not imply deletion"
+L00008063	negative_constraints: []
+L00008064	owner_hints:
+L00008065	  - Plans/assistant-chat-design.md
+L00008066	  - Plans/Runtime_Artifacts_Panel.md
+L00008067	```
+L00008068	
+L00008069	### ACD-100 - Investigation Context Rendering Filtering Actions
+L00008070	
+L00008071	```yaml
+L00008072	plan_unit_id: ACD-100
+L00008073	unit_type: requirement
+L00008074	status: accepted
+L00008075	owner_doc: Plans/assistant-chat-design.md
+L00008076	canonical_text: >-
+L00008077	  Investigation Context may render as card, `/chip/panel`, or compact
+L00008078	  equivalent with explicit attach, `/removal/revocation`, `/revoke`,
+L00008079	  provenance, timestamp, redaction/truncation state, filtering, and actions
+L00008080	  `Open target`, `Open artifacts`, `Export bundle`, `Revalidate target`,
+L00008081	  `Revoke item`, and `Show raw in Context Detail Pane`.
+L00008082	gui_related: true
+L00008083	gui_classification_reason: Rendering, filtering, and actions are visible Investigation Context UI.
+L00008084	depends_on: [ACD-092, ACD-095, ACD-097, ACD-099]
+L00008085	unblocks: []
+L00008086	acceptance_criteria:
+L00008087	  - Investigation Context renders as a card, /chip/panel, or compact equivalent.
+L00008088	  - Attach, removal/revocation, provenance, timestamps, redaction/truncation, and filtering are visible.
+L00008089	  - Open, export, revalidate, revoke, and raw-detail actions are available where supported.
+L00008090	validation_surfaces:
+L00008091	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008092	  - python3 scripts/pm-plan-index.py validate
+L00008093	risk_class: investigation_surface
+L00008094	reasoning_tier: standard
+L00008095	context_scope: investigation_context
+L00008096	implementation_surfaces:
+L00008097	  - Plans/assistant-chat-design.md
+L00008098	  - Plans/FinalGUISpec.md
+L00008099	  - Plans/UI_Command_Catalog.md
+L00008100	node_compile_hint:
+L00008101	  mode: investigation_context_rendering_filtering_actions
+L00008102	  create_worknodes: false
+L00008103	source_lineage:
+L00008104	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0061
+L00008105	preserved_exact_tokens:
+L00008106	  - "/chip/panel"
+L00008107	  - "/removal/revocation"
+L00008108	  - "/revoke"
+L00008109	  - "Open target"
+L00008110	  - "Open artifacts"
+L00008111	  - "Export bundle"
+L00008112	  - "Revalidate target"
+L00008113	  - "Revoke item"
+L00008114	  - "Show raw in Context Detail Pane"
+L00008115	negative_constraints: []
+L00008116	owner_hints:
+L00008117	  - Plans/assistant-chat-design.md
+L00008118	  - Plans/FinalGUISpec.md
+L00008119	```
+L00008120	
+
+<<< CONTEXT_AFTER canonical_document_lines=8121-8132 >>>
+L00008121	### ACD-101 - Activity Transparency Operation Card Owner Scope
+L00008122	
+L00008123	```yaml
+L00008124	plan_unit_id: ACD-101
+L00008125	unit_type: constraint
+L00008126	status: accepted
+L00008127	owner_doc: Plans/assistant-chat-design.md
+L00008128	canonical_text: >-
+L00008129	  Activity transparency uses a shared `inline operation card` family rather
+L00008130	  than isolated widgets; Assistant Chat is the primary owner for
+L00008131	  operation-card behavior, while FinalGUISpec, Permissions_System, and
+L00008132	  UI_Command_Catalog consume the relevant surfaces.

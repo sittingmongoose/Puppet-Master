@@ -17,7 +17,7 @@
 .s4-stage {
   max-width: 980px;
   margin: 0 auto;
-  padding: clamp(16px, 4vh, 56px) var(--xl) 96px;
+  padding: clamp(12px, 2vh, 24px) var(--xl) 96px;
   display: flex;
   flex-direction: column;
   gap: var(--xl);
@@ -27,7 +27,7 @@
 /* ---------- hero ---------- */
 .s4-hero {
   text-align: center;
-  padding-top: clamp(4px, 3vh, 40px);
+  padding-top: clamp(0px, 1vh, 12px);
   transition: padding 0.45s cubic-bezier(0.34, 1.2, 0.64, 1);
 }
 .s4-searching .s4-hero { padding-top: 0; }
@@ -213,8 +213,8 @@
   transition: transform var(--motion-med) var(--ease-default),
               border-color 0.2s ease, box-shadow var(--motion-med) var(--ease-default);
 }
-/* hover motion + sheen glint come from the shared .pm-sheen utility
-   (pm6-css-global); the card only tints its boundary here */
+/* hover lift + accent ring come from the shared .pm-sheen utility
+   (pm6-css-global; no sweep); the card only tints its boundary here */
 .s4-card:hover {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--border-light));
@@ -905,27 +905,33 @@
   letter-spacing: 0.08em;
 }
 
-/* glass: pre-baked liquid fills on in-flow surfaces (no per-card blur —
-   backdrop-filter budget), single-element recipe on the modal layer only */
+/* glass: transparency steps on in-flow surfaces (no per-card blur —
+   backdrop-filter stays on the overlay modal slab only) */
 [data-theme^="glass"] .s4-bar,
-[data-theme^="glass"] .s4-row,
 [data-theme^="glass"] .s4-card,
 [data-theme^="glass"] .s4-chip {
-  background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + 0.10));
+  background: var(--pm6-glass-step-2);
   border-color: var(--glass-hairline);
   box-shadow: inset 0 1px 0 var(--glass-hairline);
 }
+[data-theme^="glass"] .s4-row {
+  background: var(--pm6-glass-step-1);
+  border-color: var(--glass-hairline);
+  box-shadow: inset 0 1px 0 var(--glass-hairline);
+}
+/* settings bloom modal = overlay slab of the pane material (own frost) */
 [data-theme^="glass"] .s4-panel,
 [data-theme^="glass"] .s4-psm {
-  background: linear-gradient(180deg,
-    rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + 0.06)),
-    rgba(var(--glass-tint-rgb), var(--glass-alpha)));
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  background: linear-gradient(165deg,
+    rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k1))),
+    rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k2))) 40%,
+    rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k3))));
+  backdrop-filter: blur(34px) saturate(160%);
+  -webkit-backdrop-filter: blur(34px) saturate(160%);
   box-shadow: inset 0 1px 0 var(--glass-edge),
     inset 0 0 0 1px var(--glass-hairline),
-    inset 0 -12px 24px -18px rgba(255, 255, 255, 0.10),
-    0 8px 24px rgba(0, 0, 0, 0.38);
+    inset 0 -12px 24px -18px var(--pm6-glass-floor),
+    0 8px 24px var(--pm6-glass-pane-shadow2);
 }
 
 /* ---------- reduced motion (system preference + in-app toggle) ---------- */

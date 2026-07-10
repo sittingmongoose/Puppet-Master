@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-000808-ADVERSARIAL-WIN-5F6016A27747-0016",
+  "attempt_id": "attempt-0012",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      5513,
+      5524
+    ],
+    [
+      5887,
+      5898
+    ]
+  ],
+  "core_range": [
+    5525,
+    5886
+  ],
+  "core_sha256": "6aa57960192777d16aa3ae8526d9dd5cde20a515a45936579df0b4c9ef8907c2",
+  "document_path": "Plans/Media_Generation_and_Capabilities.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/1f/1f1da256468db13b2cd107eaae4bf2fca26c1e1a7795701100adfb1dffba827e.txt",
+  "source_excerpt_sha256": "1f1da256468db13b2cd107eaae4bf2fca26c1e1a7795701100adfb1dffba827e",
+  "source_sha256": "430a6b538379f7d9d0848ef4c9cec5d49aa8abbae3f791ac8088d67239f1cb0f",
+  "window_id": "WIN-5F6016A27747-0016"
+}

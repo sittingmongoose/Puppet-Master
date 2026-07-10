@@ -1,0 +1,376 @@
+<<< CONTEXT_BEFORE 8724-8735 >>>
+- 'error_patterns'
+- 'parent_subagents'
+negative_constraints: []
+compatibility_only_notes:
+- 'TierNode, tier_type, and TierType are compatibility/source-example vocabulary in this span.'
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 8736-9082 >>>
+### OSI-043 - Registry Validated Subagent Selection Controls
+
+```yaml
+plan_unit_id: OSI-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagent selection controls must use registry-backed selection and validation, including overrides, disabled lists, and required lists; subagent names must not be hardcoded and invalid override, disabled, or required entries must be rejected or filtered as specified by the source span.
+gui_related: false
+gui_classification_reason: This unit covers registry-backed backend selection controls, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-038
+- OSI-042
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source example paths and code snippets are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: registry_validated_subagent_selection_controls
+node_compile_hint:
+  mode: registry_validated_subagent_selection_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0022
+preserved_exact_tokens:
+- 'select_for_tier'
+- 'subagent_registry::'
+- 'NEVER hardcode subagent names'
+- 'get_tier_overrides'
+- 'is_valid_subagent_name'
+- 'disabled'
+- 'required'
+- 'Invalid subagent name in override'
+- 'Invalid subagent name in disabled list'
+- 'Invalid subagent name in required list'
+negative_constraints:
+- 'DRY REQUIREMENT: SubagentSelector MUST use subagent_registry:: functions — NEVER hardcode subagent names'
+- 'DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()'
+- 'DRY REQUIREMENT: Validate disabled names using subagent_registry::is_valid_subagent_name()'
+- 'DRY REQUIREMENT: Validate required names using subagent_registry::is_valid_subagent_name()'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+```
+
+### OSI-044 - Platform Model And Coordination Registration
+
+```yaml
+plan_unit_id: OSI-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagent execution must resolve platform and model for the tier, fetch coordination context, and register each selected agent in coordination state with identity, platform, node, worktree, file, operation, and timestamp fields before execution.
+gui_related: false
+gui_classification_reason: This unit covers orchestration coordination state, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-036
+- OSI-043
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source example paths and code snippets are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_model_coordination_registration
+node_compile_hint:
+  mode: platform_model_coordination_registration
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0022
+preserved_exact_tokens:
+- 'get_platform_for_tier'
+- 'get_model_for_tier'
+- 'get_coordination_context'
+- 'register_agent'
+- 'ActiveAgent'
+- 'agent_id'
+- 'node_id'
+- 'worktree_path'
+- 'files_being_edited'
+- 'current_operation'
+- 'started_at'
+- 'last_update'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-045 - Sequential And Parallel Subagent Execution Lifecycle
+
+```yaml
+plan_unit_id: OSI-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagent execution preserves both configured parallel and sequential lifecycle paths, including async dispatch, join_all result propagation, sequential execute_subagent calls, and post-execution unregister_agent cleanup.
+gui_related: false
+gui_classification_reason: This unit covers backend execution lifecycle behavior, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-030
+- OSI-044
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source example paths and code snippets are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: sequential_parallel_subagent_execution_lifecycle
+node_compile_hint:
+  mode: sequential_parallel_subagent_execution_lifecycle
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0022
+preserved_exact_tokens:
+- 'enable_parallel_subagents'
+- 'execute_subagent_async'
+- 'futures::future::join_all'
+- 'result??'
+- 'execute_subagent'
+- 'unregister_agent'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Parallel execution remains subordinate to lane-pool/package capacity canon rather than stale per-tier queues.'
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-046 - Single Subagent Invocation And Coordination Updates
+
+```yaml
+plan_unit_id: OSI-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Single-subagent execution builds the invocation, marks the agent operation active, executes through the platform runner with the selected subagent, extracts file operations from output, updates coordination files, and returns SubagentOutput.
+gui_related: false
+gui_classification_reason: This unit covers backend invocation and coordination updates, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-011
+- OSI-045
+- OSI-047
+- OSI-048
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source example paths and code snippets are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: single_subagent_invocation_coordination_updates
+node_compile_hint:
+  mode: single_subagent_invocation_coordination_updates
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0022
+preserved_exact_tokens:
+- 'DRY:FN:execute_subagent'
+- 'SubagentOutput'
+- 'build_subagent_invocation'
+- 'update_agent_operation'
+- 'execute_with_subagent'
+- 'extract_file_operations_from_output'
+- 'update_agent_files'
+- 'Executing {}: {}'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+```
+
+### OSI-047 - Platform Specs Invocation Format Boundary
+
+```yaml
+plan_unit_id: OSI-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Platform-specific subagent invocation formatting must be delegated to platform_specs::get_subagent_invocation_format, then filled with subagent, task, context, and coordination values without local platform match statements or duplicated format strings.
+gui_related: false
+gui_classification_reason: This unit covers provider/platform invocation formatting boundaries, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-036
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source example paths and code snippets are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_specs_invocation_format_boundary
+node_compile_hint:
+  mode: platform_specs_invocation_format_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0022
+preserved_exact_tokens:
+- 'DRY:FN:build_subagent_invocation'
+- 'platform_specs::get_subagent_invocation_format()'
+- 'Platform::Cursor'
+- 'Platform::Codex'
+- '{subagent}'
+- '{task}'
+- '{context}'
+- '{coordination}'
+- 'format_tier_context'
+negative_constraints:
+- 'MUST use platform_specs::get_subagent_invocation_format()'
+- 'NEVER hardcode platform-specific formats'
+- 'DO NOT hardcode match statements for Platform::Cursor, Platform::Codex, etc.'
+- 'DO NOT duplicate platform-specific format strings here'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+```
+
+### OSI-048 - Subagent File Operation Extraction Evidence
+
+```yaml
+plan_unit_id: OSI-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagent output evidence includes extracting file operations from findings file fields and from task_report, downstream_context, or findings text so coordination state can record files touched by a subagent.
+gui_related: false
+gui_classification_reason: This unit covers evidence extraction from backend output, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source example paths and code snippets are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: subagent_file_operation_extraction_evidence
+node_compile_hint:
+  mode: subagent_file_operation_extraction_evidence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0022
+preserved_exact_tokens:
+- 'DRY:FN:extract_file_operations_from_output'
+- 'SubagentOutput'
+- 'findings'
+- 'file'
+- 'task_report'
+- 'downstream_context'
+- 'file paths'
+- 'regex or text parsing'
+negative_constraints: []
+compatibility_only_notes:
+- 'regex or text parsing is preserved source/example wording and does not override structured artifacts where owner contracts provide them.'
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 9083-9094 >>>
+### OSI-049 - Orchestrator Subagent Failure Handling
+
+```yaml
+plan_unit_id: OSI-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Subagent orchestration failure handling preserves fallbacks and best-effort behavior: selection failures warn and fall back or skip, coordination registration/update failures warn and continue, and subagent execution failures log errors and continue with the next subagent or fail a critical tier.
+gui_related: false
+gui_classification_reason: This unit covers backend error handling behavior, not GUI behavior.
+split_recommended: false

@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE 7968-7979 >>>
+- replay checkpoint
+negative_constraints:
+- blocked_projection.v1:{project_id}:{node_id} is the only write target for blocked-state projections.
+- Unversioned shape drift, three-way concurrent key ownership, and silent redb rewrites are invalid.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Older 3-component or run-scoped variants remain migration-read aliases only.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7980-8332 >>>
+### SP-100 - Canonical Field Minima For Attempt Terminal Dev Records
+
+```yaml
+plan_unit_id: SP-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity.
+gui_related: true
+gui_classification_reason: This unit preserves terminal GUI layout/focus fields and backend attempt/dev-session minima.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: canonical_field_minima_for_attempt_terminal_dev_records
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- attempt_record.v1:{project_id}:{node_id}:{attempt_number}
+- terminal_workspace_state.v1
+- terminal_section_record.v1
+- terminal_tab_record.v1
+- terminal_pane_record.v1
+- terminal_leaf_pane_record.v1
+- terminal_workgroup_record.v1
+- editor_terminal_panel_state.v1
+- terminal_session_record.v1
+- terminal_command_block.v1
+- dev_session_record.v1:{project_id}:{dev_session_id}
+- workspace tab identity
+- section/tab/pane split identity
+- layout slot/order
+- transcript/scrollback anchors
+- dev_session_id
+- terminal_session_id
+negative_constraints:
+- dev_session_id owns higher-level dev workflow continuity and must not replace terminal_session_id when exact PTY reuse is required.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-101 - GitHub Actions Panel State Payload
+
+```yaml
+plan_unit_id: SP-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: GitHub Actions panel state preserves gha_panel_state.v1:{project_id}, workflow pins, filters, refresh interval default, collapsed sections, last run focus, notification preferences, and account-sensitive invalidation semantics.
+gui_related: true
+gui_classification_reason: This unit preserves visible GitHub Actions panel state and notifications.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: github_actions_panel_state_payload
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- gha_panel_state.v1:{project_id}
+- effective_account_id
+- pinned_workflows
+- filter_status
+- auto_refresh_interval_ms
+- '30000'
+- collapsed_sections
+- last_viewed_run_id
+- notification_prefs
+- 'notify_on_failure: bool'
+- 'default: true'
+- 'notify_on_success: bool'
+- 'default: false'
+- active effective account
+negative_constraints:
+- Implementations MUST invalidate pinned workflows, last-opened run/job/log focus, and admin-readiness snapshots when the active effective account no longer matches effective_account_id.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-102 - Bundle Annotation Storage Key Lineage
+
+```yaml
+plan_unit_id: SP-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Embedded-document bundle and annotation persistence extends the existing note model under stable notes, note, revision_run, and note_reply_index key names rather than a net-new storage subsystem or scattered GUI state.
+gui_related: false
+gui_classification_reason: This unit preserves backend bundle annotation key lineage.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: bundle_annotation_storage_key_lineage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- notes_index.{bundle_id}
+- note.{bundle_id}.{note_id}
+- note_record.v1
+- revision_run.{bundle_id}.{revision_id}
+- note_reply_index.{bundle_id}.{note_id}
+- /revision/preview
+- note_record.v1:{bundle_id}:{note_id}
+- revision_run.v1:{bundle_id}:{revision_id}
+- bundle/note revision lineage
+negative_constraints:
+- Bundle annotation persistence does not become scattered GUI state.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Existing note model and semantic key names remain compatibility lineage.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-103 - Bundle Registry Payload
+
+```yaml
+plan_unit_id: SP-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: bundle_registry.v1:{project_id}:{bundle_id} preserves bundle identity, project identity, created_at, status enum, files, review gate approvals, auto_merge, and note records.
+gui_related: false
+gui_classification_reason: This unit preserves backend bundle registry payload fields.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: bundle_registry_payload
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- bundle_registry.v1:{project_id}:{bundle_id}
+- bundle_id
+- project_id
+- created_at
+- ISO8601
+- draft
+- in_review
+- approved
+- rejected
+- merged
+- BundleFile[]
+- required_approvals
+- current_approvals
+- auto_merge
+- NoteRecord[]
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-104 - Note Record Annotation Payload And Reanchor Compatibility
+
+```yaml
+plan_unit_id: SP-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: note_record.v1 remains annotation compatibility lineage while preserving operation intent, source surface, provenance, anchor text_position/text_quote, selected_text_excerpt, last_revision_id, last_reanchor_result, and updated_anchor for targeted revision and open behavior.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible annotation, review, and reanchor/open behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: note_record_annotation_payload_and_reanchor_compatibility
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- note_record.v1:{bundle_id}:{note_id}
+- 'operation?: "comment" | "replace" | "insert_after" | "remove"'
+- 'intent_kind?: "question" | "change_request" | "both"'
+- operation_payload?
+- source_surface?
+- assistant_deep_plan
+- interview_doc_pane
+- document_viewer
+- selected_text_excerpt
+- anchor.text_position
+- anchor.text_quote
+- last_revision_id
+- last_reanchor_result
+- updated_anchor
+negative_constraints:
+- Implementations MUST preserve annotation anchor and provenance fields whenever they exist.
+preserved_contractrefs: []
+compatibility_only_notes:
+- note_record.v1 remains the compatibility lineage for Annotations.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-105 - Targeted Revision Run Persistence
+
+```yaml
+plan_unit_id: SP-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'revision_run.v1:{bundle_id}:{revision_id} persists targeted revision identity, trigger, note_reply_index, status, requested/effective revision capability, annotation_ids, changes: FileChange[], and created_at: ISO8601.'
+gui_related: false
+gui_classification_reason: This unit preserves backend targeted revision run persistence.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_scope_split_owner_reconciliation
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: targeted_revision_run_persistence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+preserved_exact_tokens:
+- revision_run.v1:{bundle_id}:{revision_id}
+- revision_id
+- bundle_id
+- trigger
+- note_reply
+- resubmit
+- auto_fix
+- 'note_reply_index: NoteReplyRef[]'
+- pending
+- running
+- completed
+- failed
+- requested_revision_capability?
+- effective_revision_capability?
+- schema_enforced_structured_revision
+- validated_structured_revision
+- chat_handoff_only
+- annotation_ids[]
+- 'changes: FileChange[]'
+- 'created_at: ISO8601'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 8333-8344 >>>
+### SP-106 - Composer Prep State Record
+
+```yaml
+plan_unit_id: SP-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: composer_prep_state.v1:{thread_id} preserves chat-side draft text, attachments, mode overlay, requested/effective persona, selection source, override owner, and saved_at for handoff continuity.
+gui_related: true
+gui_classification_reason: This unit preserves visible composer draft, attachment, mode, and persona handoff state.
+split_recommended: false
+depends_on:

@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE canonical_document_lines=901-912 >>>
+L00000901	- /download
+L00000902	- retention boundary
+L00000903	negative_constraints:
+L00000904	- Related objects may auto-pin only as view state, never as an auto-write to repository or workflow state.
+L00000905	- Heuristic linkage must not be presented as complete truth.
+L00000906	compatibility_only_notes: []
+L00000907	stale_retired_dispositions: []
+L00000908	owner_boundary_notes: []
+L00000909	owner_hints:
+L00000910	- Plans/GitHub_Integration.md
+L00000911	```
+L00000912	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=913-1282 >>>
+L00000913	### GI-015 - Failure Triage Log Access And Repro Budget
+L00000914	
+L00000915	```yaml
+L00000916	plan_unit_id: GI-015
+L00000917	unit_type: requirement
+L00000918	status: accepted
+L00000919	owner_doc: Plans/GitHub_Integration.md
+L00000920	canonical_text: Failure triage view compresses failed runs into failing job/step, logs, changed files, likely next action, metadata, log access/fallback state, tiered fetching, and stored refs while GitHub Actions repro loops follow Debug investigation budget reset rules.
+L00000921	gui_related: true
+L00000922	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00000923	split_recommended: true
+L00000924	depends_on: []
+L00000925	unblocks: []
+L00000926	acceptance_criteria:
+L00000927	- The covered source span remains losslessly available for exact-text audit.
+L00000928	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00000929	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000930	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000931	validation_surfaces:
+L00000932	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000933	- python3 scripts/pm-plan-index.py validate
+L00000934	risk_class: github_integration_drift
+L00000935	reasoning_tier: standard
+L00000936	context_scope: github_integration_standardization
+L00000937	implementation_surfaces:
+L00000938	- Plans/GitHub_Integration.md
+L00000939	node_compile_hint:
+L00000940	  mode: failure_triage_log_access_repro_budget
+L00000941	  create_worknodes: false
+L00000942	source_lineage:
+L00000943	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00000944	preserved_exact_tokens:
+L00000945	- Failure triage view
+L00000946	- step-log
+L00000947	- fail-step
+L00000948	- log-download
+L00000949	- /collapsed
+L00000950	- auto-expand
+L00000951	- /open-in-browser
+L00000952	- /tiers
+L00000953	- repro_attempts_per_strategy_tier
+L00000954	- wall-clock
+L00000955	- no-new-evidence
+L00000956	negative_constraints:
+L00000957	- Log excerpts are not canonical product state.
+L00000958	- A strategy-tier change resets repro_attempts_per_strategy_tier only and does not reset wall-clock or no-new-evidence budgets.
+L00000959	compatibility_only_notes: []
+L00000960	stale_retired_dispositions: []
+L00000961	owner_boundary_notes: []
+L00000962	owner_hints:
+L00000963	- Plans/GitHub_Integration.md
+L00000964	```
+L00000965	
+L00000966	### GI-016 - Workflow Authoring Assistance Metadata Boundary
+L00000967	
+L00000968	```yaml
+L00000969	plan_unit_id: GI-016
+L00000970	unit_type: requirement
+L00000971	status: accepted
+L00000972	owner_doc: Plans/GitHub_Integration.md
+L00000973	canonical_text: Workflow authoring assistance is a GitHub Actions Settings/workflow-editor capability with language-service validation, completion, docs, remote-repo disclosure, proxy mediation, generation links, and preview/apply behavior that stores metadata only before accepted edits.
+L00000974	gui_related: true
+L00000975	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00000976	split_recommended: true
+L00000977	depends_on: []
+L00000978	unblocks: []
+L00000979	acceptance_criteria:
+L00000980	- The covered source span remains losslessly available for exact-text audit.
+L00000981	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00000982	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000983	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000984	validation_surfaces:
+L00000985	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000986	- python3 scripts/pm-plan-index.py validate
+L00000987	risk_class: github_integration_drift
+L00000988	reasoning_tier: standard
+L00000989	context_scope: github_integration_standardization
+L00000990	implementation_surfaces:
+L00000991	- Plans/GitHub_Integration.md
+L00000992	node_compile_hint:
+L00000993	  mode: workflow_authoring_assistance_metadata_boundary
+L00000994	  create_worknodes: false
+L00000995	source_lineage:
+L00000996	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00000997	preserved_exact_tokens:
+L00000998	- Workflow authoring assistance
+L00000999	- language-service
+L00001000	- remote-repo
+L00001001	- /proxy
+L00001002	- /generation
+L00001003	- preview /apply
+L00001004	- validation/completion metadata
+L00001005	negative_constraints:
+L00001006	- Workflow authoring assistance is not a generic YAML textarea.
+L00001007	- Event storage must store validation/completion metadata only, not canonical workflow contents before the user accepts an edit.
+L00001008	compatibility_only_notes: []
+L00001009	stale_retired_dispositions: []
+L00001010	owner_boundary_notes: []
+L00001011	owner_hints:
+L00001012	- Plans/GitHub_Integration.md
+L00001013	```
+L00001014	
+L00001015	### GI-017 - Actions Blocked-state Taxonomy And Attention Semantics
+L00001016	
+L00001017	```yaml
+L00001018	plan_unit_id: GI-017
+L00001019	unit_type: requirement
+L00001020	status: accepted
+L00001021	owner_doc: Plans/GitHub_Integration.md
+L00001022	canonical_text: Actions readiness blocked-state taxonomy uses canonical actions_* reason details layered onto shared blocked metadata, maps auth expiration to shared failure class, exposes ordered allowed actions and active repo/branch context, and keeps attention_required distinct from blocked.
+L00001023	gui_related: true
+L00001024	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001025	split_recommended: true
+L00001026	depends_on: []
+L00001027	unblocks: []
+L00001028	acceptance_criteria:
+L00001029	- The covered source span remains losslessly available for exact-text audit.
+L00001030	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001031	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001032	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001033	validation_surfaces:
+L00001034	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001035	- python3 scripts/pm-plan-index.py validate
+L00001036	risk_class: github_integration_drift
+L00001037	reasoning_tier: standard
+L00001038	context_scope: github_integration_standardization
+L00001039	implementation_surfaces:
+L00001040	- Plans/GitHub_Integration.md
+L00001041	node_compile_hint:
+L00001042	  mode: actions_blocked_state_taxonomy_attention_semantics
+L00001043	  create_worknodes: false
+L00001044	source_lineage:
+L00001045	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00001046	preserved_exact_tokens:
+L00001047	- actions_no_github_remote
+L00001048	- actions_auth_required
+L00001049	- actions_auth_expired
+L00001050	- actions_missing_scope_runtime
+L00001051	- actions_missing_scope_admin
+L00001052	- actions_workflow_not_dispatchable
+L00001053	- actions_missing_secret
+L00001054	- actions_missing_variable
+L00001055	- actions_missing_environment
+L00001056	- actions_environment_review_required
+L00001057	- actions_environment_wait_timer
+L00001058	- actions_branch_rule_mismatch
+L00001059	- actions_dispatch_input_invalid
+L00001060	- actions_workflow_file_invalid
+L00001061	- allowed_action_ids[]
+L00001062	- attention_required
+L00001063	- blocked
+L00001064	negative_constraints:
+L00001065	- Hosted readiness details do not redefine blocked_reason_code.
+L00001066	- The view must not silently aggregate multiple worktrees into one branch stream.
+L00001067	- Resurfacing responds to meaningful state change, not every scheduler tick.
+L00001068	compatibility_only_notes: []
+L00001069	stale_retired_dispositions: []
+L00001070	owner_boundary_notes: []
+L00001071	owner_hints:
+L00001072	- Plans/GitHub_Integration.md
+L00001073	```
+L00001074	
+L00001075	### GI-018 - Hosted Git Governance Blockers And Policy Receipts
+L00001076	
+L00001077	```yaml
+L00001078	plan_unit_id: GI-018
+L00001079	unit_type: requirement
+L00001080	status: accepted
+L00001081	owner_doc: Plans/GitHub_Integration.md
+L00001082	canonical_text: Hosted Git governance blockers use policy-specific reasons and receipts for protected branch, force-push, required PR/merge queue/status/signed commit/tag, actor bypass, lifecycle, fallback, and mutation outcome instead of generic branch-rule mismatch.
+L00001083	gui_related: true
+L00001084	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001085	split_recommended: true
+L00001086	depends_on: []
+L00001087	unblocks: []
+L00001088	acceptance_criteria:
+L00001089	- The covered source span remains losslessly available for exact-text audit.
+L00001090	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001091	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001092	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001093	validation_surfaces:
+L00001094	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001095	- python3 scripts/pm-plan-index.py validate
+L00001096	risk_class: github_integration_drift
+L00001097	reasoning_tier: standard
+L00001098	context_scope: github_integration_standardization
+L00001099	implementation_surfaces:
+L00001100	- Plans/GitHub_Integration.md
+L00001101	node_compile_hint:
+L00001102	  mode: hosted_git_governance_blockers_policy_receipts
+L00001103	  create_worknodes: false
+L00001104	source_lineage:
+L00001105	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00001106	preserved_exact_tokens:
+L00001107	- branch-rule
+L00001108	- force-push
+L00001109	- merge queue
+L00001110	- required status checks
+L00001111	- signed commits
+L00001112	- /tags
+L00001113	- actor bypass
+L00001114	- policy_snapshot_ref
+L00001115	- create-branch fallback
+L00001116	- PR/hosted-flow handoff
+L00001117	negative_constraints:
+L00001118	- Hosted Git governance blockers use policy-specific reasons rather than a generic branch-rule mismatch.
+L00001119	compatibility_only_notes: []
+L00001120	stale_retired_dispositions: []
+L00001121	owner_boundary_notes: []
+L00001122	owner_hints:
+L00001123	- Plans/GitHub_Integration.md
+L00001124	```
+L00001125	
+L00001126	### GI-019 - Source Control Worktree Topology Ownership And Safety
+L00001127	
+L00001128	```yaml
+L00001129	plan_unit_id: GI-019
+L00001130	unit_type: requirement
+L00001131	status: accepted
+L00001132	owner_doc: Plans/GitHub_Integration.md
+L00001133	canonical_text: Source Control remains worktree-native with compare/lineage/recovery pivots, topology ownership over branch lineage, ownership badges, worktree safety warnings, run lifecycle claims/releases, restart recovery unknown ownership, and strong-action confirmations.
+L00001134	gui_related: true
+L00001135	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001136	split_recommended: true
+L00001137	depends_on: []
+L00001138	unblocks: []
+L00001139	acceptance_criteria:
+L00001140	- The covered source span remains losslessly available for exact-text audit.
+L00001141	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001142	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001143	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001144	validation_surfaces:
+L00001145	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001146	- python3 scripts/pm-plan-index.py validate
+L00001147	risk_class: github_integration_drift
+L00001148	reasoning_tier: standard
+L00001149	context_scope: github_integration_standardization
+L00001150	implementation_surfaces:
+L00001151	- Plans/GitHub_Integration.md
+L00001152	node_compile_hint:
+L00001153	  mode: source_control_worktree_topology_ownership_safety
+L00001154	  create_worknodes: false
+L00001155	source_lineage:
+L00001156	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00001157	preserved_exact_tokens:
+L00001158	- /compare/lineage/recovery
+L00001159	- Worktree topology view
+L00001160	- ownership badges
+L00001161	- admin override policy
+L00001162	- prune protection defaults
+L00001163	- safe-point awareness
+L00001164	- cmd.git.worktree.request_prune
+L00001165	- cmd.git.worktree.release
+L00001166	- cmd.git.worktree.recover
+L00001167	- unknown ownership
+L00001168	- strong
+L00001169	negative_constraints:
+L00001170	- Rerun, cancel, pin, and workflow-admin controls stay in GitHub Actions unless Source Control is mirroring a deep link.
+L00001171	- Strong Source Control actions show scope, consequence, and confirmation boundaries before execution.
+L00001172	compatibility_only_notes: []
+L00001173	stale_retired_dispositions: []
+L00001174	owner_boundary_notes: []
+L00001175	owner_hints:
+L00001176	- Plans/GitHub_Integration.md
+L00001177	```
+L00001178	
+L00001179	### GI-020 - Worktrees Responsive Row Layout And Project Filter
+L00001180	
+L00001181	```yaml
+L00001182	plan_unit_id: GI-020
+L00001183	unit_type: requirement
+L00001184	status: accepted
+L00001185	owner_doc: Plans/GitHub_Integration.md
+L00001186	canonical_text: Worktrees rows are first-class Source Control objects with narrow-pane single-column expandable rows, row labels, actions, per-project All/Threads/Orchestrator/Manual filter persistence, and two-level accordion scroll behavior.
+L00001187	gui_related: true
+L00001188	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001189	split_recommended: true
+L00001190	depends_on: []
+L00001191	unblocks: []
+L00001192	acceptance_criteria:
+L00001193	- The covered source span remains losslessly available for exact-text audit.
+L00001194	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001195	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001196	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001197	validation_surfaces:
+L00001198	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001199	- python3 scripts/pm-plan-index.py validate
+L00001200	risk_class: github_integration_drift
+L00001201	reasoning_tier: standard
+L00001202	context_scope: github_integration_standardization
+L00001203	implementation_surfaces:
+L00001204	- Plans/GitHub_Integration.md
+L00001205	node_compile_hint:
+L00001206	  mode: worktrees_responsive_row_layout_project_filter
+L00001207	  create_worknodes: false
+L00001208	source_lineage:
+L00001209	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00001210	preserved_exact_tokens:
+L00001211	- single-column expandable rows
+L00001212	- theme worktree glyph
+L00001213	- 'Thread: <thread_title>'
+L00001214	- 'Orch: <tier_label>'
+L00001215	- Manual
+L00001216	- All | Threads | Orchestrator | Manual
+L00001217	- worktree_filter
+L00001218	- two-level scroll model
+L00001219	- icon-only controls
+L00001220	negative_constraints:
+L00001221	- Worktrees rows are first-class Source Control objects, not settings-only utilities.
+L00001222	- worktree_filter persists per project and does not share across projects.
+L00001223	compatibility_only_notes: []
+L00001224	stale_retired_dispositions: []
+L00001225	owner_boundary_notes: []
+L00001226	owner_hints:
+L00001227	- Plans/GitHub_Integration.md
+L00001228	```
+L00001229	
+L00001230	### GI-021 - Hosted Repo Workflow Lifecycle States And Capability Limits
+L00001231	
+L00001232	```yaml
+L00001233	plan_unit_id: GI-021
+L00001234	unit_type: requirement
+L00001235	status: accepted
+L00001236	owner_doc: Plans/GitHub_Integration.md
+L00001237	canonical_text: Hosted-repo, remote, and workflow lifecycle states are first-class, archived/deleted/historical-only states disable mutation deterministically, receipts retain immutable identifiers and refs, deep links reopen only through safe validated refs, and capability disclosure separates hosted-only mutation boundaries from local editing.
+L00001238	gui_related: true
+L00001239	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001240	split_recommended: true
+L00001241	depends_on: []
+L00001242	unblocks: []
+L00001243	acceptance_criteria:
+L00001244	- The covered source span remains losslessly available for exact-text audit.
+L00001245	- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+L00001246	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001247	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001248	validation_surfaces:
+L00001249	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001250	- python3 scripts/pm-plan-index.py validate
+L00001251	risk_class: github_integration_drift
+L00001252	reasoning_tier: standard
+L00001253	context_scope: github_integration_standardization
+L00001254	implementation_surfaces:
+L00001255	- Plans/GitHub_Integration.md
+L00001256	node_compile_hint:
+L00001257	  mode: hosted_repo_workflow_lifecycle_states_capability_limits
+L00001258	  create_worknodes: false
+L00001259	source_lineage:
+L00001260	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+L00001261	preserved_exact_tokens:
+L00001262	- active
+L00001263	- renamed_redirected
+L00001264	- transferred
+L00001265	- deleted
+L00001266	- archived
+L00001267	- remote_mismatch
+L00001268	- historical_only
+L00001269	- /non-resumable
+L00001270	- /recreate
+L00001271	- can view runs but cannot dispatch
+L00001272	- can dispatch but cannot manage secrets
+L00001273	negative_constraints:
+L00001274	- Deleted workflow definitions never silently bind to a different current workflow with the same filename.
+L00001275	- Capability limitations are shown as effective capability state, not hidden controls.
+L00001276	compatibility_only_notes: []
+L00001277	stale_retired_dispositions: []
+L00001278	owner_boundary_notes: []
+L00001279	owner_hints:
+L00001280	- Plans/GitHub_Integration.md
+L00001281	```
+L00001282	
+
+<<< CONTEXT_AFTER canonical_document_lines=1283-1294 >>>
+L00001283	### GI-022 - Runtime Outcome Taxonomy And Bridge Status Cross-refs
+L00001284	
+L00001285	```yaml
+L00001286	plan_unit_id: GI-022
+L00001287	unit_type: requirement
+L00001288	status: accepted
+L00001289	owner_doc: Plans/GitHub_Integration.md
+L00001290	canonical_text: GitHub Integration consumes runtime status, bridge classification, tool dispatch, FileSafe, and storage startup contracts via explicit cross-ref anchors, displays canonical runtime outcomes, and treats legacy stop.* wording only as stale or compatibility input when it conflicts with kill.* and done.* families.
+L00001291	gui_related: true
+L00001292	gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
+L00001293	split_recommended: true
+L00001294	depends_on: []

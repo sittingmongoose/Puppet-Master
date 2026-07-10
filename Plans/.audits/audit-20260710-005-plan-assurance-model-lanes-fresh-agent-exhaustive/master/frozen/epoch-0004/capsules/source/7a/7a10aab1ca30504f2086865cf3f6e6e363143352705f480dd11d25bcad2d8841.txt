@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE 3745-3756 >>>
+negative_constraints:
+- "Approval scope must not silently become same-session if lanes are parallel."
+- "Session-wide approval policy must remain distinct from blocked-episode approval."
+preserved_contractrefs:
+- "ContractRef: Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/human-in-the-loop.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3757-4144 >>>
+### PS-047 - Plan Mode And Read Only Default Split
+
+```yaml
+plan_unit_id: PS-047
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Plan mode and Read-only are distinct permission concepts: Plan may allow information-gathering read/search/question/web operations while denying mutation, and strict read_only/no-network may deny web operations explicitly."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-020
+- PS-040
+unblocks: []
+acceptance_criteria:
+- "PS-047 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: plan_readonly_default_split
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0036
+preserved_exact_tokens:
+- "Deterministic defaults"
+- "Plan mode"
+- "Read-only preset"
+- "deny-all-except-read"
+- "information-gathering tools"
+- "external-read web work"
+- "websearch"
+- "webresearch"
+- "webfetch"
+- "webextract"
+- "webcrawl"
+- "webmap"
+- "read_only"
+- "plan"
+negative_constraints:
+- "Plan mode must not be treated as deny-all-except-read."
+- "Entering plan mode must not auto-deny web operations as a family."
+- "read_only and plan must not be treated as synonyms."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-048 - Permission Settings Web Rows And Provider Help
+
+```yaml
+plan_unit_id: PS-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission settings surfaces render web tool rows individually, granular editor help includes host/domain pattern examples, session help explains wildcard versus host-scoped approval, and provider settings explain API-key and fallback ordering behavior."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-047
+unblocks: []
+acceptance_criteria:
+- "PS-048 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_settings_web_rows_provider_help
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0036
+preserved_exact_tokens:
+- "Permission settings surfaces"
+- "web tool rows individually"
+- "https://docs.rs/*"
+- "https://developer.mozilla.org/*"
+- "/crawl/map/read"
+- "Exa"
+- "Tavily"
+- "Firecrawl"
+- "DuckDuckGo fallback"
+- "provider ordering"
+negative_constraints:
+- "Provider fallback help must not imply that API-key requirements are uniform across providers."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-049 - Automation First And Deterministic Gate Wording
+
+```yaml
+plan_unit_id: PS-049
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Automation-first is the baseline permission posture for non-interactive execution; compatibility defaults and nondeterministic gate phrases are compatibility notes only and do not weaken required owner-doc enforcement."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-047
+unblocks: []
+acceptance_criteria:
+- "PS-049 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: automation_first_gate_wording
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0036
+preserved_exact_tokens:
+- "Automation-first"
+- "non-interactive execution"
+- "HTE-by-default"
+- "visible-first local runs"
+- "regular"
+- "/HTE"
+- "visual_mode = auto"
+- "mandatory approvals"
+- "allowed_action_ids[]"
+- "Execution contract (recommended)"
+- "targeted for future enforcement"
+negative_constraints:
+- "Compatibility defaults must not silently prefer visible runs or mandatory approvals when effective policy supports automation-first execution."
+- "Nondeterministic gate language does not weaken required owner-doc enforcement."
+preserved_contractrefs: []
+compatibility_only_notes:
+- "HTE-by-default, visible-first local runs, regular, /HTE, and visual_mode = auto are compatibility defaults in this context."
+- "Execution contract (recommended) and targeted for future enforcement are compatibility notes only."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-050 - Resolution Algorithm Composition
+
+```yaml
+plan_unit_id: PS-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission resolution composes precedence layers with dispatch checks by building invocation context, applying mode and scoped layers, running non-bypassable guards and capability gates, persisting requested/effective evidence, rechecking hook mutations, and dispatching only final allow outcomes."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-020
+- PS-021
+- PS-022
+- PS-026
+- PS-036
+unblocks: []
+acceptance_criteria:
+- "PS-050 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_resolution_algorithm
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0037
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0038
+preserved_exact_tokens:
+- "Resolution algorithm"
+- "Composition with precedence layers"
+- "mode layer"
+- "ask"
+- "plan"
+- "yolo"
+- "non-bypassable guards"
+- "requested_permission_state"
+- "effective_permission_state"
+- "downgrade_reason"
+- "permission_snapshot_id?"
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "Dispatch only when the final effective decision is allow"
+negative_constraints:
+- "ask, deny, blocked, unavailable, or capability-failed outcomes must emit audit evidence and must not call the underlying tool."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Run_Modes.md"
+- "Plans/Tools.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PS-051 - Banned Command Full String Check
+
+```yaml
+plan_unit_id: PS-051
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Banned-command evaluation scans the full command string, including shell metacharacters and substitution forms, and denies commands whose arguments contain banned destructive sequences even when the first token is allowed."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-024
+unblocks: []
+acceptance_criteria:
+- "PS-051 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: banned_command_full_string
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0039
+preserved_exact_tokens:
+- "Banned-command full-string check"
+- "full command string"
+- "first token"
+- ";"
+- "&&"
+- "||"
+- "|"
+- "$()"
+- "backticks"
+- "First-token-only checking is prohibited"
+negative_constraints:
+- "First-token-only checking is prohibited."
+- "A command that passes a first-token allowlist but contains a banned destructive sequence in arguments is still denied."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md"
+- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FileSafe.md"
+- "Plans/Tools.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Architecture_Invariants.md"
+```
+
+### PS-052 - Hook Recheck Before Dispatch
+
+```yaml
+plan_unit_id: PS-052
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Arg-touching hooks require permission checks on the original invocation and the modified invocation before dispatch, in the required order from context normalization through final dispatch."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-016
+- PS-050
+unblocks: []
+acceptance_criteria:
+- "PS-052 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: hook_recheck_before_dispatch
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0040
+preserved_exact_tokens:
+- "Hook re-check and execution-path invariance"
+- "policy.may_execute_tool()"
+- "arg-touching hooks"
+- "Re-run permission checks"
+- "Dispatch only if the re-check passes"
+negative_constraints:
+- "The dispatch layer must not call the underlying tool implementation until both checks pass on the final argument set."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md"
+- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Plugins_System.md"
+- "Plans/Tools.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Architecture_Invariants.md"
+```
+
+### PS-053 - Shell Isolation Owner Boundary
+
+```yaml
+plan_unit_id: PS-053
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Shell and session process environment isolation is jointly owned by orchestrator-subagent integration and Tools; Permissions consumes that invariant for agent and crew execution context without defining shell lifecycle behavior."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-050
+unblocks: []
+acceptance_criteria:
+- "PS-053 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: shell_isolation_owner_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0041
+preserved_exact_tokens:
+- "Shell environment isolation routing"
+- "shell/session processes"
+- "jointly owned"
+- "agent/crew execution context"
+- "does not define shell lifecycle behavior itself"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Tools.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/orchestrator-subagent-integration.md"
+- "Plans/Tools.md"
+```
+
+
+<<< CONTEXT_AFTER 4145-4156 >>>
+### PS-054 - Cleanup Sensitive Retention Approval Gate
+
+```yaml
+plan_unit_id: PS-054
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Cleanup-sensitive approval and retention checks are permission-visible: active-run ownership, unresolved blocked recovery, required safe-point restore, unresolved conflict inspection, or newer lineage dependency keep targets retained, suspect, or restoring rather than cleanup_eligible."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:

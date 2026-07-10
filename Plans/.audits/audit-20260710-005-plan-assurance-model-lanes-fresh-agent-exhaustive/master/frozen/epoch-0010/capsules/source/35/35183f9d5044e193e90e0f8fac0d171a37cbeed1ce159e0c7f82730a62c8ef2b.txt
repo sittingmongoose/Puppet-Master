@@ -1,0 +1,422 @@
+<<< CONTEXT_BEFORE canonical_document_lines=695-706 >>>
+L00000695	- key-shape
+L00000696	- Plans/UI_Command_Catalog.md
+L00000697	- normalizes_to_contract
+L00000698	- low-priority
+L00000699	negative_constraints: []
+L00000700	compatibility_only_notes: []
+L00000701	stale_retired_dispositions: []
+L00000702	owner_boundary_notes: []
+L00000703	owner_hints:
+L00000704	- Plans/DRY_Rules.md
+L00000705	```
+L00000706	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=707-1099 >>>
+L00000707	### DR-011 - Compare Review SCM Boundaries
+L00000708	
+L00000709	```yaml
+L00000710	plan_unit_id: DR-011
+L00000711	unit_type: requirement
+L00000712	status: accepted
+L00000713	owner_doc: Plans/DRY_Rules.md
+L00000714	canonical_text: Compare/open identity, hunk controls, diff-local search, cross-surface receipts, Orchestrator run-to-repo lineage, Health read-only posture, and Source Control live-worktree truth stay with their owner docs.
+L00000715	gui_related: true
+L00000716	gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
+L00000717	split_recommended: false
+L00000718	depends_on: []
+L00000719	unblocks: []
+L00000720	acceptance_criteria:
+L00000721	- The covered source span remains losslessly available for exact-text audit.
+L00000722	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00000723	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00000724	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000725	validation_surfaces:
+L00000726	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000727	- python3 scripts/pm-plan-index.py validate
+L00000728	risk_class: dry_rule_drift
+L00000729	reasoning_tier: standard
+L00000730	context_scope: dry_rules_standardization
+L00000731	implementation_surfaces:
+L00000732	- Plans/DRY_Rules.md
+L00000733	node_compile_hint:
+L00000734	  mode: compare_review_scm_boundaries
+L00000735	  create_worknodes: false
+L00000736	source_lineage:
+L00000737	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0005
+L00000738	preserved_exact_tokens:
+L00000739	- Requested/effective runtime identity
+L00000740	- same `repo_relative_path`
+L00000741	- Plans/WorktreeGitImprovement.md
+L00000742	- Plans/FileManager.md
+L00000743	- Hunk expand/collapse
+L00000744	- grouped hunk actions
+L00000745	- diff-local search
+L00000746	- cross-surface receipt schema
+L00000747	- Plans/Orchestrator_Page.md
+L00000748	- Health remains read-only
+L00000749	- Source Control owns live-worktree truth
+L00000750	negative_constraints: []
+L00000751	compatibility_only_notes: []
+L00000752	stale_retired_dispositions: []
+L00000753	owner_boundary_notes: []
+L00000754	owner_hints:
+L00000755	- Plans/DRY_Rules.md
+L00000756	```
+L00000757	
+L00000758	### DR-012 - Worktree Owner-Node Compatibility
+L00000759	
+L00000760	```yaml
+L00000761	plan_unit_id: DR-012
+L00000762	unit_type: requirement
+L00000763	status: accepted
+L00000764	owner_doc: Plans/DRY_Rules.md
+L00000765	canonical_text: owner_node_id is canonical for worktree orchestration-node lineage, while owner_tier_id may remain only as documented compatibility, migration, or source-lineage evidence beside owner_node_id.
+L00000766	gui_related: false
+L00000767	gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+L00000768	split_recommended: false
+L00000769	depends_on: []
+L00000770	unblocks: []
+L00000771	acceptance_criteria:
+L00000772	- The covered source span remains losslessly available for exact-text audit.
+L00000773	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00000774	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00000775	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000776	validation_surfaces:
+L00000777	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000778	- python3 scripts/pm-plan-index.py validate
+L00000779	risk_class: dry_rule_drift
+L00000780	reasoning_tier: standard
+L00000781	context_scope: dry_rules_standardization
+L00000782	implementation_surfaces:
+L00000783	- Plans/DRY_Rules.md
+L00000784	node_compile_hint:
+L00000785	  mode: worktree_owner_node_compatibility
+L00000786	  create_worknodes: false
+L00000787	source_lineage:
+L00000788	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0005
+L00000789	preserved_exact_tokens:
+L00000790	- owner_node_id
+L00000791	- owner_tier_id
+L00000792	- canonical orchestration-node lineage field
+L00000793	- compatibility, migration, or source-lineage evidence
+L00000794	negative_constraints: []
+L00000795	compatibility_only_notes:
+L00000796	- owner_tier_id may remain only as documented compatibility, migration, or source-lineage evidence.
+L00000797	stale_retired_dispositions: []
+L00000798	owner_boundary_notes: []
+L00000799	owner_hints:
+L00000800	- Plans/DRY_Rules.md
+L00000801	```
+L00000802	
+L00000803	### DR-013 - Permission Snapshot Split
+L00000804	
+L00000805	```yaml
+L00000806	plan_unit_id: DR-013
+L00000807	unit_type: requirement
+L00000808	status: accepted
+L00000809	owner_doc: Plans/DRY_Rules.md
+L00000810	canonical_text: Permissions_System owns permission snapshot schema, enums, approval-surface expectations, and blocked-action semantics; storage owns only durable binding keys and cannot redefine nested permission snapshot schema.
+L00000811	gui_related: false
+L00000812	gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+L00000813	split_recommended: false
+L00000814	depends_on: []
+L00000815	unblocks: []
+L00000816	acceptance_criteria:
+L00000817	- The covered source span remains losslessly available for exact-text audit.
+L00000818	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00000819	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00000820	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000821	validation_surfaces:
+L00000822	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000823	- python3 scripts/pm-plan-index.py validate
+L00000824	risk_class: dry_rule_drift
+L00000825	reasoning_tier: standard
+L00000826	context_scope: dry_rules_standardization
+L00000827	implementation_surfaces:
+L00000828	- Plans/DRY_Rules.md
+L00000829	node_compile_hint:
+L00000830	  mode: permission_snapshot_split
+L00000831	  create_worknodes: false
+L00000832	source_lineage:
+L00000833	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0005
+L00000834	preserved_exact_tokens:
+L00000835	- Plans/Permissions_System.md
+L00000836	- permission snapshot schema
+L00000837	- permission_snapshot_record.v1:{project_id}:{snapshot_id}
+L00000838	- attempt_record.permission_snapshot_id
+L00000839	- nested permission snapshot schema
+L00000840	negative_constraints:
+L00000841	- Storage consumers may cache index fields but may not redefine the nested permission snapshot schema.
+L00000842	compatibility_only_notes: []
+L00000843	stale_retired_dispositions: []
+L00000844	owner_boundary_notes: []
+L00000845	owner_hints:
+L00000846	- Plans/DRY_Rules.md
+L00000847	```
+L00000848	
+L00000849	### DR-014 - Special Recovery Routing Evidence
+L00000850	
+L00000851	```yaml
+L00000852	plan_unit_id: DR-014
+L00000853	unit_type: requirement
+L00000854	status: accepted
+L00000855	owner_doc: Plans/DRY_Rules.md
+L00000856	canonical_text: Special recovery contradiction checks are DRY-routing evidence, not new ownership assignments, and adjacent contradiction review stays routed through the named owner docs.
+L00000857	gui_related: false
+L00000858	gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+L00000859	split_recommended: false
+L00000860	depends_on: []
+L00000861	unblocks: []
+L00000862	acceptance_criteria:
+L00000863	- The covered source span remains losslessly available for exact-text audit.
+L00000864	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00000865	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00000866	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000867	validation_surfaces:
+L00000868	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000869	- python3 scripts/pm-plan-index.py validate
+L00000870	risk_class: dry_rule_drift
+L00000871	reasoning_tier: standard
+L00000872	context_scope: dry_rules_standardization
+L00000873	implementation_surfaces:
+L00000874	- Plans/DRY_Rules.md
+L00000875	node_compile_hint:
+L00000876	  mode: special_recovery_routing_evidence
+L00000877	  create_worknodes: false
+L00000878	source_lineage:
+L00000879	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0006
+L00000880	preserved_exact_tokens:
+L00000881	- Special recovery contradiction checks
+L00000882	- DRY-routing evidence
+L00000883	- not new ownership assignments
+L00000884	- Plans/chain-wizard-flexibility.md
+L00000885	- Plans/WorktreeGitImprovement.md
+L00000886	- Contracts_V0.md
+L00000887	- Prompt_Pipeline.md
+L00000888	- storage-plan.md
+L00000889	- Multi-Account.md
+L00000890	- Orchestrator_Page.md
+L00000891	- Run_Graph_View.md
+L00000892	- UI_Wiring_Rules.md
+L00000893	- Wiring_Matrix.md
+L00000894	- Commands_System.md
+L00000895	- Widget_System.md
+L00000896	- Project_Output_Artifacts.md
+L00000897	- GitHub_Integration.md
+L00000898	- Permissions_System.md
+L00000899	negative_constraints: []
+L00000900	compatibility_only_notes: []
+L00000901	stale_retired_dispositions: []
+L00000902	owner_boundary_notes: []
+L00000903	owner_hints:
+L00000904	- Plans/DRY_Rules.md
+L00000905	```
+L00000906	
+L00000907	### DR-015 - Tooling Memory Consumer Checks
+L00000908	
+L00000909	```yaml
+L00000910	plan_unit_id: DR-015
+L00000911	unit_type: requirement
+L00000912	status: accepted
+L00000913	owner_doc: Plans/DRY_Rules.md
+L00000914	canonical_text: Tooling and memory consumer checks keep named docs as contradiction-review inputs only and do not let consumer summaries re-own schema, command, runtime, permission, or storage canon.
+L00000915	gui_related: false
+L00000916	gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+L00000917	split_recommended: false
+L00000918	depends_on: []
+L00000919	unblocks: []
+L00000920	acceptance_criteria:
+L00000921	- The covered source span remains losslessly available for exact-text audit.
+L00000922	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00000923	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00000924	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000925	validation_surfaces:
+L00000926	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000927	- python3 scripts/pm-plan-index.py validate
+L00000928	risk_class: dry_rule_drift
+L00000929	reasoning_tier: standard
+L00000930	context_scope: dry_rules_standardization
+L00000931	implementation_surfaces:
+L00000932	- Plans/DRY_Rules.md
+L00000933	node_compile_hint:
+L00000934	  mode: tooling_memory_consumer_checks
+L00000935	  create_worknodes: false
+L00000936	source_lineage:
+L00000937	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0006
+L00000938	preserved_exact_tokens:
+L00000939	- Plans/newtools.md
+L00000940	- Plans/assistant-memory-subsystem.md
+L00000941	- /assistant-memory-subsystem.md
+L00000942	- UI_Command_Catalog.md
+L00000943	- assistant-chat-design.md
+L00000944	- Tools.md
+L00000945	- contradiction-review inputs only
+L00000946	negative_constraints:
+L00000947	- Consumer summaries do not re-own schema, command, runtime, permission, or storage canon.
+L00000948	compatibility_only_notes: []
+L00000949	stale_retired_dispositions: []
+L00000950	owner_boundary_notes: []
+L00000951	owner_hints:
+L00000952	- Plans/DRY_Rules.md
+L00000953	```
+L00000954	
+L00000955	### DR-016 - Audit And Contract Check Ordering
+L00000956	
+L00000957	```yaml
+L00000958	plan_unit_id: DR-016
+L00000959	unit_type: requirement
+L00000960	status: accepted
+L00000961	owner_doc: Plans/DRY_Rules.md
+L00000962	canonical_text: Audit-overlap and contract checks reconcile owner docs before consumer docs, preserve stricter ContractRef taxonomy in gate text, and treat duplicate/stale text as DRY reconciliation risk.
+L00000963	gui_related: true
+L00000964	gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
+L00000965	split_recommended: false
+L00000966	depends_on: []
+L00000967	unblocks: []
+L00000968	acceptance_criteria:
+L00000969	- The covered source span remains losslessly available for exact-text audit.
+L00000970	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00000971	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00000972	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000973	validation_surfaces:
+L00000974	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000975	- python3 scripts/pm-plan-index.py validate
+L00000976	risk_class: dry_rule_drift
+L00000977	reasoning_tier: standard
+L00000978	context_scope: dry_rules_standardization
+L00000979	implementation_surfaces:
+L00000980	- Plans/DRY_Rules.md
+L00000981	node_compile_hint:
+L00000982	  mode: audit_and_contract_check_ordering
+L00000983	  create_worknodes: false
+L00000984	source_lineage:
+L00000985	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0006
+L00000986	preserved_exact_tokens:
+L00000987	- Crosswalk.md
+L00000988	- Contracts_V0.md
+L00000989	- storage-plan.md
+L00000990	- Decision_Log.md
+L00000991	- FinalGUISpec.md
+L00000992	- UI_Command_Catalog.md
+L00000993	- Widget_System.md
+L00000994	- FileSafe.md
+L00000995	- MiscPlan.md
+L00000996	- Executor_Protocol.md
+L00000997	- ContractRef taxonomy stricter in the gate text
+L00000998	- cost_usage
+L00000999	negative_constraints: []
+L00001000	compatibility_only_notes: []
+L00001001	stale_retired_dispositions:
+L00001002	- Duplicated cost_usage text is a DRY reconciliation risk because one copy can drift while another stays stale.
+L00001003	owner_boundary_notes: []
+L00001004	owner_hints:
+L00001005	- Plans/DRY_Rules.md
+L00001006	```
+L00001007	
+L00001008	### DR-017 - Projection-Backed Trust State
+L00001009	
+L00001010	```yaml
+L00001011	plan_unit_id: DR-017
+L00001012	unit_type: requirement
+L00001013	status: accepted
+L00001014	owner_doc: Plans/DRY_Rules.md
+L00001015	canonical_text: projection-backed operational surfaces expose trust state, last updated time, degraded or /stale reason when not current, and whether actions are partially gated.
+L00001016	gui_related: true
+L00001017	gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
+L00001018	split_recommended: false
+L00001019	depends_on: []
+L00001020	unblocks: []
+L00001021	acceptance_criteria:
+L00001022	- The covered source span remains losslessly available for exact-text audit.
+L00001023	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00001024	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00001025	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001026	validation_surfaces:
+L00001027	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001028	- python3 scripts/pm-plan-index.py validate
+L00001029	risk_class: dry_rule_drift
+L00001030	reasoning_tier: standard
+L00001031	context_scope: dry_rules_standardization
+L00001032	implementation_surfaces:
+L00001033	- Plans/DRY_Rules.md
+L00001034	node_compile_hint:
+L00001035	  mode: projection_backed_trust_state
+L00001036	  create_worknodes: false
+L00001037	source_lineage:
+L00001038	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0006
+L00001039	preserved_exact_tokens:
+L00001040	- projection-backed
+L00001041	- trust state
+L00001042	- last updated time
+L00001043	- degraded
+L00001044	- /stale
+L00001045	- partially gated
+L00001046	negative_constraints: []
+L00001047	compatibility_only_notes: []
+L00001048	stale_retired_dispositions: []
+L00001049	owner_boundary_notes: []
+L00001050	owner_hints:
+L00001051	- Plans/DRY_Rules.md
+L00001052	```
+L00001053	
+L00001054	### DR-018 - Stale Event And Crosswalk Integrity
+L00001055	
+L00001056	```yaml
+L00001057	plan_unit_id: DR-018
+L00001058	unit_type: requirement
+L00001059	status: accepted
+L00001060	owner_doc: Plans/DRY_Rules.md
+L00001061	canonical_text: Early event-source tables that already consume newer runtime-lineage concepts are internally stale and duplicated Crosswalk numbering is a DRY failure undermining ContractRef stability and traceability.
+L00001062	gui_related: false
+L00001063	gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+L00001064	split_recommended: false
+L00001065	depends_on: []
+L00001066	unblocks: []
+L00001067	acceptance_criteria:
+L00001068	- The covered source span remains losslessly available for exact-text audit.
+L00001069	- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+L00001070	- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+L00001071	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001072	validation_surfaces:
+L00001073	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001074	- python3 scripts/pm-plan-index.py validate
+L00001075	risk_class: dry_rule_drift
+L00001076	reasoning_tier: standard
+L00001077	context_scope: dry_rules_standardization
+L00001078	implementation_surfaces:
+L00001079	- Plans/DRY_Rules.md
+L00001080	node_compile_hint:
+L00001081	  mode: stale_event_and_crosswalk_integrity
+L00001082	  create_worknodes: false
+L00001083	source_lineage:
+L00001084	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0006
+L00001085	preserved_exact_tokens:
+L00001086	- event-source
+L00001087	- runtime-lineage
+L00001088	- Duplicated `Crosswalk.md` numbering
+L00001089	- ContractRef stability
+L00001090	- gateable traceability
+L00001091	negative_constraints: []
+L00001092	compatibility_only_notes: []
+L00001093	stale_retired_dispositions:
+L00001094	- Early event-source tables are internally stale and must be reconciled at the owner route, not patched as isolated table gaps.
+L00001095	owner_boundary_notes: []
+L00001096	owner_hints:
+L00001097	- Plans/DRY_Rules.md
+L00001098	```
+L00001099	
+
+<<< CONTEXT_AFTER canonical_document_lines=1100-1111 >>>
+L00001100	### DR-019 - Corroboration Dispatch Boundary
+L00001101	
+L00001102	```yaml
+L00001103	plan_unit_id: DR-019
+L00001104	unit_type: requirement
+L00001105	status: accepted
+L00001106	owner_doc: Plans/DRY_Rules.md
+L00001107	canonical_text: Corroboration routing keeps corroboration_request input and corroboration_result output evidence distinct, while dispatch contracts separate mandatory executor-facing fields from optional disclosure or /overlay fields.
+L00001108	gui_related: false
+L00001109	gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+L00001110	split_recommended: false
+L00001111	depends_on: []

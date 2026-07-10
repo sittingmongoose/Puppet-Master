@@ -1,0 +1,229 @@
+<<< CONTEXT_BEFORE 8169-8180 >>>
+- auto_generated_needs_review
+- project_override_active
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The payload token is introduced by the normative override and expanded in the Result payload minima section.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 8181-8380 >>>
+### N2-147 - Docker CLI Buildx API Responsibility Split
+
+```yaml
+plan_unit_id: N2-147
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: 'DockerHub/Unraid responsibilities are separated: Docker CLI / Buildx performs local runtime, image build, login, and push execution; Docker Hub API is used only for namespace/repository discovery and repository creation when Puppet Master needs app-managed listing/creation behavior; DockerHub is not a storage location for Unraid XML.'
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_cli_buildx_api_responsibility_split
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: docker_cli_buildx_api_responsibility_split
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+preserved_exact_tokens:
+- Docker CLI / Buildx
+- local runtime
+- image build
+- login
+- push execution
+- Docker Hub API
+- namespace/repository discovery
+- repository creation
+- Do not treat DockerHub as a storage location for Unraid XML
+negative_constraints:
+- Do not treat DockerHub as a storage location for Unraid XML.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-148 - Expanded DockerHub Auth Creation Flow
+
+```yaml
+plan_unit_id: N2-148
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The expanded DockerHub flow detects whether the active project is Docker-related, resolves requested_auth_mode, validates effective_capabilities, allows browser/device login or PAT-based auth with PAT remaining the recommended explicit path, and gates missing-repository creation behind a mandatory confirmation dialog showing namespace, repository name, and privacy that cannot be bypassed by YOLO/autonomy modes.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: expanded_dockerhub_auth_creation_flow
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: expanded_dockerhub_auth_creation_flow
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+preserved_exact_tokens:
+- Detect whether the active project is Docker-related
+- requested_auth_mode
+- effective_capabilities
+- browser/device login
+- PAT-based auth
+- PAT remaining the recommended explicit path
+- mandatory confirmation dialog
+- namespace
+- repository name
+- privacy
+- YOLO/autonomy modes
+negative_constraints:
+- Missing-repository creation confirmation cannot be bypassed by YOLO/autonomy modes.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-149 - Buildx Preview Push And Unraid Follow-On Flow
+
+```yaml
+plan_unit_id: N2-149
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The expanded runtime/publish flow builds with docker buildx build, runs containers for preview/testing and surfaces user-facing access points when available, pushes to DockerHub using the selected namespace/repository/tag set, generates or updates Unraid XML by default unless disabled, and for managed template-repo workflows updates the repo, auto-commits by default, exposes a one-click push UI action, and keeps auto-push disabled by default.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: buildx_preview_push_unraid_follow_on_flow
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: buildx_preview_push_unraid_follow_on_flow
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+preserved_exact_tokens:
+- docker buildx build
+- preview/testing
+- user-facing access points
+- Push to DockerHub
+- namespace/repository/tag set
+- generate/update Unraid XML by default unless the user disabled it
+- managed template-repo workflow
+- auto-commit by default
+- one-click push UI action
+- auto-push disabled by default
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-150 - Docker Unraid Evidence ContractRef Overlay
+
+```yaml
+plan_unit_id: N2-150
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Docker/Unraid evidence/result contract additions preserve docker_auth_result, docker_publish_result, and unraid_template_result summary semantics and retain the final ContractRef overlay to Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, and SchemaID:evidence.schema.json.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_unraid_evidence_contractref_overlay
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: docker_unraid_evidence_contractref_overlay
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+preserved_exact_tokens:
+- Evidence/result contract additions
+- docker_auth_result
+- docker_publish_result
+- unraid_template_result
+- PolicyRule:no_secrets_in_storage
+- SchemaID:evidence.schema.json
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Containers_Registry_and_Unraid.md, FinalGUISpec, Orchestrator_Page, and evidence schema remain cross-doc consumers/authorities through the preserved ContractRef.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json'
+```
+
+
+<<< CONTEXT_AFTER 8381-8392 >>>
+### N2-001 - GUI Testing Tools Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: N2-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: N2-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 107 because newtools-S0001 through newtools-S0078 are covered by N2-002 through N2-150 or explicit structural, reference-only, retired, and migration-coverage dispositions. N2-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+gui_related: false
+gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained newtools PlanUnits and coverage_map proof.
+split_recommended: false
+depends_on:

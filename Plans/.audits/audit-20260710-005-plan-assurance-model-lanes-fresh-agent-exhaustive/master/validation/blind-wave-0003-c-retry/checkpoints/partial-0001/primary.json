@@ -1,0 +1,78 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "counts": {
+    "accepted": 1,
+    "assignments": 8,
+    "pending": 7,
+    "quarantined": 0
+  },
+  "credited_assignment_ids": [
+    "A005-001029-EXACT-WIN-7414C6C901F8-0017"
+  ],
+  "results": [
+    {
+      "assignment_id": "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+      "attempt_id": "attempt-0010",
+      "error_count": 0,
+      "errors": [],
+      "item_count": 20,
+      "result_bytes": 32816,
+      "result_sha256": "299e5a99bd2b754f4e344702aeb07e5510c60d9aad55043bdca3494c3e77f445",
+      "status": "accepted",
+      "task_thread_id": "/root/a005_blind_wave_0003_c_retry_cohort_dispatcher_attempt_0010/a005_001029_exact_7414c6c901f8_0017_attempt_0010_terminal",
+      "terminal_seal_sha256": "9f99056463ff2756733cbc50104089ce835ca5030b896de39890492a47f2833b"
+    },
+    {
+      "assignment_id": "A005-001030-ADVERSARIAL-WIN-7414C6C901F8-0017",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    },
+    {
+      "assignment_id": "A005-001031-EXACT-WIN-7414C6C901F8-0018",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    },
+    {
+      "assignment_id": "A005-001032-ADVERSARIAL-WIN-7414C6C901F8-0018",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    },
+    {
+      "assignment_id": "A005-001033-EXACT-WIN-7414C6C901F8-0019",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    },
+    {
+      "assignment_id": "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    },
+    {
+      "assignment_id": "A005-001035-EXACT-WIN-749F06E4B796-0001",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    },
+    {
+      "assignment_id": "A005-001036-ADVERSARIAL-WIN-749F06E4B796-0001",
+      "errors": [
+        "missing_dispatch_receipt"
+      ],
+      "status": "pending"
+    }
+  ],
+  "status": "in_progress",
+  "validator": "wave_primary_v1",
+  "wave_id": "blind-wave-0003-c-retry"
+}

@@ -1,0 +1,128 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6993-7004 >>>
+L00006993	- OpenCode v2
+L00006994	- Pi
+L00006995	- Codex
+L00006996	- Cline
+L00006997	negative_constraints: []
+L00006998	observed_signal: OpenCode v2 separates context/source/snapshot/session history and recent releases add event streams and paged durable history. Pi reports WS/SSE first-event stalls; Cline/Codex SDKs centralize session events/history.
+L00006999	pm_current_coverage: Prior pass recommended StreamHistoryCoalescer; storage-plan has seglog replay/checkpoints and context ownership.
+L00007000	pm_gap_or_delta: Make settled history admission mandatory for all providers, not just context/cache pass.
+L00007001	proposal_or_recommendation: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases.
+L00007002	compile_disposition: create_new_planunit
+L00007003	```
+L00007004	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7005-7117 >>>
+L00007005	### EP-114 - FABLE Wake Coalescing And Transport Receipt Closure
+L00007006	
+L00007007	```yaml
+L00007008	plan_unit_id: EP-114
+L00007009	unit_type: requirement
+L00007010	status: accepted
+L00007011	owner_doc: Plans/Executor_Protocol.md
+L00007012	canonical_text: >-
+L00007013	  Executor owns deterministic scheduler wake coalescing, ready-node score tuple
+L00007014	  sorting, closed failure/blocked mapping, stream terminal timeout, backpressure
+L00007015	  bounds, and transport decision receipts for the FABLE contract-runtime core
+L00007016	  slice. Each {run_id, replan_generation} has at most one pending wake set; the
+L00007017	  earliest wake becomes scheduler.pass.wake_reason, additional wakes become
+L00007018	  coalesced_wake_reasons and wake_event_refs, and watchdog_recheck never outranks
+L00007019	  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,
+L00007020	  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and
+L00007021	  node_id ASC. Stream terminal timeout is 5000 ms, backpressure is bounded at
+L00007022	  1024 frames or 16777216 bytes, and each adapter selection records a
+L00007023	  transport_decision_receipt.
+L00007024	gui_related: false
+L00007025	gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
+L00007026	depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+L00007027	unblocks: []
+L00007028	acceptance_criteria:
+L00007029	  - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."
+L00007030	  - Wake coalescing records primary wake, coalesced wake reasons, and event refs without creating duplicate scheduler passes.
+L00007031	  - Queue analysis persists the complete score tuple and non-selected reason for ready-but-unselected nodes.
+L00007032	  - Failure and blocked classifications map auth_required separately from auth_expired and fail closed on unknown classifier values.
+L00007033	  - Missing terminal stream events time out after 5000 ms as retryable provider_transient inactivity_timeout rather than durable assistant content.
+L00007034	  - Backpressure is bounded at 1024 frames or 16777216 bytes and overflow returns structured overload evidence.
+L00007035	  - Transport decision receipts include locality, auth, replay, backpressure, fallback, provider support, decision reason, selected timestamp, and event refs.
+L00007036	validation_surfaces:
+L00007037	  - python3 scripts/pm-plan-index.py validate
+L00007038	  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+L00007039	  - python3 scripts/pm-plans-verify.py run-gates
+L00007040	risk_class: fable_executor_wake_coalescing_drift
+L00007041	reasoning_tier: high
+L00007042	context_scope: contract_runtime_core_repair
+L00007043	implementation_surfaces:
+L00007044	  - Plans/Executor_Protocol.md
+L00007045	  - Plans/Contracts_V0.md
+L00007046	  - Plans/storage-plan.md
+L00007047	  - Plans/CLI_Bridged_Providers.md
+L00007048	node_compile_hint:
+L00007049	  mode: executor_wake_coalescing_transport_closure
+L00007050	  create_worknodes: false
+L00007051	  create_nodeseeds: false
+L00007052	source_lineage:
+L00007053	  - fablereport.md
+L00007054	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+L00007055	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+L00007056	source_atom_ids: []
+L00007057	preserved_exact_tokens:
+L00007058	  - "`wake_reason`"
+L00007059	  - "`scheduler.pass`"
+L00007060	  - "`coalesced_wake_reasons[]`"
+L00007061	  - "`wake_event_refs[]`"
+L00007062	  - "`scheduler_lane_rank`"
+L00007063	  - "`failure_class`"
+L00007064	  - "`blocked_reason_code`"
+L00007065	  - "`auth_required`"
+L00007066	  - "`auth_expired`"
+L00007067	  - "`stream_terminal_event_timeout_ms = 5000`"
+L00007068	  - "`max_pending_stream_frames = 1024`"
+L00007069	  - "`max_pending_stream_bytes = 16777216`"
+L00007070	  - "`transport_decision_receipt`"
+L00007071	negative_constraints:
+L00007072	  - Do not treat this runtime protocol closure as implementation-readiness proof or runtime certification harness completion.
+L00007073	  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+L00007074	owner_hints:
+L00007075	  - Plans/Executor_Protocol.md
+L00007076	  - Plans/Contracts_V0.md
+L00007077	  - Plans/storage-plan.md
+L00007078	```
+L00007079	
+L00007080	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00007081	
+L00007082	This addendum is canonical executor protocol spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00007083	
+L00007084	### execution_unit_context Example And Conditional Requirements
+L00007085	
+L00007086	Repairs row `sfk-1e2487142a1e52002f8eb946`.
+L00007087	
+L00007088	Example:
+L00007089	
+L00007090	```json
+L00007091	{
+L00007092	  "schema_id": "pm.execution_unit_context",
+L00007093	  "schema_version": "1.0.0",
+L00007094	  "execution_unit_type": "plan_unit",
+L00007095	  "project_id": "project-001",
+L00007096	  "run_id": "run-001",
+L00007097	  "unit_id": "PDS-003",
+L00007098	  "attempt_id": "attempt-001",
+L00007099	  "permission_snapshot_id": "perm-001",
+L00007100	  "input_artifact_refs": [],
+L00007101	  "owner_doc_refs": ["Plans/Plan_Document_System.md"]
+L00007102	}
+L00007103	```
+L00007104	
+L00007105	Conditional requirements: `plan_unit` requires `unit_id` and `owner_doc_refs[]`; `tool_attempt` requires `tool_call_id`, `permission_snapshot_id`, and `attempt_id`; `verification` requires `validator_id`, `target_ref`, and `evidence_ref`; `repair_slice` requires `audit_id`, `finding_key`, and `owner_doc_refs[]`.
+L00007106	
+L00007107	### Attempt Counter Invariant Recovery
+L00007108	
+L00007109	Repairs row `sfk-d91a2513114704894b54b826`.
+L00007110	
+L00007111	If sub-counters disagree with `attempt_count`, the executor records `attempt_counter_mismatch` with `attempt_id`, `attempt_count`, `subcounter_name`, `subcounter_value`, `expected_value`, and `recovery_action`. `recovery_action` values are `recompute_from_events`, `block_for_manual_repair`, and `ignore_non_authoritative_projection`. Event history is authoritative; projections must be recomputed before any retry/skip/complete transition.
+L00007112	
+L00007113	### Event Dedup Key Sequence Fallback
+L00007114	
+L00007115	Repairs row `sfk-13a077c1b96ec11515ca81d4`.
+L00007116	
+L00007117	Dedup identity is `event_name + node_id + attempt_id + event_sequence`. Timestamp is metadata only. If `event_sequence` is missing in imported source, the migration reader derives `event_sequence` from stable event-stream order and records `dedup_sequence_derived = true`. New executor events must carry monotonic `event_sequence` per attempt.

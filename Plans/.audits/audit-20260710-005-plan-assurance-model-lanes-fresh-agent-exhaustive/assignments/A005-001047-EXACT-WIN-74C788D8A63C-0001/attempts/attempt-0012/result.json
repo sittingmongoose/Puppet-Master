@@ -1,0 +1,1153 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001047-EXACT-WIN-74C788D8A63C-0001",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001047_attempt_0012",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Tools.md",
+    "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+    "core_sha256": "be2bc7c1ce4e4bc8d43c9ab70162f122ddb396a793fa71b6e7f3390fa5d2acad",
+    "core_range": [
+      1,
+      397
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001047-I001",
+      "item_type": "capability",
+      "title": "Central registry covers built-in, custom, and MCP tools",
+      "statement": "The canonical tool-support surface includes built-in tools, config-defined custom tools, and MCP-discovered tools; MCP tools are first-class registry entries governed by the same permission and naming rules.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "tool_registry",
+        "mcp",
+        "custom_tools"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 23,
+          "line_end": 23,
+          "exact_quote": "- **Built-in tools** -- A standard set of tools (bash, edit, read, grep, webfetch, websearch, etc.) with clear semantics, limits, and a unified permission model.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 25,
+          "line_end": 25,
+          "exact_quote": "- **MCP** -- MCP tools are **in scope**: they are first-class tools in the central registry; same permission model (including wildcards); naming and precedence with built-in/custom. MCP server config and per-platform config paths are specified in **newtools.md**; live MCP naming, availability, credential, and invalidation vocabulary is specified in **MCP_Integration.md**; here we define how MCP-discovered tools integrate with the registry and policy.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I002",
+      "item_type": "gui_truth",
+      "title": "Settings and Usage expose tool policy and telemetry",
+      "statement": "The GUI requires MCP configuration, per-tool or wildcard allow/deny/ask controls, MVP permission presets, registry-backed tool rows, and a Usage widget for invocation, latency, and error telemetry.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "settings_permissions",
+        "usage_tool_metrics"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 37,
+          "line_end": 37,
+          "exact_quote": "- **Settings > Permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 39,
+          "line_end": 39,
+          "exact_quote": "**Usage page:** Tool usage widget is specified in FinalGUISpec §7.8 (Usage view): tool name, invocation count, latency p50/p95, error rate; data from seglog rollups via analytics scan. See §9.2 enhancement list for context.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I003",
+      "item_type": "contract",
+      "title": "Permission outcomes and precedence are deterministic",
+      "statement": "Tools resolve to allow, deny, or ask; FileSafe remains active after allow, headless ask denies without HITL, precedence is mode through defaults, and last-match-wins applies inside a ruleset.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "tool_permissions"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 53,
+          "line_end": 53,
+          "exact_quote": "- **allow** — Tool may run without prompting. FileSafe guards still apply after permission.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 55,
+          "line_end": 55,
+          "exact_quote": "- **ask** — User must approve (`deny` / `once` / `for session` / `for-session` / `always`). In headless runs, maps to `deny` unless HITL is enabled.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 61,
+          "line_end": 61,
+          "exact_quote": "Permission rules are evaluated in a deterministic precedence order: Mode override > Session cache > Persona overrides > Project-level > Global-level > Defaults. Within a single ruleset, last-match-wins. Full precedence table: `Plans/Permissions_System.md` §2.4.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I004",
+      "item_type": "state_transition",
+      "title": "Subagents are canonical child runs with disposable lifecycle",
+      "statement": "A PM subagent is represented as a canonical child run with stable parent/thread identity and requested/effective runtime metadata; provider-native mapping does not alter that identity, and terminal child states normally end the child.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "child_runs",
+        "subagents"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 67,
+          "line_end": 67,
+          "exact_quote": "A PM subagent is a child run. It is not a special-case provider-local actor and it is not defined by provider-native agent-file syntax.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 86,
+          "line_end": 86,
+          "exact_quote": "That adapter-level difference does not change the PM child-run canon.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 92,
+          "line_end": 92,
+          "exact_quote": "Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I005",
+      "item_type": "contract",
+      "title": "Permission and FileSafe are ordered independent gates",
+      "statement": "Permission is evaluated before FileSafe, so permission to invoke a tool does not authorize a specific invocation; embedded document review cannot bypass those layers through a hidden patch channel.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "filesafe",
+        "embedded_document_pane"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 97,
+          "line_end": 97,
+          "exact_quote": "FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = \"may the agent call this tool?\"; FileSafe = \"may this specific invocation proceed?\". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 99,
+          "line_end": 99,
+          "exact_quote": "Embedded document review is not a hidden tool mutation channel. The `embedded-document-pane` consumes the annotation and targeted revision contracts in `Plans/Crosswalk.md`, `Plans/FinalGUISpec.md`, and `Plans/assistant-chat-design.md`; Tools must not introduce direct `patch-apply` or `/suggested-change` mode for that pane unless a later separate capability defines a new tool, permission, FileSafe, and audit contract.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I006",
+      "item_type": "contract",
+      "title": "One policy engine owns every tool attempt",
+      "statement": "Every agent-usable tool attempt resolves identity, permission and approval, invocation validation, terminal binding where relevant, execution, and normalized persistence/analytics output through one ordered engine.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "policy_engine"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 102,
+          "line_end": 102,
+          "exact_quote": "Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 112,
+          "line_end": 112,
+          "exact_quote": "7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I007",
+      "item_type": "state_transition",
+      "title": "Shell execution binds real terminal state",
+      "statement": "Shell-backed execution binds canonical terminal-session state even when hidden, rejected calls do not create fake live sessions, and preview surfaces consume rather than own terminal state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "terminal_binding",
+        "shell_execution"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 118,
+          "line_end": 118,
+          "exact_quote": "- non-interactive or hidden shell execution may suppress opening the terminal UI, but it still binds to canonical terminal-session state when execution actually occurs",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 119,
+          "line_end": 119,
+          "exact_quote": "- denied or blocked shell calls do not mint fake live terminal sessions",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I008",
+      "item_type": "contract",
+      "title": "Tools owns the normalized outcome taxonomy",
+      "statement": "Normalized tool results must distinguish success, runtime error, policy/user/headless/FileSafe/validation rejection, cancellation, timeout, and post-scan failure; Tools owns the taxonomy while storage persists it.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "tool_result_taxonomy"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 124,
+          "line_end": 124,
+          "exact_quote": "At minimum, the normalized tool-result taxonomy MUST distinguish:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 140,
+          "line_end": 140,
+          "exact_quote": "This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I009",
+      "item_type": "behavior",
+      "title": "Routing persists only durable navigation state",
+      "statement": "Historical-result navigation may persist focused-run state, but hover, temporary comparison, and transient pivot interactions must not rewrite persistent view state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "tool_routing",
+        "project_state"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 146,
+          "line_end": 146,
+          "exact_quote": "Tool route activations are persistence-aware. A navigation to a historical-run result may update stored project-state such as `focused_run_id`, while hover previews, temporary comparisons, and transient pivots must not rewrite persistent view state.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I010",
+      "item_type": "contract",
+      "title": "Gap, blocked-state, identity, trust, and graph lineage propagate",
+      "statement": "Tool and route consumers must preserve unresolved gap lineage, blocked recovery fields and freshness, operational identity and export trust state, multi-repository context, governance interception state, scope identity, and node-native runtime evidence; tier fields are compatibility-only projections.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "audit_carry_through",
+        "blocked_recovery",
+        "identity_lineage"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 148,
+          "line_end": 148,
+          "exact_quote": "Tool and route audit records carry unresolved `exact_items` as explicit gap lineage until the owner docs close them. `gap-001` remains tied to the missing owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract`; `execution_unit_context` consumers must preserve `requested_account_binding`, `requested_account_policy`, and `operational_identity`. `gap-002` keeps `Plans/UI_Command_Catalog.md` references to the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy` visible until the target exists, and `cmd.search.open_result`, `cmd.search.replace_selected`, and `result_id` remain live search command arguments rather than stale residue. `gap-006` keeps Glossary carry-through honest: help-entry rows use `common_related_states` and must not collapse back into a two-column table.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 150,
+          "line_end": 150,
+          "exact_quote": "Blocked-packet consumers in Tools preserve `gap-005`, `/receipt/blocked/usage`, `blocked-attempt`, `blocked_notice`, `blocked-episode`, `/notification`, `report_ref`, `startup_recovered`, `escalation_level`, and `action_available` when a tool or route result exposes blocked runtime state. Runtime recovery surfaces use current projections and valid `allowed_action_ids` / `allowed_action_ids[]`; History and Ledger remain closer to canonical records than widget rollups, while UI consumers expose `Last updated`, `/freshness`, and `/recovery` before actions depend on stale projections. Existing broken anchors such as `Plans/Orchestrator_Page.md#11. Source Control boundary`, `route-target`, `restore points`, `already-recorded` carry-through, and incomplete consumer `carry-through` are tracked as blockers until their owner docs resolve them.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 160,
+          "line_end": 160,
+          "exact_quote": "Tool/runtime recovery evidence is `node-native`: blocked episodes, `/evidence/runtime`, and tool-facing usage/evidence/runtime rollups align to graph `/node/package/seam/lane` identity. Any `tier-native` or `tier-aligned` fields survive only as compatibility/grouping projections, never as execution authority.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I011",
+      "item_type": "capability",
+      "title": "Built-in target set spans local, web, and HITL operations",
+      "statement": "The registry target set includes shell, edit-group, file read/search/list, web fetch/search/extract/research/crawl/map, and structured user-question capabilities with canonical permission keys or edit-group sharing.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "built_in_tools"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 177,
+          "line_end": 177,
+          "exact_quote": "The following built-in tools are the **target set** for the central tool registry. Semantics align with [OpenCode's built-in tools](https://opencode.ai/docs/tools/#built-in). Mapping to each platform's native tools (Read/Edit/Bash, etc.) is a Provider/runner concern; the registry holds canonical names and the policy layer applies regardless of provider.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 198,
+          "line_end": 198,
+          "exact_quote": "| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I012",
+      "item_type": "contract",
+      "title": "Edit operations share one permission and ignore semantics",
+      "statement": "Edit, write, patch, and multiedit use a single edit permission, while grep, glob, and list respect .gitignore with project .ignore able to explicitly re-allow paths.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "edit_group",
+        "ignore_patterns"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 228,
+          "line_end": 228,
+          "exact_quote": "- **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that \"allow file changes\" is a single knob ([OpenCode](https://opencode.ai/docs/tools/): \"The edit permission covers all file modifications (edit, write, patch, multiedit)\").",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 229,
+          "line_end": 229,
+          "exact_quote": "- **Ignore patterns:** grep, glob, list respect `.gitignore` by default. A project **`.ignore`** file can explicitly allow paths (e.g. `!node_modules/`) for search/list. See [OpenCode -- Ignore patterns](https://opencode.ai/docs/tools/#ignore-patterns).",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I013",
+      "item_type": "capability",
+      "title": "Debug-capable is cross-surface registry metadata",
+      "statement": "Debug capability is metadata and tagged grouping rather than a new tool ID; eligible built-in, adapter, MCP, skill, and custom tools may join it, all run surfaces may consume it, and classification grants no permission bypass.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "debug_capable_tools"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 209,
+          "line_end": 209,
+          "exact_quote": "- `debug_capable` is metadata on a tool or capability, not a new tool ID",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 219,
+          "line_end": 219,
+          "exact_quote": "- Assistant, Interview, Orchestrator, Crew/subagents, and delegated runs may use the same debug-capable tools under the same permission, artifact, and visibility contracts",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 222,
+          "line_end": 222,
+          "exact_quote": "- classifying a tool as debug-capable does not authorize hidden evidence ingress or bypass the normal permission model",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I014",
+      "item_type": "state_transition",
+      "title": "Stale debug identity requires explicit attention",
+      "statement": "A recoverably stale runtime identity cannot resume silently; tool execution moves to attention_required with the session_reconnect_required reason code.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "debug_reconnect"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 221,
+          "line_end": 221,
+          "exact_quote": "- when a debug-capable tool's linked runtime identity is stale but recoverable, tool execution must enter `attention_required` with `attention_required_reason_code = session_reconnect_required` instead of silently resuming against stale sessions",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I015",
+      "item_type": "contract",
+      "title": "Provider mappings preserve canonical tool names",
+      "statement": "Provider-native tool names are adapter concerns; policy configuration and registry identity remain canonical so provider additions do not change permission config.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "provider_tool_mapping"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 233,
+          "line_end": 233,
+          "exact_quote": "Providers map canonical tool names to platform-native equivalents (e.g. `edit` → Claude \"Edit\", Cursor edit tool, etc.). The registry and permission engine use **canonical names only**; platform_specs or runner code holds the mapping so that adding a new provider does not require changing permission config.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I016",
+      "item_type": "contract",
+      "title": "LSP exposes nine reads and one approval-gated rename",
+      "statement": "Canonical LSP offers nine named read/navigation operations and rename as the single write operation; short lookup names and lsp_rename are compatibility aliases, workspaceSymbol requires query, position operations use path and position, and status is normalized.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "lsp_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 249,
+          "line_end": 249,
+          "exact_quote": "Canonical operation inventory: the packetization summary phrase `10 read-only + 1 write-gated (lsp_rename)` reconciles to the live Part M operation set as nine read-only operations plus one approval-gated `rename` operation. `lsp_rename` is a legacy/source alias for canonical `rename` / `lsp.rename`, not a second tool key.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 251,
+          "line_end": 251,
+          "exact_quote": "Short LSP lookup names `definition`, `references`, and `implementation` are compatibility aliases for `goToDefinition`, `findReferences`, and `goToImplementation`; the canonical operation names remain the long-form LSP actions above.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 280,
+          "line_end": 280,
+          "exact_quote": "- ok | partial | unavailable | error",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I017",
+      "item_type": "contract",
+      "title": "Tool adapters normalize sync behavior, recovery, previews, and settlement",
+      "statement": "Tool adapters default to synchronous execution unless async handles are explicit; blocked calls include structured recovery, previews use source/result or diff mini-cards without becoming mutations, and settlement_state follows an ordered nine-value precedence.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "tool_contract",
+        "tool_turn_settlement"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 289,
+          "line_end": 289,
+          "exact_quote": "All core tool-contract (`/tool-contract`) adapters default to sync execution semantics unless/until a tool contract explicitly exposes async handles. When a call is blocked by permissions, FileSafe, or an unavailable MCP/service (`/service`), the result must include a structured recovery action rather than a passive error only. Non-terminal operation previews use the same mini-card family as terminal output: web/search results show source/result mini-cards, and code-edit previews expose `/diffs` cards that open the editor diff without treating the preview as the final mutation. Built-in tool contracts must keep concrete `I/O/limit/error` guidance, unknown-tool default handling, GUI permission/preset visibility (`/presets`), and usage `/token` / `/tokens` event linkage discoverable from this registry.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 291,
+          "line_end": 291,
+          "exact_quote": "`ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I018",
+      "item_type": "contract",
+      "title": "Bash supports sync, async, reuse, and bounded initial wait",
+      "statement": "Bash requires command text, defaults to sync, supports async and shell reuse, validates initial_wait in the closed integer range 1 through 300, returns completed or running envelopes, and distinguishes validation, policy, FileSafe, shell, spawn, output, and timeout errors.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "bash_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 300,
+          "line_end": 300,
+          "exact_quote": "| `mode` | enum (`\"sync\"` \\| `\"async\"`) | no | Execution mode. Default `sync`. `sync` waits through `initial_wait`; `async` returns immediately with a live shell handle. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 301,
+          "line_end": 301,
+          "exact_quote": "| `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; minimum `1`; maximum `300`; values outside this closed range are `validation_error`. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 307,
+          "line_end": 307,
+          "exact_quote": "- Completed sync result: `{ shellId, status: \"completed\", stdout, stderr, exit_code }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I019",
+      "item_type": "failure_recovery",
+      "title": "Bash timeout separates wait expiry from hard termination",
+      "statement": "Expiry of initial_wait returns a live running shell with partial output, while hard-ceiling expiry terminates the process and returns a timed_out envelope with null exit code.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "bash_timeout"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 330,
+          "line_end": 330,
+          "exact_quote": "- If `initial_wait` expires first, the command remains live and returns `status: \"running\"` with partial `stdout` / `stderr`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 331,
+          "line_end": 331,
+          "exact_quote": "- If the hard execution ceiling expires, the runtime terminates the process and returns `{ shellId, status: \"timed_out\", stdout, stderr, exit_code: null, error: { code: \"timeout\" } }`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I020",
+      "item_type": "contract",
+      "title": "Edit performs exact atomic replacement with reveal metadata",
+      "statement": "Edit requires an allowed-root path and exact old/new strings, reports replacement spans and byte/line deltas, distinguishes validation/policy/path/match/encoding/timeout failures, and guarantees no partial rewrite on timeout.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "edit_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 339,
+          "line_end": 339,
+          "exact_quote": "| `path` | string | yes | Target file path. Must resolve inside an allowed workspace root. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 345,
+          "line_end": 345,
+          "exact_quote": "`{ status: \"success\", path, replacements: [{ start_line, end_line }], line_count_changed, bytes_changed }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 365,
+          "line_end": 365,
+          "exact_quote": "- On timeout, the operation must fail atomically: no partial file rewrite, and the response is `{ status: \"timed_out\", path, error: { code: \"timeout\" } }`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-I021",
+      "item_type": "contract",
+      "title": "Provider view normalizes to canonical read",
+      "statement": "Provider-native view maps to read, accepts a path and optional inclusive one-based range with -1 meaning EOF, returns distinct structured file or directory envelopes, preserves line numbering, and defines validation, policy, path, binary, size, and timeout errors.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "read_tool",
+        "view_alias"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 369,
+          "line_end": 369,
+          "exact_quote": "Provider-native `view` maps to the canonical registry tool `read`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 376,
+          "line_end": 376,
+          "exact_quote": "| `view_range` | array `[start_line, end_line]` | no | Inclusive 1-based line range. `-1` as `end_line` means \"to end of file\". |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 380,
+          "line_end": 380,
+          "exact_quote": "- File read: `{ path, kind: \"file\", content, lines: [{ line_number, text }], truncated? }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 381,
+          "line_end": 381,
+          "exact_quote": "- Directory read: `{ path, kind: \"directory\", entries: string[] }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G001",
+      "item_type": "gap",
+      "title": "Normalized outcome and settlement taxonomies lack a mapping",
+      "statement": "The window defines a tool-result taxonomy and a separate settlement_state taxonomy, but gives no deterministic mapping between outcomes such as permission_denied, timed_out, or post_scan_failure and settlement values such as fatal, retryable, partial, or retained.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "contract_mapping_missing",
+      "impact": "Providers, persistence, analytics, and UI can classify the same terminal tool attempt differently even though both taxonomies claim normalization authority.",
+      "builder_discretion": "Builders must invent outcome-to-settlement mapping rules and decide whether one or both fields drive terminal interpretation.",
+      "feature_keys": [
+        "tool_result_taxonomy",
+        "tool_turn_settlement"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 124,
+          "line_end": 124,
+          "exact_quote": "At minimum, the normalized tool-result taxonomy MUST distinguish:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 291,
+          "line_end": 291,
+          "exact_quote": "`ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G002",
+      "item_type": "gap",
+      "title": "LSP requires a result envelope that is not specified",
+      "statement": "The LSP rules require preservation of a normalized result envelope, but the authoritative core enumerates only generic fields and status labels; it does not define result payload fields or per-operation response shapes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "output_contract_missing",
+      "impact": "Adapters can emit incompatible definition, reference, symbol, hover, call-hierarchy, and rename results, preventing reliable persistence and agent-visible normalization.",
+      "builder_discretion": "Builders must invent the LSP result envelope and operation-specific payload schemas.",
+      "feature_keys": [
+        "lsp_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 257,
+          "line_end": 257,
+          "exact_quote": "- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope. The packetization summary phrase `10 read-only + 1 write-gated (lsp_rename)` reconciles to the canonical Part M inventory: nine read-only operations plus one approval-gated `rename` operation. `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` / `lsp_rename` requires `path` + `position` + `newName` with approval gating.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 259,
+          "line_end": 259,
+          "exact_quote": "Fields:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G003",
+      "item_type": "gap",
+      "title": "LSP parameter types and operation applicability are incomplete",
+      "statement": "The core names query, path, position, newName, and status and states broad applicability rules, but does not define their types, the position structure, or the complete required/optional field matrix for each operation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "input_schema_incomplete",
+      "impact": "Provider adapters can disagree on URI versus path, line/column bases, position encoding, and validation for document symbols and call-hierarchy operations.",
+      "builder_discretion": "Builders must select field types, coordinate bases, encodings, and per-operation validation rules.",
+      "feature_keys": [
+        "lsp_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 262,
+          "line_end": 262,
+          "exact_quote": "- path",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 282,
+          "line_end": 282,
+          "exact_quote": "- Position-based operations use `path` + `position`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 283,
+          "line_end": 283,
+          "exact_quote": "- `rename` requires `path` + `position` + `newName`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G004",
+      "item_type": "gap",
+      "title": "Bash output overflow policy is non-deterministic",
+      "statement": "The output_limit_exceeded error permits either truncation or process abort but gives no cap, selection rule, required truncation metadata, or relationship to a still-running shell.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "limit_and_recovery_policy_missing",
+      "impact": "Identical commands can have different liveness and data-loss behavior across runners, and consumers cannot reliably distinguish retained partial output from aborted execution.",
+      "builder_discretion": "Builders choose output caps, whether overflow truncates or aborts, and what recovery metadata is emitted.",
+      "feature_keys": [
+        "bash_tool",
+        "output_limits"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 322,
+          "line_end": 322,
+          "exact_quote": "| `output_limit_exceeded` | Output exceeded cap and was truncated or the command was aborted per runtime policy. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G005",
+      "item_type": "gap",
+      "title": "Bash hard execution ceiling is advisory and underspecified",
+      "statement": "The only hard-ceiling value is recommended rather than required and permits an unspecified stricter runner limit without naming its config key, minimum, visibility, or persistence in the result.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "timeout_authority_ambiguous",
+      "impact": "Users and agents cannot predict when a shell process will be forcibly terminated, and different runners can silently apply different ceilings.",
+      "builder_discretion": "Builders choose whether 30 minutes is enforced, where overrides live, and how the effective limit is surfaced.",
+      "feature_keys": [
+        "bash_timeout"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 329,
+          "line_end": 329,
+          "exact_quote": "- Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G006",
+      "item_type": "gap",
+      "title": "Detached bash lifecycle lacks ownership and recovery rules",
+      "statement": "Detach declares that a process survives client shutdown but does not specify owner identity, later discovery or reattachment, cancellation authority, retention, or cleanup after the originating client disappears.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "lifecycle_contract_missing",
+      "impact": "Detached processes can become orphaned, inaccessible, or ambiguously owned, creating resource, security, and audit risks.",
+      "builder_discretion": "Builders must invent detached-process ownership, persistence, reconnection, cancellation, and garbage-collection behavior.",
+      "feature_keys": [
+        "bash_tool",
+        "detached_process"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 303,
+          "line_end": 303,
+          "exact_quote": "| `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G007",
+      "item_type": "gap",
+      "title": "Read range behavior for directory targets is undefined",
+      "statement": "The same path parameter may identify a file or directory, but the optional line-based view_range has no validity or ignore rule for directory reads.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "parameter_combination_undefined",
+      "impact": "Adapters can reject, ignore, or misapply view_range on directories, yielding incompatible validation and UI behavior.",
+      "builder_discretion": "Builders choose whether a directory plus view_range is validation_error or whether the range is ignored.",
+      "feature_keys": [
+        "read_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 375,
+          "line_end": 375,
+          "exact_quote": "| `path` | string | yes | File or directory path to inspect. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 376,
+          "line_end": 376,
+          "exact_quote": "| `view_range` | array `[start_line, end_line]` | no | Inclusive 1-based line range. `-1` as `end_line` means \"to end of file\". |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G008",
+      "item_type": "gap",
+      "title": "Edit miss and conflict codes overlap",
+      "statement": "replace_miss is described as old_str not being found exactly once, which includes multiple matches, while replace_conflict separately owns multiple ambiguous matches; the discriminator is not exact.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "error_taxonomy_overlap",
+      "impact": "Equivalent multi-match failures can normalize to different codes, weakening deterministic recovery and analytics.",
+      "builder_discretion": "Builders choose whether multiple matches produce replace_miss or replace_conflict and what counts as ambiguity.",
+      "feature_keys": [
+        "edit_tool"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 357,
+          "line_end": 357,
+          "exact_quote": "| `replace_miss` | `old_str` was not found exactly once as required by the tool contract. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 358,
+          "line_end": 358,
+          "exact_quote": "| `replace_conflict` | Multiple ambiguous matches or file changed during validation. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001047-G009",
+      "item_type": "gap",
+      "title": "Tool Usage metrics lack aggregation semantics",
+      "statement": "The widget names invocation count, latency percentiles, and error rate but does not define time window, project/run scope, inclusion rules, percentile population, or what outcomes count as errors.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "analytics_oracle_missing",
+      "impact": "Usage views can display materially different metrics from the same seglog data and cannot be validated against one oracle.",
+      "builder_discretion": "Builders choose aggregation window, scope, denominators, and error classification.",
+      "feature_keys": [
+        "usage_tool_metrics"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 39,
+          "line_end": 39,
+          "exact_quote": "**Usage page:** Tool usage widget is specified in FinalGUISpec §7.8 (Usage view): tool name, invocation count, latency p50/p95, error rate; data from seglog rollups via analytics scan. See §9.2 enhancement list for context.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "Canonical registry, routing, policy, terminal, debug, and core tool behaviors are explicit.",
+      "evidence_item_ids": [
+        "A005-001047-I001",
+        "A005-001047-I006",
+        "A005-001047-I009",
+        "A005-001047-I018",
+        "A005-001047-I020",
+        "A005-001047-I021"
+      ]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Built-in, custom, MCP, debug-capable, LSP, web, structured-question, and edit-group capability families are identified.",
+      "evidence_item_ids": [
+        "A005-001047-I001",
+        "A005-001047-I011",
+        "A005-001047-I013",
+        "A005-001047-I016"
+      ]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Bash, edit, and read have concrete envelopes, but LSP parameter/result schemas and some parameter combinations remain incomplete.",
+      "evidence_item_ids": [
+        "A005-001047-I018",
+        "A005-001047-I020",
+        "A005-001047-I021",
+        "A005-001047-G002",
+        "A005-001047-G003",
+        "A005-001047-G007"
+      ]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Central policy and per-tool contracts are substantial, but taxonomy mapping, LSP schemas, limit policy, and overlapping edit errors are under-specified.",
+      "evidence_item_ids": [
+        "A005-001047-I003",
+        "A005-001047-I005",
+        "A005-001047-I006",
+        "A005-001047-I017",
+        "A005-001047-G001",
+        "A005-001047-G002",
+        "A005-001047-G004",
+        "A005-001047-G008"
+      ]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Child-run disposal, policy resolution, shell running/completed/timed_out, and stale-debug attention transitions are explicit; detached-process lifecycle is not.",
+      "evidence_item_ids": [
+        "A005-001047-I004",
+        "A005-001047-I007",
+        "A005-001047-I014",
+        "A005-001047-I019",
+        "A005-001047-G006"
+      ]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Tools owns policy order and normalized outcomes, providers own native mapping observations, storage owns persistence, and tier projections cannot become execution authority.",
+      "evidence_item_ids": [
+        "A005-001047-I008",
+        "A005-001047-I010",
+        "A005-001047-I015"
+      ]
+    },
+    {
+      "dimension": "ownership",
+      "status": "gap_found",
+      "summary": "Registry, provider mapping, storage, and terminal ownership are stated, but detached-process ownership after client shutdown is absent.",
+      "evidence_item_ids": [
+        "A005-001047-I007",
+        "A005-001047-I008",
+        "A005-001047-I015",
+        "A005-001047-G006"
+      ]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Assistant, Interview, Orchestrator, Crew/subagents, delegated runs, chat cards, Usage, History, Ledger, recovery widgets, and storage/analytics consumers are named with carry-through duties.",
+      "evidence_item_ids": [
+        "A005-001047-I002",
+        "A005-001047-I007",
+        "A005-001047-I010",
+        "A005-001047-I013"
+      ]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "gap_found",
+      "summary": "Required permission and MCP settings plus tool telemetry are stated, but Usage metric aggregation semantics are not testable from this core.",
+      "evidence_item_ids": [
+        "A005-001047-I002",
+        "A005-001047-G009"
+      ]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Policy, FileSafe, shell, edit, read, LSP unavailable, attention-required, timeout, and structured recovery paths are covered, but output overflow, detached recovery, and error-code overlap remain ambiguous.",
+      "evidence_item_ids": [
+        "A005-001047-I014",
+        "A005-001047-I017",
+        "A005-001047-I019",
+        "A005-001047-I020",
+        "A005-001047-I021",
+        "A005-001047-G004",
+        "A005-001047-G006",
+        "A005-001047-G008"
+      ]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "addressed",
+      "summary": "Permission, FileSafe, sensitive-path guards, allowed workspace roots, web URL controls, approval gating, and the no-hidden-ingress rule establish security boundaries.",
+      "evidence_item_ids": [
+        "A005-001047-I003",
+        "A005-001047-I005",
+        "A005-001047-I013",
+        "A005-001047-I020"
+      ]
+    },
+    {
+      "dimension": "propagation",
+      "status": "addressed",
+      "summary": "Gap lineage, blocked state, freshness, identity, trust, multi-context, governance, scope, and node-native evidence are explicitly preserved through tool consumers.",
+      "evidence_item_ids": [
+        "A005-001047-I010"
+      ]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Operational order, terminal binding, provider normalization, sync/async shell execution, and atomic edit behavior are defined; detached lifecycle and hard timeout authority are not complete.",
+      "evidence_item_ids": [
+        "A005-001047-I006",
+        "A005-001047-I007",
+        "A005-001047-I018",
+        "A005-001047-I019",
+        "A005-001047-I020",
+        "A005-001047-G005",
+        "A005-001047-G006"
+      ]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "Initial wait bounds, recommended execution ceiling, search index fallback, size/depth/fan-out concepts, and Usage percentiles exist, but output caps and analytics windows lack deterministic values.",
+      "evidence_item_ids": [
+        "A005-001047-I002",
+        "A005-001047-I018",
+        "A005-001047-G004",
+        "A005-001047-G005",
+        "A005-001047-G009"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "addressed",
+      "summary": "Provider-native tool mappings, view/read, LSP short names and lsp_rename, OpenCode baseline context, and tier compatibility projections have explicit canonicalization rules.",
+      "evidence_item_ids": [
+        "A005-001047-I010",
+        "A005-001047-I015",
+        "A005-001047-I016",
+        "A005-001047-I021"
+      ]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "Exact status values, envelopes, validation ranges, atomicity, and error codes provide many oracles, but LSP output, taxonomy mapping, overflow behavior, and Usage aggregation lack single expected results.",
+      "evidence_item_ids": [
+        "A005-001047-I016",
+        "A005-001047-I017",
+        "A005-001047-I018",
+        "A005-001047-I019",
+        "A005-001047-I020",
+        "A005-001047-I021",
+        "A005-001047-G001",
+        "A005-001047-G002",
+        "A005-001047-G004",
+        "A005-001047-G009"
+      ]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Material discretion remains in taxonomy mapping, LSP schemas, output overflow, hard timeouts, detached lifecycle, directory-range handling, edit error classification, and telemetry aggregation.",
+      "evidence_item_ids": [
+        "A005-001047-G001",
+        "A005-001047-G002",
+        "A005-001047-G003",
+        "A005-001047-G004",
+        "A005-001047-G005",
+        "A005-001047-G006",
+        "A005-001047-G007",
+        "A005-001047-G008",
+        "A005-001047-G009"
+      ]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Nine bounded ambiguities are evidenced within the authoritative core; none depends on context-after lines or unrelated sources.",
+      "evidence_item_ids": [
+        "A005-001047-G001",
+        "A005-001047-G002",
+        "A005-001047-G003",
+        "A005-001047-G004",
+        "A005-001047-G005",
+        "A005-001047-G006",
+        "A005-001047-G007",
+        "A005-001047-G008",
+        "A005-001047-G009"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE 9643-9654 >>>
+- "global_local"
+- "pm_enhanced"
+- "ready_with_warnings"
+negative_constraints:
+- "Settings remains the durable preference surface."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 9655-10044 >>>
+### F3-114 - Agent Config Personas Tab Contract
+
+```yaml
+plan_unit_id: F3-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Agent Config Personas tab exposes persona library editing, runtime preferences, skill refs,
+  row eligibility and compatibility disclosure, read-only protected core built-ins, and editable
+  restorable bundled specialty Personas.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Agent Config Personas tab behavior and controls.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: agent_config_personas_tab_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0075"
+preserved_exact_tokens:
+- "create"
+- "edit"
+- "delete"
+- "disable"
+- "restore default"
+- "reorder"
+- "chat-selectable eligibility"
+- "child/subagent eligibility"
+- "protected/core"
+- "bundled-specialty"
+negative_constraints:
+- "Protected core built-ins are read-only and not deletable, disableable, or shadowable."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-115 - Agent Config Provider Entry Diagnostics
+
+```yaml
+plan_unit_id: F3-115
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Agent Config provider data records and diagnostics expose durable provider entry identity,
+  auth_surface metadata, local provider storage paths, bootstrap evidence filenames, Cursor
+  trust/cache evidence, and independent account-local drift state.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Agent Config diagnostics and provider row evidence.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: agent_config_provider_entry_diagnostics
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0075"
+preserved_exact_tokens:
+- "provider_entry_id"
+- "runtime_platform_id"
+- "model_provider_id"
+- "auth_surface"
+- "$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/"
+- "~/.local/share/puppet-master/providers/<provider_entry_id>/"
+- "gemini-credentials.json"
+- "google_accounts.json"
+- "~/.cache/cursor-compile-cache"
+negative_constraints:
+- "Provider/profile diagnostics expose local setup state without making Settings the owner."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-116 - Agent Config Setup Evidence Failover And Default Crew
+
+```yaml
+plan_unit_id: F3-116
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Agent-Config setup copy separates setup success from operational evidence, exposes stable
+  selection and failover reason codes plus requested/effective runtime controls, and owns Default
+  Crew default-config confirmation and provider constraint explanation.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible setup, failover, provider-gap, and Default Crew controls.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: agent_config_setup_evidence_failover_and_default_crew
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0075"
+preserved_exact_tokens:
+- "Validating..."
+- "Revalidate"
+- "manual_pin"
+- "provider_default"
+- "preferred_account_retained"
+- "highest_priority_eligible"
+- "lowest_pressure_eligible"
+- "auth_surface_match"
+- "server_profile_default"
+- "honored"
+- "skipped"
+- "clamped"
+- "Default Crew"
+- "Copilot"
+negative_constraints:
+- "`provider-home` paths, scheduler mechanics, and overlay configuration internals stay hidden unless a concrete `/debug` or audit use case requires persisted evidence."
+compatibility_only_notes:
+- "`provider-specific` remains or `/quota` probes belong in Usage and expanded account/runtime inspectors, not in setup success copy."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-117 - Docker Manager Shell Boundary And Alias Disposition
+
+```yaml
+plan_unit_id: F3-117
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Docker Manager is the docker_manager side-panel shell surface for container-related navigation,
+  disabled-state copy, deep-subview discoverability, Settings entrypoints, and routing, while the
+  container owner doc retains runtime/auth/registry/publish behavior and unresolved payload
+  mismatch ownership.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains visible Docker Manager shell placement, labels, aliases, and routing.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: owner_route_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: docker_manager_shell_boundary_and_alias_disposition
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076"
+preserved_exact_tokens:
+- "docker_manager"
+- "Publish / Unraid"
+- "needs_review"
+- "/failure"
+- "DOCKER MANAGE"
+- "Docker Manage"
+- "docker_manage_surface_state"
+- "Persona Editor"
+negative_constraints:
+- "Legacy Docker Manage aliases must not create a second activity-bar slot or remain embedded under Persona Editor."
+compatibility_only_notes:
+- "Legacy `DOCKER MANAGE`, `Docker Manage`, `docker_manage_surface_state`, and separate Unraid panel references are migration aliases."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "`Plans/Containers_Registry_and_Unraid.md` owns Docker runtime, auth, registry, publish, Unraid, Podman, Kubernetes, receipt, and detection behavior."
+- "`needs_review` versus `/failure` payload semantics remain an automation-first operator-flow mismatch until the container owner resolves it."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-118 - Account Binding And Runtime Identity Resolver Display
+
+```yaml
+plan_unit_id: F3-118
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings and inspectors distinguish requested account policy from requested account binding,
+  show requested/effective account and switch reason, propagate execution_role with operational
+  identity, and render resolver source, request, and execution axes deterministically.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Settings and inspector identity display grammar.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: account_binding_and_runtime_identity_resolver_display
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076"
+preserved_exact_tokens:
+- "requested_account_id"
+- "requested_account_policy"
+- "requested_account_binding"
+- "none"
+- "preferred"
+- "required"
+- "execution_role"
+- "settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }"
+negative_constraints:
+- "`required` must bind or block."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-119 - Panel Settings Persistence And Agent-Config Naming
+
+```yaml
+plan_unit_id: F3-119
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Panel-specific persistence and visibility controls live in Settings only when durable app or
+  project preferences, are grouped by owning surface, and Settings/inspector language names
+  Agent-Config and effective runtime concepts instead of generic provider settings.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Settings grouping, persistence boundaries, and inspector naming.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: panel_settings_persistence_and_agent_config_naming
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0076"
+preserved_exact_tokens:
+- "Source Control / Branching"
+- "GitHub Actions"
+- "Docker Manager / Kubernetes"
+- "Terminal"
+- "File Manager"
+- "Models / Providers"
+- "Agent-Config"
+- "Effective Runtime inspectors"
+- "skill/MCP status"
+negative_constraints:
+- "Active runtime object selection, live run actions, and transient inspector focus remain in the owning panel."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-120 - Terminal Settings Durable Preferences Owner
+
+```yaml
+plan_unit_id: F3-120
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings > Terminal is the in-product cheat sheet and durable preferences owner for terminal
+  defaults, high-frequency preview/change controls, shortcut mappings, conflict explanations,
+  terminal appearance, profile/cwd, transcript retention, performance, diagnostics, and
+  project/workspace scope labels.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Terminal Settings surfaces, labels, preferences, and explanations.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: terminal_settings_durable_preferences_owner
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0077"
+preserved_exact_tokens:
+- "Settings > Terminal"
+- "in-product cheat sheet"
+- "/preferences"
+- "/theme/font/rendering"
+- "/selection/copy/paste"
+- "/profile/cwd"
+- "/transcript"
+- "/performance"
+- "/workspace"
+- "/tab"
+negative_constraints:
+- "Live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 10045-10056 >>>
+### F3-121 - Terminal Settings Coverage Groups And Shortcut Discovery
+
+```yaml
+plan_unit_id: F3-121
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings > Terminal groups Appearance, layout and Workspaces, Shell and Startup, Interaction,
+  and Diagnostics, and keeps terminal shortcut discovery in-product, remappable, and distinct from
+  TUI-owned keys and app-level layout actions.
+gui_related: true

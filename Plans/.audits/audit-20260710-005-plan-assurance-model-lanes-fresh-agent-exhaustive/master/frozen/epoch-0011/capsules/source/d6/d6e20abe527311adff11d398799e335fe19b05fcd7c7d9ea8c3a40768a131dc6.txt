@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE canonical_document_lines=11999-12010 >>>
+L00011999	  - "ChatGPT-backed Codex"
+L00012000	  - "API-key"
+L00012001	  - "`/reset`"
+L00012002	  - "`/cost`"
+L00012003	  - "`/stats`"
+L00012004	negative_constraints:
+L00012005	  - "Warnings and estimates must not automatically trigger failover-required behavior."
+L00012006	owner_hints:
+L00012007	  - Plans/Contracts_V0.md
+L00012008	  - Plans/usage-feature.md
+L00012009	```
+L00012010	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=12011-12410 >>>
+L00012011	### CV-184 - Provider Recovery Labels And Entitlement Copy
+L00012012	
+L00012013	```yaml
+L00012014	plan_unit_id: CV-184
+L00012015	unit_type: requirement
+L00012016	status: accepted
+L00012017	owner_doc: Plans/Contracts_V0.md
+L00012018	canonical_text: >-
+L00012019	  Account recovery projections expose Retry Sign-In, Choose Billing Entity, and
+L00012020	  Refresh Entitlements, use product-language provider labels, preserve
+L00012021	  skip/cooldown machine reasons, and display policy_blocked as Blocked by plan
+L00012022	  or policy.
+L00012023	gui_related: true
+L00012024	gui_classification_reason: This unit defines user-visible recovery labels, setup copy, and provider entitlement wording.
+L00012025	split_recommended: false
+L00012026	depends_on: [CV-183]
+L00012027	unblocks: []
+L00012028	acceptance_criteria:
+L00012029	  - "Missing billing entity for premium requests displays Needs setup."
+L00012030	  - "Copilot setup copy preserves the license and organization policy wording."
+L00012031	  - "Cooldown displays preserve the underlying machine reason."
+L00012032	validation_surfaces:
+L00012033	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012034	  - python3 scripts/pm-plan-index.py validate
+L00012035	risk_class: provider_recovery_label_drift
+L00012036	reasoning_tier: standard
+L00012037	context_scope: provider_recovery_entitlement_copy
+L00012038	implementation_surfaces:
+L00012039	  - Plans/Contracts_V0.md
+L00012040	  - Plans/FinalGUISpec.md
+L00012041	node_compile_hint:
+L00012042	  mode: provider_recovery_label_contract
+L00012043	  create_worknodes: false
+L00012044	source_lineage:
+L00012045	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+L00012046	preserved_exact_tokens:
+L00012047	  - "Retry Sign-In"
+L00012048	  - "Choose Billing Entity"
+L00012049	  - "Refresh Entitlements"
+L00012050	  - "Needs setup"
+L00012051	  - "Uses your GitHub Copilot license and organization policies"
+L00012052	  - "`rate-limited`"
+L00012053	  - "`model-unsupported`"
+L00012054	  - "`workspace-deactivated`"
+L00012055	  - "`auth-invalid`"
+L00012056	  - "Blocked by plan or policy"
+L00012057	negative_constraints:
+L00012058	  - "Provider-facing usage labels must not expose raw internal field names when product language explains the entitlement bucket."
+L00012059	owner_hints:
+L00012060	  - Plans/Contracts_V0.md
+L00012061	  - Plans/FinalGUISpec.md
+L00012062	```
+L00012063	
+L00012064	### CV-185 - Current Requested Effective Runtime Inspector Visibility
+L00012065	
+L00012066	```yaml
+L00012067	plan_unit_id: CV-185
+L00012068	unit_type: requirement
+L00012069	status: accepted
+L00012070	owner_doc: Plans/Contracts_V0.md
+L00012071	canonical_text: >-
+L00012072	  The current predicted requested/effective state remains visible in the
+L00012073	  runtime inspector and is not hidden behind Usage, history, or diagnostics;
+L00012074	  deeper run-specific inspection is supplemental.
+L00012075	gui_related: true
+L00012076	gui_classification_reason: This unit defines user-visible runtime inspector disclosure.
+L00012077	split_recommended: false
+L00012078	depends_on: [CV-145]
+L00012079	unblocks: [CV-186]
+L00012080	acceptance_criteria:
+L00012081	  - "Current requested/effective state remains visible in the runtime inspector."
+L00012082	  - "History, diagnostics, and run-specific views supplement rather than replace current state."
+L00012083	validation_surfaces:
+L00012084	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012085	  - python3 scripts/pm-plan-index.py validate
+L00012086	risk_class: runtime_identity_visibility_loss
+L00012087	reasoning_tier: high
+L00012088	context_scope: runtime_inspector_requested_effective_state
+L00012089	implementation_surfaces:
+L00012090	  - Plans/Contracts_V0.md
+L00012091	  - Plans/FinalGUISpec.md
+L00012092	node_compile_hint:
+L00012093	  mode: runtime_identity_inspector_visibility
+L00012094	  create_worknodes: false
+L00012095	source_lineage:
+L00012096	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+L00012097	preserved_exact_tokens:
+L00012098	  - "runtime inspector"
+L00012099	  - "`/history/diagnostics`"
+L00012100	  - "`/run-specific`"
+L00012101	  - "requested/effective"
+L00012102	negative_constraints:
+L00012103	  - "The current predicted requested/effective state must not be hidden behind Usage/history/diagnostics."
+L00012104	owner_hints:
+L00012105	  - Plans/Contracts_V0.md
+L00012106	  - Plans/FinalGUISpec.md
+L00012107	```
+L00012108	
+L00012109	### CV-186 - Canonical Vs Internal Audit Split
+L00012110	
+L00012111	```yaml
+L00012112	plan_unit_id: CV-186
+L00012113	unit_type: constraint
+L00012114	status: accepted
+L00012115	owner_doc: Plans/Contracts_V0.md
+L00012116	canonical_text: >-
+L00012117	  Requested/effective identity, clamping outcomes, and switching outcomes belong
+L00012118	  in canonical snapshots, while provider-registry and scheduler-only internals
+L00012119	  remain subordinate evidence unless a debug or audit contract promotes them.
+L00012120	gui_related: false
+L00012121	gui_classification_reason: This unit defines audit/source boundary semantics rather than visual presentation.
+L00012122	split_recommended: false
+L00012123	depends_on: [CV-185]
+L00012124	unblocks: []
+L00012125	acceptance_criteria:
+L00012126	  - "Canonical snapshots carry requested/effective identity, clamping outcomes, and switching outcomes."
+L00012127	  - "Provider-registry and scheduler-only internals stay subordinate unless promoted by a debug or audit contract."
+L00012128	validation_surfaces:
+L00012129	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012130	  - python3 scripts/pm-plan-index.py validate
+L00012131	risk_class: canonical_internal_boundary_drift
+L00012132	reasoning_tier: high
+L00012133	context_scope: canonical_internal_audit_split
+L00012134	implementation_surfaces:
+L00012135	  - Plans/Contracts_V0.md
+L00012136	  - Plans/storage-plan.md
+L00012137	node_compile_hint:
+L00012138	  mode: canonical_internal_audit_boundary
+L00012139	  create_worknodes: false
+L00012140	source_lineage:
+L00012141	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+L00012142	preserved_exact_tokens:
+L00012143	  - "`/switching`"
+L00012144	  - "canonical snapshots"
+L00012145	  - "provider-registry"
+L00012146	  - "scheduler-only internals"
+L00012147	negative_constraints:
+L00012148	  - "Provider-registry or scheduler-only internals must not be promoted without a debug or audit contract."
+L00012149	owner_hints:
+L00012150	  - Plans/Contracts_V0.md
+L00012151	  - Plans/storage-plan.md
+L00012152	```
+L00012153	
+L00012154	### CV-187 - UI Scale Setting Field Contract
+L00012155	
+L00012156	```yaml
+L00012157	plan_unit_id: CV-187
+L00012158	unit_type: requirement
+L00012159	status: accepted
+L00012160	owner_doc: Plans/Contracts_V0.md
+L00012161	canonical_text: >-
+L00012162	  The app exposes a user-facing UI scale setting in Settings General with
+L00012163	  scale_range [0.75, 1.5], presets [0.75, 0.9, 1.0, 1.1], default 1.0, and
+L00012164	  visible preset buttons 75 %, 90 %, 100 %, and 110 %.
+L00012165	gui_related: true
+L00012166	gui_classification_reason: This unit defines visible UI scale controls.
+L00012167	split_recommended: false
+L00012168	depends_on: []
+L00012169	unblocks: [CV-188]
+L00012170	acceptance_criteria:
+L00012171	  - "Settings General exposes the UI scale setting."
+L00012172	  - "The four preset buttons 75 %, 90 %, 100 %, and 110 % appear."
+L00012173	  - "The scale range is clamped to [0.75, 1.5] and default is 1.0."
+L00012174	validation_surfaces:
+L00012175	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012176	  - python3 scripts/pm-plan-index.py validate
+L00012177	risk_class: ui_scale_setting_drift
+L00012178	reasoning_tier: standard
+L00012179	context_scope: ui_scale_setting_fields
+L00012180	implementation_surfaces:
+L00012181	  - Plans/Contracts_V0.md
+L00012182	  - Plans/FinalGUISpec.md
+L00012183	node_compile_hint:
+L00012184	  mode: ui_scale_setting_contract
+L00012185	  create_worknodes: false
+L00012186	source_lineage:
+L00012187	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0065
+L00012188	preserved_exact_tokens:
+L00012189	  - "`scale_range`"
+L00012190	  - "`[0.75, 1.5]`"
+L00012191	  - "`[0.75, 0.9, 1.0, 1.1]`"
+L00012192	  - "`1.0`"
+L00012193	  - "75 %"
+L00012194	  - "90 %"
+L00012195	  - "100 %"
+L00012196	  - "110 %"
+L00012197	  - "ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUISpec.md#16.2"
+L00012198	negative_constraints: []
+L00012199	owner_hints:
+L00012200	  - Plans/Contracts_V0.md
+L00012201	  - Plans/FinalGUISpec.md
+L00012202	```
+L00012203	
+L00012204	### CV-188 - Slint Native Scale Mechanism And Iced Prohibition
+L00012205	
+L00012206	```yaml
+L00012207	plan_unit_id: CV-188
+L00012208	unit_type: constraint
+L00012209	status: accepted
+L00012210	owner_doc: Plans/Contracts_V0.md
+L00012211	canonical_text: >-
+L00012212	  The Slint rewrite implements UI scale through Slint native global/window scale
+L00012213	  factor as the only app-level scaling path; per-token manual scaling and
+L00012214	  Iced-era ScaledTokens multiplication layers are prohibited, and editor text
+L00012215	  zoom remains independent.
+L00012216	gui_related: true
+L00012217	gui_classification_reason: This unit constrains GUI implementation scaling behavior.
+L00012218	split_recommended: false
+L00012219	depends_on: [CV-187]
+L00012220	unblocks: []
+L00012221	acceptance_criteria:
+L00012222	  - "Slint native global/window scale factor is the only app-level UI scaling path."
+L00012223	  - "Per-token manual scaling and Iced-era ScaledTokens multiplication are not ported."
+L00012224	  - "Editor text zoom remains independent of app-level UI scale."
+L00012225	validation_surfaces:
+L00012226	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012227	  - python3 scripts/pm-plan-index.py validate
+L00012228	risk_class: slint_scale_mechanism_drift
+L00012229	reasoning_tier: high
+L00012230	context_scope: slint_ui_scale_mechanism
+L00012231	implementation_surfaces:
+L00012232	  - Plans/Contracts_V0.md
+L00012233	  - Plans/FinalGUISpec.md
+L00012234	node_compile_hint:
+L00012235	  mode: slint_native_scale_constraint
+L00012236	  create_worknodes: false
+L00012237	source_lineage:
+L00012238	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0065
+L00012239	preserved_exact_tokens:
+L00012240	  - "Slint native scale factor"
+L00012241	  - "Per-token manual scaling"
+L00012242	  - "`ScaledTokens`"
+L00012243	  - "PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration"
+L00012244	negative_constraints:
+L00012245	  - "Per-token manual scaling or Iced-era ScaledTokens multiplication layers must not be ported to Slint view code."
+L00012246	owner_hints:
+L00012247	  - Plans/Contracts_V0.md
+L00012248	  - Plans/FinalGUISpec.md
+L00012249	```
+L00012250	
+L00012251	### CV-189 - Usage Cost Microdollars Persistence
+L00012252	
+L00012253	```yaml
+L00012254	plan_unit_id: CV-189
+L00012255	unit_type: requirement
+L00012256	status: accepted
+L00012257	owner_doc: Plans/Contracts_V0.md
+L00012258	canonical_text: >-
+L00012259	  Persisted usage and cost values are stored as integer microdollars using u64;
+L00012260	  presentation converts those values to decimal currency strings while storage
+L00012261	  and accumulation do not.
+L00012262	gui_related: false
+L00012263	gui_classification_reason: This unit defines storage value types rather than visual presentation.
+L00012264	split_recommended: false
+L00012265	depends_on: []
+L00012266	unblocks: [CV-193, CV-205, CV-206]
+L00012267	acceptance_criteria:
+L00012268	  - "Persisted usage and cost values use integer microdollars."
+L00012269	  - "Presentation can convert to decimal currency strings."
+L00012270	  - "Storage and accumulation do not use decimal currency strings."
+L00012271	validation_surfaces:
+L00012272	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012273	  - python3 scripts/pm-plan-index.py validate
+L00012274	risk_class: cost_storage_type_drift
+L00012275	reasoning_tier: high
+L00012276	context_scope: usage_cost_persistence
+L00012277	implementation_surfaces:
+L00012278	  - Plans/Contracts_V0.md
+L00012279	  - Plans/usage-feature.md
+L00012280	  - Plans/storage-plan.md
+L00012281	node_compile_hint:
+L00012282	  mode: usage_cost_microdollars_contract
+L00012283	  create_worknodes: false
+L00012284	source_lineage:
+L00012285	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0067
+L00012286	preserved_exact_tokens:
+L00012287	  - "integer microdollars"
+L00012288	  - "`u64`"
+L00012289	  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md"
+L00012290	negative_constraints:
+L00012291	  - "Storage and accumulation must not use decimal currency strings."
+L00012292	owner_hints:
+L00012293	  - Plans/Contracts_V0.md
+L00012294	  - Plans/usage-feature.md
+L00012295	  - Plans/storage-plan.md
+L00012296	```
+L00012297	
+L00012298	### CV-190 - Thread Usage Detail Surface Replacement
+L00012299	
+L00012300	```yaml
+L00012301	plan_unit_id: CV-190
+L00012302	unit_type: compatibility_disposition
+L00012303	status: accepted
+L00012304	owner_doc: Plans/Contracts_V0.md
+L00012305	canonical_text: >-
+L00012306	  Assistant chat-thread usage uses a shared context-detail contract instead of a
+L00012307	  chat-local side panel; the stale direct-click detail-open pattern is replaced
+L00012308	  by hover info-popover plus More Details, and clicking the context circle reveals
+L00012309	  or arms Compact Now without dispatching compaction until the user explicitly
+L00012310	  chooses that action. `cmd.chat.compact_context` returns a visible command
+L00012311	  result lifecycle for started, already_running, cancelled, no_op, degraded,
+L00012312	  unavailable, retry_scheduled, completed, and failed states.
+L00012313	gui_related: true
+L00012314	gui_classification_reason: This unit defines user-visible thread usage interaction behavior.
+L00012315	split_recommended: false
+L00012316	depends_on: []
+L00012317	unblocks: [CV-191, CV-192, CV-193]
+L00012318	acceptance_criteria:
+L00012319	  - "Hover shows the compact thread status module."
+L00012320	  - "More Details opens the context-detail editor-tab detail surface."
+L00012321	  - "Clicking the context circle reveals or arms Compact Now but does not dispatch compaction before explicit user choice."
+L00012322	  - "cmd.chat.compact_context reports started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed state to the visible caller."
+L00012323	validation_surfaces:
+L00012324	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012325	  - python3 scripts/pm-plan-index.py validate
+L00012326	risk_class: thread_usage_detail_pattern_drift
+L00012327	reasoning_tier: standard
+L00012328	context_scope: thread_usage_detail_surface
+L00012329	implementation_surfaces:
+L00012330	  - Plans/Contracts_V0.md
+L00012331	  - Plans/assistant-chat-design.md
+L00012332	node_compile_hint:
+L00012333	  mode: thread_usage_detail_compatibility_disposition
+L00012334	  create_worknodes: false
+L00012335	source_lineage:
+L00012336	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+L00012337	preserved_exact_tokens:
+L00012338	  - "More Details"
+L00012339	  - "Compact Now"
+L00012340	  - "cmd.chat.compact_context"
+L00012341	  - "explicit user choice"
+L00012342	  - "already_running"
+L00012343	  - "cancelled"
+L00012344	  - "no_op"
+L00012345	  - "retry_scheduled"
+L00012346	  - "hover info-popover"
+L00012347	  - "context-detail editor-tab detail-surface"
+L00012348	stale_retired_dispositions:
+L00012349	  - "The stale direct-click detail-open pattern is retired."
+L00012350	negative_constraints:
+L00012351	  - "Assistant chat-thread usage surfaces must not use a chat-local side panel as the shared detail contract."
+L00012352	  - "Assistant chat-thread usage surfaces must not dispatch Compact Now from hover or from the context-circle click before the user chooses Compact Now."
+L00012353	owner_hints:
+L00012354	  - Plans/Contracts_V0.md
+L00012355	  - Plans/assistant-chat-design.md
+L00012356	```
+L00012357	
+L00012358	### CV-191 - Compact Message Usage Row Schema
+L00012359	
+L00012360	```yaml
+L00012361	plan_unit_id: CV-191
+L00012362	unit_type: requirement
+L00012363	status: accepted
+L00012364	owner_doc: Plans/Contracts_V0.md
+L00012365	canonical_text: >-
+L00012366	  The under-message summary and Messages tab compact-row schema is closed to
+L00012367	  role, worker type, mode, model, time or duration, total tokens, and cost; each
+L00012368	  message renders one expandable row with the closed Assistant Chat label set.
+L00012369	gui_related: true
+L00012370	gui_classification_reason: This unit defines visible message rows, labels, and actions.
+L00012371	split_recommended: false
+L00012372	depends_on: [CV-190]
+L00012373	unblocks: []
+L00012374	acceptance_criteria:
+L00012375	  - "Messages renders one expandable row per message."
+L00012376	  - "Expanded rows use Mode, Provider, Model, Effort, Persona, Worker, Tokens, and Context labels."
+L00012377	  - "Resend retries the most recent user message and discards later history or work."
+L00012378	validation_surfaces:
+L00012379	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012380	  - python3 scripts/pm-plan-index.py validate
+L00012381	risk_class: compact_usage_row_schema_drift
+L00012382	reasoning_tier: standard
+L00012383	context_scope: compact_message_usage_rows
+L00012384	implementation_surfaces:
+L00012385	  - Plans/Contracts_V0.md
+L00012386	  - Plans/assistant-chat-design.md
+L00012387	node_compile_hint:
+L00012388	  mode: compact_message_usage_row_schema
+L00012389	  create_worknodes: false
+L00012390	source_lineage:
+L00012391	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+L00012392	preserved_exact_tokens:
+L00012393	  - "`Messages`"
+L00012394	  - "`/duration`"
+L00012395	  - "Mode"
+L00012396	  - "Provider"
+L00012397	  - "Model"
+L00012398	  - "Effort"
+L00012399	  - "Persona"
+L00012400	  - "Worker"
+L00012401	  - "Tokens"
+L00012402	  - "Context"
+L00012403	  - "`Resend`"
+L00012404	negative_constraints:
+L00012405	  - "Resend must discard later history or work when retrying the most recent user message."
+L00012406	owner_hints:
+L00012407	  - Plans/Contracts_V0.md
+L00012408	  - Plans/assistant-chat-design.md
+L00012409	```
+L00012410	
+
+<<< CONTEXT_AFTER canonical_document_lines=12411-12422 >>>
+L00012411	### CV-192 - Context Detail Editor Tab Paths
+L00012412	
+L00012413	```yaml
+L00012414	plan_unit_id: CV-192
+L00012415	unit_type: requirement
+L00012416	status: accepted
+L00012417	owner_doc: Plans/Contracts_V0.md
+L00012418	canonical_text: >-
+L00012419	  The context-detail editor tab has top-level Curated and raw inspection paths;
+L00012420	  Curated contains Overview, Breakdown, and Messages, and Deep Plan remains a
+L00012421	  distinct workflow identity and display label.
+L00012422	gui_related: true

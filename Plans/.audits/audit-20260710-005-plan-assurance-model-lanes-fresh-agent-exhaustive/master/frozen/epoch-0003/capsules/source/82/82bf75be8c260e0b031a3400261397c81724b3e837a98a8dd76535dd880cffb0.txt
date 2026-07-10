@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 28299-28310 >>>
+negative_constraints:
+- Next steps are not executable queues or production build tasks.
+compatibility_only_notes:
+- Checklist remains source-lineage planning evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider/platform owners decide whether checklist evidence becomes owner-doc canon.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 28311-28705 >>>
+### OSI-379 - Autonomous QA Reference Adoption Boundary
+
+```yaml
+plan_unit_id: OSI-379
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The autonomous QA loop pattern is an external reference input for quality-gate ideas and must not override PM-native
+  orchestrator, subagent, and verification contracts.
+gui_related: false
+gui_classification_reason: This unit covers external reference/adoption boundary, not GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-098
+- OSI-107
+- OSI-116
+unblocks: []
+acceptance_criteria:
+- Covered Autonomous QA Loop Pattern Integration and Overview text remains losslessly available for exact-text audit.
+- External VS Code Copilot pattern material remains reference input only.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: autonomous_qa_reference_adoption_boundary
+node_compile_hint:
+  mode: autonomous_qa_reference_adoption_boundary
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0177
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0178
+preserved_exact_tokens:
+- 'https://gist.github.com/gsemet/1ef024fc426cfc75f946302033a69812'
+- autonomous QA loop pattern
+- VS Code Copilot
+- quality gates
+negative_constraints:
+- External pattern material must not override PM-native orchestration contracts.
+compatibility_only_notes:
+- External pattern is reference input only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- PM-native orchestrator and verification contracts retain authority.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-380 - Autonomous QA Backend Concept Catalog
+
+```yaml
+plan_unit_id: OSI-380
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Backend autonomous QA concepts preserve orchestrator/subagent separation, three-tier QA naming, phase-aware execution,
+  PAUSE.md halting, and rework commit strategy as source-lineage concepts.
+gui_related: false
+gui_classification_reason: This unit covers backend orchestration concepts, not visual presentation.
+split_recommended: false
+depends_on:
+- OSI-098
+- OSI-107
+- OSI-137
+unblocks: []
+acceptance_criteria:
+- Covered backend concept bullets remain losslessly available for exact-text audit.
+- Concept bullets remain plan evidence and do not create executable queues.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: autonomous_qa_backend_concept_catalog
+node_compile_hint:
+  mode: autonomous_qa_backend_concept_catalog
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0179
+preserved_exact_tokens:
+- Orchestrator/Subagent Separation
+- Three-Tier QA System
+- Phase-Aware Execution
+- PAUSE.md
+- Commit Strategy
+negative_constraints:
+- Backend concept bullets are not executable work queues.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestrator and verification owners decide whether concepts become canonical behavior.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-381 - Autonomous QA Visual Status Symbols
+
+```yaml
+plan_unit_id: OSI-381
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Autonomous QA visual status concepts preserve the exact visual symbols for progress and incomplete-task prioritization
+  as GUI-consumer evidence separate from backend orchestration semantics.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible status symbols and incomplete-task visual markers.
+split_recommended: false
+depends_on:
+- OSI-380
+unblocks: []
+acceptance_criteria:
+- Covered visual status symbol bullets remain losslessly available for exact-text audit.
+- GUI status presentation remains a consumer projection and does not own backend orchestration semantics.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: autonomous_qa_visual_status_symbols
+node_compile_hint:
+  mode: autonomous_qa_visual_status_symbols
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0179
+preserved_exact_tokens:
+- Visual status symbols
+- '⬜ 🔄 ✅ 🔴'
+- 'Incomplete tasks (🔴)'
+negative_constraints:
+- Visual symbols do not own backend orchestration state.
+compatibility_only_notes:
+- Symbols are GUI-consumer evidence until presentation owners accept them.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Final GUI owns user-visible presentation; orchestrator owns status semantics.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-382 - Progress Tracking Visual Status Model
+
+```yaml
+plan_unit_id: OSI-382
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Progress tracking visual status model evidence preserves TaskStatus values and exact status symbols for user-visible
+  progress presentation while keeping presentation separate from runtime state authority.
+gui_related: true
+gui_classification_reason: This unit preserves visible progress status symbols and labels.
+split_recommended: false
+depends_on:
+- OSI-381
+unblocks: []
+acceptance_criteria:
+- Covered progress tracking visual status lines remain losslessly available for exact-text audit.
+- Visual TaskStatus examples do not redefine canonical runtime status enums.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: progress_tracking_visual_status_model
+node_compile_hint:
+  mode: progress_tracking_visual_status_model
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0180
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0181
+preserved_exact_tokens:
+- Enhanced Progress Tracking
+- TaskStatus
+- NotStarted
+- InProgress
+- Completed
+- Incomplete
+- Skipped
+- '⬜'
+- '🔄'
+- '✅'
+- '🔴'
+- '⏸️'
+negative_constraints:
+- Visual TaskStatus examples do not redefine canonical runtime status enums.
+compatibility_only_notes:
+- Integration Opportunities heading is attached coverage for S0181-S0187 units.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Runtime contracts own canonical status enums; GUI consumes display projection.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-383 - ProgressTracker State And Next-Task Selection
+
+```yaml
+plan_unit_id: OSI-383
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  ProgressTracker source evidence preserves task progress fields, current-phase tracking, and next-task selection that
+  prioritizes incomplete current-phase tasks before not-started current-phase tasks.
+gui_related: false
+gui_classification_reason: This unit covers backend progress tracking and selection behavior, not GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-380
+- OSI-382
+unblocks: []
+acceptance_criteria:
+- Covered ProgressTracker Rust snippet remains losslessly available for exact-text audit.
+- Snippet remains plan evidence and does not create executable scheduling work.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: progress_tracker_state_next_task_selection
+node_compile_hint:
+  mode: progress_tracker_state_next_task_selection
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0181
+preserved_exact_tokens:
+- TaskProgress
+- ProgressTracker
+- current_phase
+- get_next_task
+- incomplete tasks in current phase
+- not started tasks in current phase
+negative_constraints:
+- ProgressTracker snippet is not an executable scheduler manifest.
+compatibility_only_notes:
+- Rust snippet is source-lineage evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestrator scheduling owners adjudicate concrete next-task policy.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-384 - Three-Tier QA System Interfaces
+
+```yaml
+plan_unit_id: OSI-384
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Three-tier QA system evidence preserves preflight, task-inspector, and phase-inspector interfaces plus complete/incomplete
+  feedback classification as source-lineage quality-gate concepts.
+gui_related: false
+gui_classification_reason: This unit covers backend QA interfaces, not GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-098
+- OSI-116
+- OSI-124
+- OSI-221
+unblocks: []
+acceptance_criteria:
+- Covered QASystem Rust snippet remains losslessly available for exact-text audit.
+- QA interface example does not create executable inspector work.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: three_tier_qa_system_interfaces
+node_compile_hint:
+  mode: three_tier_qa_system_interfaces
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0182
+preserved_exact_tokens:
+- QASystem
+- PreflightRunner
+- TaskInspector
+- PhaseInspector
+- run_preflight
+- inspect_task
+- inspect_phase
+- Complete or Incomplete with feedback
+negative_constraints:
+- QA interface example does not create executable inspector work.
+compatibility_only_notes:
+- Rust snippet is source-lineage evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Verification/quality-gate owners adjudicate promoted inspector interfaces.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-385 - Task Inspector Subtask Feedback Integration
+
+```yaml
+plan_unit_id: OSI-385
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Task inspector integration evidence preserves post-subagent inspection for subtasks, completed/incomplete marking, and
+  feedback prepending for the next iteration.
+gui_related: false
+gui_classification_reason: This unit covers backend task inspection flow, not GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-120
+- OSI-121
+- OSI-137
+- OSI-384
+unblocks: []
+acceptance_criteria:
+- Covered task inspector integration snippet remains losslessly available for exact-text audit.
+- Feedback integration remains source evidence and does not create executable remediation work.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: task_inspector_subtask_feedback_integration
+node_compile_hint:
+  mode: task_inspector_subtask_feedback_integration
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0183
+preserved_exact_tokens:
+- execute_tier_with_subagents
+- 'TierType::Subtask'
+- 'InspectionStatus::Complete'
+- mark_completed
+- 'InspectionStatus::Incomplete'
+- mark_incomplete
+- prepend_task_feedback
+negative_constraints:
+- Task inspector feedback snippet is not executable remediation work.
+compatibility_only_notes:
+- Rust snippet is source-lineage evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestrator remediation/inspection owners adjudicate concrete feedback routing.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 28706-28717 >>>
+### OSI-386 - Phase Inspector Completion Gate
+
+```yaml
+plan_unit_id: OSI-386
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Phase inspector evidence preserves phase completion checking, phase-level inspection, phase task lookup, and phase
+  advancement after all tasks complete.
+gui_related: false
+gui_classification_reason: This unit covers backend phase inspection flow, not GUI presentation.

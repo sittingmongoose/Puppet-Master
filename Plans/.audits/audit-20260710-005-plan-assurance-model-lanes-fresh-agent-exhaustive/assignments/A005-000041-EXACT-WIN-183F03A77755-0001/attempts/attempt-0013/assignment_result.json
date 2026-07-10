@@ -1,0 +1,274 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000041-EXACT-WIN-183F03A77755-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_c_parallel_dispatcher_epoch_0013/leaf_0041_exact_attempt_0013",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/runtime_artifact_restore_point.schema.json",
+    "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4",
+    "core_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4",
+    "core_range": [1, 1]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "I-001",
+      "item_type": "contract",
+      "title": "Closed restore-point object contract",
+      "statement": "A restore-point artifact is a JSON object governed by a fixed schema identifier and title; undeclared top-level properties are rejected.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"$id\":\"pm.runtime_artifact.restore_point.schema.v1\",\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-002",
+      "item_type": "contract",
+      "title": "Required identity, lineage, status, retention, routing, and payload fields",
+      "statement": "The object must provide schema and artifact identity, project/run/attempt lineage, creation time, projection freshness and health, retention class, routing references, and a type-specific payload.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-003",
+      "item_type": "contract",
+      "title": "Artifact classification is invariant",
+      "statement": "schema_id and artifact_type are fixed to the v1 restore-point schema and restore_point classification respectively.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.restore_point.schema.v1\"},\"artifact_id\":{\"type\":\"string\",\"minLength\":1},\"artifact_type\":{\"type\":\"string\",\"const\":\"restore_point\"}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-004",
+      "item_type": "contract",
+      "title": "Routing and payload minimum cardinality",
+      "statement": "At least one non-empty routing reference and at least one payload property are required.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-005",
+      "item_type": "gap",
+      "title": "Creation time is not format validated",
+      "statement": "created_at_utc is only a non-empty string; the contract does not require a date-time format, UTC offset, canonical precision, or parseability.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "under_specified_temporal_contract",
+      "impact": "Malformed or incomparable timestamps can pass structural validation and undermine ordering, retention, and recovery operations.",
+      "builder_discretion": "Builders must choose timestamp syntax, precision, parsing, and normalization behavior.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-006",
+      "item_type": "gap",
+      "title": "Projection and retention state vocabularies are unconstrained",
+      "statement": "projection_freshness, projection_health, and retention_class accept arbitrary strings; allowed states, meanings, transitions, and recovery consequences are not specified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "undefined_state_vocabulary",
+      "impact": "Producers and consumers can emit or interpret incompatible state values, preventing deterministic lifecycle and recovery behavior.",
+      "builder_discretion": "Builders must invent state vocabularies, transition rules, invalid-state handling, and retention semantics.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-007",
+      "item_type": "gap",
+      "title": "Type payload has no restore-point semantics",
+      "statement": "type_payload need only be a non-empty object; its required contents, restore behavior, integrity checks, size bounds, confidentiality, and compatibility rules are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "opaque_required_payload",
+      "impact": "Structurally valid artifacts can lack the data needed to restore state, while producers and consumers can disagree on payload shape and limits.",
+      "builder_discretion": "Builders control payload schema, nesting, validation, limits, protection, and version evolution.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-008",
+      "item_type": "gap",
+      "title": "Reference integrity and propagation behavior are unspecified",
+      "statement": "Thread, node, provider-attempt, usage-event, receipt, producer, actor, detail, content, source-surface, and routing references have string-level shape only; namespace, existence, authorization, cardinality limits, deduplication, and resolution failure behavior are absent.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unvalidated_reference_contract",
+      "impact": "Dangling, ambiguous, unauthorized, duplicate, or excessively large reference sets can validate, leaving consumers unable to resolve or safely propagate the artifact.",
+      "builder_discretion": "Builders must choose reference namespaces, integrity and access checks, resolution failure handling, ordering, deduplication, and propagation semantics.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"},\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-009",
+      "item_type": "gap",
+      "title": "Authority, ownership, consumer, security, and recovery rules are absent",
+      "statement": "The contract provides optional producer_ref and actor_ref strings but does not define who may create, mutate, retain, read, route, consume, or restore an artifact, nor how failures or privacy-sensitive contents are handled.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_operational_authority_contract",
+      "impact": "Implementations can diverge on ownership and authorization, expose sensitive restore data, or fail non-deterministically during restoration and cleanup.",
+      "builder_discretion": "Builders must define authority, ownership, consumers, access control, privacy handling, failure states, retries, rollback, retention execution, and recovery ownership.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-010",
+      "item_type": "acceptance_oracle",
+      "title": "Acceptance oracle is structural only",
+      "statement": "JSON Schema validation can reject unknown top-level properties, missing required fields, wrong primitive types, incorrect constants, empty required identifiers, empty routing arrays, and empty payload objects; it cannot establish referential, semantic, restoration, security, or lifecycle correctness.",
+      "severity": "medium",
+      "confidence": "high",
+      "impact": "A schema-valid object is not necessarily a usable or safe restore point.",
+      "builder_discretion": "Builders must add all semantic and executable restoration oracles beyond schema validation.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "I-011",
+      "item_type": "explicit_non_gap",
+      "title": "No GUI surface is defined by this schema",
+      "statement": "The authoritative line defines a machine-readable runtime artifact object and contains no user-interface field, presentation rule, or user interaction contract; GUI truth is not applicable to this isolated schema contract.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\"",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension":"behavior","status":"gap_found","summary":"Structural validation behavior is defined, but restoration behavior is not.","evidence_item_ids":["I-001","I-002","I-007","I-010"]},
+    {"dimension":"capabilities","status":"gap_found","summary":"The schema can classify and structurally validate restore-point artifacts, but it does not specify an executable restore capability.","evidence_item_ids":["I-001","I-003","I-007"]},
+    {"dimension":"inputs_outputs","status":"addressed","summary":"The accepted top-level object shape, required inputs, optional references, routing array, and payload object are defined.","evidence_item_ids":["I-001","I-002","I-004","I-008"]},
+    {"dimension":"contracts","status":"addressed","summary":"A closed JSON Schema contract with fixed classification and minimum field/cardinality constraints is present.","evidence_item_ids":["I-001","I-002","I-003","I-004"]},
+    {"dimension":"states_transitions","status":"gap_found","summary":"Projection and retention fields exist, but state vocabularies and transitions are undefined.","evidence_item_ids":["I-006"]},
+    {"dimension":"authority","status":"gap_found","summary":"Producer and actor references do not establish permissions or decision authority.","evidence_item_ids":["I-009"]},
+    {"dimension":"ownership","status":"gap_found","summary":"No owner is designated for creation, retention, restoration, mutation, or cleanup.","evidence_item_ids":["I-009"]},
+    {"dimension":"consumers","status":"gap_found","summary":"No consumers or their interpretation and resolution obligations are identified.","evidence_item_ids":["I-008","I-009"]},
+    {"dimension":"gui_truth","status":"not_applicable","summary":"This isolated artifact-schema line defines no GUI surface or presentation contract.","evidence_item_ids":["I-011"]},
+    {"dimension":"failures_recovery","status":"gap_found","summary":"Resolution failures, invalid state, restore failure, retry, rollback, and recovery ownership are unspecified.","evidence_item_ids":["I-006","I-008","I-009"]},
+    {"dimension":"security_privacy","status":"gap_found","summary":"No access, confidentiality, integrity, privacy, or sensitive-payload handling rules are imposed.","evidence_item_ids":["I-007","I-008","I-009"]},
+    {"dimension":"propagation","status":"gap_found","summary":"Routing references exist, but resolution, deduplication, ordering, authorization, and propagation semantics are absent.","evidence_item_ids":["I-004","I-008"]},
+    {"dimension":"operations","status":"gap_found","summary":"Timestamp, retention execution, cleanup, observability, and restore-operation rules are incomplete.","evidence_item_ids":["I-005","I-006","I-009"]},
+    {"dimension":"scale_performance","status":"gap_found","summary":"Payload, receipt-reference, and routing-reference sizes have no upper bounds or performance expectations.","evidence_item_ids":["I-004","I-007","I-008"]},
+    {"dimension":"compatibility_migration","status":"gap_found","summary":"The schema has a fixed v1 identifier, but payload versioning, compatibility, and migration rules are absent.","evidence_item_ids":["I-003","I-007"]},
+    {"dimension":"acceptance_oracles","status":"gap_found","summary":"Structural JSON Schema validation exists, but no semantic or executable restoration oracle is defined.","evidence_item_ids":["I-010"]},
+    {"dimension":"builder_discretion","status":"gap_found","summary":"Builders retain consequential discretion over timestamp syntax, state vocabularies, payload shape, reference integrity, authority, security, lifecycle, and recovery.","evidence_item_ids":["I-005","I-006","I-007","I-008","I-009","I-010"]},
+    {"dimension":"ambiguity_unknowns","status":"gap_found","summary":"Core restore-point meaning remains ambiguous because payload semantics, reference namespaces, state meanings, and operational rules are not defined.","evidence_item_ids":["I-006","I-007","I-008","I-009"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

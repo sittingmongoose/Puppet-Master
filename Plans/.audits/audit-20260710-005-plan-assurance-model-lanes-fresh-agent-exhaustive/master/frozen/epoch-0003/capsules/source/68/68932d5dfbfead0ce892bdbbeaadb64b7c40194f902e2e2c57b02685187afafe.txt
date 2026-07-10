@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 1492-1503 >>>
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Personas.md'
+compatibility_only_notes:
+- 'PM-compatible provider posture: always use the PM registry/bundling/`skill` tool path at runtime; always import/discover from PM''s canonical roots, including shared `.claude` / `.agents` compatibility roots; and only export/project to external/provider-native conventions when the user enables it or when a specific provider integration proves it materially useful. PM may project instructions, skills, and target-specific `mcp_definitions`, but provider-native files/directories and `/directories` cannot become the canonical runtime contract. Internal trace labels may include `/provider-native`, `/discover`, `/bundling/`, and `/project`, but those labels do not replace the canonical skill registry or readiness model.'
+- 'Compatibility projection/export policy is explicit and target-based: the default posture is `import/discover yes` and `export/project no`; any projection row records a target such as `.claude/skills` or `.agents/skills`, not an implicit provider-wide install into per-account sandboxes. OpenCode repo `/docs` compatibility import/discovery accepts the exact provider-native path forms `.claude/skills/*/SKILL.md`, `.agents/skills/*/SKILL.md`, `claude/skills/*/SKILL.md`, and `agents/skills/*/SKILL.md` as external compatibility roots, while PM still resolves them through the canonical registry. Projection state values are `not_projected`, `projected_in_sync`, `projection_failed`, and `drifted`; methods may include `copy` by default and `symlink` only where platform/filesystem support is proven.'
+- 'Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.'
+- The Skills tab is the loaded-skills catalog for discovered, imported, and catalog-installed entries; legacy `/imported/catalog-installed` copy is an alias for those source rows, not a separate source type. It must support browse/search/filter (`/search/filter`), source/readiness (`source-readiness`) filters including `/global/bundled/catalog`, preview/body inspection, validation details, warning details, and source/readiness badges. Rows preserve `referenced_by_persona`, `auto_invokable`, `assistant-auto-usable`, `requires_missing_capability`, `catalog_update_available`, `imported-with-warnings`, and `warning-blocked` badges/flags where applicable.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/FinalGUISpec.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1504-1862 >>>
+### SS-020 - Skill Permission Key And Skill ID Grants
+
+```yaml
+plan_unit_id: SS-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The skill permission key governs skill loading and supports granular permission rules over canonical Skill IDs.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SS-020 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_permission_key_skill_id_grants
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0021
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0022
+preserved_exact_tokens:
+- Permissions integration
+- skill
+- Plans/Permissions_System.md#5-tool-permission-keys
+- Skill IDs
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Permissions_System.md
+```
+
+### SS-021 - External Directory FileSafe Guard
+
+```yaml
+plan_unit_id: SS-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Skill permission grants operate over canonical Skill IDs rather than raw filesystem paths, and skill resource disclosure or file operations remain FileSafe and external-directory guarded.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SS-021 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: external_directory_filesafe_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0023
+preserved_exact_tokens:
+- canonical skill IDs
+- raw filesystem paths
+- FileSafe allowlist
+- external-directory policy
+- blocked-action recovery
+- Underlying file operations
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+```
+
+### SS-022 - Child Run Inheritance And Allowed Roots
+
+```yaml
+plan_unit_id: SS-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Child runs receive only the effective compatible subset of parent-allowed skills, cannot exceed the parent ceiling, and discovered global roots are canonicalized allowed roots while symlink escapes are rejected.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- PS-001
+- T-001
+- PLUG-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SS-022 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: child_run_inheritance_allowed_roots
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0024
+preserved_exact_tokens:
+- child-run inheritance
+- parent-allowed skill universe
+- parent ceiling
+- Plugins_System.md
+- Models_System.md
+- global roots
+- canonicalizes
+- symlinked roots
+negative_constraints:
+- A child must not gain skill-powered capability that exceeds the parent ceiling.
+- a child must not gain skill-powered capability that exceeds the parent ceiling.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md'
+- 'ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Permissions_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Tools.md
+- Plans/Plugins_System.md
+- Plans/storage-plan.md
+```
+
+### SS-023 - Agent Config Skills Ownership
+
+```yaml
+plan_unit_id: SS-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Agent Config > Skills owns skill management while Settings keeps system-level dependencies; legacy Settings > Skills redirects/focuses to Agent Config and dependencies deep-link back to Settings where appropriate.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SS-023 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: agent_config_skills_ownership
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0025
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0026
+preserved_exact_tokens:
+- Agent Config > Skills
+- Settings > Skills
+- Settings
+- Authentication
+- Models/Permissions
+- permission profiles
+- rules/commands
+- runtime controls
+- health
+- Agent Config > Personas
+- management-surface
+negative_constraints:
+- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Personas.md'
+compatibility_only_notes:
+- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+- 'Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.'
+- The Skills tab is the loaded-skills catalog for discovered, imported, and catalog-installed entries; legacy `/imported/catalog-installed` copy is an alias for those source rows, not a separate source type. It must support browse/search/filter (`/search/filter`), source/readiness (`source-readiness`) filters including `/global/bundled/catalog`, preview/body inspection, validation details, warning details, and source/readiness badges. Rows preserve `referenced_by_persona`, `auto_invokable`, `assistant-auto-usable`, `requires_missing_capability`, `catalog_update_available`, `imported-with-warnings`, and `warning-blocked` badges/flags where applicable.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/FinalGUISpec.md
+- Plans/Personas.md
+```
+
+### SS-024 - Skills Catalog Filters Badges Actions
+
+```yaml
+plan_unit_id: SS-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The Skills tab is the loaded-skills catalog with search/filter, source/readiness filters, preview/body inspection, validation/warning details, source/readiness badges, store-vs-management split, and import/manage actions.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SS-024 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skills_catalog_filters_badges_actions
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0026
+preserved_exact_tokens:
+- loaded-skills catalog
+- /search/filter
+- source-readiness
+- /global/bundled/catalog
+- preview/body inspection
+- referenced_by_persona
+- auto_invokable
+- assistant-auto-usable
+- requires_missing_capability
+- catalog_update_available
+- imported-with-warnings
+- warning-blocked
+- Skill Store
+- /install-only
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Personas.md'
+compatibility_only_notes:
+- 'Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.'
+- The Skills tab is the loaded-skills catalog for discovered, imported, and catalog-installed entries; legacy `/imported/catalog-installed` copy is an alias for those source rows, not a separate source type. It must support browse/search/filter (`/search/filter`), source/readiness (`source-readiness`) filters including `/global/bundled/catalog`, preview/body inspection, validation details, warning details, and source/readiness badges. Rows preserve `referenced_by_persona`, `auto_invokable`, `assistant-auto-usable`, `requires_missing_capability`, `catalog_update_available`, `imported-with-warnings`, and `warning-blocked` badges/flags where applicable.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/FinalGUISpec.md
+```
+
+### SS-025 - GUI Provenance And Remediation States
+
+```yaml
+plan_unit_id: SS-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Skill rows/cards distinguish source from location, preserve origin labels and URLs, and show plain-language primary states with remediation text and matched action buttons.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SS-025 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: gui_provenance_remediation_states
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0026
+preserved_exact_tokens:
+- /source
+- /location
+- Bundled with PM
+- Imported from disk
+- Installed from catalog
+- Installed from GitHub
+- GitHub URL
+- Ready
+- Needs setup
+- Needs permission
+- Has problems
+- Warning
+- Set up Context7
+- Review permissions
+- Edit skill
+- Review tool setup
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Personas.md'
+compatibility_only_notes:
+- 'Agent Config > Skills is the page-level GUI management surface for agent-management skills. It is not a `settings-only` tab. Legacy `Settings > Skills` copy is a redirect/focus entry into Agent Config > Skills, while Settings remains owner for Authentication, Models/Permissions, permission profiles, rules/commands, runtime controls, and health. Agent Config may cross-link to Settings when a persona or skill depends on those system resources; for example, a blocked provider/account capability may deep-link to Authentication, Health, or `/Models/Permissions` without moving that dependency into Agent Config. Source tokens `/catalog/runtime`, `/discoverability`, and `management-surface` normalize here: Agent Config > Skills is the Skills `/catalog/runtime` and `/discoverability` management-surface for Skill IDs, while runtime readiness remains owned by `skill_runtime_readiness`.'
+- The Skills tab is the loaded-skills catalog for discovered, imported, and catalog-installed entries; legacy `/imported/catalog-installed` copy is an alias for those source rows, not a separate source type. It must support browse/search/filter (`/search/filter`), source/readiness (`source-readiness`) filters including `/global/bundled/catalog`, preview/body inspection, validation details, warning details, and source/readiness badges. Rows preserve `referenced_by_persona`, `auto_invokable`, `assistant-auto-usable`, `requires_missing_capability`, `catalog_update_available`, `imported-with-warnings`, and `warning-blocked` badges/flags where applicable.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/FinalGUISpec.md
+```
+
+
+<<< CONTEXT_AFTER 1863-1874 >>>
+### SS-026 - Validation Readiness GUI Taxonomy
+
+```yaml
+plan_unit_id: SS-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: GUI readiness distinguishes schema invalid, unknown tool ref, and known-but-unavailable tool refs, mapping them to Invalid, Missing Requirement, or Permission Blocked style outcomes without hiding exact reasons.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:

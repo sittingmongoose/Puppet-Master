@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1156-1167 >>>
+L00001156	- Cleanup reconciliation includes Orchestrator tab/page retargeting, Source Control versus Orchestrator surface cleanup, `/glossary` and `/help/view` expansion, stale consumer-doc requested and `/effective/runtime` identity cleanup, and `/search/attention/project-summary` alignment.
+L00001157	- Tier language is legacy decomposition/help terminology. Tier IDs and `/request-era` or tier-era state file names remain compatibility inputs only; worktrees, crews, agent coordination, route/open cleanup, blocked-identity cleanup, and runtime cleanup use node, lane, package, attempt, `/block/runtime-lineage`, and rewrite-era runtime identity instead.
+L00001158	
+L00001159	### 10.1 WorktreeGitImprovement.md
+L00001160	
+L00001161	**What the Worktree plan does:** Config wiring (Option B: build run config from GUI at run start), worktree create/merge/cleanup (of worktree *directories*), active_worktrees repopulation, git binary resolution, GitHub API PR creation wiring (no GitHub CLI), Branching tab GUI, Doctor worktrees check.
+L00001162	
+L00001163	**Dependencies (MiscPlan depends on Worktree):**
+L00001164	
+L00001165	- **Config wiring (Phase 1):** Cleanup config (cleanup.untracked, cleanup.ignored, cleanup.clear_agent_output, etc.) must live in the **same** config shape that the run receives. When implementing MiscPlan §7 (Cleanup UX & Config), add cleanup fields to that schema and ensure they are populated from the GUI (or file) the same way as other run settings. If Option B is not yet implemented, cleanup toggles in the GUI would not affect the run; implement Option B first or in parallel so cleanup config is wired.
+L00001166	- **Git binary resolution (Phase 3):** The Worktree plan introduces a shared helper for resolving the `git` executable: `path_utils::resolve_git_executable()`, used by both GitManager and Doctor. **MiscPlan's cleanup module** must use that same helper when running `git clean` (in `run_git_clean_with_excludes`). Do not use `Command::new("git")` alone; resolve the binary so cleanup works in environments where git is only in app-local or custom paths. See Worktree §3.1, §7.5.
+L00001167	- **Worktree list for "Clean workspace" (optional):** If implementing "Clean workspace now" for **all active worktrees** (§7.2), the list of worktrees must come from the same place as the orchestrator (e.g. `worktree_manager.list_worktrees()` and/or `active_worktrees`). Worktree plan §2.2 and §7.6 describe repopulation of active_worktrees; if that is not done, "clean all worktrees" may only clean the main workspace. Prefer implementing after or with Worktree Phase 2 so worktree list is reliable.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1168-1528 >>>
+L00001168	
+L00001169	**Distinction:** Worktree plan's "cleanup" is **removing the worktree directory** after merge (`cleanup_subtask_worktree`, `remove_worktree`). MiscPlan's cleanup is **removing untracked/ignored files *inside* ** the workspace or worktree. Both apply: after an iteration, run MiscPlan's cleanup_after_execution in that worktree; when the subtask is done and merged, run Worktree's remove_worktree. No conflict.
+L00001170	
+L00001171	**STATE_FILES.md:** Worktree plan adds a worktrees subsection under `.puppet-master/`; MiscPlan adds agent-output and possibly evidence retention. Both can update STATE_FILES in their own subsections.
+L00001172	
+L00001173	### 10.2 orchestrator-subagent-integration.md
+L00001174	
+L00001175	**What the Orchestrator plan does:** Subagent selection and invocation at Phase/Task/Subtask/Iteration, config-wiring validation, start/end verification (legacy-named `verify_tier_start`, `verify_tier_end`) at phase/task/subtask boundaries, quality verification (reviewer subagent, gate criteria), parallel execution with worktrees per subtask.
+L00001176	
+L00001177	**Impacts (MiscPlan impacts Orchestrator):**
+L00001178	
+L00001179	- **Single execution path:** All agent runs (main iteration and subagent runs) should go through the same prepare → execute → cleanup flow. When the orchestrator plan adds `execute_tier_with_subagents` or similar, that path must **use run_with_cleanup** (or the same prepare/execute/cleanup wrapper) so that both "main" iterations and subagent invocations get prepare_working_directory before run and cleanup_after_execution after run. Do not call `runner.execute()` directly from new orchestrator/subagent code; use the wrapper from MiscPlan §4.6.
+L00001180	- **Ordering with start/end verification:** Orchestrator plan's legacy-named `verify_tier_start` runs at Phase/Task/Subtask (and optionally Iteration) **entry**; `verify_tier_end` runs at Phase/Task/Subtask **completion**. MiscPlan's prepare/cleanup run at **iteration** boundaries (before and after each runner.execute). So the flow is: verify_tier_start (unit) -> ... -> prepare_working_directory (iteration) -> execute -> cleanup_after_execution (iteration) -> ... -> verify_tier_end (unit). No conflict; both apply. When implementing orchestrator start/end verification, keep iteration-level prepare/cleanup as defined in MiscPlan.
+L00001181	- **Parallel subtasks:** Each parallel subtask has its own worktree and working_dir. cleanup_after_execution runs in that subtask's work_dir only (per MiscPlan §3.3). Orchestrator plan's parallel execution (worktree per subtask) is compatible; no extra change needed.
+L00001182	- **Commit order:** The orchestrator calls its legacy-named `commit_tier_progress` helper **after** the iteration returns; run_with_cleanup runs cleanup **before** that. So cleanup_after_execution must not remove untracked files (§9.1.13); only runner temp files. Full workspace untracked clean runs in prepare_working_directory (before the run).
+L00001183	
+L00001184	**Dependencies (MiscPlan depends on Orchestrator):** None. MiscPlan can be implemented first; orchestrator subagent integration should then wire its runner calls through run_with_cleanup.
+L00001185	
+L00001186	### 10.3 interview-subagent-integration.md
+L00001187	
+L00001188	**What the Interview plan does:** Subagent persona assignments per interview phase, research_engine enhancements (e.g. research_pre_question_with_subagent), prompt templates with subagent instructions, SubagentInvoker for platform-specific invocation, document generation and validation subagents.
+L00001189	
+L00001190	**Impacts (MiscPlan impacts Interview):**
+L00001191	
+L00001192	- **Research engine:** Interview plan adds or extends `research_pre_question_with_subagent` and similar. Whenever the interview flow calls the platform runner (e.g. `runner.execute(&request)` in research_engine or in subagent invocation), that call must go through **run_with_cleanup** so the interview working directory is prepared and cleaned the same way as orchestrator and start_chain. MiscPlan §4.6 already lists interview research_engine as a call site; when the interview plan adds subagent-based research, that new path must also use the wrapper (not raw runner.execute).
+L00001193	- **SubagentInvoker / platform invocation:** If the interview plan introduces a helper that builds a prompt and then runs the platform (e.g. for validation or research), that run should use run_with_cleanup so agent-left-behind files from interview runs are cleaned. Centralize on the single wrapper for all runner invocations from the interview flow.
+L00001194	
+L00001195	**Dependencies (MiscPlan depends on Interview):** None. MiscPlan can be implemented first; interview subagent integration should then use run_with_cleanup for every runner call.
+L00001196	
+L00001197	**Interview and orchestrator output:** Interview writes to `.puppet-master/interview/` and `.puppet-master/research/`; start-chain/wizard to `.puppet-master/start-chain/`; phase/task/subtask plans to `.puppet-master/plans/` (STATE_FILES). All are under `.puppet-master/` and thus allowlisted. When adding new output paths in the interview or orchestrator plans, keep them under `.puppet-master/` or add them to the cleanup allowlist so they are never removed (§9.1.14).
+L00001198	
+L00001199	### 10.4 newfeatures.md
+L00001200	
+L00001201	**Plans/newfeatures.md §13** (Bounded buffers and process isolation) requires that all subprocess output (runners, headless, stream consumers) use **bounded buffers** (fixed max size, drop oldest when full) and that the CLI always runs in a **separate process**. When implementing cleanup or any runner path, ensure we do not accumulate unbounded stdout/stderr; align with newfeatures §13 and document in AGENTS.md. **§2** (Background/async agents) defines output for background runs at `.puppet-master/agent-output/{run-id}/`; if that feature is implemented, the cleanup allowlist and optional "agent output" policy (§3.2, §5) should account for that path so background run output is preserved or cleared per policy.
+L00001202	
+L00001203	### 10.5 Summary: what else needs to be done
+L00001204	
+L00001205	
+L00001206	| Plan | What to do so MiscPlan fits |
+L00001207	|------|-----------------------------|
+L00001208	| **WorktreeGitImprovement** | Implement Phase 1 (config wiring) so cleanup config is in the same run config; implement Phase 3 shared git binary resolution and use it in MiscPlan's run_git_clean_with_excludes; optionally Phase 2 (active_worktrees) for "Clean all worktrees." |
+L00001209	| **orchestrator-subagent-integration** | When adding subagent/iteration execution, use run_with_cleanup (MiscPlan) for every runner invocation; keep legacy-named verify_tier_start/verify_tier_end checks at phase/task/subtask boundaries and prepare/cleanup at iteration boundaries. |
+L00001210	| **interview-subagent-integration** | When adding research or subagent runs that call the platform runner, use run_with_cleanup so interview runs get the same prepare/cleanup behavior. |
+L00001211	
+L00001212	---
+L00001213	
+L00001214	## 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations
+L00001215	
+L00001216	Cleanup-operation crews, when used, must follow the current PM crew model.
+L00001217	
+L00001218	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+L00001219	
+L00001220	Rules:
+L00001221	- cleanup crews are optional overlays, not a separate persistent actor system.
+L00001222	- cleanup crew members remain PM child runs.
+L00001223	- crew coordination uses explicit shared state and crew-board messages when enabled.
+L00001224	- hidden memory files and active-agent side files are not canonical cleanup coordination state.
+L00001225	
+L00001226	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+L00001227	## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations
+L00001228	
+L00001229	
+L00001230	Cleanup lifecycle and quality features must use canonical child-run and blocked-state contracts.
+L00001231	
+L00001232	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+L00001233	
+L00001234	Rules:
+L00001235	- blocked cleanup actions use canonical `blocked_reason_code` and `allowed_action_ids[]`.
+L00001236	- cleanup retries, reroutes, and cancellation preserve canonical lineage.
+L00001237	- cleanup continuity comes from canonical state and handoff reconstruction, not child-memory files.
+L00001238	
+L00001239	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md
+L00001240	## 11. References
+L00001241	
+L00001242	- REQUIREMENTS.md §26 (Fresh Agent Enforcement, Runner Contract, Process Isolation Mechanics)
+L00001243	- STATE_FILES.md (§2 state hierarchy, evidence paths)
+L00001244	- AGENTS.md (evidence logs tracked; no blanket *.log; .puppet-master/ not ignored)
+L00001245	- Plans/WorktreeGitImprovement.md (worktree paths, config wiring, git binary resolution, Phase 1-3)
+L00001246	- Plans/orchestrator-subagent-integration.md (subagent execution, start/end verification, parallel worktrees)
+L00001247	- Plans/interview-subagent-integration.md (research engine, subagent invocation)
+L00001248	- [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) -- reference for §7.8 and §7.10.
+L00001249	- Previous discussion: agent-left-behind docs, tests, artifacts, old builds; historical Rust/Iced runner contract source-lineage.
+L00001250	
+L00001251	---
+L00001252	
+L00001253	## Implementation status (Tray and Start-on-Boot, Phase 4)
+L00001254	
+L00001255	- **Status:** PASS  
+L00001256	- **Date:** 2026-02-19  
+L00001257	- **Summary:** Tray minimize-to-tray fix and start-on-boot setting (Linux/macOS/Windows).  
+L00001258	- **Files changed:** app.rs, views/settings.rs, autostart.rs, lib.rs, Cargo.toml, nfpm.yaml, installer/linux/scripts/postinstall  
+L00001259	- **Commands run:** historical source-lineage referenced cargo check and cargo test in the removed Rust/Iced app.
+L00001260	 persists at cleanup operations; remediation loop runs when cleanup operations fail with recoverable errors.
+L00001261	
+L00001262	**Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details. See orchestrator plan "Puppet Master Crews" for how cleanup crews can coordinate workspace cleanup operations.
+L00001263	
+L00001264	## 11. References
+L00001265	
+L00001266	- REQUIREMENTS.md §26 (Fresh Agent Enforcement, Runner Contract, Process Isolation Mechanics)
+L00001267	- STATE_FILES.md (§2 state hierarchy, evidence paths)
+L00001268	- AGENTS.md (evidence logs tracked; no blanket *.log; .puppet-master/ not ignored)
+L00001269	- Plans/WorktreeGitImprovement.md (worktree paths, config wiring, git binary resolution, Phase 1-3)
+L00001270	- Plans/orchestrator-subagent-integration.md (subagent execution, start/end verification, parallel worktrees)
+L00001271	- Plans/interview-subagent-integration.md (research engine, subagent invocation)
+L00001272	- [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) -- reference for §7.8 and §7.10.
+L00001273	- Previous discussion: agent-left-behind docs, tests, artifacts, old builds; historical Rust/Iced runner contract source-lineage.
+L00001274	
+L00001275	---
+L00001276	
+L00001277	## Implementation status (Tray and Start-on-Boot, Phase 4)
+L00001278	
+L00001279	- **Status:** PASS  
+L00001280	- **Date:** 2026-02-19  
+L00001281	- **Summary:** Tray minimize-to-tray fix and start-on-boot setting (Linux/macOS/Windows).  
+L00001282	- **Files changed:** app.rs, views/settings.rs, autostart.rs, lib.rs, Cargo.toml, nfpm.yaml, installer/linux/scripts/postinstall  
+L00001283	- **Commands run:** historical source-lineage referenced cargo check and cargo test in the removed Rust/Iced app.
+L00001284	
+L00001285	## Runner Preparation/Cleanup and Safe-Point Canonical Alignment (2026-03-08)
+L00001286	
+L00001287	Any runner prepare/cleanup flow must respect runtime safe points and remediation lineage.
+L00001288	
+L00001289	Required rule:
+L00001290	- prepare/cleanup logic must not erase or invalidate the baseline needed for `retry_from_safe_point`
+L00001291	- cleanup after failed runs must preserve enough state for scheduler/runtime recovery until the attempt is terminal or superseded
+L00001292	- temporary cleanup behavior must not collapse blocked/remediation states into generic failure cleanup
+L00001293	- `Plans/MiscPlan.md` / `/MiscPlan.md` cleanup states distinguish retained, cleanup_eligible, archived, and removed lane or `/worktree` states; `removed` is a backing-object or storage-presence state, while `revoked` is semantic validity state.
+L00001294	- Worktree plan cleanup removes worktree directories after merge or `/completion`; MiscPlan cleanup removes files inside a workspace or worktree. The `/state` model must separate lane lifecycle from cleanup actions.
+L00001295	- Runtime governance must preserve Architecture_Invariants, Architecture_Invariants.md, FileSafe.md, MiscPlan.md, `/crew`, `/failure`, run-scoped requested/effective snapshots, `/effective` identity, execution-role identity, graph-lock degradation boundaries, role-scoped account-pool contamination, attempt-scoped evidence retention, safe-point versus restore-point immutability, context_files write-scope constraints, remote side-effect integration, DAE enforcement, and silent-disable or bypass prevention.
+L00001296	- Normalized cleanup/run envelopes include `CLI_Bridged_Providers`, `CLI_Bridged_Providers.md`, `{ run_id, seq, type, payload }`, run_id, thread_id, attempt_id, node_id, snapshot IDs, remediation lineage, `/node/attempt/lineage`, `/event`, `/trust`, rewrite-era correlation, actor kind, effective account, switch reason, lane/worktree identity, and pressure/trust context.
+L00001297	- Live cleanup must never erase run, lane, or worktree lineage from `History`, `Ledger`, graph-linked inspection, or `/lane/worktree` records.
+L00001298	- Cleanup artifact boundaries are node-level, not tier-scoped; tier-era state file names such as `progress.txt`, `AGENTS.md`, and `prd.json` are compatibility inputs for `/cleanup`, not canonical scoping anchors.
+L00001299	- Sorting and `/grouping` defaults are explicit: `Seams` sort by most operationally problematic first, while `History` and `Ledger` sort newest first.
+L00001300	- Lane lifecycle verbs are separate: recover, archive, prune, remove, and `Clean all worktrees` must not blur together, and cleanup actions may expose prune or recover without implying remove.
+L00001301	- `persona_override_owner_id` requires owner-level cleanup so `tier_id` no longer teaches a canonical scope anchor.
+L00001302	- Cleanup command payloads with generic `page: string` or tier-bound filters must be constrained with native-surface ownership so they cannot undermine route/open or cleanup commands.
+L00001303	
+L00001304	Acceptance criteria:
+L00001305	- runner cleanup and safe-point recovery are compatible
+L00001306	- remediation/retry lineage is not lost by generic cleanup routines
+L00001307	## Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)
+L00001308	
+L00001309	
+L00001310	Cleanup logic must not erase the data required to explain or resume blocked and retried work.
+L00001311	
+L00001312	### Required rules
+L00001313	- keep safe-point metadata until the originating attempt lineage reaches terminal resolution
+L00001314	- keep remediation lineage metadata until the parent lineage is terminal
+L00001315	- cleanup may compact derived summaries, but must not destroy the canonical history needed for recovery explanation and audit
+L00001316	
+L00001317	## Debug investigation instrumentation cleanup addendum (2026-03-23)
+L00001318	
+L00001319	Temporary Debug instrumentation must preserve cleanup lineage and safe recovery behavior.
+L00001320	
+L00001321	Required rules:
+L00001322	- before invasive instrumentation or temporary dependency/tooling changes, PM creates or updates a restore point backed by `runtime_artifact.restore_point` that is sufficient to revert the investigation's temporary state if cleanup fails
+L00001323	- every temporary debug mutation lane carries an `instrumentation_id`, declared scope, and explicit cleanup obligation
+L00001324	- cleanup must account for code instrumentation, temporary env flags, dev dependencies, remote host installs, browser mocks, and other reversible debug-only changes
+L00001325	- resolved, cancelled, and superseded investigations attempt cleanup automatically; failed cleanup transitions the investigation to `failed_cleanup` instead of pretending success
+L00001326	- unresolved instrumentation remnants must remain user-visible until cleaned up or explicitly accepted as follow-up work
+L00001327	
+L00001328	### Investigation instrumentation lifecycle contract
+L00001329	
+L00001330	Cursor-like Debug Mode remains an investigation workflow reference, not automatic MVP scope. `/blog`-sourced reference behavior is hypothesis-first: collect runtime evidence through temporary-instrumentation, local debug-server collection on the editor-side, reproduction, interpretation, small targeted patching, user re-verifies, and cleanup. The fit is regressions, timing `/races`, performance, and "reproduces but unclear from static read"; pure compile-time failures rely on build `/test` capture instead.
+L00001331	
+L00001332	Instrumentation-first behavior is not grounded MVP behavior until this contract is implemented. Any temporary-instrumentation patch pipeline must declare an `instrumentation_id`, `collector_state` (`collector-state` in source-lineage/audit vocabulary), collector lifecycle transitions, the install/collect/remove sequence, debug-specific mutation rules, the evidence sink contract, and explicit write `/cleanup/rollback` semantics. Auto-cleanup is mandatory for resolved, cancelled, and superseded investigations; failed residue uses lifecycle `failed_cleanup` with `stop_reason_code = investigation.cleanup_failed`.
+L00001333	
+L00001334	Cleanup is per-scope and per instrumentation lane, not just per investigation. A bundle-record must carry the cleanup_summary, including cleanup_summary.residual_items[] / residual_items, stop_reason_code, and any surviving residue. Cleanup state transitions use `superseded` when one owner supersedes another, and PM must not let two active investigations add overlapping temporary instrumentation to the same target.
+L00001335	
+L00001336	Env/config activation cleanup must revert the exact temporary flag `/toggle/value` PM introduced. If the temporary change lived only in process env, cleanup occurs by stopping `/restarting` without that env. If PM edited `/config`, treat the edit under the same rollback rules as `temporary source patch instrumentation`.
+L00001337	
+L00001338	Secret evidence handling must redact/hash obvious secrets `/tokens`, including `Authorization`, cookies, session IDs, API keys, passwords, private tokens, and other IDs before storage, export, or bundle handoff.
+L00001339	
+L00001340	Debug-capable tooling remains shared: `Plans/Tools.md` / `Plans/newtools.md` (`/Tools.md` / `/newtools.md`) own reusable tool registry details and `/tags`, while this plan records the debug investigation roles: target discovery, evidence capture, instrumentation, verification, and bundle-export.
+L00001341	
+L00001342	Debugger `/profiler` attach instrumentation must detach the temporary attach/profiler `/session`; if detach fails but no durable workspace mutation remains, keep the failure localized to runtime/session state and do not claim cleanup success.
+L00001343	
+L00001344	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+L00001345	
+L00001346	## Owner / Consumer Map
+L00001347	
+L00001348	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/MiscPlan.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001349	
+L00001350	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001351	
+L00001352	## PlanUnits
+L00001353	
+L00001354	### M-002 - Cleanup Artifact Event Architecture Alignment
+L00001355	
+L00001356	```yaml
+L00001357	plan_unit_id: M-002
+L00001358	unit_type: requirement
+L00001359	status: accepted
+L00001360	owner_doc: Plans/MiscPlan.md
+L00001361	canonical_text: Cleanup actions, retained artifacts, evidence, and manual Clean workspace activity are first-class artifacts/events in the unified event model, with redb carrying retention policy, retention metadata, and rollups while cleanup boundaries align to patch/apply/verify/rollback rather than UI-only affordances.
+L00001362	gui_related: false
+L00001363	gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+L00001364	split_recommended: true
+L00001365	depends_on: []
+L00001366	unblocks: []
+L00001367	acceptance_criteria:
+L00001368	- The covered source span remains losslessly available for exact-text audit.
+L00001369	- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+L00001370	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001371	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001372	validation_surfaces:
+L00001373	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001374	- python3 scripts/pm-plan-index.py validate
+L00001375	risk_class: cleanup_event_storage_drift
+L00001376	reasoning_tier: standard
+L00001377	context_scope: miscplan_cleanup_standardization
+L00001378	implementation_surfaces:
+L00001379	- Plans/MiscPlan.md
+L00001380	node_compile_hint:
+L00001381	  mode: cleanup_artifact_event_architecture_alignment
+L00001382	  create_worknodes: false
+L00001383	source_lineage:
+L00001384	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0003
+L00001385	preserved_exact_tokens:
+L00001386	- cleanup actions
+L00001387	- retained artifacts
+L00001388	- evidence
+L00001389	- first-class **artifacts/events**
+L00001390	- seglog ledger
+L00001391	- cleanup and evidence events
+L00001392	- redb
+L00001393	- retention policy
+L00001394	- last cleanup time
+L00001395	- evidence count per run
+L00001396	- patch/apply/verify/rollback pipeline
+L00001397	- not UI-only affordances
+L00001398	negative_constraints: []
+L00001399	compatibility_only_notes: []
+L00001400	stale_retired_dispositions: []
+L00001401	owner_boundary_notes:
+L00001402	- Plans/MiscPlan.md owns cleanup/artifact behavior while storage-plan.md owns seglog/redb storage mechanics and rewrite-tie-in-memo.md owns rewrite alignment.
+L00001403	owner_hints:
+L00001404	- Plans/MiscPlan.md
+L00001405	preserved_contractrefs: []
+L00001406	split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001407	```
+L00001408	
+L00001409	### M-003 - Cleanup Backend Implementation Order
+L00001410	
+L00001411	```yaml
+L00001412	plan_unit_id: M-003
+L00001413	unit_type: requirement
+L00001414	status: accepted
+L00001415	owner_doc: Plans/MiscPlan.md
+L00001416	canonical_text: 'Cleanup implementation proceeds in DRY-friendly order: create src/cleanup, centralize the allowlist and run_git_clean_with_excludes, implement prepare and cleanup functions, add the run_with_cleanup wrapper and call-site adoption, then add agent-output, evidence pruning, and manual Clean workspace behavior.'
+L00001417	gui_related: false
+L00001418	gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+L00001419	split_recommended: true
+L00001420	depends_on: []
+L00001421	unblocks: []
+L00001422	acceptance_criteria:
+L00001423	- The covered source span remains losslessly available for exact-text audit.
+L00001424	- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+L00001425	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001426	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001427	validation_surfaces:
+L00001428	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001429	- python3 scripts/pm-plan-index.py validate
+L00001430	risk_class: cleanup_sequence_drift
+L00001431	reasoning_tier: standard
+L00001432	context_scope: miscplan_cleanup_standardization
+L00001433	implementation_surfaces:
+L00001434	- Plans/MiscPlan.md
+L00001435	node_compile_hint:
+L00001436	  mode: cleanup_backend_implementation_order
+L00001437	  create_worknodes: false
+L00001438	source_lineage:
+L00001439	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0002
+L00001440	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0003
+L00001441	preserved_exact_tokens:
+L00001442	- Suggested implementation order
+L00001443	- src/cleanup/
+L00001444	- allowlist
+L00001445	- DRY:DATA
+L00001446	- run_git_clean_with_excludes
+L00001447	- DRY:FN
+L00001448	- prepare_working_directory
+L00001449	- cleanup_after_execution
+L00001450	- run_with_cleanup
+L00001451	- AGENTS.md
+L00001452	- config toggles
+L00001453	- Cleanup UX
+L00001454	- Agent-output dir
+L00001455	- evidence pruning
+L00001456	- manual "Clean workspace" action
+L00001457	- Cross-plan
+L00001458	negative_constraints: []
+L00001459	compatibility_only_notes: []
+L00001460	stale_retired_dispositions: []
+L00001461	owner_boundary_notes:
+L00001462	- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+L00001463	owner_hints:
+L00001464	- Plans/MiscPlan.md
+L00001465	preserved_contractrefs: []
+L00001466	split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001467	```
+L00001468	
+L00001469	### M-004 - Cleanup UX Copy And Widget Reuse Gates
+L00001470	
+L00001471	```yaml
+L00001472	plan_unit_id: M-004
+L00001473	unit_type: requirement
+L00001474	status: accepted
+L00001475	owner_doc: Plans/MiscPlan.md
+L00001476	canonical_text: Cleanup UX changes use existing widgets, provide Expert and ELI5 copy variants for authored tooltip/help/discoverability copy, let app-level Interaction Mode choose the displayed variant, and keep Chat ELI5 separate and chat-only.
+L00001477	gui_related: true
+L00001478	gui_classification_reason: The unit covers user-visible cleanup configuration, confirmation, tooltip, or interaction behavior.
+L00001479	split_recommended: true
+L00001480	depends_on:
+L00001481	- M-003
+L00001482	unblocks: []
+L00001483	acceptance_criteria:
+L00001484	- The covered source span remains losslessly available for exact-text audit.
+L00001485	- This behavior is addressable through this fine-grained MiscPlan PlanUnit instead of broad M-001 source-preserving coverage.
+L00001486	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001487	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001488	validation_surfaces:
+L00001489	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001490	- python3 scripts/pm-plan-index.py validate
+L00001491	risk_class: cleanup_gui_copy_widget_drift
+L00001492	reasoning_tier: standard
+L00001493	context_scope: miscplan_cleanup_standardization
+L00001494	implementation_surfaces:
+L00001495	- Plans/MiscPlan.md
+L00001496	node_compile_hint:
+L00001497	  mode: cleanup_ux_copy_widget_reuse_gates
+L00001498	  create_worknodes: false
+L00001499	source_lineage:
+L00001500	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0003
+L00001501	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0016
+L00001502	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0025
+L00001503	preserved_exact_tokens:
+L00001504	- Cleanup UX
+L00001505	- config toggles
+L00001506	- existing widgets
+L00001507	- Expert and ELI5 variants
+L00001508	- Plans/FinalGUISpec.md §7.4.0
+L00001509	- App-level **Interaction Mode (Expert/ELI5)**
+L00001510	- Chat ELI5
+L00001511	- chat-only
+L00001512	- docs/gui-widget-catalog.md
+L00001513	- scripts/generate-widget-catalog.sh
+L00001514	- scripts/check-widget-reuse.sh
+L00001515	- styled_button
+L00001516	- confirm_modal
+L00001517	- toggler
+L00001518	negative_constraints: []
+L00001519	compatibility_only_notes: []
+L00001520	stale_retired_dispositions: []
+L00001521	owner_boundary_notes:
+L00001522	- Plans/MiscPlan.md owns cleanup/artifact/retention behavior while referenced owner docs keep their ContractRef boundaries.
+L00001523	owner_hints:
+L00001524	- Plans/MiscPlan.md
+L00001525	preserved_contractrefs: []
+L00001526	split_recommendation_reason: The source window contains multiple separable cleanup, security, DRY, GUI, and retention concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00001527	```
+L00001528	
+
+<<< CONTEXT_AFTER canonical_document_lines=1529-1540 >>>
+L00001529	### M-005 - Target Project AGENTS DRY Seeding Handoff
+L00001530	
+L00001531	```yaml
+L00001532	plan_unit_id: M-005
+L00001533	unit_type: requirement
+L00001534	status: accepted
+L00001535	owner_doc: Plans/MiscPlan.md
+L00001536	canonical_text: Target project AGENTS.md may be seeded with DRY Method and technology/version constraints from the interview, but implementation ownership remains with interview-subagent-integration.md §5.1 and agents_md_generator.
+L00001537	gui_related: false
+L00001538	gui_classification_reason: The unit covers backend cleanup, retention, security, storage, or execution-contract behavior rather than direct GUI presentation.
+L00001539	split_recommended: true
+L00001540	depends_on: []

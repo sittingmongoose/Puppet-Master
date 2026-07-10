@@ -1,0 +1,225 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1707-1718 >>>
+L00001707	  - "progress/speed/ETA/status panels"
+L00001708	  - "NodeSeeds drafted"
+L00001709	  - "WorkNode requests drafted"
+L00001710	  - "Plan Compile tab scope"
+L00001711	  - "Executor execution progress"
+L00001712	negative_constraints:
+L00001713	  - Do not overload Plan Compile tab with WorkNode execution/code-generation details beyond handoff status.
+L00001714	owner_hints:
+L00001715	  - Plans/Orchestrator_Page.md
+L00001716	  - Plans/FinalGUISpec.md
+L00001717	```
+L00001718	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1719-1914 >>>
+L00001719	### OP-024 - Plans-To-Code Execution Observability Separation
+L00001720	
+L00001721	```yaml
+L00001722	plan_unit_id: OP-024
+L00001723	unit_type: requirement
+L00001724	status: accepted
+L00001725	owner_doc: Plans/Orchestrator_Page.md
+L00001726	canonical_text: >-
+L00001727	  Existing Orchestrator execution views remain responsible for queued WorkNodes, active WorkNodes, blocked WorkNodes, completed WorkNodes, model lanes, worktrees, safe points, test runs, browser/device sessions, repair loops, Auditor status, GitHub PR/Actions when configured, and final certification progress. Progress, Node Graph, Evidence, History, Ledger, Runtime Artifacts, Source Control, and Worktrees consume execution receipts and runtime projections after Executor intake; they do not belong inside the Plan Compile tab except as summarized handoff readiness or final handoff status.
+L00001728	  Existing execution views, not Plan Compile, own Executor execution progress after handoff.
+L00001729	gui_related: true
+L00001730	gui_classification_reason: This unit maps visible execution progress to existing Orchestrator tabs and panels.
+L00001731	depends_on: [OP-023, EP-103, GRS-030, RAP-029, W-072]
+L00001732	unblocks: [RGV-013, F3-397]
+L00001733	acceptance_criteria:
+L00001734	  - Execution progress remains on existing execution views.
+L00001735	  - Source-control, testing, repair, GitHub, and completion receipts are visible through execution and evidence surfaces.
+L00001736	    - Plan Compile tab remains focused on node/request draft projection and handoff readiness.
+L00001737	validation_surfaces:
+L00001738	  - python3 scripts/pm-plans-verify.py run-gates
+L00001739	  - future Orchestrator execution observability review
+L00001740	risk_class: plan_compile_execution_scope_blur
+L00001741	reasoning_tier: high
+L00001742	context_scope: orchestrator_execution_observability
+L00001743	implementation_surfaces: [Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md]
+L00001744	node_compile_hint: {mode: orchestrator_execution_projection, create_worknodes: false}
+L00001745	source_lineage:
+L00001746	  - pldg-20260617-001-plans-to-code-handoff:atom-0053
+L00001747	  - pldg-20260617-001-plans-to-code-handoff:dec-0022
+L00001748	  - pldg-20260617-001-plans-to-code-handoff:corr-0007
+L00001749	preserved_exact_tokens:
+L00001750	  - "queued WorkNodes"
+L00001751	  - "active WorkNodes"
+L00001752	  - "worktrees"
+L00001753	  - "safe points"
+L00001754	  - "test runs"
+L00001755	  - "repair loops"
+L00001756	  - "final certification"
+L00001757	negative_constraints:
+L00001758	  - Do not make the Plan Compile tab the code-generation dashboard.
+L00001759	owner_hints:
+L00001760	  - Plans/Orchestrator_Page.md
+L00001761	  - Plans/Run_Graph_View.md
+L00001762	  - Plans/Runtime_Artifacts_Panel.md
+L00001763	```
+L00001764	
+L00001765	ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00001766	
+L00001767	
+L00001768	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00001769	
+L00001770	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00001771	
+L00001772	### OP-025 - Plan Compile Launch, Pending Shell, And Execution Separation
+L00001773	
+L00001774	```yaml
+L00001775	plan_unit_id: OP-025
+L00001776	unit_type: requirement
+L00001777	status: accepted
+L00001778	owner_doc: Plans/Orchestrator_Page.md
+L00001779	canonical_text: 'The default testing visibility policy is show_when_possible: when a meaningful headed or visual surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. Users may collapse, detach, background, or leave a visible test session while automation continues; the system preserves session state and does not require the user to watch every action. When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video
+L00001780	  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting. If PlanApproved publication or PlanCompileRun identity has not yet reconciled, the Plan Compile tab shows a pending launch shell tied to the approval command and then binds to the durable compile identity without creating a duplicate. Orchestrator may show launch and provisioning progress before activation, but it marks the build running and exposes runnable WorkNodes only after the atomic activation commit and durable start receipt. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, certifies a complete WorkGraph
+L00001781	  and WorkNodeRequests, passes Executor intake/provisioning, atomically creates GoalRun and WorkNodes, queues an entrypoint, and appears in Orchestrator. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled. Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status. Plan Compile tab owns compilation and handoff progress; after BuildStarted, Orchestrator execution views own WorkNode dispatch, code changes, live testing, repairs, safe points, and completion while Plan Compile remains a historical launch view with an Open Build action. Commands
+L00001782	  for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Approve And Build intentionally navigates to Orchestrator Plan Compile, but later transitions present strong Open Build and status actions rather than forcibly moving the user whenever state changes.'
+L00001783	gui_related: true
+L00001784	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00001785	depends_on: []
+L00001786	unblocks: []
+L00001787	acceptance_criteria:
+L00001788	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00001789	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00001790	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00001791	validation_surfaces:
+L00001792	- python3 scripts/pm-plan-index.py validate
+L00001793	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00001794	risk_class: execution_boundary
+L00001795	reasoning_tier: high
+L00001796	context_scope: ledger_to_plans_compile
+L00001797	implementation_surfaces:
+L00001798	- Plans/Orchestrator_Page.md
+L00001799	- Plans/Automated_Testing_System.md
+L00001800	- Plans/FinalGUISpec.md
+L00001801	- Plans/Runtime_Artifacts_Panel.md
+L00001802	- Plans/Planning_Wizard.md
+L00001803	- Plans/UI_Command_Catalog.md
+L00001804	- Plans/Contracts_V0.md
+L00001805	- Plans/Goal_Runtime_System.md
+L00001806	- Plans/Plan_To_Node_Compilation.md
+L00001807	- Plans/Executor_Protocol.md
+L00001808	- Plans/Run_Graph_View.md
+L00001809	- Plans/Commands_System.md
+L00001810	node_compile_hint:
+L00001811	  mode: canonical_planunit_from_bootstrap_ledger
+L00001812	  create_worknodes: false
+L00001813	  create_nodeseeds: false
+L00001814	source_lineage:
+L00001815	- pldg-20260618-001-prd-planning-wizard:atom-0092
+L00001816	- pldg-20260618-001-prd-planning-wizard:atom-0093
+L00001817	- pldg-20260618-001-prd-planning-wizard:atom-0094
+L00001818	- pldg-20260618-001-prd-planning-wizard:atom-0095
+L00001819	- pldg-20260618-001-prd-planning-wizard:atom-0096
+L00001820	- pldg-20260618-001-prd-planning-wizard:atom-0107
+L00001821	- pldg-20260618-001-prd-planning-wizard:atom-0108
+L00001822	- pldg-20260618-001-prd-planning-wizard:atom-0126
+L00001823	- pldg-20260618-001-prd-planning-wizard:atom-0145
+L00001824	- pldg-20260618-001-prd-planning-wizard:atom-0150
+L00001825	- pldg-20260618-001-prd-planning-wizard:atom-0152
+L00001826	- pldg-20260618-001-prd-planning-wizard:atom-0153
+L00001827	- pldg-20260618-001-prd-planning-wizard:atom-0154
+L00001828	- pldg-20260618-001-prd-planning-wizard:atom-0155
+L00001829	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00001830	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00001831	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+L00001832	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+L00001833	source_atom_ids:
+L00001834	- atom-0092
+L00001835	- atom-0093
+L00001836	- atom-0094
+L00001837	- atom-0095
+L00001838	- atom-0096
+L00001839	- atom-0107
+L00001840	- atom-0108
+L00001841	- atom-0126
+L00001842	- atom-0145
+L00001843	- atom-0150
+L00001844	- atom-0152
+L00001845	- atom-0153
+L00001846	- atom-0154
+L00001847	- atom-0155
+L00001848	decision_refs:
+L00001849	- dec-0019
+L00001850	- dec-0020
+L00001851	- dec-0028
+L00001852	correction_refs:
+L00001853	- corr-0014
+L00001854	- corr-0012
+L00001855	preserved_exact_tokens:
+L00001856	- show_when_possible
+L00001857	- built-in browser
+L00001858	- clicks
+L00001859	- form input
+L00001860	- assertions
+L00001861	- Swift
+L00001862	- live preview
+L00001863	- simulator
+L00001864	- emulator
+L00001865	- device stream
+L00001866	- collapse
+L00001867	- detach
+L00001868	- automation continues
+L00001869	- Open
+L00001870	- Watch
+L00001871	- interaction timeline
+L00001872	- Orchestrator
+L00001873	- Plan Compile tab
+L00001874	- pending launch
+L00001875	- compile identity
+L00001876	- activation commit
+L00001877	- running
+L00001878	- clean-room fixture
+L00001879	- exactly one PlanCompileRun
+L00001880	- entrypoint queued
+L00001881	- progress counts
+L00001882	- audit pass
+L00001883	- stage timeline
+L00001884	- subagent assignments
+L00001885	- WorkNodeRequest count
+L00001886	- Open Build
+L00001887	- BuildStarted
+L00001888	- Approve And Build
+L00001889	- pause
+L00001890	- cancel
+L00001891	- resume
+L00001892	- inspect evidence
+L00001893	negative_constraints:
+L00001894	- Do not mix ongoing WorkNode execution into Plan Compile stage progress.
+L00001895	owner_hints:
+L00001896	- Plans/Automated_Testing_System.md
+L00001897	- Plans/Orchestrator_Page.md
+L00001898	- Plans/FinalGUISpec.md
+L00001899	- Plans/Runtime_Artifacts_Panel.md
+L00001900	- Plans/Planning_Wizard.md
+L00001901	- Plans/UI_Command_Catalog.md
+L00001902	- Plans/Contracts_V0.md
+L00001903	- Plans/Goal_Runtime_System.md
+L00001904	- Plans/Plan_To_Node_Compilation.md
+L00001905	- Plans/Executor_Protocol.md
+L00001906	- Plans/Run_Graph_View.md
+L00001907	- Plans/Commands_System.md
+L00001908	```
+L00001909	
+L00001910	
+L00001911	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00001912	
+L00001913	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00001914	
+
+<<< CONTEXT_AFTER canonical_document_lines=1915-1926 >>>
+L00001915	### OP-026 - Current Project History Documents Runs Surface
+L00001916	
+L00001917	```yaml
+L00001918	plan_unit_id: OP-026
+L00001919	unit_type: requirement
+L00001920	status: accepted
+L00001921	owner_doc: Plans/Orchestrator_Page.md
+L00001922	canonical_text: Orchestrator History is the current-project GUI home for historical wizard-created PRD/Plan documents
+L00001923	  and historical Orchestrator runs. It provides Documents and Runs subviews, dense table rows, structured filter
+L00001924	  chips plus text search, Approved only versus All history controls, an Include archived step inside All history,
+L00001925	  visible archived labels, empty and degraded states, and a read-only stale/out-of-sync projection mode with a visible
+L00001926	  warning. The default Documents view shows final/approved outputs; the user can expand to retained drafts, intermediate

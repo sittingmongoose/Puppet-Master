@@ -1,0 +1,1223 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000888-ADVERSARIAL-WIN-6690C379876B-0001",
+  "attempt_id": "attempt-0002",
+  "task_thread_id": "019f4d38-6bcb-7693-84a6-842229d7f39b",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/usage-feature.md",
+    "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1",
+    "core_sha256": "02592b0113d53a529d03a0f12c8fd89fc844582877a5305c3222fe75fc85329f",
+    "core_range": [
+      1,
+      297
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "GAP-001",
+      "item_type": "gap",
+      "title": "Rollup publication lacks an atomic snapshot contract",
+      "statement": "The plan names the ledger, scan jobs, redb rollups, dashboard, and Usage readers, but does not define a read watermark, generation identifier, atomic publication boundary, invalidation notification, or behavior when a consumer reads while a scan is advancing.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 31,
+          "line_end": 31,
+          "exact_quote": "The rewrite described in `Plans/rewrite-tie-in-memo.md` reinforces this plan's intent: Usage should be implemented as **projections/rollups** over the canonical event ledger (seglog), with durable KV state in redb and fast search in Tantivy--without changing the UX requirements in this document. 5h/7d and dashboard numbers are served from **redb rollups** produced by **analytics scan jobs** that aggregate over the seglog (and any JSONL mirror); the Usage view reads these rollups rather than scanning the ledger on demand.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "concurrency_and_consumer_contract",
+      "impact": "Concurrent scans and reads can expose mixed-window totals, regress freshness, or leave dashboard and Usage consumers disagreeing.",
+      "builder_discretion": "The implementation mechanism is discretionary, but the snapshot, ordering, and publication semantics require a canonical contract.",
+      "feature_keys": [
+        "usage_rollups",
+        "analytics_scan",
+        "dashboard"
+      ]
+    },
+    {
+      "item_id": "GAP-002",
+      "item_type": "failure_recovery",
+      "title": "Projector partial failure and recovery are unspecified",
+      "statement": "The fan-out pipeline has multiple independently failing outputs, yet the window defines no idempotency key, retry boundary, poison-event handling, lag/error state, checkpoint repair, rebuild procedure, or rollback after one output succeeds and another fails.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 43,
+          "line_end": 43,
+          "exact_quote": "| **Projector pipeline** | seglog → JSONL mirror (human-readable), seglog → Tantivy indices (chat/docs/log summaries if Usage includes search), projector checkpoints in redb. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 44,
+          "line_end": 44,
+          "exact_quote": "| **Analytics scan jobs** | Scan seglog (or JSONL mirror) for counters; compute tool latency distributions, error rates, usage-by-window; persist rollups in redb for fast dashboard/Usage queries. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "partial_failure_recovery",
+      "impact": "A failed mirror, index, checkpoint, or rollup write can silently diverge from the canonical stream and remain unrecoverable or misleading.",
+      "builder_discretion": "Retry technology is discretionary; correctness, repair, and user-visible degraded-state requirements are not.",
+      "feature_keys": [
+        "projector_pipeline",
+        "checkpoints",
+        "observability"
+      ]
+    },
+    {
+      "item_id": "GAP-003",
+      "item_type": "gap",
+      "title": "Retention is a placeholder rather than a data-lifecycle policy",
+      "statement": "The plan asks for a retention policy but does not set retention classes or durations, deletion propagation across seglog/redb/Tantivy/mirrors/exports, account or project erasure behavior, legal or diagnostic holds, redaction, backup expiry, or treatment of rollups after source deletion.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 155,
+          "line_end": 155,
+          "exact_quote": "- **Retention:** Policy for how long to keep usage/ledger data (e.g. file-based or redb-backed) to bound disk use while supporting 5h/7d and historical views.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive prompts, account identifiers, costs, and activity history may persist inconsistently or be deleted while derived or exported copies remain.",
+      "builder_discretion": "Storage mechanics may vary, but lifecycle classes, deletion semantics, and user-visible consequences require specification.",
+      "feature_keys": [
+        "retention",
+        "privacy",
+        "deletion"
+      ]
+    },
+    {
+      "item_id": "GAP-004",
+      "item_type": "gap",
+      "title": "Untrusted usage-event and provider-input validation is absent",
+      "statement": "The window accepts events, APIs, metrics, error parsing, and mirrors without defining schema/version rejection, authentication and tenant binding, maximum sizes, clock validation, duplicate or replay handling, malformed numeric protection, provenance verification, or quarantine behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 41,
+          "line_end": 41,
+          "exact_quote": "| **Seglog** (canonical event stream) | All usage-relevant events (tokens, requests, errors, platform, tier, session) are appended here; single source of truth for analytics. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 104,
+          "line_end": 104,
+          "exact_quote": "| **AGENTS.md -- Usage Tracking & Plan Detection** | Canonical source for per-platform usage sources (Claude Admin API, Copilot metrics, Gemini quotas, Codex/Cursor error parsing), env vars, and error-message parsing. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "untrusted_input_boundary",
+      "impact": "Malformed, replayed, cross-account, or adversarial inputs can corrupt totals, route records to the wrong owner, or produce false quota states.",
+      "builder_discretion": "Validation libraries are discretionary; validation, provenance, and failure-state requirements require ownership.",
+      "feature_keys": [
+        "seglog",
+        "provider_inputs",
+        "provenance"
+      ]
+    },
+    {
+      "item_id": "GAP-005",
+      "item_type": "state_transition",
+      "title": "Refresh and offline state transitions are incomplete",
+      "statement": "Background refresh and stale labeling are required, but the state machine does not define initial loading, offline, timeout, authentication failure, partial-provider failure, cached-but-usable, refresh-in-progress, refresh-cancelled, or recovery transitions, nor which actions remain enabled in each state.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 137,
+          "line_end": 137,
+          "exact_quote": "- **Refresh:** Background refresh (e.g. periodic or after runs) so numbers stay up to date without blocking the UI. Document which platforms support \"live\" vs \"after-run\" stats.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 89,
+          "line_end": 89,
+          "exact_quote": "- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "offline_and_error_state_machine",
+      "impact": "A disconnected or partially failing client can show stale values with an ambiguous refresh affordance or permit actions based on invalid pressure data.",
+      "builder_discretion": "Exact visuals are discretionary; state names, transitions, action gating, and recovery rules require a contract.",
+      "feature_keys": [
+        "refresh",
+        "offline",
+        "freshness"
+      ]
+    },
+    {
+      "item_id": "GAP-006",
+      "item_type": "gui_truth",
+      "title": "Context-circle interaction has no accessibility contract",
+      "statement": "The primary details are exposed through hover and click, but no keyboard sequence, focus behavior, accessible name/value, screen-reader announcement, touch alternative, reduced-motion behavior, target size, high-contrast rule, or non-visual equivalent is specified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 169,
+          "line_end": 169,
+          "exact_quote": "- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 170,
+          "line_end": 170,
+          "exact_quote": "- click reveals the `Compact Now` action instead of immediately opening the detail surface",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "accessibility",
+      "impact": "Keyboard, assistive-technology, and touch users may be unable to discover status, open details, or safely invoke compaction.",
+      "builder_discretion": "Component implementation is discretionary; equivalent operability and perceivable state are mandatory design requirements.",
+      "feature_keys": [
+        "context_circle",
+        "accessibility",
+        "chat"
+      ]
+    },
+    {
+      "item_id": "GAP-007",
+      "item_type": "gap",
+      "title": "ELI5 and Expert copy do not cover localization",
+      "statement": "Two comprehension variants are required, but the window does not define locale-aware number, token, currency, percentage, duration, date, timezone, or reset-time formatting; translated expansion and pluralization behavior are also absent.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 33,
+          "line_end": 33,
+          "exact_quote": "**ELI5/Expert copy alignment:** Authored usage tooltip/help text in this plan (for example context-circle hover copy and explanatory hints) must provide both Expert and ELI5 variants and follow the authoritative checklist in `Plans/FinalGUISpec.md` §7.4.0.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "localization",
+      "impact": "Quota windows, costs, reset times, and compact UI text can be misread or overflow outside the authoring locale.",
+      "builder_discretion": "Translation tooling is discretionary; locale-sensitive semantics and layout resilience require definition.",
+      "feature_keys": [
+        "localization",
+        "copy",
+        "formatting"
+      ]
+    },
+    {
+      "item_id": "GAP-008",
+      "item_type": "failure_recovery",
+      "title": "Compact Now lacks destructive-action safeguards",
+      "statement": "The plan dispatches compaction from the context-circle affordance without defining authorization, confirmation, preview of information loss, concurrent-message handling, cancellation, failure reporting, retry idempotency, rollback, or an audit receipt.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 170,
+          "line_end": 170,
+          "exact_quote": "- click reveals the `Compact Now` action instead of immediately opening the detail surface",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 171,
+          "line_end": 171,
+          "exact_quote": "- selecting `Compact Now` dispatches the canonical compaction command for that thread",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "destructive_action",
+      "impact": "A misclick or race can irreversibly alter thread context without a predictable recovery path or proof of what changed.",
+      "builder_discretion": "Confirmation UX may vary, but authorization, concurrency, failure, and recovery semantics require canonical ownership.",
+      "feature_keys": [
+        "compact_now",
+        "thread_context",
+        "destructive_action"
+      ]
+    },
+    {
+      "item_id": "GAP-009",
+      "item_type": "authority",
+      "title": "Cleanup eligibility is not a safe deletion protocol",
+      "statement": "Owner-marked eligibility is a prerequisite, but the consumer that performs deletion, authorization boundary, last-moment retention recheck, leases against active readers, account/project scoping, partial-delete recovery, tombstones, undo, and deletion receipt are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 90,
+          "line_end": 90,
+          "exact_quote": "- Usage consumes `/package` and `/worktree` cleanup state only after owner records mark stale lanes or worktrees `cleanup_eligible`: lane/package completion, graph-patch supersession, revoked/reopened flow via `/reopened`, and completed recovery may make old backing removable only when no retention reason remains.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "destructive_cleanup_authority",
+      "impact": "Backing data can be deleted after eligibility becomes stale or while another consumer still depends on it, with no deterministic recovery.",
+      "builder_discretion": "Deletion implementation is discretionary; authorization, revalidation, locking, and receipts are not.",
+      "feature_keys": [
+        "cleanup_eligible",
+        "package",
+        "worktree"
+      ]
+    },
+    {
+      "item_id": "GAP-010",
+      "item_type": "state_transition",
+      "title": "Account-switch and pressure histories lack ordering semantics",
+      "statement": "Durable event families and consumers are named, but event identity, causal ordering, clock source, duplicate suppression, late arrival, overlap, correction, account merge/split, and the atomic boundary between switch and usage attribution are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 70,
+          "line_end": 70,
+          "exact_quote": "- `runtime-story` and audit surfaces consume append-only `account_switch_event` and `account_pressure_episode` history so Usage, History, Ledger, Orchestrator, Dashboard, and Account/Usage Pressure projections share the same durable facts; switch-history is an owned event family, not an under-owned view-only hint.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "event_ordering_and_race",
+      "impact": "Usage can be charged to the wrong effective account or pressure episode when switches and runtime events race or arrive out of order.",
+      "builder_discretion": "Ordering mechanism is discretionary; causal attribution and correction semantics require a contract.",
+      "feature_keys": [
+        "account_switch_event",
+        "account_pressure_episode",
+        "attribution"
+      ]
+    },
+    {
+      "item_id": "GAP-011",
+      "item_type": "contract",
+      "title": "Export taxonomy lacks integrity, authorization, and failure semantics",
+      "statement": "Record, bundle, and view exports are distinguished, but no manifest schema/version, hash/signature, access-control and redaction rules, missing-blob representation, consistency watermark, cancellation, resumability, partial-output cleanup, size limit, or import compatibility behavior is specified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 69,
+          "line_end": 69,
+          "exact_quote": "- Usage export semantics stay distinct: record export returns exact `/records` with stable ids, canonical ids, `/refs`, metadata, and schema-aware payloads; bundle export packages records, Evidence items, attached `/blobs/files`, thread export/share payloads, selected-object bundles, `.pm-bundle` configuration manifests, JSONL/JSON run-history artifacts, and a manifest; view export produces user-facing filtered table/list/chart output, CSV/JSON summaries, search results, analytics views, and graph `/render` convenience output without becoming canonical record truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "export_envelope_and_partial_failure",
+      "impact": "Exports can leak protected data, mix revisions, appear valid while incomplete, or become impossible to verify and migrate.",
+      "builder_discretion": "Archive format mechanics are discretionary; envelope integrity, authorization, redaction, consistency, and failure semantics require canonical definition.",
+      "feature_keys": [
+        "record_export",
+        "bundle_export",
+        "view_export"
+      ]
+    },
+    {
+      "item_id": "GAP-012",
+      "item_type": "state_transition",
+      "title": "Alert lifecycle is underspecified",
+      "statement": "The threshold is optional and the hit message is described, but defaults, source authority, hysteresis, deduplication, reset-window boundaries, acknowledgements, quiet-window interaction, escalation, account-switch transfer, and recovery clearing are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 142,
+          "line_end": 142,
+          "exact_quote": "- **Approaching limit:** Optional warning when usage is near limit (e.g. 80% of 5h window) so the user can switch tier or pause.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 143,
+          "line_end": 143,
+          "exact_quote": "- **Rate limit hit:** When a run hits quota/rate limit, surface a clear message and, where possible, suggested action (e.g. \"Try again after X\" or \"Switch platform\"); link to the Usage view.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "alert_state_machine",
+      "impact": "Users can receive flapping, duplicated, stale, or incorrectly cleared warnings and may switch or pause based on the wrong account or window.",
+      "builder_discretion": "Presentation and tuning may vary; default transitions and evidence requirements require specification.",
+      "feature_keys": [
+        "alerts",
+        "thresholds",
+        "rate_limit"
+      ]
+    },
+    {
+      "item_id": "GAP-013",
+      "item_type": "gap",
+      "title": "At-scale claim has no measurable limits",
+      "statement": "The plan asserts scale dependence but provides no event-rate, history-size, account/project cardinality, query-latency, refresh-latency, memory/disk, export-size, compaction, backpressure, or degraded-mode bounds.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 37,
+          "line_end": 37,
+          "exact_quote": "Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7d, dashboard, and analytics at scale without it. The canonical design is in **Plans/storage-plan.md** (validated by deterministic verifier gates and SSOT evidence contracts). Implementers must have the following in place for Usage to read from rollups and optional search:",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "scale_limits",
+      "impact": "Implementations cannot be falsified against a capacity target and may fail abruptly under large ledgers, many accounts, or large exports.",
+      "builder_discretion": "Optimization choices are discretionary; supported envelopes and degradation behavior require measurable acceptance bounds.",
+      "feature_keys": [
+        "scale",
+        "performance",
+        "capacity"
+      ]
+    },
+    {
+      "item_id": "GAP-014",
+      "item_type": "consumer",
+      "title": "Cross-document handoffs are named but not version-bound",
+      "statement": "The window declares consumers and ContractRefs but does not bind schema versions, required/optional fields, compatibility ranges, ownership escalation, missing-contract behavior, or executable seam acceptance for History, Ledger, Orchestrator, FinalGUISpec, storage, command, and runtime contracts.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 73,
+          "line_end": 73,
+          "exact_quote": "- `Plans/Prompt_Pipeline.md` and `Plans/FinalGUISpec.md` consume Usage runtime details for History, Ledger, and Orchestrator views, including account-switch, pressure, execution-role, and route-target disclosure.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 176,
+          "line_end": 176,
+          "exact_quote": "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "cross_document_seam",
+      "impact": "Producer and consumer documents can independently satisfy prose while disagreeing on payload shape, state meaning, or migration version.",
+      "builder_discretion": "Linkage tooling is discretionary; seam versions, compatibility, and acceptance ownership require canonical definition.",
+      "feature_keys": [
+        "contract_refs",
+        "consumers",
+        "versioning"
+      ]
+    },
+    {
+      "item_id": "GAP-015",
+      "item_type": "acceptance_oracle",
+      "title": "Storage gates do not provide Usage feature oracles",
+      "statement": "Deterministic gates are cited for the storage stack, but this window provides no executable oracle for quota-window correctness, source arbitration, stale/offline display, alert transitions, identity joins, export taxonomy, provider-bucket isolation, accessibility, or destructive-action recovery.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 37,
+          "line_end": 37,
+          "exact_quote": "Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7d, dashboard, and analytics at scale without it. The canonical design is in **Plans/storage-plan.md** (validated by deterministic verifier gates and SSOT evidence contracts). Implementers must have the following in place for Usage to read from rollups and optional search:",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 111,
+          "line_end": 111,
+          "exact_quote": "| **Plans/Progression_Gates.md + Plans/evidence.schema.json** | Validation contract for the storage stack (seglog + redb + Tantivy + projectors + analytics scan) through deterministic verifier gates and evidence requirements. |",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "test_falsifiability",
+      "impact": "A green storage implementation can still ship incorrect or misleading Usage behavior with no deterministic way to reject it.",
+      "builder_discretion": "Test framework is discretionary; observable inputs, expected outputs, and failure cases require canonical oracles.",
+      "feature_keys": [
+        "acceptance",
+        "verification",
+        "usage_behavior"
+      ]
+    },
+    {
+      "item_id": "GAP-016",
+      "item_type": "authority",
+      "title": "Mixed quota signals lack deterministic arbitration",
+      "statement": "The plan permits runtime outcomes, capabilities, heuristics, and explicit pressure evidence and requires honest labeling, but does not define precedence, merge rules, conflict states, expiry, confidence thresholds, downgrade rules, or how stronger evidence supersedes weaker evidence without historical rewriting.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 81,
+          "line_end": 81,
+          "exact_quote": "- Quota and pressure detection accept mixed signal sources: runtime outcomes, provider capabilities, heuristic `/log-derived` hints, and explicit `/pressure` evidence. Usage labels incomplete live-API availability rather than presenting inferred pressure as exact provider quota truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "source_authority_precedence",
+      "impact": "Two compliant implementations can choose different active quota truth and trigger contradictory alerts or scheduling decisions.",
+      "builder_discretion": "Display styling is discretionary; evidence precedence, expiry, and conflict semantics require one canonical rule.",
+      "feature_keys": [
+        "quota_sources",
+        "pressure",
+        "confidence"
+      ]
+    },
+    {
+      "item_id": "GAP-017",
+      "item_type": "authority",
+      "title": "Raw thread and message payloads lack a privacy access boundary",
+      "statement": "Full-thread and per-message raw inspection is required and redaction state must remain visible, but the window does not specify who may open raw data, default redaction enforcement, secret and personal-data handling, copy/export restrictions, audit logging, or behavior when a payload is partially redacted or unavailable.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 184,
+          "line_end": 184,
+          "exact_quote": "- raw payload toggles for the full thread and for individual messages",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 193,
+          "line_end": 193,
+          "exact_quote": "- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "privacy_and_authorization",
+      "impact": "Raw prompts, tool payloads, account context, and secrets may be exposed to an unauthorized viewer or copied into exports despite a redaction state.",
+      "builder_discretion": "Permission UI is discretionary; access, redaction, audit, and export boundaries require canonical specification.",
+      "feature_keys": [
+        "raw_payload",
+        "redaction",
+        "authorization"
+      ]
+    },
+    {
+      "item_id": "GAP-018",
+      "item_type": "contract",
+      "title": "Identity bridge precedence omits referential edge cases",
+      "statement": "The anchor fields are ordered, but cardinality, uniqueness scope, missing and provisional IDs, late provider handles, collision behavior, reassignment, deletion/tombstones, one-to-many receipts, replay, and join failure presentation are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 74,
+          "line_end": 74,
+          "exact_quote": "- Bridge-field precedence is explicit: `attempt_id` stays the local runtime anchor; `provider_attempt_ref?` appears on the `attempt_record` as the provider/runtime execution trace handle; `usage_event_ref` is the Usage bridge; and receipt refs remain external side-effect lineage. `opaque-but-real` provider continuity fields must have a legal bridged-provider schema slot so reconnect/replay semantics are not under-specified before account-switch history is joined.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "identity_join_edge_cases",
+      "impact": "Consumers can duplicate, orphan, or misattribute usage and receipts when optional references arrive late, collide, or span multiple records.",
+      "builder_discretion": "Indexing technology is discretionary; identity scope, cardinality, failure, and repair semantics require one contract.",
+      "feature_keys": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref"
+      ]
+    },
+    {
+      "item_id": "GAP-019",
+      "item_type": "contract",
+      "title": "Quota-window time semantics are unspecified",
+      "statement": "The plan names 5h, 7d, org, plan-cycle, monthly, RPM, and TPM windows but does not define rolling versus fixed boundaries, timezone, clock source, reset timestamps, grace intervals, daylight-saving behavior, missing limit denominators, or comparison rules across provider and locally aggregated windows.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 134,
+          "line_end": 134,
+          "exact_quote": "- **5h and 7d windows:** Show current usage vs limit (e.g. \"5h: X / Y\", \"7d: X / Y\") per platform where the platform or org API provides it.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 273,
+          "line_end": 273,
+          "exact_quote": "- **Usage feature:** Use Admin API for 5h/7d or org windows when key is set; use stream-json usage events for per-run tokens and optional mid-stream context %. No SDK required for CLI-based runs.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "time_window_semantics",
+      "impact": "Equivalent inputs can produce different totals and reset countdowns, especially across locales, clock skew, provider boundaries, and migrations.",
+      "builder_discretion": "Formatting is discretionary; window definition, clock authority, and reset behavior require canonical rules.",
+      "feature_keys": [
+        "quota_windows",
+        "reset_time",
+        "clock"
+      ]
+    },
+    {
+      "item_id": "GAP-020",
+      "item_type": "state_transition",
+      "title": "Copilot included-model fallback is not action-gated",
+      "statement": "The plan states that included models may remain available after premium exhaustion, but does not define the eligibility resolver, model/capability list authority, user choice, automatic fallback policy, queued-run behavior, in-flight transition, stale entitlement handling, or recovery after reset or policy change.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 253,
+          "line_end": 253,
+          "exact_quote": "- if the user exhausts premium requests, Copilot can still fall back to included models for the rest of the month, but premium-request-backed behavior is subject to explicit block `/rate-limit/policy` state.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "provider_fallback_transition",
+      "impact": "The GUI or scheduler may claim work can continue while selecting an ineligible model, or may over-block work that an included model can perform.",
+      "builder_discretion": "Resolver implementation is discretionary; eligibility, consent, transition, and recovery semantics require canonical definition.",
+      "feature_keys": [
+        "copilot",
+        "included_models",
+        "fallback"
+      ]
+    },
+    {
+      "item_id": "GAP-021",
+      "item_type": "failure_recovery",
+      "title": "Compatibility migrations have direction but no completion or rollback protocol",
+      "statement": "The canonical-vs-mirror and widget-key precedence directions are clear, but there is no migration version state, dual-read/write prohibition, duplicate reconciliation, corruption handling, crash-resume checkpoint, rollback, backup validation, telemetry, or criterion for retiring compatibility reads.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 80,
+          "line_end": 80,
+          "exact_quote": "- Usage follows `Plans/FinalGUISpec.md` and `/FinalGUISpec.md` appendix C.5 for backup-preserving dashboard widget layout migration: `dashboard_layout:v1` and `dashboard_layout` remain backup/migration reads, future reads use `widget_layout:v1:dashboard`, and the active `widget_layout` family takes precedence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "compatibility_migration_recovery",
+      "impact": "A crash or mixed-version deployment can duplicate totals, select the wrong layout, or strand users between legacy and canonical state.",
+      "builder_discretion": "Migration tooling is discretionary; state machine, validation, completion, and rollback requirements are not.",
+      "feature_keys": [
+        "usage_jsonl_migration",
+        "widget_layout_migration",
+        "rollback"
+      ]
+    },
+    {
+      "item_id": "GAP-022",
+      "item_type": "gui_truth",
+      "title": "Current-state prose can be mistaken for active authority",
+      "statement": "The same core labels usage.jsonl as non-canonical migration input and later presents a UsageTracker/QuotaManager/UsageRecord usage.jsonl backend as current app state without a retirement marker, observation date, compatibility-only label, or explicit prohibition on treating the block as implementation authority.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 117,
+          "line_end": 117,
+          "exact_quote": "- **Backend**: `UsageTracker`, `QuotaManager`, `UsageRecord` persisted to `usage.jsonl`; orchestrator records usage; platform runners report token usage.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "compatibility_authority_ambiguity",
+      "impact": "An implementer can revive or preserve the legacy storage path as active truth despite the canonical rollup rule.",
+      "builder_discretion": "Historical prose can remain, but it needs dated lineage and a clear non-authority boundary.",
+      "feature_keys": [
+        "legacy_backend",
+        "usage_jsonl",
+        "authority"
+      ]
+    },
+    {
+      "item_id": "UNK-001",
+      "item_type": "unknown",
+      "title": "Referenced seam completeness cannot be established in the blind window",
+      "statement": "The excerpt delegates material command, GUI, storage, and runtime behavior to referenced contracts. Because the authorized blind phase excludes those documents, whether they close the identified seam, accessibility, recovery, and test-oracle gaps remains unknown rather than disproven.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 176,
+          "line_end": 176,
+          "exact_quote": "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "gap_kind": "blind_phase_unknown",
+      "impact": "A later cross-document phase may confirm closure or reveal incompatibility; this review cannot safely infer either outcome.",
+      "builder_discretion": "None; resolve by authorized seam review rather than implementation guesswork.",
+      "feature_keys": [
+        "cross_document_seams",
+        "unknown_unknowns"
+      ]
+    },
+    {
+      "item_id": "NG-001",
+      "item_type": "explicit_non_gap",
+      "title": "Persistence and presentation ownership are explicitly separated",
+      "statement": "Within the core, seglog, redb, Tantivy, storage, Usage, and FinalGUISpec ownership is explicit enough to reject a feature-local persistence authority.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 62,
+          "line_end": 62,
+          "exact_quote": "- Usage storage-doc dependencies are `Plans/storage-plan.md` and `Plans/FinalGUISpec.md`: seglog owns the append-only event source, redb owns durable KV `/settings/state`, checkpoints, projections, and rollups, Tantivy owns search indices, and any JSONL or `usage.jsonl` output is a projector mirror rather than canonical truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 64,
+          "line_end": 64,
+          "exact_quote": "- Usage owns the cross-surface `/quota/alerts/analytics/product-shape`, usage-tracking, and `/runtime/event/GUI` product contract while storage and FinalGUISpec continue to own the persistence stack and shell presentation rules.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "authority",
+        "persistence",
+        "presentation"
+      ]
+    },
+    {
+      "item_id": "NG-002",
+      "item_type": "explicit_non_gap",
+      "title": "Misleading freshness and source certainty are explicitly prohibited",
+      "statement": "The core requires stale timestamps and refresh, source-class disclosure, and unknown or estimated wording where authoritative quota cannot be proved.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 89,
+          "line_end": 89,
+          "exact_quote": "- Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action so old numbers are never presented as current.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 216,
+          "line_end": 216,
+          "exact_quote": "- Usage UI must disclose whether the data comes from provider-reported plan data, team-admin data, inferred-from-runtime evidence, or editor-refusal evidence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 294,
+          "line_end": 294,
+          "exact_quote": "- when PM cannot prove authoritative remaining `/quota`, the UI must show `estimated`, `/unknown`, or equivalent source-qualified wording rather than pretending the numbers are definitive.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "gui_truth",
+        "freshness",
+        "source_class"
+      ]
+    },
+    {
+      "item_id": "NG-003",
+      "item_type": "explicit_non_gap",
+      "title": "Codex entitlement buckets are explicitly isolated",
+      "statement": "The core unambiguously prohibits merging ChatGPT-backed and API-key-backed Codex pressure or cooldown pools and separates login evidence from quantity evidence.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 232,
+          "line_end": 232,
+          "exact_quote": "- ChatGPT-backed Codex usage and API-key-backed Codex usage are distinct entitlement buckets.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 233,
+          "line_end": 233,
+          "exact_quote": "- PM MUST NOT merge those buckets into one shared pressure or cooldown pool, even when they belong to the same human owner.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 240,
+          "line_end": 240,
+          "exact_quote": "- `codex login status` is an allowed local probe for direct Codex login state and reports whether the account is logged-in. PM records that as setup/status evidence, not as usage quantity or quota evidence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "codex",
+        "entitlement_bucket",
+        "evidence_boundary"
+      ]
+    },
+    {
+      "item_id": "NG-004",
+      "item_type": "explicit_non_gap",
+      "title": "Copilot blocked causes are not flattened",
+      "statement": "The core preserves distinct premium exhaustion, paid-overage, organization-policy, entitlement, and billing-entity states and provides a plain-language mapping for the exhausted case.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 254,
+          "line_end": 254,
+          "exact_quote": "- premium-request exhaustion, paid-overage policy, org policy blocks, and entitlement-missing states are distinct conditions and must not all be flattened into a generic cooldown.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 255,
+          "line_end": 255,
+          "exact_quote": "- blocked reasons should remain explicit, including `billing_entity_required`, `included_premium_exhausted`, `paid_overage_disallowed`, `copilot_entitlement_missing`, and `copilot_org_policy_blocked`.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "copilot",
+        "blocked_reasons",
+        "gui_copy"
+      ]
+    },
+    {
+      "item_id": "NG-005",
+      "item_type": "explicit_non_gap",
+      "title": "Compatibility precedence has a defined direction",
+      "statement": "The core protects canonical rollups from legacy usage.jsonl scans and establishes active widget-layout precedence over migration reads.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 58,
+          "line_end": 58,
+          "exact_quote": "Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 80,
+          "line_end": 80,
+          "exact_quote": "- Usage follows `Plans/FinalGUISpec.md` and `/FinalGUISpec.md` appendix C.5 for backup-preserving dashboard widget layout migration: `dashboard_layout:v1` and `dashboard_layout` remain backup/migration reads, future reads use `widget_layout:v1:dashboard`, and the active `widget_layout` family takes precedence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "compatibility",
+        "migration_precedence",
+        "canonical_rollups"
+      ]
+    },
+    {
+      "item_id": "NG-006",
+      "item_type": "explicit_non_gap",
+      "title": "Primary identity bridge precedence is explicit",
+      "statement": "The core assigns distinct roles to local attempt identity, provider execution handle, Usage bridge, receipt lineage, and provider-backed tool traces, preventing feature-local cost or receipt identifiers from becoming primary joins.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 74,
+          "line_end": 74,
+          "exact_quote": "- Bridge-field precedence is explicit: `attempt_id` stays the local runtime anchor; `provider_attempt_ref?` appears on the `attempt_record` as the provider/runtime execution trace handle; `usage_event_ref` is the Usage bridge; and receipt refs remain external side-effect lineage. `opaque-but-real` provider continuity fields must have a legal bridged-provider schema slot so reconnect/replay semantics are not under-specified before account-switch history is joined.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 75,
+          "line_end": 75,
+          "exact_quote": "- Tool traces that originate from a provider-backed attempt carry `provider_attempt_ref?` whenever that provider/runtime handle exists; Usage joins that trace through shared usage identity rather than feature-local cost or receipt notions.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "identity_bridge",
+        "tool_trace",
+        "receipt_lineage"
+      ]
+    },
+    {
+      "item_id": "NG-007",
+      "item_type": "explicit_non_gap",
+      "title": "Record, bundle, and view exports are semantically distinct",
+      "statement": "The core explicitly prevents filtered views, summaries, render output, and projection mirrors from being presented as canonical record truth.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 69,
+          "line_end": 69,
+          "exact_quote": "- Usage export semantics stay distinct: record export returns exact `/records` with stable ids, canonical ids, `/refs`, metadata, and schema-aware payloads; bundle export packages records, Evidence items, attached `/blobs/files`, thread export/share payloads, selected-object bundles, `.pm-bundle` configuration manifests, JSONL/JSON run-history artifacts, and a manifest; view export produces user-facing filtered table/list/chart output, CSV/JSON summaries, search results, analytics views, and graph `/render` convenience output without becoming canonical record truth.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "export_taxonomy",
+        "record_truth",
+        "projection"
+      ]
+    },
+    {
+      "item_id": "NG-008",
+      "item_type": "explicit_non_gap",
+      "title": "Estimated cost and token semantics are source-qualified",
+      "statement": "The core prioritizes canonical UsageRecord projections, limits normalization to non-authoritative fallback, and requires counting, confidence, settlement, freshness, and redaction caveats to remain visible.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 190,
+          "line_end": 190,
+          "exact_quote": "- per-thread chat cost consumes canonical UsageRecord projections first",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 191,
+          "line_end": 191,
+          "exact_quote": "- OpenCode-style normalization is a display fallback only when the UsageRecord marks the value `pricing_estimated` or otherwise non-authoritative",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 193,
+          "line_end": 193,
+          "exact_quote": "- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "estimated_cost",
+        "counting_semantics",
+        "source_confidence"
+      ]
+    },
+    {
+      "item_id": "NG-009",
+      "item_type": "explicit_non_gap",
+      "title": "Setup probes cannot masquerade as quota evidence",
+      "statement": "The core explicitly limits codex login status to setup/status evidence and separates rate-limit hints from token statistics.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 240,
+          "line_end": 240,
+          "exact_quote": "- `codex login status` is an allowed local probe for direct Codex login state and reports whether the account is logged-in. PM records that as setup/status evidence, not as usage quantity or quota evidence.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 241,
+          "line_end": 241,
+          "exact_quote": "- Codex ChatGPT `/browser` accounts may expose strong local `/runtime` stats, but provider/runtime rate-limit hints must be parsed separately from token statistics so a row does not confuse token usage with quota or rate-limit pressure.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "codex_login",
+        "quota_evidence",
+        "token_statistics"
+      ]
+    },
+    {
+      "item_id": "NG-010",
+      "item_type": "explicit_non_gap",
+      "title": "Gemini Direct, Antigravity, and Gemini CLI authority are separated",
+      "statement": "The core makes direct Gemini route-specific, assigns active CLI-runtime transport to Antigravity where verified, and marks Gemini CLI as retired lineage rather than an active usage row.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 280,
+          "line_end": 280,
+          "exact_quote": "### Gemini Direct, Antigravity, and retired Gemini CLI usage",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 281,
+          "line_end": 281,
+          "exact_quote": "Gemini Direct usage must stay route-specific, and Antigravity CLI usage must be modeled as its own active CLI-runtime route where verified. Gemini CLI usage is retired/source-lineage only. Stale-canon wording that reduces Gemini to local counters, a single `mixed-account` provider, or a generic API-key `key-exception` is not sufficient for Usage.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "line_start": 283,
+          "line_end": 283,
+          "exact_quote": "The provider-doc reconciliation keeps `Plans/CLI_Bridged_Providers.md` as the owner for active CLI-runtime transport. Usage must not revive Gemini CLI as a live provider row; active Google-owned CLI-runtime evidence belongs to Antigravity.",
+          "source_sha256": "ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1"
+        }
+      ],
+      "feature_keys": [
+        "gemini_direct",
+        "antigravity",
+        "retired_lineage"
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Consumers are named, but rollup invalidation, failed-join behavior, and versioned handoff obligations are not.",
+      "evidence_item_ids": [
+        "GAP-001",
+        "GAP-014",
+        "GAP-018"
+      ]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Refresh, alerts, provider fallbacks, and quota-window transitions omit required error, recovery, and action-gating states.",
+      "evidence_item_ids": [
+        "GAP-005",
+        "GAP-012",
+        "GAP-019",
+        "GAP-020",
+        "NG-004"
+      ]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Atomic rollup publication, switch-event ordering, cleanup leases, and late identity joins are not specified.",
+      "evidence_item_ids": [
+        "GAP-001",
+        "GAP-009",
+        "GAP-010",
+        "GAP-018"
+      ]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Projector fan-out, refresh, and export operations lack partial-success and cleanup semantics.",
+      "evidence_item_ids": [
+        "GAP-002",
+        "GAP-005",
+        "GAP-011"
+      ]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Projector repair, compaction failure recovery, and compatibility migration rollback are not defined.",
+      "evidence_item_ids": [
+        "GAP-002",
+        "GAP-008",
+        "GAP-021"
+      ]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Persistence and provider ownership are strong non-gaps, but destructive operations, raw-payload access, signal arbitration, and seam version authority remain open.",
+      "evidence_item_ids": [
+        "GAP-008",
+        "GAP-009",
+        "GAP-014",
+        "GAP-016",
+        "GAP-017",
+        "NG-001",
+        "NG-003",
+        "NG-010"
+      ]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Retention, deletion propagation, raw-payload authorization, and export redaction are not closed.",
+      "evidence_item_ids": [
+        "GAP-003",
+        "GAP-011",
+        "GAP-017"
+      ]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Provider, error-parser, mirror, event, and import inputs have no validation or quarantine contract.",
+      "evidence_item_ids": [
+        "GAP-004",
+        "GAP-011"
+      ]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Source and freshness honesty are explicit non-gaps, but offline transitions, source conflicts, fallback eligibility, time-window semantics, and legacy-current wording can still mislead.",
+      "evidence_item_ids": [
+        "GAP-005",
+        "GAP-016",
+        "GAP-019",
+        "GAP-020",
+        "GAP-022",
+        "NG-002",
+        "NG-008",
+        "NG-009"
+      ]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "No cached/offline/error/recovery state machine or offline action gating is defined for provider refresh.",
+      "evidence_item_ids": [
+        "GAP-005"
+      ]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "The plan asserts scale support without measurable capacity, latency, backpressure, retention, or export bounds.",
+      "evidence_item_ids": [
+        "GAP-003",
+        "GAP-013"
+      ]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Hover/click context interactions lack keyboard, assistive-technology, touch, focus, and perceivable-state requirements.",
+      "evidence_item_ids": [
+        "GAP-006"
+      ]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "ELI5/Expert variants do not define localization, and quota-window time and numeric formatting semantics are absent.",
+      "evidence_item_ids": [
+        "GAP-007",
+        "GAP-019"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Canonical precedence is explicit, but migration state, validation, completion, crash recovery, rollback, and legacy-current labeling remain incomplete.",
+      "evidence_item_ids": [
+        "GAP-021",
+        "GAP-022",
+        "NG-005"
+      ]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "User-visible freshness exists, but projector lag, refresh failures, source conflicts, repair progress, and support diagnostics have no owned health contract.",
+      "evidence_item_ids": [
+        "GAP-002",
+        "GAP-005",
+        "GAP-016",
+        "NG-002"
+      ]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Compaction, retention deletion, and cleanup eligibility lack complete authorization, confirmation, concurrency, receipt, and recovery semantics.",
+      "evidence_item_ids": [
+        "GAP-003",
+        "GAP-008",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "ContractRefs and identity roles are explicit, but schema versions, compatibility ranges, seam oracles, and legacy authority boundaries are not proven in this window.",
+      "evidence_item_ids": [
+        "GAP-014",
+        "GAP-018",
+        "GAP-022",
+        "UNK-001",
+        "NG-006"
+      ]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Storage gates are cited, but feature-level inputs, expected outputs, state-transition oracles, and negative tests are absent.",
+      "evidence_item_ids": [
+        "GAP-015"
+      ]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Blindness correctly prevents claiming closure from referenced documents; provider evolution, cross-contract compatibility, and later-phase research may expose additional gaps.",
+      "evidence_item_ids": [
+        "GAP-013",
+        "GAP-014",
+        "GAP-016",
+        "UNK-001"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

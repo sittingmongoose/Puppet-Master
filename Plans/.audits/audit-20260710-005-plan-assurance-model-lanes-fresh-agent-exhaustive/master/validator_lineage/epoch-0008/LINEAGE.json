@@ -1,0 +1,14 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "epoch_id": "epoch-0008",
+  "status": "immutable_executable_lineage_copy",
+  "reason": "Root builder and independent checker advanced prospectively for the authorized 24-worker epoch-0009 while epoch-0008 reviewer attempts remained immutable.",
+  "launch_seal_ref": "master/frozen/epoch-0008/launch_seal.json",
+  "launch_seal_sha256": "49829d20a6d1e040860e8ac0c0f2ac643de803080037704bbb7d0a9008cc581f",
+  "builder_ref": "master/validator_lineage/epoch-0008/build_packet.py",
+  "builder_sha256": "a1fb89bfd8334b791e603e8daeb94f07e4f8634be4f8b6eca6dea849cb78901f",
+  "independent_checker_ref": "master/validator_lineage/epoch-0008/verify_prelaunch.py",
+  "independent_checker_sha256": "93735f434d061386678d08900ba78967d52e8960cca977c98625bf7c077b3721",
+  "frozen_epoch_mutated": false,
+  "canonical_plan_or_product_files_mutated": false
+}

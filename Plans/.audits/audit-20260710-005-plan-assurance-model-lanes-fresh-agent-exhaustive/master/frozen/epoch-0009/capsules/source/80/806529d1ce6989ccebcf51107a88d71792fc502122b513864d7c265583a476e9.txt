@@ -1,0 +1,398 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1966-1977 >>>
+L00001966	  - "pm.project-plan-graph.v1"
+L00001967	  - "same node IDs"
+L00001968	  - "same node fields"
+L00001969	  - "same entrypoints"
+L00001970	negative_constraints:
+L00001971	  - "The monolithic graph is not canonical and must not be required for validation or orchestration."
+L00001972	preserved_contractrefs:
+L00001973	  - "ContractRef: SchemaID:pm.project-plan-graph.v1, ContractName:Plans/Project_Output_Artifacts.md"
+L00001974	owner_hints:
+L00001975	  - "Plans/Project_Output_Artifacts.md"
+L00001976	```
+L00001977	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1978-2346 >>>
+L00001978	### POA-024 - Seglog Artifact Event Persistence Fields
+L00001979	
+L00001980	```yaml
+L00001981	plan_unit_id: POA-024
+L00001982	unit_type: requirement
+L00001983	status: accepted
+L00001984	owner_doc: Plans/Project_Output_Artifacts.md
+L00001985	canonical_text: >-
+L00001986	  Project Plan Package artifacts are canonical in seglog, with filesystem as regenerable export/cache and required artifact-event fields sufficient for hash-verified reconstruction.
+L00001987	gui_related: false
+L00001988	gui_classification_reason: This unit defines persistence event fields and reconstruction semantics rather than visual presentation.
+L00001989	split_recommended: false
+L00001990	depends_on:
+L00001991	  - "POA-007"
+L00001992	unblocks: []
+L00001993	acceptance_criteria:
+L00001994	  - "Seglog Artifact Event Persistence Fields remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00001995	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001996	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001997	validation_surfaces:
+L00001998	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001999	  - "python3 scripts/pm-plan-index.py validate"
+L00002000	risk_class: seglog_artifact_event_drift
+L00002001	reasoning_tier: standard
+L00002002	context_scope: project_output_artifacts
+L00002003	implementation_surfaces:
+L00002004	  - Plans/Project_Output_Artifacts.md
+L00002005	node_compile_hint:
+L00002006	  mode: requirement
+L00002007	  create_worknodes: false
+L00002008	source_lineage:
+L00002009	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0028
+L00002010	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0029
+L00002011	preserved_exact_tokens:
+L00002012	  - "artifact_id"
+L00002013	  - "artifact_type"
+L00002014	  - "schema_version"
+L00002015	  - "logical_path"
+L00002016	  - "content_bytes"
+L00002017	  - "content_hash"
+L00002018	  - "ts"
+L00002019	  - "session_id"
+L00002020	  - "agent_id"
+L00002021	  - "workspace-root relative"
+L00002022	  - "SHA-256"
+L00002023	negative_constraints: []
+L00002024	preserved_contractrefs:
+L00002025	  - "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog"
+L00002026	owner_hints:
+L00002027	  - "Plans/Project_Output_Artifacts.md"
+L00002028	```
+L00002029	
+L00002030	### POA-025 - Canonical Project Plan Package Artifact Types
+L00002031	
+L00002032	```yaml
+L00002033	plan_unit_id: POA-025
+L00002034	unit_type: requirement
+L00002035	status: accepted
+L00002036	owner_doc: Plans/Project_Output_Artifacts.md
+L00002037	canonical_text: >-
+L00002038	  The canonical artifact_type registry maps Project Plan Package artifact types to their required, optional, GUI, validation, traceability, and quickstart logical paths.
+L00002039	gui_related: true
+L00002040	gui_classification_reason: The source span includes optional GUI artifact types and user-visible package artifact registry entries.
+L00002041	split_recommended: false
+L00002042	depends_on:
+L00002043	  - "POA-024"
+L00002044	unblocks: []
+L00002045	acceptance_criteria:
+L00002046	  - "Canonical Project Plan Package Artifact Types remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00002047	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002048	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002049	validation_surfaces:
+L00002050	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002051	  - "python3 scripts/pm-plan-index.py validate"
+L00002052	risk_class: artifact_type_registry_drift
+L00002053	reasoning_tier: standard
+L00002054	context_scope: project_output_artifacts
+L00002055	implementation_surfaces:
+L00002056	  - Plans/Project_Output_Artifacts.md
+L00002057	node_compile_hint:
+L00002058	  mode: requirement
+L00002059	  create_worknodes: false
+L00002060	source_lineage:
+L00002061	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0030
+L00002062	preserved_exact_tokens:
+L00002063	  - "requirements"
+L00002064	  - "contracts_pack"
+L00002065	  - "plan_human"
+L00002066	  - "plan_graph_index"
+L00002067	  - "plan_graph_node"
+L00002068	  - "plan_graph_edges"
+L00002069	  - "plan_graph_monolith"
+L00002070	  - "acceptance_manifest"
+L00002071	  - "auto_decisions"
+L00002072	  - "ui_wiring_matrix"
+L00002073	  - "ui_command_catalog"
+L00002074	  - "validation_pass_report"
+L00002075	  - "requirements_quality_report"
+L00002076	  - "requirements_coverage_json"
+L00002077	  - "requirements_coverage_md"
+L00002078	  - "quickstart_md"
+L00002079	negative_constraints:
+L00002080	  - "plan_graph_monolith remains optional and noncanonical."
+L00002081	preserved_contractrefs: []
+L00002082	owner_hints:
+L00002083	  - "Plans/Project_Output_Artifacts.md"
+L00002084	```
+L00002085	
+L00002086	### POA-026 - Validator Graph Integrity And Headless Execution
+L00002087	
+L00002088	```yaml
+L00002089	plan_unit_id: POA-026
+L00002090	unit_type: requirement
+L00002091	status: accepted
+L00002092	owner_doc: Plans/Project_Output_Artifacts.md
+L00002093	canonical_text: >-
+L00002094	  Validators must prove sharded graph validity, shard hashes, contract references, acceptance coverage, seglog hash matching, headless orchestration, and optional monolithic export consistency.
+L00002095	gui_related: true
+L00002096	gui_classification_reason: The source span includes validation behavior that explicitly excludes reliance on GUI artifacts while preserving GUI-artifact boundary checks.
+L00002097	split_recommended: false
+L00002098	depends_on:
+L00002099	  - "POA-021"
+L00002100	  - "POA-025"
+L00002101	unblocks: []
+L00002102	acceptance_criteria:
+L00002103	  - "Validator Graph Integrity And Headless Execution remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00002104	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002105	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002106	validation_surfaces:
+L00002107	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002108	  - "python3 scripts/pm-plan-index.py validate"
+L00002109	risk_class: validator_graph_integrity_drift
+L00002110	reasoning_tier: standard
+L00002111	context_scope: project_output_artifacts
+L00002112	implementation_surfaces:
+L00002113	  - Plans/Project_Output_Artifacts.md
+L00002114	node_compile_hint:
+L00002115	  mode: requirement
+L00002116	  create_worknodes: false
+L00002117	source_lineage:
+L00002118	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0031
+L00002119	preserved_exact_tokens:
+L00002120	  - "plan_graph/index.json"
+L00002121	  - "nodes[].path"
+L00002122	  - "nodes[].sha256"
+L00002123	  - "ProjectContract:*"
+L00002124	  - "contracts/index.json"
+L00002125	  - "acceptance_manifest.json"
+L00002126	  - "content_hash"
+L00002127	  - "plan.md"
+L00002128	  - "GUI artifacts"
+L00002129	  - "plan_graph.monolithic.json"
+L00002130	negative_constraints:
+L00002131	  - "Headless orchestration must not depend on plan.md, GUI artifacts, or optional monolithic exports."
+L00002132	preserved_contractrefs:
+L00002133	  - "ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009, ContractName:Plans/Project_Output_Artifacts.md"
+L00002134	  - "ContractRef: Gate:GATE-001, Gate:GATE-005, Gate:GATE-009"
+L00002135	owner_hints:
+L00002136	  - "Plans/Project_Output_Artifacts.md"
+L00002137	```
+L00002138	
+L00002139	### POA-027 - Validation Sweep Completeness And Post-Pass Finality
+L00002140	
+L00002141	```yaml
+L00002142	plan_unit_id: POA-027
+L00002143	unit_type: requirement
+L00002144	status: accepted
+L00002145	owner_doc: Plans/Project_Output_Artifacts.md
+L00002146	canonical_text: >-
+L00002147	  Validation sweeps must produce Auditor cycle reports tied by workflow_run_id,
+L00002148	  preserve provider/model provenance, remain deterministic/headless, and
+L00002149	  validate post-loop corrected artifacts until certified or critically blocked;
+L00002150	  zero or more legacy pass-shaped report rows may exist only as import/export/search compatibility mirrors.
+L00002151	gui_related: true
+L00002152	gui_classification_reason: The source span is GUI-related in the migration map and covers user-visible validation sweep provenance and corrected output finality.
+L00002153	split_recommended: false
+L00002154	depends_on:
+L00002155	  - "POA-026"
+L00002156	unblocks: []
+L00002157	acceptance_criteria:
+L00002158	  - "Validation Sweep Completeness And Post-Pass Finality remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00002159	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002160	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002161	validation_surfaces:
+L00002162	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002163	  - "python3 scripts/pm-plan-index.py validate"
+L00002164	risk_class: validation_sweep_finality_drift
+L00002165	reasoning_tier: standard
+L00002166	context_scope: project_output_artifacts
+L00002167	implementation_surfaces:
+L00002168	  - Plans/Project_Output_Artifacts.md
+L00002169	node_compile_hint:
+L00002170	  mode: requirement
+L00002171	  create_worknodes: false
+L00002172	source_lineage:
+L00002173	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0031
+L00002174	preserved_exact_tokens:
+L00002175	  - "validation_pass_report"
+L00002176	  - "pass_number 1, 2, 3"
+L00002177	  - "workflow_run_id"
+L00002178	  - "changes_applied_summary"
+L00002179	  - "requirements.md"
+L00002180	  - "plan.md"
+L00002181	  - "quickstart.md"
+L00002182	  - "provider"
+L00002183	  - "model"
+L00002184	  - "model_roles.auditor.provider"
+L00002185	  - "model_roles.auditor.model"
+L00002186	negative_constraints:
+L00002187	  - "Certification-cycle summary contains no write-protected requirements.md or plan.md."
+L00002188	  - "No human approval gates occur inside the Auditor audit/repair/re-audit loop."
+L00002189	preserved_contractrefs:
+L00002190	  - "ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project_Output_Artifacts.md"
+L00002191	owner_hints:
+L00002192	  - "Plans/Project_Output_Artifacts.md"
+L00002193	```
+L00002194	
+L00002195	### POA-028 - Traceability And Quickstart Validator Integrity
+L00002196	
+L00002197	```yaml
+L00002198	plan_unit_id: POA-028
+L00002199	unit_type: requirement
+L00002200	status: accepted
+L00002201	owner_doc: Plans/Project_Output_Artifacts.md
+L00002202	canonical_text: >-
+L00002203	  Validators must enforce requirements quality and coverage JSON integrity, Markdown/JSON ID parity, and optional quickstart command, count, and size constraints.
+L00002204	gui_related: true
+L00002205	gui_classification_reason: The source span is GUI-related in the migration map and includes human-readable traceability and quickstart validation outputs.
+L00002206	split_recommended: false
+L00002207	depends_on:
+L00002208	  - "POA-026"
+L00002209	unblocks: []
+L00002210	acceptance_criteria:
+L00002211	  - "Traceability And Quickstart Validator Integrity remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00002212	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002213	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002214	validation_surfaces:
+L00002215	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002216	  - "python3 scripts/pm-plan-index.py validate"
+L00002217	risk_class: traceability_quickstart_validation_drift
+L00002218	reasoning_tier: standard
+L00002219	context_scope: project_output_artifacts
+L00002220	implementation_surfaces:
+L00002221	  - Plans/Project_Output_Artifacts.md
+L00002222	node_compile_hint:
+L00002223	  mode: requirement
+L00002224	  create_worknodes: false
+L00002225	source_lineage:
+L00002226	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0031
+L00002227	preserved_exact_tokens:
+L00002228	  - "summary.total_requirements"
+L00002229	  - "uncovered_requirements[]"
+L00002230	  - "orphaned_node_requirement_refs[]"
+L00002231	  - "uncovered_acceptance[]"
+L00002232	  - "requirements_coverage.md"
+L00002233	  - "nodes[].checks[].commands[].cmd"
+L00002234	  - "<= 20"
+L00002235	  - "<= 16384 bytes"
+L00002236	negative_constraints:
+L00002237	  - "Orchestration, planning, and validator correctness must not depend on quickstart.md."
+L00002238	preserved_contractrefs:
+L00002239	  - "ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md"
+L00002240	owner_hints:
+L00002241	  - "Plans/Project_Output_Artifacts.md"
+L00002242	```
+L00002243	
+L00002244	### POA-029 - Auditor Cycle Report Lineage Bridge
+L00002245	
+L00002246	```yaml
+L00002247	plan_unit_id: POA-029
+L00002248	unit_type: requirement
+L00002249	status: accepted
+L00002250	owner_doc: Plans/Project_Output_Artifacts.md
+L00002251	canonical_text: >-
+L00002252	  Auditor cycle reports remain upstream artifacts but must bridge backward to planning/wizard state and forward to launched execution through explicit lineage and runtime/account identity fields. The legacy `validation_pass_report` artifact family name is a compatibility mirror, not a fixed validation-pass model selector; plans-to-code audit, verification, certification, quality gates, and evidence review route to Auditor Model, and broad artifact-family rename remains deferred.
+L00002253	gui_related: true
+L00002254	gui_classification_reason: The source span is GUI-related in the migration map and preserves History/Ledger/export lineage for Auditor cycle reports and legacy compatibility mirrors.
+L00002255	split_recommended: false
+L00002256	depends_on:
+L00002257	  - "POA-027"
+L00002258	unblocks: []
+L00002259	acceptance_criteria:
+L00002260	  - "Auditor Cycle Report Lineage Bridge remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00002261	  - "validation_pass_report remains a compatibility mirror artifact-family lineage name with compatibility_only true and cycle_report_ref, not a user-facing validation-pass model selector."
+L00002262	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002263	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002264	validation_surfaces:
+L00002265	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002266	  - "python3 scripts/pm-plan-index.py validate"
+L00002267	risk_class: validation_pass_lineage_drift
+L00002268	reasoning_tier: standard
+L00002269	context_scope: project_output_artifacts
+L00002270	implementation_surfaces:
+L00002271	  - Plans/Project_Output_Artifacts.md
+L00002272	node_compile_hint:
+L00002273	  mode: requirement
+L00002274	  create_worknodes: false
+L00002275	source_lineage:
+L00002276	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0031
+L00002277	preserved_exact_tokens:
+L00002278	  - "project_id"
+L00002279	  - "wizard_id?"
+L00002280	  - "thread_id?"
+L00002281	  - "phase_plan_ref?"
+L00002282	  - "staged bundle refs"
+L00002283	  - "requirements_quality_report_ref?"
+L00002284	  - "promoted artifact refs"
+L00002285	  - "workflow_run_id"
+L00002286	  - "requested/effective runtime identity snapshot refs"
+L00002287	  - "effective_account_id?"
+L00002288	  - "execution_role"
+L00002289	  - "run_id?"
+L00002290	  - "pass_verdict"
+L00002291	  - "skipped"
+L00002292	negative_constraints:
+L00002293	  - "Auditor cycle reports and legacy validation_pass_report mirrors do not become runtime attempts."
+L00002294	preserved_contractrefs:
+L00002295	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+L00002296	  - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
+L00002297	  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+L00002298	owner_hints:
+L00002299	  - "Plans/Project_Output_Artifacts.md"
+L00002300	```
+L00002301	
+L00002302	### POA-030 - Traceability Outputs Classification
+L00002303	
+L00002304	```yaml
+L00002305	plan_unit_id: POA-030
+L00002306	unit_type: requirement
+L00002307	status: accepted
+L00002308	owner_doc: Plans/Project_Output_Artifacts.md
+L00002309	canonical_text: >-
+L00002310	  Traceability outputs are derived, noncanonical for planning decisions, and canonical for verification outputs.
+L00002311	gui_related: false
+L00002312	gui_classification_reason: This unit defines traceability output authority and classification rather than visual presentation.
+L00002313	split_recommended: false
+L00002314	depends_on:
+L00002315	  - "POA-028"
+L00002316	unblocks: []
+L00002317	acceptance_criteria:
+L00002318	  - "Traceability Outputs Classification remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+L00002319	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002320	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002321	validation_surfaces:
+L00002322	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002323	  - "python3 scripts/pm-plan-index.py validate"
+L00002324	risk_class: traceability_classification_drift
+L00002325	reasoning_tier: standard
+L00002326	context_scope: project_output_artifacts
+L00002327	implementation_surfaces:
+L00002328	  - Plans/Project_Output_Artifacts.md
+L00002329	node_compile_hint:
+L00002330	  mode: requirement
+L00002331	  create_worknodes: false
+L00002332	source_lineage:
+L00002333	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0032
+L00002334	preserved_exact_tokens:
+L00002335	  - "derived"
+L00002336	  - "non-canonical"
+L00002337	  - "canonical"
+L00002338	  - "requirements quality"
+L00002339	  - "coverage reports"
+L00002340	negative_constraints: []
+L00002341	preserved_contractrefs:
+L00002342	  - "ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011"
+L00002343	owner_hints:
+L00002344	  - "Plans/Project_Output_Artifacts.md"
+L00002345	```
+L00002346	
+
+<<< CONTEXT_AFTER canonical_document_lines=2347-2358 >>>
+L00002347	### POA-031 - Requirements Quality Report Artifact
+L00002348	
+L00002349	```yaml
+L00002350	plan_unit_id: POA-031
+L00002351	unit_type: requirement
+L00002352	status: accepted
+L00002353	owner_doc: Plans/Project_Output_Artifacts.md
+L00002354	canonical_text: >-
+L00002355	  requirements_quality_report.json is the machine-readable requirements quality artifact, validates against pm.requirements_quality_report.schema.v1, and is verification-canonical but noncanonical for planning decisions.
+L00002356	gui_related: false
+L00002357	gui_classification_reason: This unit defines a derived verification artifact path and schema rather than visual presentation.
+L00002358	split_recommended: false

@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 981-992 >>>
+stale_retired_dispositions:
+- Active Gemini CLI provider-entry support is retired by pldg-20260624-001-provider-updates.
+- The seven-provider inventory is retired by the open-ended provider catalog.
+owner_boundary_notes:
+- Provider-runtime identity applies across assistant, interviewer, builder, package/seam, and governance/execution actors while preserving separate actor ontologies.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md'
+split_recommendation_reason: Multi-Account-S0005 is intentionally split into provider scope, policy, pool, recovery, and actor identity units.
+```
+
+
+<<< AUTHORITATIVE_CORE 993-1377 >>>
+### MA-004 - Effective Policy Visibility And Storage Alignment
+
+```yaml
+plan_unit_id: MA-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-account auto-switching is on by default for provider-using roles unless policy disables it. Policy is
+  primarily project-owned, runs snapshot the effective policy space at run start, and each attempt or message records
+  the effective account actually used. Requested provider/model/effort/persona/auth mode/account policy and effective
+  provider/model/effort/persona/auth mode/account remain visible and queryable. Account selection and env/config
+  wiring belong to the Provider contract, state lives in seglog and redb, secrets stay outside canonical storage, GUI
+  requirements remain UX-only, and same-provider accounts are not interchangeable buckets.
+gui_related: true
+gui_classification_reason: The unit includes GUI requirements and user-visible requested/effective disclosure.
+split_recommended: true
+depends_on:
+- MA-003
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Requested and effective provider/account identity remain visible and queryable.
+- Account selection remains part of the Provider contract.
+- Secrets remain outside canonical storage.
+- Same-provider accounts are not flattened into interchangeable buckets.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: requested_effective_policy
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: requested_effective_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+preserved_exact_tokens:
+- Default behavior
+- Policy ownership
+- Requested/effective identity
+- Rewrite alignment
+- Non-goal
+- seglog
+- redb
+- no Iced/Slint lock-in
+negative_constraints:
+- Same-provider accounts are not treated as an interchangeable bucket.
+- Secrets remain outside canonical storage.
+- GUI requirements remain UX-only with no Iced/Slint lock-in inside this document.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider contract owns account selection and env/config wiring.
+- Plans/storage-plan.md owns canonical storage mechanics referenced by this account contract.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#42-authpolicy, ContractName:Plans/storage-plan.md'
+split_recommendation_reason: Multi-Account-S0005 is split so GUI disclosure and backend routing concerns remain separately addressable.
+```
+
+### MA-005 - Account Pool Shape And Usage Pressure Ownership
+
+```yaml
+plan_unit_id: MA-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Account-pool routing preserves account-scoped policy, per-request selection, failover caps, async-local context,
+  recovery signals, active-account state, operator-visible history, TUI surfaces, provider-specific records, pool and
+  fallback state, settings-spec and GUI coverage, Usage-owned account pressure, requested/effective gap closure,
+  current effective account displays, and switch policy thresholds without hiding provider account selection or
+  inventing a second quota subsystem beside Usage.
+gui_related: true
+gui_classification_reason: The unit includes settings-spec, GUI coverage, TUI surfaces, and current account display requirements.
+split_recommended: true
+depends_on:
+- MA-004
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Account-pool routing exposes account, fallback, pressure, and effective_account_id state.
+- Settings and GUI coverage do not hide provider account selection or switch thresholds.
+- Usage remains the owner for account pressure and quota-pressure projection.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: account_pool_usage_pressure
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: account_pool_usage_pressure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+preserved_exact_tokens:
+- Account-pool runtime shape
+- Provider product shape
+- Pool and fallback state
+- Settings-spec and GUI coverage
+- Usage-owned account pressure
+- Requested/effective account gap closure
+- Current effective account state
+- Switch policy thresholds
+- effective_account_id
+- signal_confidence
+negative_constraints:
+- Provider account selection, account pool policy, and switch thresholds must not stay under-specced or hidden.
+- PM must not invent a second independent account pressure or quota subsystem beside Usage.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/usage-feature.md consumes account pressure and quota projection instead of being replaced by this document.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: Multi-Account-S0005 is split so pool/runtime pressure and actor/audit boundaries can compile independently.
+```
+
+### MA-006 - Recovery Audit And Owner Boundary Records
+
+```yaml
+plan_unit_id: MA-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-account recovery records preserve cross-owner references, recovering provider control states, project/worktree
+  account context, GitHub auth disclosure, switch availability evidence, actor and target identity separation,
+  storage-facing audit identity, behavior-driving audit flags, shared runtime boundaries, and rewrite-era decision
+  references without making consumer docs or provider-native labels the account owner.
+gui_related: false
+gui_classification_reason: The unit defines audit, owner-boundary, and recovery records rather than direct GUI layout or controls.
+split_recommended: true
+depends_on:
+- MA-005
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Cross-owner recovery references remain auditable in recovery records.
+- Provider-native labels remain separate from actor and target identity.
+- Behavior-driving facts remain distinct from audit-only facts.
+- Shared-runtime account behavior does not make the CLI bridge the account owner.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: recovery_audit_boundary
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: recovery_audit_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+preserved_exact_tokens:
+- Cross-owner recovery references
+- Recovering provider control
+- Project/worktree account context
+- GitHub auth disclosure
+- Switch availability state
+- Actor and target identity
+- Storage-facing audit identity
+- Behavior-driving audit flags
+- Shared runtime boundary
+- Rewrite-era decision references
+- github_api:github.com/<login>
+- approve_continue
+- TierContext
+negative_constraints:
+- Provider-native identity must not be treated as the actor.
+- Shared-runtime account behavior consumed by CLI_Bridged_Providers does not make the CLI bridge the account owner.
+- Rewrite-era decision references are not substitutes for the live Multi-Account contract.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Rewrite-era Decision_Log entries are preserved as decision-history references, not live owner alternatives.
+owner_boundary_notes:
+- Executor, GitHub auth, UI command, and orchestrator integration docs are recovery consumers unless their ContractRefs say otherwise.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: Recovery/audit ownership is split from GUI pressure and actor/run scope.
+```
+
+### MA-007 - Actor Run Persona And Control Loop Account Identity
+
+```yaml
+plan_unit_id: MA-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Requested/effective account identity applies across assistant turns, interviews, builders, orchestrator nodes,
+  attempts, runs, documents, and reviews while preserving distinct actor ontologies. Serialization, account/persona
+  runtime identity, role-scoped confidence, pre-send and post-send control loops, GPT account fields, active versus
+  historical identity, and builder/runtime scopes inherit the same account contract without creating feature-local
+  account state.
+gui_related: false
+gui_classification_reason: The unit covers runtime identity propagation and control loops rather than visual presentation.
+split_recommended: true
+depends_on:
+- MA-006
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Distinct actor/run kinds share account truth without collapsing ontologies.
+- Serialization carries account/persona runtime identity instead of feature-local account state.
+- Active account context remains distinct from historical switch records and prior attempt identity.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: actor_account_identity
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: actor_account_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+preserved_exact_tokens:
+- Actor/run kind coverage
+- Serialization and persona account scope
+- Role-scoped confidence
+- Pre/post-send control loop
+- GPT account fields
+- Active versus historical identity
+- Builder/runtime account scope
+- requested_account
+- effective_account
+- generated://
+negative_constraints:
+- Runtime records must preserve distinct actor ontologies while sharing account truth.
+- Feature-local account state must not replace account/persona runtime identity.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Assistant, interviewer, builder, and orchestrator surfaces consume the same requested/effective account contract.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: Actor identity propagation is split from pool pressure and recovery audit records.
+```
+
+### MA-008 - Source Reference And Evidence Inventory
+
+```yaml
+plan_unit_id: MA-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  The multi-account references and assessment preserve the source inventory for Plans/rewrite-tie-in-memo.md,
+  Plans/storage-plan.md, Plans/usage-feature.md, AGENTS.md, claude-nonstop, OpenCode PR #11832, and OpenCode PR #8536.
+  The assessment records that the design evidence is sufficient to reverse-engineer multi-account behavior for covered
+  providers, with remaining work in the Rust port and provider-specific clients.
+gui_related: true
+gui_classification_reason: The preserved reference inventory includes UI/storage alignment and Usage view requirements.
+split_recommended: false
+depends_on:
+- MA-003
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Reference table rows remain traceable.
+- External design-source rows remain traceable.
+- The Q/A assessment remains preserved as source evidence, not as an executable task.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: source_evidence_inventory
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: source_evidence_inventory
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0010
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0011
+preserved_exact_tokens:
+- Plans/rewrite-tie-in-memo.md
+- Plans/storage-plan.md
+- Plans/usage-feature.md
+- AGENTS.md
+- claude-nonstop
+- OpenCode PR #11832
+- OpenCode PR #8536
+- Do we have what we need to reverse-engineer multi-account and apply it to Puppet Master for all covered providers?
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- External references are design evidence and do not become PM owner docs.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered evidence spans are narrow enough for one source-inventory PlanUnit.
+```
+
+### MA-009 - Requested Effective Account Identity Envelope
+
+```yaml
+plan_unit_id: MA-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Runtime, bridged-provider, and permission-facing envelopes that carry account identity preserve requested_account_id,
+  requested_account_policy, requested_account_binding, effective_account_id, effective_provider_identity,
+  execution_role, and operational_identity. provider_account_id is retired from canonical account-identity naming and
+  remains only subordinate provider-native metadata. Assistant, chat, interview, and builder actors share provider/runtime
+  identity semantics with Orchestrator while preserving actor kind and execution context.
+gui_related: false
+gui_classification_reason: The unit defines runtime envelope fields and actor boundaries rather than GUI presentation.
+split_recommended: false
+depends_on:
+- MA-004
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- requested_account_id exists alongside requested_account_policy.
+- requested_account_binding governs none, preferred, and required fallback behavior.
+- provider_account_id remains provider-native metadata rather than canonical identity.
+- Cross-surface consumers preserve actor kind and execution context.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: account_identity_envelope
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: account_identity_envelope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0008
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0009
+preserved_exact_tokens:
+- requested_account_id
+- requested_account_policy
+- requested_account_binding
+- effective_account_id
+- effective_provider_identity
+- execution_role
+- operational_identity
+- provider_account_id
+- none
+- preferred
+- required
+negative_constraints:
+- Cross-surface consumers must not collapse actor kinds into orchestration-only terms.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- provider_account_id is retired from canonical account-identity naming and kept only as provider-native metadata.
+owner_boundary_notes:
+- This section owns the canonical requested/effective account identity contract for all provider-using actors.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md'
+split_recommendation_reason: The covered envelope spans are focused on one account identity contract.
+```
+
+
+<<< CONTEXT_AFTER 1378-1389 >>>
+### MA-010 - Provider Capability Inventory And Canon Correction
+
+```yaml
+plan_unit_id: MA-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  The provider inventory preserves known capabilities and remaining Rust/client work for Claude Code, Codex, Gemini,
+  Copilot, and Cursor, plus resolved gaps for Gemini usage, Copilot usage, Cursor config isolation, Codex multi-account,
+  and Rust idioms. Current canon must not revive stale CLI-centric assumptions for Codex or GitHub Copilot; Codex and
+  GitHub Copilot are direct providers, Cursor isolation uses runnable cursor-agent account boundaries under PM-owned

@@ -1,0 +1,410 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-395 >>>
+L00000001	# Contracts V0 (Canonical)
+L00000002	
+L00000003	
+L00000004	  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+L00000005	  - Keep `active_subview`, filters, compare targets, pinned selections, and similar fields in destination/view-state contracts.
+L00000006	  - active_subview
+L00000007	  - `focus_thread_usage`
+L00000008	  - focus_thread_usage
+L00000009	  - `navigation_wrapper`
+L00000010	  - navigation_wrapper
+L00000011	  - `domain_action`
+L00000012	  - domain_action
+L00000013	  - contracts own canonical route identity
+L00000014	  - `backing_document_id`
+L00000015	  - backing_document_id
+L00000016	  - `last_saved_path`
+L00000017	  - last_saved_path
+L00000018	  - Those fields belong elsewhere:
+L00000019	  - The narrow scope-restoration fields are:
+L00000020	  - The narrow focus-refinement fields are:
+L00000021	  - Good serialized fields
+L00000022	  - Bad serialized fields
+L00000023	  - `object_kind = blocked_episode`
+L00000024	  - object_kind = blocked_episode
+L00000025	  - `focused_run_id = run_id`
+L00000026	  - focused_run_id = run_id
+L00000027	  - `object_id = blocked_sequence`
+L00000028	  - object_id = blocked_sequence
+L00000029	  - It must stay small.
+L00000030	  - `object_kind = usage_event`
+L00000031	  - `agent-rules-context.md` still under-enumerates callers, omits execution-role input, conflicts with Personas/Prompt_Pipeline on bundle ordering, and has weaker disclosure/help contracts than adjacent systems.
+L00000032	  - agent-rules-context.md
+L00000033	  - `project_id = <project_id>`
+L00000034	  - project_id = <project_id>
+L00000035	  - `thread_id = <thread_id>`
+L00000036	  - thread_id = <thread_id>
+L00000037	  - `focused_run_id = <run_id>`
+L00000038	  - focused_run_id = <run_id>
+L00000039	  - `object_id = <attempt_id>`
+L00000040	  - object_id = <attempt_id>
+L00000041	  - `object_id = <blocked_sequence>`
+L00000042	  - object_id = <blocked_sequence>
+L00000043	  - `object_kind = scheduler_pass`
+L00000044	  - object_kind = scheduler_pass
+L00000045	  - `object_id = <scheduler_pass_id>`
+L00000046	  - object_id = <scheduler_pass_id>
+L00000047	  - `object_id = <safe_point_id>`
+L00000048	  - object_id = <safe_point_id>
+L00000049	  - `object_id = <remediation_root_id>`
+L00000050	  - object_id = <remediation_root_id>
+L00000051	  - `object_kind = graph_generation`
+L00000052	  - object_kind = graph_generation
+L00000053	  - `object_id = <graph_generation_id>`
+L00000054	  - object_id = <graph_generation_id>
+L00000055	  - `object_kind = graph_patch`
+L00000056	  - object_kind = graph_patch
+L00000057	  - `object_id = <graph_patch_id>`
+L00000058	  - object_id = <graph_patch_id>
+L00000059	  - `object_id = <worktree_id>`
+L00000060	  - object_id = <worktree_id>
+L00000061	  - `object_id = <lane_id>`
+L00000062	  - object_id = <lane_id>
+L00000063	  - `object_kind = feature_seam`
+L00000064	  - object_kind = feature_seam
+L00000065	  - `object_id = <feature_seam_id>`
+L00000066	  - object_id = <feature_seam_id>
+L00000067	  - `object_kind = work_package`
+L00000068	  - object_kind = work_package
+L00000069	  - `object_id = <work_package_id>`
+L00000070	  - object_id = <work_package_id>
+L00000071	  - `object_id = <concern_id>`
+L00000072	  - object_id = <concern_id>
+L00000073	  - `object_id = <promotion_id>`
+L00000074	  - object_id = <promotion_id>
+L00000075	  - `seams`
+L00000076	  - seams
+L00000077	  - `node_graph`
+L00000078	  - node_graph
+L00000079	  - `object_id = scheduler_pass_id`
+L00000080	  - object_id = scheduler_pass_id
+L00000081	  - `object_id = safe_point_id`
+L00000082	  - object_id = safe_point_id
+L00000083	  - `object_id = remediation_root_id`
+L00000084	  - object_id = remediation_root_id
+L00000085	  - `object_id = attempt_id`
+L00000086	  - object_id = attempt_id
+L00000087	  - Stratum 1: owner docs
+L00000088	  - Treat the routing tranche as structurally closed after the owner-doc contracts are added.
+L00000089	  - subsection `7.2 WiringEntry`
+L00000090	  - 7.2 WiringEntry
+L00000091	  - `handler_location`
+L00000092	  - handler_location
+L00000093	  - `expected_event_types`
+L00000094	  - expected_event_types
+L00000095	  - unknown-command rejection
+L00000096	  - report/evidence refs
+L00000097	  - `workflow_refs`
+L00000098	  - workflow_refs
+L00000099	  - `docker_refs`
+L00000100	  - docker_refs
+L00000101	  - `kubernetes_refs`
+L00000102	  - kubernetes_refs
+L00000103	  - `attempt_record` with scheduler/safe-point/remediation/runtime identity fields
+L00000104	  - they correctly carry blocked/wizard state
+L00000105	  - wizard-blocked keeps wizard-specific clarification/report fields
+L00000106	  - usage_record
+L00000107	  - tier-adjacent `evidence_record`
+L00000108	  - `thread_blocked_notice` / `wizard_runtime_state` with `resume_url?`
+L00000109	  - resume_url?
+L00000110	  - exact command-arg mismatches
+L00000111	  - `requested_platform`
+L00000112	  - requested_platform
+L00000113	  - `effective_platform`
+L00000114	  - effective_platform
+L00000115	  - `requested_model`
+L00000116	  - requested_model
+L00000117	  - `effective_model`
+L00000118	  - effective_model
+L00000119	  - `worker_provider`
+L00000120	  - worker_provider
+L00000121	  - `worker_model`
+L00000122	  - worker_model
+L00000123	  - `verifier_provider`
+L00000124	  - verifier_provider
+L00000125	  - `verifier_model`
+L00000126	  - verifier_model
+L00000127	  - `request_id`
+L00000128	  - request_id
+L00000129	  - `request_kind = tier_boundary_approval`
+L00000130	  - request_kind = tier_boundary_approval
+L00000131	  - Strong aligned owner:
+L00000132	  - with `request_id` args
+L00000133	  - `PuppetMasterEvent::TierChanged`
+L00000134	  - PuppetMasterEvent::TierChanged
+L00000135	  - `PuppetMasterEvent::IterationStart`
+L00000136	  - PuppetMasterEvent::IterationStart
+L00000137	  - `PuppetMasterEvent::EvidenceStored`
+L00000138	  - PuppetMasterEvent::EvidenceStored
+L00000139	  - `IterationStart`
+L00000140	  - `GateStart`
+L00000141	  - GateStart
+L00000142	  - `GateComplete`
+L00000143	  - GateComplete
+L00000144	  - `EvidenceStored`
+L00000145	  - EvidenceStored
+L00000146	  - Strong owner docs:
+L00000147	  - `hitl_request_id`
+L00000148	  - hitl_request_id
+L00000149	  - Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model.
+L00000150	  - GraphNode
+L00000151	  - GraphNodeUI
+L00000152	  - `Orchestrator_Page.md`
+L00000153	  - Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes.
+L00000154	  - 39
+L00000155	  - 22
+L00000156	  - After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes.
+L00000157	  - 61
+L00000158	  - `3.13` appears twice
+L00000159	  - 3.13
+L00000160	  - `3.14` appears twice
+L00000161	  - 3.14
+L00000162	  - `3.15` appears twice
+L00000163	  - 3.15
+L00000164	  - `DRY_Rules.md` second
+L00000165	  - DRY_Rules.md
+L00000166	  - `Decision_Log.md` third
+L00000167	  - Decision_Log.md
+L00000168	  - `DRY_Rules.md` needs:
+L00000169	  - `Decision_Log.md` needs:
+L00000170	  - `plan_or_tier_default`
+L00000171	  - plan_or_tier_default
+L00000172	  - `Orchestrator_Page.md` needs:
+L00000173	  - mixed-canon owner docs
+L00000174	  - MUST RECONCILE
+L00000175	  - MUST VERIFY
+L00000176	  ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
+L00000177	  - `Plans/_shards/**`
+L00000178	  - Plans/_shards/**
+L00000179	  - Plans/storage-plan.md
+L00000180	  - Plans/FinalGUISpec.md
+L00000181	  - Plans/UI_Command_Catalog.md
+L00000182	  - 1. Reconcile owner contracts and schemas first.
+L00000183	  - Plans/Decision_Policy.md
+L00000184	  - The rerun confirms that these were not just vague "help gaps", but concrete missing contracts:
+L00000185	  - pressure-summary field
+L00000186	  - Plans/Crosswalk.md
+L00000187	  - Plans/Wiring_Matrix.md
+L00000188	  - Plans/Progression_Gates.md
+L00000189	  - Plans/FileManager.md
+L00000190	  - Plans/Project_Output_Artifacts.md
+L00000191	  - Plans/Executor_Protocol.md
+L00000192	  - execution_unit_context
+L00000193	  - ### 5.1B Persona/Runtime Snapshot Payload Contract
+L00000194	  - gap-001
+L00000195	  - requested_account_binding
+L00000196	  - requested_account_policy
+L00000197	  - operational_identity
+L00000198	  - cov-034
+L00000199	  - obl-016
+L00000200	  - active
+L00000201	  - acknowledged
+L00000202	  - resolved
+L00000203	  - dismissed
+L00000204	  - resolution_kind
+L00000205	  - accepted_risk
+L00000206	  - `working_ledger.md:L806`
+L00000207	  - working_ledger.md:L806
+L00000208	  - `working_ledger.md:L1030`
+L00000209	  - working_ledger.md:L1030
+L00000210	  - `working_ledger.md:L1035-L1036`
+L00000211	  - working_ledger.md:L1035-L1036
+L00000212	  - `working_ledger.md:L1283-L1290`
+L00000213	  - working_ledger.md:L1283-L1290
+L00000214	  - `working_ledger.md:L1539`
+L00000215	  - working_ledger.md:L1539
+L00000216	  - `working_ledger.md:L3070-L3092`
+L00000217	  - working_ledger.md:L3070-L3092
+L00000218	  - `working_ledger.md:L3170-L3182`
+L00000219	  - working_ledger.md:L3170-L3182
+L00000220	  - `working_ledger.md:L5990-L6015`
+L00000221	  - working_ledger.md:L5990-L6015
+L00000222	  - `working_ledger.md:L6442-L6490`
+L00000223	  - working_ledger.md:L6442-L6490
+L00000224	## Canonical owner-section requirements
+L00000225	
+L00000226	
+L00000227	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000228	
+L00000229	### Owner-first canonicalization order
+L00000230	
+L00000231	Contracts_V0 owns only stable cross-surface record envelopes, shared primitive names, and typed payload minima. Domain-specific docs own their behavior and may reference these contracts without copying them. When an owner-specific section and a consumer note disagree, the owner section wins; compatibility/source-lineage tokens remain traceable but do not create peer canon.
+L00000232	
+L00000233	### Requested/effective account identity contract
+L00000234	
+L00000235	
+L00000236	- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+L00000237	- Account-bearing envelopes use `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `effective_provider_identity`, `execution_role`, and `operational_identity`. Provider-native labels such as login names or provider account ids are display/audit metadata and never replace the stable PM identity.
+L00000238	### Shared governance/runtime record envelope
+L00000239	
+L00000240	Shared governance/runtime records carry `record_id`, `record_kind`, `schema_version`, `created_at`, `updated_at`, `owner_ref`, `source_event_refs[]`, `subject_ref`, `status`, `visibility_level`, `redaction_profile`, and `evidence_refs[]`. Records may project into multiple UI or audit surfaces, but the persisted record remains one typed family.
+L00000241	
+L00000242	### Concern record family definition
+L00000243	
+L00000244	`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`.
+L00000245	
+L00000246	### Concern lifecycle and resolution kinds
+L00000247	
+L00000248	Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.
+L00000249	
+L00000250	### Concern action policy and authority model
+L00000251	
+L00000252	Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly.
+L00000253	
+L00000254	### Concern linkage to adjacent families
+L00000255	
+L00000256	Concern records may link to EventRecord, AuditFinding, AuditClosure, AuthEvent, UICommandResponse, RuntimeArtifact, PlanUnit, and storage projection refs through `linked_record_refs[]`. A linked record is evidence or routing context, not a second owner for the concern lifecycle.
+L00000257	
+L00000258	### Promotion classes and gate evidence
+L00000259	
+L00000260	Promotion classes are `informational`, `attention_required`, `blocking`, `security_blocking`, and `governance_blocking`. Promotion to any blocking class requires `gate_id`, `blocked_subject_ref`, `blocking_effect`, `owner_ref`, and at least one evidence ref. A projection may display a promoted concern only after these fields exist.
+L00000261	
+L00000262	### Historical semantic consistency
+L00000263	
+L00000264	Historical concerns preserve the original `summary`, `source_event_refs[]`, and source-lineage tokens. Later owner corrections append updates instead of rewriting history, and projections must display the current resolved state without erasing the prior concern id.
+L00000265	
+L00000266	### Coverage blocker concern lifecycle owner section
+L00000267	
+L00000268	Coverage blockers are concerns whose `concern_category = coverage_blocker`. They carry `missing_owner_ref?`, `missing_contract_ref?`, `blocked_validation_surface`, and `reopen_condition`. Closing a coverage blocker requires either a repaired owner section or an explicit source-lineage-only disposition.
+L00000269	
+L00000270	### Concern owner vs creator vs resolver separation
+L00000271	
+L00000272	`creator_ref` is the actor or validator that raised the concern. `owner_ref` is the accountable owner doc or runtime authority. `resolver_ref` is the actor or tool that changed the concern to a terminal state. These fields must not collapse into a single user label.
+L00000273	
+L00000274	### Concern source-event vs record vs projection split
+L00000275	
+L00000276	`source_event_refs[]` cite the events that caused or justified the concern. The `ConcernRecord` is the durable record. UI, ledger, audit, and history rows are projections of that record and may not invent fields not present in the durable family.
+L00000277	
+L00000278	### Runtime attribution ownership split
+L00000279	
+L00000280	Runtime attribution uses `package_id`, `run_id`, `node_id`, `attempt_id`, `execution_unit_context_ref`, and `provider_account_ref` where applicable. `package_id` is canonical; `work_package_id` is import/export compatibility only and must normalize before persistence.
+L00000281	
+L00000282	### Approval scope key and approver identity
+L00000283	
+L00000284	`approval_scope_key` is a stable string composed as `scope_kind:scope_id:action_family:normalized_subject_hash`. The approver identity is stored as `approver_ref`, with optional `approval_lease_id`, `permission_snapshot_id`, and `expires_at`. Approval keys are not reusable across different normalized command identities, projects, worktrees, or purpose strings.
+L00000285	
+L00000286	### Concern update heuristics
+L00000287	
+L00000288	Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend the existing concern while it is active or acknowledged. A terminal concern may be reopened only when its reopen condition is met or when owner/evidence hashes change. Otherwise a new concern id is required.
+L00000289	
+L00000290	### Route/open compatibility-only fallback marking
+L00000291	
+L00000292	
+L00000293	  ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject
+L00000294	  - allowed_actions[]
+L00000295	  - Base route/open primitives landed, but missing:
+L00000296	  - Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.
+L00000297	### Recommended minimum concern record shape
+L00000298	
+L00000299	The minimum serialized shape is:
+L00000300	
+L00000301	```json
+L00000302	{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
+L00000303	```
+L00000304	
+L00000305	### Concern ownership / authority direction
+L00000306	
+L00000307	Concern ownership flows from source event to durable record to projections. Projections may request actions, but record mutation must go through the owning command/contract path and return a typed UICommandResponse or validator closure receipt.
+L00000308	
+L00000309	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000310	
+L00000311	<!--
+L00000312	PUPPET MASTER -- CANONICAL CONTRACTS
+L00000313	
+L00000314	Purpose:
+L00000315	- This file is the single source of truth for core, cross-cutting **contracts** referenced by other plan documents.
+L00000316	- Keep it DRY: define only stable envelopes + type contracts; other plans reference these contracts instead of redefining.
+L00000317	
+L00000318	ABSOLUTE NAMING RULE:
+L00000319	- Platform name is "Puppet Master" only.
+L00000320	- Use "Puppet Master" naming consistently throughout this document.
+L00000321	-->
+L00000322	
+L00000323	## 0. Scope
+L00000324	This document defines the canonical contracts for:
+L00000325	- Persisted event envelopes (`EventRecord`, schema `pm.event.v0`)
+L00000326	- A minimal compatibility envelope (`EventEnvelopeV1`) used by early-phase writers/readers
+L00000327	- Provider normalized stream (CLI-bridged, server-bridged, and direct-provider transports)
+L00000328	- UI commands (`UICommand`)
+L00000329	- Auth state + events (`AuthState`, `AuthPolicy`, `AuthEvent`)
+L00000330	
+L00000331	Other plans MUST reference these contracts rather than redefining them.
+L00000332	
+L00000333	ContractRef: ContractName:Plans/Contracts_V0.md
+L00000334	
+L00000335	## Cross-surface runtime, concern, and route/open contracts
+L00000336	
+L00000337	
+L00000338	This section is the single canonical owner for runtime identity, concern/episode lifecycle, route_target primitives, and OpenSubject routing semantics across all surfaces and execution contexts.
+L00000339	
+L00000340	### Canonicalization order
+L00000341	- Apply owner-doc corrections before consumer and mirror cleanup.
+L00000342	- Rerun fidelity audit only after owner and consumer corrections are in place.
+L00000343	- The canonicalization sequence in this owner section is strict: canonical owner repairs first, dependent consumer updates second, mirror cleanup third, and final verification evidence last.
+L00000344	- Owner-before-consumer rule: when the canonicalization map calls for same-heading replacement or stale-residue retirement, owner-doc correction remains mandatory before consumer cleanup.
+L00000345	- The owner-doc integrity stack is ordered, not three isolated docs: `Crosswalk.md` first for primitive/term routing, `DRY_Rules.md` second for duplication and SSOT discipline, and `Decision_Log.md` third for durable decision trace. Contract repairs that touch those owners must preserve that order.
+L00000346	- When a verification `re-check` cannot be trusted as one end-to-end read because owner or `/consumer` documents are too large, split it into smaller bounded reviewer slices and reconcile their findings back into this owner-before-consumer sequence before declaring closure.
+L00000347	- For partial-doc verification work, a cleared model-specific tail does not close the owner-correction pass. Continue the ordered later-model sequence, and do not treat the first pass boundary as coverage holes unless reconciled owner and consumer slices prove an omitted contract obligation.
+L00000348	
+L00000349	### Shared governance and runtime record envelope
+L00000350	
+L00000351	Required shared envelope fields:
+L00000352	- `record_id`
+L00000353	- `record_kind`
+L00000354	- `project_id`
+L00000355	- `scope_ref?`
+L00000356	- `source_refs[]?`
+L00000357	- `artifact_refs[]?`
+L00000358	- `evidence_refs[]?`
+L00000359	- `supersedes_record_id?`
+L00000360	- `superseded_by_record_id?`
+L00000361	- `status`
+L00000362	- `created_at_utc`
+L00000363	- `updated_at_utc?`
+L00000364	
+L00000365	Shared actor envelope fields:
+L00000366	- `actor_kind`
+L00000367	- `actor_ref?`
+L00000368	- `execution_role?`
+L00000369	
+L00000370	Rules:
+L00000371	- `record_id` and `record_kind` identify the durable governance or runtime record; they are not artifact ids, receipt ids, rendered summary ids, or process report ids.
+L00000372	- `source_refs[]`, `artifact_refs[]`, and `evidence_refs[]` preserve lineage without copying raw source material into the record body.
+L00000373	- Supersession fields preserve historical lineage and do not delete or rewrite the superseded record.
+L00000374	- `actor_kind` is required wherever a record action is attributable; `actor_ref?` stays sparse when the actor is anonymous, external, or intentionally redacted, while `execution_role?` carries runtime role when the actor participated through execution.
+L00000375	- New first-class Orchestrator object families reuse this envelope and the shared status/lineage conventions; `feature_seam`, `work_package`, `lane`, `promotion`, `review`, `resolution_thread`, `concern`, `graph_patch`, and `worktree` remain canonical records rather than adapter-local summaries.
+L00000376	- Family-specific payloads specialize under the shared envelope; they must not invent one-off top-level shapes when a subordinate payload block can carry the family-specific fields under the canonical record identity, status, provenance, and lineage fields.
+L00000377	
+L00000378	
+L00000379	- Define one shared record envelope with canonical lineage refs and artifact/evidence refs.
+L00000380	- Keep record objects distinct from artifacts and rendered summaries.
+L00000381	- Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed.
+L00000382	- Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict.
+L00000383	- Share one attribution family across tool events, runtime artifacts, receipts, and usage records.
+L00000384	- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields.
+L00000385	- Let Contracts_V0 own cross-family attribution packet shape.
+L00000386	- Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins.
+L00000387	- Temporal records that affect receipts, blocked states, stream sessions, or recovery MUST carry typed wait/timeout fields in the shared envelope rather than burying them in rendered summaries. The shared envelope admits `timeout_class?`, `wait_state_class?`, `observation_state?`, `source_timer_ref?`, `retention_anchor_kind?`, and `retention_anchor_at_utc?` when applicable.
+L00000388	- Let storage-plan own the persistence mechanics for crash-critical active receipt/session lifecycle, blocked episode creation/resolution, follow-mode intent, last inspected run/node/log context, and retention anchors for receipts, log tails, watch buffers, explorer snapshots, and stale caches.
+L00000389	
+L00000390	### Requested/effective account and execution identity
+L00000391	
+L00000392	
+L00000393	  ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, Primitive:RuntimeIdentity
+L00000394	
+L00000395	### Requested/effective runtime identity field split
+
+<<< CONTEXT_AFTER canonical_document_lines=396-407 >>>
+L00000396	
+L00000397	Required rules:
+L00000398	- Preserve `requested_persona` and `effective_persona` as canonical shared runtime identity fields.
+L00000399	- Add requested_account_id alongside requested_account_policy
+L00000400	- Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata
+L00000401	- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+L00000402	- Model requested_account_id separately from requested_account_policy
+L00000403	- Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason
+L00000404	- Carry execution_role plus requested/effective operational identity in shared runtime identity
+L00000405	- Project them into effective-resolution, attempt, usage, and inspector surfaces
+L00000406	
+L00000407	Canonical field split:

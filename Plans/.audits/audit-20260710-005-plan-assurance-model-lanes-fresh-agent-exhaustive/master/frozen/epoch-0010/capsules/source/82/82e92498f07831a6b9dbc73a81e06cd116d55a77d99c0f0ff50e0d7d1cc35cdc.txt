@@ -1,0 +1,330 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2274-2285 >>>
+L00002274	compatibility_only_notes: []
+L00002275	stale_retired_dispositions: []
+L00002276	owner_boundary_notes:
+L00002277	- Plans/human-in-the-loop.md owns HITL consumer alignment only.
+L00002278	- Plans/Permissions_System.md and Plans/Tools.md remain owners for the shared permission ladder and tool permission behavior.
+L00002279	owner_hints:
+L00002280	- Plans/human-in-the-loop.md
+L00002281	preserved_contractrefs:
+L00002282	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md'
+L00002283	split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing subspans.
+L00002284	```
+L00002285	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2286-2600 >>>
+L00002286	### HITL-035 - Ask-Flow And Terminal Block Consumer Alignment
+L00002287	
+L00002288	```yaml
+L00002289	plan_unit_id: HITL-035
+L00002290	unit_type: requirement
+L00002291	status: accepted
+L00002292	owner_doc: Plans/human-in-the-loop.md
+L00002293	canonical_text: As an approval/ask-flow consumer, HITL preserves repaired permission, question, and terminal block handling exactly through the shared permission ladder and blocked-episode model rather than drifting into local-only action names or terminal-only approval behavior; /ask-flow and /question/terminal routes are consumer labels over the shared model and not independent HITL-only state machines.
+L00002294	gui_related: true
+L00002295	gui_classification_reason: This unit governs user-visible HITL approval affordances, permission/question prompts, terminal blocked-state handling, or approval labels.
+L00002296	split_recommended: true
+L00002297	depends_on: []
+L00002298	unblocks: []
+L00002299	acceptance_criteria:
+L00002300	- The covered source span remains losslessly available for exact-text audit.
+L00002301	- This behavior is addressable through HITL-035 instead of broad HITL-001 source-preserving coverage.
+L00002302	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002303	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002304	validation_surfaces:
+L00002305	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002306	- python3 scripts/pm-plan-index.py validate
+L00002307	risk_class: hitl_permission_ladder_drift
+L00002308	reasoning_tier: standard
+L00002309	context_scope: human_in_the_loop_standardization
+L00002310	implementation_surfaces:
+L00002311	- Plans/human-in-the-loop.md
+L00002312	node_compile_hint:
+L00002313	  mode: ask_flow_and_terminal_block_consumer_alignment
+L00002314	  create_worknodes: false
+L00002315	source_lineage:
+L00002316	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0044
+L00002317	preserved_exact_tokens:
+L00002318	- approval/ask-flow consumer
+L00002319	- MUST preserve repaired permission/question/terminal block handling exactly
+L00002320	- permission prompts
+L00002321	- question prompts
+L00002322	- terminal blocked states
+L00002323	- shared permission ladder
+L00002324	- blocked-episode model
+L00002325	- local-only action names
+L00002326	- terminal-only approval behavior
+L00002327	- /ask-flow
+L00002328	- /question/terminal
+L00002329	- consumer labels
+L00002330	- not independent HITL-only state machines
+L00002331	negative_constraints:
+L00002332	- HITL must not drift into local-only action names or terminal-only approval behavior.
+L00002333	- /ask-flow and /question/terminal must remain consumer labels, not independent HITL-only state machines.
+L00002334	compatibility_only_notes: []
+L00002335	stale_retired_dispositions: []
+L00002336	owner_boundary_notes:
+L00002337	- HITL consumes the shared question, permission, and terminal blocked-episode model.
+L00002338	- HITL must not re-own shared question, permission, or terminal state machines.
+L00002339	owner_hints:
+L00002340	- Plans/human-in-the-loop.md
+L00002341	preserved_contractrefs:
+L00002342	- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md'
+L00002343	split_recommendation_reason: The source span contains separable approval-ladder vocabulary and ask-flow/terminal-block consumer-alignment requirements; repeated source lineage preserves exact source provenance without inventing subspans.
+L00002344	```
+L00002345	
+L00002346	### HITL-001 - Human-in-the-Loop Retired Source-Preserving Bridge
+L00002347	
+L00002348	```yaml
+L00002349	plan_unit_id: HITL-001
+L00002350	unit_type: compatibility_disposition
+L00002351	status: accepted
+L00002352	owner_doc: Plans/human-in-the-loop.md
+L00002353	canonical_text: The former human-in-the-loop doc-level source-preserving bridge is retired after Phase 2B atomized human-in-the-loop-S0001 through S0044 into HITL-002 through HITL-035 and structurally dispositioned S0004, S0005, S0014, S0017, S0026, S0030, S0045, S0046, and S0048. HITL-001 remains only as migration lineage for human-in-the-loop-S0047 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.
+L00002354	gui_related: false
+L00002355	gui_classification_reason: This retired bridge records migration lineage only; product GUI coverage is owned by fine-grained HITL PlanUnits HITL-002 through HITL-035.
+L00002356	split_recommended: false
+L00002357	depends_on: []
+L00002358	unblocks: []
+L00002359	acceptance_criteria:
+L00002360	- HITL-001 no longer uses source_preserving_planunit compile mode.
+L00002361	- HITL-002 through HITL-035 own product coverage for atomized human-in-the-loop spans.
+L00002362	- Structural spans are explicit coverage dispositions, not product coverage owned by HITL-001.
+L00002363	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00002364	validation_surfaces:
+L00002365	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002366	- python3 scripts/pm-plan-index.py validate
+L00002367	risk_class: migration_lineage
+L00002368	reasoning_tier: standard
+L00002369	context_scope: residual_plan_standardization
+L00002370	implementation_surfaces:
+L00002371	- Plans/human-in-the-loop.md
+L00002372	node_compile_hint:
+L00002373	  mode: source_preserving_bridge_retired
+L00002374	  create_worknodes: false
+L00002375	source_lineage:
+L00002376	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0047
+L00002377	preserved_exact_tokens:
+L00002378	- HITL-001
+L00002379	- source_preserving_planunit
+L00002380	- source_preserving_bridge_retired
+L00002381	- Human-in-the-Loop (HITL) Mode -- Plan
+L00002382	- human-in-the-loop-S0047
+L00002383	- Owner / Consumer Map
+L00002384	- PlanUnits
+L00002385	- Migration Coverage
+L00002386	negative_constraints:
+L00002387	- HITL-001 must not re-own atomized human-in-the-loop product coverage.
+L00002388	- HITL-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00002389	- Do not treat the retired bridge as implementation-ready product coverage.
+L00002390	- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.
+L00002391	compatibility_only_notes:
+L00002392	- HITL-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00002393	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00002394	stale_retired_dispositions:
+L00002395	- The former HITL-001 residual source-preserving bridge is retired by Phase 2B batch 082.
+L00002396	owner_boundary_notes:
+L00002397	- HITL-002 through HITL-035 own atomized human-in-the-loop product coverage.
+L00002398	- human-in-the-loop-S0047 is migration-lineage coverage only after bridge retirement.
+L00002399	owner_hints:
+L00002400	- Plans/human-in-the-loop.md
+L00002401	```
+L00002402	
+L00002403	## Migration Coverage
+L00002404	
+L00002405	Original hash: `844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b`.
+L00002406	
+L00002407	Run-scoped proof artifacts:
+L00002408	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00002409	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00002410	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00002411	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00002412	
+L00002413	Phase 2B batch 081 atomized `human-in-the-loop-S0001` through `human-in-the-loop-S0043` into `HITL-002` through `HITL-033`, with dense shared-runtime, recovery-label, run-loop, tier-retirement, and recovery-action spans split where safe. Phase 2B batch 082 atomized `human-in-the-loop-S0044` into `HITL-034` and `HITL-035`, structurally dispositioned `human-in-the-loop-S0045`, `human-in-the-loop-S0046`, and `human-in-the-loop-S0048`, and retired `HITL-001` as migration-lineage compatibility coverage for `human-in-the-loop-S0047`. `Plans/human-in-the-loop.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00002414	
+L00002415	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00002416	
+L00002417	### HITL-036 - Explicit HITL Checkpoints For Plans-To-Code
+L00002418	
+L00002419	```yaml
+L00002420	plan_unit_id: HITL-036
+L00002421	unit_type: requirement
+L00002422	status: accepted
+L00002423	owner_doc: Plans/human-in-the-loop.md
+L00002424	canonical_text: >-
+L00002425	  HITL remains an explicit mode for plans-to-code execution. When enabled, it may add configured package, seam, promotion, destructive-operation, or critical certification checkpoints, but these checkpoints are not required for correctness in default hands-off mode. HITL consumes Permissions_System critical-escalation policy and Goal_Runtime_System autonomy policy; it does not replace internal Auditor, Overseer, test, source-control, or high-effort repair loops.
+L00002426	  Configured checkpoints may pause for credentials/secrets or other critical authority blockers only when HITL policy enables them or critical escalation policy requires them.
+L00002427	gui_related: true
+L00002428	gui_classification_reason: HITL checkpoints, approvals, and continuation prompts are user-visible interaction surfaces.
+L00002429	depends_on: [PS-116]
+L00002430	unblocks: [OP-024]
+L00002431	acceptance_criteria:
+L00002432	  - HITL checkpoints are opt-in mode behavior.
+L00002433	  - Default mode stays hands-off and critical-only for user escalation.
+L00002434	  - HITL does not short-circuit internal repair, audit, test, source-control, or high-effort routes unless configured checkpoint policy requires a pause.
+L00002435	validation_surfaces:
+L00002436	  - python3 scripts/pm-plans-verify.py run-gates
+L00002437	  - future HITL checkpoint review
+L00002438	risk_class: hitl_required_for_correctness_drift
+L00002439	reasoning_tier: standard
+L00002440	context_scope: plans_to_code_hitl
+L00002441	implementation_surfaces: [Plans/human-in-the-loop.md, Plans/Permissions_System.md, Plans/Goal_Runtime_System.md]
+L00002442	node_compile_hint: {mode: explicit_hitl_checkpoints, create_worknodes: false}
+L00002443	source_lineage:
+L00002444	  - pldg-20260617-001-plans-to-code-handoff:atom-0044
+L00002445	  - pldg-20260617-001-plans-to-code-handoff:atom-0045
+L00002446	  - pldg-20260617-001-plans-to-code-handoff:dec-0019
+L00002447	  - pldg-20260617-001-plans-to-code-handoff:corr-0009
+L00002448	preserved_exact_tokens:
+L00002449	  - "HITL"
+L00002450	  - "hands-off"
+L00002451	  - "configured checkpoints"
+L00002452	  - "critical authority blockers"
+L00002453	negative_constraints:
+L00002454	  - Do not make HITL required for default correctness.
+L00002455	owner_hints:
+L00002456	  - Plans/human-in-the-loop.md
+L00002457	  - Plans/Permissions_System.md
+L00002458	  - Plans/Goal_Runtime_System.md
+L00002459	```
+L00002460	
+L00002461	ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Goal_Runtime_System.md
+L00002462	
+L00002463	
+L00002464	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00002465	
+L00002466	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00002467	
+L00002468	### HITL-037 - Testing Overrides, High-Risk Checkpoints, And Exceptional User Decisions
+L00002469	
+L00002470	```yaml
+L00002471	plan_unit_id: HITL-037
+L00002472	unit_type: requirement
+L00002473	status: accepted
+L00002474	owner_doc: Plans/human-in-the-loop.md
+L00002475	canonical_text: 'The controller answers auto-resolvable gaps from evidence, applies safe defaults with recorded assumptions, and defers downstream-only details; it asks the user only for genuine product direction, risk acceptance, destructive authority, credentials, legal policy, or irreconcilable ambiguity. Security, data destruction, billing, migration, legal/compliance, irreversible external effects, or similarly high-risk decisions may require explicit user confirmation under HITL policy. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, and reopen conditions. Global or privileged installation, paid services, license acceptance, account creation, credential use, device enrollment, or material external effects require applicable authority and may become a typed blocker rather than an unsafe silent
+L00002476	  install. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason, risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision, requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker. Only product policy with no safe inference, material risk acceptance, destructive or irreversible operations, credentials or permissions, legal/compliance authority, or irreconcilable user preference conflicts may block for user decision.'
+L00002477	gui_related: false
+L00002478	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00002479	depends_on: []
+L00002480	unblocks: []
+L00002481	acceptance_criteria:
+L00002482	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00002483	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00002484	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00002485	validation_surfaces:
+L00002486	- python3 scripts/pm-plan-index.py validate
+L00002487	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00002488	risk_class: implementation_readiness
+L00002489	reasoning_tier: high
+L00002490	context_scope: ledger_to_plans_compile
+L00002491	implementation_surfaces:
+L00002492	- Plans/human-in-the-loop.md
+L00002493	- Plans/Planning_Wizard.md
+L00002494	- Plans/Automated_Testing_System.md
+L00002495	- Plans/Contracts_V0.md
+L00002496	- Plans/Permissions_System.md
+L00002497	- Plans/Progression_Gates.md
+L00002498	- Plans/Goal_Runtime_System.md
+L00002499	node_compile_hint:
+L00002500	  mode: canonical_planunit_from_bootstrap_ledger
+L00002501	  create_worknodes: false
+L00002502	  create_nodeseeds: false
+L00002503	source_lineage:
+L00002504	- pldg-20260618-001-prd-planning-wizard:atom-0053
+L00002505	- pldg-20260618-001-prd-planning-wizard:atom-0062
+L00002506	- pldg-20260618-001-prd-planning-wizard:atom-0081
+L00002507	- pldg-20260618-001-prd-planning-wizard:atom-0087
+L00002508	- pldg-20260618-001-prd-planning-wizard:atom-0139
+L00002509	- pldg-20260618-001-prd-planning-wizard:atom-0143
+L00002510	- pldg-20260618-001-prd-planning-wizard:atom-0144
+L00002511	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00002512	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00002513	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+L00002514	source_atom_ids:
+L00002515	- atom-0053
+L00002516	- atom-0062
+L00002517	- atom-0081
+L00002518	- atom-0087
+L00002519	- atom-0139
+L00002520	- atom-0143
+L00002521	- atom-0144
+L00002522	decision_refs:
+L00002523	- dec-0016
+L00002524	- dec-0017
+L00002525	- dec-0027
+L00002526	correction_refs:
+L00002527	- corr-0007
+L00002528	- corr-0010
+L00002529	preserved_exact_tokens:
+L00002530	- safe defaults
+L00002531	- minimal HITL
+L00002532	- high-risk checkpoint
+L00002533	- testing_policy_override
+L00002534	- privileged installation
+L00002535	- paid service
+L00002536	- license acceptance
+L00002537	- user_approved_incomplete_item
+L00002538	- auto_resolvable
+L00002539	- safe_default_with_assumption
+L00002540	- requires_user_risk_acceptance
+L00002541	- exceptional user decision
+L00002542	negative_constraints:
+L00002543	- Do not convert ordinary planning uncertainty into a Needs user decision blocker.
+L00002544	- Do not infer an opt-out from casual conversation or a capability setting being unavailable.
+L00002545	- Do not accept a broad 'allow TODOs' exception.
+L00002546	- Do not block on ordinary details that safe defaults, evidence, or downstream stages can resolve.
+L00002547	owner_hints:
+L00002548	- Plans/Planning_Wizard.md
+L00002549	- Plans/human-in-the-loop.md
+L00002550	- Plans/Automated_Testing_System.md
+L00002551	- Plans/Contracts_V0.md
+L00002552	- Plans/Permissions_System.md
+L00002553	- Plans/Progression_Gates.md
+L00002554	- Plans/Goal_Runtime_System.md
+L00002555	```
+L00002556	
+L00002557	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00002558	
+L00002559	This addendum is canonical HITL spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00002560	
+L00002561	### PAUSE.md Gate And Precedence
+L00002562	
+L00002563	Repairs row `sfk-52b55259003ddf5c68bd4d44`.
+L00002564	
+L00002565	`PAUSE.md` is a project-root operator gate file with frontmatter fields `pause_id`, `scope`, `reason`, `created_by`, `created_at_utc`, `expires_at_utc?`, and `allowed_action_ids[]`. A valid PAUSE gate blocks new mutating execution in scope until removed or expired. HITL approvals cannot override an active PAUSE gate unless `allowed_action_ids[]` includes the exact requested action. If both PAUSE and HITL are active, PAUSE precedence is evaluated first, then HITL approval.
+L00002566	
+L00002567	### Canonical HITL Request Contract
+L00002568	
+L00002569	Repairs row `sfk-ea3ced32a2d07a9cb2ebcf07`.
+L00002570	
+L00002571	`HITLRequest` fields are `hitl_request_id`, `request_kind`, `provider_correlation_id?`, `run_id?`, `attempt_id?`, `target_ref`, `permission_snapshot_id?`, `allowed_action_ids[]`, `default_action_id?`, `expires_at_utc?`, `request_copy_ref`, `created_at_utc`, and `schema_version`.
+L00002572	
+L00002573	`request_kind` values are `approval`, `clarification`, `risk_acceptance`, `pause_override`, `credential_required`, and `manual_review`.
+L00002574	
+L00002575	Provider-native correlation stores `provider_correlation_id`, `provider_id`, `provider_request_id?`, and `provider_thread_id?` only when supplied by the provider; absence is represented by null fields, not invented local ids.
+L00002576	
+L00002577	### Skip And Cancel Commands
+L00002578	
+L00002579	Repairs row `sfk-e480989a4656856d249b9ed8`.
+L00002580	
+L00002581	- Skip node command: `cmd.runtime.skip_node` with fields `node_id`, `run_id`, `reason_code`, and `operator_note?`.
+L00002582	- Cancel run command: `cmd.runtime.abort_run` with fields `run_id`, `reason_code`, `requested_by`, and `created_at_utc`.
+L00002583	- These commands consume existing skip/abort semantics and must not be renamed to unqualified `skip_node` or `abort_run` in UI command payloads.
+L00002584	
+L00002585	### HITL Timeout Defaults
+L00002586	
+L00002587	Repairs row `sfk-f32c8b50bd2bc2bc30b350ed`.
+L00002588	
+L00002589	- `approval_wait` default timeout is `3600000` ms (1 hour).
+L00002590	- `long_governance_wait` default timeout is `86400000` ms (24 hours).
+L00002591	- Timeout maps to `hitl_request_expired` and allowed actions `view_details`, `retry_request`, and `cancel_or_skip` according to request kind.
+L00002592	
+L00002593	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00002594	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00002595	
+L00002596	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00002597	
+L00002598	- `registry_line 295` (explicitly_deferred; source line 1022; `sfk-ea3ced32a2d07a9cb2ebcf07`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] L4-16,37-91: "Provider-native correlation" and "Canonical HITL request contract" headings are either empty or list fields with no types/wire format/enum enumeration.
+L00002599	
+L00002600	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

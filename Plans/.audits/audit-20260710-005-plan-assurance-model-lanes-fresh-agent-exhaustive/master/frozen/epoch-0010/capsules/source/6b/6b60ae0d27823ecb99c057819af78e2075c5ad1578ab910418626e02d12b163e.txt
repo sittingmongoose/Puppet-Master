@@ -1,0 +1,385 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3422-3433 >>>
+L00003422	- Projection/export remains optional and explicit.
+L00003423	stale_retired_dispositions: []
+L00003424	owner_boundary_notes:
+L00003425	- Skills_System.md, FinalGUISpec.md, storage-plan.md, Multi-Account.md, and OpenCode_Deep_Extraction.md retain final projection and account-boundary authority.
+L00003426	owner_hints:
+L00003427	- Plans/MiscPlan.md
+L00003428	preserved_contractrefs:
+L00003429	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Multi-Account.md'
+L00003430	- 'ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md'
+L00003431	split_recommendation_reason: Projection target drift is distinct from PM-native runtime readiness and should remain independently routable.
+L00003432	```
+L00003433	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3434-3789 >>>
+L00003434	### M-035 - Skills Gap Decisions And Readiness Table
+L00003435	
+L00003436	```yaml
+L00003437	plan_unit_id: M-035
+L00003438	unit_type: requirement
+L00003439	status: accepted
+L00003440	owner_doc: Plans/MiscPlan.md
+L00003441	canonical_text: 'Skills implementation planning must preserve the resolved gaps table covering first-wins discovery deduplication, create-no-overwrite behavior, concurrent-edit handling recommendation, full validate-all status table, deferred ask timing, import-copy semantics, global-only create without a project, and name/folder match enforcement.'
+L00003442	gui_related: true
+L00003443	gui_classification_reason: The unit includes user-visible Skills list/status decisions, prompts, modals, and error behavior.
+L00003444	split_recommended: true
+L00003445	depends_on:
+L00003446	- M-030
+L00003447	- M-031
+L00003448	- M-032
+L00003449	- M-033
+L00003450	unblocks: []
+L00003451	acceptance_criteria:
+L00003452	- Deduplication by name uses first-wins by search order and can show later duplicates as shadowed in the GUI.
+L00003453	- Creating a skill never overwrites an existing SKILL.md.
+L00003454	- Concurrent edit handling preserves the recommended Reload / Overwrite / Cancel prompt option for implementation planning.
+L00003455	- Validate all shows a full table of discovered skills with OK or Error status and summary counts unless explicitly deferred for v1.
+L00003456	- Ask permission is deferred to the moment the runner would load the skill and is handled in-app before or at run start, not inside the platform CLI.
+L00003457	- Import copies into a discovery path instead of persisting arbitrary external paths.
+L00003458	- No-project creation offers global-only, and frontmatter name must match folder name.
+L00003459	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003460	validation_surfaces:
+L00003461	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003462	- python3 scripts/pm-plan-index.py validate
+L00003463	risk_class: skills_gap_decision_readiness_drift
+L00003464	reasoning_tier: standard
+L00003465	context_scope: miscplan_cleanup_standardization
+L00003466	implementation_surfaces:
+L00003467	- Plans/MiscPlan.md
+L00003468	node_compile_hint:
+L00003469	  mode: skills_gap_decisions_readiness_table
+L00003470	  create_worknodes: false
+L00003471	source_lineage:
+L00003472	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0048
+L00003473	preserved_exact_tokens:
+L00003474	- First-wins by search order
+L00003475	- DRY:DATA:skill_search_paths
+L00003476	- 'A skill named &lt;name&gt; already exists at this location'
+L00003477	- File changed on disk. Reload / Overwrite / Cancel
+L00003478	- 'N OK, M errors.'
+L00003479	- Show only errors
+L00003480	- Allow skill 'doc-lookup' for this run?
+L00003481	- Allow / Deny / Always / Never
+L00003482	- Explicit per-skill entry wins over pattern.
+L00003483	- Copy into a discovery path.
+L00003484	- ~/.config/puppet-master/skills/<name>
+L00003485	- Name must match folder name
+L00003486	negative_constraints:
+L00003487	- Create new must not overwrite an existing skill containing SKILL.md.
+L00003488	- Import must not persist arbitrary external paths.
+L00003489	- Ask permission prompts occur in-app before or at run start, not inside the platform CLI.
+L00003490	compatibility_only_notes:
+L00003491	- Some choices remain implementation-plan readiness decisions, not product blockers for this standardization batch.
+L00003492	stale_retired_dispositions: []
+L00003493	owner_boundary_notes:
+L00003494	- Skills_System.md owns final skill semantics; this unit keeps the MiscPlan gap-resolution table source-preserved and atomized.
+L00003495	owner_hints:
+L00003496	- Plans/MiscPlan.md
+L00003497	preserved_contractrefs: []
+L00003498	split_recommendation_reason: The source table covers many readiness choices; this unit preserves them as one planning-readiness cluster while keeping implementation decisions explicit.
+L00003499	```
+L00003500	
+L00003501	### M-036 - Skills Bulk Permission Pattern Control
+L00003502	
+L00003503	```yaml
+L00003504	plan_unit_id: M-036
+L00003505	unit_type: requirement
+L00003506	status: accepted
+L00003507	owner_doc: Plans/MiscPlan.md
+L00003508	canonical_text: The Skills tab must support a bulk permission pattern control where users enter a wildcard pattern, select Allow/Deny/Ask, confirm the matched count, persist GuiConfig.skill_permissions, and preserve explicit per-skill precedence over patterns.
+L00003509	gui_related: true
+L00003510	gui_classification_reason: The unit defines user-visible bulk permission input, dropdown, confirmation modal, and list feedback.
+L00003511	split_recommended: true
+L00003512	depends_on:
+L00003513	- M-031
+L00003514	- M-032
+L00003515	- M-035
+L00003516	unblocks: []
+L00003517	acceptance_criteria:
+L00003518	- Users can enter patterns such as doc-* or internal-* and choose Allow, Deny, or Ask.
+L00003519	- Apply resolves discovered skills matching the pattern and shows a confirmation with count before persisting.
+L00003520	- Confirmation copy preserves the source example Set Allow for 3 skills matching doc-*?.
+L00003521	- On confirm, GuiConfig.skill_permissions is updated and the list reflects new resolved permissions.
+L00003522	- Explicit per-skill rules win over pattern rules.
+L00003523	- Source lines 801-866 of MiscPlan-S0050 remain residual under M-001 for the next bounded window.
+L00003524	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003525	validation_surfaces:
+L00003526	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003527	- python3 scripts/pm-plan-index.py validate
+L00003528	risk_class: skills_bulk_permission_pattern_drift
+L00003529	reasoning_tier: standard
+L00003530	context_scope: miscplan_cleanup_standardization
+L00003531	implementation_surfaces:
+L00003532	- Plans/MiscPlan.md
+L00003533	node_compile_hint:
+L00003534	  mode: skills_bulk_permission_pattern_control
+L00003535	  create_worknodes: false
+L00003536	source_lineage:
+L00003537	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+L00003538	preserved_exact_tokens:
+L00003539	- Bulk permission
+L00003540	- Set by pattern
+L00003541	- doc-*
+L00003542	- internal-*
+L00003543	- Allow / Deny / Ask
+L00003544	- Apply
+L00003545	- 'Set Allow for 3 skills matching doc-*?'
+L00003546	- GuiConfig.skill_permissions
+L00003547	- Explicit per-skill wins over pattern
+L00003548	- apply_bulk_permission
+L00003549	- SkillPermissions
+L00003550	- Permission
+L00003551	- SkillInfo
+L00003552	negative_constraints:
+L00003553	- The atomized coverage for this unit is bounded to MiscPlan-S0050 lines 791-800; lines 801-866 remain residual for later handling.
+L00003554	- Explicit per-skill overrides must not be overridden by a broader pattern.
+L00003555	compatibility_only_notes: []
+L00003556	stale_retired_dispositions: []
+L00003557	owner_boundary_notes:
+L00003558	- Backend wildcard semantics are shared with resolve_skill_permission and M-031.
+L00003559	owner_hints:
+L00003560	- Plans/MiscPlan.md
+L00003561	preserved_contractrefs: []
+L00003562	split_recommendation_reason: This unit intentionally covers only the first bounded part of S0050; remaining sort/filter, preview, modified/version, and validate-all material stays residual.
+L00003563	```
+L00003564	
+L00003565	### M-037 - Skills Bulk Permission Backend Save Handling
+L00003566	
+L00003567	```yaml
+L00003568	plan_unit_id: M-037
+L00003569	unit_type: requirement
+L00003570	status: accepted
+L00003571	owner_doc: Plans/MiscPlan.md
+L00003572	canonical_text: Skills bulk-permission updates must route through shared backend permission state, report config-persist failures, and leave retryable in-memory state instead of pretending unsaved changes succeeded.
+L00003573	gui_related: true
+L00003574	gui_classification_reason: The unit defines user-visible bulk-permission save feedback and retry behavior on the Skills surface.
+L00003575	split_recommended: false
+L00003576	depends_on:
+L00003577	- M-031
+L00003578	- M-032
+L00003579	- M-036
+L00003580	unblocks: []
+L00003581	acceptance_criteria:
+L00003582	- Bulk permission may use apply_bulk_permission as a DRY helper to compute matched skills and update SkillPermissions.
+L00003583	- Config persist failure after Apply shows an error toast.
+L00003584	- In-memory state is not marked as saved after a persist failure so the user can retry.
+L00003585	- Source lines 801-802 of MiscPlan-S0050 are covered without re-owning the earlier M-036 source lines.
+L00003586	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003587	validation_surfaces:
+L00003588	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003589	- python3 scripts/pm-plan-index.py validate
+L00003590	risk_class: skills_bulk_permission_save_drift
+L00003591	reasoning_tier: standard
+L00003592	context_scope: miscplan_cleanup_standardization
+L00003593	implementation_surfaces:
+L00003594	- Plans/MiscPlan.md
+L00003595	node_compile_hint:
+L00003596	  mode: skills_bulk_permission_backend_save_handling
+L00003597	  create_worknodes: false
+L00003598	source_lineage:
+L00003599	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+L00003600	preserved_exact_tokens:
+L00003601	- apply_bulk_permission
+L00003602	- SkillPermissions
+L00003603	- Permission
+L00003604	- SkillInfo
+L00003605	- config persist fails
+L00003606	- error toast
+L00003607	- saved
+L00003608	negative_constraints:
+L00003609	- Failed permission config persistence must not be shown as saved.
+L00003610	compatibility_only_notes: []
+L00003611	stale_retired_dispositions: []
+L00003612	owner_boundary_notes:
+L00003613	- Backend wildcard semantics remain shared with resolve_skill_permission.
+L00003614	owner_hints:
+L00003615	- Plans/MiscPlan.md
+L00003616	preserved_contractrefs: []
+L00003617	split_recommendation_reason: This unit covers only the backend save/error tail of the bulk-permission source span.
+L00003618	```
+L00003619	
+L00003620	### M-038 - Skills Sort Filter List Controls
+L00003621	
+L00003622	```yaml
+L00003623	plan_unit_id: M-038
+L00003624	unit_type: requirement
+L00003625	status: accepted
+L00003626	owner_doc: Plans/MiscPlan.md
+L00003627	canonical_text: The Skills tab must support in-memory sort and combined filters over the discovered skill list without re-running discovery on sort or filter changes.
+L00003628	gui_related: true
+L00003629	gui_classification_reason: The unit defines user-visible list sorting, filtering controls, dropdowns, and persisted sort preference.
+L00003630	split_recommended: false
+L00003631	depends_on:
+L00003632	- M-030
+L00003633	- M-031
+L00003634	- M-032
+L00003635	unblocks: []
+L00003636	acceptance_criteria:
+L00003637	- Users can sort skills by Name, Source, or Permission.
+L00003638	- Users can filter by text, source, and permission with combined filters.
+L00003639	- Sort/filter applies in-memory to discover_skills plus resolved permission results and does not rediscover on every sort/filter change.
+L00003640	- Sort preference persists in session or GuiConfig.
+L00003641	- Existing widget-catalog inputs/dropdowns/toggles are reused.
+L00003642	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003643	validation_surfaces:
+L00003644	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003645	- python3 scripts/pm-plan-index.py validate
+L00003646	risk_class: skills_sort_filter_state_drift
+L00003647	reasoning_tier: standard
+L00003648	context_scope: miscplan_cleanup_standardization
+L00003649	implementation_surfaces:
+L00003650	- Plans/MiscPlan.md
+L00003651	node_compile_hint:
+L00003652	  mode: skills_sort_filter_list_controls
+L00003653	  create_worknodes: false
+L00003654	source_lineage:
+L00003655	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+L00003656	preserved_exact_tokens:
+L00003657	- Sort / filter list
+L00003658	- Name
+L00003659	- Source
+L00003660	- Permission
+L00003661	- All / Project / Global
+L00003662	- All / Allow / Deny / Ask
+L00003663	- skills_list_sort
+L00003664	- sort_skills
+L00003665	- filter_skills
+L00003666	- discover_skills(project_root)
+L00003667	negative_constraints:
+L00003668	- Sort and filter changes must not trigger re-discovery.
+L00003669	compatibility_only_notes: []
+L00003670	stale_retired_dispositions: []
+L00003671	owner_boundary_notes:
+L00003672	- Skills discovery remains owned by the backend skill registry; this unit owns the list-control behavior.
+L00003673	owner_hints:
+L00003674	- Plans/MiscPlan.md
+L00003675	preserved_contractrefs: []
+L00003676	split_recommendation_reason: Sort/filter list controls are a coherent GUI enhancement.
+L00003677	```
+L00003678	
+L00003679	### M-039 - Skills Preview Body Pane
+L00003680	
+L00003681	```yaml
+L00003682	plan_unit_id: M-039
+L00003683	unit_type: requirement
+L00003684	status: accepted
+L00003685	owner_doc: Plans/MiscPlan.md
+L00003686	canonical_text: The Skills tab must provide an on-demand read-only SKILL.md body preview with copyable text and clear per-skill load errors.
+L00003687	gui_related: true
+L00003688	gui_classification_reason: The unit defines a visible Skills preview pane or modal, selectable text, and error display.
+L00003689	split_recommended: false
+L00003690	depends_on:
+L00003691	- M-030
+L00003692	- M-032
+L00003693	unblocks: []
+L00003694	acceptance_criteria:
+L00003695	- Selecting a skill loads its SKILL.md body on demand into a read-only pane, drawer, or modal.
+L00003696	- Preview content is copyable and may show markdown body only or full file with frontmatter collapsed.
+L00003697	- Edit opens the full editor.
+L00003698	- Load failures show an error in the preview pane and may trigger list refresh without aborting the whole surface.
+L00003699	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003700	validation_surfaces:
+L00003701	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003702	- python3 scripts/pm-plan-index.py validate
+L00003703	risk_class: skills_preview_body_drift
+L00003704	reasoning_tier: standard
+L00003705	context_scope: miscplan_cleanup_standardization
+L00003706	implementation_surfaces:
+L00003707	- Plans/MiscPlan.md
+L00003708	node_compile_hint:
+L00003709	  mode: skills_preview_body_pane
+L00003710	  create_worknodes: false
+L00003711	source_lineage:
+L00003712	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+L00003713	preserved_exact_tokens:
+L00003714	- Preview skill body
+L00003715	- SKILL.md
+L00003716	- read-only pane
+L00003717	- selectable_label_mono
+L00003718	- load_skill(path)
+L00003719	- "body: Option<String>"
+L00003720	- load_skill_body(path)
+L00003721	- Could not load skill
+L00003722	negative_constraints:
+L00003723	- Skill bodies must be loaded on demand rather than all up front.
+L00003724	compatibility_only_notes: []
+L00003725	stale_retired_dispositions: []
+L00003726	owner_boundary_notes:
+L00003727	- Preview reuses backend skill loading and must not define a competing parser.
+L00003728	owner_hints:
+L00003729	- Plans/MiscPlan.md
+L00003730	preserved_contractrefs: []
+L00003731	split_recommendation_reason: Preview is separable from sort/filter and validation.
+L00003732	```
+L00003733	
+L00003734	### M-040 - Skill Last Modified And Version Display
+L00003735	
+L00003736	```yaml
+L00003737	plan_unit_id: M-040
+L00003738	unit_type: requirement
+L00003739	status: accepted
+L00003740	owner_doc: Plans/MiscPlan.md
+L00003741	canonical_text: Skill list and preview metadata must show last-modified information and may show optional version metadata when supported, while unreadable mtimes degrade to an empty or placeholder value without dropping the skill.
+L00003742	gui_related: true
+L00003743	gui_classification_reason: The unit defines user-visible skill metadata display in list rows and preview panes.
+L00003744	split_recommended: false
+L00003745	depends_on:
+L00003746	- M-030
+L00003747	unblocks: []
+L00003748	acceptance_criteria:
+L00003749	- SkillInfo can carry modified metadata from file mtime.
+L00003750	- The Skills list and preview pane show last modified as a date or relative time.
+L00003751	- Optional version can be read from frontmatter or metadata.version only if the frontmatter model extends to support it.
+L00003752	- Unreadable mtime shows an empty value or -- and does not remove the skill from the list.
+L00003753	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003754	validation_surfaces:
+L00003755	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003756	- python3 scripts/pm-plan-index.py validate
+L00003757	risk_class: skill_metadata_display_drift
+L00003758	reasoning_tier: standard
+L00003759	context_scope: miscplan_cleanup_standardization
+L00003760	implementation_surfaces:
+L00003761	- Plans/MiscPlan.md
+L00003762	node_compile_hint:
+L00003763	  mode: skill_last_modified_version_display
+L00003764	  create_worknodes: false
+L00003765	source_lineage:
+L00003766	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0050
+L00003767	preserved_exact_tokens:
+L00003768	- Last modified / version
+L00003769	- std::fs::metadata(path).modified()
+L00003770	- "modified: Option<DateTime<Utc>>"
+L00003771	- SystemTime
+L00003772	- "Modified: 2026-02-22"
+L00003773	- "Modified: 2 days ago"
+L00003774	- metadata.version
+L00003775	- "skill_modified(path: &Path)"
+L00003776	- --
+L00003777	negative_constraints:
+L00003778	- Mtime read failures must not exclude a discovered skill.
+L00003779	compatibility_only_notes:
+L00003780	- The version field is optional and not required by OpenCode.
+L00003781	stale_retired_dispositions: []
+L00003782	owner_boundary_notes:
+L00003783	- Skill metadata remains an extension of SkillInfo and does not change core discovery ownership.
+L00003784	owner_hints:
+L00003785	- Plans/MiscPlan.md
+L00003786	preserved_contractrefs: []
+L00003787	split_recommendation_reason: Metadata display is a narrow enhancement.
+L00003788	```
+L00003789	
+
+<<< CONTEXT_AFTER canonical_document_lines=3790-3801 >>>
+L00003790	### M-041 - Validate All Skills Read-Only Flow
+L00003791	
+L00003792	```yaml
+L00003793	plan_unit_id: M-041
+L00003794	unit_type: requirement
+L00003795	status: accepted
+L00003796	owner_doc: Plans/MiscPlan.md
+L00003797	canonical_text: Skills validation must provide a read-only Validate all flow that checks every discovered SKILL.md and reports per-skill results in a full, copyable table.
+L00003798	gui_related: true
+L00003799	gui_classification_reason: The unit defines a user-visible validation command, results table, summary line, optional error filter, and copyable errors.
+L00003800	split_recommended: false
+L00003801	depends_on:

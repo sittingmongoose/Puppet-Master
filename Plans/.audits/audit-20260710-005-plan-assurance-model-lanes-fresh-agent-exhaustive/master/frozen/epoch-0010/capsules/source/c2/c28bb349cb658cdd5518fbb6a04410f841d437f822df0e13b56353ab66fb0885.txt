@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2623-2634 >>>
+L00002623	
+L00002624	### Canonical enum families
+L00002625	`failure_class`:
+L00002626	- `provider_transient`
+L00002627	- `structured_output_invalid`
+L00002628	- `verification_failed`
+L00002629	- `reviewer_findings`
+L00002630	- `auth_expired`
+L00002631	- `storage_io`
+L00002632	- `quota_exceeded`
+L00002633	- `rate_limited`
+L00002634	- `graph_integrity`
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2635-3017 >>>
+L00002635	
+L00002636	`blocked_reason_code`:
+L00002637	- `permission_denied`
+L00002638	- `auth_required`
+L00002639	- `user_declined`
+L00002640	- `headless_ask_denied`
+L00002641	- `filesafe_blocked`
+L00002642	- `external_side_effect_blocked`
+L00002643	- `network_blocked_by_policy`
+L00002644	- `host_unreachable`
+L00002645	- `host_untrusted`
+L00002646	- `replan_required`
+L00002647	- `waiting_approval`
+L00002648	- `clarification_blocked`
+L00002649	- `worktree_conflict`
+L00002650	- `dirty_worktree`
+L00002651	- `plugin_hook_blocked`
+L00002652	- `validation_blocked`
+L00002653	- `remediation_ceiling_exceeded`
+L00002654	
+L00002655	`offline_cached` is a read-only surface/projection state, not a `blocked_reason_code`. Mutating `/runtime`, `/registry`, Kubernetes, plugin-added, or `/extensibility` actions from `offline_cached` state must still emit a canonical blocked payload when policy or host state prevents execution, using `network_blocked_by_policy`, `host_unreachable`, or `host_untrusted` rather than generic network failure.
+L00002656	
+L00002657	These blocked-state primitives are the canonical contract for worktree-heavy Source Control and Orchestrator recovery surfaces; settings and consumer docs may expose them, but they do not re-own blocked-state identity.
+L00002658	
+L00002659	Domain blocked-payload details for SCM, GitHub Actions, and Docker/Kubernetes are schema-bearing details on top of the shared blocked-state primitives. SCM payloads for `dirty_worktree` and `worktree_conflict` carry `repo_id`, `worktree_id`, dirty/conflict file refs, affected files summary, safe-point relation, recovery target, and recovery command refs. Mutation-capable SCM attempts also carry branch and head refs so consumers can resolve the attempted action to `repo/worktree/branch/head` without guessing. GitHub Actions payloads carry hosted reason detail for auth expired, `missing scope`, `no GitHub remote`, `rate-limited`, and `environment waiting for review`, plus workflow/job/step refs, code-pivot refs, and readiness refs for secrets/variables/environments. Docker/Kubernetes payloads carry reason detail for `runtime unavailable`, `repo missing`, `Buildx/Bake unavailable`, `compose invalid`, `cluster unreachable`, and `namespace/workload missing`, plus image, compose, context, namespace, workload, and rollout refs.
+L00002660	
+L00002661	`allowed_action_id`:
+L00002662	- `approve`
+L00002663	- `decline`
+L00002664	- `retry_now`
+L00002665	- `resume_after_prerequisite`
+L00002666	- `restore_safe_point_then_retry`
+L00002667	- `start_fresh_attempt`
+L00002668	- `replan`
+L00002669	- `skip_node`
+L00002670	- `abort_run`
+L00002671	- `open_details`
+L00002672	
+L00002673	Command shorthand `/abort` resolves to `abort_run` or the provider-specific stream cancellation action for an in-progress provider call; persisted approval and blocked-state payloads keep the canonical `allowed_action_id` rather than storing the slash command as a separate action identity.
+L00002674	
+L00002675	### Temporal outcome and timeout-class taxonomy
+L00002676	
+L00002677	Runtime records that describe elapsed time, observation gaps, or known waits MUST carry `timeout_class?` only when a timeout-class event actually occurred.
+L00002678	
+L00002679	Canonical `timeout_class` values are:
+L00002680	- `hard_execution_timeout` (`hard execution timeout`): execution budget expired and the runtime ended, cancelled, or blocked the operation.
+L00002681	- `inactivity_timeout` (`inactivity timeout`): no qualifying activity arrived before an inactivity threshold.
+L00002682	- `polling_timeout` (`polling timeout`): a poll loop or remote status refresh exceeded its observation budget without a terminal remote answer.
+L00002683	- `reconnect_timeout` (`reconnect timeout`): an interrupted stream or `/session` failed to revalidate or reconnect before its reconnect budget expired.
+L00002684	- `user_visible_wait_timer_expiry` (`user-visible wait timer expiry`): a timer shown to the user expired while the workflow was otherwise in a known wait state.
+L00002685	
+L00002686	`timeout_class` is distinct from `failure_class` and `blocked_reason_code`; it is a recovery discriminator that `/receipts`, blocked events, blocked projections, and receipt-linked runtime artifacts retain because recovery differs by class. A timeout may later produce `/failed` state only when the owning runtime contract declares that outcome; the timeout class itself is not a generic failure substitute.
+L00002687	
+L00002688	Known waits use `wait_state_class?` instead of being collapsed into generic `deadlock/stall` states. Canonical wait classes include:
+L00002689	- `environment_wait_timer`
+L00002690	- `approval_wait`
+L00002691	- `queue_wait`
+L00002692	- `long_governance_wait` (`long-governance-wait`)
+L00002693	- `scheduled_workflow_observation_gap`
+L00002694	- `future_timestamp_wait` (`future-timestamp`)
+L00002695	
+L00002696	A scheduled workflow with no fresh observation is not skipped/failed by inference alone. A known future-timestamp wait is not a timeout until its governing timer actually expires, and it MUST NOT produce a `/stall` banner or `auto-pause` behavior reserved for deadlocked work.
+L00002697	
+L00002698	Timestamp provenance, time-source, and clock-skew blind-spot rules:
+L00002699	- Temporal records distinguish `source_occurred_at` from the remote, provider, or runtime when available; `observed_at` when Puppet Master received the event; and `recorded_at` when the event was persisted locally.
+L00002700	- Persisted timestamps are UTC ISO-8601 values with `Z`. UI surfaces display local timezone by default and expose absolute UTC in detail or hover.
+L00002701	- Ordering prefers Puppet Master's canonical local sequence/order when remote wall-clock time conflicts with local ordering. Remote `/provider/runtime` wall-clock time remains evidence, not the ordering authority, when clocks disagree.
+L00002702	- Relative labels such as `5m ago` derive from one chosen base timestamp per surface and must not silently mix receive, `/update/log`, and persistence times.
+L00002703	- GitHub Actions, SSH remote git state, Docker runtime, and Kubernetes events may report skewed clocks. When skew is material, the UI warns with `clock_skew_detected` and avoids duration or `/staleness` claims based only on remote timestamps.
+L00002704	- Scheduled-workflow projections declare displayed schedule timezone, next-run computation source, missed-run behavior while the app is closed or offline (`/offline`), and the stale threshold for `next run overdue`. Orchestrator and receipts must not mark a scheduled workflow skipped or `/failed` merely because no fresh observation arrived.
+L00002705	
+L00002706	### Blocking payload rule
+L00002707	
+L00002708	
+L00002709	Every runtime-facing blocked event or projection MUST expose:
+L00002710	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md
+L00002711	- `blocked_reason_code`
+L00002712	- ordered `allowed_action_ids[]`
+L00002713	- prerequisite metadata needed to bind the recovery command
+L00002714	- `preserved_local_work`
+L00002715	- `requires_safe_point_restore?`
+L00002716	- `failure_class?`
+L00002717	- `timeout_class?`
+L00002718	- `wait_state_class?`
+L00002719	- `detail_ref?`
+L00002720	
+L00002721	No section in this file may present an earlier shorter enum set as the canonical value family.
+L00002722	
+L00002723	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Executor_Protocol.md
+L00002724	## Canonical Runtime Event, Outcome, and Action Contract Canonical Alignment (2026-03-09)
+L00002725	
+L00002726	
+L00002727	The canonical runtime event contract extends to child runs, crew coordination, and effective-context shaping. These contracts are part of the same runtime event and action family as parent execution. They are not an optional overlay and they do not define a separate event grammar.
+L00002728	
+L00002729	### Child-run lifecycle and projection
+L00002730	
+L00002731	PM child runs are canonical runtime entities with stable identity, lineage, and lifecycle. Command-launched subtasks, orchestrated child runs, delegated plan-mode research, and crew members all project into this same model. Disposable-by-default child lifecycle is the default product posture; long-lived or reopened child identity is the exception path.
+L00002732	
+L00002733	This contract consumes the Persona definitions in `Plans/Personas.md` at `### 1.2 Subagent` and `### 5.1 Selection`, and it projects child lifecycle through `### 8.0 Event payloads (seglog)` rather than local status text. `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md` in legacy path references) is a provider-facade consumer of this child-run + Persona-storage contract, not a separate child-run ontology.
+L00002734	
+L00002735	Canonical child lifecycle states are: `queued`, `running`, `awaiting_parent`, `blocked`, `complete`, `failed`, `cancelled`. `superseded` remains a terminal reason used when replacement occurred, even if the user-facing terminal state is still presented as `cancelled` or `complete` in some consumers.
+L00002736	ContractRef: Canonical child lifecycle states MUST be preserved across runtime storage, event projection, chat projection, and recovery, and consumers MUST NOT invent incompatible parallel enums. [Source: Tools.md#event-model; storage-plan.md#canonical-child-run-records-and-batch-structure]
+L00002737	
+L00002738	Canonical child-run records preserve identity `/lineage`, role `/routing`, lifecycle state, attempt/resume state, effective capabilities `/runtime`, context `/handoff`, grouping structure, and result `/history` references. Chat `/storage/orchestration` projections consume those canonical events and MUST NOT invent child-only shadow state machines.
+L00002739	
+L00002740	Child-to-parent signals are canonical runtime events, not ad hoc UI messages. At minimum the contract family includes: `progress`, `result`, `blocked`, `clarification_needed`, `context_expansion_requested`, `user_input_requested`, `failed`, `cancelled`. Parent orchestration may summarize, consolidate, or route these signals, but canonical event identity must remain intact.
+L00002741	ContractRef: Child-to-parent escalation and progress signals MUST remain canonical runtime events even when parent chat or crew UI projects them into higher-level summaries. [Source: Tools.md#event-model; assistant-chat-design.md#14-subagents--crew]
+L00002742	
+L00002743	The child event-model covers `/start/progress/work/thought/pause/block/outcome/retry/reroute/resume/grouping/context-shrinking` transitions as normalized runtime events, not as consumer-local prose states.
+L00002744	
+L00002745	Legacy user-facing signal labels may render as `clarification-needed`, `context-expansion-needed`, and `user-input-requested`, but they map back to canonical child-to-parent runtime events rather than ad hoc message strings.
+L00002746	
+L00002747	Chat-facing projection events may normalize child lifecycle into UI-specific projection envelopes, but they MUST preserve the underlying canonical child identity fields. Required fields remain `child_run_id`, `parent_run_id`, `thread_id`, timestamp, attempt identity when relevant, and requested/effective persona/runtime descriptors when the event semantics depend on them.
+L00002748	ContractRef: ContractName: child_projection_identity. Any projection event that feeds chat, cards, groups, or batch summaries MUST preserve canonical child identity fields and MUST NOT demote child runs into anonymous status text. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; assistant-chat-design.md#14-subagents--crew]
+L00002749	
+L00002750	Child lineage must not be over-summarizes into generic status text. Runtime events, chat projections, batch summaries, and crew views may compress display copy, but they must preserve the canonical child lineage fields above and remain reversible to the event payload.
+L00002751	Child session header and `/sidebar` projections may show token `/context` and cost details, but those displays are projections over canonical child-run records and usage events rather than independent child state.
+L00002752	
+L00002753	### Retry, reroute, replacement, and resume
+L00002754	
+L00002755	
+L00002756	`retry`, `reroute`, `replacement`, and `resume` are distinct runtime concepts and must remain distinct in contracts, storage, and event history.
+L00002757	
+L00002758	- `resume`: continue the same paused or interrupted child without semantically resetting the task.
+L00002759	- `retry`: a new attempt in the same child lineage after failure, blockage, or interruption.
+L00002760	- `reroute`: same logical child task, different effective runtime surface or capability path.
+L00002761	- `replacement`: a new child because the old role, task shape, or specialization was wrong.
+L00002762	
+L00002763	ContractRef: Runtime and storage contracts MUST preserve the semantic distinction between resume, retry, reroute, and replacement; projections MAY summarize them but MUST NOT collapse them into one generic retry/restart bucket. [Source: Tools.md#retry-reroute-replacement-and-cancel; storage-plan.md#canonical-child-run-records-and-batch-structure]
+L00002764	
+L00002765	Cancelled and superseded children are terminal by default. Resumption is primarily for in-flight interrupted or waiting children, not for re-opening completed disposable helpers. Crew mode may justify narrower persistence or re-entry behavior, but only as an explicit mode-level exception.
+L00002766	ContractRef: Disposable-by-default child lifecycle is canonical; resume/reopen behavior MUST be treated as an exception path, not the baseline continuity model. [Source: assistant-memory-subsystem.md#capability-boundary-assistant-only; assistant-chat-design.md#15-plan-mode--crew-mode]
+L00002767	
+L00002768	### Crew-board coordination contracts
+L00002769	
+L00002770	`Plans/orchestrator-subagent-integration.md` consumers must retire older crew `/message-board` and `active-agent` side-file patterns into this child-run contract. A side-file may project from canonical child-run records, but it must not stand beside them as a competing source of runtime truth.
+L00002771	
+L00002772	
+L00002773	Crew coordination uses an explicit crew board. Child-to-child communication in crew mode occurs through board messages or other explicit crew-scoped coordination records, not hidden direct peer channels. Crew board messages are task-scoped, attributable, timestamped, and persisted as part of shared crew coordination state.
+L00002774	ContractRef: Crew-board coordination MUST remain attributable, inspectable, and task-scoped; hidden direct peer messaging is not a canonical runtime channel. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]
+L00002775	
+L00002776	Crew members do not gain new authority through board traffic. Permissions, tools, skills, plugins, MCP access, and provider restrictions remain subject to the same requested/effective capability rules as any other child run.
+L00002777	ContractRef: Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; Skills_System.md#child-capability-subset-clarification]
+L00002778	
+L00002779	#### Stable subagent and crew event families
+L00002780	
+L00002781	
+L00002782	In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. Child identity and lineage are not optional metadata: they are part of the event contract. A row that over-summarizes child lineage into generic status text is non-compliant with this contract.
+L00002783	
+L00002784	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
+L00002785	
+L00002786	For every `subagent.*` event below, the payload MUST preserve the PM lineage envelope:
+L00002787	- `run_id`
+L00002788	- `thread_id`
+L00002789	- `agent_id`
+L00002790	- `parent_run_id?`
+L00002791	- `child_run_id?`
+L00002792	- `parent_thread_id?`
+L00002793	- requested and effective runtime descriptors when they differ
+L00002794	
+L00002795	The same lineage envelope applies to `subagent.spawn_requested` and `subagent.spawn_completed` when a dispatcher distinguishes request lifecycle from child-run creation and terminal completion. These names remain under `subagent.*`; `chat.subagent_*` and `chat.subagent_spawned` are legacy source aliases only.
+L00002796	
+L00002797	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
+L00002798	
+L00002799	| event_type | payload_fields | description |
+L00002800	|---|---|---|
+L00002801	| `subagent.spawned` | `run_id`, `thread_id`, `agent_id`, `agent_type`, `parent_run_id`, `child_run_id`, `parent_thread_id`, `model_id` | New subagent created and linked to parent lineage. |
+L00002802	| `subagent.started` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `prompt_preview` | Subagent begins execution. |
+L00002803	| `subagent.progress` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `progress_pct?`, `status_text` | Progress update. |
+L00002804	| `subagent.tool_called` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `tool_name`, `tool_args_preview` | Subagent invoked a tool. |
+L00002805	| `subagent.tool_completed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `tool_name`, `success`, `duration_ms` | Tool call finished. |
+L00002806	| `subagent.message_sent` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `message_preview`, `turn_index` | Follow-up message sent. |
+L00002807	| `subagent.message_received` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `response_preview`, `turn_index` | Response received. |
+L00002808	| `subagent.completed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms`, `token_usage` | Subagent finished successfully. |
+L00002809	| `subagent.failed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `error_code`, `error_message`, `duration_ms` | Subagent failed. |
+L00002810	| `subagent.cancelled` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `reason`, `duration_ms` | Subagent was cancelled. |
+L00002811	| `subagent.timeout` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `timeout_ms`, `partial_result?` | Subagent exceeded time limit. |
+L00002812	| `subagent.retried` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `attempt_number`, `retry_reason` | Subagent retry attempt. |
+L00002813	| `subagent.context_warning` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `context_usage_pct`, `threshold` | Context approaching limit. |
+L00002814	| `subagent.model_switched` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `from_model`, `to_model`, `reason` | Model changed mid-execution. |
+L00002815	| `subagent.paused` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `reason` | Subagent paused. |
+L00002816	| `subagent.resumed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `trigger` | Subagent resumed. |
+L00002817	| `subagent.output_truncated` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `original_length`, `truncated_length` | Output was truncated. |
+L00002818	| `subagent.budget_warning` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `budget_used_pct`, `budget_limit` | Approaching budget limit. |
+L00002819	| `subagent.escalated` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `escalation_reason`, `target` | Subagent escalated to parent. |
+L00002820	
+L00002821	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
+L00002822	
+L00002823	#### Stable active-agent coordination event families
+L00002824	
+L00002825	Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; side files such as `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are compatibility/debug/export mirrors only and do not stand beside the EventRecord/projection model as runtime truth.
+L00002826	
+L00002827	For every `coordination.*` event below, the payload MUST preserve the PM lineage envelope:
+L00002828	- `project_id`
+L00002829	- `run_id`
+L00002830	- `thread_id?`
+L00002831	- `agent_id`
+L00002832	- `agent_type?`
+L00002833	- `parent_run_id?`
+L00002834	- `child_run_id?`
+L00002835	- `node_id?`
+L00002836	- `lane_id?`
+L00002837	- `worktree_id?`
+L00002838	- `platform`
+L00002839	- `agent_revision?`
+L00002840	- `expected_previous_revision?`
+L00002841	- `last_applied_event_id?`
+L00002842	- `idempotency_key`
+L00002843	
+L00002844	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md, SchemaID:pm.event.v0
+L00002845	
+L00002846	| event_type | payload_fields | description |
+L00002847	|---|---|---|
+L00002848	| `coordination.agent_registered` | `project_id`, `run_id`, `thread_id?`, `agent_id`, `agent_type`, `parent_run_id?`, `child_run_id?`, `node_id?`, `lane_id?`, `worktree_id?`, `platform`, `model_id?`, `started_at_utc`, `agent_revision`, `idempotency_key` | Agent registration before execution. |
+L00002849	| `coordination.agent_status_updated` | lineage envelope, `status`, `status_reason?`, `observed_at_utc`, `agent_revision`, `expected_previous_revision?` | Agent lifecycle/status update. |
+L00002850	| `coordination.agent_operation_updated` | lineage envelope, `operation_id`, `operation_summary`, `progress_pct?`, `operation_refs[]?`, `observed_at_utc` | Current operation and progress update. |
+L00002851	| `coordination.agent_file_ownership_updated` | lineage envelope, `path_ref`, `path_hash`, `claim_kind`, `claim_confidence`, `operation_id?`, `observed_at_utc` | File-activity claim for coordination warnings; not a FileSafe lock or exclusive lease. |
+L00002852	| `coordination.agent_unregistered` | lineage envelope, `terminal_status`, `finished_at_utc`, `result_ref?` | Normal terminal unregister/completion. |
+L00002853	| `coordination.agent_crashed` | lineage envelope, `crash_reason`, `detected_at_utc`, `heartbeat_age_ms?`, `process_ref?`, `worktree_ref?` | Crash, heartbeat-expiry, process-loss, or worktree-loss resolution. |
+L00002854	| `coordination.agent_aborted` | lineage envelope, `abort_reason`, `aborted_by_ref`, `aborted_at_utc` | Parent/user/runtime abort resolution. |
+L00002855	| `coordination.debug_mirror_exported` | `project_id`, `mirror_path`, `mirror_kind`, `source_checkpoint`, `source_sequence_id`, `export_status`, `exported_at_utc`, `error_code?`, `quarantine_ref?` | Optional debug/export mirror write or recovery result. |
+L00002856	
+L00002857	Coordination consumers use `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` for authority. Scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, and validation decisions MUST NOT read `.puppet-master/state/*.json` mirrors as authority.
+L00002858	
+L00002859	ContractRef: ContractName:Plans/storage-plan.md#Coordination-record-projection-and-mirror-export-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections
+L00002860	
+L00002861	For every `crew.*` event below, the payload MUST preserve crew and child lineage together:
+L00002862	- `run_id`
+L00002863	- `thread_id`
+L00002864	- `crew_id`
+L00002865	- `parent_run_id?`
+L00002866	- `child_run_id?`
+L00002867	- `member_agent_ids[]` where membership matters
+L00002868	
+L00002869	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00002870	
+L00002871	| event_type | payload_fields | description |
+L00002872	|---|---|---|
+L00002873	| `crew.formed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `member_agent_ids[]`, `purpose` | Crew created. |
+L00002874	| `crew.member_added` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `role` | Member joined. |
+L00002875	| `crew.member_removed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `reason` | Member left. |
+L00002876	| `crew.coordination` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `coordination_type`, `details` | Inter-agent coordination. |
+L00002877	| `crew.board_message_posted` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `message_id`, `from_agent_id`, `to_agent_id?`, `to_agent_type?`, `subject`, `priority` | Attributable crew-board message posted. |
+L00002878	| `crew.board_message_read` | `run_id`, `thread_id`, `crew_id`, `message_id`, `agent_id`, `read_at_utc` | Crew-board message read receipt. |
+L00002879	| `crew.board_messages_archived` | `run_id`, `thread_id`, `crew_id`, `archived_before_utc`, `message_ids[]?`, `archive_reason` | Crew-board messages archived by retention policy. |
+L00002880	| `crew.completed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms` | Crew finished. |
+L00002881	| `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
+L00002882	
+L00002883	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+L00002884	### Dynamic context shrinking and effective-context projection
+L00002885	
+L00002886	
+L00002887	### Effective context rule
+L00002888	
+L00002889	Dynamic context shrinking is a canonical effective-context mechanism distinct from compaction, retrieval injection, rotation, and Assistant memory. It operates during ordinary tool-driven work and may replace stale effective-context blocks with shorter summaries while preserving canonical source state and rehydration references.
+L00002890	ContractRef: Dynamic context shrinking MUST preserve canonical source state and MUST operate on effective context only, not rewrite source-of-truth history. [Source: Prompt_Pipeline.md#dynamic-context-shrinking; storage-plan.md#canonical-child-run-records-and-batch-structure]
+L00002891	
+L00002892	Prompt Pipeline remains the owner for `## 2. Compaction and pruning`, `### 2.1 Context assembly and cache preservation`, and `### 2.2 Dynamic context shrinking`. Contracts_V0 records only the cross-contract floor: giant-instruction-file and instruction-file content must have an agent-visible context-budget, oversized static instruction material should shift to /on-demand retrieval or scoped references, and shrinking/replay events must preserve enough `/history`, `/continuity`, source refs, and drift-control lineage to rehydrate without pretending effective-context summaries are the source of truth.
+L00002893	
+L00002894	The default automatic shrinking scope is tool results. Retrieved-context blocks and plan/report blocks remain user-configurable optional categories. Shrinking uses conservative automatic triggers based on staleness and context pressure, with current working set items protected from automatic shrinking.
+L00002895	ContractRef: Automatic shrinking MUST respect protected current-working-set items and MUST NOT rewrite static system/provider/persona/tool-definition content. [Source: Prompt_Pipeline.md#dynamic-context-shrinking]
+L00002896	
+L00002897	Runtime projection may emit `subagent.context_shrunk` and `subagent.context_rehydrated` events where effective-context state changes need to be inspectable or replayable. These events supplement, but do not replace, canonical child history and source references.
+L00002898	ContractRef: Context-shrinking events MUST be additive effective-context projections and MUST NOT become the sole durable record of planning evidence or child outputs. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; assistant-chat-design.md#17-context--truncation]
+L00002899	
+L00002900	Every tool-call event that participates in effective-context shaping carries `_context_updates`; when no compression or rehydration is needed, the field is present as `[]`.
+L00002901	
+L00002902	### Parent mediation and required-vs-optional dependency state
+L00002903	
+L00002904	Parent orchestration retains final mediation responsibility for child escalations, user questioning, and crew synthesis. Children do not directly interrogate the user by default. Required versus optional child dependency classification is part of the canonical runtime contract because it determines whether unresolved child work blocks dependent parent completion.
+L00002905	ContractRef: Parent orchestration MUST preserve required-vs-optional child dependency semantics and MUST mediate child-to-user escalation by default. [Source: orchestrator-subagent-integration.md#plan-mode-strategy--defaults; assistant-chat-design.md#14-subagents--crew]
+L00002906	
+L00002907	Blocked state means external or runtime constraints prevent progress. `awaiting_parent` means the child is paused pending parent decision, clarification, context expansion, or user response. These are not interchangeable.
+L00002908	ContractRef: `blocked` and `awaiting_parent` MUST remain distinct canonical runtime meanings across permissions, events, chat projection, and recovery. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; assistant-chat-design.md#14-subagents--crew]
+L00002909	
+L00002910	## Owner / Consumer Map
+L00002911	
+L00002912	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Contracts_V0.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00002913	
+L00002914	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00002915	
+L00002916	## PlanUnits
+L00002917	
+L00002918	### CV-002 - Contracts V0 Cross-Cutting Contract SSOT
+L00002919	
+L00002920	```yaml
+L00002921	plan_unit_id: CV-002
+L00002922	unit_type: requirement
+L00002923	status: accepted
+L00002924	owner_doc: Plans/Contracts_V0.md
+L00002925	canonical_text: >-
+L00002926	  Plans/Contracts_V0.md is the SSOT for cross-cutting contracts including
+L00002927	  EventRecord, schema pm.event.v0, EventEnvelopeV1, provider normalized stream,
+L00002928	  UICommand, AuthState, AuthPolicy, and AuthEvent; other plans MUST reference
+L00002929	  these contracts rather than redefining them.
+L00002930	gui_related: true
+L00002931	gui_classification_reason: UICommand and auth state/events are user-facing command and authentication contracts, even though the unit is primarily cross-cutting schema ownership.
+L00002932	split_recommended: true
+L00002933	split_recommendation_reason: Source spans S0020 and S0021 contain compliance/source-purpose text and scope declarations; S0001 also has source-token bank material that remains residual.
+L00002934	depends_on: []
+L00002935	unblocks: [CV-003, CV-006]
+L00002936	acceptance_criteria:
+L00002937	  - Contracts_V0 remains the single source for the listed cross-cutting contract families.
+L00002938	  - Other plans reference these contracts instead of redefining them.
+L00002939	  - EventEnvelopeV1 remains marked as a minimal compatibility envelope for early-phase writers/readers.
+L00002940	validation_surfaces:
+L00002941	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002942	  - python3 scripts/pm-plan-index.py validate
+L00002943	risk_class: contract_ssot_drift
+L00002944	reasoning_tier: high
+L00002945	context_scope: contracts_v0_ssot
+L00002946	implementation_surfaces:
+L00002947	  - Plans/Contracts_V0.md
+L00002948	node_compile_hint:
+L00002949	  mode: contract_owner_ssot
+L00002950	  create_worknodes: false
+L00002951	source_lineage:
+L00002952	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0020
+L00002953	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0021
+L00002954	preserved_exact_tokens:
+L00002955	  - "Puppet Master"
+L00002956	  - "Contracts V0 (Canonical)"
+L00002957	  - "`EventRecord`"
+L00002958	  - "`pm.event.v0`"
+L00002959	  - "`EventEnvelopeV1`"
+L00002960	  - "`UICommand`"
+L00002961	  - "`AuthState`"
+L00002962	  - "`AuthPolicy`"
+L00002963	  - "`AuthEvent`"
+L00002964	  - "Other plans MUST reference these contracts rather than redefining them."
+L00002965	compatibility_only_notes:
+L00002966	  - "EventEnvelopeV1 is a minimal compatibility envelope for early-phase writers/readers."
+L00002967	negative_constraints:
+L00002968	  - "Other plans must not redefine the cross-cutting contract families owned here."
+L00002969	owner_hints:
+L00002970	  - Plans/Contracts_V0.md
+L00002971	```
+L00002972	
+L00002973	### CV-003 - Cross-Surface Runtime Concern Route Owner Boundary
+L00002974	
+L00002975	```yaml
+L00002976	plan_unit_id: CV-003
+L00002977	unit_type: requirement
+L00002978	status: accepted
+L00002979	owner_doc: Plans/Contracts_V0.md
+L00002980	canonical_text: >-
+L00002981	  Plans/Contracts_V0.md is the single canonical owner for runtime identity,
+L00002982	  concern/episode lifecycle, route_target primitives, and OpenSubject routing
+L00002983	  semantics across all surfaces and execution contexts.
+L00002984	gui_related: false
+L00002985	gui_classification_reason: This unit defines cross-surface ownership of runtime and routing primitives rather than a concrete visual surface.
+L00002986	split_recommended: false
+L00002987	depends_on: [CV-002]
+L00002988	unblocks: [CV-004, CV-005, CV-006]
+L00002989	acceptance_criteria:
+L00002990	  - Runtime identity, concern/episode lifecycle, route_target primitives, and OpenSubject routing semantics resolve to Contracts_V0.
+L00002991	  - Consumers across surfaces and execution contexts do not create alternate owners for these primitives.
+L00002992	validation_surfaces:
+L00002993	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002994	  - python3 scripts/pm-plan-index.py validate
+L00002995	risk_class: owner_boundary_drift
+L00002996	reasoning_tier: high
+L00002997	context_scope: runtime_concern_route_owner_boundary
+L00002998	implementation_surfaces:
+L00002999	  - Plans/Contracts_V0.md
+L00003000	node_compile_hint:
+L00003001	  mode: owner_boundary_contract
+L00003002	  create_worknodes: false
+L00003003	source_lineage:
+L00003004	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0022
+L00003005	preserved_exact_tokens:
+L00003006	  - "runtime identity"
+L00003007	  - "concern/episode lifecycle"
+L00003008	  - "`route_target`"
+L00003009	  - "`OpenSubject`"
+L00003010	  - "all surfaces"
+L00003011	  - "execution contexts"
+L00003012	negative_constraints:
+L00003013	  - "Consumer surfaces must not own alternate runtime identity, concern, route_target, or OpenSubject semantics."
+L00003014	owner_hints:
+L00003015	  - Plans/Contracts_V0.md
+L00003016	```
+L00003017	
+
+<<< CONTEXT_AFTER canonical_document_lines=3018-3029 >>>
+L00003018	### CV-004 - Owner-First Canonicalization Sequence
+L00003019	
+L00003020	```yaml
+L00003021	plan_unit_id: CV-004
+L00003022	unit_type: constraint
+L00003023	status: accepted
+L00003024	owner_doc: Plans/Contracts_V0.md
+L00003025	canonical_text: >-
+L00003026	  Canonicalization proceeds owner repairs first, dependent consumer updates
+L00003027	  second, mirror cleanup third, and final verification last; Crosswalk.md,
+L00003028	  DRY_Rules.md, and Decision_Log.md stay ordered when touched, and partial
+L00003029	  reviewer slices do not close coverage until reconciled.

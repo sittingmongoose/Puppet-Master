@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE 12250-12261 >>>
+preserved_exact_tokens:
+  - "Verified-only"
+  - "Unverified"
+  - "summary-only"
+  - "Application/Project rules pipeline"
+negative_constraints:
+  - "Any Unverified inclusion requires explicit user action."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+```
+
+
+<<< AUTHORITATIVE_CORE 12262-12657 >>>
+### ACD-188 - Assistant Memory Non Forwarding
+
+```yaml
+plan_unit_id: ACD-188
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat.
+gui_related: false
+gui_classification_reason: Assistant memory forwarding boundary is execution/context policy behavior.
+depends_on: [ACD-186, ACD-187]
+unblocks: []
+acceptance_criteria:
+  - Assistant memory remains scoped to Assistant chat.
+  - Subagents do not receive Assistant memory from chat.
+  - Non-Assistant execution paths do not receive Assistant memory from chat.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: assistant_only_scope
+reasoning_tier: high
+context_scope: assistant_memory
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/interview-subagent-integration.md
+node_compile_hint:
+  mode: assistant_memory_non_forwarding
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+preserved_exact_tokens:
+  - "Assistant memory MUST NOT be forwarded"
+negative_constraints:
+  - "Assistant memory MUST NOT be forwarded to subagents or non-Assistant execution paths from chat."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+```
+
+### ACD-189 - Gist Review Memory Command Canon
+
+```yaml
+plan_unit_id: ACD-189
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Gist Review actions in Assistant chat dispatch canonical
+  `cmd.chat.memory.*` UI command IDs and must not use ad-hoc command
+  identifiers.
+gui_related: true
+gui_classification_reason: Gist Review actions and UI command IDs are visible chat commands.
+depends_on: [ACD-186]
+unblocks: []
+acceptance_criteria:
+  - Gist Review actions dispatch cmd.chat.memory.* UI command IDs.
+  - Ad-hoc memory command identifiers are prohibited.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_ui_commands
+reasoning_tier: high
+context_scope: assistant_memory
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: gist_review_memory_command_canon
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0090
+preserved_exact_tokens:
+  - "cmd.chat.memory.*"
+negative_constraints:
+  - "Gist Review actions in Assistant chat MUST NOT use ad-hoc command identifiers."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-190 - Project Retrieval Separation
+
+```yaml
+plan_unit_id: ACD-190
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Project retrieval injection may add project-scoped chat/code/log context for
+  the current turn, but it remains separate from Assistant memory injection and
+  is fresh, ephemeral Work Bundle context.
+gui_related: false
+gui_classification_reason: Project retrieval separation is context assembly policy, not GUI behavior.
+depends_on: [ACD-186]
+unblocks: [ACD-191]
+acceptance_criteria:
+  - Project retrieval injection stays separate from Assistant memory injection.
+  - Retrieved context is fresh, ephemeral context for the current turn.
+  - Assistant memory is never implicitly expanded by chat/code/log retrieval.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retrieval
+reasoning_tier: high
+context_scope: context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: project_retrieval_separation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+preserved_exact_tokens:
+  - "project-scoped retrieved context"
+  - "chat/code/logs"
+  - "MUST remain separate"
+  - "fresh, ephemeral context"
+negative_constraints:
+  - "Assistant memory injection is never implicitly expanded by chat/code/log retrieval."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+```
+
+### ACD-191 - Project Retrieval Controls
+
+```yaml
+plan_unit_id: ACD-191
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Project retrieval injection respects the Thread-local Auto Retrieval chip,
+  per-project retrieval settings, and Context Lens overlays.
+gui_related: true
+gui_classification_reason: Retrieval chips, Settings/Memory controls, and Context Lens overlays are visible or user-configurable UI.
+depends_on: [ACD-190]
+unblocks: [ACD-194]
+acceptance_criteria:
+  - Thread-local Auto Retrieval override defaults On and can be disabled per thread.
+  - Per-project retrieval settings preserve allowlist, modes, and budgets.
+  - Context Lens overlays affect retrieval injection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retrieval
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: project_retrieval_controls
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0091
+preserved_exact_tokens:
+  - "Thread-local Auto Retrieval override"
+  - "default On"
+  - "Settings/Memory"
+  - "allowlist + modes + budgets"
+  - "Context Lens overlays"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-192 - Context Lens Control
+
+```yaml
+plan_unit_id: ACD-192
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Context Lens is a top-right chat control immediately right of chat search,
+  rendered as an icon plus dropdown exposing `Mute`, `Focus`, `Subcompact`,
+  and `Turn Off`.
+gui_related: true
+gui_classification_reason: Context Lens placement and dropdown controls are visible chat UI.
+depends_on: [ACD-191]
+unblocks: [ACD-193]
+acceptance_criteria:
+  - Context Lens lives in the top-right of the chat window.
+  - The control appears immediately to the right of chat search.
+  - Dropdown exposes Mute, Focus, Subcompact, and Turn Off.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: context_lens
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: context_lens_control
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0092
+preserved_exact_tokens:
+  - "Mute"
+  - "Focus"
+  - "Subcompact"
+  - "Turn Off"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-193 - Context Lens Modes
+
+```yaml
+plan_unit_id: ACD-193
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Context Lens modes support selecting multiple messages at once; `Mute` and
+  `Focus` apply immediately, `Subcompact` requires an explicit apply action,
+  and `Turn Off` exits Context Lens mode and clears active selection state.
+gui_related: true
+gui_classification_reason: Context Lens mode selection and apply behavior are visible chat UI.
+depends_on: [ACD-192]
+unblocks: [ACD-194]
+acceptance_criteria:
+  - Mute, Focus, and Subcompact support multi-message selection.
+  - Mute and Focus apply as selection toggles happen.
+  - Subcompact requires explicit apply before creating a local summary artifact.
+  - Turn Off clears active selection state.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: context_lens
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: context_lens_modes
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0092
+preserved_exact_tokens:
+  - "Mute"
+  - "Focus"
+  - "Subcompact"
+  - "Turn Off"
+  - "explicit apply action"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-194 - Context Lens Assembly
+
+```yaml
+plan_unit_id: ACD-194
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Context Lens effective assembly excludes muted messages, protects focused
+  messages, and replaces Subcompact selections with a local summary while
+  preserving canonical source history and rehydration handles.
+gui_related: false
+gui_classification_reason: Context Lens assembly changes prompt/context construction rather than visual presentation.
+depends_on: [ACD-193]
+unblocks: [ACD-195]
+acceptance_criteria:
+  - Muted messages are excluded from effective context assembly and agent chatsearch results.
+  - Focused messages remain protected and high priority.
+  - Subcompact uses a local summary while preserving canonical source history and rehydration handles.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: context_lens
+reasoning_tier: high
+context_scope: context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: context_lens_assembly
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0092
+preserved_exact_tokens:
+  - "chatsearch"
+  - "local summary"
+  - "canonical source history"
+  - "rehydration handles"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-195 - Context Lens Handoff Boundary
+
+```yaml
+plan_unit_id: ACD-195
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Context Lens state is thread-local UI shaping, not Assistant memory; child
+  handoff bundles derive from canonical source state plus current effective
+  shaping state and never from a lossy copy as their only truth.
+gui_related: false
+gui_classification_reason: Context Lens handoff boundary is context pipeline and child-run behavior.
+depends_on: [ACD-194]
+unblocks: []
+acceptance_criteria:
+  - Context Lens state remains thread-local shaping.
+  - Context Lens state is not Assistant memory.
+  - Child handoff bundles derive from canonical source state plus effective shaping.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: context_lens
+reasoning_tier: high
+context_scope: handoff
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: context_lens_handoff_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0092
+preserved_exact_tokens:
+  - "not Assistant memory"
+negative_constraints:
+  - "Children do not inherit a lossy copy as their only truth."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-196 - BrainStorm Plan Flow
+
+```yaml
+plan_unit_id: ACD-196
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: BrainStorm uses one coordinated plan-style Q&A, research, and debugging flow to form a single plan.
+gui_related: false
+gui_classification_reason: BrainStorm plan flow is mode/orchestration behavior.
+depends_on: []
+unblocks: [ACD-197]
+acceptance_criteria:
+  - BrainStorm uses a plan-style flow.
+  - One coordinated Q&A/research phase forms the plan.
+  - Questions are not asked repeatedly by multiple subagents.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: brainstorm
+reasoning_tier: standard
+context_scope: run_modes
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: brainstorm_plan_flow
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0093
+preserved_exact_tokens:
+  - "BrainStorm"
+  - "plan-style flow"
+  - "single plan"
+negative_constraints:
+  - "Questions are not asked multiple times by multiple subagents."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+
+<<< CONTEXT_AFTER 12658-12669 >>>
+### ACD-197 - BrainStorm Execution Switch
+
+```yaml
+plan_unit_id: ACD-197
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Starting or executing a BrainStorm plan switches chat to Agent mode, and
+  execution may run through a regular agent, a crew, or Agent plus subagents,
+  with manager auto-decision or user request.
+gui_related: true

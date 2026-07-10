@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 25865-25876 >>>
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.theme_reset.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 25877-26227 >>>
+    "catalog.theme_set_accent": {
+      "ui_element_id": "catalog.theme_set_accent",
+      "ui_location": "Settings > Appearance / Theme > Set Accent",
+      "ui_command_id": "cmd.theme.set_accent",
+      "handler_location": "handlers::theme::set_accent",
+      "expected_event_types": [
+        "settings.theme.updated"
+      ],
+      "acceptance_checks": [
+        "cmd.theme.set_accent is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.theme.set_accent exposes state selector and disabled reason before dispatch.",
+        "cmd.theme.set_accent dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.theme.set_accent uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.theme.set_accent. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.theme_set_accent.availability",
+      "disabled_reason_projection": "state.commands.theme_set_accent.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.theme.set_accent emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "settings.theme.updated"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.theme_set_accent exposes a stable role/name/description matching cmd.theme.set_accent.",
+        "keyboard_access": "catalog.theme_set_accent is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.theme_set_accent preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.theme_set_accent surfaces state.commands.theme_set_accent.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.theme_set_accent.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.theme.set_accent reaches handlers::theme::set_accent with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_accent.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.theme_set_accent.availability and disabled copy reads state.commands.theme_set_accent.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_accent.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.theme.set_accent emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_accent.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_accent.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.theme.set_accent emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.theme.set_accent emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.theme_set_density": {
+      "ui_element_id": "catalog.theme_set_density",
+      "ui_location": "Settings > Appearance / Theme > Set Density",
+      "ui_command_id": "cmd.theme.set_density",
+      "handler_location": "handlers::theme::set_density",
+      "expected_event_types": [
+        "settings.theme.updated"
+      ],
+      "acceptance_checks": [
+        "cmd.theme.set_density is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.theme.set_density exposes state selector and disabled reason before dispatch.",
+        "cmd.theme.set_density dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.theme.set_density uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.theme.set_density. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.theme_set_density.availability",
+      "disabled_reason_projection": "state.commands.theme_set_density.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.theme.set_density emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "settings.theme.updated"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.theme_set_density exposes a stable role/name/description matching cmd.theme.set_density.",
+        "keyboard_access": "catalog.theme_set_density is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.theme_set_density preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.theme_set_density surfaces state.commands.theme_set_density.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.theme_set_density.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.theme.set_density reaches handlers::theme::set_density with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_density.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.theme_set_density.availability and disabled copy reads state.commands.theme_set_density.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_density.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.theme.set_density emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_density.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_density.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.theme.set_density emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.theme.set_density emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.theme_set_mode": {
+      "ui_element_id": "catalog.theme_set_mode",
+      "ui_location": "Settings > Appearance / Theme > Set Mode",
+      "ui_command_id": "cmd.theme.set_mode",
+      "handler_location": "handlers::theme::set_mode",
+      "expected_event_types": [
+        "settings.theme.updated"
+      ],
+      "acceptance_checks": [
+        "cmd.theme.set_mode is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.theme.set_mode exposes state selector and disabled reason before dispatch.",
+        "cmd.theme.set_mode dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.theme.set_mode uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.theme.set_mode. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.theme_set_mode.availability",
+      "disabled_reason_projection": "state.commands.theme_set_mode.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.theme.set_mode emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "settings.theme.updated"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.theme_set_mode exposes a stable role/name/description matching cmd.theme.set_mode.",
+        "keyboard_access": "catalog.theme_set_mode is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.theme_set_mode preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.theme_set_mode surfaces state.commands.theme_set_mode.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.theme_set_mode.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.theme.set_mode reaches handlers::theme::set_mode with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_mode.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.theme_set_mode.availability and disabled copy reads state.commands.theme_set_mode.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_mode.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.theme.set_mode emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_mode.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.theme_set_mode.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.widget_add": {
+      "ui_element_id": "catalog.widget_add",
+      "ui_location": "Widget surface > Add",
+      "ui_command_id": "cmd.widget.add",
+      "handler_location": "handlers::widget::add",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.add must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.add must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.add dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.add must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.add must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.widget.add; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.widget_add.availability",
+      "disabled_reason_projection": "state.commands.widget_add.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.widget.add has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.widget.add.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.widget_add exposes a stable role/name/description matching cmd.widget.add.",
+        "keyboard_access": "catalog.widget_add is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.widget_add preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.widget_add surfaces state.commands.widget_add.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.widget_add.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.widget.add reaches handlers::widget::add with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.widget_add.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.widget_add.availability and disabled copy reads state.commands.widget_add.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.widget_add.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.widget.add has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_add.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.add records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.widget_configure": {
+      "ui_element_id": "catalog.widget_configure",
+      "ui_location": "Widget surface > Configure",
+      "ui_command_id": "cmd.widget.configure",
+      "handler_location": "handlers::widget::configure",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.configure must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.configure must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.configure dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.configure must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.configure must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.widget.configure; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.widget_configure.availability",
+      "disabled_reason_projection": "state.commands.widget_configure.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.widget.configure has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.widget.configure.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.widget_configure exposes a stable role/name/description matching cmd.widget.configure.",
+        "keyboard_access": "catalog.widget_configure is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.widget_configure preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.widget_configure surfaces state.commands.widget_configure.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.widget_configure.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.widget.configure reaches handlers::widget::configure with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.widget_configure.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.widget_configure.availability and disabled copy reads state.commands.widget_configure.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.widget_configure.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.widget.configure has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_configure.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.configure records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.widget_move": {
+      "ui_element_id": "catalog.widget_move",
+      "ui_location": "Widget surface > Move",
+      "ui_command_id": "cmd.widget.move",
+      "handler_location": "handlers::widget::move",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.move must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.move must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.move dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.move must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.move must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.widget.move; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.widget_move.availability",
+      "disabled_reason_projection": "state.commands.widget_move.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.widget.move has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.widget.move.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.widget_move exposes a stable role/name/description matching cmd.widget.move.",
+        "keyboard_access": "catalog.widget_move is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.widget_move preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.widget_move surfaces state.commands.widget_move.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.widget_move.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.widget.move reaches handlers::widget::move with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.widget_move.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.widget_move.availability and disabled copy reads state.commands.widget_move.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.widget_move.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.widget.move has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_move.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.move records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 26228-26239 >>>
+    "catalog.widget_remove": {
+      "ui_element_id": "catalog.widget_remove",
+      "ui_location": "Widget surface > Remove",
+      "ui_command_id": "cmd.widget.remove",
+      "handler_location": "handlers::widget::remove",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.remove must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.remove must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.remove dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.remove must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.remove must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

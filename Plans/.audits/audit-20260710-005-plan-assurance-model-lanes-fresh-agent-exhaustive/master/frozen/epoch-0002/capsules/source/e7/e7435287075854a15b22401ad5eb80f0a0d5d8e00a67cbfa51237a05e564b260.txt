@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE 7195-7206 >>>
+- "discovered endpoints"
+- "downloaded scrubbed artifacts"
+negative_constraints:
+- "Project delete cleanup must not retain non-secret residue that can still identify the user or project."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/storage-plan.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 7207-7596 >>>
+### PS-110 - Privileged Session Metadata Minimization
+
+```yaml
+plan_unit_id: PS-110
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Session-style privileged operations persist bounded metadata only for actor, target, timestamps, credential realm, transport, local bind address or port when relevant, and requested versus effective state; interactive transcript and stdin are not persisted by default."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-092
+- PS-102
+- PS-107
+unblocks: []
+acceptance_criteria:
+- "PS-110 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: privileged_session_metadata_minimization
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+preserved_exact_tokens:
+- "docker exec/attach"
+- "kubectl exec"
+- "kubectl port-forward"
+- "remote SCM-over-SSH mutation sessions"
+- "browser/device auth handoffs"
+- "actor"
+- "target"
+- "started/ended timestamps"
+- "credential realm"
+- "transport"
+- "local bind address/port"
+- "requested vs effective state"
+- "interactive transcript"
+- "stdin"
+negative_constraints:
+- "Do not persist interactive transcript or stdin by default for session-style privileged operations."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/storage-plan.md"
+```
+
+### PS-111 - Build Deploy Secret No Persist No Echo
+
+```yaml
+plan_unit_id: PS-111
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Build and deploy secret handling uses no-persist and no-echo rules for docker build secrets, build args, compose env files, registry auth helpers, kube Secret manifests, and generated deployment YAML containing sensitive values."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-105
+- PS-108
+unblocks: []
+acceptance_criteria:
+- "PS-111 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: build_deploy_secret_no_persist_no_echo
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+preserved_exact_tokens:
+- "Build/deploy secret-handling"
+- "no-persist/no-echo"
+- "docker build secrets"
+- "build args"
+- "compose env files"
+- "registry auth helpers"
+- "kube Secret manifests"
+- "generated deployment YAML"
+- "sensitive values"
+negative_constraints:
+- "Sensitive build and deployment values must not be echoed, persisted, rendered back in full, indexed, or included in receipts/evidence beyond allowed redacted identity."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+```
+
+### PS-112 - Secret Rendering And ConfigMap Redaction
+
+```yaml
+plan_unit_id: PS-112
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Secret resources are never rendered back in full, indexed, or included in receipts or evidence beyond kind, name, namespace, and redacted status; ConfigMap rendering follows a separate configurable redaction policy because it may contain sensitive plaintext."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-108
+- PS-111
+unblocks: []
+acceptance_criteria:
+- "PS-112 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: secret_resource_rendering_redaction
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0078
+preserved_exact_tokens:
+- "Secret resources"
+- "kind/name/namespace"
+- "redacted status"
+- "ConfigMap rendering"
+- "separate configurable redaction policy"
+- "sensitive plaintext"
+negative_constraints:
+- "Secret resources are never rendered back in full, indexed, or included in receipts/evidence beyond kind, name, namespace, and redacted status."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-001 - Permissions System Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: PS-001
+unit_type: generated_artifact_residual
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "PS-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 208 because Permissions_System-S0079 through S0082 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated PS-001 bridge, and Migration Coverage. Permissions_System-S0001 through S0078 are covered by PS-002 through PS-112 or explicit structural and split dispositions. PS-001 no longer carries source_preserving_planunit compile mode and must not own product coverage."
+gui_related: false
+gui_classification_reason: "The retired bridge is generated migration lineage rather than implementation-facing GUI behavior, even though the retired source lineage preserved earlier GUI-related product tokens."
+split_recommended: false
+depends_on:
+- PS-002
+- PS-003
+- PS-004
+- PS-005
+- PS-006
+- PS-007
+- PS-008
+- PS-009
+- PS-010
+- PS-011
+- PS-012
+- PS-013
+- PS-014
+- PS-015
+- PS-016
+- PS-017
+- PS-018
+- PS-019
+- PS-020
+- PS-021
+- PS-022
+- PS-023
+- PS-024
+- PS-025
+- PS-026
+- PS-027
+- PS-028
+- PS-029
+- PS-030
+- PS-031
+- PS-032
+- PS-033
+- PS-034
+- PS-035
+- PS-036
+- PS-037
+- PS-038
+- PS-039
+- PS-040
+- PS-041
+- PS-042
+- PS-043
+- PS-044
+- PS-045
+- PS-046
+- PS-047
+- PS-048
+- PS-049
+- PS-050
+- PS-051
+- PS-052
+- PS-053
+- PS-054
+- PS-055
+- PS-056
+- PS-057
+- PS-058
+- PS-059
+- PS-060
+- PS-061
+- PS-062
+- PS-063
+- PS-064
+- PS-065
+- PS-066
+- PS-067
+- PS-068
+- PS-069
+- PS-070
+- PS-071
+- PS-072
+- PS-073
+- PS-074
+- PS-075
+- PS-076
+- PS-077
+- PS-078
+- PS-079
+- PS-080
+- PS-081
+- PS-082
+- PS-083
+- PS-084
+- PS-085
+- PS-086
+- PS-087
+- PS-088
+- PS-089
+- PS-090
+- PS-091
+- PS-092
+- PS-093
+- PS-094
+- PS-095
+- PS-096
+- PS-097
+- PS-098
+- PS-099
+- PS-100
+- PS-101
+- PS-102
+- PS-103
+- PS-104
+- PS-105
+- PS-106
+- PS-107
+- PS-108
+- PS-109
+- PS-110
+- PS-111
+- PS-112
+unblocks: []
+acceptance_criteria:
+- "Permissions_System-S0001 through S0078 remain mapped to fine-grained Permissions System PlanUnits or explicit structural dispositions rather than PS-001."
+- "Permissions_System-S0079 through S0082 are generated standardization tail material or retired bridge lineage, not product implementation coverage."
+- "PS-001 no longer uses source_preserving_planunit mode and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: residual_bridge_overreach
+reasoning_tier: standard
+context_scope: permissions_system_generated_tail_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0079
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0080
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0081
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0082
+preserved_exact_tokens:
+- "source_preserving_planunit"
+- "Permissions System (Canonical SSOT) Source-Preserving PlanUnit"
+- "Permissions_System-S0079"
+- "Permissions_System-S0082"
+- "Migration Coverage"
+- "PlanUnits"
+- "Owner / Consumer Map"
+negative_constraints:
+- "PS-001 must not provide product implementation coverage for Permissions_System-S0001 through S0078 after Phase 2B batch 208."
+- "PS-001 must not override PS-002 through PS-112 or later fine-grained Permissions System PlanUnits."
+- "Do not rely on one coarse source_preserving_planunit as the final implementation standard for Permissions_System.md."
+preserved_contractrefs:
+- "ContractRef lineage remains preserved in span_map and coverage_map; malformed trailing apostrophes from the generated PS-001 span are lineage only and are not promoted as active ContractRefs."
+compatibility_only_notes:
+- "The retired bridge is compatibility lineage for generated Owner / Consumer Map, generated PlanUnits, former PS-001 bridge, and Migration Coverage tail spans only."
+stale_retired_dispositions:
+- "Former generated source-preserving bridge material is retired as migration lineage only."
+owner_hints:
+- Plans/Permissions_System.md
+```
+
+## Migration Coverage
+
+Original hash: `7d57d29a08eee4d90cd25bb6d060b5ad46b82d48ac4dd95e4167e1818fed9134`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+The initial source-preserving standardization preserved `Permissions_System-S0001` through `Permissions_System-S0078` in place under `PS-001`. Phase 2B batch 205 supersedes that coarse mapping for `Permissions_System-S0001` through `Permissions_System-S0027` with fine-grained PlanUnits `PS-002` through `PS-027`, including split coverage for mixed GUI/backend span `Permissions_System-S0009` and precedence span `Permissions_System-S0021`. `PS-001` is narrowed to residual source-preserving coverage for `Permissions_System-S0028` through `Permissions_System-S0078` only and must not override the fine-grained units. Batch 205 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 206 atomized `Permissions_System-S0028` through `Permissions_System-S0046` into fine-grained PlanUnits `PS-028` through `PS-059`, including split coverage for mixed spans `Permissions_System-S0028`, `S0032`, `S0034`, `S0035`, `S0036`, `S0041`, and `S0042`, and structural carry-through for container headings `Permissions_System-S0037` and `S0045`. `PS-001` is narrowed to residual source-preserving coverage for `Permissions_System-S0047` through `Permissions_System-S0078` only and must not override the fine-grained units. Batch 206 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 207 atomized `Permissions_System-S0047` through `Permissions_System-S0073` into fine-grained PlanUnits `PS-060` through `PS-089`, including split coverage for mixed spans `Permissions_System-S0048`, `S0052`, `S0056`, `S0066`, and `S0069`, and structural carry-through for container headings `Permissions_System-S0058` and `S0072`. `PS-001` is narrowed to residual source-preserving coverage for `Permissions_System-S0074` through `Permissions_System-S0078` only and must not override the fine-grained units. Batch 207 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+Phase 2B batch 208 atomized `Permissions_System-S0074` through `Permissions_System-S0078` into fine-grained PlanUnits `PS-090` through `PS-112`, including split coverage for recovery-option payloads, permission snapshots, Source Control/GitHub Actions/Docker Manager addendum behavior, provider exposure, remote-side-effect provenance, sensitive metadata masking, privileged-session metadata minimization, and secret redaction. Batch 208 structurally dispositioned generated tail spans `Permissions_System-S0079`, `Permissions_System-S0080`, and `Permissions_System-S0082`, and retired generated bridge span `Permissions_System-S0081` through `PS-001` as migration-lineage-only compatibility residue. `PS-001` no longer uses `source_preserving_planunit` mode and must not own product coverage. Batch 208 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### PS-113 - Approval Scope Level And Cross-Boundary Carryover
+
+```yaml
+plan_unit_id: PS-113
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Permission approval reuse must resolve through an `approval_scope_key` schema derived from the
+  runtime identity envelope plus tool/context/mode and including actor, lane, package, project, run,
+  account, tool, context, mode, requested identity, effective identity, execution_role, and
+  `approval_scope_level` inputs. Default carryover is narrow lane/run/actor scope: an approval must
+  not cross lane, run, project, or account boundaries unless `approval_scope_level` explicitly
+  permits that boundary, the scoped key records it, and the target permission class allows carryover.
+  Reject-cascade must evaluate the same scoped key instead of a single-session or single-lane
+  assumption.
+gui_related: false
+gui_classification_reason: Approval scope keys and reject-cascade behavior are permission/runtime contracts, not visual presentation.
+depends_on: [CV-281]
+unblocks: []
+acceptance_criteria:
+  - "`approval_scope_key` has a defined schema from the runtime identity envelope over actor/lane/package/project/run/account/tool/context/mode/requested/effective identity/execution_role/approval_scope_level."
+  - Default carryover remains narrow lane/run/actor scope; crossing lane, run, project, or account boundaries requires explicit `approval_scope_level`, scoped key coverage, and permission-class allowance.
+  - Reject-cascade is evaluated against scoped keys rather than global session state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: approval_scope_overreach
+reasoning_tier: high
+context_scope: permissions_approval_scope
+implementation_surfaces: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
+node_compile_hint: {mode: approval_scope_key_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0032
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0048
+preserved_exact_tokens: ["Approval Scope Key", "approval_scope_key", "runtime identity envelope", "tool/context/mode", "narrow lane/run/actor default carryover", "approval_scope_level", "crossing lane, run, project, or account boundaries", "actor/lane/run/account", "session approval carryover", "reject-cascade", "single-session/single-lane"]
+negative_constraints:
+  - Do not allow approval reuse from a provider session id alone.
+  - Do not allow implicit cross-lane, cross-run, cross-project, or cross-account approval carryover.
+  - Do not preserve single-session/single-lane reject-cascade behavior without actor/lane/run/account identity scope.
+owner_hints: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-001
+
+
+<<< CONTEXT_AFTER 7597-7608 >>>
+### PS-114 - Goal Runtime Approval Scope Consumer
+
+```yaml
+plan_unit_id: PS-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Permissions_System owns existing approval-scope, permission snapshot, approval reuse, and blocked-action payload rules consumed by Goal Runtime high-risk actions. Goal Runtime invokes approval and blocks invisible goals outside predeclared authority, but it does not redefine the permission ladder, approval-scope carryover, or blocked payload schema.
+gui_related: false
+gui_classification_reason: Approval scope, permission snapshots, and blocked-action payloads are permission/runtime policy, not visual presentation.
+depends_on:

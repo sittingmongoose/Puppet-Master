@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=24001-24012 >>>
+L00024001	          "requirement": "cmd.source_control.mark_conflict_resolved records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024002	        },
+L00024003	        {
+L00024004	          "test_id": "wiring.catalog.source_control_mark_conflict_resolved.accessibility",
+L00024005	          "evidence_kind": "accessibility_regression",
+L00024006	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024007	        }
+L00024008	      ],
+L00024009	      "event_test_requirements": [
+L00024010	        "Assert cmd.source_control.mark_conflict_resolved records dispatch receipt cmd.source_control.mark_conflict_resolved.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024011	      ]
+L00024012	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=24013-24397 >>>
+L00024013	    "catalog.source_control_open_conflict": {
+L00024014	      "ui_element_id": "catalog.source_control_open_conflict",
+L00024015	      "ui_location": "Source Control surface",
+L00024016	      "ui_command_id": "cmd.source_control.open_conflict",
+L00024017	      "handler_location": "handlers::source_control::open_conflict",
+L00024018	      "expected_event_types": [],
+L00024019	      "acceptance_checks": [
+L00024020	        "cmd.source_control.open_conflict must be registered in the UICommand dispatcher with typed args and result contract",
+L00024021	        "cmd.source_control.open_conflict must expose projected state selector and disabled reason before dispatch",
+L00024022	        "cmd.source_control.open_conflict dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024023	        "cmd.source_control.open_conflict must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024024	        "cmd.source_control.open_conflict must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024025	      ],
+L00024026	      "evidence_required": "Production wiring contract for cmd.source_control.open_conflict; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024027	      "state_selector": "state.commands.source_control_open_conflict.availability",
+L00024028	      "disabled_reason_projection": "state.commands.source_control_open_conflict.disabled_reason",
+L00024029	      "effect_contract": {
+L00024030	        "effect_kind": "receipt",
+L00024031	        "description": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024032	        "receipt_or_event_refs": [
+L00024033	          "cmd.source_control.open_conflict.dispatch_receipt"
+L00024034	        ]
+L00024035	      },
+L00024036	      "accessibility_contract": {
+L00024037	        "role_or_semantics": "catalog.source_control_open_conflict exposes a stable role/name/description matching cmd.source_control.open_conflict.",
+L00024038	        "keyboard_access": "catalog.source_control_open_conflict is reachable and activatable by keyboard where the control is visible.",
+L00024039	        "focus_management": "catalog.source_control_open_conflict preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024040	        "disabled_announcement": "catalog.source_control_open_conflict surfaces state.commands.source_control_open_conflict.disabled_reason to assistive technology when unavailable."
+L00024041	      },
+L00024042	      "test_evidence": [
+L00024043	        {
+L00024044	          "test_id": "wiring.catalog.source_control_open_conflict.dispatcher",
+L00024045	          "evidence_kind": "dispatcher_fixture",
+L00024046	          "requirement": "Dispatching cmd.source_control.open_conflict reaches handlers::source_control::open_conflict with typed args/result contract."
+L00024047	        },
+L00024048	        {
+L00024049	          "test_id": "wiring.catalog.source_control_open_conflict.state_projection",
+L00024050	          "evidence_kind": "state_projection",
+L00024051	          "requirement": "Availability reads state.commands.source_control_open_conflict.availability and disabled copy reads state.commands.source_control_open_conflict.disabled_reason."
+L00024052	        },
+L00024053	        {
+L00024054	          "test_id": "wiring.catalog.source_control_open_conflict.effect",
+L00024055	          "evidence_kind": "receipt_or_event_assertion",
+L00024056	          "requirement": "cmd.source_control.open_conflict records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024057	        },
+L00024058	        {
+L00024059	          "test_id": "wiring.catalog.source_control_open_conflict.accessibility",
+L00024060	          "evidence_kind": "accessibility_regression",
+L00024061	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024062	        }
+L00024063	      ],
+L00024064	      "event_test_requirements": [
+L00024065	        "Assert cmd.source_control.open_conflict records dispatch receipt cmd.source_control.open_conflict.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024066	      ]
+L00024067	    },
+L00024068	    "catalog.source_control_open_merge_editor": {
+L00024069	      "ui_element_id": "catalog.source_control_open_merge_editor",
+L00024070	      "ui_location": "Source Control surface",
+L00024071	      "ui_command_id": "cmd.source_control.open_merge_editor",
+L00024072	      "handler_location": "handlers::source_control::open_merge_editor",
+L00024073	      "expected_event_types": [],
+L00024074	      "acceptance_checks": [
+L00024075	        "cmd.source_control.open_merge_editor must be registered in the UICommand dispatcher with typed args and result contract",
+L00024076	        "cmd.source_control.open_merge_editor must expose projected state selector and disabled reason before dispatch",
+L00024077	        "cmd.source_control.open_merge_editor dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024078	        "cmd.source_control.open_merge_editor must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024079	        "cmd.source_control.open_merge_editor must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024080	      ],
+L00024081	      "evidence_required": "Production wiring contract for cmd.source_control.open_merge_editor; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024082	      "state_selector": "state.commands.source_control_open_merge_editor.availability",
+L00024083	      "disabled_reason_projection": "state.commands.source_control_open_merge_editor.disabled_reason",
+L00024084	      "effect_contract": {
+L00024085	        "effect_kind": "receipt",
+L00024086	        "description": "cmd.source_control.open_merge_editor records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024087	        "receipt_or_event_refs": [
+L00024088	          "cmd.source_control.open_merge_editor.dispatch_receipt"
+L00024089	        ]
+L00024090	      },
+L00024091	      "accessibility_contract": {
+L00024092	        "role_or_semantics": "catalog.source_control_open_merge_editor exposes a stable role/name/description matching cmd.source_control.open_merge_editor.",
+L00024093	        "keyboard_access": "catalog.source_control_open_merge_editor is reachable and activatable by keyboard where the control is visible.",
+L00024094	        "focus_management": "catalog.source_control_open_merge_editor preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024095	        "disabled_announcement": "catalog.source_control_open_merge_editor surfaces state.commands.source_control_open_merge_editor.disabled_reason to assistive technology when unavailable."
+L00024096	      },
+L00024097	      "test_evidence": [
+L00024098	        {
+L00024099	          "test_id": "wiring.catalog.source_control_open_merge_editor.dispatcher",
+L00024100	          "evidence_kind": "dispatcher_fixture",
+L00024101	          "requirement": "Dispatching cmd.source_control.open_merge_editor reaches handlers::source_control::open_merge_editor with typed args/result contract."
+L00024102	        },
+L00024103	        {
+L00024104	          "test_id": "wiring.catalog.source_control_open_merge_editor.state_projection",
+L00024105	          "evidence_kind": "state_projection",
+L00024106	          "requirement": "Availability reads state.commands.source_control_open_merge_editor.availability and disabled copy reads state.commands.source_control_open_merge_editor.disabled_reason."
+L00024107	        },
+L00024108	        {
+L00024109	          "test_id": "wiring.catalog.source_control_open_merge_editor.effect",
+L00024110	          "evidence_kind": "receipt_or_event_assertion",
+L00024111	          "requirement": "cmd.source_control.open_merge_editor records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024112	        },
+L00024113	        {
+L00024114	          "test_id": "wiring.catalog.source_control_open_merge_editor.accessibility",
+L00024115	          "evidence_kind": "accessibility_regression",
+L00024116	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024117	        }
+L00024118	      ],
+L00024119	      "event_test_requirements": [
+L00024120	        "Assert cmd.source_control.open_merge_editor records dispatch receipt cmd.source_control.open_merge_editor.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024121	      ]
+L00024122	    },
+L00024123	    "catalog.source_control_open_review": {
+L00024124	      "ui_element_id": "catalog.source_control_open_review",
+L00024125	      "ui_location": "Source Control surface",
+L00024126	      "ui_command_id": "cmd.source_control.open_review",
+L00024127	      "handler_location": "handlers::source_control::open_review",
+L00024128	      "expected_event_types": [],
+L00024129	      "acceptance_checks": [
+L00024130	        "cmd.source_control.open_review must be registered in the UICommand dispatcher with typed args and result contract",
+L00024131	        "cmd.source_control.open_review must expose projected state selector and disabled reason before dispatch",
+L00024132	        "cmd.source_control.open_review dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024133	        "cmd.source_control.open_review must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024134	        "cmd.source_control.open_review must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024135	      ],
+L00024136	      "evidence_required": "Production wiring contract for cmd.source_control.open_review; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024137	      "state_selector": "state.commands.source_control_open_review.availability",
+L00024138	      "disabled_reason_projection": "state.commands.source_control_open_review.disabled_reason",
+L00024139	      "effect_contract": {
+L00024140	        "effect_kind": "receipt",
+L00024141	        "description": "cmd.source_control.open_review records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024142	        "receipt_or_event_refs": [
+L00024143	          "cmd.source_control.open_review.dispatch_receipt"
+L00024144	        ]
+L00024145	      },
+L00024146	      "accessibility_contract": {
+L00024147	        "role_or_semantics": "catalog.source_control_open_review exposes a stable role/name/description matching cmd.source_control.open_review.",
+L00024148	        "keyboard_access": "catalog.source_control_open_review is reachable and activatable by keyboard where the control is visible.",
+L00024149	        "focus_management": "catalog.source_control_open_review preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024150	        "disabled_announcement": "catalog.source_control_open_review surfaces state.commands.source_control_open_review.disabled_reason to assistive technology when unavailable."
+L00024151	      },
+L00024152	      "test_evidence": [
+L00024153	        {
+L00024154	          "test_id": "wiring.catalog.source_control_open_review.dispatcher",
+L00024155	          "evidence_kind": "dispatcher_fixture",
+L00024156	          "requirement": "Dispatching cmd.source_control.open_review reaches handlers::source_control::open_review with typed args/result contract."
+L00024157	        },
+L00024158	        {
+L00024159	          "test_id": "wiring.catalog.source_control_open_review.state_projection",
+L00024160	          "evidence_kind": "state_projection",
+L00024161	          "requirement": "Availability reads state.commands.source_control_open_review.availability and disabled copy reads state.commands.source_control_open_review.disabled_reason."
+L00024162	        },
+L00024163	        {
+L00024164	          "test_id": "wiring.catalog.source_control_open_review.effect",
+L00024165	          "evidence_kind": "receipt_or_event_assertion",
+L00024166	          "requirement": "cmd.source_control.open_review records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024167	        },
+L00024168	        {
+L00024169	          "test_id": "wiring.catalog.source_control_open_review.accessibility",
+L00024170	          "evidence_kind": "accessibility_regression",
+L00024171	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024172	        }
+L00024173	      ],
+L00024174	      "event_test_requirements": [
+L00024175	        "Assert cmd.source_control.open_review records dispatch receipt cmd.source_control.open_review.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024176	      ]
+L00024177	    },
+L00024178	    "catalog.source_control_resolve_conflict_side": {
+L00024179	      "ui_element_id": "catalog.source_control_resolve_conflict_side",
+L00024180	      "ui_location": "Source Control surface",
+L00024181	      "ui_command_id": "cmd.source_control.resolve_conflict_side",
+L00024182	      "handler_location": "handlers::source_control::resolve_conflict_side",
+L00024183	      "expected_event_types": [],
+L00024184	      "acceptance_checks": [
+L00024185	        "cmd.source_control.resolve_conflict_side must be registered in the UICommand dispatcher with typed args and result contract",
+L00024186	        "cmd.source_control.resolve_conflict_side must expose projected state selector and disabled reason before dispatch",
+L00024187	        "cmd.source_control.resolve_conflict_side dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024188	        "cmd.source_control.resolve_conflict_side must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024189	        "cmd.source_control.resolve_conflict_side must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024190	      ],
+L00024191	      "evidence_required": "Production wiring contract for cmd.source_control.resolve_conflict_side; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024192	      "state_selector": "state.commands.source_control_resolve_conflict_side.availability",
+L00024193	      "disabled_reason_projection": "state.commands.source_control_resolve_conflict_side.disabled_reason",
+L00024194	      "effect_contract": {
+L00024195	        "effect_kind": "receipt",
+L00024196	        "description": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024197	        "receipt_or_event_refs": [
+L00024198	          "cmd.source_control.resolve_conflict_side.dispatch_receipt"
+L00024199	        ]
+L00024200	      },
+L00024201	      "accessibility_contract": {
+L00024202	        "role_or_semantics": "catalog.source_control_resolve_conflict_side exposes a stable role/name/description matching cmd.source_control.resolve_conflict_side.",
+L00024203	        "keyboard_access": "catalog.source_control_resolve_conflict_side is reachable and activatable by keyboard where the control is visible.",
+L00024204	        "focus_management": "catalog.source_control_resolve_conflict_side preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024205	        "disabled_announcement": "catalog.source_control_resolve_conflict_side surfaces state.commands.source_control_resolve_conflict_side.disabled_reason to assistive technology when unavailable."
+L00024206	      },
+L00024207	      "test_evidence": [
+L00024208	        {
+L00024209	          "test_id": "wiring.catalog.source_control_resolve_conflict_side.dispatcher",
+L00024210	          "evidence_kind": "dispatcher_fixture",
+L00024211	          "requirement": "Dispatching cmd.source_control.resolve_conflict_side reaches handlers::source_control::resolve_conflict_side with typed args/result contract."
+L00024212	        },
+L00024213	        {
+L00024214	          "test_id": "wiring.catalog.source_control_resolve_conflict_side.state_projection",
+L00024215	          "evidence_kind": "state_projection",
+L00024216	          "requirement": "Availability reads state.commands.source_control_resolve_conflict_side.availability and disabled copy reads state.commands.source_control_resolve_conflict_side.disabled_reason."
+L00024217	        },
+L00024218	        {
+L00024219	          "test_id": "wiring.catalog.source_control_resolve_conflict_side.effect",
+L00024220	          "evidence_kind": "receipt_or_event_assertion",
+L00024221	          "requirement": "cmd.source_control.resolve_conflict_side records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024222	        },
+L00024223	        {
+L00024224	          "test_id": "wiring.catalog.source_control_resolve_conflict_side.accessibility",
+L00024225	          "evidence_kind": "accessibility_regression",
+L00024226	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024227	        }
+L00024228	      ],
+L00024229	      "event_test_requirements": [
+L00024230	        "Assert cmd.source_control.resolve_conflict_side records dispatch receipt cmd.source_control.resolve_conflict_side.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024231	      ]
+L00024232	    },
+L00024233	    "catalog.source_control_review_filter": {
+L00024234	      "ui_element_id": "catalog.source_control_review_filter",
+L00024235	      "ui_location": "Source Control surface",
+L00024236	      "ui_command_id": "cmd.source_control.review.filter",
+L00024237	      "handler_location": "handlers::source_control::review_filter",
+L00024238	      "expected_event_types": [],
+L00024239	      "acceptance_checks": [
+L00024240	        "cmd.source_control.review.filter must be registered in the UICommand dispatcher with typed args and result contract",
+L00024241	        "cmd.source_control.review.filter must expose projected state selector and disabled reason before dispatch",
+L00024242	        "cmd.source_control.review.filter dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024243	        "cmd.source_control.review.filter must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024244	        "cmd.source_control.review.filter must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024245	      ],
+L00024246	      "evidence_required": "Production wiring contract for cmd.source_control.review.filter; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024247	      "state_selector": "state.commands.source_control_review_filter.availability",
+L00024248	      "disabled_reason_projection": "state.commands.source_control_review_filter.disabled_reason",
+L00024249	      "effect_contract": {
+L00024250	        "effect_kind": "receipt",
+L00024251	        "description": "cmd.source_control.review.filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024252	        "receipt_or_event_refs": [
+L00024253	          "cmd.source_control.review.filter.dispatch_receipt"
+L00024254	        ]
+L00024255	      },
+L00024256	      "accessibility_contract": {
+L00024257	        "role_or_semantics": "catalog.source_control_review_filter exposes a stable role/name/description matching cmd.source_control.review.filter.",
+L00024258	        "keyboard_access": "catalog.source_control_review_filter is reachable and activatable by keyboard where the control is visible.",
+L00024259	        "focus_management": "catalog.source_control_review_filter preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024260	        "disabled_announcement": "catalog.source_control_review_filter surfaces state.commands.source_control_review_filter.disabled_reason to assistive technology when unavailable."
+L00024261	      },
+L00024262	      "test_evidence": [
+L00024263	        {
+L00024264	          "test_id": "wiring.catalog.source_control_review_filter.dispatcher",
+L00024265	          "evidence_kind": "dispatcher_fixture",
+L00024266	          "requirement": "Dispatching cmd.source_control.review.filter reaches handlers::source_control::review_filter with typed args/result contract."
+L00024267	        },
+L00024268	        {
+L00024269	          "test_id": "wiring.catalog.source_control_review_filter.state_projection",
+L00024270	          "evidence_kind": "state_projection",
+L00024271	          "requirement": "Availability reads state.commands.source_control_review_filter.availability and disabled copy reads state.commands.source_control_review_filter.disabled_reason."
+L00024272	        },
+L00024273	        {
+L00024274	          "test_id": "wiring.catalog.source_control_review_filter.effect",
+L00024275	          "evidence_kind": "receipt_or_event_assertion",
+L00024276	          "requirement": "cmd.source_control.review.filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024277	        },
+L00024278	        {
+L00024279	          "test_id": "wiring.catalog.source_control_review_filter.accessibility",
+L00024280	          "evidence_kind": "accessibility_regression",
+L00024281	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024282	        }
+L00024283	      ],
+L00024284	      "event_test_requirements": [
+L00024285	        "Assert cmd.source_control.review.filter records dispatch receipt cmd.source_control.review.filter.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024286	      ]
+L00024287	    },
+L00024288	    "catalog.source_control_review_open": {
+L00024289	      "ui_element_id": "catalog.source_control_review_open",
+L00024290	      "ui_location": "Source Control surface",
+L00024291	      "ui_command_id": "cmd.source_control.review.open",
+L00024292	      "handler_location": "handlers::source_control::review_open",
+L00024293	      "expected_event_types": [],
+L00024294	      "acceptance_checks": [
+L00024295	        "cmd.source_control.review.open must be registered in the UICommand dispatcher with typed args and result contract",
+L00024296	        "cmd.source_control.review.open must expose projected state selector and disabled reason before dispatch",
+L00024297	        "cmd.source_control.review.open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024298	        "cmd.source_control.review.open must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024299	        "cmd.source_control.review.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024300	      ],
+L00024301	      "evidence_required": "Production wiring contract for cmd.source_control.review.open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024302	      "state_selector": "state.commands.source_control_review_open.availability",
+L00024303	      "disabled_reason_projection": "state.commands.source_control_review_open.disabled_reason",
+L00024304	      "effect_contract": {
+L00024305	        "effect_kind": "receipt",
+L00024306	        "description": "cmd.source_control.review.open records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024307	        "receipt_or_event_refs": [
+L00024308	          "cmd.source_control.review.open.dispatch_receipt"
+L00024309	        ]
+L00024310	      },
+L00024311	      "accessibility_contract": {
+L00024312	        "role_or_semantics": "catalog.source_control_review_open exposes a stable role/name/description matching cmd.source_control.review.open.",
+L00024313	        "keyboard_access": "catalog.source_control_review_open is reachable and activatable by keyboard where the control is visible.",
+L00024314	        "focus_management": "catalog.source_control_review_open preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024315	        "disabled_announcement": "catalog.source_control_review_open surfaces state.commands.source_control_review_open.disabled_reason to assistive technology when unavailable."
+L00024316	      },
+L00024317	      "test_evidence": [
+L00024318	        {
+L00024319	          "test_id": "wiring.catalog.source_control_review_open.dispatcher",
+L00024320	          "evidence_kind": "dispatcher_fixture",
+L00024321	          "requirement": "Dispatching cmd.source_control.review.open reaches handlers::source_control::review_open with typed args/result contract."
+L00024322	        },
+L00024323	        {
+L00024324	          "test_id": "wiring.catalog.source_control_review_open.state_projection",
+L00024325	          "evidence_kind": "state_projection",
+L00024326	          "requirement": "Availability reads state.commands.source_control_review_open.availability and disabled copy reads state.commands.source_control_review_open.disabled_reason."
+L00024327	        },
+L00024328	        {
+L00024329	          "test_id": "wiring.catalog.source_control_review_open.effect",
+L00024330	          "evidence_kind": "receipt_or_event_assertion",
+L00024331	          "requirement": "cmd.source_control.review.open records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024332	        },
+L00024333	        {
+L00024334	          "test_id": "wiring.catalog.source_control_review_open.accessibility",
+L00024335	          "evidence_kind": "accessibility_regression",
+L00024336	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024337	        }
+L00024338	      ],
+L00024339	      "event_test_requirements": [
+L00024340	        "Assert cmd.source_control.review.open records dispatch receipt cmd.source_control.review.open.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024341	      ]
+L00024342	    },
+L00024343	    "catalog.source_control_review_swap": {
+L00024344	      "ui_element_id": "catalog.source_control_review_swap",
+L00024345	      "ui_location": "Source Control surface",
+L00024346	      "ui_command_id": "cmd.source_control.review.swap",
+L00024347	      "handler_location": "handlers::source_control::review_swap",
+L00024348	      "expected_event_types": [],
+L00024349	      "acceptance_checks": [
+L00024350	        "cmd.source_control.review.swap must be registered in the UICommand dispatcher with typed args and result contract",
+L00024351	        "cmd.source_control.review.swap must expose projected state selector and disabled reason before dispatch",
+L00024352	        "cmd.source_control.review.swap dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024353	        "cmd.source_control.review.swap must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024354	        "cmd.source_control.review.swap must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024355	      ],
+L00024356	      "evidence_required": "Production wiring contract for cmd.source_control.review.swap; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024357	      "state_selector": "state.commands.source_control_review_swap.availability",
+L00024358	      "disabled_reason_projection": "state.commands.source_control_review_swap.disabled_reason",
+L00024359	      "effect_contract": {
+L00024360	        "effect_kind": "receipt",
+L00024361	        "description": "cmd.source_control.review.swap records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00024362	        "receipt_or_event_refs": [
+L00024363	          "cmd.source_control.review.swap.dispatch_receipt"
+L00024364	        ]
+L00024365	      },
+L00024366	      "accessibility_contract": {
+L00024367	        "role_or_semantics": "catalog.source_control_review_swap exposes a stable role/name/description matching cmd.source_control.review.swap.",
+L00024368	        "keyboard_access": "catalog.source_control_review_swap is reachable and activatable by keyboard where the control is visible.",
+L00024369	        "focus_management": "catalog.source_control_review_swap preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024370	        "disabled_announcement": "catalog.source_control_review_swap surfaces state.commands.source_control_review_swap.disabled_reason to assistive technology when unavailable."
+L00024371	      },
+L00024372	      "test_evidence": [
+L00024373	        {
+L00024374	          "test_id": "wiring.catalog.source_control_review_swap.dispatcher",
+L00024375	          "evidence_kind": "dispatcher_fixture",
+L00024376	          "requirement": "Dispatching cmd.source_control.review.swap reaches handlers::source_control::review_swap with typed args/result contract."
+L00024377	        },
+L00024378	        {
+L00024379	          "test_id": "wiring.catalog.source_control_review_swap.state_projection",
+L00024380	          "evidence_kind": "state_projection",
+L00024381	          "requirement": "Availability reads state.commands.source_control_review_swap.availability and disabled copy reads state.commands.source_control_review_swap.disabled_reason."
+L00024382	        },
+L00024383	        {
+L00024384	          "test_id": "wiring.catalog.source_control_review_swap.effect",
+L00024385	          "evidence_kind": "receipt_or_event_assertion",
+L00024386	          "requirement": "cmd.source_control.review.swap records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024387	        },
+L00024388	        {
+L00024389	          "test_id": "wiring.catalog.source_control_review_swap.accessibility",
+L00024390	          "evidence_kind": "accessibility_regression",
+L00024391	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024392	        }
+L00024393	      ],
+L00024394	      "event_test_requirements": [
+L00024395	        "Assert cmd.source_control.review.swap records dispatch receipt cmd.source_control.review.swap.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024396	      ]
+L00024397	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=24398-24409 >>>
+L00024398	    "catalog.source_control_select_tab": {
+L00024399	      "ui_element_id": "catalog.source_control_select_tab",
+L00024400	      "ui_location": "Source Control surface",
+L00024401	      "ui_command_id": "cmd.source_control.select_tab",
+L00024402	      "handler_location": "handlers::source_control::select_tab",
+L00024403	      "expected_event_types": [],
+L00024404	      "acceptance_checks": [
+L00024405	        "cmd.source_control.select_tab must be registered in the UICommand dispatcher with typed args and result contract",
+L00024406	        "cmd.source_control.select_tab must expose projected state selector and disabled reason before dispatch",
+L00024407	        "cmd.source_control.select_tab dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024408	        "cmd.source_control.select_tab must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024409	        "cmd.source_control.select_tab must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

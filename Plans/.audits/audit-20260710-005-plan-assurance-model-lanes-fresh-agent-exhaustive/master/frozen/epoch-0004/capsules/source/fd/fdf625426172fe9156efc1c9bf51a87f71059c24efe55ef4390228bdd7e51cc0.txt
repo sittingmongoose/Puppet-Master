@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 1-12 >>>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.web_operation_contracts.schema.v1",
+  "title": "Puppet Master Web Operation And Browser Contracts",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_id": {
+      "type": "string",
+      "const": "pm.web_operation_contracts.schema.v1"
+    }
+  },
+
+<<< AUTHORITATIVE_CORE 13-406 >>>
+  "$defs": {
+    "InvocationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "invocation_source": {
+                "enum": ["agent_initiated", "goal", "prd", "planning_wizard", "subagent"]
+              }
+            },
+            "required": ["invocation_source"]
+          },
+          "then": {
+            "required": ["agent_reason"]
+          }
+        }
+      ],
+      "required": ["invocation_source"],
+      "properties": {
+        "invocation_source": {
+          "type": "string",
+          "enum": ["slash", "palette", "nl_user", "agent_initiated", "goal", "prd", "planning_wizard", "subagent"]
+        },
+        "agent_reason": {"type": "string", "minLength": 1},
+        "source_user_message_id": {"type": "string"},
+        "source_goal_id": {"type": "string"},
+        "source_subagent_id": {"type": "string"},
+        "source_prd_id": {"type": "string"},
+        "source_planning_run_id": {"type": "string"}
+      }
+    },
+    "WebOperation": {
+      "type": "string",
+      "enum": ["search", "read", "extract", "research", "deep_research", "crawl", "map"]
+    },
+    "WebToolId": {
+      "type": "string",
+      "enum": ["websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap"]
+    },
+    "CachePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_age_seconds": {"type": "integer", "minimum": 0},
+        "store": {"type": "boolean"},
+        "cache_key_ref": {"type": "string"},
+        "redaction_profile_id": {"type": "string"}
+      }
+    },
+    "CacheRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"cache_state": {"const": "stored"}}},
+          "then": {
+            "required": ["ttl_seconds", "no_secret_verified", "redaction_profile_id"],
+            "properties": {
+              "no_secret_verified": {"const": true}
+            }
+          }
+        }
+      ],
+      "required": ["cache_state"],
+      "properties": {
+        "cache_state": {"type": "string", "enum": ["hit", "miss", "bypassed", "stored", "not_stored"]},
+        "cache_ref": {"type": "string"},
+        "content_hash": {"type": "string"},
+        "ttl_seconds": {"type": "integer", "minimum": 0},
+        "no_secret_verified": {"type": "boolean"},
+        "redaction_profile_id": {"type": "string"}
+      }
+    },
+    "WebOperationJob": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {"enum": ["completed", "failed", "cancelled", "timeout"]}
+            },
+            "required": ["status"]
+          },
+          "then": {"required": ["finished_at_utc"]}
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {"enum": ["failed", "timeout"]}
+            },
+            "required": ["status"]
+          },
+          "then": {"required": ["failure_reason_code"]}
+        }
+      ],
+      "required": ["job_id", "web_operation", "tool_id", "invocation", "status", "created_at_utc", "not_runtime_queue"],
+      "properties": {
+        "job_id": {"type": "string", "minLength": 1},
+        "web_operation": {"$ref": "#/$defs/WebOperation"},
+        "tool_id": {"$ref": "#/$defs/WebToolId"},
+        "invocation": {"$ref": "#/$defs/InvocationProvenance"},
+        "provider_job_id": {"type": "string"},
+        "provider_adapter_id": {"type": "string"},
+        "status": {"type": "string", "enum": ["queued", "polling", "running", "partial", "completed", "failed", "cancelled", "timeout", "denied"]},
+        "status_source": {"type": "string", "enum": ["pm_composed", "provider_poll", "provider_webhook", "browser_runtime"]},
+        "poll_ref": {"type": "string"},
+        "progress_ref": {"type": "string"},
+        "partial_result_ref": {"type": "string"},
+        "result_ref": {"type": "string"},
+        "permission_snapshot_id": {"type": "string"},
+        "cache_ref": {"type": "string"},
+        "redaction_profile_id": {"type": "string"},
+        "timeout_ms": {"type": "integer", "minimum": 0},
+        "created_at_utc": {"type": "string", "minLength": 1},
+        "updated_at_utc": {"type": "string"},
+        "finished_at_utc": {"type": "string"},
+        "failure_reason_code": {"type": "string"},
+        "cancelled": {"type": "boolean"},
+        "not_runtime_queue": {"type": "boolean", "const": true}
+      }
+    },
+    "CitationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"evidence_kind": {"const": "extract"}}},
+          "then": {"required": ["extract_receipt_ref"]}
+        },
+        {
+          "if": {"properties": {"evidence_kind": {"enum": ["read", "browser_snapshot", "browser_screenshot", "provider_native_read"]}}},
+          "then": {"required": ["read_receipt_ref"]}
+        }
+      ],
+      "required": ["citation_id", "url", "source_ref", "evidence_kind", "snippet_only"],
+      "properties": {
+        "citation_id": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "minLength": 1},
+        "title": {"type": "string"},
+        "source_ref": {"type": "string", "minLength": 1},
+        "read_receipt_ref": {"type": "string"},
+        "extract_receipt_ref": {"type": "string"},
+        "evidence_kind": {"type": "string", "enum": ["read", "extract", "browser_snapshot", "browser_screenshot", "provider_native_read"]},
+        "quoted_span_ref": {"type": "string"},
+        "snippet_only": {"type": "boolean", "const": false}
+      }
+    },
+    "ResearchSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "url", "selection_reason", "read_state"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "minLength": 1},
+        "title": {"type": "string"},
+        "selection_reason": {"type": "string", "minLength": 1},
+        "read_state": {"type": "string", "enum": ["selected", "read", "extracted", "skipped", "failed", "denied"]},
+        "read_receipt_ref": {"type": "string"},
+        "extract_receipt_ref": {"type": "string"},
+        "browser_artifact_refs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "ReadReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_id", "url", "web_operation", "tool_id", "content_ref", "read_at_utc"],
+      "properties": {
+        "receipt_id": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "minLength": 1},
+        "web_operation": {"const": "read"},
+        "tool_id": {"const": "webfetch"},
+        "content_ref": {"type": "string", "minLength": 1},
+        "page_representation_ref": {"type": "string"},
+        "browser_session_id": {"type": "string"},
+        "read_at_utc": {"type": "string", "minLength": 1},
+        "redaction_profile_id": {"type": "string"},
+        "content_hash": {"type": "string"}
+      }
+    },
+    "WebEgressPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "ssrf_private_host_policy", "robots_policy", "redirect_policy"],
+      "properties": {
+        "policy_id": {"type": "string", "minLength": 1},
+        "ssrf_private_host_policy": {
+          "type": "string",
+          "enum": ["deny_private_hosts", "allow_with_explicit_approval", "allow_for_configured_provider_endpoint"]
+        },
+        "robots_policy": {"type": "string", "enum": ["respect", "explicit_override_required", "not_applicable"]},
+        "redirect_policy": {"type": "string", "enum": ["same_origin", "public_http_only", "deny_redirects", "explicit_approval_required"]},
+        "dns_rebind_check": {"type": "boolean"},
+        "blocked_host_reason_code": {"type": "string"},
+        "fanout_limit": {"type": "integer", "minimum": 0},
+        "max_depth": {"type": "integer", "minimum": 0},
+        "secret_redaction_required": {"type": "boolean"}
+      }
+    },
+    "WebActionInput": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "query"],
+          "properties": {
+            "web_operation": {"const": "search"},
+            "tool_id": {"const": "websearch"},
+            "query": {"type": "string", "minLength": 1},
+            "max_results": {"type": "integer", "minimum": 1},
+            "adapter_hint": {"type": "string"},
+            "sources": {"type": "array", "items": {"type": "string"}},
+            "categories": {"type": "array", "items": {"type": "string"}},
+            "include_domains": {"type": "array", "items": {"type": "string"}},
+            "exclude_domains": {"type": "array", "items": {"type": "string"}},
+            "time_range": {"type": "string"},
+            "cache_policy": {"$ref": "#/$defs/CachePolicy"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "url"],
+          "properties": {
+            "web_operation": {"const": "read"},
+            "tool_id": {"const": "webfetch"},
+            "url": {"type": "string", "minLength": 1},
+            "adapter_hint": {"type": "string"},
+            "formats": {"type": "array", "items": {"type": "string"}},
+            "pdf_mode": {"type": "string", "enum": ["fast", "auto", "ocr"]},
+            "cache_policy": {"$ref": "#/$defs/CachePolicy"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "url"],
+          "properties": {
+            "web_operation": {"const": "extract"},
+            "tool_id": {"const": "webextract"},
+            "url": {"type": "string", "minLength": 1},
+            "adapter_hint": {"type": "string"},
+            "detail_hint": {"type": "string", "enum": ["fast", "balanced", "deep"]},
+            "schema_ref": {"type": "string"},
+            "prompt": {"type": "string"},
+            "schema_mode": {"type": "string", "enum": ["strict", "lenient"]},
+            "actions": {"type": "array", "maxItems": 10, "items": {"$ref": "#/$defs/BrowserActionInput"}},
+            "actions_total_timeout_ms": {"type": "integer", "minimum": 0, "maximum": 30000}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "task"],
+          "properties": {
+            "web_operation": {"const": "research"},
+            "tool_id": {"const": "webresearch"},
+            "task": {"type": "string", "minLength": 1},
+            "adapter_hint": {"type": "string"},
+            "research_mode": {"type": "string", "enum": ["standard"]},
+            "depth_hint": {"type": "string", "enum": ["fast", "balanced", "deep"]},
+            "max_sources": {"type": "integer", "minimum": 1},
+            "auto_read_cap": {"type": "integer", "minimum": 0},
+            "autonomous": {"type": "boolean"},
+            "starting_urls": {"type": "array", "maxItems": 5, "items": {"type": "string"}},
+            "schema_ref": {"type": "string"},
+            "schema_mode": {"type": "string", "enum": ["strict", "lenient"]}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "task"],
+          "properties": {
+            "web_operation": {"const": "deep_research"},
+            "tool_id": {"const": "webresearch"},
+            "task": {"type": "string", "minLength": 1},
+            "adapter_hint": {"type": "string"},
+            "research_mode": {"const": "deep"},
+            "depth_hint": {"type": "string", "enum": ["balanced", "deep"]},
+            "max_sources": {"type": "integer", "minimum": 1},
+            "auto_read_cap": {"type": "integer", "minimum": 0},
+            "autonomous": {"type": "boolean"},
+            "starting_urls": {"type": "array", "maxItems": 5, "items": {"type": "string"}},
+            "schema_ref": {"type": "string"},
+            "schema_mode": {"type": "string", "enum": ["strict", "lenient"]}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "root_url"],
+          "properties": {
+            "web_operation": {"const": "crawl"},
+            "tool_id": {"const": "webcrawl"},
+            "root_url": {"type": "string", "minLength": 1},
+            "adapter_hint": {"type": "string"},
+            "max_pages": {"type": "integer", "minimum": 1},
+            "max_depth": {"type": "integer", "minimum": 0},
+            "same_origin_only": {"type": "boolean"},
+            "include_paths": {"type": "array", "items": {"type": "string"}},
+            "exclude_paths": {"type": "array", "items": {"type": "string"}},
+            "respect_robots": {"type": "boolean"},
+            "dedup": {"type": "boolean"},
+            "search": {"type": "string"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["web_operation", "tool_id", "root_url"],
+          "properties": {
+            "web_operation": {"const": "map"},
+            "tool_id": {"const": "webmap"},
+            "root_url": {"type": "string", "minLength": 1},
+            "adapter_hint": {"type": "string"},
+            "max_pages": {"type": "integer", "minimum": 1},
+            "max_depth": {"type": "integer", "minimum": 0},
+            "same_origin_only": {"type": "boolean"},
+            "include_paths": {"type": "array", "items": {"type": "string"}},
+            "exclude_paths": {"type": "array", "items": {"type": "string"}},
+            "search": {"type": "string"}
+          }
+        }
+      ]
+    },
+    "WebActionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"web_operation": {"const": "search"}}},
+          "then": {"properties": {"tool_id": {"const": "websearch"}, "operation_input": {"properties": {"web_operation": {"const": "search"}, "tool_id": {"const": "websearch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "read"}}},
+          "then": {"properties": {"tool_id": {"const": "webfetch"}, "operation_input": {"properties": {"web_operation": {"const": "read"}, "tool_id": {"const": "webfetch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "extract"}}},
+          "then": {"properties": {"tool_id": {"const": "webextract"}, "operation_input": {"properties": {"web_operation": {"const": "extract"}, "tool_id": {"const": "webextract"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "research"}}},
+          "then": {"properties": {"tool_id": {"const": "webresearch"}, "operation_input": {"properties": {"web_operation": {"const": "research"}, "tool_id": {"const": "webresearch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "deep_research"}}},
+          "then": {"properties": {"tool_id": {"const": "webresearch"}, "operation_input": {"properties": {"web_operation": {"const": "deep_research"}, "tool_id": {"const": "webresearch"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "crawl"}}},
+          "then": {"properties": {"tool_id": {"const": "webcrawl"}, "operation_input": {"properties": {"web_operation": {"const": "crawl"}, "tool_id": {"const": "webcrawl"}}}}}
+        },
+        {
+          "if": {"properties": {"web_operation": {"const": "map"}}},
+          "then": {"properties": {"tool_id": {"const": "webmap"}, "operation_input": {"properties": {"web_operation": {"const": "map"}, "tool_id": {"const": "webmap"}}}}}
+        }
+      ],
+      "required": ["web_operation", "tool_id", "invocation", "operation_input", "success", "provider_fallback_occurred"],
+      "properties": {
+        "web_operation": {"$ref": "#/$defs/WebOperation"},
+        "tool_id": {"$ref": "#/$defs/WebToolId"},
+        "invocation": {"$ref": "#/$defs/InvocationProvenance"},
+        "operation_input": {"$ref": "#/$defs/WebActionInput"},
+        "success": {"type": "boolean"},
+        "support_tier": {"$ref": "#/$defs/ProviderSupportTier"},
+        "execution_path": {"type": "string"},
+        "requested_adapter_id": {"type": "string"},
+        "effective_adapter_id": {"type": "string"},
+        "adapter_selection_reason": {"type": "string"},
+        "provider_fallback_occurred": {"type": "boolean"},
+        "provider_fallback_summary": {"type": "string"},
+        "source_count": {"type": "integer", "minimum": 0},
+        "sources_ref": {"type": "string"},
+        "content_ref": {"type": "string"},
+        "map_ref": {"type": "string"},
+        "answer_summary_ref": {"type": "string"},
+        "read_receipts": {"type": "array", "items": {"$ref": "#/$defs/ReadReceipt"}},
+        "citations": {"type": "array", "items": {"$ref": "#/$defs/CitationRecord"}},
+        "cache": {"$ref": "#/$defs/CacheRecord"},
+        "permission": {"$ref": "#/$defs/WebPermissionDecision"},
+        "job_ref": {"type": "string"},
+        "job": {"$ref": "#/$defs/WebOperationJob"},
+        "warnings": {"type": "array", "items": {"type": "string"}},
+        "error_code": {"type": "string"},
+        "error_message": {"type": "string"}
+      }
+    },
+
+<<< CONTEXT_AFTER 407-418 >>>
+    "WebPermissionDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"decision": {"const": "deny"}}},
+          "then": {"required": ["denial_reason_code"]}
+        }
+      ],
+      "required": ["permission_snapshot_id", "decision", "invocation"],
+      "properties": {
+        "permission_snapshot_id": {"type": "string", "minLength": 1},

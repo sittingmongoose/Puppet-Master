@@ -1,0 +1,74 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4114-4125 >>>
+L00004114	- agent0ai/agent-zero
+L00004115	negative_constraints: []
+L00004116	observed_signal: Agent Zero added per-row extension points because plugins otherwise used MutationObserver/DOM scanning/store monkey-patching; settings hooks added for credential scanning.
+L00004117	pm_current_coverage: PM has Plugins_System and post-hook permission recheck concept.
+L00004118	pm_gap_or_delta: Define typed UI slots and stable context object fields for MCP/tool/session/model/runtime rows; forbid monkey patching privileged surfaces; mutation hooks produce receipts and rechecks.
+L00004119	compile_disposition: create_new_planunit
+L00004120	```
+L00004121	
+L00004122	## FABLE Residual Plugin Contract Cleanup Addendum - 2026-07-07
+L00004123	
+L00004124	This addendum closes only residual FABLE Critical/High plugin rows for manifest permissions/capabilities, sandboxing, signature verification, and hook-name mapping. It does not create a plugin runtime implementation.
+L00004125	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4126-4184 >>>
+L00004126	### PLUG-064 - Manifest, Sandbox, Signature, And Hook Mapping Contract
+L00004127	
+L00004128	```yaml
+L00004129	plan_unit_id: PLUG-064
+L00004130	unit_type: schema_contract
+L00004131	status: accepted
+L00004132	owner_doc: Plans/Plugins_System.md
+L00004133	canonical_text: >-
+L00004134	  Plugin manifests must declare permissions[], capabilities[], sandbox profile, signature metadata, and hook
+L00004135	  registrations before a plugin can be considered installable. Hook names map to canonical lifecycle points instead
+L00004136	  of prose-only labels, and any mutation hook must emit a receipt and trigger permission re-evaluation.
+L00004137	gui_related: true
+L00004138	gui_classification_reason: Plugin install, permissions, and extension points are user-visible management and extension surfaces.
+L00004139	depends_on: [PLUG-001, PLUG-009, PLUG-017, PLUG-026, PLUG-040, PLUG-063, PS-131]
+L00004140	unblocks: []
+L00004141	acceptance_criteria:
+L00004142	  - Manifest permissions[] entries include permission_id, scope, purpose, default_state, requested_actions[], and approval_scope_key?.
+L00004143	  - Manifest capabilities[] entries include capability_id, provider_surface, hook_refs[], data_access, network_access, fs_access, and command_access.
+L00004144	  - Sandbox profiles are none, ui_extension_only, tool_proxy, filesystem_limited, network_limited, or trusted_local; any trusted_local request requires explicit signed provenance and user consent.
+L00004145	  - Signature verification records signature_algorithm, key_id, trust_root_ref, manifest_sha256, package_sha256, verification_status, and failure_reason_code.
+L00004146	  - Hook aliases map pre_tool_invoke to tool.execute.before, post_tool_invoke to tool.execute.after, pre_attempt_start to attempt.start.before, pre_node_dispatch to node.dispatch.before, and post_attempt_complete to attempt.complete.after.
+L00004147	  - Unknown hooks, unsigned privileged packages, and permission/capability mismatches fail install validation before activation.
+L00004148	validation_surfaces:
+L00004149	  - python3 scripts/pm-plan-index.py validate
+L00004150	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00004151	  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl
+L00004152	risk_class: fable_residual_plugin_contract_drift
+L00004153	reasoning_tier: high
+L00004154	context_scope: residual_feature_contract_cleanup
+L00004155	implementation_surfaces:
+L00004156	  - Plans/Plugins_System.md
+L00004157	  - Plans/Permissions_System.md
+L00004158	node_compile_hint:
+L00004159	  mode: plugin_residual_manifest_sandbox_signature_hooks
+L00004160	  create_worknodes: false
+L00004161	  create_nodeseeds: false
+L00004162	source_lineage:
+L00004163	  - fablereport.md:937
+L00004164	  - fablereport.md:938
+L00004165	  - fablereport.md:939
+L00004166	  - fablereport.md:940
+L00004167	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+L00004168	source_atom_ids: []
+L00004169	preserved_exact_tokens:
+L00004170	  - "permissions"
+L00004171	  - "capabilities"
+L00004172	  - "sandbox"
+L00004173	  - "signature"
+L00004174	  - "hook"
+L00004175	  - "pre_tool_invoke"
+L00004176	  - "post_tool_invoke"
+L00004177	negative_constraints:
+L00004178	  - Do not implement plugin execution, plugin marketplace behavior, WorkNodes, NodeSeeds, executable queues, production build tasks, or runtime certification evidence.
+L00004179	  - Do not allow a plugin hook to mutate privileged surfaces without a receipt and permission recheck.
+L00004180	owner_hints:
+L00004181	  - Plans/Plugins_System.md
+L00004182	  - Plans/Permissions_System.md
+L00004183	  - Plans/MCP_Integration.md
+L00004184	```

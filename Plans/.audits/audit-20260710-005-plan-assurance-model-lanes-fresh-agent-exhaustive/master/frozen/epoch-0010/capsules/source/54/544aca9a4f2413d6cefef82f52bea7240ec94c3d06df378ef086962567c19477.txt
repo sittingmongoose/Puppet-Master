@@ -1,0 +1,385 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7031-7042 >>>
+L00007031	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007032	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007033	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007034	compatibility_only_notes: []
+L00007035	stale_retired_dispositions: []
+L00007036	owner_hints:
+L00007037	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007038	- Plans/storage-plan.md
+L00007039	- Plans/Permissions_System.md
+L00007040	- Plans/Tools.md
+L00007041	```
+L00007042	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7043-7398 >>>
+L00007043	### SMPFS-107 - Terminal And Dev Restore Verification
+L00007044	
+L00007045	```yaml
+L00007046	plan_unit_id: SMPFS-107
+L00007047	unit_type: requirement
+L00007048	status: accepted
+L00007049	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007050	canonical_text: Terminal sessions and dev sessions have explicit restore eligibility; running processes are never assumed alive after restart, and terminal restart or replacement creates a new terminal_session_id.
+L00007051	gui_related: false
+L00007052	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007053	split_recommended: false
+L00007054	depends_on:
+L00007055	- PDS-003
+L00007056	- PDS-004
+L00007057	- PDS-005
+L00007058	- PNC-001
+L00007059	- SP-001
+L00007060	- RM-025
+L00007061	unblocks: []
+L00007062	acceptance_criteria:
+L00007063	- SMPFS-107 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007064	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007065	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007066	validation_surfaces:
+L00007067	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007068	- python3 scripts/pm-plan-index.py validate
+L00007069	risk_class: section15_tail_drift
+L00007070	reasoning_tier: standard
+L00007071	context_scope: section15_tail
+L00007072	implementation_surfaces:
+L00007073	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007074	node_compile_hint:
+L00007075	  mode: terminal_dev_restore_verification
+L00007076	  create_worknodes: false
+L00007077	source_lineage:
+L00007078	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007079	preserved_exact_tokens:
+L00007080	- terminal sessions
+L00007081	- dev sessions
+L00007082	- explicit restore eligibility
+L00007083	- running process
+L00007084	- restart
+L00007085	- terminal_session_id
+L00007086	negative_constraints:
+L00007087	- A running process is never assumed alive after restart without verification.
+L00007088	preserved_contractrefs:
+L00007089	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007090	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007091	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007092	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007093	compatibility_only_notes: []
+L00007094	stale_retired_dispositions: []
+L00007095	owner_hints:
+L00007096	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007097	- Plans/storage-plan.md
+L00007098	- Plans/Run_Modes.md
+L00007099	```
+L00007100	
+L00007101	### SMPFS-108 - Terminal Durable Presentation Metadata
+L00007102	
+L00007103	```yaml
+L00007104	plan_unit_id: SMPFS-108
+L00007105	unit_type: requirement
+L00007106	status: accepted
+L00007107	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007108	canonical_text: Terminal section, tab, pane, selection-of-active-pane, labels, pin state, dock/detach placement, and linked dev-session references are guaranteed_durable presentation metadata.
+L00007109	gui_related: true
+L00007110	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007111	split_recommended: false
+L00007112	depends_on:
+L00007113	- PDS-003
+L00007114	- PDS-004
+L00007115	- PDS-005
+L00007116	- PNC-001
+L00007117	- SP-001
+L00007118	- UCC-001
+L00007119	unblocks: []
+L00007120	acceptance_criteria:
+L00007121	- SMPFS-108 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007122	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007123	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007124	validation_surfaces:
+L00007125	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007126	- python3 scripts/pm-plan-index.py validate
+L00007127	risk_class: section15_tail_drift
+L00007128	reasoning_tier: standard
+L00007129	context_scope: section15_tail
+L00007130	implementation_surfaces:
+L00007131	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007132	node_compile_hint:
+L00007133	  mode: terminal_durable_presentation_metadata
+L00007134	  create_worknodes: false
+L00007135	source_lineage:
+L00007136	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007137	preserved_exact_tokens:
+L00007138	- section
+L00007139	- tab
+L00007140	- pane
+L00007141	- selection-of-active-pane
+L00007142	- labels
+L00007143	- pin state
+L00007144	- dock/detach placement
+L00007145	- linked dev-session references
+L00007146	- guaranteed_durable
+L00007147	negative_constraints: []
+L00007148	preserved_contractrefs:
+L00007149	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007150	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007151	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007152	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007153	compatibility_only_notes: []
+L00007154	stale_retired_dispositions: []
+L00007155	owner_hints:
+L00007156	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007157	- Plans/storage-plan.md
+L00007158	- Plans/UI_Command_Catalog.md
+L00007159	```
+L00007160	
+L00007161	### SMPFS-109 - Terminal Transcript And Runtime Persistence Tiers
+L00007162	
+L00007163	```yaml
+L00007164	plan_unit_id: SMPFS-109
+L00007165	unit_type: requirement
+L00007166	status: accepted
+L00007167	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007168	canonical_text: Terminal transcript snapshots, command-block metadata, cwd snapshots, shell-integration hints, and Output/Ports linkage are best_effort_durable, while live PTY continuity, unlimited scrollback, TUI alternate-screen content, live selections, and in-flight search highlights are transient_only.
+L00007169	gui_related: false
+L00007170	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007171	split_recommended: false
+L00007172	depends_on:
+L00007173	- PDS-003
+L00007174	- PDS-004
+L00007175	- PDS-005
+L00007176	- PNC-001
+L00007177	- SP-001
+L00007178	- CV-215
+L00007179	unblocks: []
+L00007180	acceptance_criteria:
+L00007181	- SMPFS-109 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007182	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007183	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007184	validation_surfaces:
+L00007185	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007186	- python3 scripts/pm-plan-index.py validate
+L00007187	risk_class: section15_tail_drift
+L00007188	reasoning_tier: standard
+L00007189	context_scope: section15_tail
+L00007190	implementation_surfaces:
+L00007191	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007192	node_compile_hint:
+L00007193	  mode: terminal_transcript_runtime_persistence_tiers
+L00007194	  create_worknodes: false
+L00007195	source_lineage:
+L00007196	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007197	preserved_exact_tokens:
+L00007198	- bounded transcript snapshots
+L00007199	- command-block metadata
+L00007200	- cwd snapshots
+L00007201	- shell-integration hints
+L00007202	- best_effort_durable
+L00007203	- live PTY continuity
+L00007204	- unlimited scrollback
+L00007205	- active TUI alternate-screen content
+L00007206	- live selections
+L00007207	- in-flight search highlights
+L00007208	- transient_only
+L00007209	negative_constraints:
+L00007210	- transient_only runtime state MUST NOT be faked after restart.
+L00007211	preserved_contractrefs:
+L00007212	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007213	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007214	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007215	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007216	compatibility_only_notes: []
+L00007217	stale_retired_dispositions: []
+L00007218	owner_hints:
+L00007219	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007220	- Plans/storage-plan.md
+L00007221	- Plans/Contracts_V0.md
+L00007222	```
+L00007223	
+L00007224	### SMPFS-110 - Canonical Restore Outcome Vocabulary
+L00007225	
+L00007226	```yaml
+L00007227	plan_unit_id: SMPFS-110
+L00007228	unit_type: requirement
+L00007229	status: accepted
+L00007230	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007231	canonical_text: Canonical restore outcomes are exactly restored_live, restored_exited, restored_disconnected, and restored_without_history.
+L00007232	gui_related: true
+L00007233	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007234	split_recommended: false
+L00007235	depends_on:
+L00007236	- PDS-003
+L00007237	- PDS-004
+L00007238	- PDS-005
+L00007239	- PNC-001
+L00007240	- SP-001
+L00007241	- ACD-008
+L00007242	unblocks: []
+L00007243	acceptance_criteria:
+L00007244	- SMPFS-110 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007245	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007246	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007247	validation_surfaces:
+L00007248	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007249	- python3 scripts/pm-plan-index.py validate
+L00007250	risk_class: section15_tail_drift
+L00007251	reasoning_tier: standard
+L00007252	context_scope: section15_tail
+L00007253	implementation_surfaces:
+L00007254	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007255	node_compile_hint:
+L00007256	  mode: canonical_restore_outcome_vocabulary
+L00007257	  create_worknodes: false
+L00007258	source_lineage:
+L00007259	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007260	preserved_exact_tokens:
+L00007261	- restored_live
+L00007262	- restored_exited
+L00007263	- restored_disconnected
+L00007264	- restored_without_history
+L00007265	negative_constraints: []
+L00007266	preserved_contractrefs:
+L00007267	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007268	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007269	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007270	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007271	compatibility_only_notes: []
+L00007272	stale_retired_dispositions: []
+L00007273	owner_hints:
+L00007274	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007275	- Plans/storage-plan.md
+L00007276	- Plans/assistant-chat-design.md
+L00007277	```
+L00007278	
+L00007279	### SMPFS-111 - Automation Promotion To Normal Browsing
+L00007280	
+L00007281	```yaml
+L00007282	plan_unit_id: SMPFS-111
+L00007283	unit_type: requirement
+L00007284	status: accepted
+L00007285	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007286	canonical_text: Promotion from paused automation into normal browsing is an explicit user-confirmed action that may copy or promote eligible browser state, reclassifies the visible automation browser as normal, and is never a hidden side effect.
+L00007287	gui_related: true
+L00007288	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00007289	split_recommended: false
+L00007290	depends_on:
+L00007291	- PDS-003
+L00007292	- PDS-004
+L00007293	- PDS-005
+L00007294	- PNC-001
+L00007295	- SP-001
+L00007296	- T-001
+L00007297	- PS-001
+L00007298	unblocks: []
+L00007299	acceptance_criteria:
+L00007300	- SMPFS-111 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007301	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007302	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007303	validation_surfaces:
+L00007304	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007305	- python3 scripts/pm-plan-index.py validate
+L00007306	risk_class: section15_tail_drift
+L00007307	reasoning_tier: standard
+L00007308	context_scope: section15_tail
+L00007309	implementation_surfaces:
+L00007310	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007311	node_compile_hint:
+L00007312	  mode: automation_promotion_normal_browsing
+L00007313	  create_worknodes: false
+L00007314	source_lineage:
+L00007315	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007316	preserved_exact_tokens:
+L00007317	- user-confirmed promotion
+L00007318	- paused automation
+L00007319	- normal browsing
+L00007320	- normal persistent profile/store
+L00007321	- visible automation browser
+L00007322	- hidden side effect
+L00007323	negative_constraints:
+L00007324	- Promotion or state copy must be an explicit user action, never a hidden side effect.
+L00007325	preserved_contractrefs:
+L00007326	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007327	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007328	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007329	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007330	compatibility_only_notes: []
+L00007331	stale_retired_dispositions: []
+L00007332	owner_hints:
+L00007333	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007334	- Plans/storage-plan.md
+L00007335	- Plans/Tools.md
+L00007336	- Plans/Permissions_System.md
+L00007337	```
+L00007338	
+L00007339	### SMPFS-112 - Frozen Browser Runtime History And Crash Evidence
+L00007340	
+L00007341	```yaml
+L00007342	plan_unit_id: SMPFS-112
+L00007343	unit_type: requirement
+L00007344	status: accepted
+L00007345	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007346	canonical_text: Browser requested/effective runtime and capability state is stored as frozen runtime history instead of recomputed heuristically, and crash recovery preserves recoverable metadata and completed evidence artifacts when possible.
+L00007347	gui_related: false
+L00007348	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007349	split_recommended: false
+L00007350	depends_on:
+L00007351	- PDS-003
+L00007352	- PDS-004
+L00007353	- PDS-005
+L00007354	- PNC-001
+L00007355	- SP-001
+L00007356	- RAP-024
+L00007357	- CV-215
+L00007358	unblocks: []
+L00007359	acceptance_criteria:
+L00007360	- SMPFS-112 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007361	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007362	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007363	validation_surfaces:
+L00007364	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007365	- python3 scripts/pm-plan-index.py validate
+L00007366	risk_class: section15_tail_drift
+L00007367	reasoning_tier: standard
+L00007368	context_scope: section15_tail
+L00007369	implementation_surfaces:
+L00007370	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007371	node_compile_hint:
+L00007372	  mode: frozen_browser_runtime_history_crash_evidence
+L00007373	  create_worknodes: false
+L00007374	source_lineage:
+L00007375	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0049
+L00007376	preserved_exact_tokens:
+L00007377	- browser requested/effective runtime
+L00007378	- capability state
+L00007379	- frozen runtime history
+L00007380	- recomputed heuristically
+L00007381	- crash recovery
+L00007382	- recoverable metadata
+L00007383	- completed evidence artifacts
+L00007384	negative_constraints: []
+L00007385	preserved_contractrefs:
+L00007386	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md'
+L00007387	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md'
+L00007388	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+L00007389	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
+L00007390	compatibility_only_notes: []
+L00007391	stale_retired_dispositions: []
+L00007392	owner_hints:
+L00007393	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007394	- Plans/storage-plan.md
+L00007395	- Plans/Runtime_Artifacts_Panel.md
+L00007396	- Plans/Contracts_V0.md
+L00007397	```
+L00007398	
+
+<<< CONTEXT_AFTER canonical_document_lines=7399-7410 >>>
+L00007399	### SMPFS-113 - Profile Scope Isolation And SaveChanges
+L00007400	
+L00007401	```yaml
+L00007402	plan_unit_id: SMPFS-113
+L00007403	unit_type: requirement
+L00007404	status: accepted
+L00007405	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007406	canonical_text: Browser or terminal session classes must not silently bleed storage into another profile scope, and profile { name, saveChanges } scopes cookies and localStorage by profile name and project while disabled saveChanges keeps the session isolated.
+L00007407	gui_related: false
+L00007408	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007409	split_recommended: false
+L00007410	depends_on:

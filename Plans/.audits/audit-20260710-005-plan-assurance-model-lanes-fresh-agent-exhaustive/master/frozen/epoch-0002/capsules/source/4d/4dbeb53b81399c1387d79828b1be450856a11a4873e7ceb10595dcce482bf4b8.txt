@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 20364-20375 >>>
+- "focused browser session"
+- "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+- "ContractName:Plans/Runtime_Artifacts_Panel.md"
+- "ContractName:Plans/Wiring_Matrix.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 20376-20742 >>>
+### F3-312 - Bottom Panel Browser Action Ownership
+
+```yaml
+plan_unit_id: F3-312
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Bottom-panel browser-adjacent actions focus or act on the owning browser session, browser
+  open/detached-open/takeover/promotion/recovery actions target the canonical browser session
+  model, and DevTools/evidence bridge actions act on owning `browser_session_id` without
+  making the bottom panel primary browsing session.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains bottom-panel browser action ownership.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: bottom_panel_browser_action_ownership
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0185"
+preserved_exact_tokens:
+- "owning browser session"
+- "browser open"
+- "detached-open"
+- "takeover"
+- "promotion"
+- "recovery actions"
+- "canonical browser session model"
+- "Open DevTools"
+- "Toggle DevTools Dock"
+- "Focus Browser"
+- "browser_session_id"
+- "ContractName:Plans/storage-plan.md"
+- "ContractName:Plans/FileManager.md"
+negative_constraints:
+- "Bottom panel actions must not invent a separate browser identity."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-313 - Browser Windowing Runtime Baseline
+
+```yaml
+plan_unit_id: F3-313
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on
+  Windows, macOS, and Linux, with native child-window embedding as baseline host strategy and
+  detached browser/DevTools as first-class surfaces.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines browser runtime and windowing baseline.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: browser_windowing_runtime_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0186"
+preserved_exact_tokens:
+- "PM-managed pinned bundled CEF-class Chromium runtime"
+- "Windows, macOS, and Linux"
+- "native child-window embedding"
+- "offscreen rendering"
+- "CEF wrapper such as `wef`"
+- "PM-managed browser capability"
+- "detached browser"
+- "detached DevTools windows"
+- "owning browser session"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-314 - Browser Runtime Disclosure And Recovery
+
+```yaml
+plan_unit_id: F3-314
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Setup, Doctor, update, and installer surfaces disclose selected CEF path app-size impact and
+  remediation; offscreen rendering remains secondary and cannot replace native child-window
+  baseline; GUI copy avoids detached fallback/system-webview implications, surfaces
+  `runtime_unavailable` when needed, and does not rely on hidden pre-created browser panes.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines browser runtime disclosure and recovery behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: browser_runtime_disclosure_and_recovery
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0186"
+preserved_exact_tokens:
+- "setup, Doctor, update, and installer surfaces"
+- "~1 GB app-size impact"
+- "runtime install/update verification"
+- "offscreen rendering"
+- "degraded rendering workflows"
+- "runtime_unavailable"
+- "hidden pre-created browser panes"
+- "ContractName:Plans/rewrite-tie-in-memo.md"
+- "ContractName:Plans/Permissions_System.md"
+negative_constraints:
+- "Offscreen rendering must not replace the native child-window baseline for the canonical visible browser host."
+- "GUI copy must not imply browser availability only through detached fallback windows or system-webview assumptions."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-315 - Rendered Surface Performance
+
+```yaml
+plan_unit_id: F3-315
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Rendered surfaces use lazy rendering and virtualization for long message streams and large
+  documents, and preserve scroll positions where feasible when re-rendering preview content.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines rendering performance mechanics rather than visible control placement.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: rendered_surface_performance
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0187"
+preserved_exact_tokens:
+- "lazy rendering"
+- "virtualization"
+- "long message streams"
+- "large documents"
+- "Preserve scroll positions"
+- "re-rendering preview content"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-316 - Preview Control Accessibility
+
+```yaml
+plan_unit_id: F3-316
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Preview controls are keyboard reachable, and diagram export/open/source actions carry
+  explicit labels and accessible tooltips/text.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines accessible preview controls despite the source inference being false.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: preview_control_accessibility
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0187"
+preserved_exact_tokens:
+- "Preview controls"
+- "keyboard reachable"
+- "Diagram export/open/source actions"
+- "explicit labels"
+- "accessible tooltips/text"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-317 - Assistant Chat Plan And Deep Plan Choices
+
+```yaml
+plan_unit_id: F3-317
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Assistant Chat planning controls expose both Plan and Deep Plan as chat workflow choices.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Assistant Chat planning choices.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: assistant_chat_plan_and_deep_plan_choices
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0190"
+preserved_exact_tokens:
+- "Assistant Chat planning controls"
+- "Plan"
+- "Deep Plan"
+- "chat workflow choices"
+- "planning-mode selector entry"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-318 - Plan Thoroughness Control Presentation
+
+```yaml
+plan_unit_id: F3-318
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Plan Thoroughness (PT) appears when either planning overlay is active as a segmented
+  control, dropdown, or compact selector with canonical labels Light, Balanced, and
+  Comprehensive, default Balanced, shared across Plan and Deep Plan, and tooltip/help copy
+  explaining Deep Plan intensity.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Plan Thoroughness controls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: plan_thoroughness_control_presentation
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0190"
+preserved_exact_tokens:
+- "Plan Thoroughness (PT)"
+- "segmented control"
+- "dropdown"
+- "compact selector"
+- "Light"
+- "Balanced"
+- "Comprehensive"
+- "default selection: `Balanced`"
+- "Deep Plan and Plan share the same PT labels"
+- "tooltip/help copy"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 20743-20754 >>>
+### F3-319 - Plan Lightweight Thread Artifact Flow
+
+```yaml
+plan_unit_id: F3-319
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Plan mode produces a lightweight plan artifact in the thread, keeps the sticky plan panel
+  visible, shows the normalized TODO list before approval, allows TODO structure revision
+  before approval, and begins execution only after explicit approval.
+gui_related: true

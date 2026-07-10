@@ -1,0 +1,124 @@
+<<< CONTEXT_BEFORE 1114-1125 >>>
+negative_constraints:
+- Docker Hub management parity is not satisfied by the extension reference alone.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Detailed Docker and container behavior remains with the relevant owner docs.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 1126-1234 >>>
+### N-001 - New Features Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: N-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  N-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 103 because
+  newfeatures-S0001 through newfeatures-S0018 are covered by N-002 through N-019 or explicit structural, retired, and
+  migration-coverage dispositions. N-001 no longer carries source_preserving_planunit compile mode and must not own
+  product coverage.
+gui_related: false
+gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained newfeatures PlanUnits and coverage_map proof.
+split_recommended: false
+depends_on:
+- N-002
+- N-003
+- N-004
+- N-005
+- N-006
+- N-007
+- N-008
+- N-009
+- N-010
+- N-011
+- N-012
+- N-013
+- N-014
+- N-015
+- N-016
+- N-017
+- N-018
+- N-019
+unblocks: []
+acceptance_criteria:
+- N-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 103.
+- newfeatures-S0001 through newfeatures-S0018 product coverage is owned by N-002 through N-019 or explicit structural, retired, and migration-coverage dispositions.
+- N-001 remains only to preserve migration lineage for the former source-preserving bridge.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0017
+preserved_exact_tokens:
+- N-001
+- New Features Implementation Plan Source-Preserving PlanUnit
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- N-001 must not re-own newfeatures-S0001 through newfeatures-S0018 after Phase 2B batch 103.
+- N-001 must not use node_compile_hint.mode=source_preserving_planunit.
+- Retired bridge lineage must not be treated as implementation-ready product coverage.
+- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+compatibility_only_notes:
+- N-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+stale_retired_dispositions:
+- The former N-001 residual source-preserving bridge is retired by Phase 2B batch 103.
+owner_boundary_notes:
+- N-002 through N-019 and explicit coverage dispositions own newfeatures product coverage after bridge retirement.
+- newfeatures-S0017 is migration-lineage coverage only after bridge retirement.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+split_recommendation_reason: The former source-preserving bridge has been atomized or structurally dispositioned and is now retired.
+```
+
+## Migration Coverage
+
+Original hash: `360bfc1732e8b68dc5199eac373fe54df23eff7e6f1788d69b5f2ae21426a64c`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 103 atomized source spans `newfeatures-S0002` through `newfeatures-S0014` into fine-grained PlanUnits `N-002` through `N-019`. `newfeatures-S0001`, `newfeatures-S0005`, `newfeatures-S0011`, `newfeatures-S0015`, `newfeatures-S0016`, and `newfeatures-S0018` are structurally dispositioned. `newfeatures-S0017` is the retired `N-001` bridge disposition. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 350` (explicitly_deferred; source line 1178; `sfk-a842ba71d3915b955e7ddd63`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: pure PlanUnit YAML with no data models/algorithms/GUI wiring mislabeled "Implementation Plan" in its own H1 despite every unit having `create_worknodes: false`.
+- `registry_line 351` (repaired; source line 1179; `sfk-382a8aaadd071809899261b5`): Repaired: N-006 now links corroboration, promotion, graph-patch, and trust-state summary coverage to the `CV-315` governance runtime record schemas/state machines and `SP-233` storage binding. No buildability or runtime proof is claimed here. Source summary: - [HIGH] N-006: names required feature families (corroboration/promotion/graph-patch, trust state) with zero schema or state machine.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime newfeatures rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-a842ba71d3915b955e7ddd63`: this document is a feature summary/source-lineage compilation, not an implementation plan. Its PlanUnits preserve intent and route ownership while `create_worknodes` remains false.
+- Repairs `sfk-382a8aaadd071809899261b5`: N-006 now owner-links corroboration, promotion, graph-patch, and trust-state summary coverage to the `CV-315` governance runtime record schemas/state machines and the `SP-233` storage binding. This is non-runtime owner-doc/schema repair only and does not create WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 evidence.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

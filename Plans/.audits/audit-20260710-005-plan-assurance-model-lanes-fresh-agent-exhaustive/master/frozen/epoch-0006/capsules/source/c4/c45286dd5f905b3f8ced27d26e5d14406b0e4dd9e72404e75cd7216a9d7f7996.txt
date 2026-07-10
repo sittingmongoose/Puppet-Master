@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1702-1713 >>>
+L00001702	        "rollback_ref": {
+L00001703	          "anyOf": [
+L00001704	            {
+L00001705	              "$ref": "#/$defs/ref"
+L00001706	            },
+L00001707	            {
+L00001708	              "type": "null"
+L00001709	            }
+L00001710	          ]
+L00001711	        }
+L00001712	      }
+L00001713	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1714-2096 >>>
+L00001714	    "goal_completion_receipt": {
+L00001715	      "type": "object",
+L00001716	      "additionalProperties": false,
+L00001717	      "required": [
+L00001718	        "receipt_id",
+L00001719	        "all_worknodes_terminal",
+L00001720	        "all_tests_passed_or_dispositioned",
+L00001721	        "source_control_receipts_valid",
+L00001722	        "no_active_blockers",
+L00001723	        "rollback_requirements_satisfied",
+L00001724	        "safe_point_requirements_satisfied",
+L00001725	        "no_stale_plan_workgraph_currentness_mismatch",
+L00001726	        "final_source_state",
+L00001727	        "final_summary_ref",
+L00001728	        "auditor_passed",
+L00001729	        "final_certifier_decision",
+L00001730	        "evidence_refs",
+L00001731	        "child_receipt_refs",
+L00001732	        "worknode_receipt_refs",
+L00001733	        "changed_artifact_refs",
+L00001734	        "validator_outcomes",
+L00001735	        "authority_check_refs",
+L00001736	        "source_control_receipt_refs",
+L00001737	        "test_receipt_refs",
+L00001738	        "model_resolution_receipt_refs",
+L00001739	        "unresolved_risks",
+L00001740	        "evidence_layers",
+L00001741	        "handoff",
+L00001742	        "final_source_control_context"
+L00001743	      ],
+L00001744	      "properties": {
+L00001745	        "receipt_id": {
+L00001746	          "type": "string"
+L00001747	        },
+L00001748	        "all_worknodes_terminal": {
+L00001749	          "type": "boolean"
+L00001750	        },
+L00001751	        "all_tests_passed_or_dispositioned": {
+L00001752	          "type": "boolean"
+L00001753	        },
+L00001754	        "source_control_receipts_valid": {
+L00001755	          "type": "boolean"
+L00001756	        },
+L00001757	        "no_active_blockers": {
+L00001758	          "type": "boolean"
+L00001759	        },
+L00001760	        "rollback_requirements_satisfied": {
+L00001761	          "type": "boolean"
+L00001762	        },
+L00001763	        "safe_point_requirements_satisfied": {
+L00001764	          "type": "boolean"
+L00001765	        },
+L00001766	        "no_stale_plan_workgraph_currentness_mismatch": {
+L00001767	          "type": "boolean"
+L00001768	        },
+L00001769	        "final_source_state": {
+L00001770	          "type": "string",
+L00001771	          "enum": [
+L00001772	            "clean",
+L00001773	            "intentionally_preserved",
+L00001774	            "blocked"
+L00001775	          ]
+L00001776	        },
+L00001777	        "final_summary_ref": {
+L00001778	          "$ref": "#/$defs/ref"
+L00001779	        },
+L00001780	        "auditor_passed": {
+L00001781	          "type": "boolean"
+L00001782	        },
+L00001783	        "final_certifier_decision": {
+L00001784	          "enum": [
+L00001785	            "certified",
+L00001786	            "blocked",
+L00001787	            "failed",
+L00001788	            "cancelled"
+L00001789	          ]
+L00001790	        },
+L00001791	        "evidence_refs": {
+L00001792	          "$ref": "#/$defs/ref_list"
+L00001793	        },
+L00001794	        "child_receipt_refs": {
+L00001795	          "$ref": "#/$defs/ref_list"
+L00001796	        },
+L00001797	        "worknode_receipt_refs": {
+L00001798	          "$ref": "#/$defs/ref_list"
+L00001799	        },
+L00001800	        "changed_artifact_refs": {
+L00001801	          "$ref": "#/$defs/ref_list"
+L00001802	        },
+L00001803	        "validator_outcomes": {
+L00001804	          "type": "array",
+L00001805	          "items": {
+L00001806	            "$ref": "#/$defs/validator_outcome"
+L00001807	          }
+L00001808	        },
+L00001809	        "authority_check_refs": {
+L00001810	          "$ref": "#/$defs/ref_list"
+L00001811	        },
+L00001812	        "source_control_receipt_refs": {
+L00001813	          "$ref": "#/$defs/ref_list"
+L00001814	        },
+L00001815	        "test_receipt_refs": {
+L00001816	          "$ref": "#/$defs/ref_list"
+L00001817	        },
+L00001818	        "model_resolution_receipt_refs": {
+L00001819	          "$ref": "#/$defs/ref_list"
+L00001820	        },
+L00001821	        "unresolved_risks": {
+L00001822	          "type": "array",
+L00001823	          "items": {
+L00001824	            "$ref": "#/$defs/risk_record"
+L00001825	          }
+L00001826	        },
+L00001827	        "evidence_layers": {
+L00001828	          "type": "object",
+L00001829	          "additionalProperties": false,
+L00001830	          "required": [
+L00001831	            "source_evidence",
+L00001832	            "canonical_plan_evidence",
+L00001833	            "process_evidence",
+L00001834	            "governance_evidence",
+L00001835	            "test_evidence",
+L00001836	            "source_control_evidence",
+L00001837	            "completion_receipts"
+L00001838	          ],
+L00001839	          "properties": {
+L00001840	            "source_evidence": {
+L00001841	              "$ref": "#/$defs/ref_list"
+L00001842	            },
+L00001843	            "canonical_plan_evidence": {
+L00001844	              "$ref": "#/$defs/ref_list"
+L00001845	            },
+L00001846	            "process_evidence": {
+L00001847	              "$ref": "#/$defs/ref_list"
+L00001848	            },
+L00001849	            "governance_evidence": {
+L00001850	              "$ref": "#/$defs/ref_list"
+L00001851	            },
+L00001852	            "test_evidence": {
+L00001853	              "$ref": "#/$defs/ref_list"
+L00001854	            },
+L00001855	            "source_control_evidence": {
+L00001856	              "$ref": "#/$defs/ref_list"
+L00001857	            },
+L00001858	            "completion_receipts": {
+L00001859	              "$ref": "#/$defs/ref_list"
+L00001860	            }
+L00001861	          }
+L00001862	        },
+L00001863	        "handoff": {
+L00001864	          "$ref": "#/$defs/handoff_row"
+L00001865	        },
+L00001866	        "final_source_control_context": {
+L00001867	          "$ref": "#/$defs/source_control_context"
+L00001868	        }
+L00001869	      }
+L00001870	    },
+L00001871	    "compile_worklist": {
+L00001872	      "type": "object",
+L00001873	      "additionalProperties": false,
+L00001874	      "required": [
+L00001875	        "compile_id",
+L00001876	        "stage",
+L00001877	        "parallelism_policy",
+L00001878	        "items",
+L00001879	        "source_plan_index_hash",
+L00001880	        "status",
+L00001881	        "blocked_route",
+L00001882	        "wave_assignments"
+L00001883	      ],
+L00001884	      "properties": {
+L00001885	        "compile_id": {
+L00001886	          "type": "string"
+L00001887	        },
+L00001888	        "stage": {
+L00001889	          "$ref": "#/$defs/stage_name"
+L00001890	        },
+L00001891	        "parallelism_policy": {
+L00001892	          "$ref": "#/$defs/compile_parallelism_policy"
+L00001893	        },
+L00001894	        "items": {
+L00001895	          "type": "array",
+L00001896	          "items": {
+L00001897	            "$ref": "#/$defs/compile_worklist_item"
+L00001898	          }
+L00001899	        },
+L00001900	        "source_plan_index_hash": {
+L00001901	          "type": "string"
+L00001902	        },
+L00001903	        "status": {
+L00001904	          "enum": [
+L00001905	            "draft",
+L00001906	            "ready",
+L00001907	            "running",
+L00001908	            "blocked",
+L00001909	            "complete",
+L00001910	            "cancelled"
+L00001911	          ]
+L00001912	        },
+L00001913	        "blocked_route": {
+L00001914	          "$ref": "#/$defs/compile_worklist_blocked_route"
+L00001915	        },
+L00001916	        "resume_ref": {
+L00001917	          "type": [
+L00001918	            "string",
+L00001919	            "null"
+L00001920	          ]
+L00001921	        },
+L00001922	        "wave_assignments": {
+L00001923	          "type": "array",
+L00001924	          "items": {
+L00001925	            "$ref": "#/$defs/compile_wave_contract"
+L00001926	          }
+L00001927	        }
+L00001928	      },
+L00001929	      "allOf": [
+L00001930	        {
+L00001931	          "if": {
+L00001932	            "properties": {
+L00001933	              "stage": {
+L00001934	                "enum": [
+L00001935	                  "planunit_normalization",
+L00001936	                  "test_repository_discovery",
+L00001937	                  "typed_dependency_analysis",
+L00001938	                  "implementation_surface_mapping",
+L00001939	                  "work_risk_classification",
+L00001940	                  "nodeseed_candidate_drafting",
+L00001941	                  "split_merge_sizing",
+L00001942	                  "candidate_review",
+L00001943	                  "worknode_request_construction",
+L00001944	                  "final_compile_audit_repair"
+L00001945	                ]
+L00001946	              }
+L00001947	            },
+L00001948	            "required": [
+L00001949	              "stage"
+L00001950	            ]
+L00001951	          },
+L00001952	          "then": {
+L00001953	            "properties": {
+L00001954	              "parallelism_policy": {
+L00001955	                "properties": {
+L00001956	                  "parallelism_required": {
+L00001957	                    "const": true
+L00001958	                  },
+L00001959	                  "minimum_parallel_assignments": {
+L00001960	                    "type": "integer",
+L00001961	                    "minimum": 2
+L00001962	                  },
+L00001963	                  "assignment_receipt_refs": {
+L00001964	                    "$ref": "#/$defs/non_empty_ref_list"
+L00001965	                  },
+L00001966	                  "completion_receipt_refs": {
+L00001967	                    "$ref": "#/$defs/non_empty_ref_list"
+L00001968	                  }
+L00001969	                }
+L00001970	              }
+L00001971	            }
+L00001972	          }
+L00001973	        },
+L00001974	        {
+L00001975	          "if": {
+L00001976	            "properties": {
+L00001977	              "status": {
+L00001978	                "const": "complete"
+L00001979	              }
+L00001980	            },
+L00001981	            "required": [
+L00001982	              "status"
+L00001983	            ]
+L00001984	          },
+L00001985	          "then": {
+L00001986	            "properties": {
+L00001987	              "items": {
+L00001988	                "type": "array",
+L00001989	                "minItems": 1,
+L00001990	                "items": {
+L00001991	                  "$ref": "#/$defs/compile_worklist_item"
+L00001992	                }
+L00001993	              },
+L00001994	              "wave_assignments": {
+L00001995	                "type": "array",
+L00001996	                "minItems": 1,
+L00001997	                "items": {
+L00001998	                  "$ref": "#/$defs/compile_wave_contract"
+L00001999	                }
+L00002000	              },
+L00002001	              "parallelism_policy": {
+L00002002	                "properties": {
+L00002003	                  "completion_receipt_refs": {
+L00002004	                    "$ref": "#/$defs/non_empty_ref_list"
+L00002005	                  }
+L00002006	                }
+L00002007	              }
+L00002008	            }
+L00002009	          }
+L00002010	        }
+L00002011	      ]
+L00002012	    },
+L00002013	    "node_seed_review": {
+L00002014	      "type": "object",
+L00002015	      "additionalProperties": false,
+L00002016	      "required": [
+L00002017	        "candidate_ref",
+L00002018	        "review_status",
+L00002019	        "findings",
+L00002020	        "decision",
+L00002021	        "reviewer_role"
+L00002022	      ],
+L00002023	      "properties": {
+L00002024	        "candidate_ref": {
+L00002025	          "$ref": "#/$defs/ref"
+L00002026	        },
+L00002027	        "review_status": {
+L00002028	          "enum": [
+L00002029	            "pending",
+L00002030	            "approved",
+L00002031	            "changes_required",
+L00002032	            "rejected",
+L00002033	            "blocked"
+L00002034	          ]
+L00002035	        },
+L00002036	        "findings": {
+L00002037	          "type": "array",
+L00002038	          "items": {
+L00002039	            "$ref": "#/$defs/auditor_finding"
+L00002040	          }
+L00002041	        },
+L00002042	        "decision": {
+L00002043	          "$ref": "#/$defs/node_seed_review_decision"
+L00002044	        },
+L00002045	        "reviewer_role": {
+L00002046	          "$ref": "#/$defs/node_seed_reviewer_role"
+L00002047	        },
+L00002048	        "required_changes": {
+L00002049	          "type": "array",
+L00002050	          "items": {
+L00002051	            "type": "string"
+L00002052	          }
+L00002053	        }
+L00002054	      }
+L00002055	    },
+L00002056	    "compiler_model_routing": {
+L00002057	      "type": "object",
+L00002058	      "additionalProperties": false,
+L00002059	      "required": [
+L00002060	        "source_plan_unit_ids",
+L00002061	        "requested_lane",
+L00002062	        "requested_model_profile",
+L00002063	        "effective_model_profile",
+L00002064	        "fallback_used",
+L00002065	        "capability_checks"
+L00002066	      ],
+L00002067	      "properties": {
+L00002068	        "source_plan_unit_ids": {
+L00002069	          "$ref": "#/$defs/ref_list"
+L00002070	        },
+L00002071	        "requested_lane": {
+L00002072	          "$ref": "#/$defs/capability_lane"
+L00002073	        },
+L00002074	        "requested_model_profile": {
+L00002075	          "$ref": "#/$defs/model_profile"
+L00002076	        },
+L00002077	        "effective_model_profile": {
+L00002078	          "$ref": "#/$defs/model_profile"
+L00002079	        },
+L00002080	        "fallback_used": {
+L00002081	          "type": "boolean"
+L00002082	        },
+L00002083	        "fallback_reason": {
+L00002084	          "type": [
+L00002085	            "string",
+L00002086	            "null"
+L00002087	          ]
+L00002088	        },
+L00002089	        "capability_checks": {
+L00002090	          "type": "array",
+L00002091	          "items": {
+L00002092	            "$ref": "#/$defs/capability_check"
+L00002093	          }
+L00002094	        }
+L00002095	      }
+L00002096	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=2097-2108 >>>
+L00002097	    "codex_work_package": {
+L00002098	      "type": "object",
+L00002099	      "additionalProperties": false,
+L00002100	      "required": [
+L00002101	        "package_id",
+L00002102	        "stage",
+L00002103	        "read_files",
+L00002104	        "write_files",
+L00002105	        "forbidden_writes",
+L00002106	        "instructions",
+L00002107	        "validation_commands",
+L00002108	        "status"

@@ -1,0 +1,301 @@
+<<< CONTEXT_BEFORE canonical_document_lines=189-200 >>>
+L00000189	            "status": "completed",
+L00000190	            "result_ref": "research-output:release-notes-subagent",
+L00000191	            "created_at_utc": "2026-07-09T00:00:00Z",
+L00000192	            "finished_at_utc": "2026-07-09T00:00:19Z"
+L00000193	          }
+L00000194	        ],
+L00000195	        "subquestion_refs": ["subquestion:browser-runtime", "subquestion:evidence-artifacts"],
+L00000196	        "coverage_report_ref": "research-coverage:deep-browser-models",
+L00000197	        "closure_state": "sufficient"
+L00000198	      }
+L00000199	    }
+L00000200	  ],
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=201-486 >>>
+L00000201	  "invalid_runs": [
+L00000202	    {
+L00000203	      "case_id": "planning_research_missing_source_evidence",
+L00000204	      "schema": "ResearchRun",
+L00000205	      "run": {
+L00000206	        "research_run_id": "research:bad-planning-no-source",
+L00000207	        "mode": "standard",
+L00000208	        "task": "Verify current platform support.",
+L00000209	        "invocation": {
+L00000210	          "invocation_source": "planning_wizard",
+L00000211	          "agent_reason": "Planning question depends on current support."
+L00000212	        },
+L00000213	        "sources": [
+L00000214	          {
+L00000215	            "source_id": "source:one",
+L00000216	            "url": "https://example.com/docs",
+L00000217	            "selection_reason": "fixture",
+L00000218	            "read_state": "read",
+L00000219	            "read_receipt_ref": "receipt:one"
+L00000220	          }
+L00000221	        ],
+L00000222	        "read_receipts": [
+L00000223	          {
+L00000224	            "receipt_id": "receipt:one",
+L00000225	            "url": "https://example.com/docs",
+L00000226	            "web_operation": "read",
+L00000227	            "tool_id": "webfetch",
+L00000228	            "content_ref": "content:one",
+L00000229	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000230	          }
+L00000231	        ],
+L00000232	        "citations": [
+L00000233	          {
+L00000234	            "citation_id": "citation:one",
+L00000235	            "url": "https://example.com/docs",
+L00000236	            "source_ref": "source:one",
+L00000237	            "read_receipt_ref": "receipt:one",
+L00000238	            "evidence_kind": "read",
+L00000239	            "snippet_only": false
+L00000240	          }
+L00000241	        ],
+L00000242	        "closure_state": "sufficient"
+L00000243	      },
+L00000244	      "expected_error": "missing_planning_source_evidence_ref"
+L00000245	    },
+L00000246	    {
+L00000247	      "case_id": "snippet_only_citation_rejected",
+L00000248	      "schema": "ResearchRun",
+L00000249	      "run": {
+L00000250	        "research_run_id": "research:bad-snippet-only",
+L00000251	        "mode": "standard",
+L00000252	        "task": "Compare current docs.",
+L00000253	        "invocation": {
+L00000254	          "invocation_source": "goal",
+L00000255	          "agent_reason": "Goal requires read-backed citations."
+L00000256	        },
+L00000257	        "sources": [
+L00000258	          {
+L00000259	            "source_id": "source:snippet",
+L00000260	            "url": "https://example.com/docs",
+L00000261	            "selection_reason": "fixture",
+L00000262	            "read_state": "read",
+L00000263	            "read_receipt_ref": "receipt:snippet"
+L00000264	          }
+L00000265	        ],
+L00000266	        "read_receipts": [
+L00000267	          {
+L00000268	            "receipt_id": "receipt:snippet",
+L00000269	            "url": "https://example.com/docs",
+L00000270	            "web_operation": "read",
+L00000271	            "tool_id": "webfetch",
+L00000272	            "content_ref": "content:snippet",
+L00000273	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000274	          }
+L00000275	        ],
+L00000276	        "citations": [
+L00000277	          {
+L00000278	            "citation_id": "citation:snippet",
+L00000279	            "url": "https://example.com/docs",
+L00000280	            "source_ref": "source:snippet",
+L00000281	            "read_receipt_ref": "receipt:snippet",
+L00000282	            "evidence_kind": "read",
+L00000283	            "snippet_only": true
+L00000284	          }
+L00000285	        ],
+L00000286	        "closure_state": "sufficient"
+L00000287	      },
+L00000288	      "expected_error": "citation_not_read_backed"
+L00000289	    },
+L00000290	    {
+L00000291	      "case_id": "research_runtime_target_leakage",
+L00000292	      "schema": "ResearchRun",
+L00000293	      "run": {
+L00000294	        "research_run_id": "research:bad-runtime-leakage",
+L00000295	        "mode": "standard",
+L00000296	        "task": "Verify current platform support.",
+L00000297	        "invocation": {
+L00000298	          "invocation_source": "prd",
+L00000299	          "agent_reason": "PRD option depends on current support."
+L00000300	        },
+L00000301	        "sources": [
+L00000302	          {
+L00000303	            "source_id": "source:one",
+L00000304	            "url": "https://example.com/docs",
+L00000305	            "selection_reason": "fixture",
+L00000306	            "read_state": "read",
+L00000307	            "read_receipt_ref": "receipt:one"
+L00000308	          }
+L00000309	        ],
+L00000310	        "read_receipts": [
+L00000311	          {
+L00000312	            "receipt_id": "receipt:one",
+L00000313	            "url": "https://example.com/docs",
+L00000314	            "web_operation": "read",
+L00000315	            "tool_id": "webfetch",
+L00000316	            "content_ref": "content:one",
+L00000317	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000318	          }
+L00000319	        ],
+L00000320	        "citations": [
+L00000321	          {
+L00000322	            "citation_id": "citation:one",
+L00000323	            "url": "https://example.com/docs",
+L00000324	            "source_ref": "source:one",
+L00000325	            "read_receipt_ref": "receipt:one",
+L00000326	            "evidence_kind": "read",
+L00000327	            "snippet_only": false
+L00000328	          }
+L00000329	        ],
+L00000330	        "ledger_source_evidence_ref": "ledger-source:one",
+L00000331	        "closure_state": "sufficient",
+L00000332	        "WorkNode": "forbidden"
+L00000333	      },
+L00000334	      "expected_error": "runtime_target_leakage"
+L00000335	    },
+L00000336	    {
+L00000337	      "case_id": "deep_research_mode_mismatch",
+L00000338	      "schema": "DeepResearchRun",
+L00000339	      "run": {
+L00000340	        "research_run_id": "research:bad-deep-mode",
+L00000341	        "mode": "standard",
+L00000342	        "task": "Deeply compare sources.",
+L00000343	        "invocation": {
+L00000344	          "invocation_source": "goal",
+L00000345	          "agent_reason": "Deep research must carry deep mode."
+L00000346	        },
+L00000347	        "sources": [
+L00000348	          {
+L00000349	            "source_id": "source:one",
+L00000350	            "url": "https://example.com/docs",
+L00000351	            "selection_reason": "fixture",
+L00000352	            "read_state": "read",
+L00000353	            "read_receipt_ref": "receipt:one"
+L00000354	          }
+L00000355	        ],
+L00000356	        "read_receipts": [
+L00000357	          {
+L00000358	            "receipt_id": "receipt:one",
+L00000359	            "url": "https://example.com/docs",
+L00000360	            "web_operation": "read",
+L00000361	            "tool_id": "webfetch",
+L00000362	            "content_ref": "content:one",
+L00000363	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000364	          }
+L00000365	        ],
+L00000366	        "citations": [
+L00000367	          {
+L00000368	            "citation_id": "citation:one",
+L00000369	            "url": "https://example.com/docs",
+L00000370	            "source_ref": "source:one",
+L00000371	            "read_receipt_ref": "receipt:one",
+L00000372	            "evidence_kind": "read",
+L00000373	            "snippet_only": false
+L00000374	          }
+L00000375	        ],
+L00000376	        "closure_state": "sufficient"
+L00000377	      },
+L00000378	      "expected_error": "deep_research_mode_mismatch"
+L00000379	    },
+L00000380	    {
+L00000381	      "case_id": "research_dangling_refs_rejected",
+L00000382	      "schema": "ResearchRun",
+L00000383	      "run": {
+L00000384	        "research_run_id": "research:bad-dangling-refs",
+L00000385	        "mode": "standard",
+L00000386	        "task": "Reject dangling research evidence refs.",
+L00000387	        "invocation": {
+L00000388	          "invocation_source": "agent_initiated",
+L00000389	          "agent_reason": "Fixture proves research refs must resolve inside the run."
+L00000390	        },
+L00000391	        "sources": [
+L00000392	          {
+L00000393	            "source_id": "source:known",
+L00000394	            "url": "https://example.com/docs",
+L00000395	            "selection_reason": "fixture",
+L00000396	            "read_state": "read",
+L00000397	            "read_receipt_ref": "receipt:missing"
+L00000398	          }
+L00000399	        ],
+L00000400	        "read_receipts": [
+L00000401	          {
+L00000402	            "receipt_id": "receipt:known",
+L00000403	            "url": "https://example.com/docs",
+L00000404	            "web_operation": "read",
+L00000405	            "tool_id": "webfetch",
+L00000406	            "content_ref": "content:known",
+L00000407	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000408	          }
+L00000409	        ],
+L00000410	        "citations": [
+L00000411	          {
+L00000412	            "citation_id": "citation:known",
+L00000413	            "url": "https://example.com/docs",
+L00000414	            "source_ref": "source:missing",
+L00000415	            "read_receipt_ref": "receipt:missing",
+L00000416	            "evidence_kind": "read",
+L00000417	            "snippet_only": false
+L00000418	          }
+L00000419	        ],
+L00000420	        "synthesis_steps": [
+L00000421	          {
+L00000422	            "step_id": "synthesis:bad-dangling",
+L00000423	            "step_kind": "synthesize",
+L00000424	            "input_source_refs": ["source:missing"],
+L00000425	            "read_receipt_refs": ["receipt:missing"],
+L00000426	            "citation_refs": ["citation:missing"],
+L00000427	            "output_ref": "research-output:bad-dangling",
+L00000428	            "created_at_utc": "2026-07-09T00:00:00Z"
+L00000429	          }
+L00000430	        ],
+L00000431	        "closure_state": "sufficient"
+L00000432	      },
+L00000433	      "expected_error": "dangling_research_ref"
+L00000434	    },
+L00000435	    {
+L00000436	      "case_id": "research_mismatched_citation_url_rejected",
+L00000437	      "schema": "ResearchRun",
+L00000438	      "run": {
+L00000439	        "research_run_id": "research:bad-citation-url",
+L00000440	        "mode": "standard",
+L00000441	        "task": "Reject citation URLs that do not match source/read receipt identity.",
+L00000442	        "invocation": {
+L00000443	          "invocation_source": "agent_initiated",
+L00000444	          "agent_reason": "Fixture proves citation refs must preserve URL identity."
+L00000445	        },
+L00000446	        "sources": [
+L00000447	          {
+L00000448	            "source_id": "source:known",
+L00000449	            "url": "https://example.com/docs",
+L00000450	            "selection_reason": "fixture",
+L00000451	            "read_state": "read",
+L00000452	            "read_receipt_ref": "receipt:known"
+L00000453	          }
+L00000454	        ],
+L00000455	        "read_receipts": [
+L00000456	          {
+L00000457	            "receipt_id": "receipt:known",
+L00000458	            "url": "https://example.com/docs",
+L00000459	            "web_operation": "read",
+L00000460	            "tool_id": "webfetch",
+L00000461	            "content_ref": "content:known",
+L00000462	            "read_at_utc": "2026-07-09T00:00:00Z"
+L00000463	          }
+L00000464	        ],
+L00000465	        "citations": [
+L00000466	          {
+L00000467	            "citation_id": "citation:mismatch",
+L00000468	            "url": "https://example.com/other",
+L00000469	            "source_ref": "source:known",
+L00000470	            "read_receipt_ref": "receipt:known",
+L00000471	            "evidence_kind": "read",
+L00000472	            "snippet_only": false
+L00000473	          }
+L00000474	        ],
+L00000475	        "closure_state": "sufficient"
+L00000476	      },
+L00000477	      "expected_error": "citation_url_identity_mismatch"
+L00000478	    }
+L00000479	  ],
+L00000480	  "negative_constraints": [
+L00000481	    "Research and deep-research citations must come from read or extract receipts, not search snippets alone.",
+L00000482	    "PRD Builder and Planning Wizard research writes ledger or plan source evidence only until explicit compile/build approval.",
+L00000483	    "ResearchRun and DeepResearchRun records must not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks.",
+L00000484	    "DeepResearchRun must carry mode=deep."
+L00000485	  ]
+L00000486	}

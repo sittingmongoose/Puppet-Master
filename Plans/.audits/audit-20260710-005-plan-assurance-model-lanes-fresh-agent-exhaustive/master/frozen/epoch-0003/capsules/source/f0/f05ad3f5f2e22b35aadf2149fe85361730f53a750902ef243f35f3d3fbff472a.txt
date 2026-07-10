@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 25208-25219 >>>
+- '`active-agents.json` remains projection/debug compatibility, not canonical runtime truth.'
+compatibility_only_notes:
+- File-lock/RMW snippets apply only to optional mirror export recovery. Canonical mitigation applies through coordination records/projections and storage-owner alignment.
+stale_retired_dispositions:
+- File-lock-based coordination is retired as canonical persistence and retained only as debug/export mirror source-lineage.
+owner_boundary_notes:
+- Storage and coordination contracts own canonical locking and atomicity semantics.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 25220-25611 >>>
+### OSI-323 - Lock Timeout Fail-Open Stale Disposition
+
+```yaml
+plan_unit_id: OSI-323
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve exact fail-open tokens `within 5 seconds`, `log warning and proceed`, `coordination may be stale but execution
+  continues`, and `Proceeding without lock` as stale compatibility evidence.
+gui_related: false
+gui_classification_reason: This unit covers stale coordination safety disposition rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-322
+unblocks: []
+acceptance_criteria:
+- Covered fail-open timeout tokens remain losslessly available for exact-text audit.
+- Fail-open stale coordination is not promoted into live safety policy without owner adjudication.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: lock_timeout_fail_open_stale_disposition
+node_compile_hint:
+  mode: lock_timeout_fail_open_stale_disposition
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- within 5 seconds
+- log warning and proceed
+- coordination may be stale but execution continues
+- Proceeding without lock
+negative_constraints:
+- Future canon must not promote stale coordination or proceeding without lock as live safety policy without owner adjudication.
+compatibility_only_notes:
+- Fail-open timeout behavior is stale compatibility evidence only.
+stale_retired_dispositions:
+- Lock timeout fail-open behavior requires owner adjudication before use.
+owner_boundary_notes:
+- Coordination/storage owners must decide fail-open/fail-closed locking policy.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-324 - Save State With Lock Rust Example
+
+```yaml
+plan_unit_id: OSI-324
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve `save_state_with_lock` example tokens including `MAX_ATTEMPTS: u32 = 3`, lock file, retry sleep, temp file,
+  `serde_json::to_string_pretty`, atomic rename, and release lock as optional mirror-export source evidence.
+gui_related: false
+gui_classification_reason: This unit covers backend locking example code rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-322
+- OSI-323
+unblocks: []
+acceptance_criteria:
+- Covered Rust locking example remains losslessly available for exact-text audit.
+- The Rust snippet is not treated as implementation code.
+- The snippet cannot be used as canonical lost-update prevention; canonical lost-update prevention is append/CAS plus redb transaction.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: save_state_with_lock_rust_example
+node_compile_hint:
+  mode: save_state_with_lock_rust_example
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- save_state_with_lock
+- 'MAX_ATTEMPTS: u32 = 3'
+- tokio::time::sleep
+- serde_json::to_string_pretty
+- std::fs::rename
+- remove_file
+negative_constraints:
+- Rust snippet is not implementation code.
+- Do not promote lock-file coordination to canonical storage semantics.
+compatibility_only_notes:
+- Fail-open lines inside the snippet inherit OSI-323 stale disposition.
+stale_retired_dispositions:
+- Proceeding without lock remains stale compatibility evidence.
+- File-lock coordination remains mirror/source-lineage only.
+owner_boundary_notes:
+- Coordination/storage owners retain actual locking algorithm authority.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-325 - Lock Acquisition And Stale Lock Cleanup Example
+
+```yaml
+plan_unit_id: OSI-325
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve `acquire_lock` example tokens including PID lock content, `create_new(true)`, `AlreadyExists`, stale process check,
+  stale lock removal, and retry.
+gui_related: false
+gui_classification_reason: This unit covers backend lock acquisition example code rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-324
+unblocks: []
+acceptance_criteria:
+- Covered lock acquisition example remains losslessly available for exact-text audit.
+- Stale lock cleanup does not authorize side-file cleanup heuristics for canonical child/run state.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: lock_acquisition_and_stale_lock_cleanup_example
+node_compile_hint:
+  mode: lock_acquisition_and_stale_lock_cleanup_example
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- acquire_lock
+- create_new(true)
+- AlreadyExists
+- process_exists
+- Stale lock
+- remove_file
+negative_constraints:
+- Stale lock cleanup does not authorize side-file cleanup heuristics for canonical child/run state.
+compatibility_only_notes:
+- Rust snippet is evidence only.
+stale_retired_dispositions:
+- Stale lock cleanup behavior requires owner adjudication before use.
+owner_boundary_notes:
+- Canonical child/run state cleanup remains owned by runtime/storage contracts.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-326 - Platform-Specific Process Existence Placeholder
+
+```yaml
+plan_unit_id: OSI-326
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Preserve the `process_exists` example using Unix `kill -0` and the non-Unix placeholder `true // Assume exists for now`.
+gui_related: false
+gui_classification_reason: This unit covers platform-specific backend process-check evidence rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-325
+unblocks: []
+acceptance_criteria:
+- Covered platform-specific process-check example remains losslessly available for exact-text audit.
+- Windows/non-Unix placeholder is not treated as live correctness canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_specific_process_existence_placeholder
+node_compile_hint:
+  mode: platform_specific_process_existence_placeholder
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- process_exists
+- kill
+- '-0'
+- '#[cfg(unix)]'
+- '#[cfg(not(unix))]'
+- true // Assume exists for now
+negative_constraints:
+- Windows/non-Unix placeholder is not live correctness canon.
+compatibility_only_notes:
+- Platform-specific implementation must be adjudicated before use.
+stale_retired_dispositions:
+- Non-Unix placeholder is compatibility evidence only.
+owner_boundary_notes:
+- Runtime/platform owners must define real process-existence checks.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-327 - File Corruption Recovery Gap Opening
+
+```yaml
+plan_unit_id: OSI-327
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve the opening of Gap #29: corrupted `active-agents.json` from invalid JSON, partial write, or disk full can break
+  debug/interoperability mirror reads, but cannot break canonical registration or coordination projection reads.
+gui_related: false
+gui_classification_reason: This unit covers coordination file corruption risk rather than GUI presentation.
+split_recommended: true
+depends_on:
+- OSI-251
+- OSI-322
+unblocks: []
+acceptance_criteria:
+- Covered Gap #29 opening remains losslessly available for exact-text audit.
+- This partial unit does not claim mitigation or recovery coverage after source line 4836.
+- Corrupt mirrors cannot drive scheduler, prompt, execution-admission, conflict-prevention, unregister, crash, or abort decisions.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: file_corruption_recovery_gap_opening
+node_compile_hint:
+  mode: file_corruption_recovery_gap_opening
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- 'Gap #29: Error handling and file corruption recovery'
+- active-agents.json
+- invalid JSON
+- partial write
+- disk full
+- register or read coordination state
+negative_constraints:
+- Do not claim mitigation or recovery coverage after source line 4836 in this unit.
+- Do not treat `active-agents.json` corruption as canonical coordination-state loss.
+compatibility_only_notes:
+- Partial S0154 coverage only; recovery mitigation starts after this window.
+stale_retired_dispositions:
+- Registration/coordination reads from `active-agents.json` are retired for canonical behavior.
+owner_boundary_notes:
+- Storage/coordination owners retain recovery semantics for corrupted coordination projections.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-328 - File Corruption Recovery Mitigations
+
+```yaml
+plan_unit_id: OSI-328
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve JSON validation, backup-before-write, fallback-empty-state, and corruption-detection mitigations for corrupted
+  coordination mirror reads.
+gui_related: false
+gui_classification_reason: This unit covers coordination projection recovery rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-327
+- OSI-322
+unblocks: []
+acceptance_criteria:
+- Covered file-corruption mitigation bullets remain losslessly available for exact-text audit.
+- Recovery applies to projection/debug state and does not make `active-agents.json` canonical runtime truth.
+- Fallback-empty-state can only apply to mirror export views; authoritative readers regenerate from seglog/redb or surface projection-unavailable diagnostics.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: file_corruption_recovery_mitigations
+node_compile_hint:
+  mode: file_corruption_recovery_mitigations
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- JSON validation
+- Backup before write
+- active-agents.json.bak
+- Fallback to empty state
+- Corruption detection
+negative_constraints:
+- Recovery applies to projection/debug mirror state, not canonical runtime truth.
+compatibility_only_notes:
+- Corruption recovery is source-lineage evidence for coordination mirror exports.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Storage and coordination owners retain canonical recovery semantics.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-329 - Load State Backup Recovery Example
+
+```yaml
+plan_unit_id: OSI-329
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve the `load_state` Rust example that reads `state_file`, parses `AgentCoordinationState`, validates schema, tries
+  `.bak`, and falls back to `AgentCoordinationState::default()` as mirror recovery evidence only.
+gui_related: false
+gui_classification_reason: This unit covers backend recovery example code rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-328
+- OSI-265
+unblocks: []
+acceptance_criteria:
+- Covered Rust recovery example remains losslessly available for exact-text audit.
+- The snippet remains evidence only and does not create implementation code.
+- Backup recovery cannot provide canonical truth; canonical readers use redb projections or rebuild them from seglog.
+- Default empty state is forbidden as a canonical recovery result for missing/corrupt mirrors.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: load_state_backup_recovery_example
+node_compile_hint:
+  mode: load_state_backup_recovery_example
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+preserved_exact_tokens:
+- load_state
+- AgentCoordinationState
+- serde_json::from_str
+- backup_file
+- Recovered coordination state from backup
+- AgentCoordinationState::default()
+negative_constraints:
+- Rust snippet is evidence only.
+- Do not use `AgentCoordinationState::default()` as canonical fallback after mirror corruption.
+compatibility_only_notes:
+- Backup recovery applies to projection/debug coordination state evidence.
+stale_retired_dispositions:
+- Backup-file recovery of active-agent state is mirror/source-lineage only.
+owner_boundary_notes:
+- Storage owners retain durable recovery implementation authority.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 25612-25623 >>>
+### OSI-330 - Coordination State Schema And Timestamp Validation
+
+```yaml
+plan_unit_id: OSI-330
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve required-field and timestamp validation evidence for `agent_id`, `node_id`, future `started_at`, and the 7-day
+  stale warning.
+gui_related: false
+gui_classification_reason: This unit covers backend schema/timestamp validation rather than GUI presentation.

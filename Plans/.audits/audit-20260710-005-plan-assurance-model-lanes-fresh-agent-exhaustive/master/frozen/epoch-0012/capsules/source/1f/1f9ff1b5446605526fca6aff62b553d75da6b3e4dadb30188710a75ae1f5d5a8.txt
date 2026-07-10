@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1108-1119 >>>
+L00001108	
+L00001109	Tool dispatch consumes MCP-owned schema/OAuth facts without re-owning them. The `/OAuth/timeout` contract is: OAuth-required tool calls must fail fast with structured auth or timeout evidence when the MCP owner reports expired auth, missing client registration, callback/listener failure, or exhausted parent deadline; the tool layer must not retry by minting a hidden OAuth flow or extending the run timeout.
+L00001110	
+L00001111	OAuth callback listeners MUST use the configured loopback `bind-address` / `bind-host` from the auth owner contract; wildcard, public-interface, or tool-invented callback binds are callback/listener failures and must not silently widen the listener.
+L00001112	
+L00001113	WSL/container OAuth callback surfaces keep that owner-provided loopback binding explicit; hardcoding `127.0.0.1` in the wrong network namespace is a callback/listener failure, not a reason to widen the listener.
+L00001114	
+L00001115	MCP schema resolution treats a repeated `$ref` revisit as a `schema-cycle`: the cycle-break output substitutes the revisited branch with `{}`, emits a structured warning, and continues validation only for the safe continuation surface rather than recursing indefinitely. This prevents DataHub/Supabase-style circular-schema `RecursionError` crashes during tool registration.
+L00001116	
+L00001117	Malformed MCP tool data is isolated per-server and per-tool: schema violations emit a structured `mcp_schema_mismatch` envelope plus diagnostic evidence, do not crash the host, and do not poison other servers' availability or tool records.
+L00001118	
+L00001119	This section intentionally replaces under-specified and over-summarized child-run/MCP tool wording: inherited deadlines, pre-validation, schema validation, OAuth timeout handling, and unavailable-server behavior must stay explicit. The owner-level contract is a pre-dispatch pipeline, not a consumer hint.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1120-1482 >>>
+L00001120	
+L00001121	Additive owner-detail for this Tools anchor: provider `finishReason` / `finishReason=length` with `stop_reason = length` on an incomplete tool call is a `no-dispatch` gate before permission, schema, or any tool execution; retry taxonomy is `per-class` with explicit attempt ceilings and bounded recovery posture; loop suppression may use `similarity-based` equivalence only after normalized fingerprint and error-class comparison and must still emit a diagnostic; nested runtime/tool work inherits hierarchical deadline propagation. MCP OAuth state stays stable across tool dispatch: client registration uses a durable `client-id`, callback setup uses the owner-provided `callback-listener`, and token persistence serializes each `token-write` so concurrent refresh or callback paths cannot race or replace a valid token.
+L00001122	
+L00001123	Required order:
+L00001124	1. Normalize the invocation context and expand relevant paths.
+L00001125	2. Evaluate `policy.may_execute_tool()` on the invocation.
+L00001126	3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments.
+L00001127	4. Apply provider-specific argument normalizers where the tool surface explicitly allows them, including concrete compatibility fixes such as GLM quoted-JSON unquoting and Qwen XML-wrapper stripping before schema validation.
+L00001128	5. Run `schema.validate_tool_args()` on the post-normalization argument set.
+L00001129	6. Run arg-touching hooks.
+L00001130	7. Re-run permission and schema validation if hook output changed arguments.
+L00001131	8. Dispatch only if all checks pass.
+L00001132	
+L00001133	ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Contracts_V0.md
+L00001134	
+L00001135	Failure behavior:
+L00001136	- invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then "best effort" repair the failure afterwards
+L00001137	- the PM LESSON from empty `tool_result` crashes is that pre-execution validation must reject invalid payloads before dispatch, and max retry limits are PER error type rather than global text matching
+L00001138	- provider-specific retry decisions MUST use structured error classes or status codes, never substring matching on error text
+L00001139	- non-permission tool errors, including `OC-EXEC-106`, MUST surface as `is_error=true` with the error message and MUST NOT return a zero-value success-shaped result on error
+L00001140	
+L00001141	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00001142	
+L00001143	Truncation gate:
+L00001144	- if upstream provider output ends with `finishReason=length` or equivalent truncation while a tool invocation is incomplete, PM closes the invocation with a structured truncation error and MUST NOT dispatch the tool
+L00001145	- PM closes incomplete `tool_use` payloads with `tool_result(ok=false, error=truncated_by_length)` and MUST NOT synthesize missing arguments
+L00001146	- PM MUST reject empty, `/minimal`, or structurally incomplete tool arguments produced by truncation before any permission or execution path is reached
+L00001147	
+L00001148	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+L00001149	
+L00001150	#### Retry classification and bounded recovery
+L00001151	
+L00001152	Automatic retries are classed and capped per invocation:
+L00001153	- transient transport, server-warming, and recoverable bootstrap failures MAY retry automatically, but the total automatic attempts are capped at 3 per invocation
+L00001154	- default backoff bases are `1000ms`, `2000ms`, then `4000ms`; jitter is applied as `clamp(base_ms + deterministic_jitter_ms, 0ms, parent_remaining_budget_ms)` where `deterministic_jitter_ms` is selected from the closed interval `[-floor(base_ms * 0.25), +floor(base_ms * 0.25)]` using the invocation id plus attempt number as the seed; a stricter `Retry-After` or provider minimum delay raises the post-jitter floor before the parent-budget clamp
+L00001155	- helper/client recreation is allowed only for failures explicitly classified as recoverable, and the recreated attempt still counts toward the same retry cap
+L00001156	- auth-required, permission-denied, schema-mismatch, validation-failed, content-filter, and safety-stop classes are terminal for that invocation and MUST NOT be retried automatically
+L00001157	
+L00001158	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+L00001159	
+L00001160	#### Deadline propagation and loop suppression
+L00001161	
+L00001162	Nested tool work inherits a parent deadline rather than minting a fresh timeout window:
+L00001163	- every tool/helper invocation receives the parent's current absolute deadline or remaining-budget snapshot
+L00001164	- retries, helper restarts, and nested tool work MUST clamp to the remaining budget and MUST NOT extend the parent deadline
+L00001165	- if the remaining budget is exhausted before a retry starts, PM emits a structured timeout or budget result without dispatching the new attempt
+L00001166	- automatic retry suppression compares normalized tool fingerprint, canonical target, error class/status, and near-match argument or stderr signatures; same or substantially equivalent failures without progress MUST stop further retries and emit a diagnostic instead of looping indefinitely
+L00001167	
+L00001168	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
+L00001169	
+L00001170	#### Shell-runtime rules
+L00001171	
+L00001172	Shell-dispatch rules are part of the canonical tool flow:
+L00001173	- banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family; this is full-string validation for the shell-runtime surface
+L00001174	- implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token
+L00001175	- dispatch occurs through exactly one shell interpretation layer; never eval, and `eval` or equivalent second-pass command construction is prohibited
+L00001176	- Unix-style shell dispatch passes the already `shellQuote`-protected command through `exec.Command("bash", "-c", command)` or an equivalent one-layer platform runner; it must not run a second interpreter after quoting.
+L00001177	- shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)
+L00001178	- all paths interpolated into shell commands MUST be shell-escaped for the target platform; on Windows this means quoting, double-backslash handling, or forward-slash conversion according to the selected shell, and individual tools MUST NOT implement their own competing escaping layer
+L00001179	- shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries
+L00001180	- shell lifecycle is mutex-guarded; work queues MUST be `/non-blocking`, and writes to a dead shell return a structured error instead of hanging forever
+L00001181	- `OC-LIFE-006` requires an alive-check before queue writes; if the shell is dead, PM returns a structured LIFE error instead of blocking forever
+L00001182	
+L00001183	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md
+L00001184	
+L00001185	OC reference coverage for this owner section includes shell command validation `OC-EXEC-101` / `/108`, Windows shell/provider behavior `OC-PROV-012`, tool error surfacing `OC-EXEC-106`, shell lifecycle `OC-LIFE-004` / `/005/006`, MCP connection pooling `OC-PROV-006`, and MCP refresh `OC-PROV-005`. These codes are evidence labels only; the canonical behavior is the full-command, one-interpretation-layer, lifecycle, schema, `/error-isolation`, and MCP availability contract above.
+L00001186	
+L00001187	### 8.3 Registry → platform CLI flag derivation
+L00001188	
+L00001189	The runner (or a dedicated module) derives platform-specific CLI flags from the **canonical** permission set so the platform only sees tools we allow. Example mapping (implement in platform_specs or runner):
+L00001190	
+L00001191	- **Claude:** `--allowedTools "Read,Edit,Bash"` → build list from registry "allow" + "ask" (ask still requires approval at runtime); if edit is deny, omit Edit.
+L00001192	- **Copilot:** `--allow-tool 'shell(git)'` etc., or `--allow-all-tools` when policy is permissive; `--deny-tool` for denied tools. Build allow/deny lists from registry.
+L00001193	- **Gemini:** N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags).
+L00001194	
+L00001195	**Single source of truth:** Registry + policy (from config) → derive flags per platform; no hardcoding in runner. Document the derivation rules in platform_specs or a single "tool policy → CLI args" function.
+L00001196	
+L00001197	### 8.4 Redb keys for tool rollups (Usage widget)
+L00001198	
+L00001199	
+L00001200	Analytics scan writes rollups for the Usage page (FinalGUISpec §7.8). For the **tool usage widget** (per-tool count, latency, error rate):
+L00001201	
+L00001202	- **Namespace:** `rollups`
+L00001203	- **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md; Analytics scan and Usage widget must use the same set.
+L00001204	- **Value shape:** JSON or bincode: `{ [tool_name: string]: { count: number, p50_ms: number, p95_ms: number, error_count: number, index_used?: { true_count: number, false_count: number } } }`. Example: `{ "bash": { "count": 42, "p50_ms": 120, "p95_ms": 500, "error_count": 2 }, "grep": { "count": 30, "p50_ms": 18, "p95_ms": 40, "error_count": 0, "index_used": { "true_count": 24, "false_count": 6 } } }`. Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error, and grep/Search `index_used`) into this structure so the Usage page can render the table without scanning seglog. See §8.0 for event payload and storage-plan.md §2.3.
+L00001205	- **Runtime identity alignment:** Blocked episodes and tool/runtime recovery evidence are `node-native`; tool-facing `usage/evidence/runtime` rollups MUST NOT remain `tier-native` execution authority. Consumers align those rollups to graph `/node/package/seam/lane` identity, and any `tier-aligned` or `tier-native` fields survive only as compatibility/grouping projections.
+L00001206	- **Error-count semantics:** `error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only.
+L00001207	- **Freshness signal:** Analytics scan SHOULD also persist `tool_usage_meta.{window}` with `computed_at`, `window_started_at`, and `window_ended_at` so the Usage page can show a "Last updated" timestamp without opening seglog.
+L00001208	
+L00001209	### 8.5 YOLO and tool permissions
+L00001210	
+L00001211	When the user enables **YOLO** (Assistant), treat all tools as **allow** for that session for the purpose of prompting (no "ask" prompts). **FileSafe** still applies: destructive commands and write-scope/sensitive-file guards are still enforced. So: YOLO = "don't ask for tool approval"; it does **not** disable FileSafe.
+L00001212	
+L00001213	### 8.6 MCP tool name format and wildcard rule
+L00001214	
+L00001215	MCP tool names use the owner-defined underscore-only format `{server_slug}_{tool_name}`.
+L00001216	
+L00001217	ContractRef: ContractName:Plans/MCP_Integration.md
+L00001218	
+L00001219	Rules:
+L00001220	- wildcard rules match the underscore form, for example `context7_*`
+L00001221	- slash variants and mixed `_` / `/` examples are retired
+L00001222	- server-level permission rules still apply before per-tool wildcard expansion
+L00001223	- MCP tool enable/disable layering follows the canonical `Plans/Permissions_System.md` precedence and does not add an `org` layer; older `project > global > org > default` wording is non-canonical historical wording.
+L00001224	### 8.7 MCP server unavailable
+L00001225	
+L00001226	When an MCP server is unavailable because of startup timeout, transport failure, auth loss, schema mismatch, or repeated health-check failure, PM treats this as a structured degraded-state condition.
+L00001227	
+L00001228	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+L00001229	
+L00001230	Required behavior:
+L00001231	- Tools from that server are marked `unavailable` in the registry.
+L00001232	- Calls to those tools fail immediately with a structured error and `failure_class=provider_transient` (or a stricter class when the error is known-fatal).
+L00001233	- Per-tool MCP invocation timeout defaults to 30 seconds and MAY be overridden per server with a configured timeout. This timeout is independent of startup-timeout and reconnect cool-down settings.
+L00001234	- PM emits a structured diagnostic containing `server_id`, `reason`, `last_healthy_at`, and whether a stale list is still available.
+L00001235	- A transient `listTools()` failure is CRITICAL but not destructive to singleton state: PM retries or marks the server degraded, preserves the last known client identity when safe, and MUST NOT permanently delete the MCP client or make tools vanish forever after one listTools error.
+L00001236	- One automatic reconnect attempt MAY occur after the configured cool-down (default 60 seconds); after that, recovery requires user action or config change.
+L00001237	- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure.
+L00001238	
+L00001239	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00001240	
+L00001241	### 9.1 Gaps and potential problems
+L00001242	
+L00001243	| Gap / risk | Description | Mitigation |
+L00001244	|------------|-------------|------------|
+L00001245	| **Platform tool semantics differ** | Built-in tools (edit, bash, read) behave differently per platform (e.g. partial vs full file edit, shell env). | Document per-platform behavior in platform_specs or Provider docs; registry stays canonical; acceptance tests per platform. |
+L00001246	| **MCP tool names unstable** | MCP servers can change tool names or add/remove tools between runs. | Namespace by server; wildcard permissions; Doctor or pre-run check to list discovered MCP tools. |
+L00001247	| **Permission default ambiguity** | New or unknown tools (e.g. new MCP server) may have no explicit permission. | Default table (§10.2): "Any unknown tool" → **ask**. Resolution (§10.3) step 3: unknown falls through to step 7. Implement default table as code. |
+L00001248	| **Custom tool sandboxing** | Custom tools run arbitrary code; weak sandbox can allow escape or abuse. | MVP: subprocess with timeout (e.g. 60s) and output size cap (e.g. 1 MiB) per §4.3. Document in implementation plan. |
+L00001249	| **Ask vs HITL in orchestrator** | Orchestrator runs are often headless; "ask" has no UI. | For orchestrator: map "ask" to deny, or to a pending-approval state (HITL) if enabled; document in human-in-the-loop.md. |
+L00001250	| **Edit permission vs write scope** | User allows "edit" but FileSafe write scope restricts to plan files. Agent may try to edit out-of-scope file. | Clear error message: "Edit allowed but file not in write scope." Ensure FileSafe and tool policy share same vocabulary in UI. |
+L00001251	| **Tool latency in seglog** | High volume of tool events can grow seglog quickly. | **Recommended for MVP:** retention -- keep last 90 days then prune; analytics scan only needs rollups. Alternatives: compaction (merge into rollups, drop raw after N days) or sampling; document chosen strategy in storage-plan.md. |
+L00001252	| **Subagent tool defaults** | todowrite/todoread disabled for subagents can confuse agents that expect task lists. | Document in agent-facing docs (AGENTS.md or generated context). Override via run config (e.g. `subagent_tool_overrides: { "todowrite": "allow" }`); schema and location in implementation plan and orchestrator-subagent-integration.md. |
+L00001253	| **LSP tool when no server** | lsp tool is MVP when LSP is MVP; when no LSP server is available for the language, lsp returns no results or "LSP unavailable." | lsp adapter returns structured error per §3.5; Doctor reports LSP server status. Plans/LSPSupport.md §9.1. |
+L00001254	| **webfetch / websearch abuse** | Agent could request excessive or sensitive URLs/queries. | FileSafe URL allowlist/denylist; optional query rate limit; don't log full query/URL in plaintext; keep audit/provenance disclosure aligned with the shared web contracts instead of ad hoc cited-search wording. |
+L00001255	| **Config key for tool permissions** | Where exactly in redb/GuiConfig tool_permissions lives. | **tool_permissions** in same config blob as rest of Settings; persisted as part of `config:v1` in redb (§8.1, §8.0). Single key only. |
+L00001256	| **Permission change mid-run** | User changes Settings while a run is active. | Run uses immutable snapshot at start; no change until next run (FinalGUISpec §9.7; §8.1). |
+L00001257	| **MCP server down** | Context7 (or other server) enabled but fails to start. | Hide that server's tools for the run or mark unavailable; Doctor shows "Context7 unavailable" (§8.7). |
+L00001258	| **Tool usage widget empty** | New install or no tool events yet. | Show "No tool data yet -- run a task to see tool usage" and short explanation; don't leave blank. |
+L00001259	| **All providers in MCP GUI** | FinalGUISpec listed only Cursor, Claude, Gemini for MCP toggles. | Ensure **Codex** and **Copilot** are included in Settings > Advanced > MCP Configuration (all providers). |
+L00001260	| **Policy application point** | Where in the stack we enforce allow/deny/ask. | In Provider/runner when processing tool call from platform stream; before executing or forwarding (§8.2). |
+L00001261	| **LSP server crash mid-call** | LSP server crashes or disconnects while handling lsp.references / definition / hover / rename. | lsp adapter returns `{ "error": "lsp_unavailable", "message": "LSP server closed or timed out" }` (§3.5); enforce request timeout (e.g. 10s). |
+L00001262	
+L00001263	### 9.2 Enhancements (all optional; not MVP)
+L00001264	
+L00001265	The following are **optional** improvements. MVP is defined by §3 built-in tools, §10 permission model, §8 events/rollups, and GUI Tool permissions (`Plans/Permissions_System.md` §10 plus `Plans/FinalGUISpec.md` §7.4 Settings and inspectors).
+L00001266	
+L00001267	| Enhancement | Description | Priority / notes |
+L00001268	|------------|-------------|-------------------|
+L00001269	| **Per-tool rate limits** | Limit invocations per tool per run/session (e.g. max 100 grep calls). | Reduces runaway tool use; configurable per tool or global. |
+L00001270	| **Tool usage dashboard** | Dashboard widget: most-used tools, latency p50/p95, error rate by tool (from seglog rollups). | storage-plan + usage-feature; already implied by analytics scan. |
+L00001271	| **Permission presets** | Presets: "Read-only" allows read/grep/glob/list/codesearch/chatsearch/logsearch/skill/read-only lsp/question/todoread/todowrite/capabilities.get, asks for webfetch/websearch/logread/task, and denies edit/bash/repo.import/media.generate; "Plan mode" allows the Read-only set, asks for the full web family plus logread/task, and denies state mutation; "Full" allows read/search/skill/lsp/question/todo with asks for mutation-capable tools. | Simplifies config; maps to assistant modes (Ask, Plan, Agent). Plan mode allows information gathering but not state mutation. |
+L00001272	| **Custom tool templates** | Project or org templates for common custom tools (e.g. "run tests", "deploy staging") with schema and default permission. | Encourages reuse; catalog in docs or GUI. |
+L00001273	| **MCP tool allowlist** | Option to allow only specific MCP tools by name (e.g. only `context7_query_docs`) even if server is enabled. | Finer control than server-level enable; complements wildcards. |
+L00001274	| **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an "ask". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |
+L00001275	| **Tool description in UI** | In Config or run summary, show which tools are available and their permission (allow/deny/ask) for the current run. | Transparency; can be generated from registry + run config. |
+L00001276	| **Bash command allowlist** | Beyond FileSafe blocklist: allowlist of permitted commands (e.g. `npm test`, `cargo build`) when bash is "allow". | Stricter than blocklist-only; optional; align with FileSafe. |
+L00001277	
+L00001278	---
+L00001279	
+L00001280	## 10. Implementation plan: permissions (spec for implementers)
+L00001281	
+L00001282	> **SSOT:** The canonical permission specification (actions, precedence, granular rules, wildcards, special guards, ask-flow, defaults, resolution algorithm, persistence, and GUI) is **`Plans/Permissions_System.md`**. This section provides implementation-oriented guidance for the tool registry and policy engine integration. It references the SSOT for normative definitions and adds tool-registry-specific details (FileSafe integration, CLI derivation, presets) that are scoped to this document.
+L00001283	
+L00001284	ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules
+L00001285	
+L00001286	Mode-override alignment rule: Tools consumes the Permissions SSOT for presets; plan/research mode-override text must not imply blanket denial of `/question/skill/LSP/todo/subagent` or `/search/skill/lsp/question/todo` help-family tools when the effective preset allows them.
+L00001287	
+L00001288	### 10.1 Config schema
+L00001289	
+L00001290	The durable permission config uses TOML files at `~/.config/puppet-master/permissions.toml` (global) and `<project_root>/.puppet-master/permissions.toml` (project). Full schema: `Plans/Permissions_System.md` §9.1.
+L00001291	
+L00001292	For backward compatibility, the merged permission set is also projected to redb as `tool_permissions` in `config:v1`.
+L00001293	
+L00001294	### 10.2 Default policy table
+L00001295	
+L00001296	Canonical defaults are owned by `Plans/Permissions_System.md` §7. This consumer summary keeps the tool-registry view aligned to that owner table.
+L00001297	
+L00001298	ContractRef: ContractName:Plans/Permissions_System.md
+L00001299	
+L00001300	| Tool family | Default |
+L00001301	|---|---|
+L00001302	| `skill` | `allow` |
+L00001303	| `question` | `allow` only when HITL is available; otherwise `ask` |
+L00001304	| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | `ask` |
+L00001305	| `batch_webfetch`, `batch_webextract` | `ask` |
+L00001306	| `todoread`, `todowrite` | `allow` |
+L00001307	| child-agent `question` | `deny` |
+L00001308	### 10.3 Resolution algorithm
+L00001309	
+L00001310	Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6).
+L00001311	
+L00001312	### 10.4 Presets → config mapping
+L00001313	
+L00001314	Preset semantics are owned by `Plans/Permissions_System.md` §10.4. This section preserves the tool-registry mapping without restating conflicting policy.
+L00001315	
+L00001316	ContractRef: ContractName:Plans/Permissions_System.md
+L00001317	
+L00001318	| Preset | Tool-facing effect |
+L00001319	|---|---|
+L00001320	| `read_only` | read/search/list style tools stay available; mutation stays denied |
+L00001321	| `plan` | planning helpers stay available, read-only web tools remain `ask`, and no preset silently auto-denies the whole web family |
+L00001322	| `full` | broad availability with explicit asks on mutation-capable tools |
+L00001323	
+L00001324	Child-agent denial of `question` is architectural and remains in force even when the parent preset is broader.
+L00001325	### 10.5 GUI ↔ config serialization
+L00001326	
+L00001327	The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list.
+L00001328	
+L00001329	### 10.6 FileSafe integration order and API
+L00001330	
+L00001331	- **Canonical order owner:** `§8.2` is the authoritative dispatch sequence. This subsection is an API summary only and MUST NOT be read as a competing order definition.
+L00001332	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md
+L00001333	- **Single API (recommended):** `policy.may_execute_tool(tool_name, invocation_context) -> Result<Allow | Deny(reason) | Ask, Error>` remains the permission entrypoint within that sequence. Runner code calls it before any underlying tool implementation is invoked.
+L00001334	- **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. For file-affecting or shell-affecting tools, FileSafe runs on normalized arguments inside the canonical `§8.2` flow; hook-mutated arguments trigger the required re-checks before dispatch.
+L00001335	
+L00001336	### 10.7 Ask-flow runner notes
+L00001337	
+L00001338	Ask-flow semantics (`deny`/`once`/`for session`/`always`) are defined in `Plans/Permissions_System.md` §6. Implementation notes for the runner:
+L00001339	
+L00001340	- **Assistant (interactive):** When policy returns **ask**, surface a `blocked_notice` as a **pending approval** to the UI. The notice includes `action_available` (the scoped response options: `deny` / `once` / `for session` / `always`), `blocked_reason_code`, `blocked_sequence`, and `approval_scope_key`. See `Plans/Permissions_System.md` §6 for response semantics.
+L00001341	- **Orchestrator / Interview (headless):** Map `ask` → `deny`, or to **pending-HITL** if HITL is enabled (`Plans/human-in-the-loop.md`).
+L00001342	
+L00001343	### 10.7A Web-operation approval summary rules
+L00001344	
+L00001345	Runner and UI integrations MUST preserve the owner semantics from `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`.
+L00001346	
+L00001347	- `websearch summary shows tool name + query preview`
+L00001348	- `webfetch/webextract summary shows tool name + target host/URL`
+L00001349	- `webresearch summary shows tool name + task summary + estimated source count when available`
+L00001350	- `webcrawl/webmap summary shows tool name + root URL + page/depth caps`
+L00001351	- `Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern`
+L00001352	- `Approving webresearch For Session does NOT create broad allow for unrelated tools`
+L00001353	- `MVP uses wildcard session approval for search/research; advanced query-pattern support is future only`
+L00001354	
+L00001355	ContractRef: ContractName:Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, ContractName:Plans/FinalGUISpec.md
+L00001356	
+L00001357	### 10.8 Registry → CLI derivation (per platform)
+L00001358	
+L00001359	Implement a single function or table that, given the **resolved** permission set (which tools are allow/deny/ask for this run), returns the **platform-specific CLI args** so the runner can invoke the CLI correctly. Example (expand per platform in implementation plan):
+L00001360	
+L00001361	| Platform | Derivation rule |
+L00001362	|----------|------------------|
+L00001363	| Claude | Build `--allowedTools "Read,Edit,Bash"` from tools that are allow or ask (ask still needs runtime approval). Omit any tool that is deny. |
+L00001364	| Copilot | Build `--allow-tool '...'` list from allow+ask; build `--deny-tool '...'` from deny. If all allow, can use `--allow-all-tools` and only pass `--deny-tool` for denied. |
+L00001365	| Gemini | N/A (Direct-provider; tool gating is enforced by Puppet Master policy, not provider CLI flags). |
+L00001366	| Cursor, Codex | No single CLI flag for tool allowlist. Tool set is determined by MCP config and platform behavior. Runner **filters** tool calls against policy before forwarding: allow → forward; deny → return "Tool disabled" to agent; ask → map to deny or HITL in headless. Document in implementation plan. |
+L00001367	
+L00001368	HTE / DAE split (canonical): the "before forwarding" wording above applies to **HTE** only, where Puppet Master remains the tool executor. In **DAE**, the provider executes tools inside a jail, so enforcement relies on deterministic pre-spawn restriction + post-run reconciliation. Providers that cannot support that restriction path MUST NOT advertise `dae_allowed = true`.
+L00001369	
+L00001370	No hardcoded tool names in runner; all names come from registry + policy.
+L00001371	
+L00001372	---
+L00001373	- question default `allow` only when HITL is available
+L00001374	
+L00001375	ContractRef: ContractName:Plans/Permissions_System.md
+L00001376	## 11. Relationship to other plans
+L00001377	
+L00001378	| Plan | How tool support relates |
+L00001379	|------|---------------------------|
+L00001380	| **rewrite-tie-in-memo.md** | Central tool registry + policy engine; no per-provider special cases; tool results in unified event model → seglog → projections. |
+L00001381	| **newtools.md** | GUI testing tools catalog, per-platform MCP config paths, and non-owning GUI/settings alignment notes. Tool support, routing, and provenance canon stay here and in the owner docs. |
+L00001382	| **storage-plan.md** | Tool invocation/completion events in seglog; tool latency/errors in analytics scan → redb; dashboard/usage rollups. |
+L00001383	| **agent-rules-context.md** | Rules and context injected into every run; tool policy and safe-edit (FileSafe) align with central policy. |
+L00001384	| **orchestrator-subagent-integration.md** | Run config and node/package wiring; **42 subagents** canonical list (§4, subagent_registry); task tool validates subagent_type against this list. MCP and tool flags passed to platform runner from same run-config build. |
+L00001385	| **interview-subagent-integration.md** | Interview phase assignments use the same **42 subagents**; config (framework tools, MCP enabled) drives test strategy and PRD; same MCP/tool config available to interview runs. |
+L00001386	| **FileSafe.md** | Safe-edit and path/URL guards; runs in addition to tool permissions; map to central tool policy and patch/apply/verify pipeline. |
+L00001387	| **usage-feature.md** | Tool usage and cost can be reflected in usage rollups (from seglog/analytics). |
+L00001388	| **LSPSupport.md** | LSP MVP; lsp tool promoted (§3.4, §3.5); diagnostics in context; §9.1. |
+L00001389	| **human-in-the-loop.md** | "Ask" permission and seam-boundary approval; orchestrator ask vs HITL behavior. |
+L00001390	| **Media_Generation_and_Capabilities.md** | SSOT for `capabilities.get` and `media.generate` internal tools (§3.1); response shape, disabled reasons, slot extraction grammar, capability picker dropdown, backend routing, and UI copy. This doc registers the tools; that doc defines their full contracts. |
+L00001391	
+L00001392	---
+L00001393	
+L00001394	## 12. Implementation checklist (ordered for implementation plan)
+L00001395	
+L00001396	Use this list in order to derive a step-by-step implementation plan. Dependencies flow top to bottom.
+L00001397	
+L00001398	1. **Config schema** -- Add `tool_permissions` to app config (GuiConfig / redb `config:v1`) per §10.1; validate keys (built-in, MCP/custom, prefix wildcards only).
+L00001399	2. **Default policy table as code** -- Implement §10.2 as single source of truth; subagent overrides (todowrite/todoread deny for subagent runs).
+L00001400	3. **Resolution function** -- Implement §10.3 in order: YOLO → session cache → unknown → exact → wildcard (longest prefix) → granular → default → special guards; deterministic.
+L00001401	4. **FileSafe and YOLO order** -- After allow (or ask approved), run FileSafe before executing; do not emit `tool.denied` for FileSafe blocks (§10.6).
+L00001402	5. **Per-tool adapters** -- Input/output, errors, limits per §3.5; LSP tool with timeout and crash/disconnect handling (§3.5).
+L00001403	6. **Event emission** -- `tool.invoked` (tool_name, run_id, thread_id, latency_ms, success, error) and `tool.denied` (tool_name, run_id, thread_id, reason) per §8.0.
+L00001404	7. **GUI Tool permissions** -- Settings > Permissions (`Plans/Permissions_System.md` §10 plus `Plans/FinalGUISpec.md` §7.4 Settings and inspectors); presets per §10.4; load/save `tool_permissions` (§10.5).
+L00001405	8. **Usage widget and rollups** -- Analytics scan → redb `rollups` / `tool_usage.{window}` (§8.4); Usage view §7.8; empty state message.
+L00001406	9. **Central registry and policy engine** -- Registry + policy; single API e.g. `policy.may_execute_tool` (§10.6).
+L00001407	10. **Registry → CLI derivation** -- Single function per platform (§8.3, §10.8).
+L00001408	11. **MCP integration** -- Discovery, namespacing, hide if server fails (§8.7); all providers in GUI.
+L00001409	12. **Ask UI and headless** -- Assistant: Once / For session / Deny; headless: ask → deny or HITL (§10.7).
+L00001410	13. **LSP tool promotion** -- MVP when LSP is MVP (Plans/LSPSupport.md §9.1); no feature flag; rename requires approval.
+L00001411	14. **Addenda consolidation gate** -- Run the `FinalGUISpec` (22), `orchestrator-subagent-integration` (8), and `feature-list` (13) addenda through a `merge-and-dedup` owner pass so body-owned content lands in canonical sections and retired residue is not preserved as live implementation text.
+L00001412	15. **Machine verification gates** -- Keep machine-verification aligned with the `/gate` story: owner docs that advertise verifiable tool behavior must expose concrete schemas, event fields, policy outcomes, and evidence refs before a gate can treat the claim as supported.
+L00001413	16. **Doctor and docs** -- MCP/LSP checks; document default table and resolution.
+L00001414	17. **Subagent tool overrides** -- Document `subagent_tool_overrides` schema (e.g. `{ "todowrite": "allow" }`) and config location in orchestrator-subagent-integration.md so run config can override todowrite/todoread for subagent runs.
+L00001415	
+L00001416	---
+L00001417	
+L00001418	## 13. References
+L00001419	
+L00001420	- [OpenCode -- Tools](https://opencode.ai/docs/tools/) -- Built-in tools, permission model (allow/deny/ask), custom tools, MCP servers, ignore patterns (primary reference for §2-§4).
+L00001421	- [OpenCode -- Permissions](https://opencode.ai/docs/permissions/) -- Granular rules (object syntax), external_directory, doom_loop, defaults (.env for read), "What Ask Does" (once/always/reject), per-agent overrides; cross-plan alignment §2.5.
+L00001422	- [Model Context Protocol -- Specification (latest)](https://modelcontextprotocol.io/specification/latest) -- MCP spec; PM naming/availability/auth-state canon is captured in `Plans/MCP_Integration.md`.
+L00001423	- Operational surface reference baselines for Source Control, GitHub Actions, Docker Manager, and Kubernetes MVP parity: `github/vscode-github-actions` (`/vscode-github-actions`), `docker/vscode-extension` (`/vscode-extension`), `microsoft/vscode-containers` (`/vscode-containers`), and `vscode-kubernetes-tools/vscode-kubernetes-tools` (`/vscode-kubernetes-tools`, `vscode-kubernetes-tools` namespace).
+L00001424	- AGENTS.md -- Platform CLI commands, MCP/config notes, DRY (platform_specs, widget catalog).
+L00001425	- REQUIREMENTS.md -- Platform tool flags, MCP probe, verification adapters, tooling rules.
+L00001426	- Plans/newtools.md -- GUI testing tools, per-platform MCP config paths, and non-owning GUI/settings alignment notes.
+L00001427	- Plans/rewrite-tie-in-memo.md -- Central tool registry, policy engine, event model, storage.
+L00001428	- Plans/storage-plan.md -- seglog, redb, Tantivy, analytics scan, rollups.
+L00001429	- Plans/OpenCode_Deep_Extraction.md -- Provenance: category → SSOT mapping for upstream OpenCode pattern extraction.
+L00001430	- Plans/00-plans-index.md -- Plan map and rewrite tie-in.
+L00001431	
+L00001432	---
+L00001433	
+L00001434	*This file is a plan document only. Implementation must follow AGENTS.md (including DRY, platform_specs, Pre-Completion Verification Checklist) and the canonical plans referenced above.*
+L00001435	
+L00001436	## Tool Policy Outcome Taxonomy Addendum (2026-03-08)
+L00001437	
+L00001438	
+L00001439	### 1. Tool-layer outcomes must map into runtime blocked/failure classes
+L00001440	
+L00001441	The tool system remains the canonical source of immediate tool-policy decisions, but those decisions must map cleanly into the shared runtime taxonomy.
+L00001442	
+L00001443	Required mappings:
+L00001444	- `permission_denied` -> blocked / `permission_denied`
+L00001445	- `user_declined` -> blocked / `user_declined`
+L00001446	- `headless_ask_denied` -> blocked / `headless_ask_denied`
+L00001447	- `filesafe_blocked` -> blocked / `filesafe_blocked`
+L00001448	- `validation_blocked` -> blocked / implementation-specific reason code, not generic failure
+L00001449	
+L00001450	### 2. blocked vs failed
+L00001451	
+L00001452	If the tool call never executed because policy blocked it, the outcome is blocked/denied, not execution failure.
+L00001453	
+L00001454	### 3. Runtime integration
+L00001455	
+L00001456	Tool outcomes must carry enough information for runtime recovery UI:
+L00001457	- guard / policy source
+L00001458	- reason code
+L00001459	- recovery options where applicable
+L00001460	- whether the action executed at all
+L00001461	
+L00001462	### 4. Acceptance criteria
+L00001463	
+L00001464	- Tool-layer policy outcomes map deterministically into the shared runtime taxonomy.
+L00001465	- Non-executed tool calls are not mislabeled as execution failures.
+L00001466	- Recovery-capable blocked outcomes carry enough information for UI/assistant/orchestrator surfaces.
+L00001467	## Tool Denial / Runtime Taxonomy Alignment Addendum (2026-03-09)
+L00001468	
+L00001469	Tool-layer refusals that affect execution must collapse into the canonical runtime taxonomy before they reach UI or scheduling layers.
+L00001470	
+L00001471	### `tool.denied` requirements
+L00001472	When a denial blocks progress, the tool event MUST include or map to:
+L00001473	- `blocked_reason_code`
+L00001474	- `failure_class` when applicable
+L00001475	- effective permission snapshot identifier
+L00001476	- `allowed_action_ids[]`
+L00001477	- `headless_denied` flag when the denial was caused by mode limitations
+L00001478	- side-effect metadata when the denial concerns remote mutation
+L00001479	
+L00001480	### No silent fallback rule
+L00001481	Tools MUST NOT return success-shaped fallbacks for denied work. The denial must remain inspectable as a blocked outcome so the scheduler, chat, and GUI can offer the correct recovery path.
+L00001482	## Tool Denial and Runtime Action Canonical Alignment (2026-03-09)
+
+<<< CONTEXT_AFTER canonical_document_lines=1483-1494 >>>
+L00001483	
+L00001484	Tool-layer refusals that affect execution MUST collapse into canonical runtime blocked semantics before reaching orchestration or UI layers.
+L00001485	
+L00001486	Runtime-facing blocked payloads from tool denials MUST expose:
+L00001487	- `blocked_reason_code`
+L00001488	- `failure_class?`
+L00001489	- `allowed_action_ids[]`
+L00001490	- guard/rule metadata needed to bind the exact UI command
+L00001491	- `executed_at_all` boolean
+L00001492	
+L00001493	Runtime-facing tool-denial paths MUST NOT publish a parallel `recovery_options[]` schema.
+L00001494	## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)

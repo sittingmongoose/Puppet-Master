@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 12019-12030 >>>
+- "FileSafeEvent"
+- "config/destructive-commands.txt"
+- "Unit tests"
+negative_constraints:
+- "The implementation-order sequence is not a WorkNode, NodeSeed, executable queue, final node manifest, or production build task."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 12031-12403 >>>
+### F2-167 - Phase 2 Config Wiring And Advanced GUI Sequence
+
+```yaml
+plan_unit_id: F2-167
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The implementation-order section preserves a non-executable guide for wiring GuiConfig.filesafe
+  into PuppetMasterConfig.filesafe and exposing the Settings Advanced FileSafe Guards controls
+  with persistence.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs user-visible FileSafe UI or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: implementation_sequence_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: phase_2_config_wiring_and_advanced_gui_sequence
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0097"
+preserved_exact_tokens:
+- "Phase 2 -- Config wiring and GUI"
+- "GuiConfig::filesafe"
+- "PuppetMasterConfig::filesafe"
+- "Advanced tab"
+- "FileSafe Guards"
+- "toggles"
+- "warning override"
+- "approved commands"
+- "tooltips"
+- "Persist approved_commands"
+negative_constraints:
+- "This sequence is planning guidance only and must not become an executable build queue."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-168 - Phase 3 Assistant Chat YOLO Recovery Sequence
+
+```yaml
+plan_unit_id: F2-168
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The implementation-order section preserves non-executable Assistant Chat and YOLO recovery
+  guidance for warning chips, inline approval cards, terminal blocked output, timeouts, logging,
+  and optional dashboard status.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs user-visible FileSafe UI or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: implementation_sequence_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: phase_3_assistant_chat_yolo_recovery_sequence
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0097"
+preserved_exact_tokens:
+- "Phase 3 -- Assistant Chat and YOLO"
+- "warning chip"
+- "YOLO active -- FileSafe guards still apply"
+- "orange border"
+- "Approve once"
+- "Approve & add to list"
+- "60s timeout"
+- "[BLOCKED] Blocked by FileSafe"
+- "Dashboard FileSafe status card"
+negative_constraints:
+- "This sequence is planning guidance only and must not become an executable build queue."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-169 - Prompt Pipeline Context Follow Up Boundary
+
+```yaml
+plan_unit_id: F2-169
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Prompt Pipeline owns context compiler, delta context, cache, handoff schemas, compaction marker,
+  and skill bundling; FileSafe participates only through compiled-prompt checks and event logging
+  integration.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines runtime, policy, integration, or governance behavior rather than visual
+  presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: owner_boundary_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: prompt_pipeline_context_follow_up_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0097"
+preserved_exact_tokens:
+- "Phase 4 -- Prompt Pipeline-owned context compilation follow-up"
+- "context compiler"
+- "delta context"
+- "cache"
+- "handoff schemas"
+- "compaction marker"
+- "skill bundling"
+- "Plans/Prompt_Pipeline.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Prompt_Pipeline.md owns context compilation follow-up behavior."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-170 - Implementation Risks Summary
+
+```yaml
+plan_unit_id: F2-170
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The implementation-order risk summary preserves plan metadata, resolved worktree path,
+  OC-FILE-201/202 symlink-scope, and false-positive mitigation notes without reopening resolved
+  owner canon.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines runtime, policy, integration, or governance behavior rather than visual
+  presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: implementation_sequence_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: implementation_risks_summary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0097"
+preserved_exact_tokens:
+- "Risks and mitigations"
+- "get_allowed_files_for_current_subtask"
+- "§11.1.1"
+- "§11.1.3"
+- "OC-FILE-201/202"
+- "False positives"
+- "Log all blocks"
+negative_constraints:
+- "Risk notes must not reopen resolved owner canon."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-171 - FileSafe Blocked Outcome Taxonomy
+
+```yaml
+plan_unit_id: F2-171
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  A FileSafe block integrates with the shared runtime blocked taxonomy as blocked_reason_code =
+  filesafe_blocked, is not an execution failure, and is not auto-retryable.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines runtime, policy, integration, or governance behavior rather than visual
+  presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_blocked_outcome_taxonomy
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0099"
+preserved_exact_tokens:
+- "blocked_reason_code = filesafe_blocked"
+- "not an execution failure"
+- "not auto-retryable"
+- "shared runtime blocked taxonomy"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-172 - Recovery Payload Field Canon
+
+```yaml
+plan_unit_id: F2-172
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe blocked-state payloads use canonical blocked fields including blocked_reason_code,
+  ordered allowed_action_ids, blocked_sequence, preserved-local-work, prerequisites, and
+  detail_ref, while deprecated allowed_actions and blocked_reason fields must not appear.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines runtime, policy, integration, or governance behavior rather than visual
+  presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: recovery_payload_field_canon
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0100"
+preserved_exact_tokens:
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "blocked_sequence"
+- "preserved-local-work"
+- "prerequisite metadata"
+- "detail_ref?"
+- "allowed_actions[]"
+- "blocked_reason"
+negative_constraints:
+- "Deprecated field names such as allowed_actions[] and blocked_reason must not appear in new canonical schemas."
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "Deprecated blocked payload field names are retired for canonical FileSafe schemas."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-173 - Recovery Command Normalization And UI Projection
+
+```yaml
+plan_unit_id: F2-173
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Runtime and UI recovery surfaces expose exact recovery options, normalize graph-local labels to
+  cmd.runtime command families, and keep UI_Command_Catalog as a projection over canonical
+  FileSafe recovery payloads.
+gui_related: true
+gui_classification_reason: >-
+  This unit governs user-visible FileSafe UI or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: recovery_command_normalization_and_ui_projection
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0100"
+preserved_exact_tokens:
+- "tool.denied"
+- "cmd.runtime"
+- "cmd.runtime.*"
+- "Retry/Replan/Reopen/Approve/Deny"
+- "UI_Command_Catalog.md"
+- "Approve once"
+- "Approve & add to list"
+- "Cancel"
+negative_constraints:
+- "UI_Command_Catalog copy must not contradict runtime action IDs or allowed-action ordering."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "UI_Command_Catalog is a projection over canonical FileSafe recovery payloads."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 12404-12415 >>>
+### F2-174 - Account Pressure Recovery State Preservation
+
+```yaml
+plan_unit_id: F2-174
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe recovery preserves durable switch and account-pressure state including
+  threshold_preemptive_switch, no eligible backup, confidence/source, soft or hard switching,
+  no-backup-account, policy-disallowed, and role/account interactions.
+gui_related: false

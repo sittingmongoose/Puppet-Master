@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE 5389-5400 >>>
+- "OpenCode (server-bridged)"
+- "@path"
+- "inside Puppet Master before sending requests"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Provider docs own provider taxonomy; FileSafe owns guard enforcement across transports."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 5401-5791 >>>
+### F2-048 - Provider Metadata Is Not FileSafe Authorization
+
+```yaml
+plan_unit_id: F2-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Provider metadata and projection notes may record session id, selected model, provider effort,
+  tokens used, plugin/session/quota signals, and usage evidence quality, but they must not
+  authorize actions or carry live overlay/full projection policy inside FileSafe runtime
+  snapshots.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines provider metadata evidence boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: provider_metadata_is_not_filesafe_authorization
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0022"
+preserved_exact_tokens:
+- "session id"
+- "/provider/effort"
+- "tokens used"
+- "/plugin"
+- "provider_usage_source_kind?"
+- "provider_signal_confidence?"
+- "live overlay policy"
+- "full projection details"
+negative_constraints:
+- "Provider metadata may be recorded as execution evidence but must not be treated as authorization."
+- "provider_usage_source_kind? and provider_signal_confidence? must not cram live overlay policy or full projection details into every runtime snapshot."
+- "provider_usage_source_kind? and provider_signal_confidence? must normalize to source_class/source_confidence/source_authority before UsageRecord accounting, display, rollups, or runtime-artifact projection."
+compatibility_only_notes:
+- "provider_usage_source_kind? and provider_signal_confidence? are compatibility/evidence-signal aliases only and cannot become FileSafe permission authority or Usage accounting authority."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-049 - Provider Agnostic Defense In Depth Check Order
+
+```yaml
+plan_unit_id: F2-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Provider-agnostic FileSafe defense-in-depth checks compiled prompt at platform runner level,
+  final command string at BaseRunner level, context files through the security filter, and file
+  paths through write-scope plus security-filter checks.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend defense-in-depth check ordering.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: provider_agnostic_defense_in_depth_check_order
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0022"
+preserved_exact_tokens:
+- "compiled prompt"
+- "command string"
+- "context files"
+- "file paths"
+- "write scope + security filter"
+- "defense-in-depth"
+- "platform runner level"
+- "BaseRunner level"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-050 - Destructive Command Blocklist File Contract
+
+```yaml
+plan_unit_id: F2-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The bundled puppet-master-rs/config/destructive-commands.txt blocklist uses one case-
+  insensitive regex pattern per line, treats lines starting with # as comments, and ignores
+  empty lines.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend blocklist file format and parsing behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: destructive_command_blocklist_file_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0023"
+preserved_exact_tokens:
+- "puppet-master-rs/config/destructive-commands.txt"
+- "# Puppet Master Destructive Command Blocklist"
+- "One regex pattern per line. Case-insensitive matching."
+- "Lines starting with # are comments. Empty lines ignored."
+- "4. Pattern File"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FileSafe owns the destructive-command blocklist contract; Tools and provider plans consume guard decisions."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-051 - Bundled Destructive Command Pattern Coverage
+
+```yaml
+plan_unit_id: F2-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The default destructive-command regex coverage spans PHP/Laravel, Ruby/Rails, Python/Django,
+  Prisma, Knex, Sequelize, TypeORM, Drizzle, Go migrate, Diesel, SQLx, Ecto, raw SQL clients,
+  MongoDB, Redis, Docker volume destruction, and database-file deletion patterns.
+gui_related: false
+gui_classification_reason: >-
+  This unit preserves backend destructive-pattern coverage.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: bundled_destructive_command_pattern_coverage
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0023"
+preserved_exact_tokens:
+- "PHP / Laravel"
+- "Ruby / Rails"
+- "Python / Django"
+- "Node.js / Prisma"
+- "Node.js / Knex"
+- "Node.js / Sequelize"
+- "Node.js / TypeORM"
+- "Node.js / Drizzle"
+- "Go"
+- "Rust / Diesel"
+- "Rust / SQLx"
+- "Elixir / Phoenix / Ecto"
+- "Raw SQL via CLI clients"
+- "MongoDB shell"
+- "Redis"
+- "Docker (volume destruction)"
+- "File system (database files)"
+- "artisan\\s+migrate:(fresh|reset|refresh)"
+- "prisma\\s+db\\s+push\\s+--force-reset"
+- "(mysql|psql|sqlite3)\\s+.*DROP\\s+(DATABASE|TABLE)"
+- "redis-cli\\s+FLUSH(ALL|DB)"
+- "docker\\s+system\\s+prune.*--volumes"
+- "rm\\s+(-rf?\\s+)?/var/lib/(mysql|postgresql|mongodb)"
+negative_constraints:
+- "Do not remove framework/database destructive patterns without source-lineage proof and owner-doc reconciliation."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-052 - PUPPET MASTER ALLOW DESTRUCTIVE Env Override
+
+```yaml
+plan_unit_id: F2-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  PUPPET_MASTER_ALLOW_DESTRUCTIVE is a destructive-override request signal only; the value 1
+  requests evaluation of an authenticated operator grant, while missing or other values request no
+  override, and the environment variable alone never authorizes destructive execution.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines environment-variable runtime behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Override grant contains auth_realm, operator identity, reason, duration/expiry, project/run/worktree scope, security event, and receipt fields."
+- "Denial emits filesafe.destructive_override_denied and leaves the guarded command blocked."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: puppet_master_allow_destructive_env_override
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0025"
+preserved_exact_tokens:
+- "PUPPET_MASTER_ALLOW_DESTRUCTIVE"
+- "std::env::var"
+- "v == \"1\""
+- "unwrap_or(false)"
+- "destructive_override_requested"
+negative_constraints:
+- "PUPPET_MASTER_ALLOW_DESTRUCTIVE must not be sufficient authority by itself."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-053 - Unified FileSafe YAML And GUI Toggle Surface
+
+```yaml
+plan_unit_id: F2-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  puppet-master.yaml exposes filesafe bashGuard, fileGuard, securityFilter, and approvedCommands
+  configuration; all FileSafe toggles for Command blocklist, Write scope, and Security filter
+  must be configurable from the GUI and easy to turn on or off in one place.
+gui_related: true
+gui_classification_reason: >-
+  This unit explicitly preserves GUI-configurable FileSafe toggle requirements and labels.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: unified_filesafe_yaml_and_gui_toggle_surface
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0026"
+preserved_exact_tokens:
+- "puppet-master.yaml"
+- "filesafe:"
+- "bashGuard"
+- "fileGuard"
+- "securityFilter"
+- "approvedCommands"
+- "Command blocklist"
+- "Write scope"
+- "Security filter"
+- "customPatternsPath"
+- ".puppet-master/destructive-commands.local.txt"
+- "§13.4"
+- "§15.5"
+- "easy to turn on or off in one place"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This unit preserves the YAML/GUI toggle surface and does not supersede F2-035 through F2-038 config-key/default canon."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-054 - Project Specific Pattern Extension Loading
+
+```yaml
+plan_unit_id: F2-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Project-specific destructive patterns extend the default bundled patterns by loading defaults
+  first, then loading and appending local patterns from .puppet-master/destructive-
+  commands.local.txt when the configured path exists.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend pattern loading behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: project_specific_pattern_extension_loading
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0027"
+preserved_exact_tokens:
+- "Project-Specific Patterns"
+- ".puppet-master/destructive-commands.local.txt"
+- "Load default patterns"
+- "load_patterns(&default_patterns_path)?"
+- "custom_patterns_path"
+- "local_path.exists()"
+- "patterns.extend(local_patterns)"
+negative_constraints:
+- "Local project patterns extend the bundled baseline and must not replace or disable bundled patterns."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Aligns with F2-034 and F2-038 additive custom pattern behavior."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 5792-5803 >>>
+### F2-055 - FileSafe Event Stream Authority
+
+```yaml
+plan_unit_id: F2-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe emits a structured event for every block or approved override into the canonical
+  seglog EventRecord stream; filesafe-events.jsonl is only a derived projector or diagnostic
+  mirror and not an authoritative append log.
+gui_related: false

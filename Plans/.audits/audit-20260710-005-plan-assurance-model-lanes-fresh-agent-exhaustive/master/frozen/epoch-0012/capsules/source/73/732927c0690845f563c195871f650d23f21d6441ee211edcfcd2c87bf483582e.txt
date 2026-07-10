@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE canonical_document_lines=18314-18325 >>>
+L00018314	preserved_exact_tokens:
+L00018315	  - "chat.thread_worktree_bound"
+L00018316	  - "chat.thread_worktree_unbound"
+L00018317	  - "git worktree list"
+L00018318	  - "reason=path_missing"
+L00018319	negative_constraints:
+L00018320	  - "Missing worktrees must not be silently re-created."
+L00018321	owner_hints:
+L00018322	  - Plans/assistant-chat-design.md
+L00018323	  - Plans/storage-plan.md
+L00018324	```
+L00018325	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=18326-18684 >>>
+L00018326	### ACD-329 - Worktree Aware File Identity
+L00018327	
+L00018328	```yaml
+L00018329	plan_unit_id: ACD-329
+L00018330	unit_type: constraint
+L00018331	status: accepted
+L00018332	owner_doc: Plans/assistant-chat-design.md
+L00018333	canonical_text: >-
+L00018334	  File identity for chat/debug/Source Control/GitHub pivots is `{ repo_id,
+L00018335	  worktree_id, relative_path }`; turn start freezes
+L00018336	  `execution_unit_context.worktree_id` and `working_directory`; historical cards
+L00018337	  remain pinned.
+L00018338	gui_related: false
+L00018339	gui_classification_reason: Worktree-aware file identity and turn-start freezing are runtime/contract behavior.
+L00018340	depends_on: [ACD-326]
+L00018341	unblocks: [ACD-330, ACD-367]
+L00018342	acceptance_criteria:
+L00018343	  - Worktree-aware file identity uses repo, worktree, and relative path.
+L00018344	  - Turn start freezes worktree ID and working directory for the whole turn.
+L00018345	  - Historical cards, receipts, and debug evidence remain pinned to captured worktree identity.
+L00018346	validation_surfaces:
+L00018347	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018348	  - python3 scripts/pm-plan-index.py validate
+L00018349	risk_class: worktree_identity
+L00018350	reasoning_tier: high
+L00018351	context_scope: contracts
+L00018352	implementation_surfaces:
+L00018353	  - Plans/assistant-chat-design.md
+L00018354	  - Plans/Contracts_V0.md
+L00018355	  - Plans/GitHub_Integration.md
+L00018356	  - Plans/WorktreeGitImprovement.md
+L00018357	node_compile_hint:
+L00018358	  mode: worktree_aware_file_identity
+L00018359	  create_worknodes: false
+L00018360	source_lineage:
+L00018361	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+L00018362	preserved_exact_tokens:
+L00018363	  - "{ repo_id, worktree_id, relative_path }"
+L00018364	  - "execution_unit_context.worktree_id"
+L00018365	  - "working_directory"
+L00018366	  - "HEAD_sha"
+L00018367	negative_constraints:
+L00018368	  - "Path alone is not sufficient."
+L00018369	owner_hints:
+L00018370	  - Plans/assistant-chat-design.md
+L00018371	  - Plans/Contracts_V0.md
+L00018372	```
+L00018373	
+L00018374	### ACD-330 - Mode Worktree Invariant
+L00018375	
+L00018376	```yaml
+L00018377	plan_unit_id: ACD-330
+L00018378	unit_type: constraint
+L00018379	status: accepted
+L00018380	owner_doc: Plans/assistant-chat-design.md
+L00018381	canonical_text: >-
+L00018382	  Worktree binding is thread-level and orthogonal to Ask, Agent, Debug, Plan,
+L00018383	  and Deep Plan; mode transitions do not rebind, unbind, or change frozen
+L00018384	  `working_directory` for an in-flight turn.
+L00018385	gui_related: false
+L00018386	gui_classification_reason: Mode/worktree orthogonality is runtime invariant behavior.
+L00018387	depends_on: [ACD-329]
+L00018388	unblocks: []
+L00018389	acceptance_criteria:
+L00018390	  - Mode transitions never rebind, unbind, or change frozen working directory for an in-flight turn.
+L00018391	  - The next turn observes the same bound worktree unless the user explicitly changes binding.
+L00018392	validation_surfaces:
+L00018393	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018394	  - python3 scripts/pm-plan-index.py validate
+L00018395	risk_class: run_modes
+L00018396	reasoning_tier: high
+L00018397	context_scope: worktrees
+L00018398	implementation_surfaces:
+L00018399	  - Plans/assistant-chat-design.md
+L00018400	  - Plans/Run_Modes.md
+L00018401	node_compile_hint:
+L00018402	  mode: mode_worktree_invariant
+L00018403	  create_worknodes: false
+L00018404	source_lineage:
+L00018405	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+L00018406	preserved_exact_tokens:
+L00018407	  - "Mode-worktree invariant"
+L00018408	  - "working_directory"
+L00018409	negative_constraints:
+L00018410	  - "Mode transitions never mutate worktree binding."
+L00018411	owner_hints:
+L00018412	  - Plans/assistant-chat-design.md
+L00018413	  - Plans/Run_Modes.md
+L00018414	```
+L00018415	
+L00018416	### ACD-331 - Create Worktree Dialog Surface
+L00018417	
+L00018418	```yaml
+L00018419	plan_unit_id: ACD-331
+L00018420	unit_type: requirement
+L00018421	status: accepted
+L00018422	owner_doc: Plans/assistant-chat-design.md
+L00018423	canonical_text: Create Worktree dialog opens from `Create Worktree…`, with Branch name and Base ref fields, defaults, validation, and `Create`/`Cancel` buttons.
+L00018424	gui_related: true
+L00018425	gui_classification_reason: Create Worktree dialog fields, defaults, validation, and buttons are visible UI.
+L00018426	depends_on: [ACD-324]
+L00018427	unblocks: [ACD-332]
+L00018428	acceptance_criteria:
+L00018429	  - "`Create Worktree…` opens a dialog with Branch name and Base ref fields."
+L00018430	  - Branch name and Base ref defaults and validation match the source span.
+L00018431	  - Dialog exposes `Create` and `Cancel` buttons.
+L00018432	validation_surfaces:
+L00018433	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018434	  - python3 scripts/pm-plan-index.py validate
+L00018435	risk_class: worktree_create
+L00018436	reasoning_tier: standard
+L00018437	context_scope: gui
+L00018438	implementation_surfaces:
+L00018439	  - Plans/assistant-chat-design.md
+L00018440	  - Plans/WorktreeGitImprovement.md
+L00018441	  - Plans/storage-plan.md
+L00018442	node_compile_hint:
+L00018443	  mode: create_worktree_dialog_surface
+L00018444	  create_worknodes: false
+L00018445	source_lineage:
+L00018446	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+L00018447	preserved_exact_tokens:
+L00018448	  - "Create Worktree…"
+L00018449	  - "assistant/thread-<short_id>"
+L00018450	  - "branching.assistant_worktree_base_ref"
+L00018451	  - "branching.base_branch"
+L00018452	  - "Create"
+L00018453	  - "Cancel"
+L00018454	negative_constraints: []
+L00018455	owner_hints:
+L00018456	  - Plans/assistant-chat-design.md
+L00018457	  - Plans/FinalGUISpec.md
+L00018458	```
+L00018459	
+L00018460	### ACD-332 - Worktree Create Backend Transaction
+L00018461	
+L00018462	```yaml
+L00018463	plan_unit_id: ACD-332
+L00018464	unit_type: requirement
+L00018465	status: accepted
+L00018466	owner_doc: Plans/assistant-chat-design.md
+L00018467	canonical_text: >-
+L00018468	  Backend create flow calls
+L00018469	  `WorktreeManager::create_worktree(branch_name, base_ref, worktree_path)`,
+L00018470	  writes `worktree_record`, writes thread binding, emits
+L00018471	  `chat.thread_worktree_bound`, and uses the generated
+L00018472	  `.puppet-master/worktrees/thread-{short_id}` path with numeric suffixes.
+L00018473	gui_related: false
+L00018474	gui_classification_reason: Worktree creation backend transaction is storage/runtime behavior.
+L00018475	depends_on: [ACD-331]
+L00018476	unblocks: [ACD-333, ACD-334]
+L00018477	acceptance_criteria:
+L00018478	  - Backend creates worktrees through `WorktreeManager::create_worktree`.
+L00018479	  - Successful creation writes worktree record and thread binding and emits the bound event.
+L00018480	  - Auto-generated worktree paths use the thread short-id path and numeric suffixes.
+L00018481	validation_surfaces:
+L00018482	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018483	  - python3 scripts/pm-plan-index.py validate
+L00018484	risk_class: worktree_create
+L00018485	reasoning_tier: high
+L00018486	context_scope: storage
+L00018487	implementation_surfaces:
+L00018488	  - Plans/assistant-chat-design.md
+L00018489	  - Plans/WorktreeGitImprovement.md
+L00018490	  - Plans/storage-plan.md
+L00018491	  - Plans/Contracts_V0.md
+L00018492	node_compile_hint:
+L00018493	  mode: worktree_create_backend_transaction
+L00018494	  create_worknodes: false
+L00018495	source_lineage:
+L00018496	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+L00018497	preserved_exact_tokens:
+L00018498	  - "WorktreeManager::create_worktree(branch_name, base_ref, worktree_path)"
+L00018499	  - "chat.thread_worktree_bound"
+L00018500	  - "thread-{short_id}-2"
+L00018501	negative_constraints: []
+L00018502	owner_hints:
+L00018503	  - Plans/assistant-chat-design.md
+L00018504	  - Plans/WorktreeGitImprovement.md
+L00018505	```
+L00018506	
+L00018507	### ACD-333 - Create Worktree Dialog Result States
+L00018508	
+L00018509	```yaml
+L00018510	plan_unit_id: ACD-333
+L00018511	unit_type: requirement
+L00018512	status: accepted
+L00018513	owner_doc: Plans/assistant-chat-design.md
+L00018514	canonical_text: >-
+L00018515	  Create dialog success closes and updates bound state/thread selector; failure
+L00018516	  keeps dialog open with inline error; branch collision warning is advisory with
+L00018517	  `Create Anyway` and `Use Different Branch`; loading disables dropdown/create
+L00018518	  button and shows `Creating…`.
+L00018519	gui_related: true
+L00018520	gui_classification_reason: Create Worktree success, failure, warning, and loading states are visible dialog UI.
+L00018521	depends_on: [ACD-332]
+L00018522	unblocks: []
+L00018523	acceptance_criteria:
+L00018524	  - Successful create closes the dialog and updates button and thread selector state.
+L00018525	  - Failure keeps the dialog open with inline error and allows retry or cancel.
+L00018526	  - Branch collision warning and loading states match the specified copy and buttons.
+L00018527	validation_surfaces:
+L00018528	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018529	  - python3 scripts/pm-plan-index.py validate
+L00018530	risk_class: worktree_create
+L00018531	reasoning_tier: standard
+L00018532	context_scope: gui
+L00018533	implementation_surfaces:
+L00018534	  - Plans/assistant-chat-design.md
+L00018535	  - Plans/FinalGUISpec.md
+L00018536	  - Plans/Wiring_Matrix.md
+L00018537	node_compile_hint:
+L00018538	  mode: create_worktree_dialog_result_states
+L00018539	  create_worknodes: false
+L00018540	source_lineage:
+L00018541	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+L00018542	preserved_exact_tokens:
+L00018543	  - "Branch already exists"
+L00018544	  - "Create Anyway"
+L00018545	  - "Use Different Branch"
+L00018546	  - "Creating…"
+L00018547	negative_constraints:
+L00018548	  - "Branch name collision warning is advisory only."
+L00018549	owner_hints:
+L00018550	  - Plans/assistant-chat-design.md
+L00018551	  - Plans/FinalGUISpec.md
+L00018552	```
+L00018553	
+L00018554	### ACD-334 - Worktree Creation Tool Boundary
+L00018555	
+L00018556	```yaml
+L00018557	plan_unit_id: ACD-334
+L00018558	unit_type: constraint
+L00018559	status: accepted
+L00018560	owner_doc: Plans/assistant-chat-design.md
+L00018561	canonical_text: Worktree creation/removal entrypoints are user-initiated or system-initiated by auto-create; the AI agent never invokes worktree creation/removal as a direct tool call.
+L00018562	gui_related: false
+L00018563	gui_classification_reason: Tool-call boundary is command/runtime behavior.
+L00018564	depends_on: [ACD-332]
+L00018565	unblocks: [ACD-335]
+L00018566	acceptance_criteria:
+L00018567	  - Worktree creation/removal starts from chat header dropdown, slash command, Source Control action, or auto-create setting.
+L00018568	  - AI agents do not directly invoke worktree creation/removal as tools.
+L00018569	validation_surfaces:
+L00018570	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018571	  - python3 scripts/pm-plan-index.py validate
+L00018572	risk_class: tool_boundary
+L00018573	reasoning_tier: high
+L00018574	context_scope: worktrees
+L00018575	implementation_surfaces:
+L00018576	  - Plans/assistant-chat-design.md
+L00018577	  - Plans/UI_Command_Catalog.md
+L00018578	  - Plans/WorktreeGitImprovement.md
+L00018579	node_compile_hint:
+L00018580	  mode: worktree_creation_tool_boundary
+L00018581	  create_worknodes: false
+L00018582	source_lineage:
+L00018583	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+L00018584	preserved_exact_tokens:
+L00018585	  - "chat header dropdown"
+L00018586	  - "slash command"
+L00018587	  - "Source Control action"
+L00018588	negative_constraints:
+L00018589	  - "The AI agent never invokes worktree creation or removal as a direct tool call."
+L00018590	owner_hints:
+L00018591	  - Plans/assistant-chat-design.md
+L00018592	  - Plans/UI_Command_Catalog.md
+L00018593	```
+L00018594	
+L00018595	### ACD-335 - Assistant Auto Worktree Creation
+L00018596	
+L00018597	```yaml
+L00018598	plan_unit_id: ACD-335
+L00018599	unit_type: requirement
+L00018600	status: accepted
+L00018601	owner_doc: Plans/assistant-chat-design.md
+L00018602	canonical_text: When `branching.assistant_auto_worktree` is true, new thread creation synchronously creates a worktree before first turn dispatch; failure creates the thread without a worktree and warns the user.
+L00018603	gui_related: false
+L00018604	gui_classification_reason: Auto-create timing is chat runtime behavior.
+L00018605	depends_on: [ACD-326]
+L00018606	unblocks: [ACD-336, ACD-337, ACD-338]
+L00018607	acceptance_criteria:
+L00018608	  - New thread creation checks `branching.assistant_auto_worktree`.
+L00018609	  - Auto-create happens before first turn dispatch when enabled.
+L00018610	  - Failure leaves the thread without a worktree and warns the user.
+L00018611	validation_surfaces:
+L00018612	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018613	  - python3 scripts/pm-plan-index.py validate
+L00018614	risk_class: worktree_auto_create
+L00018615	reasoning_tier: high
+L00018616	context_scope: chat_runtime
+L00018617	implementation_surfaces:
+L00018618	  - Plans/assistant-chat-design.md
+L00018619	  - Plans/storage-plan.md
+L00018620	  - Plans/WorktreeGitImprovement.md
+L00018621	node_compile_hint:
+L00018622	  mode: assistant_auto_worktree_creation
+L00018623	  create_worknodes: false
+L00018624	source_lineage:
+L00018625	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0151
+L00018626	preserved_exact_tokens:
+L00018627	  - "branching.assistant_auto_worktree"
+L00018628	  - "cmd.chat.new"
+L00018629	  - "Could not create worktree: {error}. Thread will use project root."
+L00018630	negative_constraints: []
+L00018631	owner_hints:
+L00018632	  - Plans/assistant-chat-design.md
+L00018633	  - Plans/WorktreeGitImprovement.md
+L00018634	```
+L00018635	
+L00018636	### ACD-336 - Auto Worktree Title Rename
+L00018637	
+L00018638	```yaml
+L00018639	plan_unit_id: ACD-336
+L00018640	unit_type: requirement
+L00018641	status: accepted
+L00018642	owner_doc: Plans/assistant-chat-design.md
+L00018643	canonical_text: >-
+L00018644	  Title rename flow sanitizes generated titles, targets
+L00018645	  `assistant/<sanitized_title>`, appends numeric suffixes silently, renames the
+L00018646	  branch, updates records, emits `chat.thread_worktree_renamed`, and keeps the
+L00018647	  temp name on failure.
+L00018648	gui_related: false
+L00018649	gui_classification_reason: Auto title rename is branch/runtime storage behavior.
+L00018650	depends_on: [ACD-335]
+L00018651	unblocks: [ACD-337]
+L00018652	acceptance_criteria:
+L00018653	  - Title generation sanitizes branch names using the specified examples and fallback.
+L00018654	  - Existing target branch names receive numeric suffixes silently.
+L00018655	  - Successful rename updates records and emits `chat.thread_worktree_renamed`; failure keeps the temp name without user interruption.
+L00018656	validation_surfaces:
+L00018657	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018658	  - python3 scripts/pm-plan-index.py validate
+L00018659	risk_class: worktree_auto_create
+L00018660	reasoning_tier: high
+L00018661	context_scope: chat_runtime
+L00018662	implementation_surfaces:
+L00018663	  - Plans/assistant-chat-design.md
+L00018664	  - Plans/storage-plan.md
+L00018665	  - Plans/WorktreeGitImprovement.md
+L00018666	node_compile_hint:
+L00018667	  mode: auto_worktree_title_rename
+L00018668	  create_worknodes: false
+L00018669	source_lineage:
+L00018670	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0151
+L00018671	preserved_exact_tokens:
+L00018672	  - "Fix Auth Bug"
+L00018673	  - "users-login-v2"
+L00018674	  - "thread-a1b2c3d4"
+L00018675	  - "assistant/<sanitized_title>"
+L00018676	  - "chat.thread_worktree_renamed"
+L00018677	negative_constraints:
+L00018678	  - "Auto-create title suffixing uses no user dialog."
+L00018679	  - "Rename failure keeps the temp name with no user interruption."
+L00018680	owner_hints:
+L00018681	  - Plans/assistant-chat-design.md
+L00018682	  - Plans/storage-plan.md
+L00018683	```
+L00018684	
+
+<<< CONTEXT_AFTER canonical_document_lines=18685-18696 >>>
+L00018685	### ACD-337 - Auto Worktree Runtime Ownership
+L00018686	
+L00018687	```yaml
+L00018688	plan_unit_id: ACD-337
+L00018689	unit_type: constraint
+L00018690	status: accepted
+L00018691	owner_doc: Plans/assistant-chat-design.md
+L00018692	canonical_text: >-
+L00018693	  Chat runtime owns auto-create; Executor never invokes `WorktreeManager`
+L00018694	  directly; create is serialized per project and reverse lookup write is atomic;
+L00018695	  race failures retry with the next suffix, while non-race failures do not retry.
+L00018696	gui_related: false

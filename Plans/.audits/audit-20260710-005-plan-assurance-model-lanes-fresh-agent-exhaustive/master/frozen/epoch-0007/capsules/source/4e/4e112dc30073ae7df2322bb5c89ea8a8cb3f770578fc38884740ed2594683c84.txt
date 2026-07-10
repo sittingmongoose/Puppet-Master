@@ -1,0 +1,376 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3238-3249 >>>
+L00003238	- Plans/UI_Command_Catalog.md
+L00003239	- Plans/Commands_System.md
+L00003240	- Plans/Orchestrator_Page.md
+L00003241	- Plans/00-plans-index.md
+L00003242	- Plans/Crosswalk.md
+L00003243	- Plans/Wiring_Matrix.md
+L00003244	```
+L00003245	
+L00003246	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00003247	
+L00003248	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Wiring Matrix owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00003249	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3250-3610 >>>
+L00003250	### WM-039 - Notifications And Sounds Settings Wiring
+L00003251	
+L00003252	```yaml
+L00003253	plan_unit_id: WM-039
+L00003254	unit_type: requirement
+L00003255	status: accepted
+L00003256	owner_doc: Plans/Wiring_Matrix.md
+L00003257	canonical_text: >-
+L00003258	  Notifications and Sounds wiring maps `cmd.settings.open_notifications` to Settings > General > Notifications & Sounds;
+L00003259	  destination create/update/delete/toggle/test commands to notification destination storage, credential custody, live-send
+L00003260	  authority, delivery service, and receipt projection; mapping/override commands to global/project override records; and
+L00003261	  sound preview/upload/pack import/asset delete/asset restore/asset export/mapping set commands to sound asset validation,
+L00003262	  manifest storage, PM-managed blobs, and local-only preview. Destination create/update wiring validates provider-specific
+L00003263	  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram profile payloads against CV-298 before writing non-secret
+L00003264	  settings and credential refs. This PlanUnit records wiring obligations only and does not generate wiring JSON.
+L00003265	gui_related: true
+L00003266	gui_classification_reason: Defines user-visible settings command wiring and command-to-surface behavior.
+L00003267	depends_on: [UCC-103, F3-405, CV-298, SP-222, PS-124]
+L00003268	unblocks: [ATS-016]
+L00003269	acceptance_criteria:
+L00003270	  - Destination test-send wiring requires explicit user action, enabled destination, masking, rate limit, and receipt recording.
+L00003271	  - Provider-specific destination payloads are validated before storage or live-send test wiring can proceed.
+L00003272	  - Sound preview wiring stays local-only and cannot send remote notifications.
+L00003273	  - Global/project override wiring follows built-in < global < project < runtime safety constraints.
+L00003274	validation_surfaces:
+L00003275	  - python3 scripts/pm-plan-index.py validate
+L00003276	  - Notifications and Sounds wiring fixtures
+L00003277	risk_class: notification_wiring_gap
+L00003278	reasoning_tier: high
+L00003279	context_scope: notifications_sounds_wiring
+L00003280	implementation_surfaces:
+L00003281	  - Plans/Wiring_Matrix.md
+L00003282	  - future Settings command wiring
+L00003283	node_compile_hint:
+L00003284	  mode: notifications_sounds_settings_wiring
+L00003285	  create_worknodes: false
+L00003286	  create_nodeseeds: false
+L00003287	source_lineage:
+L00003288	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-settings-gui-command-wiring
+L00003289	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
+L00003290	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00003291	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+L00003292	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+L00003293	source_atom_ids: [atom-0064, atom-0065, atom-0068]
+L00003294	preserved_exact_tokens:
+L00003295	  - "cmd.settings.open_notifications"
+L00003296	  - "cmd.notifications.destination.create"
+L00003297	  - "cmd.notifications.destination.update"
+L00003298	  - "cmd.notifications.destination.delete"
+L00003299	  - "cmd.notifications.destination.toggle"
+L00003300	  - "cmd.notifications.destination.test"
+L00003301	  - "cmd.notifications.mapping.update"
+L00003302	  - "cmd.notifications.override.set"
+L00003303	  - "cmd.sound.preview"
+L00003304	  - "cmd.sound.upload"
+L00003305	  - "cmd.sound.pack.import"
+L00003306	  - "cmd.sound.asset.delete"
+L00003307	  - "cmd.sound.asset.restore"
+L00003308	  - "cmd.sound.asset.export"
+L00003309	  - "cmd.sound.mapping.set"
+L00003310	negative_constraints:
+L00003311	  - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
+L00003312	  - Do not wire local preview through remote delivery.
+L00003313	  - Do not let quiet/mute override blocked or security-sensitive notifications.
+L00003314	owner_hints:
+L00003315	  - Plans/Wiring_Matrix.md
+L00003316	  - Plans/UI_Command_Catalog.md
+L00003317	  - Plans/FinalGUISpec.md
+L00003318	  - Plans/storage-plan.md
+L00003319	```
+L00003320	
+L00003321	## Usage GUI Propagation Addendum - 2026-07-09
+L00003322	
+L00003323	This addendum constrains generated wiring validation for Usage route/open commands. It creates no generated wiring JSON, WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, production build tasks, final manifests, or PNC-019 receipts.
+L00003324	
+L00003325	### WM-043 - Usage Route Wiring Alias And Correlation Gate
+L00003326	
+L00003327	```yaml
+L00003328	plan_unit_id: WM-043
+L00003329	unit_type: wiring_contract
+L00003330	status: accepted
+L00003331	owner_doc: Plans/Wiring_Matrix.md
+L00003332	canonical_text: >-
+L00003333	  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Wiring evidence for `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` must prove route_open effect_kind, route_target.object_kind = usage_event when usage_event_ref is present, OpenSubject preservation, and correlation passthrough for usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where present.
+L00003334	gui_related: true
+L00003335	gui_classification_reason: Wiring determines whether visible Usage navigation controls dispatch canonical commands.
+L00003336	depends_on: [WM-034, WM-042, UCC-109, CV-316]
+L00003337	unblocks: []
+L00003338	acceptance_criteria:
+L00003339	  - validate-wiring-matrix fails if production wiring registers `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical command rows instead of compatibility aliases or exclusions.
+L00003340	  - Usage route/open wiring entries declare effect_kind route_open or mixed with route_open detail, not generic receipt-only success.
+L00003341	  - Wiring fixtures prove Usage correlation refs survive dispatch and route restoration without being replaced by timestamp/run/thread/tier filters.
+L00003342	  - Wiring evidence distinguishes thread Context Detail Pane commands from app-wide Usage route/open commands.
+L00003343	validation_surfaces:
+L00003344	  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+L00003345	  - python3 scripts/pm-plan-index.py validate
+L00003346	  - future Usage route wiring fixture suite
+L00003347	risk_class: usage_wiring_alias_false_certification
+L00003348	reasoning_tier: high
+L00003349	context_scope: usage_route_wiring
+L00003350	implementation_surfaces:
+L00003351	  - Plans/Wiring_Matrix.md
+L00003352	  - Plans/UI_Command_Catalog.md
+L00003353	  - Plans/Wiring_Matrix.production.json
+L00003354	  - Plans/Wiring_Matrix.production.exclusions.json
+L00003355	node_compile_hint:
+L00003356	  mode: usage_route_wiring_alias_gate
+L00003357	  create_worknodes: false
+L00003358	  create_nodeseeds: false
+L00003359	source_lineage:
+L00003360	  - "Plans/Wiring_Matrix.md:2705-2784"
+L00003361	  - "Plans/Wiring_Matrix.md:3325-3390"
+L00003362	  - "Plans/Wiring_Matrix.production.json:2674"
+L00003363	  - "Plans/Wiring_Matrix.production.json:3664"
+L00003364	  - "Plans/Wiring_Matrix.production.json:4819"
+L00003365	  - "Plans/Wiring_Matrix.production.json:16493"
+L00003366	  - "Plans/UI_Command_Catalog.md:798-799"
+L00003367	preserved_exact_tokens:
+L00003368	  - cmd.chat.open_thread_usage
+L00003369	  - cmd.chat.focus_thread_usage
+L00003370	  - cmd.chat.close_thread_usage
+L00003371	  - cmd.nav.open_usage_subject
+L00003372	  - cmd.artifacts.show_in_usage
+L00003373	  - cmd.artifacts.show_in_ledger
+L00003374	  - route_open
+L00003375	  - route_target.object_kind = usage_event
+L00003376	  - correlation_passthrough
+L00003377	negative_constraints:
+L00003378	  - Do not certify retired chat usage IDs as live production UICommands.
+L00003379	  - Do not let generic family-root exclusions hide concrete stale command rows.
+L00003380	  - Do not accept receipt-only wiring for a command whose effect is route/open navigation.
+L00003381	owner_hints:
+L00003382	  - Plans/Wiring_Matrix.md
+L00003383	  - Plans/UI_Command_Catalog.md
+L00003384	  - Plans/Contracts_V0.md
+L00003385	```
+L00003386	
+L00003387	## FABLE Production Wiring Repair Addendum - 2026-07-07
+L00003388	
+L00003389	This addendum closes the FABLE production wiring portion of the GUI command/wiring repair. It records contract obligations for `Plans/Wiring_Matrix.production.json` and `Plans/Wiring_Matrix.production.exclusions.json`; it does not create WorkNodes, NodeSeeds, executable queues, runtime handlers, Slint/Rust implementation files, generated governance artifacts, or production build tasks.
+L00003390	
+L00003391	### WM-042 - FABLE Production Wiring Semantic Repair
+L00003392	
+L00003393	```yaml
+L00003394	plan_unit_id: WM-042
+L00003395	unit_type: validation_rule
+L00003396	status: accepted
+L00003397	owner_doc: Plans/Wiring_Matrix.md
+L00003398	canonical_text: >-
+L00003399	  The FABLE production wiring repair requires the production wiring matrix to cover cataloged UI commands after
+L00003400	  exact exclusions, use concrete owner-surface locations instead of generic Cataloged GUI surface rows, remove
+L00003401	  bare namespace-root production rows, replace fabricated command_applied placeholder events with canonical
+L00003402	  event types or explicit no-persist dispatch and route/open receipts, and keep the PRD Builder to Planning Wizard
+L00003403	  to runtime approval to Plan Compile open-build chain wired with projected availability and disabled reasons.
+L00003404	gui_related: true
+L00003405	gui_classification_reason: Defines user-visible command wiring, projected availability, disabled reasons, and route/open behavior.
+L00003406	depends_on: [UCC-108]
+L00003407	unblocks: [PG-061]
+L00003408	acceptance_criteria:
+L00003409	  - validate-wiring-matrix passes against the production matrix and exact exclusion list.
+L00003410	  - No production row uses `Cataloged GUI surface` as a concrete location.
+L00003411	  - No production row emits `*.command_applied` placeholder events.
+L00003412	  - Bare command namespace roots are excluded as parser artifacts or compatibility roots, not represented as production UI rows.
+L00003413	  - Commands with no persisted domain event declare explicit no-persist dispatch or route/open receipts and event-test requirements.
+L00003414	  - Launch-chain rows preserve CAS/currentness, projected availability, disabled reasons, and receipt/event effects without claiming runtime buildability.
+L00003415	validation_surfaces:
+L00003416	  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+L00003417	  - python3 scripts/pm-plan-index.py validate
+L00003418	  - python3 scripts/pm-plans-verify.py run-gates
+L00003419	risk_class: production_wiring_semantic_drift
+L00003420	reasoning_tier: high
+L00003421	context_scope: fable_gui_command_wiring_gate_repair
+L00003422	implementation_surfaces:
+L00003423	  - Plans/Wiring_Matrix.production.json
+L00003424	  - Plans/Wiring_Matrix.production.exclusions.json
+L00003425	  - Plans/UI_Command_Catalog.md
+L00003426	  - future UI command dispatcher fixtures
+L00003427	node_compile_hint:
+L00003428	  mode: production_wiring_semantic_repair
+L00003429	  create_worknodes: false
+L00003430	  create_nodeseeds: false
+L00003431	source_lineage:
+L00003432	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events
+L00003433	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-launch-approval-chain-preimplementation-proof
+L00003434	preserved_exact_tokens:
+L00003435	  - Cataloged GUI surface
+L00003436	  - "*.command_applied"
+L00003437	  - cmd.prd_builder.approve_for_planning_wizard
+L00003438	  - cmd.planning_wizard.approve_and_build
+L00003439	  - cmd.runtime.approve
+L00003440	  - cmd.plan_compile.open_build
+L00003441	negative_constraints:
+L00003442	  - Do not treat wiring JSON existence as runtime certification or buildability proof.
+L00003443	  - Do not create runtime handlers, WorkNodes, NodeSeeds, executable queues, or production build tasks.
+L00003444	  - Do not fabricate command_applied events for receipt-only or route/open commands.
+L00003445	owner_hints:
+L00003446	  - Plans/Wiring_Matrix.md
+L00003447	  - Plans/UI_Command_Catalog.md
+L00003448	  - Plans/PRD_Builder.md
+L00003449	  - Plans/Planning_Wizard.md
+L00003450	  - Plans/Goal_Runtime_System.md
+L00003451	  - Plans/Plan_To_Node_Compilation.md
+L00003452	```
+L00003453	
+L00003454	## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+L00003455	
+L00003456	This addendum compiles first-run onboarding route wiring obligations from bootstrap ledger `pldg-20260701-001-feature-intake` into Wiring_Matrix ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, wiring JSON, generated governance artifacts, or a governance seal.
+L00003457	
+L00003458	### WM-041 - First-Run Onboarding CTA And Route Wiring
+L00003459	
+L00003460	```yaml
+L00003461	plan_unit_id: WM-041
+L00003462	unit_type: requirement
+L00003463	status: accepted
+L00003464	owner_doc: Plans/Wiring_Matrix.md
+L00003465	canonical_text: >-
+L00003466	  First-run onboarding wiring maps the visible wizard CTAs to the UI_Command_Catalog onboarding command family and
+L00003467	  owner-doc consumers. `Set up a paid provider`, `Use this provider`, `Sign in`, `Set up provider`, and `Reconnect`
+L00003468	  open or resume provider/account setup with return context. `Skip for now` writes or references limited
+L00003469	  `onboarding_setup_state` and opens Planning Wizard in limited setup state without marking Doctor/Health Ready.
+L00003470	  `Review Free Models`, `Maybe later`, and `Continue to Planning Wizard` preserve the paid-provider-before-Free-Models
+L00003471	  sequence and saved top-10 order. `Open Planning Wizard` routes to Planning Wizard as the first full app page after
+L00003472	  setup or skip. The onboarding Teacher copy routes through Assistant Chat/Teacher contracts rather than a separate
+L00003473	  Teacher surface. Health/Doctor `Set up provider` reuses the same provider setup route and return context. This PlanUnit
+L00003474	  records wiring obligations only and does not generate wiring JSON.
+L00003475	gui_related: true
+L00003476	gui_classification_reason: Defines user-visible CTA routing, first-run step transitions, and cross-surface GUI route behavior.
+L00003477	depends_on: [F3-411, UCC-106, CV-305, MA-066, MS-122, ACD-431, PWIZ-017]
+L00003478	unblocks: [ATS-020]
+L00003479	acceptance_criteria:
+L00003480	  - Every accepted first-run CTA maps to a cataloged UI command or existing Teacher/Planning Wizard route.
+L00003481	  - Skip routing preserves limited setup state and cannot produce a false-ready Health state.
+L00003482	  - Provider setup return context routes back to onboarding, Planning Wizard limited state, Health, or the originating Free Models row/list as appropriate.
+L00003483	  - Free Models review/defer wiring occurs only after the paid-provider prompt.
+L00003484	  - Wiring consumes owner docs rather than redefining provider auth, model readiness, Teacher behavior, or Planning Wizard state.
+L00003485	validation_surfaces:
+L00003486	  - python3 scripts/pm-plan-index.py validate
+L00003487	  - future first-run onboarding command wiring fixture
+L00003488	  - future Health provider-setup return-route fixture
+L00003489	risk_class: onboarding_wiring_gap
+L00003490	reasoning_tier: high
+L00003491	context_scope: first_run_onboarding_wiring
+L00003492	implementation_surfaces:
+L00003493	  - Plans/Wiring_Matrix.md
+L00003494	  - future first-run onboarding route wiring
+L00003495	node_compile_hint:
+L00003496	  mode: first_run_onboarding_wiring
+L00003497	  create_worknodes: false
+L00003498	  create_nodeseeds: false
+L00003499	source_lineage:
+L00003500	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+L00003501	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+L00003502	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+L00003503	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+L00003504	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+L00003505	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+L00003506	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+L00003507	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00003508	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00003509	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+L00003510	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+L00003511	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+L00003512	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00003513	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+L00003514	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+L00003515	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+L00003516	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+L00003517	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+L00003518	source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
+L00003519	decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
+L00003520	preserved_exact_tokens:
+L00003521	  - "Set up a paid provider"
+L00003522	  - "Use this provider"
+L00003523	  - "Sign in"
+L00003524	  - "Set up provider"
+L00003525	  - "Reconnect"
+L00003526	  - "Skip for now"
+L00003527	  - "Review Free Models"
+L00003528	  - "Maybe later"
+L00003529	  - "Continue to Planning Wizard"
+L00003530	  - "Open Planning Wizard"
+L00003531	  - "onboarding_setup_state"
+L00003532	  - "Provider setup is not finished"
+L00003533	  - "Teacher"
+L00003534	negative_constraints:
+L00003535	  - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
+L00003536	  - Do not route skip to the dense Home shell by default.
+L00003537	  - Do not mark Doctor/Health as Ready when provider setup was skipped.
+L00003538	  - Do not define UICommand payload/result schemas outside UI_Command_Catalog.
+L00003539	  - Do not redefine provider/account readiness or Teacher behavior in Wiring_Matrix.
+L00003540	owner_hints:
+L00003541	  - Plans/Wiring_Matrix.md
+L00003542	  - Plans/UI_Command_Catalog.md
+L00003543	  - Plans/FinalGUISpec.md
+L00003544	  - Plans/Planning_Wizard.md
+L00003545	```
+L00003546	
+L00003547	### WM-040 - DRY Method Settings Wiring
+L00003548	
+L00003549	```yaml
+L00003550	plan_unit_id: WM-040
+L00003551	unit_type: requirement
+L00003552	status: accepted
+L00003553	owner_doc: Plans/Wiring_Matrix.md
+L00003554	canonical_text: >-
+L00003555	  DRY Method settings wiring maps `cmd.settings.agent_rules.dry_method_default_guard.set` from Settings > General >
+L00003556	  Agent Rules to `app.agent_rules.dry_method_default_guard` storage, emits
+L00003557	  `settings.agent_rules.dry_method_default_guard.updated`, refreshes Assistant Chat and run-detail DRY disclosure
+L00003558	  projections, and records receipt provenance for enabled and disabled_by_user states. This wiring does not generate
+L00003559	  wiring JSON and does not disable explicit instructions, safety, secrets, source authority, governance, permissions,
+L00003560	  or source-control hygiene when the default DRY guard is turned off.
+L00003561	gui_related: true
+L00003562	gui_classification_reason: Defines user-visible settings toggle wiring and disclosure refresh behavior.
+L00003563	depends_on: [UCC-104, CV-299, SP-223, ACD-429]
+L00003564	unblocks: [ATS-018]
+L00003565	acceptance_criteria:
+L00003566	  - The Settings toggle writes only enabled or disabled_by_user to the DRY default-guard setting.
+L00003567	  - Assistant Chat and run-detail disclosures refresh after the setting changes.
+L00003568	  - Disabled DRY state remains receipt-backed and does not bypass non-DRY authority boundaries.
+L00003569	validation_surfaces:
+L00003570	  - python3 scripts/pm-plan-index.py validate
+L00003571	  - DRY Method settings wiring fixture
+L00003572	risk_class: dry_method_settings_wiring_gap
+L00003573	reasoning_tier: high
+L00003574	context_scope: dry_method_settings_wiring
+L00003575	implementation_surfaces:
+L00003576	  - Plans/Wiring_Matrix.md
+L00003577	  - future Settings command wiring
+L00003578	node_compile_hint:
+L00003579	  mode: dry_method_settings_wiring
+L00003580	  create_worknodes: false
+L00003581	  create_nodeseeds: false
+L00003582	source_lineage:
+L00003583	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+L00003584	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
+L00003585	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
+L00003586	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+L00003587	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00003588	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
+L00003589	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+L00003590	source_atom_ids: [atom-0073, atom-0074, atom-0089]
+L00003591	decision_refs: [dec-0016, dec-0017]
+L00003592	preserved_exact_tokens:
+L00003593	  - "cmd.settings.agent_rules.dry_method_default_guard.set"
+L00003594	  - "app.agent_rules.dry_method_default_guard"
+L00003595	  - "enabled"
+L00003596	  - "disabled_by_user"
+L00003597	  - "settings.agent_rules.dry_method_default_guard.updated"
+L00003598	  - "DRY applied"
+L00003599	  - "DRY degraded"
+L00003600	  - "DRY disabled"
+L00003601	negative_constraints:
+L00003602	  - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
+L00003603	  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+L00003604	  - Do not hide trust-affecting DRY state in backend logs only.
+L00003605	owner_hints:
+L00003606	  - Plans/Wiring_Matrix.md
+L00003607	  - Plans/UI_Command_Catalog.md
+L00003608	  - Plans/FinalGUISpec.md
+L00003609	  - Plans/storage-plan.md
+L00003610	```

@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE canonical_document_lines=12399-12410 >>>
+L00012399	  - "Persona"
+L00012400	  - "Worker"
+L00012401	  - "Tokens"
+L00012402	  - "Context"
+L00012403	  - "`Resend`"
+L00012404	negative_constraints:
+L00012405	  - "Resend must discard later history or work when retrying the most recent user message."
+L00012406	owner_hints:
+L00012407	  - Plans/Contracts_V0.md
+L00012408	  - Plans/assistant-chat-design.md
+L00012409	```
+L00012410	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=12411-12800 >>>
+L00012411	### CV-192 - Context Detail Editor Tab Paths
+L00012412	
+L00012413	```yaml
+L00012414	plan_unit_id: CV-192
+L00012415	unit_type: requirement
+L00012416	status: accepted
+L00012417	owner_doc: Plans/Contracts_V0.md
+L00012418	canonical_text: >-
+L00012419	  The context-detail editor tab has top-level Curated and raw inspection paths;
+L00012420	  Curated contains Overview, Breakdown, and Messages, and Deep Plan remains a
+L00012421	  distinct workflow identity and display label.
+L00012422	gui_related: true
+L00012423	gui_classification_reason: This unit defines visible context-detail tab paths and labels.
+L00012424	split_recommended: false
+L00012425	depends_on: [CV-190]
+L00012426	unblocks: []
+L00012427	acceptance_criteria:
+L00012428	  - "Curated contains Overview, Breakdown, and Messages."
+L00012429	  - "Raw inspection may expose serialized payloads, provider metadata, and path/runtime data for log, detail, and debugging."
+L00012430	  - "Deep Plan remains distinct from generic plan mode."
+L00012431	validation_surfaces:
+L00012432	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012433	  - python3 scripts/pm-plan-index.py validate
+L00012434	risk_class: context_detail_path_drift
+L00012435	reasoning_tier: standard
+L00012436	context_scope: context_detail_editor_tab
+L00012437	implementation_surfaces:
+L00012438	  - Plans/Contracts_V0.md
+L00012439	  - Plans/assistant-chat-design.md
+L00012440	node_compile_hint:
+L00012441	  mode: context_detail_editor_tab_paths
+L00012442	  create_worknodes: false
+L00012443	source_lineage:
+L00012444	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+L00012445	preserved_exact_tokens:
+L00012446	  - "`Curated`"
+L00012447	  - "`/raw`"
+L00012448	  - "`/workflow`"
+L00012449	  - "Deep Plan"
+L00012450	  - "Overview"
+L00012451	  - "Breakdown"
+L00012452	  - "Messages"
+L00012453	negative_constraints:
+L00012454	  - "Raw/log/detail/debug fields must not become chat-facing labels."
+L00012455	owner_hints:
+L00012456	  - Plans/Contracts_V0.md
+L00012457	  - Plans/assistant-chat-design.md
+L00012458	```
+L00012459	
+L00012460	### CV-193 - Thread Estimated Cost Display
+L00012461	
+L00012462	```yaml
+L00012463	plan_unit_id: CV-193
+L00012464	unit_type: requirement
+L00012465	status: accepted
+L00012466	owner_doc: Plans/Contracts_V0.md
+L00012467	canonical_text: >-
+L00012468	  Thread cost labels are Estimated Cost unless PM has provider-authoritative
+L00012469	  cost semantics for that value; estimated baselines may use OpenCode-style
+L00012470	  normalization while preserving provider buckets and over-200k tier behavior.
+L00012471	gui_related: true
+L00012472	gui_classification_reason: This unit defines user-visible thread cost labels.
+L00012473	split_recommended: false
+L00012474	depends_on: [CV-189]
+L00012475	unblocks: [CV-194]
+L00012476	acceptance_criteria:
+L00012477	  - "Thread cost labels use Estimated Cost unless provider-authoritative cost exists."
+L00012478	  - "Estimated baseline may use OpenCode-style normalization."
+L00012479	  - "Provider-reported buckets, cache caveats, and over-200k pricing tier selection are preserved where available."
+L00012480	validation_surfaces:
+L00012481	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012482	  - python3 scripts/pm-plan-index.py validate
+L00012483	risk_class: thread_cost_display_drift
+L00012484	reasoning_tier: standard
+L00012485	context_scope: thread_estimated_cost_display
+L00012486	implementation_surfaces:
+L00012487	  - Plans/Contracts_V0.md
+L00012488	  - Plans/assistant-chat-design.md
+L00012489	  - Plans/usage-feature.md
+L00012490	node_compile_hint:
+L00012491	  mode: thread_estimated_cost_display
+L00012492	  create_worknodes: false
+L00012493	source_lineage:
+L00012494	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+L00012495	preserved_exact_tokens:
+L00012496	  - "Estimated Cost"
+L00012497	  - "OpenCode-style normalization"
+L00012498	  - "over-200k"
+L00012499	negative_constraints:
+L00012500	  - "Estimated display labels must not imply provider-authoritative cost when that authority is absent."
+L00012501	owner_hints:
+L00012502	  - Plans/Contracts_V0.md
+L00012503	  - Plans/usage-feature.md
+L00012504	```
+L00012505	
+L00012506	### CV-194 - Provider Cost Raw Audit Preservation
+L00012507	
+L00012508	```yaml
+L00012509	plan_unit_id: CV-194
+L00012510	unit_type: constraint
+L00012511	status: accepted
+L00012512	owner_doc: Plans/Contracts_V0.md
+L00012513	canonical_text: >-
+L00012514	  Raw, log, and debug paths preserve normalization path, provider-reported
+L00012515	  buckets, provider-sensitive cache normalization caveats, and raw bucket values
+L00012516	  for audit so display estimates do not drop evidence.
+L00012517	gui_related: false
+L00012518	gui_classification_reason: This unit defines audit evidence preservation rather than visual presentation.
+L00012519	split_recommended: false
+L00012520	depends_on: [CV-193]
+L00012521	unblocks: []
+L00012522	acceptance_criteria:
+L00012523	  - "Raw, log, and debug paths preserve normalization path and raw bucket values."
+L00012524	  - "Provider-sensitive cache normalization caveats remain available for audit."
+L00012525	validation_surfaces:
+L00012526	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012527	  - python3 scripts/pm-plan-index.py validate
+L00012528	risk_class: provider_cost_audit_loss
+L00012529	reasoning_tier: high
+L00012530	context_scope: provider_cost_raw_audit
+L00012531	implementation_surfaces:
+L00012532	  - Plans/Contracts_V0.md
+L00012533	  - Plans/usage-feature.md
+L00012534	node_compile_hint:
+L00012535	  mode: provider_cost_raw_audit_preservation
+L00012536	  create_worknodes: false
+L00012537	source_lineage:
+L00012538	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+L00012539	preserved_exact_tokens:
+L00012540	  - "provider-reported buckets"
+L00012541	  - "raw bucket values"
+L00012542	  - "`/log`"
+L00012543	  - "`/detail`"
+L00012544	  - "`/debugging`"
+L00012545	negative_constraints:
+L00012546	  - "Display estimates must not drop provider-sensitive raw evidence."
+L00012547	owner_hints:
+L00012548	  - Plans/Contracts_V0.md
+L00012549	  - Plans/usage-feature.md
+L00012550	```
+L00012551	
+L00012552	### CV-195 - Implementation Readiness Naming Boundary
+L00012553	
+L00012554	```yaml
+L00012555	plan_unit_id: CV-195
+L00012556	unit_type: constraint
+L00012557	status: accepted
+L00012558	owner_doc: Plans/Contracts_V0.md
+L00012559	canonical_text: >-
+L00012560	  Implementation readiness pins canonical schema and field names only when they
+L00012561	  are part of planning-doc contracts, persisted payloads, runtime identity
+L00012562	  objects, or cross-doc shared vocabulary; implementation-local helpers,
+L00012563	  variables, and UI components do not need pre-naming.
+L00012564	gui_related: false
+L00012565	gui_classification_reason: This unit defines planning readiness and naming scope rather than GUI work.
+L00012566	split_recommended: false
+L00012567	depends_on: []
+L00012568	unblocks: []
+L00012569	acceptance_criteria:
+L00012570	  - "Canonical schema and field names are pinned only for contracts, persisted payloads, runtime identity, or shared vocabulary."
+L00012571	  - "Implementation-local helper, variable, and component names are not required ahead of time."
+L00012572	validation_surfaces:
+L00012573	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012574	  - python3 scripts/pm-plan-index.py validate
+L00012575	risk_class: over_specified_implementation_names
+L00012576	reasoning_tier: standard
+L00012577	context_scope: implementation_readiness_naming
+L00012578	implementation_surfaces:
+L00012579	  - Plans/Contracts_V0.md
+L00012580	node_compile_hint:
+L00012581	  mode: implementation_naming_boundary
+L00012582	  create_worknodes: false
+L00012583	source_lineage:
+L00012584	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0068
+L00012585	preserved_exact_tokens:
+L00012586	  - "`/field`"
+L00012587	  - "planning-doc contracts"
+L00012588	  - "persisted payloads"
+L00012589	  - "runtime identity objects"
+L00012590	negative_constraints:
+L00012591	  - "Implementation readiness must not require naming every implementation-local helper, variable, or UI component ahead of time."
+L00012592	owner_hints:
+L00012593	  - Plans/Contracts_V0.md
+L00012594	```
+L00012595	
+L00012596	### CV-196 - Canonical Token Bucket Fields
+L00012597	
+L00012598	```yaml
+L00012599	plan_unit_id: CV-196
+L00012600	unit_type: requirement
+L00012601	status: accepted
+L00012602	owner_doc: Plans/Contracts_V0.md
+L00012603	canonical_text: >-
+L00012604	  The canonical UsageRecord token buckets are input_total, input_non_cached,
+L00012605	  cache_read, cache_write, cache_write_1h or provider TTL-specific
+L00012606	  cache_write_ttl where exposed, output_total, output_visible,
+L00012607	  reasoning/thoughts, provider_total, and context_estimate; legacy
+L00012608	  input_tokens, output_tokens, cache_read_input_tokens,
+L00012609	  cache_creation_input_tokens, cache_read_tokens, and reasoning_tokens are
+L00012610	  compatibility import/export aliases only.
+L00012611	gui_related: false
+L00012612	gui_classification_reason: This unit defines usage schema fields rather than visual presentation.
+L00012613	split_recommended: false
+L00012614	depends_on: []
+L00012615	unblocks: [CV-197, CV-198, CV-204, CV-211]
+L00012616	acceptance_criteria:
+L00012617	  - "All UF-085 token buckets are preserved individually or represented as unknown/not_exposed when a provider does not expose them."
+L00012618	  - "Legacy token names normalize into UF-085 fields before persistence, aggregation, spending-limit checks, GUI projection, or route/open drill-through."
+L00012619	  - "Consumers do not collapse the token buckets into a smaller canonical set or double-count provider-inclusive cache/reasoning buckets."
+L00012620	validation_surfaces:
+L00012621	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012622	  - python3 scripts/pm-plan-index.py validate
+L00012623	risk_class: token_bucket_schema_drift
+L00012624	reasoning_tier: high
+L00012625	context_scope: canonical_token_buckets
+L00012626	implementation_surfaces:
+L00012627	  - Plans/Contracts_V0.md
+L00012628	  - Plans/usage-feature.md
+L00012629	  - Plans/Architecture_Invariants.md
+L00012630	node_compile_hint:
+L00012631	  mode: token_bucket_field_contract
+L00012632	  create_worknodes: false
+L00012633	source_lineage:
+L00012634	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0069
+L00012635	preserved_exact_tokens:
+L00012636	  - "`input_tokens`"
+L00012637	  - "`output_tokens`"
+L00012638	  - "`cache_read_input_tokens`"
+L00012639	  - "`cache_creation_input_tokens`"
+L00012640	  - "`reasoning_tokens`"
+L00012641	  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md"
+L00012642	negative_constraints:
+L00012643	  - "Canonical token buckets must not be collapsed into a smaller field set."
+L00012644	  - "Legacy token names must not be presented as the canonical UsageRecord schema."
+L00012645	owner_hints:
+L00012646	  - Plans/Contracts_V0.md
+L00012647	  - Plans/usage-feature.md
+L00012648	```
+L00012649	
+L00012650	### CV-197 - Token Counting Adapter And Raw Metadata
+L00012651	
+L00012652	```yaml
+L00012653	plan_unit_id: CV-197
+L00012654	unit_type: requirement
+L00012655	status: accepted
+L00012656	owner_doc: Plans/Contracts_V0.md
+L00012657	canonical_text: >-
+L00012658	  Provider-specific token counting flows through a token-counting abstraction
+L00012659	  before canonical buckets are persisted, and raw provider counts explain the
+L00012660	  canonical buckets without replacing them.
+L00012661	gui_related: false
+L00012662	gui_classification_reason: This unit defines usage accounting metadata rather than visual presentation.
+L00012663	split_recommended: false
+L00012664	depends_on: [CV-196]
+L00012665	unblocks: []
+L00012666	acceptance_criteria:
+L00012667	  - "Usage records preserve token_counting_adapter_id and token_counting_basis."
+L00012668	  - "Optional provider raw-count metadata remains explanatory and does not replace canonical buckets."
+L00012669	validation_surfaces:
+L00012670	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012671	  - python3 scripts/pm-plan-index.py validate
+L00012672	risk_class: token_counting_adapter_drift
+L00012673	reasoning_tier: high
+L00012674	context_scope: token_counting_adapter_metadata
+L00012675	implementation_surfaces:
+L00012676	  - Plans/Contracts_V0.md
+L00012677	  - Plans/usage-feature.md
+L00012678	node_compile_hint:
+L00012679	  mode: token_counting_adapter_metadata
+L00012680	  create_worknodes: false
+L00012681	source_lineage:
+L00012682	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0069
+L00012683	preserved_exact_tokens:
+L00012684	  - "`token_counting_adapter_id`"
+L00012685	  - "`token_counting_basis`"
+L00012686	  - "provider raw-count metadata"
+L00012687	negative_constraints:
+L00012688	  - "Raw provider counts must not replace canonical token buckets."
+L00012689	owner_hints:
+L00012690	  - Plans/Contracts_V0.md
+L00012691	  - Plans/usage-feature.md
+L00012692	```
+L00012693	
+L00012694	### CV-198 - Token Bucket Persistence And Total Tokens Limit
+L00012695	
+L00012696	```yaml
+L00012697	plan_unit_id: CV-198
+L00012698	unit_type: constraint
+L00012699	status: accepted
+L00012700	owner_doc: Plans/Contracts_V0.md
+L00012701	canonical_text: >-
+L00012702	  Token buckets are individually persisted for every LLM call, including title
+L00012703	  generation, summaries, helper passes, subagents, and background operations;
+L00012704	  total_tokens may be stored or derived for convenience but must not replace the
+L00012705	  individual UF-085 buckets or double-count provider-inclusive cache or reasoning
+L00012706	  values.
+L00012707	gui_related: false
+L00012708	gui_classification_reason: This unit defines usage persistence rules rather than visual presentation.
+L00012709	split_recommended: false
+L00012710	depends_on: [CV-196]
+L00012711	unblocks: []
+L00012712	acceptance_criteria:
+L00012713	  - "Every LLM call emits separated input_total, input_non_cached, cache_read, cache_write, output_total, output_visible, reasoning/thoughts, provider_total, and context_estimate fields where exposed, with unknown/not_exposed state where absent."
+L00012714	  - "Client-side spending limit enforcement reads the canonical usage stream rather than an optional display rollup."
+L00012715	  - "total_tokens does not replace the individual token buckets."
+L00012716	validation_surfaces:
+L00012717	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012718	  - python3 scripts/pm-plan-index.py validate
+L00012719	risk_class: token_bucket_collapse
+L00012720	reasoning_tier: high
+L00012721	context_scope: token_bucket_persistence
+L00012722	implementation_surfaces:
+L00012723	  - Plans/Contracts_V0.md
+L00012724	  - Plans/storage-plan.md
+L00012725	  - Plans/FinalGUISpec.md
+L00012726	node_compile_hint:
+L00012727	  mode: token_bucket_persistence_constraint
+L00012728	  create_worknodes: false
+L00012729	source_lineage:
+L00012730	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0069
+L00012731	preserved_exact_tokens:
+L00012732	  - "`total_tokens`"
+L00012733	  - "title generation"
+L00012734	  - "summaries"
+L00012735	  - "hidden helper passes"
+L00012736	  - "subagents"
+L00012737	  - "background ops"
+L00012738	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md"
+L00012739	negative_constraints:
+L00012740	  - "`total_tokens` MAY be stored or derived for convenience, but it MUST NOT replace the individual token buckets."
+L00012741	owner_hints:
+L00012742	  - Plans/Contracts_V0.md
+L00012743	  - Plans/storage-plan.md
+L00012744	```
+L00012745	
+L00012746	### CV-199 - Usage Attribution Minimum Fields
+L00012747	
+L00012748	```yaml
+L00012749	plan_unit_id: CV-199
+L00012750	unit_type: requirement
+L00012751	status: accepted
+L00012752	owner_doc: Plans/Contracts_V0.md
+L00012753	canonical_text: >-
+L00012754	  Usage records and normalized usage events preserve provider, model, account,
+L00012755	  provider-native account label, parent run, per-message model attribution,
+L00012756	  parent aggregation, billing entity, and entitlement fields needed for
+L00012757	  attribution and rollups.
+L00012758	gui_related: false
+L00012759	gui_classification_reason: This unit defines usage attribution schema fields rather than visual presentation.
+L00012760	split_recommended: false
+L00012761	depends_on: []
+L00012762	unblocks: [CV-200, CV-201, CV-203, CV-204, CV-208]
+L00012763	acceptance_criteria:
+L00012764	  - "provider_id, model_id, account_id, parent_run_id, billing_entity_id, and entitlement_class are preserved when known."
+L00012765	  - "provider_account_id and account-label remain provider-native or display metadata subordinate to stable account identity."
+L00012766	  - "Per-message model attribution is preserved for user-visible and background LLM calls."
+L00012767	validation_surfaces:
+L00012768	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012769	  - python3 scripts/pm-plan-index.py validate
+L00012770	risk_class: usage_attribution_field_loss
+L00012771	reasoning_tier: high
+L00012772	context_scope: usage_attribution_minimum_fields
+L00012773	implementation_surfaces:
+L00012774	  - Plans/Contracts_V0.md
+L00012775	  - Plans/usage-feature.md
+L00012776	  - Plans/Models_System.md
+L00012777	  - Plans/storage-plan.md
+L00012778	node_compile_hint:
+L00012779	  mode: usage_attribution_minimum_fields
+L00012780	  create_worknodes: false
+L00012781	source_lineage:
+L00012782	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+L00012783	preserved_exact_tokens:
+L00012784	  - "`provider_id`"
+L00012785	  - "`model_id`"
+L00012786	  - "`account_id`"
+L00012787	  - "`provider_account_id?`"
+L00012788	  - "`/account-label`"
+L00012789	  - "`parent_run_id`"
+L00012790	  - "`billing_entity_id`"
+L00012791	  - "`entitlement_class`"
+L00012792	  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md"
+L00012793	negative_constraints:
+L00012794	  - "Provider-native display metadata must not replace stable account identity."
+L00012795	owner_hints:
+L00012796	  - Plans/Contracts_V0.md
+L00012797	  - Plans/usage-feature.md
+L00012798	  - Plans/Models_System.md
+L00012799	```
+L00012800	
+
+<<< CONTEXT_AFTER canonical_document_lines=12801-12812 >>>
+L00012801	### CV-200 - Usage Source Window And Cache Metadata
+L00012802	
+L00012803	```yaml
+L00012804	plan_unit_id: CV-200
+L00012805	unit_type: requirement
+L00012806	status: accepted
+L00012807	owner_doc: Plans/Contracts_V0.md
+L00012808	canonical_text: >-
+L00012809	  Usage attribution preserves source_class, source_confidence, source_authority,
+L00012810	  window_label, closed window_scope values, cache_hit, cache_strategy, and maps
+L00012811	  the display phrase usage-record to the canonical usage_record object; legacy
+L00012812	  usage_source_kind and provider_usage_source_kind normalize into the source

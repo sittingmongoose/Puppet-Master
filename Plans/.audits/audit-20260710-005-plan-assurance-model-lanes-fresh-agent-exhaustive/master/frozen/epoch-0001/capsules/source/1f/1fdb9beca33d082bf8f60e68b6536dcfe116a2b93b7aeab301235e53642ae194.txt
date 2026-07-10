@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 8026-8037 >>>
+- "/signing"
+negative_constraints:
+- "A transient tool discovery miss must not become permanent executable access."
+- "Executable plugin surfaces require explicit approval or signing evidence before FileSafe allows execution-modifying behavior."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Subagent scheduling and tool discovery owners define policy; FileSafe consumes effective safety inputs."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 8038-8431 >>>
+### F2-094 - Atomic CAS Restatement And Legacy Audit Evidence Boundary
+
+```yaml
+plan_unit_id: F2-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  S0048 restates atomic replacement and CAS contracts as safety inputs and classifies stale
+  legacy-term audits, escaped legacy fallback wording, EXEC/file-record map concerns, and
+  unresolved symlink TODOs as verification evidence rather than independent FileSafe policy.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend restatement and stale-audit evidence boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: atomic_cas_restatement_and_legacy_audit_evidence_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0048"
+preserved_exact_tokens:
+- "temp -> fsync -> rename"
+- "/janitor"
+- "read_revision={mtime_ns, content_sha256}"
+- "concurrent_edit_conflict"
+- "error.concurrent_edit_conflict"
+- "unwrap_or_else(|_| resolved_path)"
+- "canonicalize() failure"
+- "unwrap_or_else(\\|_\\| resolved_path)"
+- "stale escaped legacy-row wording"
+- "Doc-set searches"
+- "stale-legacy-term audits"
+- "EXEC/file-record"
+- "TODO"
+- "realpath-before-scope-check"
+- "case-folding contracts"
+negative_constraints:
+- "Doc-set searches and stale-legacy-term audits are verification evidence, not FileSafe policy."
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "unwrap_or_else(\\|_\\| resolved_path) is retained only as stale escaped legacy-row wording."
+- "Doc-set searches and stale-legacy-term audits are verification evidence, not FileSafe policy."
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-095 - SecurityFilter Access Check And GuardError Emission
+
+```yaml
+plan_unit_id: F2-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  SecurityFilter stores sensitive path regexes, respects the enabled flag, converts checked
+  paths to string form, and returns GuardError::SensitiveFileAccess with the file path and
+  matched pattern when a sensitive pattern matches.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend SecurityFilter access-check behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: securityfilter_access_check_and_guarderror_emission
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0049"
+preserved_exact_tokens:
+- "Security Filter (CRITICAL)"
+- "DRY:DATA:SecurityFilter — Blocks access to sensitive files"
+- "pub struct SecurityFilter"
+- "sensitive_patterns: Vec<Regex>"
+- "enabled: bool"
+- "DRY:FN:check_file_access"
+- "file_path: &Path"
+- "Result<(), GuardError>"
+- "to_string_lossy"
+- "GuardError::SensitiveFileAccess"
+- "pattern.as_str()"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-096 - Default Sensitive Pattern Set And Case Insensitive Matching
+
+```yaml
+plan_unit_id: F2-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  SecurityFilter default sensitive patterns are implemented as a fixed list of regex patterns
+  compiled once in SecurityFilter::new using case-insensitive path matching, covering env files,
+  secret/key/credential paths, key/cert extensions, SSH keys, and secrets directories or config
+  files.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend sensitive-pattern defaults.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: default_sensitive_pattern_set_and_case_insensitive_matching
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0049"
+preserved_exact_tokens:
+- "Sensitive patterns (default set)"
+- "fixed list of regex patterns"
+- "compiled once in `SecurityFilter::new()`"
+- "case-insensitive path matching"
+- "\\.env(\\..*)?$"
+- ".*secret.*"
+- ".*key.*"
+- ".*credential.*"
+- "\\.(pem|key|p12|pfx)$"
+- "id_rsa"
+- "id_ed25519"
+- "\\.pub$"
+- "config/secrets\\."
+- "secrets/"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-097 - Additive Security Filter Overrides And AGENTS Documentation Hook
+
+```yaml
+plan_unit_id: F2-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The FileSafe validation layer exposes default_sensitive_patterns() -> Vec<Regex> and supports
+  an optional additive-only project override file at .puppet-master/security-filter.local.txt,
+  with the behavior documented in AGENTS.md.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend security-filter override and documentation behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: additive_security_filter_overrides_and_agents_documentation_hook
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0049"
+preserved_exact_tokens:
+- "FileSafe validation layer"
+- "default_sensitive_patterns() -> Vec<Regex>"
+- ".puppet-master/security-filter.local.txt"
+- "additive patterns only"
+- "Document in AGENTS.md"
+negative_constraints:
+- "Project security-filter overrides are additive-only."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-098 - Prompt And Context Compilation Safety Threat Model
+
+```yaml
+plan_unit_id: F2-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  ExecutionRequest.prompt and ExecutionRequest.context_files are compiled into the final
+  platform prompt, so destructive prompt text and destructive content from context files are in
+  FileSafe scope before platform CLI execution.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend prompt and context compilation threat model behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: prompt_and_context_compilation_safety_threat_model
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0050"
+preserved_exact_tokens:
+- "ExecutionRequest.prompt"
+- "ExecutionRequest.context_files"
+- "append_prompt_attachments()"
+- "Final Prompt"
+- "platform CLI"
+- "destructive commands in their prompts"
+- "context files may contain destructive commands"
+- "11.3 Prompt Content Checking & Context Compilation"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Aligns with existing compiled-context FileSafe units and does not replace them."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-099 - Platform Attachment Token Format Contract
+
+```yaml
+plan_unit_id: F2-099
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  append_prompt_attachments formats context file references with platform-specific token
+  prefixes, using empty prefixes for Cursor, Codex, and Claude text attachments and @ path
+  tokens for Gemini and Copilot, while Codex must not rely on --add-dir for prompt attachment
+  semantics and Claude append-system-prompt-file is only an implementation detail.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend platform attachment formatting behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: platform_attachment_token_format_contract
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0050"
+preserved_exact_tokens:
+- "DRY:FN:append_prompt_attachments"
+- "token_prefix"
+- "\"\""
+- "\"@\""
+- "Reference attachments:"
+- "@/path/to/file.rs"
+- "Cursor"
+- "Gemini"
+- "Copilot"
+- "Codex"
+- "Claude"
+- "do not rely on `--add-dir`"
+- "--append-system-prompt-file"
+- "Platform-Specific Context Compilation"
+negative_constraints:
+- "Codex must not rely on --add-dir for prompt attachment semantics."
+- "Claude --append-system-prompt-file usage is an implementation detail only when needed."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-100 - Compiled Prompt FileSafe Integration Point
+
+```yaml
+plan_unit_id: F2-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe checks the compiled prompt after context compilation and before sending to the
+  platform CLI, not just the original prompt, so destructive commands in context files and file
+  paths in context attachments are validated.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend compiled prompt guard integration.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: compiled_prompt_filesafe_integration_point
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0050"
+preserved_exact_tokens:
+- "FileSafe integration point"
+- "compiled prompt"
+- "after context compilation"
+- "not just the original prompt"
+- "before sending to platform CLI"
+- "Destructive commands in context files are caught"
+- "File paths in context attachments are validated"
+- "final prompt sent to the platform is safe"
+negative_constraints:
+- "FileSafe must not check only the original prompt."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 8432-8443 >>>
+### F2-101 - Prompt Command Extraction And Deduplication
+
+```yaml
+plan_unit_id: F2-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  BashGuard.check_prompt extracts advisory candidate commands from bash, sh, shell, and SQL code
+  blocks, shell prompt lines, SQL statements, and common destructive mentions in prose, then sorts
+  and deduplicates commands before checking each against destructive patterns; this prompt/free-text
+  extraction is defense-in-depth and never replaces final structured command/path enforcement.

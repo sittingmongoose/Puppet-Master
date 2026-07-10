@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE canonical_document_lines=761-772 >>>
+L00000761	  - "allowlisted log shapes"
+L00000762	  - "structured fields"
+L00000763	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+L00000764	negative_constraints:
+L00000765	  - "Debug captures should use allowlisted log shapes or structured fields rather than free-form dump capture."
+L00000766	owner_hints:
+L00000767	  - Plans/Decision_Log.md
+L00000768	  - Plans/Contracts_V0.md
+L00000769	  - Plans/Architecture_Invariants.md
+L00000770	  - Plans/Runtime_Artifacts_Panel.md
+L00000771	```
+L00000772	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=773-1164 >>>
+L00000773	### DL-016 - Provider Runtime Actor Envelope
+L00000774	
+L00000775	```yaml
+L00000776	plan_unit_id: DL-016
+L00000777	unit_type: requirement
+L00000778	status: accepted
+L00000779	owner_doc: Plans/Decision_Log.md
+L00000780	canonical_text: >-
+L00000781	  The shared provider-runtime contract applies beyond Orchestrator to assistant,
+L00000782	  interviewer, requirements builder, PRD builder, overseers, node workers, and
+L00000783	  provider-backed chat/tool turns; actor_kind and execution_role are required
+L00000784	  for auditability and storage must not key provider account snapshots only by
+L00000785	  run_id.
+L00000786	gui_related: false
+L00000787	gui_classification_reason: This unit defines provider-runtime actor and storage identity boundaries.
+L00000788	split_recommended: false
+L00000789	depends_on: [DL-012]
+L00000790	unblocks: []
+L00000791	acceptance_criteria:
+L00000792	  - Shared provider-runtime identity applies beyond Orchestrator.
+L00000793	  - actor_kind and execution_role are preserved for non-run auditability and replay.
+L00000794	  - storage-plan does not key provider account snapshots only by run_id when runtime actors include non-run actors.
+L00000795	validation_surfaces:
+L00000796	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000797	  - python3 scripts/pm-plan-index.py validate
+L00000798	risk_class: provider_runtime_actor_envelope_gap
+L00000799	reasoning_tier: high
+L00000800	context_scope: provider_runtime_actor_envelope
+L00000801	implementation_surfaces:
+L00000802	  - Plans/Decision_Log.md
+L00000803	  - Plans/Multi-Account.md
+L00000804	  - Plans/Models_System.md
+L00000805	  - Plans/Prompt_Pipeline.md
+L00000806	  - Plans/storage-plan.md
+L00000807	node_compile_hint:
+L00000808	  mode: provider_runtime_actor_envelope
+L00000809	  create_worknodes: false
+L00000810	source_lineage:
+L00000811	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0017
+L00000812	preserved_exact_tokens:
+L00000813	  - "`/model/effort/persona/auth/account`"
+L00000814	  - "`/effective`"
+L00000815	  - "`actor_kind`"
+L00000816	  - "`execution_role`"
+L00000817	  - "`run_id`"
+L00000818	  - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md"
+L00000819	negative_constraints:
+L00000820	  - "storage-plan must not key provider account snapshots only by run_id when runtime actors include assistant, interviewer, builders, overseers, and node workers."
+L00000821	owner_hints:
+L00000822	  - Plans/Decision_Log.md
+L00000823	  - Plans/Multi-Account.md
+L00000824	  - Plans/Models_System.md
+L00000825	  - Plans/Prompt_Pipeline.md
+L00000826	  - Plans/storage-plan.md
+L00000827	```
+L00000828	
+L00000829	### DL-017 - Support Decision Drift Guard
+L00000830	
+L00000831	```yaml
+L00000832	plan_unit_id: DL-017
+L00000833	unit_type: requirement
+L00000834	status: accepted
+L00000835	owner_doc: Plans/Decision_Log.md
+L00000836	canonical_text: >-
+L00000837	  Supporting planning machinery is not exempt from decision traceability:
+L00000838	  sharding_config and auto_decisions must not disagree on fallback chunk-line
+L00000839	  settings because decision-state drift in support files can corrupt
+L00000840	  owner/consumer reconciliation.
+L00000841	gui_related: false
+L00000842	gui_classification_reason: This unit defines planning-governance consistency constraints.
+L00000843	split_recommended: false
+L00000844	depends_on: [DL-002]
+L00000845	unblocks: []
+L00000846	acceptance_criteria:
+L00000847	  - sharding_config and auto_decisions do not disagree on fallback chunk-line settings.
+L00000848	  - Decision-state drift in support files is treated as owner/consumer reconciliation risk.
+L00000849	validation_surfaces:
+L00000850	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000851	  - python3 scripts/pm-plan-index.py validate
+L00000852	risk_class: support_decision_state_drift
+L00000853	reasoning_tier: high
+L00000854	context_scope: support_decision_drift_guard
+L00000855	implementation_surfaces:
+L00000856	  - Plans/Decision_Log.md
+L00000857	  - Plans/DRY_Rules.md
+L00000858	  - Plans/Decision_Policy.md
+L00000859	node_compile_hint:
+L00000860	  mode: support_decision_drift_guard
+L00000861	  create_worknodes: false
+L00000862	source_lineage:
+L00000863	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0018
+L00000864	preserved_exact_tokens:
+L00000865	  - "`Plans/sharding_config.json`"
+L00000866	  - "`/sharding_config.json`"
+L00000867	  - "`Plans/auto_decisions.jsonl`"
+L00000868	  - "`/auto_decisions.jsonl`"
+L00000869	  - "`chunk-line`"
+L00000870	  - "`/decision`"
+L00000871	  - "ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md"
+L00000872	negative_constraints:
+L00000873	  - "Plans/sharding_config.json and Plans/auto_decisions.jsonl must not disagree on fallback chunk-line settings."
+L00000874	owner_hints:
+L00000875	  - Plans/Decision_Log.md
+L00000876	  - Plans/DRY_Rules.md
+L00000877	  - Plans/Decision_Policy.md
+L00000878	```
+L00000879	
+L00000880	### DL-018 - Governance Label Copy Boundary
+L00000881	
+L00000882	```yaml
+L00000883	plan_unit_id: DL-018
+L00000884	unit_type: requirement
+L00000885	status: accepted
+L00000886	owner_doc: Plans/Decision_Log.md
+L00000887	canonical_text: >-
+L00000888	  Canonical copy favors precise runtime and user-facing labels for seams, graph
+L00000889	  objects, overseers, completion/blocking/promotion states, corroboration,
+L00000890	  challenges, advisory concerns, graph patches, and generation updates; label,
+L00000891	  action, runtime, and object consumers must not invent alternate peer terms.
+L00000892	gui_related: true
+L00000893	gui_classification_reason: This unit governs user-facing labels and copy boundaries.
+L00000894	split_recommended: true
+L00000895	split_recommendation_reason: Decision_Log-S0019 contains both copy-label constraints and graph-owned governance semantics.
+L00000896	depends_on: [DL-007, DL-008]
+L00000897	unblocks: [DL-019, DL-020, DL-021]
+L00000898	acceptance_criteria:
+L00000899	  - Canonical runtime and user-facing labels remain precise and preserved.
+L00000900	  - /labels, /action, /runtime, and /object consumers do not invent alternate peer terms.
+L00000901	validation_surfaces:
+L00000902	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000903	  - python3 scripts/pm-plan-index.py validate
+L00000904	risk_class: governance_label_copy_drift
+L00000905	reasoning_tier: high
+L00000906	context_scope: governance_label_copy_boundary
+L00000907	implementation_surfaces:
+L00000908	  - Plans/Decision_Log.md
+L00000909	  - Plans/Orchestrator_Page.md
+L00000910	  - Plans/Run_Graph_View.md
+L00000911	  - Plans/Decision_Policy.md
+L00000912	node_compile_hint:
+L00000913	  mode: governance_label_copy_boundary
+L00000914	  create_worknodes: false
+L00000915	source_lineage:
+L00000916	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0019
+L00000917	preserved_exact_tokens:
+L00000918	  - "`Seams`"
+L00000919	  - "`Feature Seam`"
+L00000920	  - "`Work Package`"
+L00000921	  - "`Package Overseer`"
+L00000922	  - "`Seam Overseer`"
+L00000923	  - "`Locally Complete`"
+L00000924	  - "`Seam Complete`"
+L00000925	  - "`Completion Blocked`"
+L00000926	  - "`Weak Integration`"
+L00000927	  - "`Promotion Revoked`"
+L00000928	  - "`Corroboration Requested`"
+L00000929	  - "`Generation Updated`"
+L00000930	negative_constraints:
+L00000931	  - "`/labels`, `/action`, `/runtime`, and `/object` consumers must not invent alternate peer terms."
+L00000932	owner_hints:
+L00000933	  - Plans/Decision_Log.md
+L00000934	  - Plans/Orchestrator_Page.md
+L00000935	  - Plans/Run_Graph_View.md
+L00000936	  - Plans/Decision_Policy.md
+L00000937	```
+L00000938	
+L00000939	### DL-019 - Graph Owned Governance Semantics
+L00000940	
+L00000941	```yaml
+L00000942	plan_unit_id: DL-019
+L00000943	unit_type: requirement
+L00000944	status: accepted
+L00000945	owner_doc: Plans/Decision_Log.md
+L00000946	canonical_text: >-
+L00000947	  Governance semantics stay graph-owned: a run is the full canonical graph under
+L00000948	  deterministic runtime control, a work package is a coherent precomputed
+L00000949	  subgraph with a local overseer, a feature seam is a cross-package oversight
+L00000950	  scope, a node is the smallest executable work unit, and newly discovered work
+L00000951	  becomes remediation nodes or graph-patch requests.
+L00000952	gui_related: false
+L00000953	gui_classification_reason: This unit defines graph-governance ownership and execution semantics.
+L00000954	split_recommended: true
+L00000955	split_recommendation_reason: Decision_Log-S0019 contains both copy-label constraints and graph-owned governance semantics.
+L00000956	depends_on: [DL-005, DL-006, DL-010, DL-018]
+L00000957	unblocks: [DL-020, DL-021]
+L00000958	acceptance_criteria:
+L00000959	  - Governance semantics remain graph-owned.
+L00000960	  - Runs, work packages, feature seams, and nodes retain their source meanings.
+L00000961	  - Newly discovered work becomes remediation nodes or graph-patch requests.
+L00000962	  - Seam completion requires integration quality rather than package-local pass states alone.
+L00000963	validation_surfaces:
+L00000964	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000965	  - python3 scripts/pm-plan-index.py validate
+L00000966	risk_class: graph_governance_semantics_drift
+L00000967	reasoning_tier: high
+L00000968	context_scope: graph_owned_governance_semantics
+L00000969	implementation_surfaces:
+L00000970	  - Plans/Decision_Log.md
+L00000971	  - Plans/Orchestrator_Page.md
+L00000972	  - Plans/Run_Graph_View.md
+L00000973	  - Plans/Decision_Policy.md
+L00000974	node_compile_hint:
+L00000975	  mode: graph_owned_governance_semantics
+L00000976	  create_worknodes: false
+L00000977	source_lineage:
+L00000978	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0019
+L00000979	preserved_exact_tokens:
+L00000980	  - "`run`"
+L00000981	  - "`work package`"
+L00000982	  - "`feature seam`"
+L00000983	  - "`node`"
+L00000984	  - "`/corroboration`"
+L00000985	negative_constraints:
+L00000986	  - "Seam completion requires integration quality rather than package-local pass states alone."
+L00000987	owner_hints:
+L00000988	  - Plans/Decision_Log.md
+L00000989	  - Plans/Orchestrator_Page.md
+L00000990	  - Plans/Run_Graph_View.md
+L00000991	  - Plans/Decision_Policy.md
+L00000992	```
+L00000993	
+L00000994	### DL-020 - Seam Weak Integration UI Visibility
+L00000995	
+L00000996	```yaml
+L00000997	plan_unit_id: DL-020
+L00000998	unit_type: requirement
+L00000999	status: accepted
+L00001000	owner_doc: Plans/Decision_Log.md
+L00001001	canonical_text: >-
+L00001002	  Seams UI must summarize weak integration visibly, group concerns under
+L00001003	  readable headings such as Wiring, Workflow, State, GUI, and Design, and keep
+L00001004	  Locally Complete, Available to Seam, and Seam Complete distinct from lane to
+L00001005	  package, package to seam, and seam completion promotion boundaries.
+L00001006	gui_related: true
+L00001007	gui_classification_reason: This unit explicitly governs Seams UI summaries and readable headings.
+L00001008	split_recommended: true
+L00001009	split_recommendation_reason: Decision_Log-S0020 contains both UI visibility rules and lifecycle/reopen policy.
+L00001010	depends_on: [DL-007, DL-008, DL-019]
+L00001011	unblocks: [DL-021]
+L00001012	acceptance_criteria:
+L00001013	  - Seams UI visibly summarizes weak integration.
+L00001014	  - Weak integration concerns are grouped under readable headings including Wiring, Workflow, State, GUI, and Design.
+L00001015	  - Completion states remain distinct from promotion boundaries.
+L00001016	validation_surfaces:
+L00001017	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001018	  - python3 scripts/pm-plan-index.py validate
+L00001019	risk_class: seam_weak_integration_visibility_gap
+L00001020	reasoning_tier: high
+L00001021	context_scope: seam_weak_integration_ui_visibility
+L00001022	implementation_surfaces:
+L00001023	  - Plans/Decision_Log.md
+L00001024	  - Plans/Orchestrator_Page.md
+L00001025	  - Plans/Run_Graph_View.md
+L00001026	  - Plans/Decision_Policy.md
+L00001027	  - Plans/Glossary.md
+L00001028	node_compile_hint:
+L00001029	  mode: seam_weak_integration_ui_visibility
+L00001030	  create_worknodes: false
+L00001031	source_lineage:
+L00001032	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0020
+L00001033	preserved_exact_tokens:
+L00001034	  - "`Wiring`"
+L00001035	  - "`Workflow`"
+L00001036	  - "`State`"
+L00001037	  - "`GUI`"
+L00001038	  - "`Design`"
+L00001039	  - "`Lane to Package`"
+L00001040	  - "`Package to Seam`"
+L00001041	  - "`Seam Completion`"
+L00001042	negative_constraints:
+L00001043	  - "Weak integration must not be only a badge without visible seam summary and readable buckets."
+L00001044	owner_hints:
+L00001045	  - Plans/Decision_Log.md
+L00001046	  - Plans/Orchestrator_Page.md
+L00001047	  - Plans/Run_Graph_View.md
+L00001048	  - Plans/Decision_Policy.md
+L00001049	  - Plans/Glossary.md
+L00001050	```
+L00001051	
+L00001052	### DL-021 - Reopen Revocation Weak Integration Policy
+L00001053	
+L00001054	```yaml
+L00001055	plan_unit_id: DL-021
+L00001056	unit_type: requirement
+L00001057	status: accepted
+L00001058	owner_doc: Plans/Decision_Log.md
+L00001059	canonical_text: >-
+L00001060	  Revocation and reopen semantics are explicit named states, blocked states
+L00001061	  expose blocked reason, blocked owner, and recovery context, weak-integration
+L00001062	  buckets include runtime/governance visibility, state, workflow, contract, UX,
+L00001063	  architecture, and recovery gaps, and Decision_Policy needs first-class policy
+L00001064	  objects and transitions for concerns, corroboration, promotions, and
+L00001065	  superseded revoked/reopened states.
+L00001066	gui_related: true
+L00001067	gui_classification_reason: This unit governs visible blocked states, weak-integration buckets, UX semantics, and missing operator affordances.
+L00001068	split_recommended: true
+L00001069	split_recommendation_reason: Decision_Log-S0020 contains both UI visibility rules and lifecycle/reopen policy.
+L00001070	depends_on: [DL-020]
+L00001071	unblocks: [DL-022, DL-026]
+L00001072	acceptance_criteria:
+L00001073	  - Promotion Revoked, Seam Completion Revoked, Reopened, Reopened by Patch, and Reopened by New Evidence remain explicit named states.
+L00001074	  - Blocked states expose blocked reason, blocked owner, and recovery context.
+L00001075	  - Decision_Policy owns first-class policy objects and transitions for concerns, corroboration, promotions, and superseded revoked/reopened states.
+L00001076	validation_surfaces:
+L00001077	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001078	  - python3 scripts/pm-plan-index.py validate
+L00001079	risk_class: reopen_revocation_policy_gap
+L00001080	reasoning_tier: high
+L00001081	context_scope: reopen_revocation_weak_integration_policy
+L00001082	implementation_surfaces:
+L00001083	  - Plans/Decision_Log.md
+L00001084	  - Plans/Orchestrator_Page.md
+L00001085	  - Plans/Run_Graph_View.md
+L00001086	  - Plans/Decision_Policy.md
+L00001087	  - Plans/Glossary.md
+L00001088	node_compile_hint:
+L00001089	  mode: reopen_revocation_weak_integration_policy
+L00001090	  create_worknodes: false
+L00001091	source_lineage:
+L00001092	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0020
+L00001093	preserved_exact_tokens:
+L00001094	  - "`Promotion Revoked`"
+L00001095	  - "`Seam Completion Revoked`"
+L00001096	  - "`Reopened`"
+L00001097	  - "`Reopened by Patch`"
+L00001098	  - "`Reopened by New Evidence`"
+L00001099	  - "`/recovery`"
+L00001100	  - "`/revoked/reopened`"
+L00001101	negative_constraints:
+L00001102	  - "Blocked and weak-integration lifecycle states must not be collapsed into generic failure states."
+L00001103	owner_hints:
+L00001104	  - Plans/Decision_Log.md
+L00001105	  - Plans/Orchestrator_Page.md
+L00001106	  - Plans/Run_Graph_View.md
+L00001107	  - Plans/Decision_Policy.md
+L00001108	  - Plans/Glossary.md
+L00001109	```
+L00001110	
+L00001111	### DL-022 - Approval Anchoring Evidence Governance
+L00001112	
+L00001113	```yaml
+L00001114	plan_unit_id: DL-022
+L00001115	unit_type: requirement
+L00001116	status: accepted
+L00001117	owner_doc: Plans/Decision_Log.md
+L00001118	canonical_text: >-
+L00001119	  Approval anchoring moves to canonical runtime identity: run_id, node_id,
+L00001120	  blocked_sequence, optional attempt_id, and execution-unit context refs
+L00001121	  supersede request-centric button copy, request-centric persistence language,
+L00001122	  and tier-boundary approval CTA framing; gate/evidence schema mismatch is a
+L00001123	  first-class governance defect that evidence contracts must expose.
+L00001124	gui_related: true
+L00001125	gui_classification_reason: This unit affects approval CTA framing and evidence defect exposure.
+L00001126	split_recommended: false
+L00001127	depends_on: [DL-013, DL-021]
+L00001128	unblocks: [DL-023]
+L00001129	acceptance_criteria:
+L00001130	  - Approval anchoring uses canonical runtime identity fields.
+L00001131	  - Request-centric button copy, persistence language, and tier-boundary CTA framing are superseded.
+L00001132	  - Gate/evidence schema mismatch is exposed as first-class governance defect.
+L00001133	validation_surfaces:
+L00001134	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001135	  - python3 scripts/pm-plan-index.py validate
+L00001136	risk_class: approval_anchor_evidence_governance_drift
+L00001137	reasoning_tier: high
+L00001138	context_scope: approval_anchoring_evidence_governance
+L00001139	implementation_surfaces:
+L00001140	  - Plans/Decision_Log.md
+L00001141	  - Plans/Contracts_V0.md
+L00001142	  - Plans/human-in-the-loop.md
+L00001143	  - Plans/Progression_Gates.md
+L00001144	node_compile_hint:
+L00001145	  mode: approval_anchoring_evidence_governance
+L00001146	  create_worknodes: false
+L00001147	source_lineage:
+L00001148	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0021
+L00001149	preserved_exact_tokens:
+L00001150	  - "`run_id`"
+L00001151	  - "`node_id`"
+L00001152	  - "`blocked_sequence`"
+L00001153	  - "`attempt_id`"
+L00001154	  - "`CTA`"
+L00001155	  - "`/evidence`"
+L00001156	negative_constraints:
+L00001157	  - "Request-centric approval framing must not supersede canonical runtime identity anchoring."
+L00001158	owner_hints:
+L00001159	  - Plans/Decision_Log.md
+L00001160	  - Plans/Contracts_V0.md
+L00001161	  - Plans/human-in-the-loop.md
+L00001162	  - Plans/Progression_Gates.md
+L00001163	```
+L00001164	
+
+<<< CONTEXT_AFTER canonical_document_lines=1165-1176 >>>
+L00001165	### DL-023 - Blocked Episode Identity Migration
+L00001166	
+L00001167	```yaml
+L00001168	plan_unit_id: DL-023
+L00001169	unit_type: requirement
+L00001170	status: accepted
+L00001171	owner_doc: Plans/Decision_Log.md
+L00001172	canonical_text: >-
+L00001173	  Worktree and graph approval identity must stop hanging on tier_id,
+L00001174	  request-centric HITL, or request_id payloads once blocked-episode runtime
+L00001175	  identity is available; graph HITL command payload identity moves to
+L00001176	  blocked-episode anchored identity while preserving Contracts_V0 compatibility

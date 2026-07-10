@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 2149-2160 >>>
+                file: check_result.file,
+                line: check_result.line,
+                suggestion: check_result.suggestion,
+            });
+        }
+    }
+
+    Ok(QualityGateResult {
+        passed: findings.is_empty(),
+        findings,
+    })
+}
+
+<<< AUTHORITATIVE_CORE 2161-2552 >>>
+
+fn get_quality_criteria_for_tier(tier_type: TierType) -> Result<Vec<QualityCriterion>> {
+    match tier_type {
+        TierType::Phase => Ok(vec![
+            QualityCriterion {
+                name: "document_quality".to_string(),
+                check_type: QualityCheckType::DocumentReview,
+                severity: FindingSeverity::Major,
+            },
+        ]),
+        TierType::Task => Ok(vec![
+            QualityCriterion {
+                name: "design_doc_quality".to_string(),
+                check_type: QualityCheckType::DocumentReview,
+                severity: FindingSeverity::Major,
+            },
+        ]),
+        TierType::Subtask => Ok(vec![
+            QualityCriterion {
+                name: "no_new_clippy_warnings".to_string(),
+                check_type: QualityCheckType::Linter,
+                severity: FindingSeverity::Major,
+            },
+            QualityCriterion {
+                name: "new_code_has_tests".to_string(),
+                check_type: QualityCheckType::TestCoverage,
+                severity: FindingSeverity::Critical,
+            },
+            QualityCriterion {
+                name: "no_todos_without_tickets".to_string(),
+                check_type: QualityCheckType::CodeReview,
+                severity: FindingSeverity::Minor,
+            },
+        ]),
+        TierType::Iteration => Ok(vec![]), // Iteration quality checked at subtask level
+    }
+}
+```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, Gate:GATE-005
+
+**Error handling:**
+
+- **Artifact collection failure:** If artifacts cannot be collected, return `VerificationStatus::Warning` with Info finding
+- **Diff computation failure:** If diff cannot be computed, log warning and continue (diff may not be applicable)
+- **Reviewer subagent failure:** If reviewer subagent fails, return `VerificationStatus::Fail` with Critical finding (reviewer is required)
+- **Quality gate failure:** If quality gate fails, return appropriate status based on severity (Critical → Fail, Major/Minor → Warning)
+
+### Summary table -- start vs end, what runs when
+
+| Boundary | When | Config-wiring | Wiring/readiness (GUI? backend? steps? gaps?) | Acceptance criteria | Quality verification |
+|----------|------|----------------|-----------------------------------------------|--------------------|------------------------|
+| **Start Phase** | Enter phase | Yes | Yes | -- | -- |
+| **Start Task** | Enter task | Yes | Yes | -- | -- |
+| **Start Subtask** | Enter subtask | Yes | Yes | -- | -- |
+| **Start Iteration** | Enter iteration | Yes | (optional; can defer to tier) | -- | -- |
+| **End Phase** | Phase complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
+| **End Task** | Task complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
+| **End Subtask** | Subtask complete | -- | Yes (re-check) | Yes (gate) | Yes (code/artifact review) |
+
+### Gaps and potential issues in start/end verification
+This section closes the remaining start/end verification gaps and is normative.
+
+### Canonical validation-table source of truth
+Start/end verification uses one static mapping table maintained with the orchestrator code and referenced by the planning docs.
+
+Each row MUST contain:
+- config field
+- GUI control or UI source
+- backend consumer
+- applicable tier set (`phase`, `task`, `subtask`, `iteration`, `interview_phase` as applicable)
+- required/optional execution impact
+- default/fallback behavior
+
+This table is the source of truth for `validate_config_wiring_for_tier(...)`. Readiness MUST NOT be heuristic prose.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, PolicyRule:Plans/orchestrator-subagent-integration.md#config-wiring-verification
+
+### Start-of-tier verification
+Start-of-phase, start-of-task, and start-of-subtask verification always run the same categories in this order:
+1. config-wiring validation against the canonical table
+2. readiness validation for required upstream artifacts and dependencies
+3. operation-sequence validation
+4. known-gap detection for execution-affecting unresolved prerequisites
+
+A tier MUST NOT start when a required execution-affecting field is unwired, unavailable, or inconsistent.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Plans/orchestrator-subagent-integration.md#tier-start-preconditions
+
+### End-of-tier verification
+End-of-phase, end-of-task, and end-of-subtask verification always run the same categories in this order:
+1. config-wiring re-check for execution-affecting settings used during the tier
+2. acceptance check for the tier’s declared outputs and completion criteria
+3. quality review
+4. feedback emission for any failed requirement, quality finding, or retry/remediation trigger
+
+### Canonical quality matrix
+| Tier | Required quality review |
+|---|---|
+| Phase | artifact completeness, acceptance coverage, cross-doc integrity, terminology alignment |
+| Task | design/contract correctness, dependency consistency, fit with parent phase intent |
+| Subtask | code review, tests for touched scope, lint/format for touched scope, implementation acceptance |
+| Iteration | local acceptance of the concrete retry/fix objective when iteration-level execution is used |
+| Interview phase | document completeness, decision clarity, unresolved-clarification handling, output readiness for downstream plan generation |
+
+### Reviewer participation
+The reviewer/quality path is not optional.
+- it runs at the end of every tier completion path
+- it runs again on retry paths when the tier is re-attempted after a failure
+- it runs when a quality gate fails and the remediation loop feeds back into the same tier
+
+### Failure vs warning policy
+- required execution-affecting mismatches fail verification
+- missing or inconsistent upstream dependencies required for the declared tier objective fail verification
+- display-only, observability-only, or deferred non-execution-affecting mismatches may warn when they do not change runtime behavior
+- performance concerns MUST NOT weaken the verification categories; implementation may scope work to changed artifacts, but may not silently skip categories
+
+ContractRef: PolicyRule:Plans/orchestrator-subagent-integration.md#verification-category-invariant
+
+### Interview-phase mirror
+Interview phases use the same start/end pattern:
+- start = wiring + readiness + sequence
+- end = wiring re-check + acceptance + quality
+
+`interview-subagent-integration.md` is responsible for the interview-phase-specific quality criteria and UI/runtime consequences, but it MUST mirror this contract rather than invent an alternate lifecycle.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md
+
+### Unrelated-failure escalation
+When a tier fails because of issues outside its intended scope:
+1. retry once automatically using the same config
+2. if retry also fails, raise an Assistant chat CTA with review, skip, retry, and abort options
+3. use a modal instead only for P0 risk such as possible data loss or workspace corruption
+4. do not silently bypass unrelated failures
+
+### Feedback loop
+Verification failures MUST produce structured feedback identifying the failing criterion, affected artifact or file when known, and the expected next action. Rework loops reuse the existing incomplete-task / remediation flow rather than inventing a separate ad hoc channel.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)
+
+
+**Concept:** Puppet Master should support **BeforeUnit** and **AfterUnit** hooks that run automatically at execution unit boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
+
+**Platform-specific hook registration:**
+
+- **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
+- **Codex:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary middleware.
+- **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
+- **Gemini:** Gemini is a Direct API provider; hooks are implemented at the orchestrator level. No platform-native hook config file is needed for Gemini.
+- **Copilot:** Use CLI lifecycle outputs and orchestrator-managed hooks/middleware. Implement orchestrator-level hooks as primary.
+
+**Hook trait definition:**
+
+```rust
+// src/core/hooks.rs or src/verification/hooks.rs
+
+use crate::types::{Platform, TierType};
+use crate::core::state_persistence::ExecutionUnitContext;
+use anyhow::Result;
+
+/// Hook context passed to BeforeUnit hook
+pub struct BeforeUnitContext {
+    pub run_id: String,
+    pub node_id: String,
+    pub attempt_id: String,
+    pub lane_id: String,
+    pub worktree_id: String,
+    pub execution_role: String,
+    pub requested_account_policy: String,
+    pub tool_use_id: String,
+    pub tier_type: TierType,
+    pub platform: Platform,
+    pub model: String,
+    pub selected_subagents: Vec<String>,
+    pub config_snapshot: serde_json::Value,
+    pub known_gaps: Vec<String>,
+}
+
+/// Hook context passed to AfterUnit hook
+pub struct AfterUnitContext {
+    pub run_id: String,
+    pub node_id: String,
+    pub attempt_id: String,
+    pub lane_id: String,
+    pub worktree_id: String,
+    pub execution_role: String,
+    pub requested_account_policy: String,
+    pub tool_use_id: String,
+    pub tier_type: TierType,
+    pub platform: Platform,
+    pub subagent_output: String,
+    pub completion_status: CompletionStatus,
+    pub iteration_count: u32,
+}
+
+pub enum CompletionStatus {
+    Success,
+    Failure(String),
+    Warning(String),
+}
+
+/// BeforeUnit hook trait
+pub trait BeforeUnitHook: Send + Sync {
+    fn execute(&self, ctx: &BeforeUnitContext) -> Result<BeforeUnitResult>;
+    fn name(&self) -> &str;
+}
+
+/// AfterUnit hook trait
+pub trait AfterUnitHook: Send + Sync {
+    fn execute(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult>;
+    fn name(&self) -> &str;
+}
+
+pub struct BeforeUnitResult {
+    pub active_subagent: Option<String>,
+    pub injected_context: Option<String>,
+    pub block: bool,
+    pub block_reason: Option<String>,
+}
+
+pub struct AfterUnitResult {
+    pub validation_passed: bool,
+    pub validation_error: Option<String>,
+    pub request_retry: bool,
+    pub retry_reason: Option<String>,
+}
+
+pub struct HookRegistry {
+    before_unit_hooks: Vec<Box<dyn BeforeUnitHook>>,
+    after_unit_hooks: Vec<Box<dyn AfterUnitHook>>,
+}
+
+impl HookRegistry {
+    pub fn new() -> Self {
+        Self { before_unit_hooks: Vec::new(), after_unit_hooks: Vec::new() }
+    }
+    pub fn register_before_unit(&mut self, hook: Box<dyn BeforeUnitHook>) {
+        self.before_unit_hooks.push(hook);
+    }
+    pub fn register_after_unit(&mut self, hook: Box<dyn AfterUnitHook>) {
+        self.after_unit_hooks.push(hook);
+    }
+    pub fn execute_before_unit(&self, ctx: &BeforeUnitContext) -> Result<BeforeUnitResult> {
+        let mut active_subagent = None;
+        let mut injected_contexts = Vec::new();
+        let mut block = false;
+        let mut block_reason = None;
+        for hook in &self.before_unit_hooks {
+            match safe_hook_main(|| hook.execute(ctx)) {
+                Ok(result) => {
+                    if result.block { block = true; block_reason = Some(result.block_reason.unwrap_or_else(|| format!("Hook {} blocked", hook.name()))); break; }
+                    if let Some(subagent) = result.active_subagent { active_subagent = Some(subagent); }
+                    if let Some(ctx) = result.injected_context { injected_contexts.push(ctx); }
+                }
+                Err(e) => { log::warn!("BeforeUnit hook {} failed: {}", hook.name(), e); }
+            }
+        }
+        Ok(BeforeUnitResult { active_subagent, injected_context: if injected_contexts.is_empty() { None } else { Some(injected_contexts.join("\n\n")) }, block, block_reason })
+    }
+    pub fn execute_after_unit(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult> {
+        let mut validation_passed = true;
+        let mut validation_error = None;
+        let mut request_retry = false;
+        let mut retry_reason = None;
+        for hook in &self.after_unit_hooks {
+            match safe_hook_main(|| hook.execute(ctx)) {
+                Ok(result) => {
+                    if !result.validation_passed { validation_passed = false; validation_error = result.validation_error; request_retry = result.request_retry; retry_reason = result.retry_reason; break; }
+                }
+                Err(e) => { log::warn!("AfterUnit hook {} failed: {}", hook.name(), e); }
+            }
+        }
+        Ok(AfterUnitResult { validation_passed, validation_error, request_retry, retry_reason })
+    }
+}
+
+fn safe_hook_main<F, T>(hook_fn: F) -> Result<T>
+where F: FnOnce() -> Result<T>,
+{ hook_fn() }
+```
+
+**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit).
+
+**Integration:** In `src/core/orchestrator.rs`, call `hook_registry.execute_before_unit` before subagent execution and `hook_registry.execute_after_unit` after. Update `ExecutionUnitContext.active_subagent` from `BeforeUnitResult`. Always register built-in hooks even when platform-native hooks are also registered.
+### 2. Structured Handoff Report Validation
+
+**Concept:** Enforce a standardized output format for subagent invocations. Every subagent must produce a structured handoff report with required fields. If output is malformed, block and request one retry (fail-safe after retry).
+
+**BeforeHandoffValidation responsibilities:**
+
+- **Detect output format:** Detect if subagent output is structured (JSON) or unstructured (text)
+- **Load validation schema:** Load validation schema for `SubagentOutput` format
+- **Prepare validation context:** Build validation context with expected fields and format requirements
+
+**DuringHandoffValidation responsibilities:**
+
+- **Parse structured output:** Attempt to parse output as structured `SubagentOutput` JSON
+- **Validate required fields:** Validate that all required fields are present (`task_report` is required)
+- **Validate field types:** Validate that field types match schema (string, array, enum, etc.)
+- **Validate findings format:** Validate that findings array contains valid `Finding` objects with required fields
+- **Extract from text (fallback):** If JSON parsing fails, attempt to extract structured data from text output
+- **Request retry if malformed:** If output is malformed and retry not yet attempted, request one retry with format instruction
+
+**AfterHandoffValidation responsibilities:**
+
+- **Persist validation results:** Append the handoff-validation result to the canonical runtime verification/receipt event family and project it into redb-backed handoff validation read models. The legacy `.puppet-master/state/handoff-validation-{node_id}.json` path is retired source-lineage and may exist only as an explicit debug/export mirror generated from canonical storage.
+- **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
+- **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
+
+**Required output format:**
+
+```rust
+// src/types/subagent_output.rs (new file)
+
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+// DRY:DATA:SubagentOutput — Structured subagent output format
+pub struct SubagentOutput {
+    /// Task report: what the subagent did
+    pub task_report: String,
+    /// Downstream context: information for next tier/subagent
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub downstream_context: Option<String>,
+    /// Findings: quality issues, blockers, recommendations
+    #[serde(default)]
+    pub findings: Vec<Finding>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Finding {
+    pub severity: Severity,
+    pub category: String,   // e.g., "security", "performance", "maintainability"
+    pub description: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub file: Option<PathBuf>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub suggestion: Option<String>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Severity {
+    Critical,
+    Major,
+    Minor,
+    Info,
+}
+
+#[derive(Debug, thiserror::Error)]
+pub enum ValidationError {
+    #[error("JSON parse error: {0}")]
+    JsonParse(#[from] serde_json::Error),
+    #[error("Missing required field: {0}")]
+    MissingField(String),
+    #[error("Invalid severity: {0}")]
+    InvalidSeverity(String),
+    #[error("Text extraction failed: {0}")]
+    TextExtraction(String),
+    #[error("Validation failed after retry: {0}")]
+    ValidationFailedAfterRetry(String),
+}
+```
+
+**Platform-specific parser implementation:**
+
+Extend `src/platforms/output_parser.rs` with new parser methods:
+
+```rust
+// Add to ParsedOutput struct:
+pub struct ParsedOutput {
+    // ... existing fields ...
+    /// Parsed subagent output if structured format detected
+    pub subagent_output: Option<SubagentOutput>,
+}
+
+// Add to OutputParser trait:
+pub trait OutputParser: Send + Sync {
+    // ... existing methods ...
+
+    /// Parse structured subagent output (platform-specific)
+    fn parse_subagent_output(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
+
+    /// Extract structured output from text (fallback)
+    fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
+}
+
+// Implementation for each platform parser:
+
+<<< CONTEXT_AFTER 2553-2564 >>>
+
+impl OutputParser for CursorOutputParser {
+    // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
+    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // DRY requirement: output format detection must use platform_specs — do not hardcode "--output-format json"
+        // Cursor outputs JSON with --output-format json (from platform_specs)
+        // Implementation note: Use platform_specs to determine expected output format for this platform
+        let json: serde_json::Value = serde_json::from_str(stdout)
+            .map_err(|e| ValidationError::JsonParse(e))?;
+
+        // Extract structured fields
+        let task_report = json.get("task_report")

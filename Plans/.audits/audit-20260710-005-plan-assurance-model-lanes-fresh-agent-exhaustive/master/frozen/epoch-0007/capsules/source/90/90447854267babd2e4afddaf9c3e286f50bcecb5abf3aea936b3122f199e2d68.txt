@@ -1,0 +1,122 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-107 >>>
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.runtime_artifact.api_web_call.schema.v1",
+L00000004	  "title": "Runtime Artifact api_web_call",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "artifact_id",
+L00000010	    "artifact_type",
+L00000011	    "project_id",
+L00000012	    "run_id",
+L00000013	    "attempt_id",
+L00000014	    "created_at_utc",
+L00000015	    "projection_freshness",
+L00000016	    "projection_health",
+L00000017	    "retention_class",
+L00000018	    "routing_refs",
+L00000019	    "type_payload"
+L00000020	  ],
+L00000021	  "properties": {
+L00000022	    "schema_id": {
+L00000023	      "type": "string",
+L00000024	      "const": "pm.runtime_artifact.api_web_call.schema.v1"
+L00000025	    },
+L00000026	    "artifact_id": {
+L00000027	      "type": "string",
+L00000028	      "minLength": 1
+L00000029	    },
+L00000030	    "artifact_type": {
+L00000031	      "type": "string",
+L00000032	      "const": "api_web_call"
+L00000033	    },
+L00000034	    "project_id": {
+L00000035	      "type": "string",
+L00000036	      "minLength": 1
+L00000037	    },
+L00000038	    "run_id": {
+L00000039	      "type": "string",
+L00000040	      "minLength": 1
+L00000041	    },
+L00000042	    "attempt_id": {
+L00000043	      "type": "string",
+L00000044	      "minLength": 1
+L00000045	    },
+L00000046	    "thread_id": {
+L00000047	      "type": "string"
+L00000048	    },
+L00000049	    "node_id": {
+L00000050	      "type": "string"
+L00000051	    },
+L00000052	    "provider_attempt_ref": {
+L00000053	      "type": "string"
+L00000054	    },
+L00000055	    "usage_event_ref": {
+L00000056	      "type": "string"
+L00000057	    },
+L00000058	    "receipt_refs": {
+L00000059	      "type": "array",
+L00000060	      "items": {
+L00000061	        "type": "string",
+L00000062	        "minLength": 1
+L00000063	      }
+L00000064	    },
+L00000065	    "producer_ref": {
+L00000066	      "type": "string"
+L00000067	    },
+L00000068	    "actor_ref": {
+L00000069	      "type": "string"
+L00000070	    },
+L00000071	    "created_at_utc": {
+L00000072	      "type": "string",
+L00000073	      "minLength": 1
+L00000074	    },
+L00000075	    "summary": {
+L00000076	      "type": "string"
+L00000077	    },
+L00000078	    "detail_ref": {
+L00000079	      "type": "string"
+L00000080	    },
+L00000081	    "content_ref": {
+L00000082	      "type": "string"
+L00000083	    },
+L00000084	    "source_surface": {
+L00000085	      "type": "string"
+L00000086	    },
+L00000087	    "projection_freshness": {
+L00000088	      "type": "string"
+L00000089	    },
+L00000090	    "projection_health": {
+L00000091	      "type": "string"
+L00000092	    },
+L00000093	    "retention_class": {
+L00000094	      "type": "string"
+L00000095	    },
+L00000096	    "routing_refs": {
+L00000097	      "type": "array",
+L00000098	      "minItems": 1,
+L00000099	      "items": {
+L00000100	        "type": "string",
+L00000101	        "minLength": 1
+L00000102	      }
+L00000103	    },
+L00000104	    "type_payload": {
+L00000105	      "$ref": "#/$defs/ApiWebCallPayload"
+L00000106	    }
+L00000107	  },
+
+<<< CONTEXT_AFTER canonical_document_lines=108-119 >>>
+L00000108	  "$defs": {
+L00000109	    "InvocationProvenance": {
+L00000110	      "type": "object",
+L00000111	      "additionalProperties": false,
+L00000112	      "allOf": [
+L00000113	        {
+L00000114	          "if": {
+L00000115	            "properties": {
+L00000116	              "invocation_source": {
+L00000117	                "enum": [
+L00000118	                  "agent_initiated",
+L00000119	                  "goal",

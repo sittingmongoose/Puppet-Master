@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE canonical_document_lines=17189-17200 >>>
+L00017189	  - "deep_plan"
+L00017190	  - "debug"
+L00017191	  - "interview"
+L00017192	  - "brainstorm"
+L00017193	  - "crew"
+L00017194	negative_constraints:
+L00017195	  - "`deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning."
+L00017196	owner_hints:
+L00017197	  - Plans/assistant-chat-design.md
+L00017198	  - Plans/Run_Modes.md
+L00017199	```
+L00017200	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=17201-17598 >>>
+L00017201	### ACD-304 - Natural Language Mode Resolution
+L00017202	
+L00017203	```yaml
+L00017204	plan_unit_id: ACD-304
+L00017205	unit_type: requirement
+L00017206	status: accepted
+L00017207	owner_doc: Plans/assistant-chat-design.md
+L00017208	canonical_text: >-
+L00017209	  Natural-language requests resolve deterministically: ask/read-only phrases map
+L00017210	  to overlay `none` plus runtime `ask`; plan phrases map to overlay `plan` plus
+L00017211	  runtime `plan`; deep-plan phrases map to overlay `deep_plan` plus runtime
+L00017212	  `plan`; agent phrases clear planning overlays and preserve explicit permission
+L00017213	  posture.
+L00017214	gui_related: false
+L00017215	gui_classification_reason: Natural-language mode resolution is command/resolver behavior.
+L00017216	depends_on: [ACD-303]
+L00017217	unblocks: [ACD-305, ACD-314]
+L00017218	acceptance_criteria:
+L00017219	  - Ask/read-only phrases resolve to overlay `none` and runtime `ask`.
+L00017220	  - Plan phrases resolve to overlay `plan` and runtime `plan`.
+L00017221	  - Deep Plan phrases resolve to overlay `deep_plan` and runtime `plan`.
+L00017222	  - Agent mode requests clear planning overlays and preserve explicit permission posture.
+L00017223	validation_surfaces:
+L00017224	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017225	  - python3 scripts/pm-plan-index.py validate
+L00017226	risk_class: mode_invocation
+L00017227	reasoning_tier: high
+L00017228	context_scope: modes
+L00017229	implementation_surfaces:
+L00017230	  - Plans/assistant-chat-design.md
+L00017231	  - Plans/Prompt_Pipeline.md
+L00017232	  - Plans/FinalGUISpec.md
+L00017233	node_compile_hint:
+L00017234	  mode: natural_language_mode_resolution
+L00017235	  create_worknodes: false
+L00017236	source_lineage:
+L00017237	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017238	preserved_exact_tokens:
+L00017239	  - "use ask mode"
+L00017240	  - "don't edit"
+L00017241	  - "just inspect"
+L00017242	  - "use plan mode"
+L00017243	  - "use deep plan"
+L00017244	  - "use agent mode"
+L00017245	  - "regular"
+L00017246	  - "yolo"
+L00017247	negative_constraints: []
+L00017248	owner_hints:
+L00017249	  - Plans/assistant-chat-design.md
+L00017250	  - Plans/Prompt_Pipeline.md
+L00017251	```
+L00017252	
+L00017253	### ACD-305 - Mode Compact Display Labels
+L00017254	
+L00017255	```yaml
+L00017256	plan_unit_id: ACD-305
+L00017257	unit_type: requirement
+L00017258	status: accepted
+L00017259	owner_doc: Plans/assistant-chat-design.md
+L00017260	canonical_text: Compact visible labels derive from effective overlay plus runtime posture so labels may remain `Ask`, `Agent`, `Plan`, or `Deep Plan`.
+L00017261	gui_related: true
+L00017262	gui_classification_reason: Compact mode labels are visible Assistant Chat UI.
+L00017263	depends_on: [ACD-304]
+L00017264	unblocks: []
+L00017265	acceptance_criteria:
+L00017266	  - Compact display labels derive from effective overlay plus runtime posture.
+L00017267	  - Visible labels may be Ask, Agent, Plan, or Deep Plan.
+L00017268	validation_surfaces:
+L00017269	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017270	  - python3 scripts/pm-plan-index.py validate
+L00017271	risk_class: mode_display
+L00017272	reasoning_tier: standard
+L00017273	context_scope: gui
+L00017274	implementation_surfaces:
+L00017275	  - Plans/assistant-chat-design.md
+L00017276	  - Plans/FinalGUISpec.md
+L00017277	node_compile_hint:
+L00017278	  mode: mode_compact_display_labels
+L00017279	  create_worknodes: false
+L00017280	source_lineage:
+L00017281	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017282	preserved_exact_tokens:
+L00017283	  - "Ask"
+L00017284	  - "Agent"
+L00017285	  - "Plan"
+L00017286	  - "Deep Plan"
+L00017287	negative_constraints: []
+L00017288	owner_hints:
+L00017289	  - Plans/assistant-chat-design.md
+L00017290	  - Plans/FinalGUISpec.md
+L00017291	```
+L00017292	
+L00017293	### ACD-306 - Assistant Planning Wizard Recommendation
+L00017294	
+L00017295	```yaml
+L00017296	plan_unit_id: ACD-306
+L00017297	unit_type: requirement
+L00017298	status: accepted
+L00017299	owner_doc: Plans/assistant-chat-design.md
+L00017300	canonical_text: Assistant chat recommends Planning Wizard when feature, substantial enhancement, major refactor/change, broad scope, open questions, or Deep Plan output suggests planning-workspace scoping and orchestrator follow-through would help.
+L00017301	gui_related: false
+L00017302	gui_classification_reason: Recommendation trigger detection is workflow behavior; CTA display is covered separately.
+L00017303	depends_on: [ACD-301]
+L00017304	unblocks: [ACD-307, ACD-308, ACD-314]
+L00017305	acceptance_criteria:
+L00017306	  - Assistant chat detects feature, enhancement, major change, and major refactor requests as Planning Wizard recommendation candidates.
+L00017307	  - Broad scope, many open questions, or large plan size may trigger recommendation.
+L00017308	  - Deep Plan output may trigger recommendation when interview scoping or orchestrator follow-through would help.
+L00017309	validation_surfaces:
+L00017310	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017311	  - python3 scripts/pm-plan-index.py validate
+L00017312	risk_class: wizard_escalation
+L00017313	reasoning_tier: standard
+L00017314	context_scope: wizard_handoff
+L00017315	implementation_surfaces:
+L00017316	  - Plans/assistant-chat-design.md
+L00017317	  - Plans/chain-wizard-flexibility.md
+L00017318	node_compile_hint:
+L00017319	  mode: assistant_planning_wizard_recommendation
+L00017320	  create_worknodes: false
+L00017321	source_lineage:
+L00017322	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0139
+L00017323	preserved_exact_tokens:
+L00017324	  - "add a feature"
+L00017325	  - "major enhancement"
+L00017326	  - "big change"
+L00017327	  - "large refactor"
+L00017328	negative_constraints: []
+L00017329	owner_hints:
+L00017330	  - Plans/assistant-chat-design.md
+L00017331	  - Plans/chain-wizard-flexibility.md
+L00017332	```
+L00017333	
+L00017334	### ACD-307 - Planning Wizard Recommendation CTA
+L00017335	
+L00017336	```yaml
+L00017337	plan_unit_id: ACD-307
+L00017338	unit_type: requirement
+L00017339	status: accepted
+L00017340	owner_doc: Plans/assistant-chat-design.md
+L00017341	canonical_text: Planning Wizard recommendation is a CTA, not an automatic redirect; the user may accept or decline, and declining keeps the user in chat with no hidden workflow switch.
+L00017342	gui_related: true
+L00017343	gui_classification_reason: Recommendation CTA and accept/decline behavior are visible user-facing flow.
+L00017344	depends_on: [ACD-306]
+L00017345	unblocks: [ACD-309]
+L00017346	acceptance_criteria:
+L00017347	  - Planning Wizard recommendation appears as a CTA.
+L00017348	  - The user may accept or decline the recommendation.
+L00017349	  - Declining keeps the user in chat without a hidden workflow switch.
+L00017350	validation_surfaces:
+L00017351	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017352	  - python3 scripts/pm-plan-index.py validate
+L00017353	risk_class: wizard_escalation
+L00017354	reasoning_tier: standard
+L00017355	context_scope: gui
+L00017356	implementation_surfaces:
+L00017357	  - Plans/assistant-chat-design.md
+L00017358	  - Plans/FinalGUISpec.md
+L00017359	  - Plans/chain-wizard-flexibility.md
+L00017360	node_compile_hint:
+L00017361	  mode: planning_wizard_recommendation_cta
+L00017362	  create_worknodes: false
+L00017363	source_lineage:
+L00017364	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0139
+L00017365	preserved_exact_tokens:
+L00017366	  - "CTA"
+L00017367	  - "not an automatic redirect"
+L00017368	negative_constraints:
+L00017369	  - "Declining keeps the user in chat with no hidden workflow switch."
+L00017370	owner_hints:
+L00017371	  - Plans/assistant-chat-design.md
+L00017372	  - Plans/FinalGUISpec.md
+L00017373	```
+L00017374	
+L00017375	### ACD-308 - Deep Planning Wizard Escalation Evaluation
+L00017376	
+L00017377	```yaml
+L00017378	plan_unit_id: ACD-308
+L00017379	unit_type: requirement
+L00017380	status: accepted
+L00017381	owner_doc: Plans/assistant-chat-design.md
+L00017382	canonical_text: >-
+L00017383	  Deep Plan performs a final wizard-escalation evaluation before defaulting to
+L00017384	  chat execution and recommends Planning Wizard when work spans several domains,
+L00017385	  has unresolved material questions, reads like a feature spec, or should
+L00017386	  produce orchestrator-ready artifacts.
+L00017387	gui_related: false
+L00017388	gui_classification_reason: Deep Plan escalation evaluation is planning workflow behavior.
+L00017389	depends_on: [ACD-301, ACD-306]
+L00017390	unblocks: [ACD-309, ACD-314]
+L00017391	acceptance_criteria:
+L00017392	  - Deep Plan performs a final wizard-escalation evaluation before chat execution.
+L00017393	  - Deep Plan recommends Planning Wizard for multi-domain, unresolved, spec-like, or artifact-producing work.
+L00017394	validation_surfaces:
+L00017395	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017396	  - python3 scripts/pm-plan-index.py validate
+L00017397	risk_class: wizard_escalation
+L00017398	reasoning_tier: high
+L00017399	context_scope: deep_plan
+L00017400	implementation_surfaces:
+L00017401	  - Plans/assistant-chat-design.md
+L00017402	  - Plans/chain-wizard-flexibility.md
+L00017403	node_compile_hint:
+L00017404	  mode: deep_planning_wizard_escalation_evaluation
+L00017405	  create_worknodes: false
+L00017406	source_lineage:
+L00017407	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0140
+L00017408	preserved_exact_tokens:
+L00017409	  - "Deep Plan MUST perform"
+L00017410	  - "orchestrator-ready project artifacts"
+L00017411	negative_constraints: []
+L00017412	owner_hints:
+L00017413	  - Plans/assistant-chat-design.md
+L00017414	  - Plans/chain-wizard-flexibility.md
+L00017415	```
+L00017416	
+L00017417	### ACD-309 - Planning Wizard Handoff Bundle
+L00017418	
+L00017419	```yaml
+L00017420	plan_unit_id: ACD-309
+L00017421	unit_type: requirement
+L00017422	status: accepted
+L00017423	owner_doc: Plans/assistant-chat-design.md
+L00017424	canonical_text: >-
+L00017425	  Accepting a recommendation launches Planning Wizard / Interview with a structured
+L00017426	  handoff bundle containing source, reason, origin IDs, project context,
+L00017427	  `default_intent = EnhanceRewriteAdd`, user goal, summaries, GUI hint, plan
+L00017428	  refs, todos, open questions, assumptions, and `chat_excerpt_refs[]`.
+L00017429	gui_related: false
+L00017430	gui_classification_reason: Handoff bundle schema is integration data behavior.
+L00017431	depends_on: [ACD-307, ACD-308]
+L00017432	unblocks: [ACD-310, ACD-311, ACD-312]
+L00017433	acceptance_criteria:
+L00017434	  - Accepting a recommendation launches Planning Wizard / Interview with a structured handoff bundle.
+L00017435	  - The handoff bundle carries source, reason, origin, project, goal, summary, GUI hint, plan, TODO, question, assumption, and excerpt references.
+L00017436	validation_surfaces:
+L00017437	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017438	  - python3 scripts/pm-plan-index.py validate
+L00017439	risk_class: wizard_handoff
+L00017440	reasoning_tier: high
+L00017441	context_scope: handoff
+L00017442	implementation_surfaces:
+L00017443	  - Plans/assistant-chat-design.md
+L00017444	  - Plans/chain-wizard-flexibility.md
+L00017445	  - Plans/interview-subagent-integration.md
+L00017446	node_compile_hint:
+L00017447	  mode: planning_wizard_handoff_bundle
+L00017448	  create_worknodes: false
+L00017449	source_lineage:
+L00017450	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
+L00017451	preserved_exact_tokens:
+L00017452	  - "handoff_source"
+L00017453	  - "handoff_reason"
+L00017454	  - "origin_thread_id"
+L00017455	  - "origin_message_id"
+L00017456	  - "default_intent = EnhanceRewriteAdd"
+L00017457	  - "has_gui_hint"
+L00017458	  - "chat_excerpt_refs[]"
+L00017459	negative_constraints: []
+L00017460	owner_hints:
+L00017461	  - Plans/assistant-chat-design.md
+L00017462	  - Plans/chain-wizard-flexibility.md
+L00017463	```
+L00017464	
+L00017465	### ACD-310 - Chat Excerpt Reference Lineage
+L00017466	
+L00017467	```yaml
+L00017468	plan_unit_id: ACD-310
+L00017469	unit_type: requirement
+L00017470	status: accepted
+L00017471	owner_doc: Plans/assistant-chat-design.md
+L00017472	canonical_text: >-
+L00017473	  `chat_excerpt_refs[]` are bounded lineage pointers with `thread_id`,
+L00017474	  `message_id`, optional `range_ref`, `excerpt_role`, and `redaction_state`;
+L00017475	  they are not copied transcript authority and resolve through canonical
+L00017476	  thread/message storage.
+L00017477	gui_related: false
+L00017478	gui_classification_reason: Chat excerpt references are lineage and storage behavior.
+L00017479	depends_on: [ACD-309]
+L00017480	unblocks: [ACD-311]
+L00017481	acceptance_criteria:
+L00017482	  - "`chat_excerpt_refs[]` identify bounded source excerpts by canonical pointer fields."
+L00017483	  - Excerpt references are lineage pointers, not copied transcript authority.
+L00017484	  - Wizard resolves excerpt references through canonical thread/message storage.
+L00017485	validation_surfaces:
+L00017486	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017487	  - python3 scripts/pm-plan-index.py validate
+L00017488	risk_class: handoff_lineage
+L00017489	reasoning_tier: high
+L00017490	context_scope: handoff
+L00017491	implementation_surfaces:
+L00017492	  - Plans/assistant-chat-design.md
+L00017493	  - Plans/storage-plan.md
+L00017494	  - Plans/chain-wizard-flexibility.md
+L00017495	node_compile_hint:
+L00017496	  mode: chat_excerpt_reference_lineage
+L00017497	  create_worknodes: false
+L00017498	source_lineage:
+L00017499	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
+L00017500	preserved_exact_tokens:
+L00017501	  - "chat_excerpt_refs[]"
+L00017502	  - "thread_id"
+L00017503	  - "message_id"
+L00017504	  - "range_ref"
+L00017505	  - "excerpt_role"
+L00017506	  - "redaction_state"
+L00017507	negative_constraints:
+L00017508	  - "`chat_excerpt_refs[]` entries are lineage pointers, not copied transcript authority."
+L00017509	owner_hints:
+L00017510	  - Plans/assistant-chat-design.md
+L00017511	  - Plans/storage-plan.md
+L00017512	```
+L00017513	
+L00017514	### ACD-311 - Wizard Handoff Visibility And Audit
+L00017515	
+L00017516	```yaml
+L00017517	plan_unit_id: ACD-311
+L00017518	unit_type: constraint
+L00017519	status: accepted
+L00017520	owner_doc: Plans/assistant-chat-design.md
+L00017521	canonical_text: Imported handoff context remains visible and auditable; imported plans become wizard/interviewer context rather than immediate executable artifacts, and the launch audit trail is preserved.
+L00017522	gui_related: true
+L00017523	gui_classification_reason: Imported context visibility and audit trail are user-facing handoff behavior.
+L00017524	depends_on: [ACD-309, ACD-310]
+L00017525	unblocks: [ACD-314]
+L00017526	acceptance_criteria:
+L00017527	  - Imported handoff context is visible to the user.
+L00017528	  - Imported plans become wizard/interviewer context rather than immediate executable artifacts.
+L00017529	  - Handoff preserves an audit trail from Assistant Chat / Deep Plan.
+L00017530	validation_surfaces:
+L00017531	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017532	  - python3 scripts/pm-plan-index.py validate
+L00017533	risk_class: handoff_visibility
+L00017534	reasoning_tier: high
+L00017535	context_scope: gui
+L00017536	implementation_surfaces:
+L00017537	  - Plans/assistant-chat-design.md
+L00017538	  - Plans/FinalGUISpec.md
+L00017539	  - Plans/chain-wizard-flexibility.md
+L00017540	node_compile_hint:
+L00017541	  mode: wizard_handoff_visibility_audit
+L00017542	  create_worknodes: false
+L00017543	source_lineage:
+L00017544	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0141
+L00017545	preserved_exact_tokens:
+L00017546	  - "imported context"
+L00017547	  - "visible"
+L00017548	  - "audit trail"
+L00017549	negative_constraints:
+L00017550	  - "Imported context must be visible to the user; it must not be hidden system state."
+L00017551	  - "The imported plan is not an immediate executable artifact."
+L00017552	owner_hints:
+L00017553	  - Plans/assistant-chat-design.md
+L00017554	  - Plans/FinalGUISpec.md
+L00017555	```
+L00017556	
+L00017557	### ACD-312 - Wizard Launch Context Routing
+L00017558	
+L00017559	```yaml
+L00017560	plan_unit_id: ACD-312
+L00017561	unit_type: requirement
+L00017562	status: accepted
+L00017563	owner_doc: Plans/assistant-chat-design.md
+L00017564	canonical_text: >-
+L00017565	  Wizard launch opens preloaded `EnhanceRewriteAdd` when project/path context
+L00017566	  exists, or preserves imported context and lands on project-setup review first
+L00017567	  when required project context is missing.
+L00017568	gui_related: true
+L00017569	gui_classification_reason: Wizard launch path and project-setup review landing are visible workflow UI.
+L00017570	depends_on: [ACD-309]
+L00017571	unblocks: [ACD-313, ACD-314]
+L00017572	acceptance_criteria:
+L00017573	  - Threads with active project/path open the preloaded `EnhanceRewriteAdd` flow.
+L00017574	  - Threads missing required project context preserve imported context and land on project-setup review first.
+L00017575	validation_surfaces:
+L00017576	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017577	  - python3 scripts/pm-plan-index.py validate
+L00017578	risk_class: wizard_launch
+L00017579	reasoning_tier: standard
+L00017580	context_scope: gui
+L00017581	implementation_surfaces:
+L00017582	  - Plans/assistant-chat-design.md
+L00017583	  - Plans/FinalGUISpec.md
+L00017584	  - Plans/chain-wizard-flexibility.md
+L00017585	node_compile_hint:
+L00017586	  mode: wizard_launch_context_routing
+L00017587	  create_worknodes: false
+L00017588	source_lineage:
+L00017589	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
+L00017590	preserved_exact_tokens:
+L00017591	  - "EnhanceRewriteAdd"
+L00017592	  - "project-setup review path"
+L00017593	negative_constraints: []
+L00017594	owner_hints:
+L00017595	  - Plans/assistant-chat-design.md
+L00017596	  - Plans/FinalGUISpec.md
+L00017597	```
+L00017598	
+
+<<< CONTEXT_AFTER canonical_document_lines=17599-17610 >>>
+L00017599	### ACD-313 - Wizard Imported Context Before Interview
+L00017600	
+L00017601	```yaml
+L00017602	plan_unit_id: ACD-313
+L00017603	unit_type: constraint
+L00017604	status: accepted
+L00017605	owner_doc: Plans/assistant-chat-design.md
+L00017606	canonical_text: >-
+L00017607	  The interviewer must not start cold: imported context is available before the
+L00017608	  first question, imported plan context may be opened, and the mandatory scope
+L00017609	  probe still runs without bypassing phase 0.
+L00017610	gui_related: false

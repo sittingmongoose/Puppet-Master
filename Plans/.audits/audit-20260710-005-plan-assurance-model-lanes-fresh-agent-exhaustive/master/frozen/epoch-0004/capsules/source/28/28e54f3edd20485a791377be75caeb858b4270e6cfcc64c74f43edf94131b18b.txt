@@ -1,0 +1,346 @@
+<<< CONTEXT_BEFORE 791-802 >>>
+#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)
+
+This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-lane search backends.
+
+**chatsearch (project chat index)**
+- **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
+- **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
+- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+- **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+
+<<< AUTHORITATIVE_CORE 803-1119 >>>
+
+**codesearch (project workspace code search; MVP multi-lane)**
+- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
+- **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
+- **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
+- **Tool split:** `codesearch` is a multi-tier workspace search tool (Tantivy full-text index, LSP symbol search, and grep fallback), while `lsp` is the direct language-server operation surface for go-to-definition, references, hover, and related symbol calls.
+- **Tool boundary:** `grep` is regex pattern matching over raw text, while `codesearch` is semantic/keyword/phrase/symbol workspace search (`/keyword` and `/phrase/symbol`) over code-search indexes and symbol-aware sources. They have different tool contracts, indexes, and use cases even when codesearch falls back to text search.
+- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
+- **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
+- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
+
+**grep (index-accelerated regex search; MVP)**
+
+The `grep` tool keeps its existing interface and transparently uses a per-project sparse n-gram regex index when that index can narrow the query.
+
+Plans/Tools.md (`/Tools.md`) owns `grep` /fallback semantics, `/sparse-n-gram` index-acceleration behavior, tool-event field disclosure, filtering, and /degradation language: acceleration may narrow candidates, but raw ripgrep remains the visible fallback when the index is unavailable, disabled, invalid, or skipped by query rules. The `/fallback/freshness/degradation/filtering/event-field` owner bundle maps to this section: fallback causes, stale-index freshness, degradation language, filtering rules, and the `tool.invoked.index_used` event field live here.
+
+For multi-project scope, each `grep` call carries a project context from the active tool registry or from the project owning the `path` parameter. PM queries that project's index only; there is no cross-project index merging.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+- **External contract:** Same compatibility signature `{ pattern: string, path?: string, glob?: string }`, same `matches: Array<{ path, line_number, line }>` result shape for content-mode callers, same project scoping, same result limit (1000), same timeout (30s), and same read-only permission posture as today's `grep`. The richer canonical contract above may expose output-mode variants, but Search-panel regex mode uses the same backend; there is no new user-facing or agent-facing tool name.
+- **Correctness model:** The index is only a candidate reducer. Final results always come from ripgrep verification on authoritative file content. Hash collisions, stale base snapshots, and broad dirty-layer candidate inclusion may increase candidate count, but MUST NOT change final correctness.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, Invariant:INV-002
+
+- **Sparse-n-gram model:** This is not a summary-level algorithm and not a classic fixed-trigram index. Build time extracts **all** sparse n-grams from normalized file content via `build_all`. Query time extracts only a **minimal-covering** set from normalized literals. That asymmetric build/query contract is the core selectivity/performance property.
+- **Frequency table contract:** Boundary weighting uses a shipped pre-computed 256x256 `u16` base table derived from The Stack Smol, counted on ASCII-lowercased bytes as char-pair frequencies, blended with per-project frequencies using `effective[a][b] = α × base[a][b] + (1-α) × project[a][b]` where alpha defaults to 0.5. The blended table improves selectivity for projects with unusual naming conventions, DSLs, or non-English identifiers, is stored per project in `frequency_table.bin`, and is shared by both build and query logic. It is recomputed only on full rebuilds; Non-Git remote content uses the pre-computed base table only until a project table exists.
+- **Boundary-failure fallback:** When weighting cannot place sparse boundaries for a segment of length >= 3, including zero-weight or all-equal blended weights, extraction falls back to fixed-width 3-gram boundaries so the segment remains discoverable.
+- **Byte-level operation rule:** N-gram extraction and frequency counting operate on raw bytes. Implementers MUST NOT decode content to Unicode at any point in the indexing or query pipeline. ASCII-only lowercasing (`u8::to_ascii_lowercase()`, loop shorthand `u8::to_ascii_lowercase();`) is the only transformation; non-ASCII bytes pass through unchanged.
+- **Line-ending normalization:** The sparse-n-gram pipeline is line-ending-agnostic: index-time and query-time inputs strip CRLF `\r` bytes before ASCII-lowercase, so bare Git clones and Windows working trees produce matching n-grams for the same content.
+- **Lowercase query rationale:** CRITICAL FIX: the sparse-n-gram index stores lowercase-normalized n-grams rather than original-case n-grams; both index-time and query-time operate in lowercase space. A case-insensitive query such as `(?i)foobar` therefore queries lowercase forms and gets superset candidates that ripgrep verifies, avoiding case-variant explosion and normalized-hash misses such as `hash("fo")` versus `hash("Fo")`. Case-sensitive queries may get more candidates, but final ripgrep verification preserves exact case correctness.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+- **Query flow:** Parse regex with `regex-syntax` / `regex_syntax` into HIR, extract literals through `regex_syntax::literal`, classify `regex_syntax::literal::Seq` conjunctions versus alternations, strip CRLF `\r` bytes, ASCII-lowercase with `u8::to_ascii_lowercase()`, compute a minimal-covering n-gram set, hash with xxh3, binary-search `lookup.bin`, load Roaring Bitmap postings, intersect within required-literal groups, union across alternations, resolve file IDs / `file_id` entries via `file_map.bin`, apply path/glob filters, add dirty-layer paths, then run ripgrep only on candidate files from the local filesystem, local Git cache via `git show`-materialized content, or dirty staging; index-build bulk reads for bare Git content use `git cat-file --batch`. Git repositories without a public clone URL follow the same non-Git fallback path.
+- **Alternation rule (CRITICAL FIX):** Alternation uses union-of-intersections, not pure intersection. For alternatives, e.g., `foo|bar`, PM intersects within each branch and then UNIONs across branches; a match means files containing foo OR bar, not files containing BOTH alternatives.
+- **Query skip rules:** Skip the index and run raw ripgrep when no literals can be extracted, for example `.*`, `[a-z]+`, or `\d{3}`; this is the same behavior as the index-missing path. Also skip when a case-insensitive query contains non-ASCII literals or when the covering set exceeds 64 n-grams.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+- **Freshness model:** PM-mediated writes update the dirty layer synchronously before returning success. Dirty entries are generation-aware path records, not a second canonical search index. All dirty paths are unconditionally included in candidate verification, and deleted dirty paths suppress stale base-index hits.
+- **Watcher overflow/rescan model:** When a file watcher reports an overflow/rescan condition, including inotify `IN_Q_OVERFLOW`, FSEvents "must scan", or Windows RDCW buffer overflow, PM marks all indexed files dirty and immediately crosses the re-anchor threshold. This path is equivalent to crash-recovery after losing the dirty layer; on Windows the watcher buffer default is 64 KB to reduce overflow frequency.
+- **Stale-index rule:** There is no stale-threshold cutoff and no commit-count-based fallback threshold. When an index snapshot exists, it remains queryable while background refresh or re-anchor work runs; dirty-layer state tracks `SHA` / `HEAD` movement through re-anchor instead of making commit count the freshness proxy. Raw ripgrep fallback is reserved for missing, `/corrupted/building` without a valid snapshot, disabled, or query-skip conditions.
+- **Verification fault tolerance:** Per-file verification races (`ENOENT`, permission denied, deleted-between-candidate-and-verify, transient I/O errors) are skip-and-continue conditions, not whole-query failures.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+- **Filtering rules:** The index respects the same `.gitignore` / `.ignore` baseline as `grep`, applies mandatory secret-path exclusions, excludes binary files using ripgrep-style null-byte detection, honors the per-project large-file threshold (default 10 MB), and applies separate index-exclusion patterns for low-value or generated-file content. The default generated-file exclusion set is `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`, `*.min.js`, `*.min.css`, `*.map`, `*.generated.*`, `*.g.dart`, and `*.pb.go`; users can add/remove patterns without changing grep ignore rules.
+- **Path traversal prevention:** Paths derived from `.gitmodules`, dirty staging notifications, or remote file-change events MUST be canonicalized before use and then validated with `starts_with(project_root)` / `starts_with(cache_root)`. Submodule paths containing `..` are rejected with a logged warning before they can affect the project tree or remote `cache_root`.
+- **Symlink policy:** Index build filesystem walks and ripgrep verification default to `--no-follow` / `no-follow`; symlinks are not followed into directories outside the project root. The Indexing settings section may expose a "Follow symlinks" toggle, but it is OFF by default. When enabled, PM still canonicalizes each resolved path and applies `starts_with(project_root)` validation after canonicalization before indexing or verifying a symlink target.
+- **User-facing search:** When the Search panel regex toggle is ON, the same sparse-n-gram path accelerates find-in-files. Search inherits the same dirty-layer freshness guarantee and the same fallback causes as agent `grep`.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+- **Performance / acceptance targets:** Indexed query latency target is <20 ms across repository sizes. Full-build targets are <2 minutes for <=500 MB, <10 minutes for <=5 GB, and <30 minutes for <=50 GB on SSD-class storage. Incremental rebuilds may temporarily use roughly 1.5x index size in RAM because extraction is incremental but serialization is full-snapshot rewrite. SSD storage is the supported baseline for repositories above 5 GB. Steady-state memory: peak RSS contribution typically <500 MB (only the lookup table is mmap'd; postings are streamed via offset). Dirty-layer insert: <1 ms per path (synchronous HashMap update). Typical index size: 1-10% of source code size. Build-thread dependencies, also reflected by `storage-plan.md ### 2.4`, include `thread-priority` alongside `regex-syntax`, `roaring`, `memmap2`, `xxhash-rust`, and `arc-swap`; `thread-priority` runs build threads at `ThreadPriority::Min`, wraps `setpriority/pthread_setschedparam` on Unix and `SetThreadPriority` on Windows, and on macOS Apple Silicon additionally calls `pthread_set_qos_class_self_np(QOS_CLASS_UTILITY)` for energy-efficient scheduling so indexing does not starve the editor.
+- **Build publication and cancellation handoff:** Storage owns the detailed snapshot lifecycle, while this tool contract depends on the same guarantees: builders write the next generation under `gen-{N+1}/`, flush generation files with `File::sync_all();` / `sync_all` before publication, check `CancellationToken` between file-processing iterations, and document incremental rebuild cost as O(index_size) RAM.
+- **Rust implementation foundation:** PM assembles well-understood Rust crates rather than a from-scratch novel algorithm: regex parsing uses `regex-syntax` plus the `regex_syntax::literal` module and `regex_syntax` HIR extraction; posting operations use `roaring` intersection and /union behavior; lookup mmap uses `memmap2`; and SIMD may optimize candidate or verification loops without changing correctness. `trigrep` and `fast-grep-rust` are disk-backed study references only, while Cursor, ClickHouse, and GitHub Code Search are proof points, not PM dependencies.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+**logsearch / logread (project logs)**
+- **logsearch input:** `query: string`, optional `filters: { time_range?, run_id?, thread_id?, tool_name?, level? }`, `k?: number`.
+- **logsearch output:** hits with `{ ts, summary, run_id?, thread_id?, tool_name?, level?, ref: { event_id? | blob_ref? } }`.
+- **logread input:** `{ event_id? | blob_ref? }`.
+- **logread output:** `{ content, truncated?: boolean, truncation_reason? }` (bounded by size caps).
+- **Index rule:** Tantivy logs index stores summaries/snippets only; full payload remains out-of-index and is fetched via logread.
+- **Secrets policy:** Log summaries/snippets and any persisted payload returned by logread MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Blob resolution:** `blob_ref` resolves to `storage/blobs/projects/{project_id}/logs/...` (see Plans/storage-plan.md).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+**repo.import (external repo import; separate from workspace search)**
+- **Input:** `{ source: string (URL or owner/repo), dest_path?, mode?: "new_project"|"add_workspace_root"|"temporary_mount" }`.
+- **Output:** `{ repo_id?, project_id?, workspace_root?, mount_ref?, status, warnings[]?, imported_ref? }`; temporary mounts return a bounded `mount_ref` instead of silently creating a permanent workspace root.
+- **Limits:** import must honor FileSafe write scope, project-root/path traversal guards, maximum repository size and clone timeout, and network/provider permissions; `temporary_mount` data is lifecycle-bound and excluded from durable project identity until promoted.
+- **Errors:** structured failures include `invalid_source`, `permission_denied`, `filesafe_blocked`, `repo_too_large`, `clone_failed`, `auth_required`, `destination_exists`, and `network_unavailable`; failed imports must not leave a half-registered project/workspace root.
+
+### 3.6 Task tool and the 42 subagents (Plans)
+
+The public `task` contract describes delegated work, not a user-curated agent catalog. Hidden, unavailable, or policy-blocked subagents stay out of public discovery and out of runtime success-shaped fallbacks.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md
+
+#### Request shape
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `goal` | `string` | yes | The delegated work to perform. |
+| `context?` | `object` | no | Structured supporting context, refs, or constraints. |
+| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`; on no match the current session remains the owner. |
+| `subagent_type?` | `string` | no | Optional child role selector; when present, validate it against the `subagent_registry` enum of 42 subagent types before launch. |
+| `resume?` | `{ delegated_session_id: string }` | no | Resume token for an existing delegated run. |
+| `timeout_s?` | `number` | no | Caller-selected ceiling when policy allows. |
+
+This request-shape table is the task tool input schema. The dispatch contract resolves an accepted `subagent_type` through the same run-config, permission, and tool-policy pipeline as other child launches, rejects unknown subagent types before launch, and keeps hidden, inaccessible, or policy-blocked subagents out of selectable public inputs.
+
+#### Runtime result shape
+
+| Field | Type | Notes |
+|---|---|---|
+| `delegated_session_id` | `string` | Stable identity reused on resume. |
+| `status` | `pending | running | completed | failed | cancelled | timed_out` | Child lifecycle. |
+| `summary?` | `string` | Short user-facing result. |
+| `artifacts[]?` | `array` | Optional refs emitted by the delegated run. |
+| `failure_detail?` | `object` | Structured failure disclosure when not completed. |
+
+Runtime rules:
+- Task I/O is resume-aware: resumes reuse the stable delegated session, surface `resumed: boolean` only as provider-facing compatibility metadata, and normalize returned text/artifacts back into PM's canonical child-run result shape.
+- resume reuses the same `delegated_session_id`; it does not mint a fresh child identity
+- provider-facing compatibility output may expose `task_id`, `subagent_type`, `resumed: boolean`, `result_text`, and `runtime_snapshot?`, but PM normalizes those values back to the canonical child-run identity and user-facing result shape
+- hidden, inaccessible, or denied subagents are not advertised as selectable, subagents inherit parent permissions with enforced overrides, `todowrite` / `todoread` remain denied by default for subagents unless explicitly re-enabled by run config, and nested `task` stays denied unless the target subagent/run config explicitly permits it
+- The low-level permission engine remains the base enforcement point for task/subagent launches; permanent-approval UX, /logging/subagents visibility, and aggressive-by-default read-heavy delegation heuristics are consumed through the permission, chat, storage, and orchestrator owners while Tools keeps the user-facing `task` envelope tight.
+- User-asked subagent usage is honored when feasible. Without explicit instruction, PM may be aggressive-by-default about read-heavy `task` delegation when specialist-fit and task-fit evidence is strong; GUI/chat transparency records which subagent or `/persona` was used, why when meaningful, what task it owned, TODO linkage, `/blocked` or failure state, and lifecycle in thread history/storage after registry validation.
+- task-launched MCP dependencies use the shared MCP runtime `/auth/config` owner rather than task-local config. Local MCP entries use `type: "local"` plus `command: string[]`; remote entries use `type: "remote"` plus URL/auth state, and task metadata may reference that resolved runtime but does not copy secrets.
+- nested `task` remains default-denied unless an explicit future policy opens it
+- `owner_hint` maps to an exact available role or falls back to the current session; unavailable providers surface an error instead of silent rerouting
+- the public contract does not expose `agent_type`, `name`, or optional `agent_id` as canonical user-facing inputs
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+### 3.6A Task runtime addendum
+
+The `task` tool launches canonical child runs.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
+
+Required task-tool launch contract:
+- validate the requested child against `subagent_registry` when the launch path names a subagent type.
+- resolve requested and effective Persona separately from requested and effective runtime surface.
+- classify each child as `required` or `optional` for parent progress.
+- inherit the parent permission ceiling, write scope, requested/effective runtime and account restrictions, and remaining budget as hard upper bounds; the child MAY narrow them further but MUST NOT widen them.
+- preserve requested versus effective runtime surface, effective account/billing context, effort, capability state, write scope, and resolved `task_timeout_ms` in metadata.
+- when the caller omits an explicit child timeout, default to the inherited parent remaining budget; when the caller requests a broader timeout, clamp it to the parent's remaining budget and emit a structured diagnostic.
+
+No-silent-fallback rules:
+- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
+- implicit orchestrator-selected runtime surfaces may fallback to another compatible surface.
+- fallback reason must be recorded in metadata.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
+
+Copilot-native routing rule:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path.
+- a non-Copilot parent must not route into Copilot-native subagent semantics.
+- the correct outcome is strict deny, not silent downgrade.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle semantics exposed by `task`:
+- retry = same logical child with a new attempt.
+- reroute = same logical child task under a different effective runtime surface.
+- replacement = a new child run because the role or task shape changed materially.
+- cancellation is parent-controlled and explicit.
+- resume applies only to non-terminal interrupted or waiting children.
+
+The `task` tool must not treat command subtasks, interview children, crew members, or orchestrator children as different runtime classes. They all enter the same canonical child-run model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md
+### 3.6B Delegated debug investigations
+
+Delegated runs launched through `task` may participate in an existing investigation.
+
+Required rules:
+- a delegated run launched inside an investigation inherits `investigation_id` plus a narrowed-or-equal permission snapshot
+- delegated runs may add evidence, instrumentation updates, and verification results to the shared investigation, but they must do so through the canonical investigation and runtime-artifact contracts
+- delegated runs must not create a second mutation-capable investigation against the same project/worktree unless a higher-level owner flow explicitly isolates the work in another worktree or host context
+- any delegated run that installs or mutates temporary instrumentation must also carry the cleanup contract for its own `instrumentation_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### GitHubApiTool
+
+**ToolID:** `GitHubApiTool`
+
+**Purpose:** The sole permitted interface for GitHub HTTPS API calls. All GitHub operations (repository, fork, PR, issue, status) MUST route through this tool.
+
+**Rules:**
+- GitHub CLI (`gh`) is forbidden for auth/status/repo/fork/PR operations (see Spec_Lock.json#github_operations).
+- Auth flows are owned by Plans/GitHub_API_Auth_and_Flows.md.
+- API version: configurable via `github.api_version` (default: `"2022-11-28"`).
+
+**Owner:** Crosswalk.md §3.1 (Tooling domain).
+
+ContractRef: ToolID:GitHubApiTool, SchemaID:Spec_Lock.json#github_operations, Primitive:Tool
+
+---
+
+## 4. Custom tools
+
+**Custom tools** are user- or project-defined functions the LLM can call. They are defined in config (or a linked module) and can execute arbitrary code.
+
+### 4.1 Registry requirements
+
+The central tool registry should support:
+
+- **Registration:** Name, description, and input schema (parameters, types) so the model knows when and how to call the tool.
+- **Permission model:** Same allow/deny/ask and wildcards (e.g. `myproject_*: ask`). Custom tools are not exempt from policy.
+- **Events:** Invocations and results normalized into the unified event model (seglog) for analytics, audit, and replay.
+
+### 4.2 Schema and discovery
+
+- **Schema:** JSON Schema or equivalent for parameters; description for model prompt. Stored in config or a dedicated tools manifest (e.g. project-level or user-level).
+- **Discovery:** Registry must know which custom tools are available for a run (project config, enabled list, or scan). Avoid loading arbitrary code from disk without explicit enablement.
+
+### 4.3 Sandboxing and safety
+
+- **Execution:** Custom tools run arbitrary code. **MVP:** Execute in a **subprocess** with a configurable timeout (e.g. 60s default) and optional output size cap (e.g. 1 MiB). No network or filesystem sandbox for MVP; document in implementation plan. Future: optional resource limits or allowlist-based sandbox.
+- **FileSafe:** Custom tools that read/write files or run shell commands are subject to the same FileSafe guards (write scope, sensitive paths, command blocklist) where the invocation can be classified (e.g. if the tool forwards to bash or edit, apply FileSafe).
+- **Naming:** Prefer a prefix or namespace (e.g. `custom_*`, `myproject_*`) so permission wildcards and analytics can group them.
+- **Enterprise host-policy:** MCP, custom, `/custom/plugin`, `/import/share`, and plugin tools that touch external `/hosts` declare contacted domains before execution. The same `host-policy`, proxy, and trust checks used by core web/runtime surfaces apply before the subprocess or adapter runs. Diagnostics distinguish `blocked_by_host_policy`, `host_blocked_by_policy`, `proxy_auth_required`, `tls_untrusted`, `offline_cached_only`, and `enterprise_host_unsupported` from generic network failure; offline cached results are read-only evidence, not live authority.
+
+See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for reference.
+
+---
+
+<a id="MCP-INTEGRATION"></a>
+
+## 5. MCP integration (in scope)
+
+MCP canon is owned by `Plans/MCP_Integration.md`. This section is a consumer cross-reference for tool-registry and permission integration only.
+
+ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+Consumer rules:
+- requested versus effective MCP availability is resolved through the owner document; this section does not redefine it
+- credential binding and invalidation semantics are owner-defined in `Plans/MCP_Integration.md`
+- tool names use the underscore-only form `{server_slug}_{tool_name}`
+- slash-separated aliases are not canonical and must not remain live examples
+- MCP-specific skill metadata is a consumer of the central registry, not a competing tool model: requested/effective `tool-resolution` is resolved through the registry and policy engine before provider-specific projection or skill metadata is interpreted
+- Tool-registry consumers expose MCP `/remote/auth/debug/status` as requested/effective availability and auth-state evidence from `Plans/MCP_Integration.md`; this is a lower-level owner handoff, not a second MCP schema in Tools.
+## 6. Ways to add tools (implementation angles)
+
+
+| Mechanism | What it adds | Where it's configured | Notes |
+|-----------|--------------|------------------------|-------|
+| **MCP server** | New tools/resources/prompts from one server | Per-platform MCP config (see §7) | Single MCP server can expose many tools. Context7 and GUI automation remain representative examples; search/provider canon stays in the owner docs. |
+| **Platform CLI flags** | Allow/deny built-in tools (shell, write, MCP by name) | Run config / runner args | Copilot: `--allow-tool` / `--deny-tool`. Claude: `--allowedTools`. Gemini: N/A (Direct-provider; enforced by Puppet Master). |
+| **Central tool registry** | All tools (MCP + native) registered and gated by policy | Puppet Master core (rewrite) | Permissions, validation, normalized results; events in seglog; analytics on latency/errors. |
+| **GUI tool catalog** | Framework-specific tools (e.g. Playwright, headless runners) offered in Interview | DRY:DATA:gui_tool_catalog; interview config | newtools.md: discovery, user choice, test strategy and PRD wiring. |
+| **GUI MCP settings** | Enable/disable MCP servers, API keys (e.g. Context7) | Settings → Advanced → MCP Configuration | newtools §8.1; MCP tools then integrated per §5 above. |
+
+Implementations should:
+
+- Use **platform_specs** (and future central registry) as single source of truth; avoid hardcoding platform tool/MCP details.
+- Own MCP centrally (tool registry + policy engine); generate derived adapter config for `CliBridge` providers only where required. `DirectApi` providers use the central registry directly. Resolve secrets via env/credential store only (no secrets in config files).
+- Align with **storage-plan.md**: tool-related events in seglog, rollups in redb, and any search index in Tantivy.
+
+---
+
+## 7. Per-platform MCP and tool config (reference)
+
+Snapshot for implementation; re-verify with Doctor or platform docs at implementation time.
+
+| Platform     | Project / workspace config       | User config                | Format | Tool-related CLI flags |
+|-------------|-----------------------------------|----------------------------|--------|-------------------------|
+| Cursor      | `.cursor/mcp.json`                | `~/.cursor/mcp.json`       | JSON   | MCP via config; non-interactive via `-p`, `--output-format` |
+| Claude Code | `.mcp.json` (cwd)                 | `~/.claude.json`           | JSON   | `--allowedTools`, `--permission-mode`, `--max-turns` |
+| Codex       | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
+| Gemini      | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
+| Copilot     | N/A (DirectApi; central MCP registry) | N/A                  | N/A    | (provider/tool boundary) |
+
+- Claude Code CLI structured output probes such as `claude -p --output-format json --permission-mode plan "Reply exactly OK"` can return usage fields including `usage.outputTokens`, `usage.cacheReadTokens`, and `usage.cacheWriteTokens`. PM treats those as provider/runtime usage observations that normalize through `usage.event`, not as a separate tool counter schema.
+- **Context7:** API key as `Authorization: Bearer <key>`; resolve via env/credential store and inject in-memory. Derived adapter config MUST contain no secrets.
+- **Cited web search:** Prefer one MCP server (e.g. server slug `websearch-cited`, default tool name `websearch_cited`) registered centrally like Context7 when this historical integration path is still enabled. Derived adapters for `CliBridge` providers only. Tool results MUST normalize to the live web/provenance contracts owned by `Plans/Tools.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/assistant-chat-design.md` before reaching chat/interview/orchestrator consumers.
+
+---
+
+## 8. Implementation details and technical notes
+
+### 8.0 Event payloads (seglog)
+Blocked and denied tool packets expose the shared runtime-facing blocked payload.
+
+Required fields:
+- `blocked_sequence`
+- `approval_scope_key`
+- `action_available`
+- `escalation_level`
+
+Canonical events:
+- `tool.invoked`
+- `tool.denied`
+
+Escalation ladder:
+- `info`
+- `warning`
+- `attention_required`
+- `blocked`
+- `system_notification`
+
+Rules:
+- Tool payloads keep blocked identity and action availability discoverable.
+- The same escalation ladder is reused across tools, approvals, and blocked runtime surfaces.
+- `tool.invoked` events for grep/Search acceleration include optional `index_used`; `tool.invoked.index_used = true` means sparse-n-gram candidate narrowing served the query, while `false` means raw ripgrep fallback or another unindexed path served it.
+### 8.1 Config persistence
+
+- **Where:** Tool permissions live in the same config as the rest of Settings (e.g. `GuiConfig` in memory, persisted to redb as `config:v1` per FinalGUISpec §15.1). Use the key **`tool_permissions`** (object: tool name or wildcard → `"allow"` | `"deny"` | `"ask"`, or per-tool object for granular rules per §10.1).
+- **Scope:** Tool permissions support app-level defaults plus project-scoped overrides for the active project context. Project switching recalculates the effective permission set from the current scope layers.
+- **Mid-run:** Run config is an immutable snapshot at start (FinalGUISpec §9.7). Changing Settings (including tool permissions) mid-run does **not** affect the active run; next run picks up the new config.
+
+### 8.2 Policy application order and invocation flow
+
+Tool dispatch follows one canonical order. No tool implementation is invoked directly outside this flow.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Child-run tool dispatch inherits the parent run's tool policy, deadline, and MCP effective-availability snapshot unless the run envelope carries an explicit narrower override. The child tool set is resolved from the central tool registry plus effective MCP-discovered tools before policy filtering, so built-in, custom, provider-exposed, and MCP tools follow one readiness and permission path. `/helper/background` work uses the same policy application order as foreground tool calls and must not bypass per-tool policy, schema validation, or timeout propagation.
+
+### Schema isolation and OAuth state
+
+Tool dispatch consumes MCP-owned schema/OAuth facts without re-owning them. The `/OAuth/timeout` contract is: OAuth-required tool calls must fail fast with structured auth or timeout evidence when the MCP owner reports expired auth, missing client registration, callback/listener failure, or exhausted parent deadline; the tool layer must not retry by minting a hidden OAuth flow or extending the run timeout.
+
+OAuth callback listeners MUST use the configured loopback `bind-address` / `bind-host` from the auth owner contract; wildcard, public-interface, or tool-invented callback binds are callback/listener failures and must not silently widen the listener.
+
+WSL/container OAuth callback surfaces keep that owner-provided loopback binding explicit; hardcoding `127.0.0.1` in the wrong network namespace is a callback/listener failure, not a reason to widen the listener.
+
+MCP schema resolution treats a repeated `$ref` revisit as a `schema-cycle`: the cycle-break output substitutes the revisited branch with `{}`, emits a structured warning, and continues validation only for the safe continuation surface rather than recursing indefinitely. This prevents DataHub/Supabase-style circular-schema `RecursionError` crashes during tool registration.
+
+Malformed MCP tool data is isolated per-server and per-tool: schema violations emit a structured `mcp_schema_mismatch` envelope plus diagnostic evidence, do not crash the host, and do not poison other servers' availability or tool records.
+
+This section intentionally replaces under-specified and over-summarized child-run/MCP tool wording: inherited deadlines, pre-validation, schema validation, OAuth timeout handling, and unavailable-server behavior must stay explicit. The owner-level contract is a pre-dispatch pipeline, not a consumer hint.
+
+<<< CONTEXT_AFTER 1120-1131 >>>
+
+Additive owner-detail for this Tools anchor: provider `finishReason` / `finishReason=length` with `stop_reason = length` on an incomplete tool call is a `no-dispatch` gate before permission, schema, or any tool execution; retry taxonomy is `per-class` with explicit attempt ceilings and bounded recovery posture; loop suppression may use `similarity-based` equivalence only after normalized fingerprint and error-class comparison and must still emit a diagnostic; nested runtime/tool work inherits hierarchical deadline propagation. MCP OAuth state stays stable across tool dispatch: client registration uses a durable `client-id`, callback setup uses the owner-provided `callback-listener`, and token persistence serializes each `token-write` so concurrent refresh or callback paths cannot race or replace a valid token.
+
+Required order:
+1. Normalize the invocation context and expand relevant paths.
+2. Evaluate `policy.may_execute_tool()` on the invocation.
+3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments.
+4. Apply provider-specific argument normalizers where the tool surface explicitly allows them, including concrete compatibility fixes such as GLM quoted-JSON unquoting and Qwen XML-wrapper stripping before schema validation.
+5. Run `schema.validate_tool_args()` on the post-normalization argument set.
+6. Run arg-touching hooks.
+7. Re-run permission and schema validation if hook output changed arguments.
+8. Dispatch only if all checks pass.

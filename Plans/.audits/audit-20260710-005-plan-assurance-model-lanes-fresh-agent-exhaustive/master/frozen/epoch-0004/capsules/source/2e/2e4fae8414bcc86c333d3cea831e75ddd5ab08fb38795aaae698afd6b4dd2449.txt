@@ -1,0 +1,320 @@
+<<< AUTHORITATIVE_CORE 1-305 >>>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/non_executable_closure_evidence.schema.json",
+  "title": "Puppet Master Non-Executable Implementation-Readiness Closure Evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "updated_at_utc",
+    "scope",
+    "buildability_policy",
+    "forbidden_artifact_counts",
+    "closed_blocker_families",
+    "remaining_blocker_families",
+    "closure_records",
+    "event_payload_contract_registry",
+    "plancompile_artifact_payload_registry",
+    "provider_stream_contract",
+    "persistence_behavior_fixtures",
+    "security_boundary_fixtures",
+    "gui_wiring_contract",
+    "behavioral_acceptance_contract",
+    "structural_integrity_contract",
+    "owner_routing_contract",
+    "currentness_contract"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.implementation_readiness.non_executable_closure_evidence.v1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "updated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "const": "spec_schema_validator_fixture_only_no_runtime_artifact_emission"
+    },
+    "buildability_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buildability_gate_passed_must_remain_false",
+        "ordinary_product_worknodes_allowed",
+        "ordinary_product_nodeseeds_allowed",
+        "pnc019_executable_lifecycle_certification_required"
+      ],
+      "properties": {
+        "buildability_gate_passed_must_remain_false": {
+          "const": true
+        },
+        "ordinary_product_worknodes_allowed": {
+          "const": false
+        },
+        "ordinary_product_nodeseeds_allowed": {
+          "const": false
+        },
+        "pnc019_executable_lifecycle_certification_required": {
+          "const": true
+        }
+      }
+    },
+    "forbidden_artifact_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "worknodes",
+        "nodeseeds",
+        "candidates",
+        "queues",
+        "manifests",
+        "implementation_files",
+        "runtime_launches",
+        "production_build_tasks"
+      ],
+      "properties": {
+        "worknodes": { "const": 0 },
+        "nodeseeds": { "const": 0 },
+        "candidates": { "const": 0 },
+        "queues": { "const": 0 },
+        "manifests": { "const": 0 },
+        "implementation_files": { "const": 0 },
+        "runtime_launches": { "const": 0 },
+        "production_build_tasks": { "const": 0 }
+      }
+    },
+    "closed_blocker_families": {
+      "$ref": "#/$defs/family_list"
+    },
+    "remaining_blocker_families": {
+      "$ref": "#/$defs/family_list"
+    },
+    "closure_records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/closure_record"
+      }
+    },
+    "event_payload_contract_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_record_owner", "event_record_schema", "consumer_rule", "payload_contracts"],
+      "properties": {
+        "event_record_owner": {"$ref": "#/$defs/non_empty_string"},
+        "event_record_schema": {"$ref": "#/$defs/non_empty_string"},
+        "consumer_rule": {"$ref": "#/$defs/non_empty_string"},
+        "payload_contracts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["event_type", "payload_schema_id", "payload_contract_ref", "producer", "consumers", "negative_fixture"],
+            "properties": {
+              "event_type": {"$ref": "#/$defs/non_empty_string"},
+              "payload_schema_id": {"$ref": "#/$defs/non_empty_string"},
+              "payload_contract_ref": {"$ref": "#/$defs/non_empty_string"},
+              "producer": {"$ref": "#/$defs/non_empty_string"},
+              "consumers": {"$ref": "#/$defs/string_list"},
+              "negative_fixture": {"$ref": "#/$defs/non_empty_string"}
+            }
+          }
+        }
+      }
+    },
+    "plancompile_artifact_payload_registry": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/artifact_payload"
+      }
+    },
+    "provider_stream_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_split",
+        "circular_owner_break",
+        "event_kinds",
+        "required_refs",
+        "chunk_contract",
+        "tool_call_contract",
+        "cancellation_contract",
+        "retry_contract",
+        "quota_error_degraded_contract",
+        "evidence_and_redaction"
+      ],
+      "properties": {
+        "owner_split": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "facade_contract_owner",
+            "account_and_auth_owner",
+            "server_bridge_owner",
+            "event_envelope_owner",
+            "plancompile_consumer",
+            "external_mapping_reference"
+          ],
+          "properties": {
+            "facade_contract_owner": {"$ref": "#/$defs/non_empty_string"},
+            "account_and_auth_owner": {"$ref": "#/$defs/non_empty_string"},
+            "server_bridge_owner": {"$ref": "#/$defs/non_empty_string"},
+            "event_envelope_owner": {"$ref": "#/$defs/non_empty_string"},
+            "plancompile_consumer": {"$ref": "#/$defs/non_empty_string"},
+            "external_mapping_reference": {"$ref": "#/$defs/non_empty_string"}
+          }
+        },
+        "circular_owner_break": {"$ref": "#/$defs/non_empty_string"},
+        "event_kinds": {"$ref": "#/$defs/string_list"},
+        "required_refs": {"$ref": "#/$defs/string_list"},
+        "chunk_contract": {"$ref": "#/$defs/non_empty_string"},
+        "tool_call_contract": {"$ref": "#/$defs/non_empty_string"},
+        "cancellation_contract": {"$ref": "#/$defs/non_empty_string"},
+        "retry_contract": {"$ref": "#/$defs/non_empty_string"},
+        "quota_error_degraded_contract": {"$ref": "#/$defs/non_empty_string"},
+        "evidence_and_redaction": {"$ref": "#/$defs/non_empty_string"}
+      }
+    },
+    "persistence_behavior_fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/fixture"
+      }
+    },
+    "security_boundary_fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/fixture"
+      }
+    },
+    "gui_wiring_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command_id",
+        "catalog_ref",
+        "wiring_entries",
+        "state_selector",
+        "disabled_reason_projection",
+        "source_report",
+        "handler_location",
+        "permission_scope",
+        "required_args",
+        "result_contract",
+        "disabled_dispatch_rule",
+        "failure_projections",
+        "slint_bindings"
+      ],
+      "properties": {
+        "command_id": {"$ref": "#/$defs/non_empty_string"},
+        "catalog_ref": {"$ref": "#/$defs/non_empty_string"},
+        "wiring_entries": {"$ref": "#/$defs/string_list"},
+        "state_selector": {"$ref": "#/$defs/non_empty_string"},
+        "disabled_reason_projection": {"$ref": "#/$defs/non_empty_string"},
+        "source_report": {"$ref": "#/$defs/non_empty_string"},
+        "handler_location": {"$ref": "#/$defs/non_empty_string"},
+        "permission_scope": {"$ref": "#/$defs/non_empty_string"},
+        "required_args": {"$ref": "#/$defs/string_list"},
+        "result_contract": {"$ref": "#/$defs/non_empty_string"},
+        "disabled_dispatch_rule": {"$ref": "#/$defs/non_empty_string"},
+        "failure_projections": {"$ref": "#/$defs/string_list"},
+        "slint_bindings": {"$ref": "#/$defs/string_list"}
+      }
+    },
+    "behavioral_acceptance_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "preservation_only_acceptance_allowed",
+        "lineage_only_terms_are_not_behavioral",
+        "lineage_only_terms",
+        "required_dimensions",
+        "implementation_targeted_acceptance_examples"
+      ],
+      "properties": {
+        "preservation_only_acceptance_allowed": {"const": false},
+        "lineage_only_terms_are_not_behavioral": {"const": true},
+        "lineage_only_terms": {"$ref": "#/$defs/string_list"},
+        "required_dimensions": {"$ref": "#/$defs/string_list"},
+        "implementation_targeted_acceptance_examples": {"$ref": "#/$defs/string_list"}
+      }
+    },
+    "structural_integrity_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dependency_graph_ref", "node_readiness_ref", "build_order_hazard_policy", "required_checks"],
+      "properties": {
+        "dependency_graph_ref": {"$ref": "#/$defs/non_empty_string"},
+        "node_readiness_ref": {"$ref": "#/$defs/non_empty_string"},
+        "build_order_hazard_policy": {"$ref": "#/$defs/non_empty_string"},
+        "required_checks": {"$ref": "#/$defs/string_list"}
+      }
+    },
+    "owner_routing_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner_matrix_source",
+        "closed_family_owner_docs_exact",
+        "candidate_owners_allowed_for_closed_rows",
+        "source_lineage_docs_current_authority",
+        "compatibility_docs_current_authority",
+        "responsibilities"
+      ],
+      "properties": {
+        "owner_matrix_source": {"$ref": "#/$defs/non_empty_string"},
+        "closed_family_owner_docs_exact": {"const": true},
+        "candidate_owners_allowed_for_closed_rows": {"const": false},
+        "source_lineage_docs_current_authority": {"const": false},
+        "compatibility_docs_current_authority": {"const": false},
+        "responsibilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["responsibility", "owners"],
+            "properties": {
+              "responsibility": {"$ref": "#/$defs/non_empty_string"},
+              "owners": {"$ref": "#/$defs/string_list"}
+            }
+          }
+        }
+      }
+    },
+    "currentness_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cas_fields", "reject_stale_but_valid_json", "negative_cases", "refresh_routes", "receipt_rule"],
+      "properties": {
+        "cas_fields": {"$ref": "#/$defs/string_list"},
+        "reject_stale_but_valid_json": {"const": true},
+        "negative_cases": {"$ref": "#/$defs/string_list"},
+        "refresh_routes": {"$ref": "#/$defs/string_list"},
+        "receipt_rule": {"$ref": "#/$defs/non_empty_string"}
+      }
+    }
+  },
+
+<<< CONTEXT_AFTER 306-317 >>>
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    },

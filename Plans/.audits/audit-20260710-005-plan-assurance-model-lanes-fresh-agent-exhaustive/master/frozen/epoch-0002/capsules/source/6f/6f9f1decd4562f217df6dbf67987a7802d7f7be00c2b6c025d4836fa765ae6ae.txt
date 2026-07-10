@@ -1,0 +1,397 @@
+<<< CONTEXT_BEFORE 6844-6855 >>>
+- Child re-entry must not create hidden inter-agent channels, implicit shared state, or an unbounded task queue outside the
+  crew board contract.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md'
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 6856-7223 >>>
+### OSI-009 - Child Authority Clamp And Outcomes
+
+```yaml
+plan_unit_id: OSI-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Child effective authority is clamped before dispatch and audited after completion across child-permission,
+  tool policy, write/FileSafe scope, mode ceiling, provider/model/account availability, crew admission, and budget-outcome
+  supervision.
+gui_related: false
+gui_classification_reason: This unit covers child authority and runtime outcomes, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: child_authority_clamp_and_outcomes
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: child_authority_clamp_outcomes
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0006
+preserved_exact_tokens:
+- child-permission
+- tool policy
+- write scope
+- FileSafe scope
+- mode ceiling
+- provider/model/account availability
+- crew admission
+- budget-outcome
+- pre-dispatch budget denial
+- post-response budget-overrun
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md'
+```
+
+### OSI-010 - Retired Crew Cap Example
+
+```yaml
+plan_unit_id: OSI-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: 'The stale later-stage example Enforce maximum concurrent crews (e.g., 20 total) from Gap #45 is non-canonical;
+  crew and child admission use the executionLimits owner contract.'
+gui_related: false
+gui_classification_reason: This unit covers stale crew cap retirement, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: retired_crew_cap_example
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: retired_crew_cap_example
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0006
+preserved_exact_tokens:
+- Enforce maximum concurrent crews (e.g., 20 total)
+- 'Gap #45: Crew performance and scalability'
+- non-canonical
+- executionLimits
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The later-stage crew cap example is non-canonical and retired.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md'
+```
+
+### OSI-011 - Task Tool Delegation Lifecycle
+
+```yaml
+plan_unit_id: OSI-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Task-tool delegation honors per-target deny rules, rejects unsafe self-dispatch loops, and treats long-running
+  session_id tasks as governed child lifecycle/resume/timeout/parent-supervision sessions.
+gui_related: false
+gui_classification_reason: This unit covers task tool lifecycle, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: task_tool_delegation_lifecycle
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: task_tool_delegation_lifecycle
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0006
+preserved_exact_tokens:
+- Task-tool delegation
+- per-target deny rules
+- unsafe self-dispatch loops
+- session_id
+- child lifecycle
+- resume
+- timeout
+- parent supervision
+negative_constraints:
+- Unsafe self-dispatch loops must be rejected.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md'
+```
+
+### OSI-012 - Parent Owned Clarification Escalation
+
+```yaml
+plan_unit_id: OSI-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: 'Task and question escalation remain parent-owned: subagents request clarification through the parent orchestrator,
+  do not address users directly, and follow the parent /question flow plus child lifecycle contract.'
+gui_related: false
+gui_classification_reason: This unit covers parent-owned escalation, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: parent_owned_clarification_escalation
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: parent_owned_clarification_escalation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0007
+preserved_exact_tokens:
+- Task tool contract alignment
+- parent-owned
+- /question
+- do not address users directly
+- child lifecycle contract
+negative_constraints:
+- Subagents do not address users directly.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-013 - Child Launch Snapshot Propagation
+
+```yaml
+plan_unit_id: OSI-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: Child launch context carries normalized effective skill/tool/permission/MCP snapshots plus cache-affinity,
+  cache-hit, compaction-state, compaction-regression, and subagent context visibility inputs without provider-specific hidden
+  channels or permission bypass.
+gui_related: false
+gui_classification_reason: This unit covers launch context propagation, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: child_launch_snapshot_propagation
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: child_launch_snapshot_propagation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0007
+preserved_exact_tokens:
+- effective skill/tool/permission/MCP snapshot
+- cache-affinity
+- cache-hit
+- compaction-state
+- compaction-regression
+- subagent context visibility
+- handoff bundle
+negative_constraints:
+- Child launch context does not create provider-specific hidden channels or bypass the parent permission ceiling.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MCP_Integration.md, ContractName:Plans/Prompt_Pipeline.md'
+```
+
+### OSI-014 - AgentCard Selection Boundary
+
+```yaml
+plan_unit_id: OSI-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: AgentCard-style capability advertisement is only an inspectable capability summary for subagent selection
+  and does not replace the registry, permission ceiling, runtime snapshot, or provider capability contract.
+gui_related: false
+gui_classification_reason: This unit covers selection metadata boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: agentcard_selection_boundary
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: agentcard_selection_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0007
+preserved_exact_tokens:
+- AgentCard
+- inspectable capability summary
+- registry
+- permission ceiling
+- runtime snapshot
+- provider capability contract
+negative_constraints:
+- AgentCard data does not replace the registry, permission ceiling, runtime snapshot, or provider capability contract.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md'
+```
+
+### OSI-015 - Timeout Heading Retirement
+
+```yaml
+plan_unit_id: OSI-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: The duplicate heading string Task-envelope timeout contract is retired; terminal elapsed-time completion is
+  done.task_timeout, while done.timeout and alternate timeout headings are non-canonical.
+gui_related: false
+gui_classification_reason: This unit covers timeout terminology retirement, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: timeout_heading_retirement
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: timeout_heading_retirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0007
+preserved_exact_tokens:
+- '#### Task-envelope timeout contract'
+- done.task_timeout
+- done.timeout
+- alternate timeout headings
+- budget taxonomy
+negative_constraints:
+- Wording must not revive done.timeout or alternate timeout headings.
+compatibility_only_notes:
+- The legacy duplicate heading string is retired as a separate live heading.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md'
+```
+
+
+<<< CONTEXT_AFTER 7224-7235 >>>
+### OSI-016 - Crew Message Board Surface
+
+```yaml
+plan_unit_id: OSI-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: The crew message board is the normative subagent-collaboration surface; BrainStorm, Crew, and Assistant projections
+  may show collaborative summaries, while schema, routing, priority, rate limiting, visibility, and parent mediation remain
+  owned by this orchestrator contract.
+gui_related: true
+gui_classification_reason: This unit includes user-visible BrainStorm, Crew, Assistant projections and collaboration summaries.

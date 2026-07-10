@@ -1,0 +1,404 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6052-6063 >>>
+L00006052	- "Default stale threshold"
+L00006053	- "Expiry computation"
+L00006054	- "Post-expiry posture"
+L00006055	negative_constraints:
+L00006056	- "Default stale-window thresholds are explicit and may be tightened by a surface owner, but may not be silently lengthened without a persisted policy version."
+L00006057	preserved_contractrefs: []
+L00006058	compatibility_only_notes: []
+L00006059	stale_retired_dispositions: []
+L00006060	owner_hints:
+L00006061	- "Plans/storage-plan.md"
+L00006062	```
+L00006063	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6064-6438 >>>
+L00006064	### SP-065 - Watchable Stream When-Hidden Policy
+L00006065	
+L00006066	```yaml
+L00006067	plan_unit_id: SP-065
+L00006068	unit_type: requirement
+L00006069	status: accepted
+L00006070	owner_doc: Plans/storage-plan.md
+L00006071	canonical_text: "Watchable streams declare when-hidden behavior for polling pause, return-to-visibility refresh, and relative timer elapsed/reset semantics so consumers do not infer continuity from the last rendered frame."
+L00006072	gui_related: true
+L00006073	gui_classification_reason: "This unit preserves user-visible watchable stream visibility and refresh behavior."
+L00006074	split_recommended: false
+L00006075	depends_on:
+L00006076	- "PDS-003"
+L00006077	- "PDS-004"
+L00006078	- "PDS-005"
+L00006079	- "PNC-001"
+L00006080	unblocks: []
+L00006081	acceptance_criteria:
+L00006082	- "SP-065 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+L00006083	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00006084	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00006085	validation_surfaces:
+L00006086	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00006087	- "python3 scripts/pm-plan-index.py validate"
+L00006088	risk_class: storage_plan_drift
+L00006089	reasoning_tier: standard
+L00006090	context_scope: storage_plan
+L00006091	implementation_surfaces:
+L00006092	- "Plans/storage-plan.md"
+L00006093	node_compile_hint:
+L00006094	  mode: watchable_stream_when_hidden_policy
+L00006095	  create_worknodes: false
+L00006096	source_lineage:
+L00006097	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0076"
+L00006098	preserved_exact_tokens:
+L00006099	- "Pause-when-hidden"
+L00006100	- "watchable streams"
+L00006101	- "when-hidden"
+L00006102	- "polling pauses"
+L00006103	- "grace period"
+L00006104	- "return to visibility"
+L00006105	- "forces refresh"
+L00006106	- "relative timers"
+L00006107	- "hidden elapsed time"
+L00006108	- "reset"
+L00006109	- "last rendered frame"
+L00006110	negative_constraints:
+L00006111	- "Consumers do not infer continuity from the last rendered frame."
+L00006112	preserved_contractrefs: []
+L00006113	compatibility_only_notes: []
+L00006114	stale_retired_dispositions: []
+L00006115	owner_hints:
+L00006116	- "Plans/storage-plan.md"
+L00006117	```
+L00006118	
+L00006119	### SP-066 - Store Scope Split And Projection Owner Boundary
+L00006120	
+L00006121	```yaml
+L00006122	plan_unit_id: SP-066
+L00006123	unit_type: requirement
+L00006124	status: accepted
+L00006125	owner_doc: Plans/storage-plan.md
+L00006126	canonical_text: Storage records keep secret, global app state, project state, and event ledger scope split across OS credential store only, redb, and seglog, while unified event/projection wording remains owned by Plans/newtools.md rather than a competing storage projection family.
+L00006127	gui_related: false
+L00006128	gui_classification_reason: This unit preserves backend storage ownership and projection owner boundaries.
+L00006129	split_recommended: false
+L00006130	depends_on:
+L00006131	- PDS-003
+L00006132	- PDS-004
+L00006133	- PDS-005
+L00006134	- PNC-001
+L00006135	unblocks: []
+L00006136	acceptance_criteria:
+L00006137	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00006138	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00006139	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006140	validation_surfaces:
+L00006141	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006142	- python3 scripts/pm-plan-index.py validate
+L00006143	risk_class: storage_plan_drift
+L00006144	reasoning_tier: standard
+L00006145	context_scope: storage_scope_split_owner_reconciliation
+L00006146	implementation_surfaces:
+L00006147	- Plans/storage-plan.md
+L00006148	node_compile_hint:
+L00006149	  mode: store_scope_split_and_projection_owner_boundary
+L00006150	  create_worknodes: false
+L00006151	source_lineage:
+L00006152	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00006153	preserved_exact_tokens:
+L00006154	- Scope split (owner reconciliation)
+L00006155	- OS credential store only
+L00006156	- redb
+L00006157	- seglog
+L00006158	- Plans/newtools.md
+L00006159	- /projection
+L00006160	- regex-index storage records
+L00006161	- PolicyRule:no_secrets_in_storage
+L00006162	negative_constraints:
+L00006163	- Secrets belong in the OS credential store only, not in redb or seglog.
+L00006164	preserved_contractrefs:
+L00006165	- 'ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage'
+L00006166	compatibility_only_notes: []
+L00006167	stale_retired_dispositions: []
+L00006168	owner_hints:
+L00006169	- Plans/storage-plan.md
+L00006170	```
+L00006171	
+L00006172	### SP-067 - Cross-Surface Project Panel State Persistence
+L00006173	
+L00006174	```yaml
+L00006175	plan_unit_id: SP-067
+L00006176	unit_type: requirement
+L00006177	status: accepted
+L00006178	owner_doc: Plans/storage-plan.md
+L00006179	canonical_text: Cross-surface panel state is per-project and panel-specific across Source Control, GitHub Actions, Docker Manager, Kubernetes, hidden-subview policy, and Unraid navigation while canonical cmd.docker.* command aliases win when legacy and new keys coexist.
+L00006180	gui_related: true
+L00006181	gui_classification_reason: This unit preserves user-visible panel state, subviews, filters, focus, and navigation.
+L00006182	split_recommended: false
+L00006183	depends_on:
+L00006184	- PDS-003
+L00006185	- PDS-004
+L00006186	- PDS-005
+L00006187	- PNC-001
+L00006188	unblocks: []
+L00006189	acceptance_criteria:
+L00006190	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00006191	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00006192	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006193	validation_surfaces:
+L00006194	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006195	- python3 scripts/pm-plan-index.py validate
+L00006196	risk_class: storage_plan_drift
+L00006197	reasoning_tier: standard
+L00006198	context_scope: storage_scope_split_owner_reconciliation
+L00006199	implementation_surfaces:
+L00006200	- Plans/storage-plan.md
+L00006201	node_compile_hint:
+L00006202	  mode: cross_surface_project_panel_state_persistence
+L00006203	  create_worknodes: false
+L00006204	source_lineage:
+L00006205	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00006206	preserved_exact_tokens:
+L00006207	- source_control.project_state.{project_id}
+L00006208	- github_actions.project_state.{project_id}
+L00006209	- container_manager
+L00006210	- Docker Manager > Publish / Unraid
+L00006211	- cmd.docker.*
+L00006212	- History
+L00006213	- Graph
+L00006214	- Current Branch
+L00006215	- Workflows
+L00006216	- Settings
+L00006217	- admin-scope
+L00006218	- /job/log
+L00006219	- /context/compose/Kubernetes
+L00006220	negative_constraints: []
+L00006221	preserved_contractrefs: []
+L00006222	compatibility_only_notes:
+L00006223	- Legacy container and publish-oriented panel state migrates into container_manager or Docker Manager > Publish / Unraid.
+L00006224	stale_retired_dispositions: []
+L00006225	owner_hints:
+L00006226	- Plans/storage-plan.md
+L00006227	```
+L00006228	
+L00006229	### SP-068 - Docker Manager One-Way Key Migration
+L00006230	
+L00006231	```yaml
+L00006232	plan_unit_id: SP-068
+L00006233	unit_type: requirement
+L00006234	status: accepted
+L00006235	owner_doc: Plans/storage-plan.md
+L00006236	canonical_text: 'Docker Manager project-state key migration is one-way: legacy Docker keys are migration-read aliases only, canonical writes use container_manager.project_state.{project_id}, and adjacent owner families stay with Source Control, GitHub Actions, and Orchestrator receipts.'
+L00006237	gui_related: false
+L00006238	gui_classification_reason: This unit preserves backend storage-key ownership and one-way migration rules.
+L00006239	split_recommended: false
+L00006240	depends_on:
+L00006241	- PDS-003
+L00006242	- PDS-004
+L00006243	- PDS-005
+L00006244	- PNC-001
+L00006245	unblocks: []
+L00006246	acceptance_criteria:
+L00006247	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00006248	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00006249	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006250	validation_surfaces:
+L00006251	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006252	- python3 scripts/pm-plan-index.py validate
+L00006253	risk_class: storage_plan_drift
+L00006254	reasoning_tier: standard
+L00006255	context_scope: storage_scope_split_owner_reconciliation
+L00006256	implementation_surfaces:
+L00006257	- Plans/storage-plan.md
+L00006258	node_compile_hint:
+L00006259	  mode: docker_manager_one_way_key_migration
+L00006260	  create_worknodes: false
+L00006261	source_lineage:
+L00006262	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00006263	preserved_exact_tokens:
+L00006264	- docker_manager.project_state.*
+L00006265	- docker.project_state.{project_id}
+L00006266	- docker.project_state
+L00006267	- docker_manage_surface_state
+L00006268	- /auth/Unraid
+L00006269	- migration-read aliases only
+L00006270	- container_manager.project_state.{project_id}
+L00006271	- source_control.project_state.{project_id}
+L00006272	- github_actions.project_state.{project_id}
+L00006273	- orchestrator.receipt.{run_id}.{attempt_id}
+L00006274	negative_constraints:
+L00006275	- Legacy Docker project-state keys are migration-read aliases only.
+L00006276	preserved_contractrefs: []
+L00006277	compatibility_only_notes:
+L00006278	- Legacy Docker Manager keys may be read for migration but must not receive canonical writes.
+L00006279	stale_retired_dispositions: []
+L00006280	owner_hints:
+L00006281	- Plans/storage-plan.md
+L00006282	```
+L00006283	
+L00006284	### SP-069 - Cross-Process Target Ownership And Multi-Repo Identity
+L00006285	
+L00006286	```yaml
+L00006287	plan_unit_id: SP-069
+L00006288	unit_type: requirement
+L00006289	status: accepted
+L00006290	owner_doc: Plans/storage-plan.md
+L00006291	canonical_text: Concurrent mutable control of the same project, repo, workspace root, runtime target, or remote repository is unsupported without a canonical project/target lock; conflicts degrade to read-only or explicit override and multi-repo projects carry stable workspace_root_id and repo_id below project_id.
+L00006292	gui_related: false
+L00006293	gui_classification_reason: This unit preserves backend cross-process locking, receipt, and multi-repo identity semantics.
+L00006294	split_recommended: true
+L00006295	depends_on:
+L00006296	- PDS-003
+L00006297	- PDS-004
+L00006298	- PDS-005
+L00006299	- PNC-001
+L00006300	unblocks: []
+L00006301	acceptance_criteria:
+L00006302	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00006303	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00006304	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006305	validation_surfaces:
+L00006306	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006307	- python3 scripts/pm-plan-index.py validate
+L00006308	risk_class: storage_plan_drift
+L00006309	reasoning_tier: standard
+L00006310	context_scope: storage_scope_split_owner_reconciliation
+L00006311	implementation_surfaces:
+L00006312	- Plans/storage-plan.md
+L00006313	node_compile_hint:
+L00006314	  mode: cross_process_target_ownership_and_multi_repo_identity
+L00006315	  create_worknodes: false
+L00006316	source_lineage:
+L00006317	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00006318	preserved_exact_tokens:
+L00006319	- project_id
+L00006320	- repo_id
+L00006321	- /workspace-root
+L00006322	- /repo/runtime
+L00006323	- remote_repo_ref
+L00006324	- read-only
+L00006325	- explicit override mode
+L00006326	- workspace_root_id
+L00006327	- origin
+L00006328	negative_constraints:
+L00006329	- Concurrent mutable control is unsupported unless a canonical project/target lock exists.
+L00006330	preserved_contractrefs: []
+L00006331	compatibility_only_notes: []
+L00006332	stale_retired_dispositions: []
+L00006333	owner_hints:
+L00006334	- Plans/storage-plan.md
+L00006335	```
+L00006336	
+L00006337	### SP-070 - Mutation Lock And Stale-Selection Revalidation
+L00006338	
+L00006339	```yaml
+L00006340	plan_unit_id: SP-070
+L00006341	unit_type: requirement
+L00006342	status: accepted
+L00006343	owner_doc: Plans/storage-plan.md
+L00006344	canonical_text: Mutation-capable operations claim mutation_lock_id, persist the validated armed selection/version, fail stale-selection when the visible target changes, and reconcile cancel-vs-complete races through receipt reference_state rules.
+L00006345	gui_related: false
+L00006346	gui_classification_reason: This unit preserves backend mutation lock, revalidation, and receipt reconciliation rules.
+L00006347	split_recommended: false
+L00006348	depends_on:
+L00006349	- PDS-003
+L00006350	- PDS-004
+L00006351	- PDS-005
+L00006352	- PNC-001
+L00006353	unblocks: []
+L00006354	acceptance_criteria:
+L00006355	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00006356	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00006357	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006358	validation_surfaces:
+L00006359	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006360	- python3 scripts/pm-plan-index.py validate
+L00006361	risk_class: storage_plan_drift
+L00006362	reasoning_tier: standard
+L00006363	context_scope: storage_scope_split_owner_reconciliation
+L00006364	implementation_surfaces:
+L00006365	- Plans/storage-plan.md
+L00006366	node_compile_hint:
+L00006367	  mode: mutation_lock_and_stale_selection_revalidation
+L00006368	  create_worknodes: false
+L00006369	source_lineage:
+L00006370	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00006371	preserved_exact_tokens:
+L00006372	- mutation_lock_id
+L00006373	- mutation-lock
+L00006374	- stale-selection
+L00006375	- reference_state
+L00006376	- project/repo/workspace target
+L00006377	- validated selection version
+L00006378	- cancel-vs-complete races
+L00006379	negative_constraints:
+L00006380	- Mutations must rebuild against the new canonical identity rather than applying to a previously visible row after stale-selection.
+L00006381	preserved_contractrefs: []
+L00006382	compatibility_only_notes: []
+L00006383	stale_retired_dispositions: []
+L00006384	owner_hints:
+L00006385	- Plans/storage-plan.md
+L00006386	```
+L00006387	
+L00006388	### SP-071 - Worktrees Panel State Persistence
+L00006389	
+L00006390	```yaml
+L00006391	plan_unit_id: SP-071
+L00006392	unit_type: requirement
+L00006393	status: accepted
+L00006394	owner_doc: Plans/storage-plan.md
+L00006395	canonical_text: Worktrees panel state persists selected worktree, sort mode, hide-stale, ownership display/focus, filters, and temporary Graph overlay badges until the dedicated Source Control Graph contract owns persisted graph state.
+L00006396	gui_related: true
+L00006397	gui_classification_reason: This unit preserves visible Worktrees panel state and Graph overlay badges.
+L00006398	split_recommended: false
+L00006399	depends_on:
+L00006400	- PDS-003
+L00006401	- PDS-004
+L00006402	- PDS-005
+L00006403	- PNC-001
+L00006404	unblocks: []
+L00006405	acceptance_criteria:
+L00006406	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00006407	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00006408	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00006409	validation_surfaces:
+L00006410	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006411	- python3 scripts/pm-plan-index.py validate
+L00006412	risk_class: storage_plan_drift
+L00006413	reasoning_tier: standard
+L00006414	context_scope: storage_scope_split_owner_reconciliation
+L00006415	implementation_surfaces:
+L00006416	- Plans/storage-plan.md
+L00006417	node_compile_hint:
+L00006418	  mode: worktrees_panel_state_persistence
+L00006419	  create_worknodes: false
+L00006420	source_lineage:
+L00006421	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00006422	preserved_exact_tokens:
+L00006423	- selected worktree
+L00006424	- sort mode
+L00006425	- hide-stale
+L00006426	- ownership display mode
+L00006427	- worktree ownership projection focus
+L00006428	- persisted worktree panel filters
+L00006429	- Graph overlay badges
+L00006430	- Source Control Graph contract
+L00006431	negative_constraints: []
+L00006432	preserved_contractrefs: []
+L00006433	compatibility_only_notes: []
+L00006434	stale_retired_dispositions: []
+L00006435	owner_hints:
+L00006436	- Plans/storage-plan.md
+L00006437	```
+L00006438	
+
+<<< CONTEXT_AFTER canonical_document_lines=6439-6450 >>>
+L00006439	### SP-072 - Assistant Worktree Config Keys
+L00006440	
+L00006441	```yaml
+L00006442	plan_unit_id: SP-072
+L00006443	unit_type: requirement
+L00006444	status: accepted
+L00006445	owner_doc: Plans/storage-plan.md
+L00006446	canonical_text: Assistant worktree settings are additive project-level redb config keys and do not replace Branching, File Manager, or Source Control panel-state keys.
+L00006447	gui_related: false
+L00006448	gui_classification_reason: This unit preserves backend project-level configuration keys.
+L00006449	split_recommended: false
+L00006450	depends_on:

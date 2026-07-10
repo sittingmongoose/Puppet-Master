@@ -1,0 +1,388 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-373 >>>
+L00000001	# Run Graph View (Node Graph Display) -- Specification
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Concern linkage to adjacent families
+L00000009	
+L00000010	
+L00000011	### Focused run and historical routing contract
+L00000012	
+L00000013	
+L00000014	## 1. Scope and canonical role
+L00000015	
+L00000016	
+L00000017	Run Graph is the canonical graph/lineage inspection surface for orchestrated execution.
+L00000018	
+L00000019	Rules:
+L00000020	- graph nodes are runtime nodes, not tiers
+L00000021	- graph lineage spans generations when graph patching occurs
+L00000022	- blocked/recovery/promotion/corroboration state belongs in graph detail when it pertains to the selected node or related lineage object
+L00000023	
+L00000024	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md
+L00000025	
+L00000026	### P5 run-graph focus and identity recovery requirements
+L00000027	
+L00000028	- GUI navigation must demote `Tiers` from a primary Orchestrator tab/page concept: `Seams` plus `Node Graph` are the rewrite primary surfaces, and tier labels survive only as derived view context.
+L00000029	- Run Graph distinguishes `active run truth` from `focused run context`: `active_run_id?` names live runtime truth, while `focused_run_id?` and `focus_mode = live | historical` name the page selection and first-class `Historical Run Mode` state.
+L00000030	- Page-level search and route selection must remain separate from `/tab-specific` `/filter`, `/sort`, and `/table` controls; graph node search/filter, Evidence local search/filter, Ledger filter/sort, and History list/table controls do not rewrite focused run state except through an explicit route.
+L00000031	- `Orchestrator / Graph inspector / run detail` is `/execution-axis` heavy: for each run or `/attempt`, the inspector answers what the run/attempt requested, what actually happened, and why.
+L00000032	- One shared `/deep-link` routing payload preserves target context for search results, command-palette results, widget `drill-downs`, recovery links, and cross-surface pivots; search and command-palette navigation must not restore a watered-down approximation.
+L00000033	- `Run_Graph_View.md` data-source joins retarget away from `tier_id` toward `node_id` and `attempt_id`; the remaining `follow-up` is whether any tier display survives as presentation `/grouping`, never as `/execution` authority or the primary Usage, Output, or Run Graph join key.
+L00000034	- Evidence, terminal, usage, and output routing must not remain `tier-keyed` once attempts, blocked episodes, and graph generations are first-class routing objects.
+L00000035	- Deep links generally do not preserve `non-stable` UI layout state such as transient panel widths, `/split` ratios, ephemeral local widget state, or every possible inspector subsection detail.
+L00000036	- Concern merge, `/split/supersession`, and supersession logic remain `discussion-only` until the concern identity/routing rules become `contract-level`; Run Graph may link candidate concern operations but must not invent canonical merge authority.
+L00000037	- `projection-trust` failures and `weak-integration` findings may both mint real concerns, but they remain different concern categories with distinct evidence, routing, and remediation semantics.
+L00000038	- `Node Graph` keeps culling, caching, and `throttled-update` behavior; old generations stay in the data model, while generation visibility controls, focus mode, and `density-aware` overlays keep historical branches available without rendering every path at full fidelity.
+L00000039	- Graph detail uses reusable `detail-pane` and `drill-in` patterns shared across Orchestrator, graph detail, history `/ledger` pivots, and evidence `/artifact` surfaces.
+L00000040	- `field-name` modernization is insufficient without canonical scope modernization: renamed graph fields must also retarget to run, node, attempt, blocked-episode, generation, lane, and artifact identity scopes.
+L00000041	- The graph `view-model` MUST NOT keep `hitl_request_id` as the durable action identity once the blocked/recovery model moves to `blocked-episode` identity; any legacy HITL field is compatibility lineage only.
+L00000042	- `live-status` source tables in Run Graph and Orchestrator consume canonical runtime records and `/projections` first, then disclose stale/degraded projection trust before showing live claims.
+L00000043	- Route/open auditing stays focused on refinement omissions, not `re-claiming` absence of primitives that already landed; `/open` checks verify payload fidelity, owner routing, and missing context only.
+L00000044	- Graph `/search/focus-to-object` supports seam, package, node, lane, and generation focus; focus pans and applies `/zoom` to target regions while preserving `full-graph` context rather than replacing the graph with a `local-only` view, and branch `/rejoin` overlays, minimap, and search remain `generation-aware`.
+L00000045	- `active_run_id` is the currently running, `/paused/interrupted`, or otherwise active run for the project; `focused_run_id` is the run shown by Orchestrator tabs, `focus_mode = live` when `focused_run_id == active_run_id`, and `focus_mode = historical` when the user inspects a non-active run.
+L00000046	- The shared destination payload spans search results, command palette entries, widget `drill-downs`, deep links, resume `URLs`, cross-surface "Show in ..." pivots, preview restore, artifact opens, and `subject-open` semantics through the same identity model.
+L00000047	- Run Graph command/routing cleanup disposition: earlier `cmd.graph.approve_hitl` / `deny_hitl`, `request_id`, graph-local recovery IDs, unbound cross-surface open commands, and missing projection-trust payload notes are stale lineage. Live Run Graph actions consume `UI_Command_Catalog.md`, blocked/runtime approval identity, `blocked_sequence`, `allowed_action_ids[] -> cmd.runtime.*`, shared route/open payloads, and projection-trust payloads before mutating stale/degraded projections.
+L00000048	- Node Graph tab direction was extended beyond lineage: - graph canvas + right-side detail inspector - detail inspector should expose: - requested/effective provider/model/effort/persona/account - usage/token/cost info - worker policy (agent/subagent, fresh/reused, spawn path) - retry/review/promotion state - lane/worktree/snapshot state - linked evidence/artifacts - clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied
+L00000049	- Run Graph tier-era cleanup disposition: older worker/verifier activity filtered by `tier_id`, `View in Usage`, `worker_provider`, `worker_model`, `verifier_provider`, `verifier_model`, `hitl_request_id`, `Open that tier in the Tiers tab`, `View in Tiers`, and `Copy tier_id` are compatibility/source-lineage tokens only. Live Run Graph joins use node_id, attempt_id, blocked episode, graph generation, lane, artifact, provider platform identity, `scheduler_lane`, `allowed_action_ids[]`, `blocked_sequence`, and historical lineage preservation.
+L00000050	- Node Graph tab direction now includes: - graph canvas + right-side detail inspector - node click should expose: - requested/effective provider/model/effort/persona/account - usage/token/cost info - worker policy - retry/review/promotion state - lane/worktree/snapshot state - linked evidence/artifacts - clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected
+L00000051	- Multi-account history cleanup disposition: the stale claim that `Multi-Account.md` still has no durable `account.switched` / switch-episode family is retired because `Contracts_V0.md` defines `account_switch_event` and Multi-Account persists durable switch and pressure history through `account_switch_event` and `account_pressure_episode`. Remaining role-scoping concerns such as `policy_hash`, `actor_kind`, and `execution_role` stay routed to their owner docs.
+L00000052	- Default Progress-widget drill targets were made deterministic: - Run Status -> `History` - Current Activity -> `Node Graph` - Attention / Blockers -> `Node Graph` - Seam Health -> `Seams` - Package Activity -> `Seams` - Promotion Queue -> `Ledger` - Worktree Lanes -> `Node Graph` - Account / Usage Pressure -> `Usage` - Recent Major Events -> `History` - Overseer Activity -> `Seams` - Corroboration Queue -> `Evidence` - Recovery State -> `Evidence` - Throughput / Capacity -> `History`
+L00000053	- Likely good surface behavior: - `Progress`: show run-level trust banner or chip when projections are stale/degraded - `Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth - `Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale - `Evidence`: artifact browsing can remain available; live verdict/action affordances may gate - `History` / `Ledger`: usually the fallback-safe surfaces because they are closest to canonical records
+L00000054	- `Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` - The rerun sharpened several misses that were previously grouped too broadly: - explicit `focus_mode = live | historical` - `orchestrator.project_state.{project_id}` persistence record - page-wide shared `focused_run_id` coherence across tabs - historical Progress behavior - default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run - global-vs-local Orchestrator search distinction - explicit fallback hierarchy to History/Ledger under projection degradation
+L00000055	- Current GUI/orchestrator documentation has retired the older surface model: any source-lineage lists such as `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger` are compatibility evidence only; the active seven-tab shell is `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`.
+L00000056	- Cross-tab navigation is now treated as a real contract: - object/event focus should deep-link across Progress / Plan Compile / Seams / Node Graph / Evidence / History / Ledger where the target is in that tab's scope - deep links should carry selection/filter/focus context, not merely switch tabs - `Seams` and `Node Graph` should share focus context without hyperactive live-sync
+L00000057	- This now conflicts with current rewrite direction: - `Progress` is the widget-hosting tab - `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are fixed-purpose tabs with stronger native layouts and interaction contracts - `Node Graph` is explicitly not a widget - `Evidence` has separate evidence/artifact panes - `History` and `Ledger` stay distinct for chronology vs exact record inspection
+L00000058	- Implications: - `History` selection changes the whole page's focused run - `Node Graph`, `Evidence`, and `Ledger` all pivot to the same `run_id` - `Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA
+L00000059	- Narrow the widget-hostable Orchestrator surface to `Progress` only. - `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` become native surfaces with their own state contracts
+L00000060	- Examples: - seam/package -> `Seams` tab with correct hierarchy expanded - node -> `Node Graph` with node selected and inspector open - evidence/artifact -> `Evidence` with panes focused appropriately - promotion/review/corroboration/graph patch/recovery record -> likely `Ledger` or `History` depending on whether exact-record or story context is primary - run -> switch `focused_run_id` and open the relevant tab/context
+L00000061	- Separate page-level Orchestrator search from tab-local filtering. - Reuse the same routing contract for: - search results - command palette results - cross-tab deep links - `Show in ...` actions
+L00000062	- `hard_gate` - approve/reject HITL boundaries - graph patch application when it changes canonical graph generation - remote-side-effect actions with explicit non-bypassable policy - any approval path whose allowed actions are defined by runtime blocked/HITL contracts rather than generic UI choice
+L00000063	- `Node Graph` - focused inspection may survive mild staleness - live status claims, blocked action buttons, and generation overlays should disclose trust state explicitly
+L00000064	- concerns need durable identity and lineage, not just severity/status - `acknowledged` is a noise-control state, not a semantic resolution
+L00000065	- But wizard/attention flows already use exact deep links via `resume_url`, and Usage/artifact surfaces already imply identity-native jumps using `usage_event_ref` and related canonical refs.
+L00000066	- stale consumer cleanup - graph and Orchestrator command payloads - active-tier widgets and tier-targeted terminals - tier-keyed usage/evidence correlation - legacy `PuppetMasterEvent::*` source tables
+L00000067	- Remove `request_id` as the primary action target from graph command payloads. - Replace `hitl_request_id` in graph data requirements with blocked/runtime approval identity or explicit compatibility lineage-only fields.
+L00000068	- **Schema-level contradictions are active, not hypothetical.** is preserved as stale audit-lineage for the pre-cleanup state. Live scheduler ordering consumes the executor scored ready-set; graph-schema lexicographic ordering is not execution authority. Remaining base provider envelope/spec and acceptance/evidence/coverage identity gaps route to Contracts_V0, Executor Protocol, and schema owner docs before Run Graph consumes them.
+L00000069	- Recommended explicit mode: - `Historical Run Mode` - Required behavior: - all tabs clearly show the focused historical `run_id` - the page displays a persistent banner/chip that the user is viewing historical data - controls that only make sense for the active run are disabled or removed - actions route against the focused run only when they are historical-safe
+L00000070	- Candidate fields: - `focused_run_id?` - `focus_mode` - `last_live_run_id?` - `selected_tab` - per-tab view state refs - maybe `auto_return_to_live = false` by default
+L00000071	- Likely good direction: - in historical mode, `Progress` becomes a historical run summary surface - live-only widgets either: - switch to historical-summary rendering - or show disabled/live-unavailable state with explanation
+L00000072	- Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch.
+L00000073	- Replace stale `Tiers` tab/page assumptions with the rewrite tab model: - `Progress` - `Plan Compile` - `Seams` - `Node Graph` - `Evidence` - `History` - `Ledger`
+L00000074	- `Plans/Run_Graph_View.md` - **Impacted surface:** Execution visualization. - **Likely issue:** Grouped-by-phase layouts are rigid. Needs a graph or swimlane view to show parallel work packages and dependencies.
+L00000075	- Existing wording is not enough yet: - `Orchestrator_Page.md` says the graph renders when a run is active or a historical run is selected - `History` rows can load a historical run into the graph/evidence - `Ledger` filters to the current/selected run - but there is no clear mode contract for what the whole page is in after a historical run is selected
+L00000076	- No explicit `historical-run mode` contract yet. - No obvious `orchestrator.project_state.{project_id}` for focused run persistence.
+L00000077	- Recommended concern envelope + payload core: - `concern_id` - `project_id` - `run_id?` - `scope_type` - `scope_id` - `status` - `severity` - `category` - `summary` - `description?` - `owner_kind?` - `origin_kind` - `created_at_utc` - `updated_at_utc` - `first_observed_at_utc` - `last_observed_at_utc` - `resolution_kind?` - `resolution_rationale?` - `acknowledged_by?` - `acknowledged_at_utc?` - `dismissed_by?` - `dismissed_at_utc?` - `source_refs[]` - `evidence_refs[]` - `related_record_refs[]` - `lineage_refs[]` - `blocked_episode_refs[]?` - `promotion_refs[]?` - `graph_patch_refs[]?` - `recovery_refs[]?`
+L00000078	- `Plans/usage-feature.md` still says: - Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` - `usage.jsonl` aggregation is tier-based
+L00000079	- Graph-view direction is now materially clearer: - the graph should show the full lineage, including historical branches and patched fork/rejoin paths - the graph is expected to handle very large scale (thousands of nodes) - zoom + pan + minimap are expected to be primary navigation tools; full-graph visibility should not be replaced by default collapsing of history - seam and package boundaries should be visible as toggleable overlays - node visuals should carry execution/governance state - edge/path visuals should carry structure/lineage meaning - boundaries should carry grouping only, not duplicate state/severity semantics
+L00000080	- Additional projection/UI constraints from the user: - Source Control worktree area likely needs top-level partitioning: - `Orchestrator Owned` - `Other` - the `Orchestrator Owned` section likely needs further subdivision because of worktree volume; breaking by `feature seam` is a plausible direction - Orchestrator page is a very high-density information surface across many tabs, so projection design must assume very large detail volume rather than a small/simple inspector
+L00000081	- Background-run behavior exists, but it is still somewhat separate from Orchestrator run-focus semantics: - background runs have queue/state events - Dashboard has a Background Runs card - but Orchestrator does not yet clearly define how active background runs interact with a currently focused historical run
+L00000082	- When focused on the live run: - live cards/widgets are active - CTAs operate on current runtime truth - background events and live state changes update the focused tabs directly
+L00000083	- Add `resolution_kind` and rationale requirements for dismiss/resolve paths. - Define how nominated findings become canonical concerns.
+L00000084	- Example: - explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state - hover previews or temporary compare pivots should not necessarily rewrite persistent state
+L00000085	- This makes the concern gap more concrete: - concerns need exact identity, lineage, source linking, status, and interaction rules - they should not just be badges, notes, or review leftovers
+L00000086	- Historical run-graph and Orchestrator page audit notes identified tier-bound drift: older `Run_Graph_View.md` text had near-zero awareness of concern/corroboration/promotion/graph-patch/lane/package object families, and older `Orchestrator_Page.md` text specified `Tiers` and widget/persistence contracts around that obsolete structure. Current active navigation consumes the seven-tab Orchestrator shell with `Plan Compile` and `Seams`, while `Tiers` remains compatibility lineage only.
+L00000087	- `effective_provider_identity` / `provider_identity` / `effective_project_id` are already treated as optional non-secret disclosure fields. That makes them the wrong place to encode actor role or side-effect target identity.
+L00000088	- `page_tab` - examples: Orchestrator tabs like Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger; Tiers is a compatibility/search alias only.
+L00000089	- **Tiers-first UI is misleading historical lineage.** The retired Tiers tab, `widget.tier_tree`, phase-grouped graph layouts, and single-current-task widgets all assume execution authority still lives in the tier hierarchy instead of the node/package/seam graph.
+L00000090	- **Tiers are compatibility/search aliases, not productized active navigation.** GPT-5.4 repeatedly found historical `Tiers` references as a primary tab, navigation target, widget namespace, and telemetry dimension; current routing uses `Seams` and the seven-tab shell.
+L00000091	- Distinguish: - `historical run` - `related run` - `derived run` - `retry/recovery run` or continuation lineage if such a concept exists later
+L00000092	- Working interpretation: - `historical run` = any non-active/non-focused run retained for the project - `related run` = explicitly linked by user/system relationship metadata - `derived run` = intentionally spawned from or based on another run's outputs/graph/contracts
+L00000093	- graph patch - request patch may be `strong` - apply accepted patch should likely be `hard_gate` or runtime-controlled strong action because it changes canonical graph generation
+L00000094	- node graph detail: - `object_kind = node` or `attempt` - `object_id = <id>` - `inspector_target = evidence` / `history` / `reviews` / similar
+L00000095	
+L00000096	
+L00000097	## 2. Layout
+L00000098	The graph view has three primary regions:
+L00000099	- top header for run scope, generation scope, and trust state
+L00000100	- main graph canvas with minimap/search/overlays
+L00000101	- right-side inspector and table region
+L00000102	
+L00000103	Rules:
+L00000104	- current generation is emphasized by default
+L00000105	- superseded and historical branches remain visible and clickable
+L00000106	- large-graph modes use virtualization, level-of-detail reduction, and lineage-focused defaults rather than hiding historical truth
+L00000107	- `Run_Graph_View` treats `by-phase` grouping as a compatibility layout only; canonical layouts include package-group swimlanes, seam boundaries, and parallel lane visualization so work packages and dependencies remain visible without collapsing into phase order.
+L00000108	- The Run Graph and Orchestrator lineage view carries concise requested-vs-effective SCM state for mutation-capable attempts, including repo/worktree/branch `/head`, `/branches/commit`, safe-point relation, and partial receipt availability. `Seams`, `Node Graph`, `History`, `Evidence`, and `Ledger` all show enough SCM identity to distinguish runs by worktree, branch, commit range, and receipt lineage, while `Plan Compile` shows only design-only compile/handoff readiness status; the `Ledger` may stay usage-focused only when a parallel receipt/lineage surface is available.
+L00000109	
+L00000110	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+L00000111	
+L00000112	## 3. Node detail inspector
+L00000113	
+L00000114	Diff cards cap previews at 50 lines; diffs above that cap show a truncation marker such as `… N lines omitted` and a `View Full Diff` action resolving to `cmd.file.open_with` with target `diff_review`.
+L00000115	
+L00000116	SCM recovery and lineage actions in graph/node detail use exact command-catalog pivots: `cmd.orchestrator.open_receipt`, `cmd.orchestrator.compare_run_output`, `cmd.orchestrator.open_source_control`, `cmd.orchestrator.open_github_actions`, `cmd.orchestrator.open_docker_manager`, `cmd.orchestrator.open_kubernetes`, `cmd.orchestrator.open_conflict_assistant`, and `cmd.orchestrator.restore_safe_point_then_retry`. `restore_safe_point_then_retry` must carry exact worktree/baseline targeting rather than implied reuse. These commands open owner surfaces with stable route context after restart and label missing lineage as partial rather than synthesizing a repo, worktree, `/head`, receipt, or recovery target.
+L00000117	
+L00000118	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md
+L00000119	
+L00000120	
+L00000121	#### Acceptance carry-through
+L00000122	- Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns
+L00000123	- Allow blocked episodes to reference concerns without replacing concern identity
+L00000124	
+L00000125	## 4. Data model and identity
+L00000126	
+L00000127	The Run Graph data model includes a persistent effective-runtime inspector for every attempt that resolved through provider routing. It records `provider_entry`, `provider_family`, `requested_platform`, and `effective_platform` mappings back to Orchestrator vocabulary: `requested_platform` and `effective_platform` identify the concrete provider entry/runtime surface that was requested or executed, while `provider_family_id` remains additive grouping metadata and never replaces platform identity.
+L00000128	
+L00000129	
+L00000130	#### Acceptance carry-through
+L00000131	- Use active_run_id/focused_run_id with focus_mode = live | historical
+L00000132	- Keep cross-tab deep links and search pivots coherent on the focused run
+L00000133	- Source Control `Graph` integration is a consumer projection of Source Control graph state, not a separate graph authority. When a run commit belongs to a known worktree or receipt, Run Graph links to Source Control graph focus; when graph parsing fails, it degrades to branch/history pivots with an explicit disabled reason.
+L00000134	
+L00000135	## Owner / Consumer Map
+L00000136	
+L00000137	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Run_Graph_View.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000138	
+L00000139	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000140	
+L00000141	## PlanUnits
+L00000142	
+L00000143	### RGV-001 - Run Graph Canonical Scope
+L00000144	
+L00000145	```yaml
+L00000146	plan_unit_id: RGV-001
+L00000147	unit_type: requirement
+L00000148	status: accepted
+L00000149	owner_doc: Plans/Run_Graph_View.md
+L00000150	canonical_text: Run Graph is the canonical graph and lineage inspection surface for orchestrated execution. Graph nodes are runtime nodes rather than tiers; lineage spans graph generations; blocked, recovery, promotion, and corroboration state appears in graph detail when it belongs to the selected node or related lineage object.
+L00000151	gui_related: true
+L00000152	gui_classification_reason: The unit defines the user-visible Run Graph inspection surface.
+L00000153	depends_on: []
+L00000154	unblocks: [RGV-002, RGV-003, RGV-004, RGV-005, RGV-006]
+L00000155	acceptance_criteria:
+L00000156	- Graph nodes are modeled as runtime nodes, not tiers.
+L00000157	- Graph lineage remains generation-aware when graph patching occurs.
+L00000158	- Node detail can expose blocked, recovery, promotion, and corroboration state for selected or related lineage objects.
+L00000159	validation_surfaces:
+L00000160	- Manual review of Plans/Run_Graph_View.md section 1.
+L00000161	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000162	- python3 scripts/pm-plan-index.py validate
+L00000163	- python3 scripts/pm-plans-verify.py run-gates
+L00000164	risk_class: route_owner_drift
+L00000165	reasoning_tier: standard
+L00000166	context_scope: run_graph_owner_surface
+L00000167	implementation_surfaces:
+L00000168	- Plans/Run_Graph_View.md
+L00000169	- future Run Graph UI
+L00000170	node_compile_hint:
+L00000171	  mode: future_compiler_input
+L00000172	  create_worknodes: false
+L00000173	source_lineage:
+L00000174	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0001
+L00000175	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0002
+L00000176	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0005
+L00000177	- Plans/Run_Graph_View.md:1-24
+L00000178	preserved_exact_tokens:
+L00000179	- Run Graph View (Node Graph Display) -- Specification
+L00000180	- Canonical owner-section requirements
+L00000181	- 1. Scope and canonical role
+L00000182	negative_constraints:
+L00000183	- Do not treat tiers as runtime graph nodes.
+L00000184	owner_hints:
+L00000185	- Plans/Run_Graph_View.md
+L00000186	```
+L00000187	
+L00000188	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00000189	
+L00000190	This addendum compiles Run Graph containerized-host evidence and access-pivot obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+L00000191	
+L00000192	### RGV-015 - Run Graph Host Capability Evidence And Access Pivots
+L00000193	
+L00000194	```yaml
+L00000195	plan_unit_id: RGV-015
+L00000196	unit_type: requirement
+L00000197	status: accepted
+L00000198	owner_doc: Plans/Run_Graph_View.md
+L00000199	canonical_text: >-
+L00000200	  Run Graph may display containerized-host capability evidence, active host assignments, dynamic/canonical access URLs,
+L00000201	  blocked/degraded states, and pivots to Docker/Hosts, Orchestrator/Executor run details, Runtime Artifacts, and test
+L00000202	  receipts. Run Graph remains an inspection/projection surface: it does not own host mutation, does not silently auto-open
+L00000203	  low-confidence URLs, and does not persist transient port discoveries as canonical state without source, confidence,
+L00000204	  health, staleness, and override evidence from port_access_record. Open App and Open Container actions resolve through
+L00000205	  UI_Command_Catalog and HostCapabilityCommand when authority permits them.
+L00000206	gui_related: true
+L00000207	gui_classification_reason: This PlanUnit defines visible Run Graph evidence presentation, links, and access pivots.
+L00000208	depends_on: [F3-410, UCC-105, OP-028, RAP-042, CV-303]
+L00000209	unblocks: []
+L00000210	acceptance_criteria:
+L00000211	  - Run Graph nodes can show host_capability_ref, host_assignment_id, runtime_family, capability_state, blocked_reason_code, and receipt/evidence refs where available.
+L00000212	  - Dynamic URLs remain visible for running instances, while canonical URLs are marked as convenience bindings for the active selected or checked-out instance.
+L00000213	  - Access pivots disclose confidence, health_state, stale_window_expires_at_utc, and source before Open App or Open Container actions.
+L00000214	  - Run Graph links to Docker/Hosts, Runtime Artifacts, and Orchestrator/Executor details without becoming a mutation owner.
+L00000215	validation_surfaces:
+L00000216	  - python3 scripts/pm-plan-index.py validate
+L00000217	  - future Run Graph host evidence/access pivot fixture
+L00000218	risk_class: run_graph_host_projection_authority_drift
+L00000219	reasoning_tier: standard
+L00000220	context_scope: run_graph_containerized_host_evidence_access
+L00000221	implementation_surfaces:
+L00000222	  - Plans/Run_Graph_View.md
+L00000223	  - future Run Graph host evidence and access pivots
+L00000224	node_compile_hint:
+L00000225	  mode: run_graph_host_evidence_access_projection
+L00000226	  create_worknodes: false
+L00000227	  create_nodeseeds: false
+L00000228	source_lineage:
+L00000229	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0015
+L00000230	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00000231	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00000232	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00000233	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00000234	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+L00000235	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+L00000236	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00000237	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#core_contracts.port_access_record
+L00000238	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-003-blocker-taxonomy-projection-boundary
+L00000239	source_atom_ids: [atom-0015, atom-0040, atom-0041, atom-0073, atom-0075, atom-0079, atom-0080, atom-0081]
+L00000240	preserved_exact_tokens:
+L00000241	  - "dynamic ports"
+L00000242	  - "canonical ports"
+L00000243	  - "dynamic URLs remain visible"
+L00000244	  - "Open App"
+L00000245	  - "Open Container"
+L00000246	  - "Orchestrator/Executor run details"
+L00000247	  - "Runtime Artifacts"
+L00000248	negative_constraints:
+L00000249	  - Do not make Run Graph a host mutation owner.
+L00000250	  - Do not silently auto-open low-confidence URLs.
+L00000251	  - Do not persist transient port discoveries as canonical state without source, confidence, health, staleness, and override evidence.
+L00000252	owner_hints:
+L00000253	  - Plans/Run_Graph_View.md
+L00000254	  - Plans/Orchestrator_Page.md
+L00000255	  - Plans/FinalGUISpec.md
+L00000256	  - Plans/UI_Command_Catalog.md
+L00000257	```
+L00000258	
+L00000259	ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Executor_Protocol.md
+L00000260	
+L00000261	### RGV-002 - Focused Run And Historical Mode
+L00000262	
+L00000263	```yaml
+L00000264	plan_unit_id: RGV-002
+L00000265	unit_type: requirement
+L00000266	status: accepted
+L00000267	owner_doc: Plans/Run_Graph_View.md
+L00000268	canonical_text: Run Graph distinguishes active run truth from focused run context. active_run_id names live runtime truth; focused_run_id and focus_mode = live | historical name the selected run, page state, and Historical Run Mode behavior across Orchestrator tabs.
+L00000269	gui_related: true
+L00000270	gui_classification_reason: This unit defines visible run focus, historical-mode indicators, tab behavior, and user-facing controls.
+L00000271	depends_on: [RGV-001]
+L00000272	unblocks: [RGV-003, RGV-005, RGV-010]
+L00000273	acceptance_criteria:
+L00000274	- active_run_id and focused_run_id are distinct concepts.
+L00000275	- focus_mode is live only when focused_run_id equals active_run_id; historical mode applies when the user inspects a non-active run.
+L00000276	- Historical mode clearly identifies the focused historical run and disables, removes, or reroutes live-only actions.
+L00000277	- Progress, Node Graph, Evidence, History, and Ledger remain coherent against the focused run.
+L00000278	validation_surfaces:
+L00000279	- Manual focus-mode review across Run Graph and Orchestrator docs.
+L00000280	- python3 scripts/pm-plan-index.py validate
+L00000281	- python3 scripts/pm-plans-verify.py run-gates
+L00000282	risk_class: historical_run_focus
+L00000283	reasoning_tier: standard
+L00000284	context_scope: run_focus_state
+L00000285	implementation_surfaces:
+L00000286	- Plans/Run_Graph_View.md
+L00000287	- Plans/Orchestrator_Page.md
+L00000288	- Plans/storage-plan.md
+L00000289	- future Orchestrator project state projection
+L00000290	node_compile_hint:
+L00000291	  mode: focused_run_state_requirement
+L00000292	  create_worknodes: false
+L00000293	source_lineage:
+L00000294	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0004
+L00000295	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000296	- Plans/Run_Graph_View.md:29-31
+L00000297	- Plans/Run_Graph_View.md:45-46
+L00000298	- Plans/Run_Graph_View.md:58-61
+L00000299	- Plans/Run_Graph_View.md:69-71
+L00000300	- Plans/Run_Graph_View.md:75-76
+L00000301	- Plans/Run_Graph_View.md:81-84
+L00000302	preserved_exact_tokens:
+L00000303	- active_run_id?
+L00000304	- focused_run_id?
+L00000305	- focus_mode = live | historical
+L00000306	- Historical Run Mode
+L00000307	- orchestrator.project_state.{project_id}
+L00000308	negative_constraints:
+L00000309	- Tab-local filters, sorts, tables, graph node search, Evidence local search/filter, Ledger filter/sort, and History list/table controls do not rewrite focused run state except through an explicit route.
+L00000310	owner_hints:
+L00000311	- Plans/Run_Graph_View.md
+L00000312	- Plans/Orchestrator_Page.md
+L00000313	- Plans/storage-plan.md
+L00000314	```
+L00000315	
+L00000316	ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md
+L00000317	
+L00000318	### RGV-003 - Shared Deep-Link And Search Routing
+L00000319	
+L00000320	```yaml
+L00000321	plan_unit_id: RGV-003
+L00000322	unit_type: constraint
+L00000323	status: accepted
+L00000324	owner_doc: Plans/Run_Graph_View.md
+L00000325	canonical_text: Run Graph uses one shared destination payload for search results, command-palette results, widget drill-downs, recovery links, resume URLs, artifact opens, subject-open semantics, and cross-surface pivots. Navigation preserves target identity and context instead of switching tabs with an approximate target.
+L00000326	gui_related: true
+L00000327	gui_classification_reason: The unit governs user-visible navigation, deep links, command-palette results, and search focus behavior.
+L00000328	depends_on: [RGV-001, RGV-002]
+L00000329	unblocks: [RGV-005, RGV-010]
+L00000330	acceptance_criteria:
+L00000331	- Page-level Orchestrator search remains separate from tab-local filtering controls.
+L00000332	- Search, command-palette, widget drill-down, recovery, resume URL, artifact open, and Show-in pivots reuse the same identity model.
+L00000333	- Graph focus-to-object can target seam, package, node, lane, and generation objects while preserving full-graph context.
+L00000334	- Deep links avoid preserving non-stable layout state such as transient panel widths, split ratios, and ephemeral widget state.
+L00000335	validation_surfaces:
+L00000336	- Route/open payload audit.
+L00000337	- Manual cross-surface deep-link review.
+L00000338	- python3 scripts/pm-plan-index.py validate
+L00000339	risk_class: route_fidelity
+L00000340	reasoning_tier: high
+L00000341	context_scope: cross_surface_navigation
+L00000342	implementation_surfaces:
+L00000343	- Plans/Run_Graph_View.md
+L00000344	- Plans/UI_Command_Catalog.md
+L00000345	- Plans/Orchestrator_Page.md
+L00000346	- Plans/Contracts_V0.md
+L00000347	node_compile_hint:
+L00000348	  mode: routing_contract
+L00000349	  create_worknodes: false
+L00000350	source_lineage:
+L00000351	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Run_Graph_View-S0006
+L00000352	- Plans/Run_Graph_View.md:30-35
+L00000353	- Plans/Run_Graph_View.md:43-46
+L00000354	- Plans/Run_Graph_View.md:56-61
+L00000355	- Plans/Run_Graph_View.md:84
+L00000356	- Plans/Run_Graph_View.md:94
+L00000357	preserved_exact_tokens:
+L00000358	- /deep-link
+L00000359	- /search/focus-to-object
+L00000360	- full-graph
+L00000361	- local-only
+L00000362	- Show in ...
+L00000363	negative_constraints:
+L00000364	- Search and command-palette navigation must not restore a watered-down approximation.
+L00000365	- Deep links generally do not preserve non-stable UI layout state.
+L00000366	owner_hints:
+L00000367	- Plans/Run_Graph_View.md
+L00000368	- Plans/UI_Command_Catalog.md
+L00000369	- Plans/Contracts_V0.md
+L00000370	```
+L00000371	
+L00000372	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+L00000373	
+
+<<< CONTEXT_AFTER canonical_document_lines=374-385 >>>
+L00000374	### RGV-004 - Graph Layout, Scale, And Generation Visibility
+L00000375	
+L00000376	```yaml
+L00000377	plan_unit_id: RGV-004
+L00000378	unit_type: requirement
+L00000379	status: accepted
+L00000380	owner_doc: Plans/Run_Graph_View.md
+L00000381	canonical_text: The Run Graph layout has a run/generation/trust header, a main graph canvas with minimap, search, and overlays, and a right-side inspector/table region. It keeps historical and superseded branches available through generation-aware controls, culling, caching, virtualization, level-of-detail reduction, and density-aware overlays.
+L00000382	gui_related: true
+L00000383	gui_classification_reason: This unit defines visible layout regions, graph canvas behavior, overlays, minimap, zoom, pan, and inspector placement.
+L00000384	depends_on: [RGV-001]
+L00000385	unblocks: [RGV-005]

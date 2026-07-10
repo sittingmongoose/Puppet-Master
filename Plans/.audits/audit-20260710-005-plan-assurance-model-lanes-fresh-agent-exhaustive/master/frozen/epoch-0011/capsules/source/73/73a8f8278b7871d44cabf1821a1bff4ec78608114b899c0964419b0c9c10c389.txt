@@ -1,0 +1,392 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3621-3632 >>>
+L00003621	- landscape / `horizontal` / `widescreen` = `16:9`
+L00003622	negative_constraints: []
+L00003623	compatibility_only_notes: []
+L00003624	stale_retired_dispositions: []
+L00003625	owner_boundary_notes:
+L00003626	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003627	owner_hints:
+L00003628	- Plans/Media_Generation_and_Capabilities.md
+L00003629	preserved_contractrefs: []
+L00003630	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003631	```
+L00003632	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3633-3995 >>>
+L00003633	### MGAC-047 - Size Resolution Candidate Extraction
+L00003634	
+L00003635	```yaml
+L00003636	plan_unit_id: MGAC-047
+L00003637	unit_type: requirement
+L00003638	status: accepted
+L00003639	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003640	canonical_text: Size and resolution candidate extraction preserves image pixel sizes, image k-form sizes, and video resolution tokens before deterministic envelope assignment.
+L00003641	gui_related: false
+L00003642	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003643	split_recommended: true
+L00003644	depends_on:
+L00003645	- MGAC-041
+L00003646	- MGAC-042
+L00003647	unblocks: []
+L00003648	acceptance_criteria:
+L00003649	- The covered source span remains losslessly available for exact-text audit.
+L00003650	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003651	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003652	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003653	validation_surfaces:
+L00003654	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003655	- python3 scripts/pm-plan-index.py validate
+L00003656	risk_class: media_slot_extraction_drift
+L00003657	reasoning_tier: standard
+L00003658	context_scope: media_generation_capabilities_standardization
+L00003659	implementation_surfaces:
+L00003660	- Plans/Media_Generation_and_Capabilities.md
+L00003661	node_compile_hint:
+L00003662	  mode: size_resolution_candidate_extraction
+L00003663	  create_worknodes: false
+L00003664	source_lineage:
+L00003665	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003666	preserved_exact_tokens:
+L00003667	- (?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_px>512|768|1024|1152|1280|1536|2048|3072|4096)\s*(?:px|pixels)?\b
+L00003668	- (?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_k>2k|4k|8k)\b
+L00003669	- (?i)\b(?P<vres>720p|1080p|1440p|2160p|4k)\b
+L00003670	- size_px
+L00003671	- size_k
+L00003672	- vres
+L00003673	negative_constraints: []
+L00003674	compatibility_only_notes: []
+L00003675	stale_retired_dispositions: []
+L00003676	owner_boundary_notes:
+L00003677	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003678	owner_hints:
+L00003679	- Plans/Media_Generation_and_Capabilities.md
+L00003680	preserved_contractrefs: []
+L00003681	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003682	```
+L00003683	
+L00003684	### MGAC-048 - Size Resolution Envelope Assignment Guards
+L00003685	
+L00003686	```yaml
+L00003687	plan_unit_id: MGAC-048
+L00003688	unit_type: requirement
+L00003689	status: accepted
+L00003690	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003691	canonical_text: Size and resolution assignment does not treat bare numbers as size except in controls or trailing comma controls, maps size_px to size, maps size_k to numeric size plus symbolic resolution, maps vres to video resolution, and prevents image creative-prose vres or vres from overriding image size_k-derived resolution.
+L00003692	gui_related: false
+L00003693	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003694	split_recommended: true
+L00003695	depends_on:
+L00003696	- MGAC-047
+L00003697	unblocks: []
+L00003698	acceptance_criteria:
+L00003699	- The covered source span remains losslessly available for exact-text audit.
+L00003700	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003701	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003702	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003703	validation_surfaces:
+L00003704	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003705	- python3 scripts/pm-plan-index.py validate
+L00003706	risk_class: media_slot_extraction_drift
+L00003707	reasoning_tier: standard
+L00003708	context_scope: media_generation_capabilities_standardization
+L00003709	implementation_surfaces:
+L00003710	- Plans/Media_Generation_and_Capabilities.md
+L00003711	node_compile_hint:
+L00003712	  mode: size_resolution_envelope_assignment_guards
+L00003713	  create_worknodes: false
+L00003714	source_lineage:
+L00003715	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003716	preserved_exact_tokens:
+L00003717	- Bare numbers are **not** treated as size unless they appear in a controls block or trailing comma controls.
+L00003718	- '`size_px` populates `size`.'
+L00003719	- '`size_k` populates `size` using `2k -> 2048`, `4k -> 4096`, `8k -> 8192`, and also populates `resolution` with the symbolic token.'
+L00003720	- '`vres` populates `resolution` for `kind=video`'
+L00003721	- for `kind=image`, bare `vres` matches in creative prose are ignored unless provided in a keyed controls context
+L00003722	- '`size_k` is authoritative'
+L00003723	negative_constraints:
+L00003724	- Bare numbers must not be treated as size unless they appear in a controls block or trailing comma controls.
+L00003725	- For image requests, vres must not override size_k-derived resolution.
+L00003726	compatibility_only_notes: []
+L00003727	stale_retired_dispositions: []
+L00003728	owner_boundary_notes:
+L00003729	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003730	owner_hints:
+L00003731	- Plans/Media_Generation_and_Capabilities.md
+L00003732	preserved_contractrefs:
+L00003733	- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+L00003734	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003735	```
+L00003736	
+L00003737	### MGAC-049 - Duration Extraction For Video Music
+L00003738	
+L00003739	```yaml
+L00003740	plan_unit_id: MGAC-049
+L00003741	unit_type: requirement
+L00003742	status: accepted
+L00003743	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003744	canonical_text: Duration extraction applies only to video and music, preserving keyworded seconds matching and bare seconds matching only inside controls blocks or trailing controls.
+L00003745	gui_related: false
+L00003746	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003747	split_recommended: true
+L00003748	depends_on:
+L00003749	- MGAC-041
+L00003750	- MGAC-042
+L00003751	unblocks: []
+L00003752	acceptance_criteria:
+L00003753	- The covered source span remains losslessly available for exact-text audit.
+L00003754	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003755	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003756	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003757	validation_surfaces:
+L00003758	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003759	- python3 scripts/pm-plan-index.py validate
+L00003760	risk_class: media_slot_extraction_drift
+L00003761	reasoning_tier: standard
+L00003762	context_scope: media_generation_capabilities_standardization
+L00003763	implementation_surfaces:
+L00003764	- Plans/Media_Generation_and_Capabilities.md
+L00003765	node_compile_hint:
+L00003766	  mode: duration_extraction_video_music
+L00003767	  create_worknodes: false
+L00003768	source_lineage:
+L00003769	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003770	preserved_exact_tokens:
+L00003771	- (?i)\b(?:for|duration|length)\s*(?P<secs>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs|second|seconds)\b
+L00003772	- (?i)\b(?P<secs2>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs)\b
+L00003773	- video/music only
+L00003774	- Bare (only in controls block or trailing controls)
+L00003775	negative_constraints:
+L00003776	- Bare duration values are valid only in controls block or trailing controls.
+L00003777	compatibility_only_notes: []
+L00003778	stale_retired_dispositions: []
+L00003779	owner_boundary_notes:
+L00003780	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003781	owner_hints:
+L00003782	- Plans/Media_Generation_and_Capabilities.md
+L00003783	preserved_contractrefs: []
+L00003784	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003785	```
+L00003786	
+L00003787	### MGAC-050 - Format Extraction
+L00003788	
+L00003789	```yaml
+L00003790	plan_unit_id: MGAC-050
+L00003791	unit_type: requirement
+L00003792	status: accepted
+L00003793	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003794	canonical_text: Format extraction preserves the exact keyworded matcher and canonical output token set for image, video, and audio media outputs.
+L00003795	gui_related: false
+L00003796	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003797	split_recommended: true
+L00003798	depends_on:
+L00003799	- MGAC-041
+L00003800	- MGAC-042
+L00003801	unblocks: []
+L00003802	acceptance_criteria:
+L00003803	- The covered source span remains losslessly available for exact-text audit.
+L00003804	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003805	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003806	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003807	validation_surfaces:
+L00003808	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003809	- python3 scripts/pm-plan-index.py validate
+L00003810	risk_class: media_slot_extraction_drift
+L00003811	reasoning_tier: standard
+L00003812	context_scope: media_generation_capabilities_standardization
+L00003813	implementation_surfaces:
+L00003814	- Plans/Media_Generation_and_Capabilities.md
+L00003815	node_compile_hint:
+L00003816	  mode: format_extraction
+L00003817	  create_worknodes: false
+L00003818	source_lineage:
+L00003819	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003820	preserved_exact_tokens:
+L00003821	- (?i)\b(?:format|output|export|as)\s*[:=]?\s*(?P<fmt>png|jpg|jpeg|webp|gif|mp4|mov|wav|mp3|flac|pcm16)\b
+L00003822	- png
+L00003823	- jpg
+L00003824	- jpeg
+L00003825	- webp
+L00003826	- gif
+L00003827	- mp4
+L00003828	- mov
+L00003829	- wav
+L00003830	- mp3
+L00003831	- flac
+L00003832	- pcm16
+L00003833	negative_constraints: []
+L00003834	compatibility_only_notes: []
+L00003835	stale_retired_dispositions: []
+L00003836	owner_boundary_notes:
+L00003837	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003838	owner_hints:
+L00003839	- Plans/Media_Generation_and_Capabilities.md
+L00003840	preserved_contractrefs: []
+L00003841	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003842	```
+L00003843	
+L00003844	### MGAC-051 - TTS Voice Extraction
+L00003845	
+L00003846	```yaml
+L00003847	plan_unit_id: MGAC-051
+L00003848	unit_type: requirement
+L00003849	status: accepted
+L00003850	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003851	canonical_text: TTS voice extraction preserves the voice ID matcher and voice-style phrase matcher.
+L00003852	gui_related: false
+L00003853	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003854	split_recommended: true
+L00003855	depends_on:
+L00003856	- MGAC-041
+L00003857	- MGAC-042
+L00003858	unblocks: []
+L00003859	acceptance_criteria:
+L00003860	- The covered source span remains losslessly available for exact-text audit.
+L00003861	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003862	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003863	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003864	validation_surfaces:
+L00003865	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003866	- python3 scripts/pm-plan-index.py validate
+L00003867	risk_class: media_slot_extraction_drift
+L00003868	reasoning_tier: standard
+L00003869	context_scope: media_generation_capabilities_standardization
+L00003870	implementation_surfaces:
+L00003871	- Plans/Media_Generation_and_Capabilities.md
+L00003872	node_compile_hint:
+L00003873	  mode: tts_voice_extraction
+L00003874	  create_worknodes: false
+L00003875	source_lineage:
+L00003876	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003877	preserved_exact_tokens:
+L00003878	- (?i)\bvoice\s*[:=]\s*(?P<voice>[a-z0-9][a-z0-9 _\-]{0,32})\b
+L00003879	- (?i)\bin\s+a[n]?\s+(?P<voice_style>[^,.;]{1,40})\s+voice\b
+L00003880	- Voice ID
+L00003881	- Voice style
+L00003882	- TTS
+L00003883	negative_constraints: []
+L00003884	compatibility_only_notes: []
+L00003885	stale_retired_dispositions: []
+L00003886	owner_boundary_notes:
+L00003887	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003888	owner_hints:
+L00003889	- Plans/Media_Generation_and_Capabilities.md
+L00003890	preserved_contractrefs: []
+L00003891	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003892	```
+L00003893	
+L00003894	### MGAC-052 - Quality Candidate And Keyword Guard
+L00003895	
+L00003896	```yaml
+L00003897	plan_unit_id: MGAC-052
+L00003898	unit_type: requirement
+L00003899	status: accepted
+L00003900	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003901	canonical_text: Quality extraction preserves draft/standard/high candidate matching and phrase mapping, but quality is set only from controls-block or quality-keyword phrases and never from plain descriptive adjectives in the creative prompt.
+L00003902	gui_related: false
+L00003903	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003904	split_recommended: true
+L00003905	depends_on:
+L00003906	- MGAC-041
+L00003907	- MGAC-042
+L00003908	unblocks: []
+L00003909	acceptance_criteria:
+L00003910	- The covered source span remains losslessly available for exact-text audit.
+L00003911	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003912	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003913	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003914	validation_surfaces:
+L00003915	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003916	- python3 scripts/pm-plan-index.py validate
+L00003917	risk_class: media_slot_extraction_drift
+L00003918	reasoning_tier: standard
+L00003919	context_scope: media_generation_capabilities_standardization
+L00003920	implementation_surfaces:
+L00003921	- Plans/Media_Generation_and_Capabilities.md
+L00003922	node_compile_hint:
+L00003923	  mode: quality_candidate_keyword_guard
+L00003924	  create_worknodes: false
+L00003925	source_lineage:
+L00003926	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003927	preserved_exact_tokens:
+L00003928	- (?i)\b(?P<qual>draft|standard|high)\b
+L00003929	- quick draft -> `draft`
+L00003930	- high quality -> `high`
+L00003931	- 'quality: high'
+L00003932	- quality=standard
+L00003933	- draft quality
+L00003934	negative_constraints:
+L00003935	- Plain descriptive adjectives in the creative prompt MUST NOT set `quality`.
+L00003936	- Bare lexical matches are candidate tokens only.
+L00003937	compatibility_only_notes: []
+L00003938	stale_retired_dispositions: []
+L00003939	owner_boundary_notes:
+L00003940	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003941	owner_hints:
+L00003942	- Plans/Media_Generation_and_Capabilities.md
+L00003943	preserved_contractrefs:
+L00003944	- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+L00003945	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003946	```
+L00003947	
+L00003948	### MGAC-053 - Seed Extraction
+L00003949	
+L00003950	```yaml
+L00003951	plan_unit_id: MGAC-053
+L00003952	unit_type: requirement
+L00003953	status: accepted
+L00003954	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00003955	canonical_text: Seed extraction preserves the keyworded integer matcher for one-to-ten digit seed values.
+L00003956	gui_related: false
+L00003957	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00003958	split_recommended: true
+L00003959	depends_on:
+L00003960	- MGAC-041
+L00003961	- MGAC-042
+L00003962	unblocks: []
+L00003963	acceptance_criteria:
+L00003964	- The covered source span remains losslessly available for exact-text audit.
+L00003965	- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+L00003966	- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00003967	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003968	validation_surfaces:
+L00003969	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003970	- python3 scripts/pm-plan-index.py validate
+L00003971	risk_class: media_slot_extraction_drift
+L00003972	reasoning_tier: standard
+L00003973	context_scope: media_generation_capabilities_standardization
+L00003974	implementation_surfaces:
+L00003975	- Plans/Media_Generation_and_Capabilities.md
+L00003976	node_compile_hint:
+L00003977	  mode: seed_extraction
+L00003978	  create_worknodes: false
+L00003979	source_lineage:
+L00003980	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+L00003981	preserved_exact_tokens:
+L00003982	- (?i)\bseed\s*[:=]?\s*(?P<seed>\d{1,10})\b
+L00003983	- seed
+L00003984	- 1,10
+L00003985	negative_constraints: []
+L00003986	compatibility_only_notes: []
+L00003987	stale_retired_dispositions: []
+L00003988	owner_boundary_notes:
+L00003989	- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+L00003990	owner_hints:
+L00003991	- Plans/Media_Generation_and_Capabilities.md
+L00003992	preserved_contractrefs: []
+L00003993	split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+L00003994	```
+L00003995	
+
+<<< CONTEXT_AFTER canonical_document_lines=3996-4007 >>>
+L00003996	### MGAC-054 - BPM Extraction
+L00003997	
+L00003998	```yaml
+L00003999	plan_unit_id: MGAC-054
+L00004000	unit_type: requirement
+L00004001	status: accepted
+L00004002	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00004003	canonical_text: BPM extraction preserves both number-before-bpm and bpm-keyed forms with bpm and bpm2 capture groups.
+L00004004	gui_related: false
+L00004005	gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+L00004006	split_recommended: true
+L00004007	depends_on:

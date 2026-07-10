@@ -1,0 +1,377 @@
+<<< CONTEXT_BEFORE 2220-2231 >>>
+  - "status badges"
+  - "connection, health, discovery, and stale-cache state"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/Multi-Account.md"
+  - "Plans/storage-plan.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2232-2579 >>>
+### PO-030 - Settings Ownership And Reflected State Boundary
+
+```yaml
+plan_unit_id: PO-030
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode settings must label profiles rather than implied account identity, expose connection and discovery
+  details, hide lifecycle actions that imply PM owns attached remote processes, and keep PM-owned
+  skills/tools/runtime state separate from OpenCode-reflected server and upstream-provider state.
+gui_related: true
+gui_classification_reason: "This unit defines visible settings ownership labels and GUI state boundaries."
+split_recommended: true
+depends_on:
+  - "PO-006"
+  - "PO-014"
+  - "PO-025"
+unblocks: []
+acceptance_criteria:
+  - "Settings Ownership And Reflected State Boundary remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_settings_boundary
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_settings_state_ownership_boundary
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0036"
+preserved_exact_tokens:
+  - "profile label"
+  - "not an implied account identity"
+  - "connection mode"
+  - "endpoint summary"
+  - "discovery freshness"
+  - "PM ownership mode"
+  - "PM-owned canon"
+  - "OpenCode-reflected state"
+  - "attached profiles"
+  - "lifecycle actions"
+  - "PM owns the remote process"
+  - "/runtime"
+  - "server auth"
+  - "discovered upstream auth/runtime state"
+  - "server-side session residue"
+  - "OpenCode skill discovery is global to the selected server-profile"
+  - "OPENCODE_DISABLE_CLAUDE_CODE_SKILLS"
+  - "PM still routes canonical skills/tools through the PM skill and tool contracts"
+negative_constraints:
+  - "Attached profiles must not expose lifecycle actions that imply PM owns the remote process."
+  - "OpenCode-reflected state must not replace PM-owned canonical runtime, skills, or tool state."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/OpenCode_Deep_Extraction.md"
+  - "Plans/Skills_System.md"
+  - "Plans/Tools.md"
+```
+
+### PO-031 - Tier Config Dropdown And Shared Card Layout
+
+```yaml
+plan_unit_id: PO-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  When OpenCode is enabled, it appears in the tier platform dropdown and uses the same tier config card layout
+  as other providers; its only UI difference is that model selection is sourced from OpenCode HTTP discovery
+  and grouped by underlying provider.
+gui_related: true
+gui_classification_reason: "This unit defines tier configuration UI behavior and model-list presentation."
+split_recommended: false
+depends_on:
+  - "PO-019"
+  - "PO-020"
+unblocks: []
+acceptance_criteria:
+  - "Tier Config Dropdown And Shared Card Layout remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_tier_ui
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_tier_config_ui
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0037"
+preserved_exact_tokens:
+  - "platform dropdown"
+  - "any tier"
+  - "Model selection"
+  - "models discovered from the OpenCode server"
+  - "grouped by underlying provider"
+  - "No special-casing in UI"
+  - "same tier config card layout"
+  - "HTTP API vs CLI command"
+negative_constraints:
+  - "OpenCode must not receive a special tier config card layout distinct from other providers."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/FinalGUISpec.md"
+```
+
+### PO-032 - CLI Path Fallback Scope
+
+```yaml
+plan_unit_id: PO-032
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode does not require CLI path input for normal runtime operation; if provided, the opencode CLI path is
+  limited to local launcher/discovery fallback and installation diagnostics while run transport remains
+  HTTP/SSE.
+gui_related: false
+gui_classification_reason: "This unit constrains launcher/discovery fallback behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PO-002"
+  - "PO-005"
+  - "PO-006"
+unblocks: []
+acceptance_criteria:
+  - "CLI Path Fallback Scope remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_cli_fallback
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_cli_path_fallback_scope
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0038"
+preserved_exact_tokens:
+  - "does NOT require CLI path input"
+  - "normal runtime operation"
+  - "opencode CLI path"
+  - "local launcher/discovery fallback"
+  - "installation diagnostics"
+  - "OpenCode run transport remains HTTP/SSE"
+negative_constraints:
+  - "OpenCode CLI path input must not become normal runtime transport."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/CLI_Bridged_Providers.md"
+```
+
+### PO-033 - Retired platform_specs SSOT Constraints
+
+```yaml
+plan_unit_id: PO-033
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  Legacy platform_specs.rs OpenCode SSOT wording is retired/source-lineage only. Active OpenCode constraints are
+  server-bridged http transport, default port 4096, optional CLI path only for launcher/discovery fallback, dynamic model
+  discovery without hardcoded fallback models, and provider/model capability ownership through current contracts.
+gui_related: false
+gui_classification_reason: "This unit defines provider metadata SSOT constraints rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PO-002"
+  - "PO-023"
+  - "PO-024"
+  - "PO-032"
+unblocks: []
+acceptance_criteria:
+  - "platform_specs SSOT Constraints remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_platform_specs
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: retired_opencode_platform_specs_ssot
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0039"
+preserved_exact_tokens:
+  - "platform_specs.rs"
+  - "SSOT"
+  - "Platform variant: `OpenCode`"
+  - "Transport: `http`"
+  - "Default server port: `4096`"
+  - "CLI path is **optional**"
+  - "launcher/discovery fallback"
+  - "No hardcoded fallback models"
+  - "dynamic discovery only"
+negative_constraints:
+  - "Do not use platform_specs.rs as active implementation authority."
+  - "Do not encode hardcoded fallback OpenCode models."
+compatibility_only_notes:
+  - "platform_specs.rs is retained only as source-lineage."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, CodePath:puppet-master-rs/src/platforms/platform_specs.rs"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/DRY_Rules.md"
+```
+
+### PO-034 - Per-Iteration Session Isolation
+
+```yaml
+plan_unit_id: PO-034
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  Each Puppet Master iteration creates a new OpenCode session with POST /session, sends the prompt, waits for
+  completion, deletes the session with DELETE /session/:id, and never reuses sessions across iterations.
+gui_related: false
+gui_classification_reason: "This unit defines runtime session lifecycle isolation rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PO-015"
+  - "PO-002"
+unblocks: []
+acceptance_criteria:
+  - "Per-Iteration Session Isolation remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_session_reuse_drift
+reasoning_tier: standard
+context_scope: provider_opencode_session_isolation
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_session_isolation
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0040"
+preserved_exact_tokens:
+  - "Each Puppet Master iteration"
+  - "new OpenCode session"
+  - "POST /session"
+  - "sends the prompt"
+  - "waits for completion"
+  - "deletes the session"
+  - "DELETE /session/:id"
+  - "No session reuse across iterations"
+  - "fresh-process-per-iteration guarantee"
+  - "session abstraction"
+negative_constraints:
+  - "OpenCode sessions must not be reused across Puppet Master iterations."
+preserved_contractrefs:
+  - "ContractRef: PolicyRule:CU-P2-T12"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/Executor_Protocol.md"
+```
+
+### PO-035 - Synchronous Invocation Sequence
+
+```yaml
+plan_unit_id: PO-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  The synchronous OpenCode run sequence performs GET /global/health, POST /session, POST /session/{id}/message
+  with providerID/modelID, build agent, and text parts, parses response parts into normalized events, and
+  deletes the session.
+gui_related: false
+gui_classification_reason: "This unit defines HTTP invocation sequencing rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PO-016"
+  - "PO-019"
+  - "PO-024"
+  - "PO-034"
+unblocks: []
+acceptance_criteria:
+  - "Synchronous Invocation Sequence remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_sync_invocation
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_sync_invocation_sequence
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0041"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0042"
+preserved_exact_tokens:
+  - "Invocation Shape (Normative)"
+  - "Synchronous Run"
+  - "GET /global/health"
+  - "healthy: true"
+  - "version"
+  - "POST /session"
+  - "PM-2026-02-24-19-30-00-001"
+  - "session-uuid"
+  - "POST /session/{id}/message"
+  - "providerID"
+  - "modelID"
+  - "claude-sonnet-4-5-20250514"
+  - "agent"
+  - "build"
+  - "parts"
+  - "Parse response parts"
+  - "normalized events"
+  - "DELETE /session/{id}"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/Executor_Protocol.md"
+```
+
+
+<<< CONTEXT_AFTER 2580-2591 >>>
+### PO-036 - Asynchronous SSE Invocation Sequence
+
+```yaml
+plan_unit_id: PO-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  The asynchronous OpenCode run sequence subscribes to GET /event, sends POST /session/{id}/prompt_async with
+  the same request body as the synchronous path, maps SSE events to normalized events, emits done on
+  completion, and deletes the session.
+gui_related: false

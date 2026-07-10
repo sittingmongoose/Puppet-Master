@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE canonical_document_lines=17941-17952 >>>
+L00017941	  create_worknodes: false
+L00017942	source_lineage:
+L00017943	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+L00017944	preserved_exact_tokens:
+L00017945	  - "config:project:{pid}:source_control.accordion_state"
+L00017946	  - "{\"Changes\": true, \"Worktrees\": false, \"Branches/Stash\": false, \"History\": false, \"Graph\": false}"
+L00017947	negative_constraints: []
+L00017948	owner_hints:
+L00017949	  - Plans/assistant-chat-design.md
+L00017950	  - Plans/storage-plan.md
+L00017951	```
+L00017952	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=17953-18325 >>>
+L00017953	### ACD-321 - Source Control Worktree Filter State
+L00017954	
+L00017955	```yaml
+L00017956	plan_unit_id: ACD-321
+L00017957	unit_type: requirement
+L00017958	status: accepted
+L00017959	owner_doc: Plans/assistant-chat-design.md
+L00017960	canonical_text: >-
+L00017961	  Source Control section order is Changes, Worktrees, Branches/Stash, History,
+L00017962	  Graph; scroll position is not persisted; each project state is independent;
+L00017963	  expanded sections may scroll internally while the outer accordion scrolls;
+L00017964	  Worktrees filter is `All | Threads | Orchestrator | Manual`, persists as
+L00017965	  `worktree_filter`, defaults to `All`, and is not shared across projects.
+L00017966	gui_related: true
+L00017967	gui_classification_reason: Source Control section order, scrolling, and Worktrees filter are visible UI behavior.
+L00017968	depends_on: [ACD-319, ACD-320]
+L00017969	unblocks: []
+L00017970	acceptance_criteria:
+L00017971	  - Source Control sections use the fixed order Changes, Worktrees, Branches/Stash, History, Graph.
+L00017972	  - Scroll position is not persisted and each project's accordion state remains independent.
+L00017973	  - Worktrees filter options, persistence key, default, and per-project scope match the source contract.
+L00017974	validation_surfaces:
+L00017975	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017976	  - python3 scripts/pm-plan-index.py validate
+L00017977	risk_class: source_control_state
+L00017978	reasoning_tier: standard
+L00017979	context_scope: gui
+L00017980	implementation_surfaces:
+L00017981	  - Plans/assistant-chat-design.md
+L00017982	  - Plans/FinalGUISpec.md
+L00017983	  - Plans/WorktreeGitImprovement.md
+L00017984	node_compile_hint:
+L00017985	  mode: source_control_worktree_filter_state
+L00017986	  create_worknodes: false
+L00017987	source_lineage:
+L00017988	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+L00017989	preserved_exact_tokens:
+L00017990	  - "Changes, Worktrees, Branches/Stash, History, Graph"
+L00017991	  - "All | Threads | Orchestrator | Manual"
+L00017992	  - "config:project:{pid}:source_control.worktree_filter"
+L00017993	  - "worktree_filter"
+L00017994	  - "All"
+L00017995	negative_constraints:
+L00017996	  - "User reordering is outside MVP."
+L00017997	  - "Worktrees filter state is not shared across projects."
+L00017998	owner_hints:
+L00017999	  - Plans/assistant-chat-design.md
+L00018000	  - Plans/FinalGUISpec.md
+L00018001	```
+L00018002	
+L00018003	### ACD-322 - Worktree Header Button Placement
+L00018004	
+L00018005	```yaml
+L00018006	plan_unit_id: ACD-322
+L00018007	unit_type: requirement
+L00018008	status: accepted
+L00018009	owner_doc: Plans/assistant-chat-design.md
+L00018010	canonical_text: >-
+L00018011	  Chat header appends the Worktree button after Reasoning/effort; mode buttons
+L00018012	  remain separate; the button is visible in Ask, Agent, Debug, Plan, and Deep
+L00018013	  Plan and hidden when the active project has no git repository.
+L00018014	gui_related: true
+L00018015	gui_classification_reason: Chat header placement, visibility, and mode presentation are visible Assistant Chat UI.
+L00018016	depends_on: [ACD-318]
+L00018017	unblocks: [ACD-323]
+L00018018	acceptance_criteria:
+L00018019	  - The Worktree button appears after the Reasoning/effort control in the chat header strip.
+L00018020	  - Mode buttons remain separate from the header strip and are not adjacent to the Worktree button.
+L00018021	  - The button is visible in Ask, Agent, Debug, Plan, and Deep Plan and hidden when no git repository is active.
+L00018022	validation_surfaces:
+L00018023	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018024	  - python3 scripts/pm-plan-index.py validate
+L00018025	risk_class: worktree_header_ui
+L00018026	reasoning_tier: standard
+L00018027	context_scope: gui
+L00018028	implementation_surfaces:
+L00018029	  - Plans/assistant-chat-design.md
+L00018030	  - Plans/FinalGUISpec.md
+L00018031	  - Plans/Wiring_Matrix.md
+L00018032	node_compile_hint:
+L00018033	  mode: worktree_header_button_placement
+L00018034	  create_worknodes: false
+L00018035	source_lineage:
+L00018036	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0148
+L00018037	preserved_exact_tokens:
+L00018038	  - "Reasoning/effort"
+L00018039	  - "Ask"
+L00018040	  - "Agent"
+L00018041	  - "Debug"
+L00018042	  - "Plan"
+L00018043	  - "Deep Plan"
+L00018044	negative_constraints:
+L00018045	  - "Mode buttons are separate from the header strip and not adjacent to this button."
+L00018046	owner_hints:
+L00018047	  - Plans/assistant-chat-design.md
+L00018048	  - Plans/FinalGUISpec.md
+L00018049	```
+L00018050	
+L00018051	### ACD-323 - Worktree Header Icon States
+L00018052	
+L00018053	```yaml
+L00018054	plan_unit_id: ACD-323
+L00018055	unit_type: requirement
+L00018056	status: accepted
+L00018057	owner_doc: Plans/assistant-chat-design.md
+L00018058	canonical_text: Worktree header icon states are unbound, bound clean, bound dirty, and bound conflict, using theme tokens and compact overflow behavior.
+L00018059	gui_related: true
+L00018060	gui_classification_reason: Worktree icon states, colors, indicators, tooltips, and overflow behavior are visible UI.
+L00018061	depends_on: [ACD-322]
+L00018062	unblocks: [ACD-324, ACD-341]
+L00018063	acceptance_criteria:
+L00018064	  - Unbound, bound clean, bound dirty, and bound conflict icon states render with the specified tooltips and indicators.
+L00018065	  - Icon colors resolve through theme tokens rather than hardcoded hex values.
+L00018066	  - Accessibility announcements and compact overflow behavior match the source span.
+L00018067	validation_surfaces:
+L00018068	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018069	  - python3 scripts/pm-plan-index.py validate
+L00018070	risk_class: worktree_header_ui
+L00018071	reasoning_tier: standard
+L00018072	context_scope: gui
+L00018073	implementation_surfaces:
+L00018074	  - Plans/assistant-chat-design.md
+L00018075	  - Plans/FinalGUISpec.md
+L00018076	  - Plans/Wiring_Matrix.md
+L00018077	node_compile_hint:
+L00018078	  mode: worktree_header_icon_states
+L00018079	  create_worknodes: false
+L00018080	source_lineage:
+L00018081	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0148
+L00018082	preserved_exact_tokens:
+L00018083	  - "No worktree — click to create"
+L00018084	  - "icon-secondary"
+L00018085	  - "accent-warning"
+L00018086	  - "accent-error"
+L00018087	  - "dirty_state"
+L00018088	  - "conflict_state"
+L00018089	  - "aria-live=\"polite\""
+L00018090	negative_constraints:
+L00018091	  - "Icon colors must not use hardcoded hex values."
+L00018092	  - "Narrow controls degrade to icon-only controls rather than wrapping text into the compact chat header."
+L00018093	owner_hints:
+L00018094	  - Plans/assistant-chat-design.md
+L00018095	  - Plans/FinalGUISpec.md
+L00018096	```
+L00018097	
+L00018098	### ACD-324 - Worktree Dropdown Rows
+L00018099	
+L00018100	```yaml
+L00018101	plan_unit_id: ACD-324
+L00018102	unit_type: requirement
+L00018103	status: accepted
+L00018104	owner_doc: Plans/assistant-chat-design.md
+L00018105	canonical_text: >-
+L00018106	  Worktree dropdown rows differ for unbound and bound states, including `None`,
+L00018107	  `Create Worktree…`, branch/path/status info, `Unbind`, `Merge into Base…`,
+L00018108	  `Create PR…`, and destructive `Remove Worktree`.
+L00018109	gui_related: true
+L00018110	gui_classification_reason: Worktree dropdown rows and actions are visible chat header UI.
+L00018111	depends_on: [ACD-323]
+L00018112	unblocks: [ACD-325, ACD-331]
+L00018113	acceptance_criteria:
+L00018114	  - The unbound dropdown shows `None` and `Create Worktree…`.
+L00018115	  - The bound dropdown shows branch name, path, status, `Unbind`, `Merge into Base…`, `Create PR…`, and destructive `Remove Worktree`.
+L00018116	  - Info labels and status pills have no action.
+L00018117	validation_surfaces:
+L00018118	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018119	  - python3 scripts/pm-plan-index.py validate
+L00018120	risk_class: worktree_header_ui
+L00018121	reasoning_tier: standard
+L00018122	context_scope: gui
+L00018123	implementation_surfaces:
+L00018124	  - Plans/assistant-chat-design.md
+L00018125	  - Plans/UI_Command_Catalog.md
+L00018126	  - Plans/Contracts_V0.md
+L00018127	node_compile_hint:
+L00018128	  mode: worktree_dropdown_rows
+L00018129	  create_worknodes: false
+L00018130	source_lineage:
+L00018131	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0148
+L00018132	preserved_exact_tokens:
+L00018133	  - "None"
+L00018134	  - "Create Worktree…"
+L00018135	  - "Unbind"
+L00018136	  - "Merge into Base…"
+L00018137	  - "Create PR…"
+L00018138	  - "Remove Worktree"
+L00018139	negative_constraints:
+L00018140	  - "Dropdown info labels have no action."
+L00018141	owner_hints:
+L00018142	  - Plans/assistant-chat-design.md
+L00018143	  - Plans/UI_Command_Catalog.md
+L00018144	```
+L00018145	
+L00018146	### ACD-325 - Worktree Binding Change Rules
+L00018147	
+L00018148	```yaml
+L00018149	plan_unit_id: ACD-325
+L00018150	unit_type: constraint
+L00018151	status: accepted
+L00018152	owner_doc: Plans/assistant-chat-design.md
+L00018153	canonical_text: >-
+L00018154	  Binding changes apply to the next turn; in-flight turns make the dropdown
+L00018155	  read-only; `Unbind` sets binding to None; `Remove Worktree` calls
+L00018156	  `WorktreeManager::remove_worktree` and is blocked when an active run exists.
+L00018157	gui_related: true
+L00018158	gui_classification_reason: Dropdown read-only and blocked-action behavior are visible chat UI states.
+L00018159	depends_on: [ACD-324]
+L00018160	unblocks: [ACD-326, ACD-343]
+L00018161	acceptance_criteria:
+L00018162	  - Binding changes apply only to the next turn.
+L00018163	  - In-flight turns make the dropdown read-only.
+L00018164	  - Remove is blocked when the worktree has an active run in any thread or orchestrator tier.
+L00018165	validation_surfaces:
+L00018166	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018167	  - python3 scripts/pm-plan-index.py validate
+L00018168	risk_class: worktree_binding
+L00018169	reasoning_tier: high
+L00018170	context_scope: worktrees
+L00018171	implementation_surfaces:
+L00018172	  - Plans/assistant-chat-design.md
+L00018173	  - Plans/Run_Modes.md
+L00018174	  - Plans/WorktreeGitImprovement.md
+L00018175	node_compile_hint:
+L00018176	  mode: worktree_binding_change_rules
+L00018177	  create_worknodes: false
+L00018178	source_lineage:
+L00018179	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0148
+L00018180	preserved_exact_tokens:
+L00018181	  - "next turn"
+L00018182	  - "WorktreeManager::remove_worktree"
+L00018183	negative_constraints:
+L00018184	  - "No binding changes during execution."
+L00018185	owner_hints:
+L00018186	  - Plans/assistant-chat-design.md
+L00018187	  - Plans/WorktreeGitImprovement.md
+L00018188	```
+L00018189	
+L00018190	### ACD-326 - Thread Worktree Binding Storage
+L00018191	
+L00018192	```yaml
+L00018193	plan_unit_id: ACD-326
+L00018194	unit_type: requirement
+L00018195	status: accepted
+L00018196	owner_doc: Plans/assistant-chat-design.md
+L00018197	canonical_text: >-
+L00018198	  Thread worktree binding persists at
+L00018199	  `thread_state:{thread_id}:worktree_binding` with `worktree_id`,
+L00018200	  `branch_name`, `worktree_path`, `bound_at_utc`, `binding_origin`, and
+L00018201	  `temp_branch_name`.
+L00018202	gui_related: false
+L00018203	gui_classification_reason: Thread worktree binding storage is persistence/data-contract behavior.
+L00018204	depends_on: [ACD-318]
+L00018205	unblocks: [ACD-327, ACD-328, ACD-329, ACD-335]
+L00018206	acceptance_criteria:
+L00018207	  - Thread worktree binding uses the specified redb key family and JSON fields.
+L00018208	  - UI display uses `branch_name`; `temp_branch_name` is internal bookkeeping.
+L00018209	  - Worktree filesystem paths use `.puppet-master/worktrees/thread-{short_id}` with suffixes when needed.
+L00018210	validation_surfaces:
+L00018211	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018212	  - python3 scripts/pm-plan-index.py validate
+L00018213	risk_class: worktree_storage
+L00018214	reasoning_tier: high
+L00018215	context_scope: storage
+L00018216	implementation_surfaces:
+L00018217	  - Plans/assistant-chat-design.md
+L00018218	  - Plans/storage-plan.md
+L00018219	  - Plans/Contracts_V0.md
+L00018220	  - Plans/WorktreeGitImprovement.md
+L00018221	node_compile_hint:
+L00018222	  mode: thread_worktree_binding_storage
+L00018223	  create_worknodes: false
+L00018224	source_lineage:
+L00018225	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+L00018226	preserved_exact_tokens:
+L00018227	  - "thread_state:{thread_id}:worktree_binding"
+L00018228	  - ".puppet-master/worktrees/thread-{short_id}"
+L00018229	  - "thread-{short_id}-2"
+L00018230	  - "wt-*"
+L00018231	negative_constraints:
+L00018232	  - "`temp_branch_name` is internal bookkeeping only."
+L00018233	  - "`worktree_id` remains the stable record identity and MUST NOT make `wt-*` the filesystem path model."
+L00018234	owner_hints:
+L00018235	  - Plans/assistant-chat-design.md
+L00018236	  - Plans/storage-plan.md
+L00018237	```
+L00018238	
+L00018239	### ACD-327 - Worktree Reverse Binding Enforcement
+L00018240	
+L00018241	```yaml
+L00018242	plan_unit_id: ACD-327
+L00018243	unit_type: requirement
+L00018244	status: accepted
+L00018245	owner_doc: Plans/assistant-chat-design.md
+L00018246	canonical_text: Reverse lookup `worktree_binding_reverse:{worktree_id}` enforces one worktree per thread and one thread per worktree, with explicit error and deep link when already bound.
+L00018247	gui_related: false
+L00018248	gui_classification_reason: Reverse lookup and one-to-one enforcement are storage/runtime behavior.
+L00018249	depends_on: [ACD-326]
+L00018250	unblocks: [ACD-328]
+L00018251	acceptance_criteria:
+L00018252	  - Reverse lookup stores the owning `thread_id` for a `worktree_id`.
+L00018253	  - Binding a worktree already bound to another thread is blocked with an explicit error.
+L00018254	  - The error includes a deep link to the owning thread when available.
+L00018255	validation_surfaces:
+L00018256	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018257	  - python3 scripts/pm-plan-index.py validate
+L00018258	risk_class: worktree_storage
+L00018259	reasoning_tier: high
+L00018260	context_scope: storage
+L00018261	implementation_surfaces:
+L00018262	  - Plans/assistant-chat-design.md
+L00018263	  - Plans/storage-plan.md
+L00018264	node_compile_hint:
+L00018265	  mode: worktree_reverse_binding_enforcement
+L00018266	  create_worknodes: false
+L00018267	source_lineage:
+L00018268	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+L00018269	preserved_exact_tokens:
+L00018270	  - "worktree_binding_reverse:{worktree_id}"
+L00018271	  - "thread_id"
+L00018272	negative_constraints:
+L00018273	  - "Duplicate thread/worktree binding is blocked."
+L00018274	owner_hints:
+L00018275	  - Plans/assistant-chat-design.md
+L00018276	  - Plans/storage-plan.md
+L00018277	```
+L00018278	
+L00018279	### ACD-328 - Worktree Binding Projection Revalidation
+L00018280	
+L00018281	```yaml
+L00018282	plan_unit_id: ACD-328
+L00018283	unit_type: requirement
+L00018284	status: accepted
+L00018285	owner_doc: Plans/assistant-chat-design.md
+L00018286	canonical_text: >-
+L00018287	  Projectors replay `chat.thread_worktree_bound` and
+L00018288	  `chat.thread_worktree_unbound`; startup lazily revalidates path membership in
+L00018289	  `git worktree list`, auto-unbinds missing paths, emits
+L00018290	  `reason=path_missing`, and notifies the user.
+L00018291	gui_related: false
+L00018292	gui_classification_reason: Event replay and startup revalidation are storage/runtime behavior.
+L00018293	depends_on: [ACD-326]
+L00018294	unblocks: [ACD-329]
+L00018295	acceptance_criteria:
+L00018296	  - Binding projectors replay bound/unbound events in sequence order.
+L00018297	  - Startup lazily verifies the recorded path exists and appears in `git worktree list`.
+L00018298	  - Missing worktrees auto-unbind with `reason=path_missing` and notify the user.
+L00018299	validation_surfaces:
+L00018300	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018301	  - python3 scripts/pm-plan-index.py validate
+L00018302	risk_class: worktree_storage
+L00018303	reasoning_tier: high
+L00018304	context_scope: storage
+L00018305	implementation_surfaces:
+L00018306	  - Plans/assistant-chat-design.md
+L00018307	  - Plans/storage-plan.md
+L00018308	  - Plans/Contracts_V0.md
+L00018309	node_compile_hint:
+L00018310	  mode: worktree_binding_projection_revalidation
+L00018311	  create_worknodes: false
+L00018312	source_lineage:
+L00018313	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+L00018314	preserved_exact_tokens:
+L00018315	  - "chat.thread_worktree_bound"
+L00018316	  - "chat.thread_worktree_unbound"
+L00018317	  - "git worktree list"
+L00018318	  - "reason=path_missing"
+L00018319	negative_constraints:
+L00018320	  - "Missing worktrees must not be silently re-created."
+L00018321	owner_hints:
+L00018322	  - Plans/assistant-chat-design.md
+L00018323	  - Plans/storage-plan.md
+L00018324	```
+L00018325	
+
+<<< CONTEXT_AFTER canonical_document_lines=18326-18337 >>>
+L00018326	### ACD-329 - Worktree Aware File Identity
+L00018327	
+L00018328	```yaml
+L00018329	plan_unit_id: ACD-329
+L00018330	unit_type: constraint
+L00018331	status: accepted
+L00018332	owner_doc: Plans/assistant-chat-design.md
+L00018333	canonical_text: >-
+L00018334	  File identity for chat/debug/Source Control/GitHub pivots is `{ repo_id,
+L00018335	  worktree_id, relative_path }`; turn start freezes
+L00018336	  `execution_unit_context.worktree_id` and `working_directory`; historical cards
+L00018337	  remain pinned.

@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE 569-580 >>>
+        "schema_contract_validation": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "design_only",
+            "validated",
+            "blocked"
+          ]
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 581-969 >>>
+    "plan_compile_run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compile_id",
+        "source_plan_set_id",
+        "source_plan_index_hash",
+        "launch_source",
+        "contract_mode",
+        "launch_policy",
+        "runtime_adapter",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref",
+        "status",
+        "current_stage",
+        "cursor",
+        "last_green_stage",
+        "last_green_hashes",
+        "blockers",
+        "next_required_stage",
+        "resume_command_or_action",
+        "automatic_launch_enabled",
+        "planning_wizard_launch_enabled",
+        "codex_bootstrap_launch_enabled",
+        "current_state",
+        "receipts",
+        "compile_wave_contracts"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "source_plan_set_id": {
+          "type": "string"
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "launch_source": {
+          "enum": [
+            "codex_bootstrap",
+            "native_planning_wizard"
+          ]
+        },
+        "contract_mode": {
+          "enum": [
+            "design_only",
+            "native_runtime"
+          ]
+        },
+        "launch_policy": {
+          "enum": [
+            "disabled",
+            "automatic_after_approval"
+          ]
+        },
+        "runtime_adapter": {
+          "enum": [
+            "codex_bootstrap_adapter",
+            "native_puppet_master_adapter"
+          ]
+        },
+        "runtime_enablement_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "runtime_policy_snapshot_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "design_only_disabled",
+            "preflight",
+            "running",
+            "blocked",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "current_stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "cursor": {
+          "$ref": "#/$defs/cursor"
+        },
+        "last_green_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "last_green_hashes": {
+          "$ref": "#/$defs/hash_snapshot"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "next_required_stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/stage_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resume_command_or_action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "automatic_launch_enabled": {
+          "type": "boolean"
+        },
+        "planning_wizard_launch_enabled": {
+          "type": "boolean"
+        },
+        "codex_bootstrap_launch_enabled": {
+          "const": false
+        },
+        "current_state": {
+          "type": "string",
+          "enum": [
+            "initialized",
+            "preflight",
+            "stage_running",
+            "stage_blocked",
+            "stage_complete",
+            "ready_for_executor_intake",
+            "cancelled",
+            "complete"
+          ]
+        },
+        "receipts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "compile_wave_contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_wave_contract"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "contract_mode": {
+                "const": "design_only"
+              }
+            },
+            "required": [
+              "contract_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "launch_policy": {
+                "const": "disabled"
+              },
+              "launch_source": {
+                "const": "codex_bootstrap"
+              },
+              "runtime_adapter": {
+                "const": "codex_bootstrap_adapter"
+              },
+              "runtime_enablement_ref": {
+                "type": "null"
+              },
+              "runtime_policy_snapshot_ref": {
+                "type": "null"
+              },
+              "status": {
+                "const": "design_only_disabled"
+              },
+              "automatic_launch_enabled": {
+                "const": false
+              },
+              "planning_wizard_launch_enabled": {
+                "const": false
+              },
+              "codex_bootstrap_launch_enabled": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "contract_mode": {
+                "const": "native_runtime"
+              }
+            },
+            "required": [
+              "contract_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "launch_policy": {
+                "const": "automatic_after_approval"
+              },
+              "launch_source": {
+                "const": "native_planning_wizard"
+              },
+              "runtime_adapter": {
+                "const": "native_puppet_master_adapter"
+              },
+              "runtime_enablement_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "runtime_policy_snapshot_ref": {
+                "$ref": "#/$defs/ref"
+              },
+              "status": {
+                "enum": [
+                  "preflight",
+                  "running",
+                  "blocked",
+                  "ready_for_executor_intake",
+                  "cancelled",
+                  "complete"
+                ]
+              },
+              "automatic_launch_enabled": {
+                "const": true
+              },
+              "planning_wizard_launch_enabled": {
+                "const": true
+              },
+              "codex_bootstrap_launch_enabled": {
+                "const": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "current_state": {
+                "const": "complete"
+              },
+              "current_stage": {
+                "const": "orchestrator_projection"
+              },
+              "cursor": {
+                "properties": {
+                  "stage": {
+                    "const": "orchestrator_projection"
+                  }
+                }
+              },
+              "next_required_stage": {
+                "type": "null"
+              },
+              "resume_command_or_action": {
+                "type": "null"
+              },
+              "receipts": {
+                "$ref": "#/$defs/non_empty_ref_list"
+              },
+              "compile_wave_contracts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/compile_wave_contract"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "blocked"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "current_state": {
+                "const": "stage_blocked"
+              },
+              "blockers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/blocker"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "stage_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage_id",
+        "purpose",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "entry_gate",
+        "item_boundaries",
+        "exit_gate",
+        "success_route",
+        "blocked_route",
+        "assignment_contract",
+        "parent_writeback_policy"
+      ],
+      "properties": {
+        "stage_id": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "read_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "entry_gate": {
+          "type": "string"
+        },
+        "item_boundaries": {
+          "$ref": "#/$defs/item_boundaries"
+        },
+        "exit_gate": {
+          "type": "string"
+        },
+        "success_route": {
+          "$ref": "#/$defs/stage_success_route"
+        },
+        "blocked_route": {
+          "$ref": "#/$defs/stage_blocked_route"
+        },
+        "assignment_contract": {
+          "$ref": "#/$defs/compile_wave_contract"
+        },
+        "parent_writeback_policy": {
+          "$ref": "#/$defs/parent_writeback_policy"
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 970-981 >>>
+    "node_seed_candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_unit_ids",
+        "source_acceptance_unit_ids",
+        "objective",
+        "owner_area",
+        "implementation_surfaces",
+        "read_set",
+        "write_set_candidates",
+        "acceptance_criteria",

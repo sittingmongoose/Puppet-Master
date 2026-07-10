@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9627-9638 >>>
+L00009627	  - "terminal engine/emulator"
+L00009628	  - "PTY/process host"
+L00009629	  - "UI shell/chrome"
+L00009630	  - "bounded preview"
+L00009631	  - "audit"
+L00009632	  - "reveal controls"
+L00009633	negative_constraints: []
+L00009634	owner_hints:
+L00009635	  - Plans/assistant-chat-design.md
+L00009636	  - Plans/FinalGUISpec.md
+L00009637	```
+L00009638	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9639-10025 >>>
+L00009639	### ACD-132 - Terminal Product Fidelity
+L00009640	
+L00009641	```yaml
+L00009642	plan_unit_id: ACD-132
+L00009643	unit_type: requirement
+L00009644	status: accepted
+L00009645	owner_doc: Plans/assistant-chat-design.md
+L00009646	canonical_text: >-
+L00009647	  Terminal fidelity carries GPU fallback with context-loss disclosure, IME
+L00009648	  correctness, `/accessibility/Unicode-width` handling, `/log/CI-safe` and
+L00009649	  machine-readable output modes, diff-based redraw, `/command/exit markers`,
+L00009650	  recent-command navigation, `/detach/revive/reconnect` flows, and narrow
+L00009651	  `/extensibility` APIs rather than broad plugin surfaces.
+L00009652	gui_related: true
+L00009653	gui_classification_reason: Terminal fidelity affects visible terminal rendering, accessibility, and recovery surfaces.
+L00009654	depends_on: [ACD-131]
+L00009655	unblocks: []
+L00009656	acceptance_criteria:
+L00009657	  - Terminal rendering and accessibility fidelity preserves the listed product-critical cases.
+L00009658	  - Extensibility remains narrow and PM-owned rather than broad plugin surface.
+L00009659	validation_surfaces:
+L00009660	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009661	  - python3 scripts/pm-plan-index.py validate
+L00009662	risk_class: terminal_fidelity
+L00009663	reasoning_tier: high
+L00009664	context_scope: terminal_consumer
+L00009665	implementation_surfaces:
+L00009666	  - Plans/assistant-chat-design.md
+L00009667	  - Plans/FinalGUISpec.md
+L00009668	node_compile_hint:
+L00009669	  mode: terminal_product_fidelity
+L00009670	  create_worknodes: false
+L00009671	source_lineage:
+L00009672	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009673	preserved_exact_tokens:
+L00009674	  - "GPU fallback with context-loss disclosure"
+L00009675	  - "IME correctness"
+L00009676	  - "/accessibility/Unicode-width"
+L00009677	  - "/log/CI-safe"
+L00009678	  - "/command/exit markers"
+L00009679	  - "/detach/revive/reconnect"
+L00009680	  - "/extensibility"
+L00009681	negative_constraints: []
+L00009682	owner_hints:
+L00009683	  - Plans/assistant-chat-design.md
+L00009684	  - Plans/FinalGUISpec.md
+L00009685	```
+L00009686	
+L00009687	### ACD-133 - PTY Backed Continuity
+L00009688	
+L00009689	```yaml
+L00009690	plan_unit_id: ACD-133
+L00009691	unit_type: constraint
+L00009692	status: accepted
+L00009693	owner_doc: Plans/assistant-chat-design.md
+L00009694	canonical_text: >-
+L00009695	  Shell-first command continuity is `/PTY-backed` and preserves `/env/session`,
+L00009696	  working-directory, and terminal-session state; chat is not a pseudo-terminal
+L00009697	  or earlier-thread transcript owner, and continuity remains visible in audit
+L00009698	  rather than hidden in chat-only reconstruction.
+L00009699	gui_related: true
+L00009700	gui_classification_reason: PTY continuity and audit visibility affect user-visible command cards and terminal reveal.
+L00009701	depends_on: [ACD-131]
+L00009702	unblocks: [ACD-134, ACD-145]
+L00009703	acceptance_criteria:
+L00009704	  - Shell-first command continuity is backed by PTY/session state.
+L00009705	  - Chat does not own pseudo-terminal or full transcript continuity.
+L00009706	  - Audit surfaces expose continuity rather than reconstructing it chat-locally.
+L00009707	validation_surfaces:
+L00009708	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009709	  - python3 scripts/pm-plan-index.py validate
+L00009710	risk_class: pty_continuity
+L00009711	reasoning_tier: high
+L00009712	context_scope: terminal_consumer
+L00009713	implementation_surfaces:
+L00009714	  - Plans/assistant-chat-design.md
+L00009715	  - Plans/storage-plan.md
+L00009716	node_compile_hint:
+L00009717	  mode: pty_backed_continuity
+L00009718	  create_worknodes: false
+L00009719	source_lineage:
+L00009720	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009721	preserved_exact_tokens:
+L00009722	  - "/PTY-backed"
+L00009723	  - "/env/session"
+L00009724	  - "working-directory"
+L00009725	  - "terminal-session state"
+L00009726	negative_constraints:
+L00009727	  - "Chat is not a pseudo-terminal or earlier-thread transcript owner."
+L00009728	  - "Continuity must not be hidden in a chat-only reconstruction."
+L00009729	owner_hints:
+L00009730	  - Plans/assistant-chat-design.md
+L00009731	  - Plans/storage-plan.md
+L00009732	```
+L00009733	
+L00009734	### ACD-134 - Shell First Surface Routing
+L00009735	
+L00009736	```yaml
+L00009737	plan_unit_id: ACD-134
+L00009738	unit_type: constraint
+L00009739	status: accepted
+L00009740	owner_doc: Plans/assistant-chat-design.md
+L00009741	canonical_text: >-
+L00009742	  Shell-like `/CLI-native`, stdin, PTY, `/TUI`, TTY, session-continuity, and
+L00009743	  live-takeover work routes to Terminal; non-interactive bounded
+L00009744	  `/progress/result` or `/results/structured` output routes to Output;
+L00009745	  diagnostics with `/line/code/location` route to Problems; discovered
+L00009746	  endpoints route to Ports.
+L00009747	gui_related: true
+L00009748	gui_classification_reason: Routing determines visible terminal, output, problems, ports, and chat preview surfaces.
+L00009749	depends_on: [ACD-131, ACD-133]
+L00009750	unblocks: [ACD-146]
+L00009751	acceptance_criteria:
+L00009752	  - Terminal owns shell-like interactive and session-continuity work.
+L00009753	  - Output owns bounded non-interactive structured process output.
+L00009754	  - Problems and Ports receive only their owning diagnostic or endpoint semantics.
+L00009755	  - Inline previews, command cards, and chat summaries remain audit/preview surfaces.
+L00009756	validation_surfaces:
+L00009757	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009758	  - python3 scripts/pm-plan-index.py validate
+L00009759	risk_class: surface_routing
+L00009760	reasoning_tier: high
+L00009761	context_scope: terminal_consumer
+L00009762	implementation_surfaces:
+L00009763	  - Plans/assistant-chat-design.md
+L00009764	  - Plans/FinalGUISpec.md
+L00009765	  - Plans/FileManager.md
+L00009766	node_compile_hint:
+L00009767	  mode: shell_first_surface_routing
+L00009768	  create_worknodes: false
+L00009769	source_lineage:
+L00009770	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009771	preserved_exact_tokens:
+L00009772	  - "/CLI-native"
+L00009773	  - "/TUI"
+L00009774	  - "TTY"
+L00009775	  - "/progress/result"
+L00009776	  - "/results/structured"
+L00009777	  - "/line/code/location"
+L00009778	negative_constraints:
+L00009779	  - "Inline previews, command cards, and chat summaries are never the canonical execution-surface for shell work."
+L00009780	owner_hints:
+L00009781	  - Plans/assistant-chat-design.md
+L00009782	  - Plans/FinalGUISpec.md
+L00009783	```
+L00009784	
+L00009785	### ACD-135 - Terminal Workspace Controller Split
+L00009786	
+L00009787	```yaml
+L00009788	plan_unit_id: ACD-135
+L00009789	unit_type: constraint
+L00009790	status: accepted
+L00009791	owner_doc: Plans/assistant-chat-design.md
+L00009792	canonical_text: >-
+L00009793	  Terminal workspace behavior preserves `/tabs/panes`,
+L00009794	  `/focus/send-input/interrupt/resize/state` APIs,
+L00009795	  `/status/search/selection` state, overlay state,
+L00009796	  persistence/diagnostics/labeling/docking settings, `/cwd/shell` disclosure,
+L00009797	  linked Problems/Ports surfaces, tab-scoped overrides, `/reuse/binding`, and
+L00009798	  session-reveal semantics while keeping Terminal, Output, Problems, Ports,
+L00009799	  and chat controller ownership distinct.
+L00009800	gui_related: true
+L00009801	gui_classification_reason: Terminal workspace controls, labels, linked surfaces, and reveal behavior are visible UI.
+L00009802	depends_on: [ACD-131]
+L00009803	unblocks: [ACD-136, ACD-138, ACD-139, ACD-140, ACD-141, ACD-142]
+L00009804	acceptance_criteria:
+L00009805	  - Terminal workspace state and controller APIs remain explicit.
+L00009806	  - Terminal, Output, Problems, Ports, and chat ownership stay distinct.
+L00009807	  - Chat owns only preview/reveal cards for terminal work.
+L00009808	validation_surfaces:
+L00009809	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009810	  - python3 scripts/pm-plan-index.py validate
+L00009811	risk_class: controller_split
+L00009812	reasoning_tier: high
+L00009813	context_scope: terminal_workspace
+L00009814	implementation_surfaces:
+L00009815	  - Plans/assistant-chat-design.md
+L00009816	  - Plans/FinalGUISpec.md
+L00009817	node_compile_hint:
+L00009818	  mode: terminal_workspace_controller_split
+L00009819	  create_worknodes: false
+L00009820	source_lineage:
+L00009821	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009822	preserved_exact_tokens:
+L00009823	  - "/tabs/panes"
+L00009824	  - "/focus/send-input/interrupt/resize/state"
+L00009825	  - "/status/search/selection"
+L00009826	  - "/cwd/shell"
+L00009827	  - "/reuse/binding"
+L00009828	  - "/controller"
+L00009829	negative_constraints:
+L00009830	  - "Chat does not guarantee full terminal transcript ownership after promotion."
+L00009831	owner_hints:
+L00009832	  - Plans/assistant-chat-design.md
+L00009833	  - Plans/FinalGUISpec.md
+L00009834	```
+L00009835	
+L00009836	### ACD-136 - Terminal Search Review Tool
+L00009837	
+L00009838	```yaml
+L00009839	plan_unit_id: ACD-136
+L00009840	unit_type: requirement
+L00009841	status: accepted
+L00009842	owner_doc: Plans/assistant-chat-design.md
+L00009843	canonical_text: >-
+L00009844	  Terminal search is a first-class review tool that targets whole-transcript
+L00009845	  history in the current `/pane` and `/session`, shows result count and
+L00009846	  current-hit position, supports next and `/previous`, keeps stable highlights
+L00009847	  while output streams, jumps between `/matching` command blocks when metadata
+L00009848	  exists, and restores live/review state predictably on exit.
+L00009849	gui_related: true
+L00009850	gui_classification_reason: Terminal search controls, hit navigation, and highlights are visible review UI.
+L00009851	depends_on: [ACD-135]
+L00009852	unblocks: []
+L00009853	acceptance_criteria:
+L00009854	  - Search scopes to current pane/session transcript history.
+L00009855	  - Streaming output does not destabilize highlights.
+L00009856	  - Search exit restores prior live/review state predictably.
+L00009857	validation_surfaces:
+L00009858	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009859	  - python3 scripts/pm-plan-index.py validate
+L00009860	risk_class: terminal_search
+L00009861	reasoning_tier: standard
+L00009862	context_scope: terminal_workspace
+L00009863	implementation_surfaces:
+L00009864	  - Plans/assistant-chat-design.md
+L00009865	  - Plans/FinalGUISpec.md
+L00009866	node_compile_hint:
+L00009867	  mode: terminal_search_review_tool
+L00009868	  create_worknodes: false
+L00009869	source_lineage:
+L00009870	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009871	preserved_exact_tokens:
+L00009872	  - "/pane"
+L00009873	  - "/session"
+L00009874	  - "/previous"
+L00009875	  - "/matching"
+L00009876	negative_constraints: []
+L00009877	owner_hints:
+L00009878	  - Plans/assistant-chat-design.md
+L00009879	```
+L00009880	
+L00009881	### ACD-137 - Command Block Confidence Rules
+L00009882	
+L00009883	```yaml
+L00009884	plan_unit_id: ACD-137
+L00009885	unit_type: constraint
+L00009886	status: accepted
+L00009887	owner_doc: Plans/assistant-chat-design.md
+L00009888	canonical_text: >-
+L00009889	  Rich or basic shell integration may show authoritative command blocks with
+L00009890	  start/end markers, cwd, exit metadata, sticky headers, failed-command
+L00009891	  navigation, `/confidence` metadata, and safe rerun; weak grouping must look
+L00009892	  approximate and running output extends the active block without re-keying the
+L00009893	  block identity.
+L00009894	gui_related: true
+L00009895	gui_classification_reason: Command blocks, sticky headers, rerun controls, and confidence disclosure are visible terminal UI.
+L00009896	depends_on: [ACD-131, ACD-126]
+L00009897	unblocks: [ACD-143, ACD-144]
+L00009898	acceptance_criteria:
+L00009899	  - Authoritative command blocks require rich/basic shell integration.
+L00009900	  - Weak grouping remains visually approximate.
+L00009901	  - Running output extends the active block without changing block identity.
+L00009902	validation_surfaces:
+L00009903	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009904	  - python3 scripts/pm-plan-index.py validate
+L00009905	risk_class: command_block_confidence
+L00009906	reasoning_tier: high
+L00009907	context_scope: terminal_workspace
+L00009908	implementation_surfaces:
+L00009909	  - Plans/assistant-chat-design.md
+L00009910	  - Plans/FinalGUISpec.md
+L00009911	node_compile_hint:
+L00009912	  mode: command_block_confidence_rules
+L00009913	  create_worknodes: false
+L00009914	source_lineage:
+L00009915	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009916	preserved_exact_tokens:
+L00009917	  - "rich"
+L00009918	  - "basic"
+L00009919	  - "weak grouping"
+L00009920	  - "/confidence"
+L00009921	  - "/copy-command"
+L00009922	negative_constraints:
+L00009923	  - "PM must not show fake exact command blocks, exact command-text, /copy-command, or rerun controls unless command-text capture is authoritative or sufficiently trustworthy."
+L00009924	owner_hints:
+L00009925	  - Plans/assistant-chat-design.md
+L00009926	  - Plans/FinalGUISpec.md
+L00009927	```
+L00009928	
+L00009929	### ACD-138 - Terminal Empty Restore Review States
+L00009930	
+L00009931	```yaml
+L00009932	plan_unit_id: ACD-138
+L00009933	unit_type: requirement
+L00009934	status: accepted
+L00009935	owner_doc: Plans/assistant-chat-design.md
+L00009936	canonical_text: >-
+L00009937	  Terminal empty, restore, and review states preserve no-structure-yet,
+L00009938	  hidden-structure, review-only, `/review-only`, history-only,
+L00009939	  pane-without-live-runtime, restored-without-history, `/disconnected`, and
+L00009940	  `/tab/pane/session` restore semantics as distinct user-visible states.
+L00009941	gui_related: true
+L00009942	gui_classification_reason: Empty, restore, and review states are visible terminal workspace states.
+L00009943	depends_on: [ACD-135]
+L00009944	unblocks: [ACD-145]
+L00009945	acceptance_criteria:
+L00009946	  - Hidden structure is not treated as first-run empty.
+L00009947	  - Restored-without-history is distinguished from no retained transcript/history.
+L00009948	  - Tab/pane/session structure restore remains separate from live runtime restore.
+L00009949	validation_surfaces:
+L00009950	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009951	  - python3 scripts/pm-plan-index.py validate
+L00009952	risk_class: terminal_restore_states
+L00009953	reasoning_tier: standard
+L00009954	context_scope: terminal_workspace
+L00009955	implementation_surfaces:
+L00009956	  - Plans/assistant-chat-design.md
+L00009957	  - Plans/FinalGUISpec.md
+L00009958	node_compile_hint:
+L00009959	  mode: terminal_empty_restore_review_states
+L00009960	  create_worknodes: false
+L00009961	source_lineage:
+L00009962	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009963	preserved_exact_tokens:
+L00009964	  - "no-structure-yet"
+L00009965	  - "hidden-structure"
+L00009966	  - "review-only"
+L00009967	  - "/review-only"
+L00009968	  - "history-only"
+L00009969	  - "pane-without-live-runtime"
+L00009970	  - "restored-without-history"
+L00009971	  - "/disconnected"
+L00009972	  - "/tab/pane/session"
+L00009973	negative_constraints: []
+L00009974	owner_hints:
+L00009975	  - Plans/assistant-chat-design.md
+L00009976	```
+L00009977	
+L00009978	### ACD-139 - Pane Status Badges Notifications
+L00009979	
+L00009980	```yaml
+L00009981	plan_unit_id: ACD-139
+L00009982	unit_type: requirement
+L00009983	status: accepted
+L00009984	owner_doc: Plans/assistant-chat-design.md
+L00009985	canonical_text: >-
+L00009986	  Pane status, badges, and notifications preserve terminal_session states,
+L00009987	  aggregate precedence, exact runtime-state in pane headers, compact quiet tab
+L00009988	  counts, dock/chrome attention, focus-clearing rules, and contextual TUI
+L00009989	  mouse-capture guidance rather than permanent warning banners.
+L00009990	gui_related: true
+L00009991	gui_classification_reason: Pane status, badges, notifications, and chrome attention are visible terminal UI.
+L00009992	depends_on: [ACD-135]
+L00009993	unblocks: []
+L00009994	acceptance_criteria:
+L00009995	  - terminal_session states and aggregate precedence are preserved.
+L00009996	  - Runtime state placement remains pane-header authoritative.
+L00009997	  - Focus clear rules preserve unseen output/completion and failure attention semantics.
+L00009998	validation_surfaces:
+L00009999	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010000	  - python3 scripts/pm-plan-index.py validate
+L00010001	risk_class: terminal_attention
+L00010002	reasoning_tier: high
+L00010003	context_scope: terminal_workspace
+L00010004	implementation_surfaces:
+L00010005	  - Plans/assistant-chat-design.md
+L00010006	  - Plans/FinalGUISpec.md
+L00010007	node_compile_hint:
+L00010008	  mode: pane_status_badges_notifications
+L00010009	  create_worknodes: false
+L00010010	source_lineage:
+L00010011	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00010012	preserved_exact_tokens:
+L00010013	  - "terminal_session"
+L00010014	  - "failed_to_start"
+L00010015	  - "restore_action_needed"
+L00010016	  - "failed_command_since_focus"
+L00010017	  - "unseen_completion"
+L00010018	  - "unseen_output"
+L00010019	  - "TUI mouse-capture"
+L00010020	negative_constraints:
+L00010021	  - "TUI mouse-capture guidance is contextual, not a permanent warning banner."
+L00010022	owner_hints:
+L00010023	  - Plans/assistant-chat-design.md
+L00010024	```
+L00010025	
+
+<<< CONTEXT_AFTER canonical_document_lines=10026-10037 >>>
+L00010026	### ACD-140 - Transcript Alternate Screen Reset Actions
+L00010027	
+L00010028	```yaml
+L00010029	plan_unit_id: ACD-140
+L00010030	unit_type: constraint
+L00010031	status: accepted
+L00010032	owner_doc: Plans/assistant-chat-design.md
+L00010033	canonical_text: >-
+L00010034	  Persisted transcript is review continuity, not emulator-state resurrection;
+L00010035	  `/TUI` and alternate-screen markers, clear scrollback, `/reset`,
+L00010036	  `/reinitialize`, clear/reset/replace/close action separation, partial export
+L00010037	  history, metadata-only command blocks, and per-project retention settings

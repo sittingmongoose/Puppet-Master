@@ -1,0 +1,374 @@
+<<< CONTEXT_BEFORE canonical_document_lines=10220-10231 >>>
+L00010220	- "Other (experimental, cleanup, etc.)"
+L00010221	negative_constraints:
+L00010222	- "FileSafe is not a separate tab."
+L00010223	compatibility_only_notes: []
+L00010224	stale_retired_dispositions:
+L00010225	- "The legacy 8-tab Config list is retired compatibility/source-lineage only; FileSafe lives under Settings > Advanced."
+L00010226	owner_boundary_notes:
+L00010227	- "Plans/FinalGUISpec.md owns GUI placement; FileSafe.md aligns with that spec."
+L00010228	owner_hints:
+L00010229	- "Plans/FileSafe.md"
+L00010230	```
+L00010231	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10232-10576 >>>
+L00010232	### F2-133 - FileSafe Advanced Card Controls And Tooltip Keys
+L00010233	
+L00010234	```yaml
+L00010235	plan_unit_id: F2-133
+L00010236	unit_type: requirement
+L00010237	status: accepted
+L00010238	owner_doc: Plans/FileSafe.md
+L00010239	canonical_text: >-
+L00010240	  The FileSafe Advanced card presents three independent enforcement controls, destructive override
+L00010241	  request flow with warning styling and auth/audit receipt fields, approved command list controls,
+L00010242	  optional pattern and event-log controls, existing widget reuse, and stable tooltip keys for
+L00010243	  bash_guard, file_guard, security_filter, override, and approved commands.
+L00010244	gui_related: true
+L00010245	gui_classification_reason: >-
+L00010246	  This unit defines GUI controls, widget reuse, and tooltip keys.
+L00010247	split_recommended: false
+L00010248	depends_on: []
+L00010249	unblocks: []
+L00010250	acceptance_criteria:
+L00010251	- "The covered source span remains losslessly available for exact-text audit."
+L00010252	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010253	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010254	- "The GUI cannot present destructive override as a simple sufficient toggle."
+L00010255	- "Override UI collects or references auth realm, operator identity, reason, scope, expiry, audit event, and receipt."
+L00010256	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010257	validation_surfaces:
+L00010258	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010259	- "python3 scripts/pm-plan-index.py validate"
+L00010260	risk_class: filesafe_drift
+L00010261	reasoning_tier: standard
+L00010262	context_scope: filesafe_standardization
+L00010263	implementation_surfaces:
+L00010264	- "Plans/FileSafe.md"
+L00010265	node_compile_hint:
+L00010266	  mode: filesafe_advanced_card_controls_and_tooltip_keys
+L00010267	  create_worknodes: false
+L00010268	source_lineage:
+L00010269	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+L00010270	preserved_exact_tokens:
+L00010271	- "bash_guard"
+L00010272	- "file_guard"
+L00010273	- "security_filter"
+L00010274	- "\"Request destructive override\""
+L00010275	- "filesafe.approvedCommands"
+L00010276	- "toggler"
+L00010277	- "help_tooltip(tooltip_key, tooltip_variant, theme, scaled)"
+L00010278	- "styled_button"
+L00010279	- "filesafe.bash_guard"
+L00010280	- "filesafe.file_guard"
+L00010281	- "filesafe.security_filter"
+L00010282	- "filesafe.override"
+L00010283	- "filesafe.approved_commands"
+L00010284	- "docs/gui-widget-catalog.md"
+L00010285	- "danger/warning variant"
+L00010286	negative_constraints: []
+L00010287	compatibility_only_notes: []
+L00010288	stale_retired_dispositions: []
+L00010289	owner_boundary_notes:
+L00010290	- "This unit preserves visual/control requirements; F2-134 preserves config struct shape."
+L00010291	owner_hints:
+L00010292	- "Plans/FileSafe.md"
+L00010293	```
+L00010294	
+L00010295	### F2-134 - FileSafe Config Struct Preservation
+L00010296	
+L00010297	```yaml
+L00010298	plan_unit_id: F2-134
+L00010299	unit_type: requirement
+L00010300	status: accepted
+L00010301	owner_doc: Plans/FileSafe.md
+L00010302	canonical_text: >-
+L00010303	  The FileSafe GUI config struct remains GuiConfig.filesafe: FileSafeConfig with
+L00010304	  BashGuardConfig, FileGuardConfig, SecurityFilterConfig, and approved_commands: Vec<String> as
+L00010305	  defined in earlier config sections.
+L00010306	gui_related: false
+L00010307	gui_classification_reason: >-
+L00010308	  This unit defines config schema preservation rather than GUI layout.
+L00010309	split_recommended: false
+L00010310	depends_on: []
+L00010311	unblocks: []
+L00010312	acceptance_criteria:
+L00010313	- "The covered source span remains losslessly available for exact-text audit."
+L00010314	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010315	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010316	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010317	validation_surfaces:
+L00010318	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010319	- "python3 scripts/pm-plan-index.py validate"
+L00010320	risk_class: filesafe_drift
+L00010321	reasoning_tier: standard
+L00010322	context_scope: filesafe_standardization
+L00010323	implementation_surfaces:
+L00010324	- "Plans/FileSafe.md"
+L00010325	node_compile_hint:
+L00010326	  mode: filesafe_config_struct_preservation
+L00010327	  create_worknodes: false
+L00010328	source_lineage:
+L00010329	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+L00010330	preserved_exact_tokens:
+L00010331	- "GuiConfig.filesafe: FileSafeConfig"
+L00010332	- "BashGuardConfig"
+L00010333	- "FileGuardConfig"
+L00010334	- "SecurityFilterConfig"
+L00010335	- "approved_commands: Vec<String>"
+L00010336	- "Config struct (unchanged)"
+L00010337	- "§2.4"
+L00010338	- "§5.2"
+L00010339	negative_constraints: []
+L00010340	compatibility_only_notes: []
+L00010341	stale_retired_dispositions: []
+L00010342	owner_boundary_notes:
+L00010343	- "Config schema/runtime bridge boundary; not visual layout."
+L00010344	owner_hints:
+L00010345	- "Plans/FileSafe.md"
+L00010346	```
+L00010347	
+L00010348	### F2-135 - Assistant Chat YOLO Approval And Terminal Block Output
+L00010349	
+L00010350	```yaml
+L00010351	plan_unit_id: F2-135
+L00010352	unit_type: requirement
+L00010353	status: accepted
+L00010354	owner_doc: Plans/FileSafe.md
+L00010355	canonical_text: >-
+L00010356	  Assistant Chat shows a persistent warning chip when YOLO is enabled and FileSafe guards are
+L00010357	  active, renders blocked commands as inline approval cards with orange border and actions to
+L00010358	  approve once or approve and add to list, auto-dismisses after 60 seconds, logs blocked
+L00010359	  commands, and shows terminal blocked output in red with the FileSafe prefix.
+L00010360	gui_related: true
+L00010361	gui_classification_reason: >-
+L00010362	  This unit defines Assistant Chat and terminal user-visible blocked-command behavior.
+L00010363	split_recommended: false
+L00010364	depends_on: []
+L00010365	unblocks: []
+L00010366	acceptance_criteria:
+L00010367	- "The covered source span remains losslessly available for exact-text audit."
+L00010368	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010369	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010370	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010371	validation_surfaces:
+L00010372	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010373	- "python3 scripts/pm-plan-index.py validate"
+L00010374	risk_class: filesafe_drift
+L00010375	reasoning_tier: standard
+L00010376	context_scope: filesafe_standardization
+L00010377	implementation_surfaces:
+L00010378	- "Plans/FileSafe.md"
+L00010379	node_compile_hint:
+L00010380	  mode: assistant_chat_yolo_approval_and_terminal_block_output
+L00010381	  create_worknodes: false
+L00010382	source_lineage:
+L00010383	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+L00010384	preserved_exact_tokens:
+L00010385	- "\"[!] YOLO active -- FileSafe guards still apply.\""
+L00010386	- "Orange left border"
+L00010387	- "monospace"
+L00010388	- "\"Approve once\""
+L00010389	- "\"Approve & add to list\""
+L00010390	- "60 seconds"
+L00010391	- "\"Timed out -- command skipped.\""
+L00010392	- "RED"
+L00010393	- "\"[BLOCKED] Blocked by FileSafe\""
+L00010394	- "FinalGUISpec §7.16"
+L00010395	- "FileSafe event log"
+L00010396	negative_constraints: []
+L00010397	compatibility_only_notes: []
+L00010398	stale_retired_dispositions: []
+L00010399	owner_boundary_notes: []
+L00010400	owner_hints:
+L00010401	- "Plans/FileSafe.md"
+L00010402	```
+L00010403	
+L00010404	### F2-136 - Dashboard Status And FileSafe Message Flow
+L00010405	
+L00010406	```yaml
+L00010407	plan_unit_id: F2-136
+L00010408	unit_type: requirement
+L00010409	status: accepted
+L00010410	owner_doc: Plans/FileSafe.md
+L00010411	canonical_text: >-
+L00010412	  The dashboard may show compact FileSafe status linked to Settings > Advanced > FileSafe, and
+L00010413	  FileSafe-related UI messages update guard toggles, destructive override, strict mode,
+L00010414	  interview allowance, approved command removal/addition, event-log viewing, and config
+L00010415	  persistence with other Advanced tab changes.
+L00010416	gui_related: true
+L00010417	gui_classification_reason: >-
+L00010418	  This unit defines GUI status and message/update flow.
+L00010419	split_recommended: false
+L00010420	depends_on: []
+L00010421	unblocks: []
+L00010422	acceptance_criteria:
+L00010423	- "The covered source span remains losslessly available for exact-text audit."
+L00010424	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010425	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010426	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010427	validation_surfaces:
+L00010428	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010429	- "python3 scripts/pm-plan-index.py validate"
+L00010430	risk_class: filesafe_drift
+L00010431	reasoning_tier: standard
+L00010432	context_scope: filesafe_standardization
+L00010433	implementation_surfaces:
+L00010434	- "Plans/FileSafe.md"
+L00010435	node_compile_hint:
+L00010436	  mode: dashboard_status_and_filesafe_message_flow
+L00010437	  create_worknodes: false
+L00010438	source_lineage:
+L00010439	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+L00010440	preserved_exact_tokens:
+L00010441	- "\"FileSafe: 3/3 guards active\""
+L00010442	- "Settings > Advanced > FileSafe"
+L00010443	- "FileSafeBashGuardToggled(bool)"
+L00010444	- "FileSafeAllowDestructiveToggled(bool)"
+L00010445	- "FileSafeFileGuardToggled(bool)"
+L00010446	- "FileSafeFileGuardStrictToggled(bool)"
+L00010447	- "FileSafeSecurityFilterToggled(bool)"
+L00010448	- "FileSafeAllowSensitiveDuringInterviewToggled(bool)"
+L00010449	- "FileSafeRemoveApprovedCommand(usize)"
+L00010450	- "FileSafeAddApprovedCommandClicked"
+L00010451	- "FileSafeAddApprovedCommand(String)"
+L00010452	- "FileSafeViewEventLog"
+L00010453	- "Save Changes per tab or global"
+L00010454	negative_constraints: []
+L00010455	compatibility_only_notes: []
+L00010456	stale_retired_dispositions: []
+L00010457	owner_boundary_notes: []
+L00010458	owner_hints:
+L00010459	- "Plans/FileSafe.md"
+L00010460	```
+L00010461	
+L00010462	### F2-137 - GUI Config To PuppetMasterConfig Runtime Wiring
+L00010463	
+L00010464	```yaml
+L00010465	plan_unit_id: F2-137
+L00010466	unit_type: requirement
+L00010467	status: accepted
+L00010468	owner_doc: Plans/FileSafe.md
+L00010469	canonical_text: >-
+L00010470	  FileSafe settings and approved commands must flow from GuiConfig into PuppetMasterConfig and
+L00010471	  BaseRunner initialization using the WorktreeGitImprovement Option B build-run-config-from-GUI
+L00010472	  pattern so command blocklist whitelist behavior is applied at runtime.
+L00010473	gui_related: false
+L00010474	gui_classification_reason: >-
+L00010475	  This unit defines runtime config wiring rather than visual UI.
+L00010476	split_recommended: false
+L00010477	depends_on: []
+L00010478	unblocks: []
+L00010479	acceptance_criteria:
+L00010480	- "The covered source span remains losslessly available for exact-text audit."
+L00010481	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010482	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010483	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010484	validation_surfaces:
+L00010485	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010486	- "python3 scripts/pm-plan-index.py validate"
+L00010487	risk_class: filesafe_drift
+L00010488	reasoning_tier: standard
+L00010489	context_scope: filesafe_standardization
+L00010490	implementation_surfaces:
+L00010491	- "Plans/FileSafe.md"
+L00010492	node_compile_hint:
+L00010493	  mode: gui_config_to_puppetmasterconfig_runtime_wiring
+L00010494	  create_worknodes: false
+L00010495	source_lineage:
+L00010496	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0072"
+L00010497	preserved_exact_tokens:
+L00010498	- "Config Wiring (Critical)"
+L00010499	- "PuppetMasterConfig"
+L00010500	- "Option B -- Build run config from GUI"
+L00010501	- "Plans/WorktreeGitImprovement.md §5.2"
+L00010502	- "BaseRunner"
+L00010503	- "approved_commands"
+L00010504	- "GuiConfig"
+L00010505	- "orchestrator start"
+L00010506	- "command blocklist whitelist"
+L00010507	negative_constraints:
+L00010508	- "FileSafe settings and approved_commands must not remain GUI-only."
+L00010509	compatibility_only_notes: []
+L00010510	stale_retired_dispositions: []
+L00010511	owner_boundary_notes:
+L00010512	- "Follows WorktreeGitImprovement Option B runtime config bridge."
+L00010513	owner_hints:
+L00010514	- "Plans/FileSafe.md"
+L00010515	```
+L00010516	
+L00010517	### F2-138 - Verification Gate Tagging And Gate Override Config
+L00010518	
+L00010519	```yaml
+L00010520	plan_unit_id: F2-138
+L00010521	unit_type: requirement
+L00010522	status: accepted
+L00010523	owner_doc: Plans/FileSafe.md
+L00010524	canonical_text: >-
+L00010525	  Verification-gate operations must be tagged before BaseRunner guard checks so gate-specific
+L00010526	  ScopedOverridePolicy grants can be evaluated for legitimate QA and security-audit work without
+L00010527	  weakening normal execution or bypassing FileSafe auth, scope, expiry, event, and receipt
+L00010528	  requirements.
+L00010529	gui_related: false
+L00010530	gui_classification_reason: >-
+L00010531	  This unit defines runtime, policy, integration, or governance behavior rather than visual
+L00010532	  presentation.
+L00010533	split_recommended: true
+L00010534	depends_on: []
+L00010535	unblocks: []
+L00010536	acceptance_criteria:
+L00010537	- "The covered source span remains losslessly available for exact-text audit."
+L00010538	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00010539	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010540	- "Verification_gate operation type alone never authorizes destructive or sensitive access."
+L00010541	- "Gate overrides emit filesafe.destructive_override_requested, granted or denied, and carry receipt refs."
+L00010542	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010543	validation_surfaces:
+L00010544	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010545	- "python3 scripts/pm-plan-index.py validate"
+L00010546	risk_class: filesafe_drift
+L00010547	reasoning_tier: standard
+L00010548	context_scope: filesafe_standardization
+L00010549	implementation_surfaces:
+L00010550	- "Plans/FileSafe.md"
+L00010551	node_compile_hint:
+L00010552	  mode: verification_gate_tagging_and_gate_override_config
+L00010553	  create_worknodes: false
+L00010554	source_lineage:
+L00010555	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0073"
+L00010556	preserved_exact_tokens:
+L00010557	- "run_verification_gate()"
+L00010558	- "ExecutionRequest"
+L00010559	- "BaseRunner"
+L00010560	- "GateOverrideConfig"
+L00010561	- "ScopedOverridePolicy"
+L00010562	- "qa_destructive_override_policy"
+L00010563	- "security_audit_sensitive_access_policy"
+L00010564	- "migrate:fresh"
+L00010565	- ".env"
+L00010566	negative_constraints:
+L00010567	- "Do not model gate overrides as default-true booleans."
+L00010568	compatibility_only_notes:
+L00010569	- "The old allow_destructive_during_qa and allow_sensitive_during_security_audit boolean names are retired source-lineage only."
+L00010570	stale_retired_dispositions: []
+L00010571	owner_boundary_notes:
+L00010572	- "Operation metadata aligns with the env-var tagging model standardized in earlier FileSafe PlanUnits."
+L00010573	owner_hints:
+L00010574	- "Plans/FileSafe.md"
+L00010575	```
+L00010576	
+
+<<< CONTEXT_AFTER canonical_document_lines=10577-10588 >>>
+L00010577	### F2-139 - Gate Evidence And GATE-010 FileSafe Detail Arrays
+L00010578	
+L00010579	```yaml
+L00010580	plan_unit_id: F2-139
+L00010581	unit_type: requirement
+L00010582	status: accepted
+L00010583	owner_doc: Plans/FileSafe.md
+L00010584	canonical_text: >-
+L00010585	  FileSafe blocks during verification gates are gate evidence and GateReport inputs, and GATE-010
+L00010586	  route-aware FileSafe checks must use named machine-readable detail arrays aligned with GATE-011
+L00010587	  and GATE-012 instead of text-heavy freeform details.
+L00010588	gui_related: false

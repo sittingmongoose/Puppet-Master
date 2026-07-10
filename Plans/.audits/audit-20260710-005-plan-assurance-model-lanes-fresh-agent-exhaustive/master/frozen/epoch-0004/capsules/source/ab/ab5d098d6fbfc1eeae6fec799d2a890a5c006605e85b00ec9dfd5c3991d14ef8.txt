@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE 1237-1248 >>>
+
+Permission carry-through:
+- ordered `allowed_action_ids[]`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/UI_Command_Catalog.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+
+<<< AUTHORITATIVE_CORE 1249-1601 >>>
+### UCC-002 - Command Catalog Owner Identity
+
+```yaml
+plan_unit_id: UCC-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: UI_Command_Catalog.md is the canonical owner document for stable UI command catalog requirements and preserves product, runtime, storage, UI, and governance details in owner-section form.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-002 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: ui_command_catalog_owner_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0002
+preserved_exact_tokens:
+- UI Command Catalog (Canonical)
+- Canonical owner-section requirements
+- stable UI command catalog
+- owner-section requirements
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- cmd.project.chain_wizard_open_deferred remains a legacy command alias for deferred Planning Wizard intake; active product copy and affected surfaces use Planning Wizard terminology until a dedicated command-ID migration is accepted.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-003 - Compatibility Vocabulary Noncanon
+
+```yaml
+plan_unit_id: UCC-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Compatibility-only source vocabulary is noncanonical; live UI command wording uses the owner terminology preserved in this document.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-003 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: compatibility_vocabulary_noncanon
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0003
+preserved_exact_tokens:
+- Retire tier-era canon and shadow fields
+- Compatibility-only source vocabulary
+- noncanonical
+- live wording
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- Compatibility-only source vocabulary remains source lineage rather than live command canon.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-004 - Compliance Naming And SSOT Header
+
+```yaml
+plan_unit_id: UCC-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The catalog follows DRY and contract SSOT references, uses Puppet Master as the only platform name, treats older names only as legacy naming, and preserves the UI command SSOT header.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-004 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: command_catalog_compliance_and_naming
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0004
+preserved_exact_tokens:
+- Canonical route payload
+- Puppet Master
+- legacy naming
+- PUPPET MASTER -- UI COMMAND SSOT
+- ABSOLUTE NAMING RULE
+negative_constraints:
+- Older naming must be referred to only as legacy naming and must not be quoted as active canon.
+preserved_contractrefs:
+- 'ContractRef: Plans/DRY_Rules.md'
+- 'ContractRef: Plans/Contracts_V0.md'
+compatibility_only_notes:
+- Older naming is compatibility-only source vocabulary.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-005 - Stable Command Id Scope
+
+```yaml
+plan_unit_id: UCC-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: UI command IDs are stable SSOT identifiers referenced by plans and tests; GUI labels may clean casing or spacing, but internal IDs remain stable, collision-safe, and preserve canonical command-id tokens.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-005 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: stable_command_id_scope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0005
+preserved_exact_tokens:
+- 0. Scope
+- stable UI command IDs
+- GUI labels
+- internal IDs
+- collision-safe
+- hyphens
+- canonical command-id tokens
+negative_constraints:
+- GUI label normalization must not destructively strip hyphens or other canonical command-id tokens.
+preserved_contractrefs:
+- 'ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-006 - Command Id Naming Rules
+
+```yaml
+plan_unit_id: UCC-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: UI command IDs must be lowercase, dot-separated, and prefixed with cmd.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-006 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: command_id_naming_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0006
+preserved_exact_tokens:
+- 1. Naming rules
+- lowercase
+- dot-separated
+- cmd.
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-007 - Canonical Command Family Container
+
+```yaml
+plan_unit_id: UCC-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The Canonical command IDs section contains normalized command families, including promoted Section 15 families organized around shared navigation, search routing, and runtime recovery ownership.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-007 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: canonical_command_family_container
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0008
+preserved_exact_tokens:
+- 2. Canonical command IDs
+- 2.0A Promoted Section 15 command families
+- shared navigation
+- search routing
+- runtime recovery ownership
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-008 - Command Entry Metadata Contract
+
+```yaml
+plan_unit_id: UCC-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Live command rows carry command_id, label, description, preconditions, command_kind, normalization.kind, normalizes_to_contract, and alias_of_command_id so consumers can classify actions without reading handlers.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-008 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: command_entry_metadata_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0009
+preserved_exact_tokens:
+- 2.0 Command entry contract (doc-level)
+- command_id
+- label
+- description
+- preconditions
+- command_kind
+- shell_view
+- navigation_wrapper
+- domain_action
+- normalization.kind
+- normalizes_to_contract
+- alias_of_command_id
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 1602-1613 >>>
+### UCC-009 - Catalog Route Wiring Boundary
+
+```yaml
+plan_unit_id: UCC-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The command catalog owns command metadata and normalization intent, the route schema owns route-target structure, and wiring rows reference command IDs and handlers without restating full routing semantics.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:

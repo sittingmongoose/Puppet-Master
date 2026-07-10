@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE 1516-1527 >>>
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0009
+preserved_exact_tokens:
+  - "`referenced by an existing plan document`"
+  - "`lexicographically smallest stable ID`"
+  - "`ContractRef: PolicyRule:Decision_Policy.md§2`"
+negative_constraints: []
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1528-1888 >>>
+### DP-025 - Autonomous Decision Logging Contract
+
+```yaml
+plan_unit_id: DP-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Autonomous ambiguity resolution emits exactly one schema-valid auto-decision
+  row to the correct internal or user-project path, with deterministic field
+  semantics, contract_refs, and no secrets or credential material.
+gui_related: false
+gui_classification_reason: This unit defines JSONL decision logging policy.
+split_recommended: false
+depends_on: [DP-024]
+unblocks: []
+acceptance_criteria:
+  - Puppet Master internal SSOT decisions write to Plans/auto_decisions.jsonl.
+  - User-project artifact decisions write to .puppet-master/project/auto_decisions.jsonl.
+  - Auto-decision rows do not contain secrets in decision, rationale, or applied_to.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: auto_decision_logging_drift
+reasoning_tier: high
+context_scope: autonomous_decision_logging
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/auto_decisions.jsonl
+node_compile_hint:
+  mode: autonomous_decision_logging_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0010
+preserved_exact_tokens:
+  - "`pm.auto_decisions.schema.v1`"
+  - "`Plans/auto_decisions.jsonl`"
+  - "`.puppet-master/project/auto_decisions.jsonl`"
+  - "`inputs_hash`"
+  - "`contract_refs[]`"
+  - "`PolicyRule:no_secrets_in_storage`"
+negative_constraints:
+  - "Auto-decision rows MUST NOT contain secrets or credential material."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-026 - No Human In Loop Runtime Rule
+
+```yaml
+plan_unit_id: DP-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Runtime execution plans must not depend on humans making decisions mid-run;
+  the spec-lock-update-protocol alias remains preserved for the following
+  SpecLock protocol section.
+gui_related: false
+gui_classification_reason: This unit defines runtime decision policy.
+split_recommended: false
+depends_on: [DP-025]
+unblocks: []
+acceptance_criteria:
+  - Plans do not depend on humans making decisions during orchestrator execution, agent iterations, or verification gates.
+  - The spec-lock-update-protocol anchor remains available.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: human_midrun_dependency
+reasoning_tier: high
+context_scope: no_human_in_loop_runtime
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+node_compile_hint:
+  mode: no_human_in_loop_runtime_rule
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0011
+preserved_exact_tokens:
+  - "`No human in the loop`"
+  - "`plans must not depend on humans making decisions mid-run`"
+  - "`<a id=\"spec-lock-update-protocol\"></a>`"
+negative_constraints:
+  - "Plans MUST NOT depend on humans making decisions mid-run."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-027 - Spec Lock Protocol Boundary
+
+```yaml
+plan_unit_id: DP-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  SpecLock updates are autonomous machine maintenance only after canonical SSOT
+  edits, and the operational handling forbids hand-maintained Spec_Lock or
+  manual auto_decisions ledger updates outside the protocol.
+gui_related: false
+gui_classification_reason: This unit defines governance protocol boundaries.
+split_recommended: false
+depends_on: [DP-026]
+unblocks: []
+acceptance_criteria:
+  - Spec Lock updates are allowed only after canonical SSOT edits.
+  - Plans/Spec_Lock.json and Plans/auto_decisions.jsonl are not hand-maintained outside the protocol.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: spec_lock_protocol_boundary_drift
+reasoning_tier: high
+context_scope: spec_lock_update_protocol
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Spec_Lock.json
+  - Plans/auto_decisions.jsonl
+node_compile_hint:
+  mode: spec_lock_protocol_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0012
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0013
+preserved_exact_tokens:
+  - "`SpecLock Update Protocol`"
+  - "`Plans/Spec_Lock.json`"
+  - "`Plans/auto_decisions.jsonl`"
+  - "`SchemaID:pm.auto_decisions.schema.v1`"
+negative_constraints:
+  - "Do not hand-edit Spec_Lock or manually maintain auto_decisions outside this protocol."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-028 - Spec Lock Deterministic Update Steps
+
+```yaml
+plan_unit_id: DP-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  A Spec Lock update loads and rewrites the full JSON object, recomputes
+  canonical SSOT hashes, appends one auto-decision row, produces schema-valid
+  evidence, and runs verifier gates.
+gui_related: false
+gui_classification_reason: This unit defines governance update mechanics.
+split_recommended: false
+depends_on: [DP-027]
+unblocks: []
+acceptance_criteria:
+  - Spec Lock updates rewrite the full JSON object without partial updates.
+  - canonical_ssot_hashes, auto_decisions, evidence bundles, and verifier gates are all part of the protocol.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: spec_lock_update_step_loss
+reasoning_tier: high
+context_scope: spec_lock_update_steps
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Spec_Lock.json
+node_compile_hint:
+  mode: spec_lock_deterministic_update_steps
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0014
+preserved_exact_tokens:
+  - "`canonical_ssot_hashes[*].sha256`"
+  - "`pm.evidence.schema.v1`"
+  - "`Gate:GATE-001`"
+  - "`Plans/evidence.schema.json`"
+negative_constraints:
+  - "Do not partially update Spec_Lock fields."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-029 - Spec Lock Prohibited Behaviors
+
+```yaml
+plan_unit_id: DP-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Spec Lock updates must not add TBD, Open Questions, or ask-later language and
+  must not leave canonical SSOT hashes stale after SSOT docs change.
+gui_related: false
+gui_classification_reason: This unit defines governance prohibitions.
+split_recommended: false
+depends_on: [DP-028]
+unblocks: []
+acceptance_criteria:
+  - Spec Lock updates do not add deferred-decision language.
+  - Hashes are not left stale after SSOT document changes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: spec_lock_prohibited_behavior
+reasoning_tier: high
+context_scope: spec_lock_prohibitions
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Spec_Lock.json
+node_compile_hint:
+  mode: spec_lock_prohibited_behaviors
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0015
+preserved_exact_tokens:
+  - "`TBD`"
+  - "`Open Questions`"
+  - "`ask later`"
+  - "`ContractName:Plans/DRY_Rules.md#4-forbidden-patterns-drift-accelerators`"
+  - "`SchemaID:Spec_Lock.json#canonical_ssot_hashes`"
+negative_constraints:
+  - "Do not add TBD, Open Questions, or ask later language as part of a Spec Lock update."
+  - "Do not leave hashes stale after changing SSOT docs."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-030 - No Secrets In Persistent Storage
+
+```yaml
+plan_unit_id: DP-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Persistent stores, including seglog, redb, and Tantivy indexes, must not
+  contain tokens, passwords, API keys, OAuth refresh tokens, credentials, or
+  other secrets; tokens live only in the OS credential store.
+gui_related: false
+gui_classification_reason: This unit defines storage safety policy.
+split_recommended: false
+depends_on: [DP-023]
+unblocks: []
+acceptance_criteria:
+  - Persistent stores do not contain secrets.
+  - AuthState tokens are not persisted, and violations are P0 remediation bugs.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: secret_persistence
+reasoning_tier: high
+context_scope: persistent_storage_secrets
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: no_secrets_in_persistent_storage
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0016
+preserved_exact_tokens:
+  - "`PolicyRule: no_secrets_in_storage`"
+  - "`seglog`"
+  - "`redb`"
+  - "`Tantivy indexes`"
+  - "`OS credential store`"
+  - "`Architecture_Invariants.md#INV-002`"
+  - "`<a id=\"6\"></a>`"
+negative_constraints:
+  - "Persistent stores MUST NOT contain secrets."
+  - "Tokens MUST NOT be persisted in AuthState."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/Architecture_Invariants.md
+```
+
+### DP-031 - Ambiguity Deterministic Resolution
+
+```yaml
+plan_unit_id: DP-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Ambiguity exists when multiple valid technical or design choices satisfy user
+  intent; resolve it by applying deterministic defaults from section 2 and
+  logging to Plans/auto_decisions.jsonl without user interaction.
+gui_related: false
+gui_classification_reason: This unit defines policy classification and logging, not UI presentation.
+split_recommended: false
+depends_on: [DP-024, DP-025]
+unblocks: []
+acceptance_criteria:
+  - Ambiguity is resolved by deterministic defaults, not user questions.
+  - Examples such as buffer size, retry count, and brand-palette color remain classified as ambiguity when user intent is satisfied.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: ambiguity_classification_drift
+reasoning_tier: standard
+context_scope: ambiguity_vs_missing_intent
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+node_compile_hint:
+  mode: ambiguity_deterministic_resolution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0017
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0018
+preserved_exact_tokens:
+  - "`Ambiguity (multiple valid choices)`"
+  - "`pm.auto_decisions.schema.v1`"
+  - "`Choosing a buffer size`"
+  - "`Picking a retry count`"
+  - "`Selecting a color within a brand palette`"
+negative_constraints:
+  - "Do not ask the user when deterministic defaults resolve the ambiguity."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-032 - Missing User Intent Clarification Boundary
+
+```yaml
+plan_unit_id: DP-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Missing user intent or insufficient specification is a material product choice
+  the system cannot infer; it generates a clarification question captured in
+  needs_user_clarification and does not apply a deterministic default.
+gui_related: false
+gui_classification_reason: This unit defines pre-execution clarification policy.
+split_recommended: false
+depends_on: [DP-031]
+unblocks: []
+acceptance_criteria:
+  - Missing user intent generates a clarification question rather than a deterministic default.
+  - The clarification is captured in requirements_quality_report needs_user_clarification.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: missing_intent_defaulting
+reasoning_tier: high
+context_scope: missing_user_intent
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/requirements_quality_report.schema.json
+node_compile_hint:
+  mode: missing_user_intent_clarification_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0019
+preserved_exact_tokens:
+  - "`Missing User Intent / Insufficient Specification`"
+  - "`needs_user_clarification[]`"
+  - "`pm.requirements_quality_report.schema.v1`"
+negative_constraints:
+  - "The system MUST generate a clarification question and MUST NOT apply a deterministic default."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+
+<<< CONTEXT_AFTER 1889-1900 >>>
+### DP-033 - Pre-Execution Clarification And Start-Run Block
+
+```yaml
+plan_unit_id: DP-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Clarification questions surface before orchestrator execution during Planning
+  Wizard finalization or a legacy Chain Wizard / Interview compatibility flow;
+  unresolved clarification blocks run start by moving wizard state to
+  attention_required and blocking the Start Run action.

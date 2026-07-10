@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE canonical_document_lines=716-727 >>>
+L00000716	2. **Preflight checks** run (see §14.2). If any hard dependency fails, degrade per §14.3.
+L00000717	3. **Launch visible target** and emit `live.session.started` with:
+L00000718	   - `run_id`, `platform`, `provider`, `pid/session_id`, `display_target`, `artifact_root`
+L00000719	   - `browser_session_id?` and `session_class?` when the visible target is the PM built-in browser
+L00000720	4. **Execute interactions** through the scenario/action catalog (same contract as headless; only backend driver differs).
+L00000721	5. **Capture evidence in parallel** (timeline + screenshots + optional recording/trace) into the shared runtime artifact pipeline.
+L00000722	6. **Stream progress to chat** with low-latency status cards:
+L00000723	   - current step, pass/fail, latest thumbnail, and open/focus hints for the live target
+L00000724	7. **Finalize run** with `manifest.json`, `summary.md`, `checks.json`, then emit `live.session.completed`.
+L00000725	8. **Render evidence in chat** using §13 media rules (inline image/video + deterministic fallback links).
+L00000726	
+L00000727	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=728-1126 >>>
+L00000728	
+L00000729	**Platform-specific launch contracts:**
+L00000730	- **Web apps (local browser run/attach):**
+L00000731	  - Primary product path: PM built-in browser `automation_session` for visible browser execution and watchable automation.
+L00000732	  - Backend/compat attach path: external Playwright/CDP attach when the user explicitly wants to watch an already-open browser/profile or when the implementation uses Playwright as a backend adapter.
+L00000733	  - Browser adapter lineage from `/browser-stack` research is reference material only: `wry`, platform engines `WebView2`, `WKWebView`, and `WebKitGTK` with `/X11/Wayland` constraints, `microsoft/playwright`, `Playwright MCP`, `playwright-mcp`, `packages/playwright/src/mcp`, `/playwright/src/mcp`, `cdpEndpoint`, attach-to-existing-browser, file-access, `/eval`, and `IPC` may inform backend adapters, evidence capture, profile/CDP options, and accessibility-snapshot practice; `/playwright` remains test/automation adapter lineage, not PM's visible browser product foundation.
+L00000734	  - The same reference-only lineage preserves Wry child webviews, JS init/eval, custom protocols, and DevTools support by feature/build mode; Playwright contributes navigation, clicks, typing, multi-tab flows, screenshots, tracing, and browser contexts across Linux/macOS/Windows; Playwright MCP provenance includes README/config/tests, capability buckets `core`, `network`, `pdf`, `storage`, `testing`, `vision`, `devtools`, and `config`, default core tools, optional capability-gated tools, persistent vs isolated profiles, snapshot modes, and output/session persistence knobs.
+L00000735	  - Evidence: screenshots/video/trace/structured snapshot semantics must map into the shared artifact contract regardless of backend implementation.
+L00000736	- **Desktop apps (native launch + visible state capture):**
+L00000737	  - Windows: Appium Windows Driver with `appium:app` (launch) or `appium:appTopLevelWindow` (attach existing window).
+L00000738	  - macOS: Appium `mac2` driver for native visible automation.
+L00000739	- **iOS (Xcode previews and/or simulator runs):**
+L00000740	  - Preview mode: Xcode previews for rapid visual iteration of UI states.
+L00000741	  - Automation mode: Appium XCUITest simulator session.
+L00000742	- **Android (emulator-driven runs):**
+L00000743	  - Launch emulator with deterministic AVD profile, then run UiAutomator2 session.
+L00000744	  - Optional direct emulator lifecycle via Android emulator CLI remains valid.
+L00000745	
+L00000746	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000747	
+L00000748	### 14.2 Runtime dependencies and environment checks
+L00000749	
+L00000750	Add Doctor preflight categories:
+L00000751	- `doctor.live_visualization`
+L00000752	- `doctor.browser.runtime` for the PM built-in browser runtime health required by visible browser sessions
+L00000753	
+L00000754	**Required checks (deterministic):**
+L00000755	- **Common**
+L00000756	  - Node/npm available where JS-based providers or MCP servers need them
+L00000757	  - writable evidence/runtime artifact path
+L00000758	  - display availability check (`DISPLAY`/Wayland on Linux, desktop session on macOS/Windows) unless the selected provider explicitly supports an alternative
+L00000759	- **Web / PM built-in browser**
+L00000760	  - PM-managed bundled browser runtime is present, healthy, and version-matched
+L00000761	  - PM browser startup path is healthy for the current desktop session
+L00000762	  - editor-tab browser host and detached browser host can both be validated under the same PM browser abstraction
+L00000763	  - packaging/update/install metadata declares how the selected bundled runtime is installed, updated, verified, cached, removed, and remediated
+L00000764	  - Installer evidence must distinguish current full `/offline` app packaging from "download browser runtime during install" orchestration: Windows `NSIS` copies `puppet-master.exe`, `macOS` `DMG` wraps the app binary/resources, and Linux `DEB`/`/RPM` packages the built binary, desktop entry, and icon until an explicit browser-runtime `/install` bundle policy replaces that baseline.
+L00000765	  - if PM uses `wef`/`cargo-wef`, the auto-downloaded CEF binary distribution is version-pinned and integrity-checked before PM advertises visible browser capability
+L00000766	  - package-size budget for the selected CEF runtime is recorded; roughly ~1 GB additions are surfaced as release/installer metadata rather than hidden Doctor surprises
+L00000767	  - upstream experimental status for a browser wrapper is captured as implementation risk and does not create user-facing experimental runtime toggles
+L00000768	  - target dev server or requested page origin is reachable when the run expects local web content
+L00000769	- **Desktop**
+L00000770	  - Appium server reachable
+L00000771	  - Windows mode: WinAppDriver present/reachable
+L00000772	  - macOS mode: `appium driver list --installed` includes `mac2`
+L00000773	- **iOS**
+L00000774	  - Xcode CLI tools installed, simulator runtime exists
+L00000775	  - Appium XCUITest driver installed; WebDriverAgent prerequisites pass
+L00000776	  - if preview mode is selected, Xcode previews capability is present
+L00000777	- **Android**
+L00000778	  - Android SDK + emulator + adb available
+L00000779	  - requested AVD exists and boots within timeout
+L00000780	  - UiAutomator2 driver installed; device/emulator visible to adb
+L00000781	
+L00000782	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000783	
+L00000784	**Preflight output contract:** emit machine-readable failures as `{ code, severity, dependency, expected, observed, remediation }`.
+L00000785	
+L00000786	PM browser runtime failures map to `runtime_unavailable` in requested/effective browser capability disclosure when a PM browser session is involved.
+L00000787	
+L00000788	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00000789	
+L00000790	### 14.3 Coexistence with headless mode (default/CI fallback policy)
+L00000791	
+L00000792	Policy:
+L00000793	- **Default local policy:** `visual_mode = auto`
+L00000794	  - prefer visible mode when an interactive desktop session is available
+L00000795	  - fall back to headless if a required visible dependency is missing
+L00000796	- **CI default policy:** `visual_mode = headless` unless explicitly overridden
+L00000797	- **Manual override:**
+L00000798	  - `visual_mode = forced_visible` -> fail fast if visible prerequisites are missing
+L00000799	  - `visual_mode = forced_headless` -> skip all visible launch steps
+L00000800	
+L00000801	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md
+L00000802	
+L00000803	For browser-capable web runs:
+L00000804	- the visible path is the PM built-in browser `automation_session`
+L00000805	- missing PM browser runtime prerequisites surface as `runtime_unavailable`
+L00000806	- forced-visible mode must fail fast rather than silently swapping to a different browser product model
+L00000807	- headless fallback remains valid for CI or explicitly headless flows, but it does not redefine the visible browser UX contract
+L00000808	
+L00000809	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000810	
+L00000811	**Required run metadata fields:**
+L00000812	- `requested_visual_mode` (`auto|forced_visible|forced_headless`)
+L00000813	- `effective_visual_mode` (`visible|headless`)
+L00000814	- `fallback_reason` (nullable string enum such as `missing_display`, `runtime_unavailable`, `simulator_unavailable`, or `emulator_boot_timeout`)
+L00000815	
+L00000816	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+L00000817	
+L00000818	### 14.4 Deterministic additions required in this plan file
+L00000819	
+L00000820	Implementation MUST include these concrete schema/config entries:
+L00000821	
+L00000822	1. **`InterviewGuiConfig` + `InterviewOrchestratorConfig` fields**
+L00000823	   - `live_visualization_enabled: bool`
+L00000824	   - `visual_mode: "auto" | "forced_visible" | "forced_headless"`
+L00000825	   - `visual_targets: { web?: bool, desktop?: bool, ios?: "preview"|"simulator"|"both", android?: bool }`
+L00000826	
+L00000827	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000828	
+L00000829	2. **`GuiToolCatalog` capability flags**
+L00000830	   - `supports_visible_run`
+L00000831	   - `supports_attach_existing`
+L00000832	   - `supports_recording`
+L00000833	   - `requires_display_server`
+L00000834	   - `supports_pm_built_in_browser_visible`
+L00000835	   - `supports_pm_browser_focus_or_reopen`
+L00000836	
+L00000837	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000838	
+L00000839	3. **Test strategy schema extension (additive)**
+L00000840	   - `test_type` includes `visual_web`, `visual_desktop`, `visual_ios`, `visual_android`
+L00000841	   - optional `visual_launch_command`, `attach_command`, and `evidence_capture_mode`
+L00000842	
+L00000843	ContractRef: SchemaID:pm.test_strategy.schema.v1, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+L00000844	
+L00000845	4. **Seglog events**
+L00000846	   - `live.session.started`
+L00000847	   - `live.step.updated`
+L00000848	   - `live.artifact.created`
+L00000849	   - `live.session.completed`
+L00000850	   - `live.session.degraded`
+L00000851	   - visible browser runs additionally carry `browser_session_id?` and `session_class?` when the target is the PM built-in browser
+L00000852	
+L00000853	ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000854	
+L00000855	5. **Doctor checks**
+L00000856	   - `doctor.live_visualization`
+L00000857	   - `doctor.live_visualization.evidence`
+L00000858	   - `doctor.browser.runtime`
+L00000859	
+L00000860	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000861	
+L00000862	6. **Chat renderer contract**
+L00000863	   - `live_run_card` remains the live status card type
+L00000864	   - open/focus actions for PM browser runs resolve through `browser_session_id` when present rather than raw path guessing
+L00000865	   - artifact links resolve through manifest IDs only
+L00000866	
+L00000867	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000868	
+L00000869	---
+L00000870	
+L00000871	## 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)
+L00000872	
+L00000873	This section adds concrete, command-level defaults for iOS, Android, and Expo/React Native testing and preview workflows.
+L00000874	
+L00000875	### 14.5.1 Practical comparison matrix
+L00000876	
+L00000877	| Stack | Primary test frameworks | E2E/device testing | Live preview/emulator tooling | Artifact capture | Puppet Master integration strengths | Limits / caveats |
+L00000878	|---|---|---|---|---|---|---|
+L00000879	| **Swift / iOS** | XCTest (`XCTestCase`, assertions, `measure`) | XCUITest (native) + optional Appium XCUITest driver | SwiftUI `#Preview`, `@Previewable`, Xcode Canvas, iOS Simulator | XCTest attachments (project-side), simulator screenshots, Appium iOS screen recording | Best native signal quality; stable for app-internal assertions; easy simulator orchestration hooks | Needs macOS runners/Xcode; simulator orchestration is Apple-tooling specific |
+L00000880	| **Kotlin / Android** | Jetpack Compose testing (`createComposeRule`, semantics matchers) + Espresso instrumentation | UIAutomator / AndroidX instrumentation, optional Appium UiAutomator2 | Android Emulator + ADB; Compose preview/testing sync behavior | ADB/device screenshots & recordings, framework logs, CI artifacts | Strong for both view-level and device-level Android validation; good headless CI path | Fragmented stack (Compose vs View system); emulator/device matrix still needed |
+L00000881	| **Expo / React Native** | Jest/unit + framework-level integration tests | **Default:** Detox (gray-box, RN aware). **Fallbacks:** Maestro (flow-first) and Appium (cross-platform WebDriver) | Expo CLI (`expo start`, `expo run:ios`, `expo run:android`), simulator/emulator shortcuts (`i`/`a`) | Detox artifacts plugin (screenshots/video/logs), Maestro `takeScreenshot`, Appium screenshot/screen-record APIs | Highest reuse for RN teams; good dev-loop + CI parity; multiple E2E fallback choices | Detox setup can be strict; Expo managed/bare differences must be explicit in plans |
+L00000882	
+L00000883	### 14.5.2 Recommended path + fallback per stack
+L00000884	
+L00000885	1. **Swift/iOS**
+L00000886	   - **Default:** SwiftUI previews (`#Preview`, `@Previewable`) + XCTest/XCUITest on iOS Simulator.
+L00000887	   - **Fallback:** Appium XCUITest driver where cross-platform automation parity is required.
+L00000888	
+L00000889	2. **Kotlin/Android**
+L00000890	   - **Default:** Compose UI tests + Espresso for instrumentation + targeted UIAutomator flows for system-level interactions.
+L00000891	   - **Fallback:** Appium UiAutomator2 for teams standardizing on WebDriver tooling.
+L00000892	
+L00000893	3. **Expo/React Native**
+L00000894	   - **Default:** Expo CLI dev flow + Detox for E2E on simulator/emulator with artifacts enabled.
+L00000895	   - **Fallback:** Maestro for fast, declarative smoke flows; Appium for multi-platform automation parity.
+L00000896	
+L00000897	### 14.5.3 Concrete workflow snippets to include in generated plans
+L00000898	
+L00000899	#### A) Swift / iOS
+L00000900	
+L00000901	```bash
+L00000902	# Preview/runtime iteration in Xcode (manual)
+L00000903	# Use #Preview and @Previewable in SwiftUI view files, then iterate in Canvas.
+L00000904	
+L00000905	# Run unit/UI tests on simulator (CI or local)
+L00000906	xcodebuild test \
+L00000907	  -scheme MyApp \
+L00000908	  -destination 'platform=iOS Simulator,name=iPhone 16'
+L00000909	
+L00000910	# Capture simulator screenshot artifact
+L00000911	xcrun simctl io booted screenshot .puppet-master/evidence/ios/sim.png
+L00000912	```
+L00000913	
+L00000914	#### B) Kotlin / Android
+L00000915	
+L00000916	```bash
+L00000917	# Run local JVM tests
+L00000918	./gradlew testDebugUnitTest
+L00000919	
+L00000920	# Run instrumentation tests (Compose/Espresso/UIAutomator)
+L00000921	./gradlew connectedDebugAndroidTest
+L00000922	
+L00000923	# Capture emulator artifacts
+L00000924	adb exec-out screencap -p > .puppet-master/evidence/android/screen.png
+L00000925	adb shell screenrecord /sdcard/test.mp4
+L00000926	adb pull /sdcard/test.mp4 .puppet-master/evidence/android/test.mp4
+L00000927	```
+L00000928	
+L00000929	#### C) Expo / React Native
+L00000930	
+L00000931	```bash
+L00000932	# Dev server + simulator/emulator loop
+L00000933	npx expo start      # then press i (iOS sim) or a (Android emulator)
+L00000934	
+L00000935	# Native run commands (dev builds)
+L00000936	npx expo run:ios
+L00000937	npx expo run:android
+L00000938	
+L00000939	# Detox (default E2E)
+L00000940	detox test -c ios.sim.debug
+L00000941	detox test -c android.emu.debug
+L00000942	```
+L00000943	
+L00000944	```json
+L00000945	// detox.config.js artifact baseline
+L00000946	{
+L00000947	  "artifacts": {
+L00000948	    "rootDir": ".puppet-master/evidence/detox",
+L00000949	    "plugins": {
+L00000950	      "screenshot": { "enabled": true, "shouldTakeAutomaticSnapshots": true },
+L00000951	      "video": { "enabled": true },
+L00000952	      "log": { "enabled": true }
+L00000953	    }
+L00000954	  }
+L00000955	}
+L00000956	```
+L00000957	
+L00000958	#### D) Fallback E2E snippets
+L00000959	
+L00000960	```bash
+L00000961	# Maestro
+L00000962	maestro test flows/smoke.yaml
+L00000963	
+L00000964	# Appium (driver-managed screenshots/recordings)
+L00000965	# Use session APIs or executeScript mobile commands in test runtime.
+L00000966	```
+L00000967	
+L00000968	## 14.6 Preview, Build, Docker, and Actions Contracts
+L00000969	
+L00000970	This section defines deterministic Slint-rebuild behavior for Preview/Build actions and their Docker/GitHub Actions integrations.
+L00000971	
+L00000972	ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md#7.2, ContractName:Plans/Project_Output_Artifacts.md
+L00000973	
+L00000974	### 14.6.1 Preview controls contract (Dashboard + Orchestrator)
+L00000975	
+L00000976	**Required UX surfaces:**
+L00000977	- Dashboard Orchestrator Status card includes `PREVIEW`.
+L00000978	- Orchestrator Progress tab `widget.orchestrator_status` includes `Preview`.
+L00000979	
+L00000980	**Deterministic behavior:**
+L00000981	1. Resolve preview target from selected stack and `visual_targets` in run config.
+L00000982	2. Launch one preview session per action press with generated `preview_session_id`.
+L00000983	3. Emit session events and evidence (`manifest.json`, `timeline.jsonl`, screenshot/video when available).
+L00000984	4. Show inline chat evidence card for latest preview state and media.
+L00000985	5. If media cannot be rendered inline, show deterministic fallback with clickable artifact path.
+L00000986	
+L00000987	**Reserved UI command IDs (canonical):**
+L00000988	- `cmd.orchestrator.preview_open`
+L00000989	- `cmd.orchestrator.preview_stop`
+L00000990	- `cmd.orchestrator.open_preview_artifact`
+L00000991	
+L00000992	ContractRef: UICommand:cmd.orchestrator.preview_open, UICommand:cmd.orchestrator.preview_stop, UICommand:cmd.orchestrator.open_preview_artifact, SchemaID:evidence.schema.json
+L00000993	
+L00000994	### 14.6.2 Build controls and artifact reporting contract
+L00000995	
+L00000996	**Required UX surfaces:**
+L00000997	- Dashboard Orchestrator Status card includes `BUILD`.
+L00000998	- Orchestrator Progress tab `widget.orchestrator_status` includes `Build`.
+L00000999	
+L00001000	**Deterministic behavior:**
+L00001001	1. Build action resolves profile (`native`, `web`, `mobile`, `container`) from project stack + settings.
+L00001002	2. Build runs produce a normalized `build_result` payload with:
+L00001003	   - `build_id`
+L00001004	   - `build_profile`
+L00001005	   - `status`
+L00001006	   - `artifacts[]` (`path`, `kind`, `sha256`, `size_bytes`)
+L00001007	   - `logs_path`
+L00001008	3. GUI shows latest artifact list and "open path / copy path" action.
+L00001009	4. Chat shows concise build summary plus artifact links.
+L00001010	
+L00001011	**Canonical output-path examples to preserve in docs/UI copy:**
+L00001012	- Linux installer outputs under `installer/linux/` (existing script contract).
+L00001013	- Multi-platform installer helper reports concrete installer paths per platform.
+L00001014	
+L00001015	**Reserved UI command IDs (canonical):**
+L00001016	- `cmd.orchestrator.build_run`
+L00001017	- `cmd.orchestrator.open_build_artifact`
+L00001018	
+L00001019	ContractRef: UICommand:cmd.orchestrator.build_run, UICommand:cmd.orchestrator.open_build_artifact, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/UI_Command_Catalog.md
+L00001020	
+L00001021	### 14.7 Docker runtime + DockerHub contract
+L00001022	
+L00001023	Docker support is expressed through the Docker Manager surface.
+L00001024	
+L00001025	Required Docker Manager contract coverage:
+L00001026	- containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes
+L00001027	- Docker as default runtime mode, Podman as alternate runtime mode inside the same surface
+L00001028	- requested vs effective auth capability disclosure for Docker Hub
+L00001029	- protected missing-repository creation and publish-side-effect separation
+L00001030	- doctor/preflight scopes must differentiate build-only, `compose-run`, and publish workflows, and receipt/deep-link attribution must stay app-wide for Source Control, GitHub Actions, Docker Manager, and Orchestrator surfaces in worktree-heavy projects
+L00001031	- `Plans/Containers_Registry_and_Unraid.md` owns the `Preflight and approval ordering contract`, `Kubernetes enablement rules`, `Kubernetes doctor checks`, `Future-scope placeholders` for registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage, and the `Event registration contract`; `Plans/Contracts_V0.md` remains the registration authority for Docker/Unraid events and Kubernetes event names.
+L00001032	
+L00001033	ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+L00001034	
+L00001035	Doctor / preflight rules remain canonical here:
+L00001036	- `doctor.docker.engine`
+L00001037	- `doctor.docker.compose`
+L00001038	- `doctor.docker.buildx`
+L00001039	- `doctor.dockerhub.auth.capability`
+L00001040	- `doctor.dockerhub.repo.access`
+L00001041	- Kubernetes-specific runtime checks when Kubernetes subview actions are invoked
+L00001042	
+L00001043	`doctor.registry.auth` is a deprecated alias for DockerHub-specific flows and MUST NOT remain the visible canonical term in surface docs.
+L00001044	
+L00001045	ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/storage-plan.md
+L00001046	
+L00001047	Result payload minima remain authoritative here and must be reused by other docs:
+L00001048	- `docker_auth_result`
+L00001049	- `docker_publish_result`
+L00001050	- `unraid_template_result`
+L00001051	
+L00001052	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00001053	
+L00001054	### 14.8 GitHub Actions settings + generation contract
+L00001055	
+L00001056	GitHub Actions generation and readiness must align with the live GitHub Actions surface.
+L00001057	
+L00001058	Required Settings > Advanced coverage:
+L00001059	- workflow template selection
+L00001060	- trigger and matrix controls
+L00001061	- required-secrets readiness checklist
+L00001062	- preview/apply generation flow
+L00001063	
+L00001064	Required GitHub Actions surface alignment:
+L00001065	- generated workflows are visible from the `Workflows` subview
+L00001066	- current-branch run behavior and workflow dispatch use the same repository and branch context
+L00001067	- admin readiness for secrets, variables, and environments reuses the same capability/auth model as the live GitHub Actions Settings subview
+L00001068	- `doctor.actions.workflow-ready` remains the canonical readiness gate for workflow generation/apply flows
+L00001069	- repository workflow files under `.github/workflows/` / `github/workflows/` are the runtime source of truth after preview `/save` or apply; `generated-workflow` and generated required-secrets `/configuration` lists are historical hints and must not override current repo `/worktree` workflow `YAML`, hosted `/variables/environments`, or `GitHub Actions > Current Branch` context
+L00001070	- repo-level Actions `/admin` operations create project-scoped `/receipt` records for secret `/update/delete`, variable `/update/delete`, environment `/update/delete/update-rules`, workflow pin `/unpin`, and readiness-check execution; receipts may `/link` a `run_id` through `github_api` evidence but never store secret values or reversible `value-derived` material
+L00001071	
+L00001072	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
+L00001073	
+L00001074	### 14.9 Automation migration contract (Iced-era tool to Slint-era tooling)
+L00001075	
+L00001076	The existing Iced automation implementation remains a reference pattern, while rewrite deliverables target Slint runtime semantics.
+L00001077	
+L00001078	**Required migration boundaries:**
+L00001079	- Keep evidence schema compatibility (`manifest/timeline/media`) across automation backends.
+L00001080	- Introduce backend abstraction so preview/build automation can run with Slint UI surfaces.
+L00001081	- Keep headless and visible modes both supported in the new backend.
+L00001082	- Preserve doctor/preflight checks for automation dependencies and media capture capability.
+L00001083	
+L00001084	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md#2, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:evidence.schema.json
+L00001085	
+L00001086	### 14.10 Doctor and preflight matrix
+L00001087	
+L00001088	The Slint rebuild must expose deterministic readiness checks before Preview/Build/Docker/Actions flows execute.
+L00001089	
+L00001090	| Check ID | Scope | Required signal | Failure behavior |
+L00001091	|---|---|---|---|
+L00001092	| `doctor.preview.visual-runtime` | preview | Display/runtime dependency available for selected mode (`visible` vs `headless`) | Block preview start; show explicit missing dependency and fallback option |
+L00001093	| `doctor.mobile.ios-simulator` | mobile iOS | Simulator toolchain reachable (`xcodebuild`, `simctl`) | Mark iOS preview/test path unavailable; suggest fallback target |
+L00001094	| `doctor.mobile.android-emulator` | mobile Android | Emulator/ADB reachable | Mark Android preview/test path unavailable; suggest fallback target |
+L00001095	| `doctor.docker.engine` | docker local | Docker daemon reachable and responsive | Block docker preview/build path; show remediation steps |
+L00001096	| `doctor.docker.compose` | docker local | Compose config resolves and service graph validates | Block compose launch; show config error details |
+L00001097	| `doctor.dockerhub.auth.capability` | docker publish | DockerHub auth validated into the requested effective capability set | Block publish; preserve local build results |
+L00001098	| `doctor.actions.workflow-ready` | GitHub Actions | Workflow template validates and required secrets are declared | Block workflow apply; show missing/invalid fields |
+L00001099	| `doctor.evidence.media` | evidence/chat | Manifest + media artifacts are readable and hash-valid | Keep run result, mark evidence degraded with explicit fallback message |
+L00001100	| `doctor.browser.runtime` | PM built-in browser | PM-managed bundled CEF-class runtime is present, healthy, version-matched, and backed by packaging/update/install metadata; `wef`/`cargo-wef` auto-downloaded CEF cache passes integrity checks when that path is selected | Mark visible browser sessions unavailable with `runtime_unavailable`; show remediation and keep source/native surfaces usable |
+L00001101	| `doctor.mcp.context7` | MCP / docs | Context7 enablement is on and a usable key resolves from env or credential store; server can list tools | Keep run usable, but mark Context7-backed tools unavailable and surface remediation |
+L00001102	| `doctor.mcp.provider-ready` | MCP / provider bridge | For each selected provider, MCP bridge/adapters are present and the configured server set exposes the expected tool names | Mark MCP-backed tools unavailable for that provider; do not silently advertise missing tools |
+L00001103	| `doctor.websearch.cited` | cited web search | `websearch_cited` result contract passes a dry-run/provider health check for the configured provider order | Keep run usable, but disable cited web search with explicit config/auth/timeout reason |
+L00001104	| `doctor.gui.custom-headless` | custom GUI tool | When `plan_custom_headless_tool = true`, configured tool path exists, is executable, and produces canonical evidence layout | Mark custom headless path unavailable and point to config/evidence contract remediation |
+L00001105	| `doctor.gui_tool_catalog.freshness` | framework tool catalog | Base catalog version plus overlay `last_updated` metadata are present and readable | Keep run usable, but warn that tool recommendations may be stale and show the recorded snapshot date |
+L00001106	
+L00001107	ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:Plans/FinalGUISpec.md#74-settings-unified, ContractName:Plans/newtools.md#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat, SchemaID:evidence.schema.json
+L00001108	
+L00001109	### 14.10A Debug automation and diagnostic tooling
+L00001110	
+L00001111	Tool discovery for Debug Mode must cover more than browser automation. The platform needs enough metadata to select reproduction, instrumentation, trace, and verification tooling automatically.
+L00001112	
+L00001113	Debug target mapping rules:
+L00001114	- When the user points Debug Mode at an app or website, PM classifies the target as workspace-built (/workspace), browser/website, or black-box binary/app before choosing tooling. Workspace-built targets may combine temporary server/workspace instrumentation with the local collector; browser/website targets combine server/workspace instrumentation with PM-controlled built-in browser repro automation and capture of console, network summaries, DOM, and /screenshot-style evidence. For black-box targets or user-pasted artifacts where source instrumentation is unavailable, fallback inputs are attach logs, DAP/session tooling, external captures, and attach-to-chat bundles, but PM's native browser stack remains preferred over OSS-style agent-plus-browser patterns for permissions, session identity, and assistant-side evidence packaging.
+L00001115	- The Debug target registry records the selected target shape, including launch config, URL, attach PID, browser session, or imported evidence bundle; PM routes each registered target to the collector through log sink, built-in browser session plus agent tools, DAP adapter, or manual attach intake as applicable.
+L00001116	- The grounded PM Debug core is **H + I + J + E + A**: H points PM at a target; I keeps debug inside the overlay/runtime architecture instead of creating a new runtime mode; J sends evidence through the existing runtime-artifact and seglog pipeline; E covers assistant/session inspection in a Copilot-like way; and A allows temporary instrumentation in MVP only under an explicit instrumentation contract. For MVP web/debug repro, the preferred path is **PM built-in browser + `automation_session`**; process/test/dev-server correlation uses `dev_session_id` / existing `output-problems-ports` linkage, including `/test/dev-server` loops. Classical DAP debugging remains a separate related adapter/surface rather than the primary web repro mode. Cursor-like temporary instrumentation remains in MVP only when the instrumentation contract covers visibility, cleanup, rollback, failure handling, evidence routing, and failed-cleanup escalation.
+L00001117	- Research-grade adapters are explicit advanced options: DAP/session tools with debugger perturbation in the InspectCoder direction, and execution trace to LLM analysis in the snooper-style direction. They are useful evidence and remediation accelerators, but higher novelty and implementation risk keep them behind normal target-registry and policy checks.
+L00001118	- Browser/session automation defaults to an ephemeral automation profile/session. If a target requires authentication and no valid automation session exists, Debug moves to `attention_required` rather than silently reusing an unrelated user profile.
+L00001119	- External Playwright or Browser MCP tooling remains documented for newtools, interview-subagent-integration, interview, test strategy, and generic tool discovery; it is orthogonal to the promoted named-action browser contract unless a product surface explicitly bridges it.
+L00001120	- tool-emitted debug evidence enters chat only through a bounded, user-visible attach model. Ordinary browser capture remains explicit-user-attach, while active Debug investigations may attach agent/session traces and runtime bundles automatically or semi-automatically only when the visible debug-context rules allow it.
+L00001121	
+L00001122	#### Enterprise host/trust policy, host declaration preflight, and governance denials
+L00001123	
+L00001124	Debug, MCP, custom-plugin, networked-tool, `/shell/debugger`, and `/tunnel/browser` actions run through shared `/trust/proxy/governance` preflight before execution. Every `/custom/plugin/networked` tool profile declares contacted hosts and `/domains` before dispatch; if a run expands to an undeclared host, domain, proxy target, or remote authority, the action returns `blocked_preflight` rather than silently broadening the session permission. Governance denials preserve a machine-readable `deny-code` family for GitHub, registry, Kubernetes, and runtime host-policy checks, while the older permission-era source wording is lineage only. Host/trust decisions that are meant to survive restart must be explicit `/durable` permission or trust records, not inferred from a transient debug run.
+L00001125	
+L00001126	#### Debug automation profile instrumentation scope
+
+<<< CONTEXT_AFTER canonical_document_lines=1127-1138 >>>
+L00001127	
+L00001128	The Debug automation profile classifies temporary instrumentation scope as exactly `env_config_activation`, `ephemeral_tool_install`, `wrapper_launcher`, `temporary_source_patch`, and `debugger_or_profiler_attach`. Each scope records whether the change is temporary or durable, the expected cleanup path, the sensitive-runtime impact, and the recovery behavior if cleanup fails. `wrapper_launcher` and `debugger_or_profiler_attach` are stricter than read-only inspection because they can perturb process timing, credentials, environment, or attach permissions; `temporary_source_patch` requires a revert path before execution; `ephemeral_tool_install` requires an install location, provenance, and cleanup path before dispatch.
+L00001129	
+L00001130	Required discovery outputs are:
+L00001131	- preferred local or remote dev/test runner
+L00001132	- browser automation stack and visibility mode support
+L00001133	- structured log and trace collectors
+L00001134	- source-map or symbolization support where relevant
+L00001135	- DAP adapter availability for the target language/runtime
+L00001136	- temporary instrumentation install / rollback path when framework-native tracing is missing
+L00001137	- target discovery / environment preparation capability that detects stack/runtime, prepares dev session, browser session, debugger attach, or imported bundle intake, and installs/activates tracers or debug tooling when required by the selected policy
+L00001138	

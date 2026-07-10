@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7199-7210 >>>
+L00007199	- /preview
+L00007200	- side-panel filter/focus state
+L00007201	- hunk UI layout
+L00007202	negative_constraints:
+L00007203	- Storage records review-state summaries without owning hunk UI layout.
+L00007204	preserved_contractrefs: []
+L00007205	compatibility_only_notes: []
+L00007206	stale_retired_dispositions: []
+L00007207	owner_hints:
+L00007208	- Plans/storage-plan.md
+L00007209	```
+L00007210	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7211-7601 >>>
+L00007211	### SP-086 - File Command Receipt Payload Vocabulary
+L00007212	
+L00007213	```yaml
+L00007214	plan_unit_id: SP-086
+L00007215	unit_type: requirement
+L00007216	status: accepted
+L00007217	owner_doc: Plans/storage-plan.md
+L00007218	canonical_text: File command receipt payloads store exact workspace-node intent and typed payload vocabulary before UI localization for cmd.file.* operations, root_kind, target_dir, image_viewer, diff_review, workspace_preview, and detached_preview.
+L00007219	gui_related: false
+L00007220	gui_classification_reason: This unit preserves backend command-ref and receipt payload vocabulary.
+L00007221	split_recommended: false
+L00007222	depends_on:
+L00007223	- PDS-003
+L00007224	- PDS-004
+L00007225	- PDS-005
+L00007226	- PNC-001
+L00007227	unblocks: []
+L00007228	acceptance_criteria:
+L00007229	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007230	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007231	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007232	validation_surfaces:
+L00007233	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007234	- python3 scripts/pm-plan-index.py validate
+L00007235	risk_class: storage_plan_drift
+L00007236	reasoning_tier: standard
+L00007237	context_scope: storage_scope_split_owner_reconciliation
+L00007238	implementation_surfaces:
+L00007239	- Plans/storage-plan.md
+L00007240	node_compile_hint:
+L00007241	  mode: file_command_receipt_payload_vocabulary
+L00007242	  create_worknodes: false
+L00007243	source_lineage:
+L00007244	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007245	preserved_exact_tokens:
+L00007246	- cmd.file.*
+L00007247	- cmd.file.new_file { project_id, parent_path }
+L00007248	- cmd.file.new_folder { project_id, parent_path }
+L00007249	- cmd.file.rename { project_id, path, new_name? }
+L00007250	- 'cmd.file.delete { project_id, paths: string[] }'
+L00007251	- cmd.file.copy_full_path { project_id, path }
+L00007252	- 'cmd.file.copy_relative_path { project_id, path, root_kind?: "project"|"worktree" }'
+L00007253	- 'cmd.file.copy_nodes { project_id, paths: string[] }'
+L00007254	- 'cmd.file.cut_nodes { project_id, paths: string[] }'
+L00007255	- cmd.file.paste_nodes { project_id, target_dir }
+L00007256	- cmd.file.save_local_copy
+L00007257	- root_kind
+L00007258	- target_dir
+L00007259	- image_viewer
+L00007260	- diff_review
+L00007261	- workspace_preview
+L00007262	- detached_preview
+L00007263	negative_constraints: []
+L00007264	preserved_contractrefs: []
+L00007265	compatibility_only_notes: []
+L00007266	stale_retired_dispositions: []
+L00007267	owner_hints:
+L00007268	- Plans/storage-plan.md
+L00007269	```
+L00007270	
+L00007271	### SP-087 - Account-Switch Projection Invalidation
+L00007272	
+L00007273	```yaml
+L00007274	plan_unit_id: SP-087
+L00007275	unit_type: requirement
+L00007276	status: accepted
+L00007277	owner_doc: Plans/storage-plan.md
+L00007278	canonical_text: Effective account changes hard-refresh or invalidate account-bound projections for source_control, github_actions, docker_manager, kubernetes, receipts, blocked_state, and requested_effective while preserving historical focus refs in the event ledger.
+L00007279	gui_related: true
+L00007280	gui_classification_reason: This unit preserves user-visible account-switch invalidation, CTA reclassification, and stale row clearing.
+L00007281	split_recommended: false
+L00007282	depends_on:
+L00007283	- PDS-003
+L00007284	- PDS-004
+L00007285	- PDS-005
+L00007286	- PNC-001
+L00007287	unblocks: []
+L00007288	acceptance_criteria:
+L00007289	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007290	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007291	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007292	validation_surfaces:
+L00007293	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007294	- python3 scripts/pm-plan-index.py validate
+L00007295	risk_class: storage_plan_drift
+L00007296	reasoning_tier: standard
+L00007297	context_scope: storage_scope_split_owner_reconciliation
+L00007298	implementation_surfaces:
+L00007299	- Plans/storage-plan.md
+L00007300	node_compile_hint:
+L00007301	  mode: account_switch_projection_invalidation
+L00007302	  create_worknodes: false
+L00007303	source_lineage:
+L00007304	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007305	preserved_exact_tokens:
+L00007306	- source_control
+L00007307	- github_actions
+L00007308	- docker_manager
+L00007309	- kubernetes
+L00007310	- receipts
+L00007311	- blocked_state
+L00007312	- requested_effective
+L00007313	- hard-refresh
+L00007314	- invalidate
+L00007315	- clear stale selected rows
+L00007316	- read-only or interrupted
+L00007317	- old account binding
+L00007318	- new effective account binding
+L00007319	negative_constraints: []
+L00007320	preserved_contractrefs: []
+L00007321	compatibility_only_notes: []
+L00007322	stale_retired_dispositions: []
+L00007323	owner_hints:
+L00007324	- Plans/storage-plan.md
+L00007325	```
+L00007326	
+L00007327	### SP-088 - Authored Help Copy And First-Use Namespaces
+L00007328	
+L00007329	```yaml
+L00007330	plan_unit_id: SP-088
+L00007331	unit_type: requirement
+L00007332	status: accepted
+L00007333	owner_doc: Plans/storage-plan.md
+L00007334	canonical_text: Help, copy, empty states, disabled-state explainers, first-use disclosure, expert variants, eli5 variants, and worktree-native SCM teaching use authored namespaces for source_control, github_actions, docker_manager, kubernetes, receipts, blocked_state, and requested_effective.
+L00007335	gui_related: true
+L00007336	gui_classification_reason: This unit preserves user-visible help, copy, empty-state, and first-use teaching namespaces.
+L00007337	split_recommended: false
+L00007338	depends_on:
+L00007339	- PDS-003
+L00007340	- PDS-004
+L00007341	- PDS-005
+L00007342	- PNC-001
+L00007343	unblocks: []
+L00007344	acceptance_criteria:
+L00007345	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007346	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007347	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007348	validation_surfaces:
+L00007349	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007350	- python3 scripts/pm-plan-index.py validate
+L00007351	risk_class: storage_plan_drift
+L00007352	reasoning_tier: standard
+L00007353	context_scope: storage_scope_split_owner_reconciliation
+L00007354	implementation_surfaces:
+L00007355	- Plans/storage-plan.md
+L00007356	node_compile_hint:
+L00007357	  mode: authored_help_copy_and_first_use_namespaces
+L00007358	  create_worknodes: false
+L00007359	source_lineage:
+L00007360	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007361	preserved_exact_tokens:
+L00007362	- source_control
+L00007363	- github_actions
+L00007364	- docker_manager
+L00007365	- kubernetes
+L00007366	- receipts
+L00007367	- blocked_state
+L00007368	- requested_effective
+L00007369	- empty states
+L00007370	- disabled-state explainers
+L00007371	- first-use disclosure copy
+L00007372	- expert variants
+L00007373	- eli5 variants
+L00007374	- what worktrees mean here
+L00007375	negative_constraints: []
+L00007376	preserved_contractrefs: []
+L00007377	compatibility_only_notes: []
+L00007378	stale_retired_dispositions: []
+L00007379	owner_hints:
+L00007380	- Plans/storage-plan.md
+L00007381	```
+L00007382	
+L00007383	### SP-089 - Runtime-Backed Panel Freshness Warnings
+L00007384	
+L00007385	```yaml
+L00007386	plan_unit_id: SP-089
+L00007387	unit_type: requirement
+L00007388	status: accepted
+L00007389	owner_doc: Plans/storage-plan.md
+L00007390	canonical_text: Hosted and runtime-backed panel projections persist freshness, cache/live, partial, and last-known fields; mutating stale runtime projections must record refresh-first or explicit last-known warning posture before execution.
+L00007391	gui_related: true
+L00007392	gui_classification_reason: This unit preserves visible runtime-backed freshness markers and stale mutation warning posture.
+L00007393	split_recommended: false
+L00007394	depends_on:
+L00007395	- PDS-003
+L00007396	- PDS-004
+L00007397	- PDS-005
+L00007398	- PNC-001
+L00007399	unblocks: []
+L00007400	acceptance_criteria:
+L00007401	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007402	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007403	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007404	validation_surfaces:
+L00007405	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007406	- python3 scripts/pm-plan-index.py validate
+L00007407	risk_class: storage_plan_drift
+L00007408	reasoning_tier: standard
+L00007409	context_scope: storage_scope_split_owner_reconciliation
+L00007410	implementation_surfaces:
+L00007411	- Plans/storage-plan.md
+L00007412	node_compile_hint:
+L00007413	  mode: runtime_backed_panel_freshness_warnings
+L00007414	  create_worknodes: false
+L00007415	source_lineage:
+L00007416	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007417	preserved_exact_tokens:
+L00007418	- /runtime-backed
+L00007419	- last refresh timestamp
+L00007420	- active refresh state
+L00007421	- stale marker
+L00007422	- cached
+L00007423	- /live
+L00007424	- partial
+L00007425	- /last-known
+L00007426	- refresh-first
+L00007427	- last-known warning
+L00007428	negative_constraints:
+L00007429	- Visible stale data is never mistaken for current execution capability.
+L00007430	preserved_contractrefs: []
+L00007431	compatibility_only_notes: []
+L00007432	stale_retired_dispositions: []
+L00007433	owner_hints:
+L00007434	- Plans/storage-plan.md
+L00007435	```
+L00007436	
+L00007437	### SP-090 - Receipt And Storage Retention Classes
+L00007438	
+L00007439	```yaml
+L00007440	plan_unit_id: SP-090
+L00007441	unit_type: requirement
+L00007442	status: accepted
+L00007443	owner_doc: Plans/storage-plan.md
+L00007444	canonical_text: Receipt and storage retention classes distinguish durable state, bounded cache, and discardable state, mapping retention preference to explicit class, policy, and anchor fields without erasing canonical receipts or state transitions.
+L00007445	gui_related: false
+L00007446	gui_classification_reason: This unit preserves backend retention class and cleanup semantics.
+L00007447	split_recommended: false
+L00007448	depends_on:
+L00007449	- PDS-003
+L00007450	- PDS-004
+L00007451	- PDS-005
+L00007452	- PNC-001
+L00007453	unblocks: []
+L00007454	acceptance_criteria:
+L00007455	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007456	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007457	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007458	validation_surfaces:
+L00007459	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007460	- python3 scripts/pm-plan-index.py validate
+L00007461	risk_class: storage_plan_drift
+L00007462	reasoning_tier: standard
+L00007463	context_scope: storage_scope_split_owner_reconciliation
+L00007464	implementation_surfaces:
+L00007465	- Plans/storage-plan.md
+L00007466	node_compile_hint:
+L00007467	  mode: receipt_and_storage_retention_classes
+L00007468	  create_worknodes: false
+L00007469	source_lineage:
+L00007470	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007471	preserved_exact_tokens:
+L00007472	- Durable state
+L00007473	- canonical receipts
+L00007474	- canonical state transitions
+L00007475	- bounded cache
+L00007476	- log tails
+L00007477	- watch buffers
+L00007478	- explorer snapshots
+L00007479	- retention windows
+L00007480	- truncation rules
+L00007481	- stale markers
+L00007482	- discardable state
+L00007483	- Project-delete cleanup
+L00007484	negative_constraints:
+L00007485	- Project-delete cleanup removes bounded-cache and discardable records according to class policy without erasing durable receipts or canonical state transitions.
+L00007486	preserved_contractrefs: []
+L00007487	compatibility_only_notes: []
+L00007488	stale_retired_dispositions: []
+L00007489	owner_hints:
+L00007490	- Plans/storage-plan.md
+L00007491	```
+L00007492	
+L00007493	### SP-091 - Provider Runtime Record Family Purpose
+L00007494	
+L00007495	```yaml
+L00007496	plan_unit_id: SP-091
+L00007497	unit_type: requirement
+L00007498	status: accepted
+L00007499	owner_doc: Plans/storage-plan.md
+L00007500	canonical_text: The promoted provider/runtime rewrite and updated terminal/editor model require durable record and projection families for concrete runtime surfaces, account/profile identity, entitlement attribution, and terminal layout continuity.
+L00007501	gui_related: false
+L00007502	gui_classification_reason: This unit preserves backend provider/runtime record-family purpose.
+L00007503	split_recommended: false
+L00007504	depends_on:
+L00007505	- PDS-003
+L00007506	- PDS-004
+L00007507	- PDS-005
+L00007508	- PNC-001
+L00007509	unblocks: []
+L00007510	acceptance_criteria:
+L00007511	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007512	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007513	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007514	validation_surfaces:
+L00007515	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007516	- python3 scripts/pm-plan-index.py validate
+L00007517	risk_class: storage_plan_drift
+L00007518	reasoning_tier: standard
+L00007519	context_scope: storage_scope_split_owner_reconciliation
+L00007520	implementation_surfaces:
+L00007521	- Plans/storage-plan.md
+L00007522	node_compile_hint:
+L00007523	  mode: provider_runtime_record_family_purpose
+L00007524	  create_worknodes: false
+L00007525	source_lineage:
+L00007526	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007527	preserved_exact_tokens:
+L00007528	- promoted provider/runtime rewrite
+L00007529	- terminal/editor model
+L00007530	- durable record and projection families
+L00007531	- concrete runtime surfaces
+L00007532	- account/profile identity
+L00007533	- entitlement attribution
+L00007534	- terminal layout continuity
+L00007535	negative_constraints: []
+L00007536	preserved_contractrefs:
+L00007537	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md'
+L00007538	compatibility_only_notes: []
+L00007539	stale_retired_dispositions: []
+L00007540	owner_hints:
+L00007541	- Plans/storage-plan.md
+L00007542	```
+L00007543	
+L00007544	### SP-092 - Core Runtime Project Provider Families
+L00007545	
+L00007546	```yaml
+L00007547	plan_unit_id: SP-092
+L00007548	unit_type: requirement
+L00007549	status: accepted
+L00007550	owner_doc: Plans/storage-plan.md
+L00007551	canonical_text: Core runtime storage includes attempt, blocked, artifact, lane, worktree, concern, project, attention, provider account, entitlement, server profile, pressure, and account-switch record families with their exact v1 key templates.
+L00007552	gui_related: false
+L00007553	gui_classification_reason: This unit preserves backend runtime/project/provider key families.
+L00007554	split_recommended: false
+L00007555	depends_on:
+L00007556	- PDS-003
+L00007557	- PDS-004
+L00007558	- PDS-005
+L00007559	- PNC-001
+L00007560	unblocks: []
+L00007561	acceptance_criteria:
+L00007562	- This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
+L00007563	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00007564	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007565	validation_surfaces:
+L00007566	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007567	- python3 scripts/pm-plan-index.py validate
+L00007568	risk_class: storage_plan_drift
+L00007569	reasoning_tier: standard
+L00007570	context_scope: storage_scope_split_owner_reconciliation
+L00007571	implementation_surfaces:
+L00007572	- Plans/storage-plan.md
+L00007573	node_compile_hint:
+L00007574	  mode: core_runtime_project_provider_families
+L00007575	  create_worknodes: false
+L00007576	source_lineage:
+L00007577	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+L00007578	preserved_exact_tokens:
+L00007579	- attempt_record.v1:{project_id}:{node_id}:{attempt_number}
+L00007580	- blocked_projection.v1:{project_id}:{node_id}
+L00007581	- artifacts_index.v1:{project_id}:{artifact_id}
+L00007582	- lane_record.v1:{project_id}:{lane_id}
+L00007583	- lane_projection.v1:{project_id}:{lane_id}
+L00007584	- worktree_record.v1:{project_id}:{worktree_id}
+L00007585	- worktree_projection.v1:{project_id}:{worktree_id}
+L00007586	- concern_record.v1:{project_id}:{concern_id}
+L00007587	- project_summary.v1:{project_id}
+L00007588	- project_attention_item.v1:{project_id}:{attention_item_id}
+L00007589	- provider_account_record.v1:{provider_id}:{account_id}
+L00007590	- provider_entitlement_context_record.v1:{provider_id}:{account_id}:{billing_entity_id}
+L00007591	- server_profile_record.v1:{provider_id}:{connection_profile_id}
+L00007592	- account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}
+L00007593	- account_switch_event.v1:{provider_id}:{event_id}
+L00007594	negative_constraints: []
+L00007595	preserved_contractrefs: []
+L00007596	compatibility_only_notes: []
+L00007597	stale_retired_dispositions: []
+L00007598	owner_hints:
+L00007599	- Plans/storage-plan.md
+L00007600	```
+L00007601	
+
+<<< CONTEXT_AFTER canonical_document_lines=7602-7613 >>>
+L00007602	### SP-093 - Terminal And Dev Session Families
+L00007603	
+L00007604	```yaml
+L00007605	plan_unit_id: SP-093
+L00007606	unit_type: requirement
+L00007607	status: accepted
+L00007608	owner_doc: Plans/storage-plan.md
+L00007609	canonical_text: Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob.
+L00007610	gui_related: true
+L00007611	gui_classification_reason: This unit preserves user-visible terminal layout continuity plus dev-session restoration identities.
+L00007612	split_recommended: true
+L00007613	depends_on:

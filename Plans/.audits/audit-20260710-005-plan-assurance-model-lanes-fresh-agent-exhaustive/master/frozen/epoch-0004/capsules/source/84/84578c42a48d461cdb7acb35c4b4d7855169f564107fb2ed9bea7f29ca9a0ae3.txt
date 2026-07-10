@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 24428-24439 >>>
+negative_constraints:
+- Do not treat the Rust fence beginning at source line 4437 as covered by this unit.
+compatibility_only_notes:
+- The prompt-injection code fence remains residual source-preserving coverage for the next batch.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Prompt contract ownership remains with orchestrator/prompt pipeline consumers.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 24440-24831 >>>
+### OSI-309 - Prompt Message Injection Rust Example
+
+```yaml
+plan_unit_id: OSI-309
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve the intact Rust example that loads `coordination_context`, gets messages for `agent_id` and `node_id`, formats
+  `message_context`, and builds `enhanced_prompt` containing `**Messages from other agents:**`.
+gui_related: false
+gui_classification_reason: This unit covers prompt orchestration example code rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-308
+- OSI-254
+- OSI-302
+unblocks: []
+acceptance_criteria:
+- Covered Rust snippet remains losslessly available for exact-text audit.
+- The snippet remains example evidence and does not narrow the canonical prompt contract.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: prompt_message_injection_rust_example
+node_compile_hint:
+  mode: prompt_message_injection_rust_example
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+preserved_exact_tokens:
+- coordination_context
+- get_messages_for_agent
+- format_messages_for_prompt
+- enhanced_prompt
+- '**Messages from other agents:**'
+negative_constraints:
+- Example text must not hardcode or narrow the canonical prompt contract.
+compatibility_only_notes:
+- Rust snippet is evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Earlier prompt and message-board PlanUnits retain canonical prompt-contract semantics.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-310 - Agent Message Relevance Filters
+
+```yaml
+plan_unit_id: OSI-310
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Agent-local message views include messages addressed to `agent_id`, agent type, `node_id`, broadcast messages, and messages
+  mentioning files the agent is working on.
+gui_related: false
+gui_classification_reason: This unit covers backend message filtering rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-248
+- OSI-302
+- OSI-253
+unblocks: []
+acceptance_criteria:
+- Covered filtering prose and snippet remain losslessly available for exact-text audit.
+- This example does not narrow richer canonical routing/lane coverage in earlier PlanUnits.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: agent_message_relevance_filters
+node_compile_hint:
+  mode: agent_message_relevance_filters
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+preserved_exact_tokens:
+- Messages addressed to their agent_id
+- Messages addressed to their agent type
+- Messages addressed to their node_id
+- Broadcast messages
+- Messages mentioning files they're working on
+- files_being_edited
+negative_constraints:
+- This example omits lane routing and must not narrow OSI-248.
+compatibility_only_notes:
+- Filtering code is evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Earlier canonical message-board routing PlanUnits retain lane and lifecycle semantics not repeated here.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-311 - Message Threading Fields
+
+```yaml
+plan_unit_id: OSI-311
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Threaded messages use `thread_id` to group related messages and `in_reply_to` to link replies so agents can follow
+  conversation history.
+gui_related: false
+gui_classification_reason: This unit covers message threading metadata rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-250
+unblocks: []
+acceptance_criteria:
+- Covered threading fields remain losslessly available for exact-text audit.
+- Threading coverage reinforces existing message lifecycle canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: message_threading_fields
+node_compile_hint:
+  mode: message_threading_fields
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+preserved_exact_tokens:
+- thread_id
+- in_reply_to
+- conversation history
+negative_constraints: []
+compatibility_only_notes:
+- Source-lineage reinforcement of existing lifecycle canon.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-312 - Message Lifecycle And Retention Caveat
+
+```yaml
+plan_unit_id: OSI-312
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Message lifecycle preserves Created, Read tracked in `read_by`, Replied through `in_reply_to`, Resolved, and Expired/archive
+  behavior for old messages.
+gui_related: false
+gui_classification_reason: This unit covers backend message lifecycle and retention behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-250
+unblocks: []
+acceptance_criteria:
+- Covered lifecycle prose and archive snippet remain losslessly available for exact-text audit.
+- Unresolved blocker or coordination-request threads remain visible until resolved or explicitly superseded.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: message_lifecycle_and_retention_caveat
+node_compile_hint:
+  mode: message_lifecycle_and_retention_caveat
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+preserved_exact_tokens:
+- Created
+- Read
+- Replied
+- Resolved
+- Expired
+- '>24 hours'
+- archive.json
+negative_constraints:
+- Unresolved blocker or coordination-request threads must remain visible until resolved or explicitly superseded.
+compatibility_only_notes:
+- '`>24 hours`, archived/deleted behavior, and archive-file code remain source evidence and do not override OSI-250.'
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Durable lifecycle and retention semantics remain owned by canonical message-board/storage contracts.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-313 - AgentCommunicator Placement And Paths Example
+
+```yaml
+plan_unit_id: OSI-313
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Preserve the `AgentCommunicator` example using `message_board_file`, `AgentCoordinator`, and `.puppet-master/state/agent-messages.json`,
+  with load/save behavior analogous to coordination state locking as source-lineage example code, not as canonical persistence.
+gui_related: false
+gui_classification_reason: This unit covers backend placement and storage-path examples rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-245
+- OSI-246
+- OSI-251
+unblocks: []
+acceptance_criteria:
+- Covered placement and path example remains losslessly available for exact-text audit.
+- Implementation module/path tokens remain examples and do not create source files.
+- message_board_file and .puppet-master/state/agent-messages.json remain compatibility-path examples only.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: agentcommunicator_placement_and_paths_example
+node_compile_hint:
+  mode: agentcommunicator_placement_and_paths_example
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+preserved_exact_tokens:
+- src/core/agent_communication.rs
+- AgentCommunicator
+- message_board_file
+- AgentCoordinator
+- .puppet-master/state/agent-messages.json
+- load_message_board
+- save_message_board
+negative_constraints:
+- Implementation module/path tokens are examples, not source-code creation.
+- message_board_file must not become canonical persistence.
+compatibility_only_notes:
+- Rust snippet is evidence only.
+- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestrator owns communication use; storage owns durable record semantics.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-314 - Post Message Validation And Persistence Example
+
+```yaml
+plan_unit_id: OSI-314
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  `post_message` preserves the DRY requirement to validate a subagent name with `subagent_registry::is_valid_subagent_name()`,
+  load the board, append the message, update `last_updated`, and save.
+gui_related: false
+gui_classification_reason: This unit covers backend message posting and validation rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-247
+unblocks: []
+acceptance_criteria:
+- Covered post-message snippet remains losslessly available for exact-text audit.
+- Subagent-name validation is preserved when `agent_id` encodes a subagent name.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: post_message_validation_and_persistence_example
+node_compile_hint:
+  mode: post_message_validation_and_persistence_example
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+preserved_exact_tokens:
+- DRY:FN:post_message
+- subagent_registry::is_valid_subagent_name()
+- load_message_board
+- board.messages.push(message)
+- last_updated
+- save_message_board
+negative_constraints:
+- Subagent-name validation must not be bypassed when `agent_id` encodes a subagent name.
+compatibility_only_notes:
+- Rust snippet is evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+```
+
+### OSI-315 - Prompt Formatting Uses Platform Display Contract
+
+```yaml
+plan_unit_id: OSI-315
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Message prompt formatting preserves `**Recent Messages from Other Agents:**`, limits display to 10 recent messages, formats
+  sender, platform, type, subject, content, and files, and uses `platform_specs::display_name_for()` for platform display names.
+gui_related: false
+gui_classification_reason: This unit covers prompt formatting and platform naming contracts rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-254
+- OSI-247
+- OSI-300
+unblocks: []
+acceptance_criteria:
+- Covered prompt-formatting snippet remains losslessly available for exact-text audit.
+- Platform display names use the DRY platform display contract and are never hardcoded.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: prompt_formatting_uses_platform_display_contract
+node_compile_hint:
+  mode: prompt_formatting_uses_platform_display_contract
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+preserved_exact_tokens:
+- '**Recent Messages from Other Agents:**'
+- take(10)
+- platform_specs::display_name_for()
+- '❓ Question'
+- '✅ Answer'
+- '📢 Update'
+- '🙏 Request'
+- '🎯 Decision'
+- '⚠️ Warning'
+- '📣 Announcement'
+negative_constraints:
+- Platform display name MUST use `platform_specs::display_name_for()` and NEVER hardcode platform names.
+compatibility_only_notes:
+- Prompt labels and Rust formatting are example evidence.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- DRY_Rules and Models_System own platform display naming.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md'
+```
+
+
+<<< CONTEXT_AFTER 24832-24843 >>>
+### OSI-316 - Agent Execution Message Command Integration
+
+```yaml
+plan_unit_id: OSI-316
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  During execution, orchestrator output parsing may detect `@message` or `@ask`, parse a message, post it, and inject relevant
+  formatted messages before agent execution.
+gui_related: false
+gui_classification_reason: This unit covers execution/prompt integration rather than GUI presentation.

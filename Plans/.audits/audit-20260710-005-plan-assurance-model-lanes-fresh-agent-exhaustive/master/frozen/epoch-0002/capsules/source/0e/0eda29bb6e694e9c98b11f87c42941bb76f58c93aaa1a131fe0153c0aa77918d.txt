@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 1877-1888 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0019
+preserved_exact_tokens:
+  - "`Missing User Intent / Insufficient Specification`"
+  - "`needs_user_clarification[]`"
+  - "`pm.requirements_quality_report.schema.v1`"
+negative_constraints:
+  - "The system MUST generate a clarification question and MUST NOT apply a deterministic default."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1889-2282 >>>
+### DP-033 - Pre-Execution Clarification And Start-Run Block
+
+```yaml
+plan_unit_id: DP-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Clarification questions surface before orchestrator execution during Planning
+  Wizard finalization or a legacy Chain Wizard / Interview compatibility flow;
+  unresolved clarification blocks run start by moving wizard state to
+  attention_required and blocking the Start Run action.
+gui_related: true
+gui_classification_reason: This unit defines user-visible clarification timing and Start Run blocking.
+split_recommended: false
+depends_on: [DP-032]
+unblocks: []
+acceptance_criteria:
+  - Clarification occurs before any orchestrator run begins.
+  - If clarification is unresolved, the run does not start and Start Run is blocked.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pre_execution_clarification_bypass
+reasoning_tier: high
+context_scope: clarification_start_run_block
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: pre_execution_clarification_start_run_block
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0020
+preserved_exact_tokens:
+  - "`Chain Wizard`"
+  - "`Interview phase`"
+  - "`attention_required`"
+  - "`Start Run`"
+  - "`PolicyRule:Decision_Policy.md§4`"
+negative_constraints:
+  - "If clarification cannot be resolved before run start, the run MUST NOT start."
+  - "Do not use Chain Wizard or Interview as current product terminology outside compatibility/source-lineage contexts."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/Planning_Wizard.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### DP-034 - Requirements Quality Report Boundary Severity Persistence
+
+```yaml
+plan_unit_id: DP-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  The requirements_quality_report is a pre-execution artifact generated after
+  Contract Unification and before run start; execution may continue only on PASS
+  with empty needs_user_clarification, and report text is redacted before
+  persistence.
+gui_related: false
+gui_classification_reason: This unit defines validation artifact and persistence policy.
+split_recommended: false
+depends_on: [DP-030, DP-032, DP-033]
+unblocks: []
+acceptance_criteria:
+  - Execution only continues when the latest canonical report is PASS and needs_user_clarification is empty.
+  - Blocking severity and redaction rules are preserved.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: requirements_quality_report_drift
+reasoning_tier: high
+context_scope: requirements_quality_report_boundary
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/requirements_quality_report.schema.json
+node_compile_hint:
+  mode: requirements_quality_report_boundary_severity_persistence
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0021
+preserved_exact_tokens:
+  - "`requirements_quality_report`"
+  - "`verdict: \"PASS\"`"
+  - "`needs_user_clarification[]`"
+  - "`missing_scenarios`"
+  - "`contradiction`"
+  - "`vagueness`"
+  - "`PolicyRule:no_secrets_in_storage`"
+negative_constraints:
+  - "Do not copy credentials or tokens into requirements quality report fields."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### DP-035 - Runtime Fallback Prohibition Defaults
+
+```yaml
+plan_unit_id: DP-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Runtime and consumer docs must not preserve tier-era or request-era canon as
+  silent fallback; provider and account fallback is automatic only for eligible
+  policy-permitted units and otherwise terminates in explicit blocked reasons.
+gui_related: false
+gui_classification_reason: This unit defines runtime fallback policy.
+split_recommended: false
+depends_on: [DP-007, DP-013]
+unblocks: []
+acceptance_criteria:
+  - Replacement canon does not leave silent tier-era or request-era fallbacks.
+  - Terminal fallback blocked reasons remain explicit and enumerable.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hidden_runtime_fallback
+reasoning_tier: high
+context_scope: runtime_decision_rules_addendum
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Contracts_V0.md
+  - Plans/Crosswalk.md
+node_compile_hint:
+  mode: runtime_fallback_prohibition_defaults
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0022
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0023
+preserved_exact_tokens:
+  - "`No hidden orchestration fallbacks`"
+  - "`no_eligible_account`"
+  - "`policy_forbids_fallback`"
+  - "`all_units_hard_blocked`"
+negative_constraints:
+  - "Runtime and consumer docs must not preserve tier-era or request-era canon as silent fallback behavior."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-036 - Deterministic Blocked Approval Identity Addendum
+
+```yaml
+plan_unit_id: DP-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Blocked and approval decisions resolve through runtime blocked episodes
+  targeting run_id, node_id, blocked_sequence, and optional attempt_id, with
+  request_id retained only as lineage or compatibility and allowed_action_ids as
+  canonical.
+gui_related: false
+gui_classification_reason: This unit defines blocked and approval payload identity.
+split_recommended: false
+depends_on: [DP-013]
+unblocks: []
+acceptance_criteria:
+  - Runtime blocked episode identity uses run_id, node_id, blocked_sequence, and attempt_id when present.
+  - request_id is lineage/compatibility only and allowed_action_ids[] is canonical.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_approval_identity_drift
+reasoning_tier: high
+context_scope: blocked_approval_identity_addendum
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+  - Plans/Executor_Protocol.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: deterministic_blocked_approval_identity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0024
+preserved_exact_tokens:
+  - "`run_id`"
+  - "`node_id`"
+  - "`blocked_sequence`"
+  - "`attempt_id?`"
+  - "`request_id`"
+  - "`allowed_action_ids[]`"
+negative_constraints:
+  - "request_id is lineage/compatibility only."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+```
+
+### DP-037 - Workflow Overlay Identity Preservation
+
+```yaml
+plan_unit_id: DP-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Deterministic defaults preserve workflow overlay identity instead of
+  collapsing it into runtime posture; Deep Plan remains a first-class workflow
+  display identity even when normalized runtime mode is plan.
+gui_related: false
+gui_classification_reason: This unit defines workflow identity semantics.
+split_recommended: false
+depends_on: [DP-008]
+unblocks: []
+acceptance_criteria:
+  - Deep Plan remains first-class workflow display identity.
+  - Shared lower-level planning mechanics stay in subordinate profile or behavior fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: workflow_identity_collapse
+reasoning_tier: standard
+context_scope: workflow_overlay_identity
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: workflow_overlay_identity_preservation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0025
+preserved_exact_tokens:
+  - "`Deep Plan`"
+  - "`/workflow`"
+  - "`plan`"
+  - "`deep_plan`"
+  - "`/profile`"
+negative_constraints:
+  - "Do not collapse Deep Plan workflow identity into lower-level plan runtime posture."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-038 - Projection-Sensitive Mutation Guard
+
+```yaml
+plan_unit_id: DP-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Mutating actions must not rely silently on stale, partial, unknown, degraded,
+  account-changed, receipt, state, or drift projections; mutation-sensitive
+  domains return to blocked or preflight-gated posture and require revalidate
+  immediately before mutation.
+gui_related: true
+gui_classification_reason: This unit governs visible blocked/preflight action posture for mutation-sensitive surfaces.
+split_recommended: false
+depends_on: [DP-016]
+unblocks: []
+acceptance_criteria:
+  - Registry promotion, Docker Manager drift detection, and Kubernetes operations are projection-sensitive mutation domains.
+  - /revalidate occurs immediately before mutation when projection trust is not authoritative.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: stale_projection_mutation
+reasoning_tier: high
+context_scope: projection_state_action_policy
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: projection_sensitive_mutation_guard
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0026
+preserved_exact_tokens:
+  - "`stale`"
+  - "`partial`"
+  - "`unknown`"
+  - "`degraded`"
+  - "`account-changed`"
+  - "`/revalidate`"
+negative_constraints:
+  - "Mutating actions must not rely silently on stale or degraded projections."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-039 - Auth Action Lifecycle Provider Pressure And Config Ownership
+
+```yaml
+plan_unit_id: DP-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Setup/auth actions expose idle, pending, success, failure, disabled, and
+  post-success lifecycle states; provider pressure distinguishes authoritative
+  counters from inferred signals, and GUI provider/model/account controls belong
+  primarily in Agent-Config.
+gui_related: true
+gui_classification_reason: This unit defines visible auth action states, pressure display, and configuration surface ownership.
+split_recommended: false
+depends_on: [DP-038]
+unblocks: []
+acceptance_criteria:
+  - Auth actions are not complete merely because a projection updated.
+  - authoritative_remaining_counter drives approaching_threshold at <= 20 percent remaining.
+  - Health and Usage pages are observability and diagnostics, not primary provider/model/account config owners.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: auth_pressure_config_drift
+reasoning_tier: standard
+context_scope: auth_pressure_config_ownership
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: auth_lifecycle_provider_pressure_config_ownership
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0026
+preserved_exact_tokens:
+  - "`idle`"
+  - "`pending`"
+  - "`success`"
+  - "`failure`"
+  - "`disabled`"
+  - "`post-success`"
+  - "`authoritative_remaining_counter`"
+  - "`approaching_threshold`"
+  - "`<= 20% remaining`"
+  - "`Agent-Config`"
+negative_constraints:
+  - "Weaker inferred pressure signals must not masquerade as authoritative counters."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-040 - Question Routing Approval UX And Runtime Display Defaults
+
+```yaml
+plan_unit_id: DP-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Question routing uses parent-owned question-flow, subagent access stays
+  default-denial, blocked and HITL approval surfaces show ordered
+  allowed_action_ids and permission-level disclosure, and runtime-display
+  consumers do not re-own runtime identity.
+gui_related: true
+gui_classification_reason: This unit defines question surfaces, approval cards, and runtime disclosure UI.
+split_recommended: false
+depends_on: [DP-036]
+unblocks: []
+acceptance_criteria:
+  - Child ask channels cannot answer the user through a child-local path.
+  - Approval cards do not mutate Persona permission profiles.
+  - Runtime-display consumers show disclosure without runtime-identity re-ownership.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_approval_runtime_display_drift
+reasoning_tier: high
+context_scope: question_approval_runtime_display
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: question_routing_approval_ux_runtime_display_defaults
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0026
+preserved_exact_tokens:
+  - "`/G/L`"
+  - "`question-flow`"
+  - "`default-denial`"
+  - "`sendPrompt`"
+  - "`permission-level`"
+  - "`deny`, `once`, `for session`, `always`"
+  - "`allowed_action_id`"
+  - "`allowed_action_ids[]`"
+negative_constraints:
+  - "Subagent access stays default-denial and must not let a child answer through a child-local ask channel."
+  - "Approval cards MUST NOT mutate Persona permission profiles."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+
+<<< CONTEXT_AFTER 2283-2294 >>>
+### DP-041 - Debug Context And Reopen Blocking
+
+```yaml
+plan_unit_id: DP-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Browser-context auto-ingestion is visible, bounded, and revocable; debug
+  blocked reopen states render canonical blocked-state UI and missing linked
+  runtime identity reopens into attention_required with target_selection_required
+  rather than silently minting a replacement target.

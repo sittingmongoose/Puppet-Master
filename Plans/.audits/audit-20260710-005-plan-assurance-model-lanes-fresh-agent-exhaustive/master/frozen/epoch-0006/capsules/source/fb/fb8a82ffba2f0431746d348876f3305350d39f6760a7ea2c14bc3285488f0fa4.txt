@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7173-7184 >>>
+L00007173	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0035
+L00007174	preserved_exact_tokens:
+L00007175	  - "normalized stream"
+L00007176	  - "live UI consumption"
+L00007177	  - "`EventRecord`"
+L00007178	  - "transport-facing"
+L00007179	  - "persistence-facing"
+L00007180	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md"
+L00007181	owner_hints:
+L00007182	  - Plans/Contracts_V0.md
+L00007183	```
+L00007184	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7185-7575 >>>
+L00007185	### CV-090 - Unified Provider Facade Across Transports
+L00007186	
+L00007187	```yaml
+L00007188	plan_unit_id: CV-090
+L00007189	unit_type: requirement
+L00007190	status: accepted
+L00007191	owner_doc: Plans/Contracts_V0.md
+L00007192	canonical_text: >-
+L00007193	  CLI-bridged, server-bridged, and direct-provider implementations conform to
+L00007194	  one unified Provider facade/trait contract with capability flags and
+L00007195	  tool-policy inputs defined at the Provider boundary.
+L00007196	gui_related: false
+L00007197	gui_classification_reason: This unit defines provider runtime boundary contracts.
+L00007198	split_recommended: true
+L00007199	depends_on: [CV-089]
+L00007200	unblocks: [CV-091, CV-092, CV-093]
+L00007201	acceptance_criteria:
+L00007202	  - CLI-bridged providers conform to the unified Provider facade/trait.
+L00007203	  - Server-bridged providers conform to the unified Provider facade/trait.
+L00007204	  - Direct-provider integrations conform to the unified Provider facade/trait.
+L00007205	  - Capability flags and tool-policy inputs are defined at the Provider boundary.
+L00007206	validation_surfaces:
+L00007207	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007208	  - python3 scripts/pm-plan-index.py validate
+L00007209	risk_class: provider_facade_transport_forking
+L00007210	reasoning_tier: high
+L00007211	context_scope: unified_provider_facade_transports
+L00007212	implementation_surfaces:
+L00007213	  - Plans/Contracts_V0.md
+L00007214	  - Plans/CLI_Bridged_Providers.md
+L00007215	  - Plans/Provider_OpenCode.md
+L00007216	  - Plans/Tools.md
+L00007217	node_compile_hint:
+L00007218	  mode: provider_facade_contract
+L00007219	  create_worknodes: false
+L00007220	source_lineage:
+L00007221	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0035
+L00007222	preserved_exact_tokens:
+L00007223	  - "CLI-bridged"
+L00007224	  - "server-bridged"
+L00007225	  - "direct-provider"
+L00007226	  - "Provider facade/trait"
+L00007227	  - "capability flags"
+L00007228	  - "tool-policy inputs"
+L00007229	owner_hints:
+L00007230	  - Plans/Contracts_V0.md
+L00007231	```
+L00007232	
+L00007233	### CV-091 - Provider Consumer Normalization And Tool Access
+L00007234	
+L00007235	```yaml
+L00007236	plan_unit_id: CV-091
+L00007237	unit_type: requirement
+L00007238	status: accepted
+L00007239	owner_doc: Plans/Contracts_V0.md
+L00007240	canonical_text: >-
+L00007241	  UI and orchestrator consumers must not special-case provider transport or
+L00007242	  brand beyond configuration fields; provider-originated events and tool-call
+L00007243	  lifecycle signals normalize before consumers or persistence mapping; PM
+L00007244	  bundling and PM skill tool access remain available regardless of provider
+L00007245	  transport.
+L00007246	gui_related: true
+L00007247	gui_classification_reason: This unit constrains UI provider consumption and user-visible tool access behavior.
+L00007248	split_recommended: true
+L00007249	depends_on: [CV-089, CV-090]
+L00007250	unblocks: [CV-096]
+L00007251	acceptance_criteria:
+L00007252	  - UI and orchestrator consumers do not special-case provider transport or brand beyond configuration fields.
+L00007253	  - Provider-originated events and tool-call lifecycle signals normalize before reaching consumers or persistence mapping.
+L00007254	  - PM bundling and PM skill tool access are preserved regardless of provider transport.
+L00007255	validation_surfaces:
+L00007256	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007257	  - python3 scripts/pm-plan-index.py validate
+L00007258	risk_class: provider_consumer_transport_special_casing
+L00007259	reasoning_tier: high
+L00007260	context_scope: provider_consumer_normalization_tool_access
+L00007261	implementation_surfaces:
+L00007262	  - Plans/Contracts_V0.md
+L00007263	  - Plans/UI_Command_Catalog.md
+L00007264	  - Plans/CLI_Bridged_Providers.md
+L00007265	  - Plans/Provider_OpenCode.md
+L00007266	  - Plans/Tools.md
+L00007267	node_compile_hint:
+L00007268	  mode: provider_consumer_normalization_contract
+L00007269	  create_worknodes: false
+L00007270	source_lineage:
+L00007271	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0035
+L00007272	preserved_exact_tokens:
+L00007273	  - "UI and orchestrator consumers"
+L00007274	  - "provider transport"
+L00007275	  - "provider brand"
+L00007276	  - "provider configuration fields"
+L00007277	  - "PM bundling"
+L00007278	  - "PM skill tool access"
+L00007279	negative_constraints:
+L00007280	  - "UI and orchestrator consumers must not special-case provider transport or provider brand beyond provider configuration fields."
+L00007281	  - "Transport selection must not remove built-in PM tool availability."
+L00007282	owner_hints:
+L00007283	  - Plans/Contracts_V0.md
+L00007284	```
+L00007285	
+L00007286	### CV-092 - Provider Transport Version Governance
+L00007287	
+L00007288	```yaml
+L00007289	plan_unit_id: CV-092
+L00007290	unit_type: requirement
+L00007291	status: accepted
+L00007292	owner_doc: Plans/Contracts_V0.md
+L00007293	canonical_text: >-
+L00007294	  Provider and stream seams require explicit contract-version governance, and a
+L00007295	  transport adapter must not invent adapter-local shadow fields for actor,
+L00007296	  account, or trust categories before a contract-versioned owner path exists
+L00007297	  for persistence or UI projections.
+L00007298	gui_related: false
+L00007299	gui_classification_reason: This unit defines provider contract governance and adapter field boundaries.
+L00007300	split_recommended: true
+L00007301	depends_on: [CV-089, CV-090]
+L00007302	unblocks: [CV-093, CV-094, CV-096]
+L00007303	acceptance_criteria:
+L00007304	  - Provider and stream seams have explicit contract-version governance.
+L00007305	  - Transport adapters do not invent adapter-local actor/account/trust shadow fields.
+L00007306	  - New provider fields have a contract-versioned owner path before persistence or UI projections consume them.
+L00007307	validation_surfaces:
+L00007308	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007309	  - python3 scripts/pm-plan-index.py validate
+L00007310	risk_class: provider_transport_shadow_field_drift
+L00007311	reasoning_tier: high
+L00007312	context_scope: provider_transport_version_governance
+L00007313	implementation_surfaces:
+L00007314	  - Plans/Contracts_V0.md
+L00007315	  - Plans/CLI_Bridged_Providers.md
+L00007316	  - Plans/Provider_OpenCode.md
+L00007317	  - Plans/Models_System.md
+L00007318	node_compile_hint:
+L00007319	  mode: provider_transport_governance_contract
+L00007320	  create_worknodes: false
+L00007321	source_lineage:
+L00007322	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007323	preserved_exact_tokens:
+L00007324	  - "contract-version governance"
+L00007325	  - "actor/account/trust categories"
+L00007326	  - "adapter-local shadow fields"
+L00007327	negative_constraints:
+L00007328	  - "A transport adapter must not invent adapter-local shadow fields for actor/account/trust categories."
+L00007329	owner_hints:
+L00007330	  - Plans/Contracts_V0.md
+L00007331	```
+L00007332	
+L00007333	### CV-093 - Provider Transport Enum And Class Mapping
+L00007334	
+L00007335	```yaml
+L00007336	plan_unit_id: CV-093
+L00007337	unit_type: requirement
+L00007338	status: accepted
+L00007339	owner_doc: Plans/Contracts_V0.md
+L00007340	canonical_text: >-
+L00007341	  Provider transport classes are CLI-bridged, server-bridged, and
+L00007342	  direct-provider, and the canonical implementation enum is ProviderTransport =
+L00007343	  CliBridge | DirectApi | ServerBridge with CliBridge mapping to CLI-bridged,
+L00007344	  DirectApi mapping to direct-provider, and ServerBridge mapping to
+L00007345	  server-bridged.
+L00007346	gui_related: false
+L00007347	gui_classification_reason: This unit defines provider transport enum and class mapping.
+L00007348	split_recommended: true
+L00007349	depends_on: [CV-090, CV-092]
+L00007350	unblocks: [CV-094, CV-095, CV-096]
+L00007351	acceptance_criteria:
+L00007352	  - Provider transport classes are CLI-bridged, server-bridged, and direct-provider.
+L00007353	  - ProviderTransport = CliBridge | DirectApi | ServerBridge is the canonical implementation enum.
+L00007354	  - CliBridge, DirectApi, and ServerBridge retain their exact class mappings.
+L00007355	validation_surfaces:
+L00007356	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007357	  - python3 scripts/pm-plan-index.py validate
+L00007358	risk_class: provider_transport_enum_mapping_drift
+L00007359	reasoning_tier: standard
+L00007360	context_scope: provider_transport_enum_mapping
+L00007361	implementation_surfaces:
+L00007362	  - Plans/Contracts_V0.md
+L00007363	  - Plans/CLI_Bridged_Providers.md
+L00007364	  - Plans/Provider_OpenCode.md
+L00007365	  - Plans/Models_System.md
+L00007366	node_compile_hint:
+L00007367	  mode: provider_transport_enum_contract
+L00007368	  create_worknodes: false
+L00007369	source_lineage:
+L00007370	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007371	preserved_exact_tokens:
+L00007372	  - "ProviderTransport = CliBridge | DirectApi | ServerBridge"
+L00007373	  - "`CliBridge`"
+L00007374	  - "`DirectApi`"
+L00007375	  - "`ServerBridge`"
+L00007376	  - "CLI-bridged"
+L00007377	  - "direct-provider"
+L00007378	  - "server-bridged"
+L00007379	owner_hints:
+L00007380	  - Plans/Contracts_V0.md
+L00007381	```
+L00007382	
+L00007383	### CV-094 - Provider Support-State And Provenance Dispositions
+L00007384	
+L00007385	```yaml
+L00007386	plan_unit_id: CV-094
+L00007387	unit_type: requirement
+L00007388	status: accepted
+L00007389	owner_doc: Plans/Contracts_V0.md
+L00007390	canonical_text: >-
+L00007391	  Provider support-state projections use closed values native,
+L00007392	  native_projected, and projected plus explicit evidence dispositions for
+L00007393	  verified, unverified, unsupported, disabled, capability-gated,
+L00007394	  separate-profile, source-lineage-only, and retired/source-lineage states.
+L00007395	  Direct-provider catalog candidates such as Alibaba/Qwen, MiniMax, Kimi,
+L00007396	  Z.AI/Zhipu, Cursor, GitHub Copilot, and OpenAI/Codex must not be promoted
+L00007397	  from catalog visibility alone; local end-to-end prompt output or explicit
+L00007398	  route proof is required for green implementation-ready status. Legacy
+L00007399	  CLI/runtime outputs plus CLI auth/import notes are migration provenance while
+L00007400	  /import, /runtime, PM skill access, and copilot_github auth realm are
+L00007401	  preserved.
+L00007402	gui_related: true
+L00007403	gui_classification_reason: This unit affects provider support-state projections visible to UI/help surfaces.
+L00007404	split_recommended: true
+L00007405	depends_on: [CV-092, CV-093]
+L00007406	unblocks: []
+L00007407	acceptance_criteria:
+L00007408	  - Provider support-state projections use native, native_projected, and projected.
+L00007409	  - Direct-provider catalog candidates remain lower-confidence until route-specific local end-to-end proof or explicit primary-source route proof exists.
+L00007410	  - Capability-gated, unsupported, disabled, unverified, source-lineage-only, separate-profile, and retired/source-lineage states remain distinct.
+L00007411	  - Legacy CLI/runtime outputs plus CLI auth/import notes remain migration provenance.
+L00007412	  - /import, /runtime, PM skill access, and copilot_github auth realm are preserved.
+L00007413	validation_surfaces:
+L00007414	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007415	  - python3 scripts/pm-plan-index.py validate
+L00007416	risk_class: provider_support_state_provenance_drift
+L00007417	reasoning_tier: high
+L00007418	context_scope: provider_support_state_provenance
+L00007419	implementation_surfaces:
+L00007420	  - Plans/Contracts_V0.md
+L00007421	  - Plans/CLI_Bridged_Providers.md
+L00007422	  - Plans/Provider_OpenCode.md
+L00007423	  - Plans/Models_System.md
+L00007424	  - Plans/UI_Command_Catalog.md
+L00007425	node_compile_hint:
+L00007426	  mode: provider_support_state_contract
+L00007427	  create_worknodes: false
+L00007428	source_lineage:
+L00007429	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007430	preserved_exact_tokens:
+L00007431	  - "`native`"
+L00007432	  - "`native_projected`"
+L00007433	  - "`projected`"
+L00007434	  - "Alibaba"
+L00007435	  - "MiniMax"
+L00007436	  - "Kimi"
+L00007437	  - "Z.AI"
+L00007438	  - "Zhipu"
+L00007439	  - "Cursor"
+L00007440	  - "GitHub Copilot"
+L00007441	  - "OpenAI/Codex"
+L00007442	  - "verified"
+L00007443	  - "unverified"
+L00007444	  - "unsupported"
+L00007445	  - "disabled"
+L00007446	  - "capability-gated"
+L00007447	  - "separate-profile"
+L00007448	  - "source-lineage-only"
+L00007449	  - "retired/source-lineage"
+L00007450	  - "`/import`"
+L00007451	  - "`/runtime`"
+L00007452	  - "`copilot_github`"
+L00007453	compatibility_only_notes:
+L00007454	  - "Legacy CLI/runtime outputs plus CLI auth/import notes are migration provenance."
+L00007455	negative_constraints:
+L00007456	  - "Unverified direct-provider catalog candidates must not be promoted as implementation-ready PM direct providers."
+L00007457	  - "Catalog visibility, HTTP 200 model listing, or OpenCode-routed proof alone must not be treated as direct-provider closure evidence."
+L00007458	owner_hints:
+L00007459	  - Plans/Contracts_V0.md
+L00007460	```
+L00007461	
+L00007462	### CV-095 - Transport-Specific Stream Completion Rules
+L00007463	
+L00007464	```yaml
+L00007465	plan_unit_id: CV-095
+L00007466	unit_type: requirement
+L00007467	status: accepted
+L00007468	owner_doc: Plans/Contracts_V0.md
+L00007469	canonical_text: >-
+L00007470	  Server-bridged providers use HTTP REST endpoints and SSE event streams,
+L00007471	  CLI-bridged providers use CLI event outputs and adapter parsing, and
+L00007472	  direct-provider integrations may use provider HTTP/gRPC endpoints directly
+L00007473	  while emitting the same normalized event types; Gemini/Vertex requires schema
+L00007474	  sanitizer and post-tool loop evidence, and OpenCode EXEC adapters enumerate
+L00007475	  terminal finish reasons before marking a stream complete.
+L00007476	gui_related: false
+L00007477	gui_classification_reason: This unit defines provider transport and stream-completion runtime rules.
+L00007478	split_recommended: true
+L00007479	depends_on: [CV-093]
+L00007480	unblocks: []
+L00007481	acceptance_criteria:
+L00007482	  - Server-bridged, CLI-bridged, and direct-provider transport-specific notes are preserved.
+L00007483	  - Direct-provider integrations emit the same normalized event types.
+L00007484	  - Gemini/Vertex uses schema sanitizer and post-tool loop rules, and finish_reason alone is insufficient evidence of completion.
+L00007485	  - OpenCode EXEC adapters distinguish content-filter, safety, and unknown empty-content terminal cases before marking streams complete.
+L00007486	validation_surfaces:
+L00007487	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007488	  - python3 scripts/pm-plan-index.py validate
+L00007489	risk_class: provider_stream_completion_rule_loss
+L00007490	reasoning_tier: high
+L00007491	context_scope: transport_specific_stream_completion
+L00007492	implementation_surfaces:
+L00007493	  - Plans/Contracts_V0.md
+L00007494	  - Plans/CLI_Bridged_Providers.md
+L00007495	  - Plans/Provider_OpenCode.md
+L00007496	  - Plans/Models_System.md
+L00007497	node_compile_hint:
+L00007498	  mode: provider_stream_completion_contract
+L00007499	  create_worknodes: false
+L00007500	source_lineage:
+L00007501	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007502	preserved_exact_tokens:
+L00007503	  - "HTTP REST endpoints"
+L00007504	  - "SSE event streams"
+L00007505	  - "CLI event outputs"
+L00007506	  - "provider HTTP/gRPC endpoints"
+L00007507	  - "`text_delta`"
+L00007508	  - "`tool_use`"
+L00007509	  - "`tool_result`"
+L00007510	  - "`usage`"
+L00007511	  - "`done`"
+L00007512	  - "`Gemini/Vertex`"
+L00007513	  - "`FinishReasonContentFilter`"
+L00007514	  - "`FinishReasonSafety`"
+L00007515	  - "`FinishReasonUnknown`"
+L00007516	negative_constraints:
+L00007517	  - "Provider finish_reason alone is not sufficient evidence that tool execution, tool-result ingestion, or response continuation is complete."
+L00007518	  - "FinishReasonUnknown with empty content is an error path rather than normal completion."
+L00007519	owner_hints:
+L00007520	  - Plans/Contracts_V0.md
+L00007521	```
+L00007522	
+L00007523	### CV-096 - Provider Consumption And Platform Vocabulary Safety
+L00007524	
+L00007525	```yaml
+L00007526	plan_unit_id: CV-096
+L00007527	unit_type: requirement
+L00007528	status: accepted
+L00007529	owner_doc: Plans/Contracts_V0.md
+L00007530	canonical_text: >-
+L00007531	  Consumers do not branch on provider transport class because all provider
+L00007532	  output is consumed through the unified normalized stream, and
+L00007533	  vocabulary-safe persisted contracts must not replace requested_platform or
+L00007534	  effective_platform with provider_entry_id, which may accompany but not rewrite
+L00007535	  requested/effective platform fields.
+L00007536	gui_related: false
+L00007537	gui_classification_reason: This unit defines provider consumption and persisted vocabulary constraints rather than visual presentation.
+L00007538	split_recommended: true
+L00007539	depends_on: [CV-091, CV-092, CV-093]
+L00007540	unblocks: []
+L00007541	acceptance_criteria:
+L00007542	  - Consumers do not branch on transport class.
+L00007543	  - All provider output is consumed through the unified normalized stream.
+L00007544	  - requested_platform and effective_platform are not replaced with provider_entry_id.
+L00007545	  - provider_entry_id may accompany but not rewrite requested/effective platform fields.
+L00007546	validation_surfaces:
+L00007547	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007548	  - python3 scripts/pm-plan-index.py validate
+L00007549	risk_class: provider_platform_vocabulary_rewrite
+L00007550	reasoning_tier: high
+L00007551	context_scope: provider_consumption_platform_vocabulary
+L00007552	implementation_surfaces:
+L00007553	  - Plans/Contracts_V0.md
+L00007554	  - Plans/CLI_Bridged_Providers.md
+L00007555	  - Plans/Provider_OpenCode.md
+L00007556	  - Plans/Models_System.md
+L00007557	  - Plans/storage-plan.md
+L00007558	node_compile_hint:
+L00007559	  mode: provider_platform_vocabulary_contract
+L00007560	  create_worknodes: false
+L00007561	source_lineage:
+L00007562	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0036
+L00007563	preserved_exact_tokens:
+L00007564	  - "unified normalized stream"
+L00007565	  - "`requested_platform`"
+L00007566	  - "`effective_platform`"
+L00007567	  - "`provider_entry_id`"
+L00007568	  - "ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md"
+L00007569	negative_constraints:
+L00007570	  - "Consumers must not branch on transport class."
+L00007571	  - "Vocabulary-safe persisted contracts must not replace requested_platform or effective_platform with provider_entry_id."
+L00007572	owner_hints:
+L00007573	  - Plans/Contracts_V0.md
+L00007574	```
+L00007575	
+
+<<< CONTEXT_AFTER canonical_document_lines=7576-7587 >>>
+L00007576	### CV-097 - Tool Invoked Attribution Payload
+L00007577	
+L00007578	```yaml
+L00007579	plan_unit_id: CV-097
+L00007580	unit_type: requirement
+L00007581	status: accepted
+L00007582	owner_doc: Plans/Contracts_V0.md
+L00007583	canonical_text: >-
+L00007584	  tool.invoked persisted payloads carry runtime/tool/artifact attribution
+L00007585	  directly, including attempt_id as the canonical local runtime anchor and
+L00007586	  explicit subordinate bridge refs such as provider_attempt_ref and
+L00007587	  usage_event_ref.

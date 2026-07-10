@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1048-1059 >>>
+L00001048	negative_constraints:
+L00001049	  - Do not complete strong-certification goals in degraded verifier mode.
+L00001050	  - Do not retain secrets in logs or receipts.
+L00001051	  - Do not store uncapped raw logs inline in completion receipts.
+L00001052	owner_hints:
+L00001053	  - Plans/Goal_Runtime_System.md
+L00001054	  - Plans/Runtime_Artifacts_Panel.md
+L00001055	  - Plans/storage-plan.md
+L00001056	compatibility_only_notes:
+L00001057	  - Plans/Project_Output_Artifacts.md remains a boundary/distinction reference only; it does not own Goal Runtime evidence receipts.
+L00001058	```
+L00001059	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1060-1417 >>>
+L00001060	### GRS-015 - Progress Fingerprints, Budgets, And Validators
+L00001061	
+L00001062	```yaml
+L00001063	plan_unit_id: GRS-015
+L00001064	unit_type: requirement
+L00001065	status: accepted
+L00001066	owner_doc: Plans/Goal_Runtime_System.md
+L00001067	canonical_text: >-
+L00001068	  Goal Runtime uses progress_fingerprint records, blocker_signature, artifact hashes, retry/blocker detection, repeat_count, no-progress continuations, hard budgets, limit statuses, and deterministic validators as first-class gates. Budget and limit gates carry exact fields max_turns, max_tokens, max_wall_time_seconds, max_parallel_agents, budget_limited, and usage_limited. Repeated identical blockers without artifact change route to repair/adjudication rather than infinite retry, and a goal cannot hide repeated non-progress, validator failure, or budget exhaustion behind a normal completion claim.
+L00001069	gui_related: false
+L00001070	gui_classification_reason: Progress, budget, and validator gates are runtime control behavior, not GUI implementation.
+L00001071	depends_on:
+L00001072	  - GRS-012
+L00001073	unblocks: []
+L00001074	acceptance_criteria:
+L00001075	  - Repeated retries or blockers escalate instead of looping silently.
+L00001076	  - Budget and limit statuses are represented distinctly from successful completion.
+L00001077	  - Budget and limit gates expose max_turns, max_tokens, max_wall_time_seconds, max_parallel_agents, budget_limited, and usage_limited.
+L00001078	  - Validators are first-class gates for certification where available.
+L00001079	  - Progress records expose progress_fingerprint, blocker_signature, repeat_count, artifact hashes, and no-progress continuation detection.
+L00001080	  - Repeated identical blockers without artifact change route to repair/adjudication rather than indefinite retry.
+L00001081	  - "Default budget values are explicit: max_turns=25, max_tokens=null (provider/model policy owns the concrete token ceiling), max_wall_time_seconds=7200, and max_parallel_agents=0 unless a parent Goal or user-supplied run policy narrows them."
+L00001082	validation_surfaces:
+L00001083	  - python3 scripts/pm-plan-index.py validate
+L00001084	  - future progress-fingerprint and validator-gate tests
+L00001085	risk_class: loop_or_validator_false_completion
+L00001086	reasoning_tier: high
+L00001087	context_scope: goal_runtime_progress
+L00001088	implementation_surfaces:
+L00001089	  - future Goal Mode service
+L00001090	  - future validator registry
+L00001091	node_compile_hint:
+L00001092	  mode: progress_budget_validator_policy
+L00001093	  create_worknodes: false
+L00001094	source_lineage:
+L00001095	  - pldg-20260616-001-goal-runtime-system:atom-0050
+L00001096	  - pldg-20260616-001-goal-runtime-system:atom-0051
+L00001097	  - pldg-20260616-001-goal-runtime-system:atom-0052
+L00001098	preserved_exact_tokens:
+L00001099	  - "Progress fingerprints"
+L00001100	  - "progress_fingerprint"
+L00001101	  - "blocker_signature"
+L00001102	  - "repeat_count"
+L00001103	  - "loop detection"
+L00001104	  - "artifact hashes"
+L00001105	  - "no-progress"
+L00001106	  - "Hard budgets"
+L00001107	  - "limit statuses"
+L00001108	  - "Validators are first-class gates"
+L00001109	  - "max_turns"
+L00001110	  - "max_tokens"
+L00001111	  - "max_wall_time_seconds"
+L00001112	  - "max_parallel_agents"
+L00001113	  - "budget_limited"
+L00001114	  - "usage_limited"
+L00001115	negative_constraints:
+L00001116	  - Do not claim normal completion when validators fail.
+L00001117	  - Do not hide repeated non-progress behind repeated worker attempts.
+L00001118	owner_hints:
+L00001119	  - Plans/Goal_Runtime_System.md
+L00001120	  - Plans/Planning_Ledger_System.md
+L00001121	  - Plans/Plan_Document_System.md
+L00001122	```
+L00001123	
+L00001124	### GRS-016 - Parallel Child Goals And Parent Completion Authority
+L00001125	
+L00001126	```yaml
+L00001127	plan_unit_id: GRS-016
+L00001128	unit_type: requirement
+L00001129	status: accepted
+L00001130	owner_doc: Plans/Goal_Runtime_System.md
+L00001131	canonical_text: >-
+L00001132	  Parent goals may spawn parallel child goals/subagents with dedicated child_goal_id, parent_goal_id, agent_id, objectives, allowed scope, write policy, budgets, task lists, recovery state, stale/re-steer state, result artifacts, and local completion receipts. Subagents are preferred by default for bounded parallel work. "As many as needed" parallel child goals are capped by max_parallel_agents and budget, and remain bounded by write_scope_conflict_detection, worktree isolation, and parent synthesis requirements. Child goals may complete themselves locally, but they cannot complete the parent goal; parent goals own synthesis, merge, final verification, and parent completion certification.
+L00001133	gui_related: false
+L00001134	gui_classification_reason: Child-goal state and authority are runtime orchestration behavior; chat display is an Assistant Chat consumer surface.
+L00001135	depends_on:
+L00001136	  - GRS-006
+L00001137	  - GRS-012
+L00001138	unblocks: []
+L00001139	acceptance_criteria:
+L00001140	  - Child goals have first-class runtime identity and are not hidden implementation details.
+L00001141	  - Parent goal synthesis and completion authority cannot be delegated to a child goal.
+L00001142	  - Parallel execution is bounded by declared scope, budgets, and recovery state.
+L00001143	  - Parallel child goal spawning honors max_parallel_agents, write_scope_conflict_detection, worktree isolation, and parent synthesis requirements.
+L00001144	  - Child-goal state preserves child_goal_id, parent_goal_id, agent_id, allowed_scope, write_policy, result_artifacts, and stale/re-steer state.
+L00001145	validation_surfaces:
+L00001146	  - python3 scripts/pm-plan-index.py validate
+L00001147	  - future child-goal orchestration tests
+L00001148	risk_class: child_goal_authority_drift
+L00001149	reasoning_tier: high
+L00001150	context_scope: parent_child_goal_runtime
+L00001151	implementation_surfaces:
+L00001152	  - future Goal Mode service
+L00001153	  - future subagent runtime
+L00001154	node_compile_hint:
+L00001155	  mode: parent_child_goal_runtime
+L00001156	  create_worknodes: false
+L00001157	source_lineage:
+L00001158	  - pldg-20260616-001-goal-runtime-system:atom-0053
+L00001159	  - pldg-20260616-001-goal-runtime-system:atom-0054
+L00001160	  - pldg-20260616-001-goal-runtime-system:atom-0055
+L00001161	  - pldg-20260616-001-goal-runtime-system:atom-0056
+L00001162	  - pldg-20260616-001-goal-runtime-system:atom-0057
+L00001163	  - pldg-20260616-001-goal-runtime-system:atom-0058
+L00001164	  - pldg-20260616-001-goal-runtime-system:atom-0096
+L00001165	  - pldg-20260616-001-goal-runtime-system:atom-0098
+L00001166	  - pldg-20260616-001-goal-runtime-system:dec-0009
+L00001167	  - pldg-20260616-001-goal-runtime-system:dec-0015
+L00001168	preserved_exact_tokens:
+L00001169	  - "parallel child goals"
+L00001170	  - "Subagents preferred by default"
+L00001171	  - "Parent/child goal tree"
+L00001172	  - "Parent-only synthesis and merge authority"
+L00001173	  - "first-class runtime objects"
+L00001174	  - "child_goal_id"
+L00001175	  - "parent_goal_id"
+L00001176	  - "agent_id"
+L00001177	  - "allowed_scope"
+L00001178	  - "write_policy"
+L00001179	  - "completion_receipt"
+L00001180	  - "stale/re-steer state"
+L00001181	  - "as many as needed"
+L00001182	  - "max_parallel_agents"
+L00001183	  - "write_scope_conflict_detection"
+L00001184	  - "worktree isolation"
+L00001185	  - "parent synthesis"
+L00001186	  - "Child goals may complete themselves locally"
+L00001187	  - "cannot complete the parent goal"
+L00001188	  - "For this task, write yourself a new goal and spawn agents in parallel - as many as needed to do it better and faster. Split the work into independent pieces, dispatch them concurrently, and synthesize the results as they return. Give each agent its own dedicated /goal."
+L00001189	negative_constraints:
+L00001190	  - Do not hide child agents as untracked implementation details.
+L00001191	  - Do not let a child goal certify, merge, or finish the parent goal independently.
+L00001192	  - Do not launch unlimited agents.
+L00001193	  - Do not allow multiple write agents to edit conflicting scopes without isolation/merge control.
+L00001194	owner_hints:
+L00001195	  - Plans/Goal_Runtime_System.md
+L00001196	  - Plans/assistant-chat-design.md
+L00001197	```
+L00001198	
+L00001199	### GRS-017 - Child Goal Write Authority And Single-Writer Leases
+L00001200	
+L00001201	```yaml
+L00001202	plan_unit_id: GRS-017
+L00001203	unit_type: constraint
+L00001204	status: accepted
+L00001205	owner_doc: Plans/Goal_Runtime_System.md
+L00001206	canonical_text: >-
+L00001207	  Child goals default to read_only or proposal_only. Direct writes require an isolated worktree, explicit non-overlapping scope, or a parent-granted single-writer lease. If two child goals need the same file, the parent goal serializes or isolates the work, and write_scope_conflict_detection runs before writes proceed.
+L00001208	gui_related: false
+L00001209	gui_classification_reason: Write authority and conflict policy are runtime/file orchestration behavior, not GUI implementation.
+L00001210	depends_on:
+L00001211	  - GRS-016
+L00001212	unblocks: []
+L00001213	acceptance_criteria:
+L00001214	  - Parallel child goals do not perform blind concurrent direct writes.
+L00001215	  - Write scopes are isolated, explicitly partitioned, or leased to a single writer by the parent.
+L00001216	  - Parent synthesis handles conflicting child outputs.
+L00001217	validation_surfaces:
+L00001218	  - python3 scripts/pm-plan-index.py validate
+L00001219	  - future worktree/write-scope conflict tests
+L00001220	risk_class: concurrent_write_conflict
+L00001221	reasoning_tier: high
+L00001222	context_scope: parent_child_goal_runtime
+L00001223	implementation_surfaces:
+L00001224	  - future Goal Mode service
+L00001225	  - future worktree manager
+L00001226	node_compile_hint:
+L00001227	  mode: child_write_authority_policy
+L00001228	  create_worknodes: false
+L00001229	source_lineage:
+L00001230	  - pldg-20260616-001-goal-runtime-system:atom-0055
+L00001231	  - pldg-20260616-001-goal-runtime-system:atom-0101
+L00001232	  - pldg-20260616-001-goal-runtime-system:atom-0102
+L00001233	  - pldg-20260616-001-goal-runtime-system:atom-0110
+L00001234	  - pldg-20260616-001-goal-runtime-system:dec-0017
+L00001235	  - pldg-20260616-001-goal-runtime-system:dec-0024
+L00001236	preserved_exact_tokens:
+L00001237	  - "read_only"
+L00001238	  - "proposal_only"
+L00001239	  - "isolated_worktree"
+L00001240	  - "direct_write_single_owner"
+L00001241	  - "direct_write_partitioned"
+L00001242	  - "parent goal is the default merger/writer"
+L00001243	  - "No blind concurrent writes"
+L00001244	  - "parent-granted single-writer lease"
+L00001245	  - "write_scope_conflict_detection"
+L00001246	negative_constraints:
+L00001247	  - Do not allow blind concurrent direct writes from multiple child goals.
+L00001248	  - Do not default parallel child agents to direct file mutation.
+L00001249	  - Do not allow child direct writes without isolation, partitioning, or a parent-granted lease.
+L00001250	  - Do not allow multiple write agents to edit conflicting scopes without isolation/merge control.
+L00001251	owner_hints:
+L00001252	  - Plans/Goal_Runtime_System.md
+L00001253	```
+L00001254	
+L00001255	### GRS-018 - Task Template Catalog And Goal-Type Completion Criteria
+L00001256	
+L00001257	```yaml
+L00001258	plan_unit_id: GRS-018
+L00001259	unit_type: requirement
+L00001260	status: accepted
+L00001261	owner_doc: Plans/Goal_Runtime_System.md
+L00001262	canonical_text: >-
+L00001263	  Goal Runtime provides a task template catalog for common goal classes: bug_fix, feature_build, test_until_pass, doc_update, repo_research, refactor, migration, audit_and_repair, ledger_to_plan_transfer, governance seal, and future plan_graph_build only after the PlanUnit-to-NodeSeed-to-WorkNode compiler contract exists. Each template carries goal-type completion criteria, validator expectations, evidence requirements, and no-WorkNode boundary where applicable. Bug-fix goals require the bug reproduced or a reason recorded, fix applied, relevant tests pass, and changed files/evidence summarized. Feature-build goals require implementation done within scope, tests added/updated and passing, docs/plans updated when required, and acceptance criteria proved. Test-until-pass goals keep running until the command passes or external/blocking status is classified with logs captured. Doc-update goals require target docs reflect the request, unsupported content absent, source refs/lineage preserved where required, and validators or lint checks pass. Ledger-to-plan transfer goals load compact state and relevant records, inspect sharded source/target docs through runtime retrieval, update live Plans, verify coverage, repair missed/weak areas autonomously, and complete with evidence/certification.
+L00001264	gui_related: false
+L00001265	gui_classification_reason: Goal templates and completion criteria are runtime/task policy, not GUI implementation.
+L00001266	depends_on:
+L00001267	  - GRS-012
+L00001268	  - GRS-015
+L00001269	unblocks: []
+L00001270	acceptance_criteria:
+L00001271	  - Bug-fix, feature-build, test-until-pass, doc-update, audit/repair, and ledger-to-plan transfer goals have explicit completion criteria.
+L00001272	  - Plan graph build remains deferred until the compiler contract defines safe node artifacts.
+L00001273	  - Template metadata does not create executable queues by itself.
+L00001274	  - Bug-fix goals complete only after bug reproduced or reason recorded, fix applied, relevant tests pass, and changed files/evidence summarized.
+L00001275	  - Feature-build goals complete only after implementation done within scope, tests added/updated and pass, docs/plans updated when required, and acceptance criteria proved.
+L00001276	  - Test-until-pass goals continue until command passes or external/blocking condition is classified with logs captured.
+L00001277	  - Doc-update goals complete only when target docs reflect the request, unsupported content is absent, source refs/lineage are preserved where required, and validators or lint checks pass.
+L00001278	  - Ledger-to-plan transfer goals load compact state/relevant records, inspect sharded source/target docs, update live Plans, verify coverage, repair autonomously, and complete with completion certificate.
+L00001279	validation_surfaces:
+L00001280	  - python3 scripts/pm-plan-index.py validate
+L00001281	  - future template catalog tests
+L00001282	risk_class: goal_template_ambiguity
+L00001283	reasoning_tier: standard
+L00001284	context_scope: goal_runtime_templates
+L00001285	implementation_surfaces:
+L00001286	  - future Goal Mode service
+L00001287	  - Plans/Plan_To_Node_Compilation.md
+L00001288	node_compile_hint:
+L00001289	  mode: goal_template_catalog
+L00001290	  create_worknodes: false
+L00001291	source_lineage:
+L00001292	  - pldg-20260616-001-goal-runtime-system:atom-0059
+L00001293	  - pldg-20260616-001-goal-runtime-system:atom-0060
+L00001294	  - pldg-20260616-001-goal-runtime-system:atom-0061
+L00001295	  - pldg-20260616-001-goal-runtime-system:atom-0062
+L00001296	  - pldg-20260616-001-goal-runtime-system:atom-0063
+L00001297	  - pldg-20260616-001-goal-runtime-system:atom-0064
+L00001298	  - pldg-20260616-001-goal-runtime-system:atom-0065
+L00001299	  - pldg-20260616-001-goal-runtime-system:dec-0005
+L00001300	  - pldg-20260616-001-goal-runtime-system:q-0002
+L00001301	preserved_exact_tokens:
+L00001302	  - "bug_fix"
+L00001303	  - "feature_build"
+L00001304	  - "test_until_pass"
+L00001305	  - "doc_update"
+L00001306	  - "repo_research"
+L00001307	  - "refactor"
+L00001308	  - "migration"
+L00001309	  - "audit_and_repair"
+L00001310	  - "ledger_to_plan_transfer"
+L00001311	  - "ledger-to-plan transfer"
+L00001312	  - "governance seal"
+L00001313	  - "plan_graph_build"
+L00001314	  - "Plan graph build goal deferred"
+L00001315	  - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
+L00001316	  - "bug reproduced"
+L00001317	  - "fix applied"
+L00001318	  - "relevant tests pass"
+L00001319	  - "implementation done"
+L00001320	  - "tests added/updated"
+L00001321	  - "tests pass"
+L00001322	  - "docs/plans updated"
+L00001323	  - "test until pass"
+L00001324	  - "command passes"
+L00001325	  - "external/blocking"
+L00001326	  - "logs captured"
+L00001327	  - "source refs"
+L00001328	  - "lineage"
+L00001329	  - "validators"
+L00001330	  - "lint checks"
+L00001331	  - "compact state"
+L00001332	  - "relevant records"
+L00001333	  - "sharded source/target docs"
+L00001334	  - "update live Plans"
+L00001335	  - "verify coverage"
+L00001336	  - "repair autonomously"
+L00001337	  - "completion certificate"
+L00001338	negative_constraints:
+L00001339	  - Do not create NodeSeeds or WorkNodes until Plans/Plan_To_Node_Compilation.md defines the compiler contract.
+L00001340	  - Do not treat a task template as an executable queue.
+L00001341	owner_hints:
+L00001342	  - Plans/Goal_Runtime_System.md
+L00001343	  - Plans/Plan_To_Node_Compilation.md
+L00001344	```
+L00001345	
+L00001346	### GRS-019 - Autonomous Recovery And Exact Blockers
+L00001347	
+L00001348	```yaml
+L00001349	plan_unit_id: GRS-019
+L00001350	unit_type: requirement
+L00001351	status: accepted
+L00001352	owner_doc: Plans/Goal_Runtime_System.md
+L00001353	canonical_text: >-
+L00001354	  Goal Runtime handles ordinary ambiguity and large-work recovery autonomously by preserving open questions, conflicts, or unplaced requirements in appropriate docs/artifacts, selecting a safe canonical destination when policy is clear, retrying, inspecting, replanning, spawning verifier/subagents, escalating model tier, narrowing scope, running repair gates, rolling back isolated changes when appropriate, and recording precise blockers when it cannot proceed. Large, cross-referential, ambiguous-in-ordinary-ways, or many-shard tasks do not route to manual decision merely because they are large. Blocked status must store and display blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action rather than a generic failure label.
+L00001355	gui_related: true
+L00001356	gui_classification_reason: Exact blocker status is a user-visible goal status surface as well as runtime state.
+L00001357	depends_on:
+L00001358	  - GRS-006
+L00001359	  - GRS-015
+L00001360	unblocks: []
+L00001361	acceptance_criteria:
+L00001362	  - Ordinary large-work ambiguity does not become a manual decision request by default.
+L00001363	  - Recovery actions are recorded as goal events or receipt evidence.
+L00001364	  - Blocked states expose exact blocker causes for user and verifier review.
+L00001365	  - Ordinary ambiguity can be preserved as open questions, conflicts, or unplaced requirements with safe canonical destination evidence.
+L00001366	  - Recovery actions include retry, replan, spawn verifier/subagents, escalate model tier, narrow scope, repair gates, and isolated rollback where safe.
+L00001367	  - Blocked states record blocker_class, cause, affected scope, last attempted recovery, why autonomous recovery cannot continue safely, and next safe action.
+L00001368	validation_surfaces:
+L00001369	  - python3 scripts/pm-plan-index.py validate
+L00001370	  - future recovery/blocker-state tests
+L00001371	risk_class: hidden_blocker
+L00001372	reasoning_tier: high
+L00001373	context_scope: goal_runtime_recovery
+L00001374	implementation_surfaces:
+L00001375	  - future Goal Mode service
+L00001376	  - Plans/assistant-chat-design.md
+L00001377	node_compile_hint:
+L00001378	  mode: autonomous_recovery_and_blockers
+L00001379	  create_worknodes: false
+L00001380	source_lineage:
+L00001381	  - pldg-20260616-001-goal-runtime-system:atom-0069
+L00001382	  - pldg-20260616-001-goal-runtime-system:atom-0070
+L00001383	  - pldg-20260616-001-goal-runtime-system:atom-0071
+L00001384	  - pldg-20260616-001-goal-runtime-system:atom-0072
+L00001385	preserved_exact_tokens:
+L00001386	  - "Autonomous ambiguity handling"
+L00001387	  - "ordinary ambiguity"
+L00001388	  - "open questions"
+L00001389	  - "conflicts"
+L00001390	  - "unplaced requirements"
+L00001391	  - "safe canonical destination"
+L00001392	  - "Autonomous recovery actions"
+L00001393	  - "retry"
+L00001394	  - "replan"
+L00001395	  - "spawn verifier"
+L00001396	  - "escalate model tier"
+L00001397	  - "repair gates"
+L00001398	  - "roll back"
+L00001399	  - "precise blockers"
+L00001400	  - "No manual decision for ordinary large work"
+L00001401	  - "do not route to manual decision just because the task count is large"
+L00001402	  - "large"
+L00001403	  - "cross-referential"
+L00001404	  - "many shards"
+L00001405	  - "Blocked status carries exact blocker"
+L00001406	  - "blocker_class"
+L00001407	  - "affected scope"
+L00001408	  - "last attempted recovery"
+L00001409	  - "next safe action"
+L00001410	negative_constraints:
+L00001411	  - Do not ask the user for ordinary invisible-goal ambiguity.
+L00001412	  - Do not hide an unresolved blocker behind a successful completion receipt.
+L00001413	owner_hints:
+L00001414	  - Plans/Goal_Runtime_System.md
+L00001415	  - Plans/assistant-chat-design.md
+L00001416	```
+L00001417	
+
+<<< CONTEXT_AFTER canonical_document_lines=1418-1429 >>>
+L00001418	### GRS-020 - Approval Boundaries For High-Risk Goal Actions
+L00001419	
+L00001420	```yaml
+L00001421	plan_unit_id: GRS-020
+L00001422	unit_type: constraint
+L00001423	status: accepted
+L00001424	owner_doc: Plans/Goal_Runtime_System.md
+L00001425	canonical_text: >-
+L00001426	  Goal Runtime requires explicit user approval for destructive actions, governance seal, broad writes outside declared scope, external paid/network side effects, production-affecting actions, data deletion/migration, dependency/license/security-policy changes, and credential/secrets touching. Invisible internal goals use predeclared authority and block when outside it.
+L00001427	gui_related: false
+L00001428	gui_classification_reason: Approval authority boundaries are runtime/permission policy, not GUI layout or presentation.
+L00001429	depends_on:

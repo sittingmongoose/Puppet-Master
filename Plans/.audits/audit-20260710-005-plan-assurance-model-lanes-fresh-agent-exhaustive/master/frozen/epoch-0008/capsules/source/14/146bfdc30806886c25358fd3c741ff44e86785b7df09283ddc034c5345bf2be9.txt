@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8401-8412 >>>
+L00008401	          "requirement": "cmd.docker.cleanup.scan has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008402	        },
+L00008403	        {
+L00008404	          "test_id": "wiring.catalog.docker_cleanup_scan.accessibility",
+L00008405	          "evidence_kind": "accessibility_regression",
+L00008406	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008407	        }
+L00008408	      ],
+L00008409	      "event_test_requirements": [
+L00008410	        "Assert cmd.docker.cleanup.scan records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008411	      ]
+L00008412	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8413-8797 >>>
+L00008413	    "catalog.docker_compose": {
+L00008414	      "ui_element_id": "catalog.docker_compose",
+L00008415	      "ui_location": "Docker Manager > Compose",
+L00008416	      "ui_command_id": "cmd.docker.compose",
+L00008417	      "handler_location": "handlers::docker::compose",
+L00008418	      "expected_event_types": [],
+L00008419	      "acceptance_checks": [
+L00008420	        "cmd.docker.compose must be registered in the UICommand dispatcher with typed args and result contract",
+L00008421	        "cmd.docker.compose must expose projected state selector and disabled reason before dispatch",
+L00008422	        "cmd.docker.compose dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008423	        "cmd.docker.compose must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008424	        "cmd.docker.compose must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008425	      ],
+L00008426	      "evidence_required": "Production wiring contract for cmd.docker.compose; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008427	      "state_selector": "state.commands.docker_compose.availability",
+L00008428	      "disabled_reason_projection": "state.commands.docker_compose.disabled_reason",
+L00008429	      "effect_contract": {
+L00008430	        "effect_kind": "receipt",
+L00008431	        "description": "cmd.docker.compose has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008432	        "receipt_or_event_refs": [
+L00008433	          "cmd.docker.compose.dispatch_receipt"
+L00008434	        ]
+L00008435	      },
+L00008436	      "accessibility_contract": {
+L00008437	        "role_or_semantics": "catalog.docker_compose exposes a stable role/name/description matching cmd.docker.compose.",
+L00008438	        "keyboard_access": "catalog.docker_compose is reachable and activatable by keyboard where the control is visible.",
+L00008439	        "focus_management": "catalog.docker_compose preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008440	        "disabled_announcement": "catalog.docker_compose surfaces state.commands.docker_compose.disabled_reason to assistive technology when unavailable."
+L00008441	      },
+L00008442	      "test_evidence": [
+L00008443	        {
+L00008444	          "test_id": "wiring.catalog.docker_compose.dispatcher",
+L00008445	          "evidence_kind": "dispatcher_fixture",
+L00008446	          "requirement": "Dispatching cmd.docker.compose reaches handlers::docker::compose with typed args/result contract."
+L00008447	        },
+L00008448	        {
+L00008449	          "test_id": "wiring.catalog.docker_compose.state_projection",
+L00008450	          "evidence_kind": "state_projection",
+L00008451	          "requirement": "Availability reads state.commands.docker_compose.availability and disabled copy reads state.commands.docker_compose.disabled_reason."
+L00008452	        },
+L00008453	        {
+L00008454	          "test_id": "wiring.catalog.docker_compose.effect",
+L00008455	          "evidence_kind": "receipt_or_event_assertion",
+L00008456	          "requirement": "cmd.docker.compose has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008457	        },
+L00008458	        {
+L00008459	          "test_id": "wiring.catalog.docker_compose.accessibility",
+L00008460	          "evidence_kind": "accessibility_regression",
+L00008461	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008462	        }
+L00008463	      ],
+L00008464	      "event_test_requirements": [
+L00008465	        "Assert cmd.docker.compose records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008466	      ]
+L00008467	    },
+L00008468	    "catalog.docker_compose_down": {
+L00008469	      "ui_element_id": "catalog.docker_compose_down",
+L00008470	      "ui_location": "Docker Manager > Compose Down",
+L00008471	      "ui_command_id": "cmd.docker.compose_down",
+L00008472	      "handler_location": "handlers::docker::compose_down",
+L00008473	      "expected_event_types": [],
+L00008474	      "acceptance_checks": [
+L00008475	        "cmd.docker.compose_down must be registered in the UICommand dispatcher with typed args and result contract",
+L00008476	        "cmd.docker.compose_down must expose projected state selector and disabled reason before dispatch",
+L00008477	        "cmd.docker.compose_down dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008478	        "cmd.docker.compose_down must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008479	        "cmd.docker.compose_down must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008480	      ],
+L00008481	      "evidence_required": "Production wiring contract for cmd.docker.compose_down; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008482	      "state_selector": "state.commands.docker_compose_down.availability",
+L00008483	      "disabled_reason_projection": "state.commands.docker_compose_down.disabled_reason",
+L00008484	      "effect_contract": {
+L00008485	        "effect_kind": "receipt",
+L00008486	        "description": "cmd.docker.compose_down has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008487	        "receipt_or_event_refs": [
+L00008488	          "cmd.docker.compose_down.dispatch_receipt"
+L00008489	        ]
+L00008490	      },
+L00008491	      "accessibility_contract": {
+L00008492	        "role_or_semantics": "catalog.docker_compose_down exposes a stable role/name/description matching cmd.docker.compose_down.",
+L00008493	        "keyboard_access": "catalog.docker_compose_down is reachable and activatable by keyboard where the control is visible.",
+L00008494	        "focus_management": "catalog.docker_compose_down preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008495	        "disabled_announcement": "catalog.docker_compose_down surfaces state.commands.docker_compose_down.disabled_reason to assistive technology when unavailable."
+L00008496	      },
+L00008497	      "test_evidence": [
+L00008498	        {
+L00008499	          "test_id": "wiring.catalog.docker_compose_down.dispatcher",
+L00008500	          "evidence_kind": "dispatcher_fixture",
+L00008501	          "requirement": "Dispatching cmd.docker.compose_down reaches handlers::docker::compose_down with typed args/result contract."
+L00008502	        },
+L00008503	        {
+L00008504	          "test_id": "wiring.catalog.docker_compose_down.state_projection",
+L00008505	          "evidence_kind": "state_projection",
+L00008506	          "requirement": "Availability reads state.commands.docker_compose_down.availability and disabled copy reads state.commands.docker_compose_down.disabled_reason."
+L00008507	        },
+L00008508	        {
+L00008509	          "test_id": "wiring.catalog.docker_compose_down.effect",
+L00008510	          "evidence_kind": "receipt_or_event_assertion",
+L00008511	          "requirement": "cmd.docker.compose_down has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008512	        },
+L00008513	        {
+L00008514	          "test_id": "wiring.catalog.docker_compose_down.accessibility",
+L00008515	          "evidence_kind": "accessibility_regression",
+L00008516	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008517	        }
+L00008518	      ],
+L00008519	      "event_test_requirements": [
+L00008520	        "Assert cmd.docker.compose_down records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008521	      ]
+L00008522	    },
+L00008523	    "catalog.docker_compose_down_subset": {
+L00008524	      "ui_element_id": "catalog.docker_compose_down_subset",
+L00008525	      "ui_location": "Docker Manager > Compose > Down Subset",
+L00008526	      "ui_command_id": "cmd.docker.compose.down_subset",
+L00008527	      "handler_location": "handlers::docker::compose_down_subset",
+L00008528	      "expected_event_types": [],
+L00008529	      "acceptance_checks": [
+L00008530	        "cmd.docker.compose.down_subset must be registered in the UICommand dispatcher with typed args and result contract",
+L00008531	        "cmd.docker.compose.down_subset must expose projected state selector and disabled reason before dispatch",
+L00008532	        "cmd.docker.compose.down_subset dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008533	        "cmd.docker.compose.down_subset must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008534	        "cmd.docker.compose.down_subset must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008535	      ],
+L00008536	      "evidence_required": "Production wiring contract for cmd.docker.compose.down_subset; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008537	      "state_selector": "state.commands.docker_compose_down_subset.availability",
+L00008538	      "disabled_reason_projection": "state.commands.docker_compose_down_subset.disabled_reason",
+L00008539	      "effect_contract": {
+L00008540	        "effect_kind": "receipt",
+L00008541	        "description": "cmd.docker.compose.down_subset has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008542	        "receipt_or_event_refs": [
+L00008543	          "cmd.docker.compose.down_subset.dispatch_receipt"
+L00008544	        ]
+L00008545	      },
+L00008546	      "accessibility_contract": {
+L00008547	        "role_or_semantics": "catalog.docker_compose_down_subset exposes a stable role/name/description matching cmd.docker.compose.down_subset.",
+L00008548	        "keyboard_access": "catalog.docker_compose_down_subset is reachable and activatable by keyboard where the control is visible.",
+L00008549	        "focus_management": "catalog.docker_compose_down_subset preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008550	        "disabled_announcement": "catalog.docker_compose_down_subset surfaces state.commands.docker_compose_down_subset.disabled_reason to assistive technology when unavailable."
+L00008551	      },
+L00008552	      "test_evidence": [
+L00008553	        {
+L00008554	          "test_id": "wiring.catalog.docker_compose_down_subset.dispatcher",
+L00008555	          "evidence_kind": "dispatcher_fixture",
+L00008556	          "requirement": "Dispatching cmd.docker.compose.down_subset reaches handlers::docker::compose_down_subset with typed args/result contract."
+L00008557	        },
+L00008558	        {
+L00008559	          "test_id": "wiring.catalog.docker_compose_down_subset.state_projection",
+L00008560	          "evidence_kind": "state_projection",
+L00008561	          "requirement": "Availability reads state.commands.docker_compose_down_subset.availability and disabled copy reads state.commands.docker_compose_down_subset.disabled_reason."
+L00008562	        },
+L00008563	        {
+L00008564	          "test_id": "wiring.catalog.docker_compose_down_subset.effect",
+L00008565	          "evidence_kind": "receipt_or_event_assertion",
+L00008566	          "requirement": "cmd.docker.compose.down_subset has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008567	        },
+L00008568	        {
+L00008569	          "test_id": "wiring.catalog.docker_compose_down_subset.accessibility",
+L00008570	          "evidence_kind": "accessibility_regression",
+L00008571	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008572	        }
+L00008573	      ],
+L00008574	      "event_test_requirements": [
+L00008575	        "Assert cmd.docker.compose.down_subset records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008576	      ]
+L00008577	    },
+L00008578	    "catalog.docker_compose_scenario_delete": {
+L00008579	      "ui_element_id": "catalog.docker_compose_scenario_delete",
+L00008580	      "ui_location": "Docker Manager > Compose > Scenario > Delete",
+L00008581	      "ui_command_id": "cmd.docker.compose.scenario.delete",
+L00008582	      "handler_location": "handlers::docker::compose_scenario_delete",
+L00008583	      "expected_event_types": [],
+L00008584	      "acceptance_checks": [
+L00008585	        "cmd.docker.compose.scenario.delete must be registered in the UICommand dispatcher with typed args and result contract",
+L00008586	        "cmd.docker.compose.scenario.delete must expose projected state selector and disabled reason before dispatch",
+L00008587	        "cmd.docker.compose.scenario.delete dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008588	        "cmd.docker.compose.scenario.delete must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008589	        "cmd.docker.compose.scenario.delete must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008590	      ],
+L00008591	      "evidence_required": "Production wiring contract for cmd.docker.compose.scenario.delete; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008592	      "state_selector": "state.commands.docker_compose_scenario_delete.availability",
+L00008593	      "disabled_reason_projection": "state.commands.docker_compose_scenario_delete.disabled_reason",
+L00008594	      "effect_contract": {
+L00008595	        "effect_kind": "receipt",
+L00008596	        "description": "cmd.docker.compose.scenario.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008597	        "receipt_or_event_refs": [
+L00008598	          "cmd.docker.compose.scenario.delete.dispatch_receipt"
+L00008599	        ]
+L00008600	      },
+L00008601	      "accessibility_contract": {
+L00008602	        "role_or_semantics": "catalog.docker_compose_scenario_delete exposes a stable role/name/description matching cmd.docker.compose.scenario.delete.",
+L00008603	        "keyboard_access": "catalog.docker_compose_scenario_delete is reachable and activatable by keyboard where the control is visible.",
+L00008604	        "focus_management": "catalog.docker_compose_scenario_delete preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008605	        "disabled_announcement": "catalog.docker_compose_scenario_delete surfaces state.commands.docker_compose_scenario_delete.disabled_reason to assistive technology when unavailable."
+L00008606	      },
+L00008607	      "test_evidence": [
+L00008608	        {
+L00008609	          "test_id": "wiring.catalog.docker_compose_scenario_delete.dispatcher",
+L00008610	          "evidence_kind": "dispatcher_fixture",
+L00008611	          "requirement": "Dispatching cmd.docker.compose.scenario.delete reaches handlers::docker::compose_scenario_delete with typed args/result contract."
+L00008612	        },
+L00008613	        {
+L00008614	          "test_id": "wiring.catalog.docker_compose_scenario_delete.state_projection",
+L00008615	          "evidence_kind": "state_projection",
+L00008616	          "requirement": "Availability reads state.commands.docker_compose_scenario_delete.availability and disabled copy reads state.commands.docker_compose_scenario_delete.disabled_reason."
+L00008617	        },
+L00008618	        {
+L00008619	          "test_id": "wiring.catalog.docker_compose_scenario_delete.effect",
+L00008620	          "evidence_kind": "receipt_or_event_assertion",
+L00008621	          "requirement": "cmd.docker.compose.scenario.delete has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008622	        },
+L00008623	        {
+L00008624	          "test_id": "wiring.catalog.docker_compose_scenario_delete.accessibility",
+L00008625	          "evidence_kind": "accessibility_regression",
+L00008626	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008627	        }
+L00008628	      ],
+L00008629	      "event_test_requirements": [
+L00008630	        "Assert cmd.docker.compose.scenario.delete records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008631	      ]
+L00008632	    },
+L00008633	    "catalog.docker_compose_scenario_edit": {
+L00008634	      "ui_element_id": "catalog.docker_compose_scenario_edit",
+L00008635	      "ui_location": "Docker Manager > Compose > Scenario > Edit",
+L00008636	      "ui_command_id": "cmd.docker.compose.scenario.edit",
+L00008637	      "handler_location": "handlers::docker::compose_scenario_edit",
+L00008638	      "expected_event_types": [],
+L00008639	      "acceptance_checks": [
+L00008640	        "cmd.docker.compose.scenario.edit must be registered in the UICommand dispatcher with typed args and result contract",
+L00008641	        "cmd.docker.compose.scenario.edit must expose projected state selector and disabled reason before dispatch",
+L00008642	        "cmd.docker.compose.scenario.edit dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008643	        "cmd.docker.compose.scenario.edit must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008644	        "cmd.docker.compose.scenario.edit must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008645	      ],
+L00008646	      "evidence_required": "Production wiring contract for cmd.docker.compose.scenario.edit; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008647	      "state_selector": "state.commands.docker_compose_scenario_edit.availability",
+L00008648	      "disabled_reason_projection": "state.commands.docker_compose_scenario_edit.disabled_reason",
+L00008649	      "effect_contract": {
+L00008650	        "effect_kind": "receipt",
+L00008651	        "description": "cmd.docker.compose.scenario.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008652	        "receipt_or_event_refs": [
+L00008653	          "cmd.docker.compose.scenario.edit.dispatch_receipt"
+L00008654	        ]
+L00008655	      },
+L00008656	      "accessibility_contract": {
+L00008657	        "role_or_semantics": "catalog.docker_compose_scenario_edit exposes a stable role/name/description matching cmd.docker.compose.scenario.edit.",
+L00008658	        "keyboard_access": "catalog.docker_compose_scenario_edit is reachable and activatable by keyboard where the control is visible.",
+L00008659	        "focus_management": "catalog.docker_compose_scenario_edit preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008660	        "disabled_announcement": "catalog.docker_compose_scenario_edit surfaces state.commands.docker_compose_scenario_edit.disabled_reason to assistive technology when unavailable."
+L00008661	      },
+L00008662	      "test_evidence": [
+L00008663	        {
+L00008664	          "test_id": "wiring.catalog.docker_compose_scenario_edit.dispatcher",
+L00008665	          "evidence_kind": "dispatcher_fixture",
+L00008666	          "requirement": "Dispatching cmd.docker.compose.scenario.edit reaches handlers::docker::compose_scenario_edit with typed args/result contract."
+L00008667	        },
+L00008668	        {
+L00008669	          "test_id": "wiring.catalog.docker_compose_scenario_edit.state_projection",
+L00008670	          "evidence_kind": "state_projection",
+L00008671	          "requirement": "Availability reads state.commands.docker_compose_scenario_edit.availability and disabled copy reads state.commands.docker_compose_scenario_edit.disabled_reason."
+L00008672	        },
+L00008673	        {
+L00008674	          "test_id": "wiring.catalog.docker_compose_scenario_edit.effect",
+L00008675	          "evidence_kind": "receipt_or_event_assertion",
+L00008676	          "requirement": "cmd.docker.compose.scenario.edit has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008677	        },
+L00008678	        {
+L00008679	          "test_id": "wiring.catalog.docker_compose_scenario_edit.accessibility",
+L00008680	          "evidence_kind": "accessibility_regression",
+L00008681	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008682	        }
+L00008683	      ],
+L00008684	      "event_test_requirements": [
+L00008685	        "Assert cmd.docker.compose.scenario.edit records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008686	      ]
+L00008687	    },
+L00008688	    "catalog.docker_compose_scenario_run": {
+L00008689	      "ui_element_id": "catalog.docker_compose_scenario_run",
+L00008690	      "ui_location": "Docker Manager > Compose > Scenario > Run",
+L00008691	      "ui_command_id": "cmd.docker.compose.scenario.run",
+L00008692	      "handler_location": "handlers::docker::compose_scenario_run",
+L00008693	      "expected_event_types": [],
+L00008694	      "acceptance_checks": [
+L00008695	        "cmd.docker.compose.scenario.run must be registered in the UICommand dispatcher with typed args and result contract",
+L00008696	        "cmd.docker.compose.scenario.run must expose projected state selector and disabled reason before dispatch",
+L00008697	        "cmd.docker.compose.scenario.run dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008698	        "cmd.docker.compose.scenario.run must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008699	        "cmd.docker.compose.scenario.run must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008700	      ],
+L00008701	      "evidence_required": "Production wiring contract for cmd.docker.compose.scenario.run; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008702	      "state_selector": "state.commands.docker_compose_scenario_run.availability",
+L00008703	      "disabled_reason_projection": "state.commands.docker_compose_scenario_run.disabled_reason",
+L00008704	      "effect_contract": {
+L00008705	        "effect_kind": "receipt",
+L00008706	        "description": "cmd.docker.compose.scenario.run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008707	        "receipt_or_event_refs": [
+L00008708	          "cmd.docker.compose.scenario.run.dispatch_receipt"
+L00008709	        ]
+L00008710	      },
+L00008711	      "accessibility_contract": {
+L00008712	        "role_or_semantics": "catalog.docker_compose_scenario_run exposes a stable role/name/description matching cmd.docker.compose.scenario.run.",
+L00008713	        "keyboard_access": "catalog.docker_compose_scenario_run is reachable and activatable by keyboard where the control is visible.",
+L00008714	        "focus_management": "catalog.docker_compose_scenario_run preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008715	        "disabled_announcement": "catalog.docker_compose_scenario_run surfaces state.commands.docker_compose_scenario_run.disabled_reason to assistive technology when unavailable."
+L00008716	      },
+L00008717	      "test_evidence": [
+L00008718	        {
+L00008719	          "test_id": "wiring.catalog.docker_compose_scenario_run.dispatcher",
+L00008720	          "evidence_kind": "dispatcher_fixture",
+L00008721	          "requirement": "Dispatching cmd.docker.compose.scenario.run reaches handlers::docker::compose_scenario_run with typed args/result contract."
+L00008722	        },
+L00008723	        {
+L00008724	          "test_id": "wiring.catalog.docker_compose_scenario_run.state_projection",
+L00008725	          "evidence_kind": "state_projection",
+L00008726	          "requirement": "Availability reads state.commands.docker_compose_scenario_run.availability and disabled copy reads state.commands.docker_compose_scenario_run.disabled_reason."
+L00008727	        },
+L00008728	        {
+L00008729	          "test_id": "wiring.catalog.docker_compose_scenario_run.effect",
+L00008730	          "evidence_kind": "receipt_or_event_assertion",
+L00008731	          "requirement": "cmd.docker.compose.scenario.run has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008732	        },
+L00008733	        {
+L00008734	          "test_id": "wiring.catalog.docker_compose_scenario_run.accessibility",
+L00008735	          "evidence_kind": "accessibility_regression",
+L00008736	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008737	        }
+L00008738	      ],
+L00008739	      "event_test_requirements": [
+L00008740	        "Assert cmd.docker.compose.scenario.run records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008741	      ]
+L00008742	    },
+L00008743	    "catalog.docker_compose_scenario_save": {
+L00008744	      "ui_element_id": "catalog.docker_compose_scenario_save",
+L00008745	      "ui_location": "Docker Manager > Compose > Scenario > Save",
+L00008746	      "ui_command_id": "cmd.docker.compose.scenario.save",
+L00008747	      "handler_location": "handlers::docker::compose_scenario_save",
+L00008748	      "expected_event_types": [],
+L00008749	      "acceptance_checks": [
+L00008750	        "cmd.docker.compose.scenario.save must be registered in the UICommand dispatcher with typed args and result contract",
+L00008751	        "cmd.docker.compose.scenario.save must expose projected state selector and disabled reason before dispatch",
+L00008752	        "cmd.docker.compose.scenario.save dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008753	        "cmd.docker.compose.scenario.save must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008754	        "cmd.docker.compose.scenario.save must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00008755	      ],
+L00008756	      "evidence_required": "Production wiring contract for cmd.docker.compose.scenario.save; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00008757	      "state_selector": "state.commands.docker_compose_scenario_save.availability",
+L00008758	      "disabled_reason_projection": "state.commands.docker_compose_scenario_save.disabled_reason",
+L00008759	      "effect_contract": {
+L00008760	        "effect_kind": "receipt",
+L00008761	        "description": "cmd.docker.compose.scenario.save has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00008762	        "receipt_or_event_refs": [
+L00008763	          "cmd.docker.compose.scenario.save.dispatch_receipt"
+L00008764	        ]
+L00008765	      },
+L00008766	      "accessibility_contract": {
+L00008767	        "role_or_semantics": "catalog.docker_compose_scenario_save exposes a stable role/name/description matching cmd.docker.compose.scenario.save.",
+L00008768	        "keyboard_access": "catalog.docker_compose_scenario_save is reachable and activatable by keyboard where the control is visible.",
+L00008769	        "focus_management": "catalog.docker_compose_scenario_save preserves visible focus and returns focus deterministically after dispatch or error.",
+L00008770	        "disabled_announcement": "catalog.docker_compose_scenario_save surfaces state.commands.docker_compose_scenario_save.disabled_reason to assistive technology when unavailable."
+L00008771	      },
+L00008772	      "test_evidence": [
+L00008773	        {
+L00008774	          "test_id": "wiring.catalog.docker_compose_scenario_save.dispatcher",
+L00008775	          "evidence_kind": "dispatcher_fixture",
+L00008776	          "requirement": "Dispatching cmd.docker.compose.scenario.save reaches handlers::docker::compose_scenario_save with typed args/result contract."
+L00008777	        },
+L00008778	        {
+L00008779	          "test_id": "wiring.catalog.docker_compose_scenario_save.state_projection",
+L00008780	          "evidence_kind": "state_projection",
+L00008781	          "requirement": "Availability reads state.commands.docker_compose_scenario_save.availability and disabled copy reads state.commands.docker_compose_scenario_save.disabled_reason."
+L00008782	        },
+L00008783	        {
+L00008784	          "test_id": "wiring.catalog.docker_compose_scenario_save.effect",
+L00008785	          "evidence_kind": "receipt_or_event_assertion",
+L00008786	          "requirement": "cmd.docker.compose.scenario.save has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00008787	        },
+L00008788	        {
+L00008789	          "test_id": "wiring.catalog.docker_compose_scenario_save.accessibility",
+L00008790	          "evidence_kind": "accessibility_regression",
+L00008791	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00008792	        }
+L00008793	      ],
+L00008794	      "event_test_requirements": [
+L00008795	        "Assert cmd.docker.compose.scenario.save records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00008796	      ]
+L00008797	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=8798-8809 >>>
+L00008798	    "catalog.docker_compose_up": {
+L00008799	      "ui_element_id": "catalog.docker_compose_up",
+L00008800	      "ui_location": "Docker Manager > Compose Up",
+L00008801	      "ui_command_id": "cmd.docker.compose_up",
+L00008802	      "handler_location": "handlers::docker::compose_up",
+L00008803	      "expected_event_types": [],
+L00008804	      "acceptance_checks": [
+L00008805	        "cmd.docker.compose_up must be registered in the UICommand dispatcher with typed args and result contract",
+L00008806	        "cmd.docker.compose_up must expose projected state selector and disabled reason before dispatch",
+L00008807	        "cmd.docker.compose_up dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00008808	        "cmd.docker.compose_up must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00008809	        "cmd.docker.compose_up must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

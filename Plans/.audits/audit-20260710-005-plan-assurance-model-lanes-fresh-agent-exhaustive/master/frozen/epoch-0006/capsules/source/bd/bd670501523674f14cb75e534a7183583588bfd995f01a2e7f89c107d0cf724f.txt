@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15579-15590 >>>
+L00015579	- Plans/PRD_Builder.md
+L00015580	- Plans/Planning_Wizard.md
+L00015581	- Plans/Project_Output_Artifacts.md
+L00015582	- Plans/Runtime_Artifacts_Panel.md
+L00015583	- Plans/storage-plan.md
+L00015584	- Plans/Contracts_V0.md
+L00015585	- Plans/Orchestrator_Page.md
+L00015586	- Plans/UI_Command_Catalog.md
+L00015587	- Plans/FinalGUISpec.md
+L00015588	- Plans/Permissions_System.md
+L00015589	```
+L00015590	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15591-15988 >>>
+L00015591	### SP-220 - Teach Memory Capture Storage Boundary
+L00015592	
+L00015593	```yaml
+L00015594	plan_unit_id: SP-220
+L00015595	unit_type: requirement
+L00015596	status: accepted
+L00015597	owner_doc: Plans/storage-plan.md
+L00015598	canonical_text: Teach memory capture is explicit and separate from one-off Teacher-guided instruction. Eligible
+L00015599	  Teacher answers may offer Save as taught memory; durable records preserve normalized fact, scope selector thread/project/user,
+L00015600	  source message/thread, secret-safety warning, conflict or supersession state, and user-locked record state. Users
+L00015601	  can inspect, narrow, supersede, revoke, or unlock records; one-off guidance is not auto-saved and secrets must
+L00015602	  not be persisted.
+L00015603	gui_related: false
+L00015604	gui_classification_reason: Durable taught-memory scope and record state are storage behavior; capture UI is owned
+L00015605	  by Assistant Chat.
+L00015606	depends_on:
+L00015607	- ACD-426
+L00015608	unblocks:
+L00015609	- G-026
+L00015610	- ATS-014
+L00015611	acceptance_criteria:
+L00015612	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00015613	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00015614	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00015615	  are created by this compile.
+L00015616	validation_surfaces:
+L00015617	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00015618	- python3 scripts/pm-plan-index.py validate
+L00015619	- git diff --check
+L00015620	risk_class: teach_memory_persistence_drift
+L00015621	reasoning_tier: standard
+L00015622	context_scope: teach_memory_capture_records
+L00015623	implementation_surfaces:
+L00015624	- Plans/storage-plan.md
+L00015625	- future taught memory records
+L00015626	node_compile_hint:
+L00015627	  mode: teach_memory_storage_boundary
+L00015628	  create_worknodes: false
+L00015629	  create_nodeseeds: false
+L00015630	source_lineage:
+L00015631	- pldg-20260626-001-feature-name:atom-0094
+L00015632	- pldg-20260626-001-feature-name:atom-0122
+L00015633	- pldg-20260626-001-feature-name:atom-0123
+L00015634	- pldg-20260626-001-feature-name:atom-0146
+L00015635	- Plans/assistant-chat-design.md#6-Teach
+L00015636	- chat:teach-teacher-correction
+L00015637	- chat:teach-gap-fill-correction
+L00015638	- q-0028
+L00015639	- chat:teach-bundle-accepted-pmconcept-reference
+L00015640	- chat:work-through-teach-gaps
+L00015641	- Plans/assistant-chat-design.md#6-teach
+L00015642	source_atom_ids:
+L00015643	- atom-0094
+L00015644	- atom-0122
+L00015645	- atom-0123
+L00015646	- atom-0146
+L00015647	decision_refs:
+L00015648	- dec-0018
+L00015649	- dec-0019
+L00015650	- dec-0020
+L00015651	- dec-0024
+L00015652	correction_refs:
+L00015653	- corr-0003
+L00015654	preserved_exact_tokens:
+L00015655	- Teach
+L00015656	- Teacher
+L00015657	- remember that...
+L00015658	- for this repo always...
+L00015659	- please prefer...
+L00015660	- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+L00015661	- taught memory
+L00015662	- memory scope
+L00015663	- durable
+L00015664	- user-approved
+L00015665	- current thread
+L00015666	- current project
+L00015667	- feature area
+L00015668	- scope selector
+L00015669	- edit/delete
+L00015670	- one-off Teacher instruction
+L00015671	- user-locked record
+L00015672	- must not silently overwrite
+L00015673	- rejects an update
+L00015674	- resolves a conflict
+L00015675	- pins a correction
+L00015676	- unlock/edit flow
+L00015677	- conflict display
+L00015678	- Save as taught memory
+L00015679	- normalized fact
+L00015680	- thread
+L00015681	- project
+L00015682	- user
+L00015683	- source message/thread
+L00015684	- secret-safety warning
+L00015685	- conflict/supersession preview
+L00015686	- Save/Cancel
+L00015687	- inspect
+L00015688	- narrow
+L00015689	- supersede
+L00015690	- revoke
+L00015691	- unlock
+L00015692	negative_constraints:
+L00015693	- Do not make Teacher-guided instruction automatically persist memory.
+L00015694	- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
+L00015695	- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
+L00015696	- Do not persist Teach conversation content as memory without confirmation.
+L00015697	- Do not use taught memory outside its approved scope.
+L00015698	- Do not bury edit/delete controls away from the memory explanation.
+L00015699	- Do not let later Teach runs overwrite locked corrections without explicit user action.
+L00015700	- Do not cite a locked record without showing its scope/source when relevant.
+L00015701	- Do not auto-save one-off Teacher guidance as taught memory.
+L00015702	- Do not persist secrets, tokens, passwords, or credentials.
+L00015703	- Do not allow conflicting teachings to silently overwrite prior locked records.
+L00015704	owner_hints:
+L00015705	- Plans/assistant-chat-design.md
+L00015706	- Plans/Prompt_Pipeline.md
+L00015707	- Plans/storage-plan.md
+L00015708	- Plans/Contracts_V0.md
+L00015709	- Plans/Personas.md
+L00015710	- Plans/Glossary.md
+L00015711	- Plans/FinalGUISpec.md
+L00015712	```
+L00015713	
+L00015714	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00015715	
+L00015716	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Storage Plan owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00015717	
+L00015718	### SP-221 - Inline Visualizer V2 State And Replay Storage
+L00015719	
+L00015720	```yaml
+L00015721	plan_unit_id: SP-221
+L00015722	unit_type: requirement
+L00015723	status: accepted
+L00015724	owner_doc: Plans/storage-plan.md
+L00015725	canonical_text: >-
+L00015726	  Inline visualizer v2 persists source fragment, title/type/version, render config, approved bridge metadata,
+L00015727	  PM-managed state outputs, visible fallback or error state, and replay/re-render lineage scoped by project, thread,
+L00015728	  message, and visualizer artifact. Reload re-renders from source/config when practical; screenshot or snapshot
+L00015729	  fallback is stored only when re-render is impractical. PM-managed bridge state uses the namespace
+L00015730	  `visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}`, stores only
+L00015731	  JSON-serializable values under quota, records the bridge method and schema version that wrote the state, and exposes
+L00015732	  replay, export, and purge boundaries. Runtime heap, same-origin storage, raw parent localStorage, secrets, and
+L00015733	  diagnostic payload leaks are never persistence sources.
+L00015734	gui_related: false
+L00015735	gui_classification_reason: Defines durable visualizer record scope and replay storage behavior; visible rendering is owned by GUI and Assistant Chat.
+L00015736	depends_on: [ACD-427, CV-300]
+L00015737	unblocks: [RAP-037, ATS-015]
+L00015738	acceptance_criteria:
+L00015739	  - Visualizer records are scoped by project, thread, message, and visualizer artifact.
+L00015740	  - Reload can replay from persisted source/config/state or show the stored fallback/error state.
+L00015741	  - PM-managed visualizer state is namespaced, quota-bound, JSON-serializable, and reload/export/purge aware.
+L00015742	  - PM-managed state outputs are allowed; raw parent localStorage and runtime heap persistence are forbidden.
+L00015743	validation_surfaces:
+L00015744	  - python3 scripts/pm-plan-index.py validate
+L00015745	  - Inline visualizer reload and export storage fixtures
+L00015746	risk_class: inline_visualizer_replay_storage_gap
+L00015747	reasoning_tier: high
+L00015748	context_scope: inline_visualizer_v2_storage
+L00015749	implementation_surfaces:
+L00015750	  - Plans/storage-plan.md
+L00015751	  - future visualizer artifact records
+L00015752	node_compile_hint:
+L00015753	  mode: inline_visualizer_v2_storage_replay
+L00015754	  create_worknodes: false
+L00015755	  create_nodeseeds: false
+L00015756	source_lineage:
+L00015757	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
+L00015758	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
+L00015759	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+L00015760	source_atom_ids: [atom-0060, atom-0088]
+L00015761	preserved_exact_tokens:
+L00015762	  - "source fragment"
+L00015763	  - "title/type/version"
+L00015764	  - "render config"
+L00015765	  - "approved bridge metadata"
+L00015766	  - "PM-managed state outputs"
+L00015767	  - "visualizer_state.v1:{project_id}:{thread_id}:{message_id}:{visualizer_artifact_id}"
+L00015768	  - "project/thread/message/visualizer artifact"
+L00015769	  - "screenshot/snapshot fallback"
+L00015770	  - "raw parent localStorage"
+L00015771	negative_constraints:
+L00015772	  - Do not persist runtime heap as visualizer state.
+L00015773	  - Do not read or write raw parent localStorage from the visualizer iframe.
+L00015774	  - Do not store secrets or unredacted diagnostic payloads in visualizer replay records.
+L00015775	owner_hints:
+L00015776	  - Plans/storage-plan.md
+L00015777	  - Plans/assistant-chat-design.md
+L00015778	  - Plans/Runtime_Artifacts_Panel.md
+L00015779	```
+L00015780	
+L00015781	### SP-222 - Notification Settings Destinations Receipts And Sound Assets Storage
+L00015782	
+L00015783	```yaml
+L00015784	plan_unit_id: SP-222
+L00015785	unit_type: requirement
+L00015786	status: accepted
+L00015787	owner_doc: Plans/storage-plan.md
+L00015788	canonical_text: >-
+L00015789	  Notification storage separates non-secret settings, destination definitions, sound mappings, sound asset manifests,
+L00015790	  uploaded/imported sound blobs, and delivery attempt receipts. Record keys include `notification_settings.v1:global`,
+L00015791	  project-scoped settings, `notification_destination.v1:{scope}:{destination_id}`,
+L00015792	  `notification_sound_mapping.v1:{scope}:{event_category}`, and `sound_asset_manifest.v1:{scope}:{sound_id}`.
+L00015793	  Destination records include provider_kind, scope, enabled state, display_name, event_category allowlist, quiet/focus
+L00015794	  policy, rate_limit_profile, idempotency profile, last_test_receipt_ref, and provider-specific profile payloads for
+L00015795	  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram as defined by CV-298. Webhook and push tokens are stored
+L00015796	  only as OS credential references; receipts store redacted request and response digests, provider kind, destination id,
+L00015797	  event id, event category, status class, HTTP status, provider request/message id when available, retry count, next
+L00015798	  retry time, redaction profile, idempotency key, and secret refs only. Built-in sound manifests include sound_id,
+L00015799	  built_in/user_uploaded/imported source_kind, display_name, source_url_or_package_ref, license_ref, attribution,
+L00015800	  version, format, duration_ms, loudness_normalization, sha256, disabled/hidden state, and default event_category
+L00015801	  mappings.
+L00015802	gui_related: false
+L00015803	gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
+L00015804	depends_on: [CV-298, PS-124]
+L00015805	unblocks: [F3-405, RAP-039, ATS-016]
+L00015806	acceptance_criteria:
+L00015807	  - Non-secret notification settings and sound manifests are durable and scope-aware.
+L00015808	  - Provider-specific destination profile payloads are persisted as credential refs and non-secret settings, not as raw tokens or URLs.
+L00015809	  - Built-in normal notification sounds carry source, license, attribution, version, duration, hash, and default event-category mapping metadata.
+L00015810	  - Webhook URLs, tokens, and push credentials are represented only by credential refs outside redb/plain settings.
+L00015811	  - Uploaded sound assets validate MIME/header/decode/path, cap at 5 MiB and 10 seconds decoded, warn above 3 seconds, normalize to PM-managed copies, trim silence, hash duplicates, soft-delete user assets, and never export secrets.
+L00015812	validation_surfaces:
+L00015813	  - python3 scripts/pm-plan-index.py validate
+L00015814	  - Notification settings and sound asset storage fixtures
+L00015815	risk_class: notification_storage_secret_leak
+L00015816	reasoning_tier: high
+L00015817	context_scope: notifications_sounds_storage
+L00015818	implementation_surfaces:
+L00015819	  - Plans/storage-plan.md
+L00015820	  - future notification settings records
+L00015821	  - future sound asset records
+L00015822	node_compile_hint:
+L00015823	  mode: notifications_sounds_storage
+L00015824	  create_worknodes: false
+L00015825	  create_nodeseeds: false
+L00015826	source_lineage:
+L00015827	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+L00015828	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+L00015829	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
+L00015830	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
+L00015831	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
+L00015832	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+L00015833	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+L00015834	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00015835	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+L00015836	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
+L00015837	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+L00015838	source_atom_ids: [atom-0061, atom-0063, atom-0064, atom-0065, atom-0066, atom-0067]
+L00015839	preserved_exact_tokens:
+L00015840	  - "notification_settings.v1:global"
+L00015841	  - "notification_destination.v1:{scope}:{destination_id}"
+L00015842	  - "notification_sound_mapping.v1:{scope}:{event_category}"
+L00015843	  - "sound_asset_manifest.v1:{scope}:{sound_id}"
+L00015844	  - "provider_kind"
+L00015845	  - "event_category"
+L00015846	  - "rate_limit_profile"
+L00015847	  - "idempotency"
+L00015848	  - "source_kind"
+L00015849	  - "license_ref"
+L00015850	  - "source_url_or_package_ref"
+L00015851	  - "WAV"
+L00015852	  - "MP3"
+L00015853	  - "OGG"
+L00015854	  - "5MiB"
+L00015855	  - "10s"
+L00015856	  - "warn >3s"
+L00015857	  - "soft-delete"
+L00015858	negative_constraints:
+L00015859	  - Do not store webhook URLs or provider tokens in non-secret settings.
+L00015860	  - Do not export secrets with sound packs or notification settings.
+L00015861	  - Do not hard-delete built-in sounds; built-ins may be hidden or disabled.
+L00015862	owner_hints:
+L00015863	  - Plans/storage-plan.md
+L00015864	  - Plans/Contracts_V0.md
+L00015865	  - Plans/Permissions_System.md
+L00015866	  - Plans/FinalGUISpec.md
+L00015867	```
+L00015868	
+L00015869	### SP-223 - DRY Setting Receipt And Rules Provenance Storage
+L00015870	
+L00015871	```yaml
+L00015872	plan_unit_id: SP-223
+L00015873	unit_type: requirement
+L00015874	status: accepted
+L00015875	owner_doc: Plans/storage-plan.md
+L00015876	canonical_text: >-
+L00015877	  DRY Method storage preserves the application setting `app.agent_rules.dry_method_default_guard` as enabled or
+L00015878	  disabled_by_user with default enabled, plus run/turn receipts carrying `instruction_bundle_ref`,
+L00015879	  `rules_application_sha256`, `rules_project_sha256`, `dry_method_effective_state`, `dry_method_reason`, and
+L00015880	  `dry_method_source_refs`. Turning DRY off disables only the default DRY guard and DRY-specific caveat/block behavior;
+L00015881	  it does not delete receipt provenance or disable explicit instructions, safety, secrets, source authority,
+L00015882	  governance phase boundaries, permissions, or source-control hygiene.
+L00015883	gui_related: false
+L00015884	gui_classification_reason: Defines durable setting and provenance/receipt fields rather than visible presentation.
+L00015885	depends_on: [ARC-036, CV-299]
+L00015886	unblocks: [F3-406, ATS-018]
+L00015887	acceptance_criteria:
+L00015888	  - The stored enum is exactly enabled or disabled_by_user, with enabled as the default.
+L00015889	  - Run-start minimum fields include instruction_bundle_ref, rules_application_sha256, rules_project_sha256, dry_method_effective_state, and dry_method_reason.
+L00015890	  - DRY-off state remains auditable through receipts and does not weaken non-DRY authority boundaries.
+L00015891	validation_surfaces:
+L00015892	  - python3 scripts/pm-plan-index.py validate
+L00015893	  - DRY setting and receipt persistence fixtures
+L00015894	risk_class: dry_method_provenance_storage_gap
+L00015895	reasoning_tier: high
+L00015896	context_scope: dry_method_storage
+L00015897	implementation_surfaces:
+L00015898	  - Plans/storage-plan.md
+L00015899	  - future run receipts
+L00015900	node_compile_hint:
+L00015901	  mode: dry_method_setting_receipt_storage
+L00015902	  create_worknodes: false
+L00015903	  create_nodeseeds: false
+L00015904	source_lineage:
+L00015905	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-rules-provenance
+L00015906	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-001
+L00015907	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-002
+L00015908	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+L00015909	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00015910	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00015911	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+L00015912	source_atom_ids: [atom-0073, atom-0075, atom-0083]
+L00015913	decision_refs: [dec-0016]
+L00015914	preserved_exact_tokens:
+L00015915	  - "app.agent_rules.dry_method_default_guard"
+L00015916	  - "enabled"
+L00015917	  - "disabled_by_user"
+L00015918	  - "instruction_bundle_ref"
+L00015919	  - "rules_application_sha256"
+L00015920	  - "rules_project_sha256"
+L00015921	  - "dry_method_effective_state"
+L00015922	  - "dry_method_reason"
+L00015923	  - "dry_method_source_refs"
+L00015924	negative_constraints:
+L00015925	  - Do not make disabling DRY delete receipts or provenance.
+L00015926	  - Do not treat disabled DRY as permission to bypass safety, secrets, source authority, governance, permissions, or source-control hygiene.
+L00015927	owner_hints:
+L00015928	  - Plans/storage-plan.md
+L00015929	  - Plans/Contracts_V0.md
+L00015930	  - Plans/agent-rules-context.md
+L00015931	```
+L00015932	
+L00015933	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00015934	
+L00015935	This addendum compiles Free Models storage requirements for import snapshots, currentness, activation/quarantine/rollback, and redacted diagnostics. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00015936	
+L00015937	### SP-224 - Free Models Import Snapshot Alias And Currentness Storage
+L00015938	
+L00015939	```yaml
+L00015940	plan_unit_id: SP-224
+L00015941	unit_type: requirement
+L00015942	status: accepted
+L00015943	owner_doc: Plans/storage-plan.md
+L00015944	canonical_text: >-
+L00015945	  PM persists Free Models trusted source state, source resolver outcomes, source refs, release/tag/commit/npm/changelog/source hashes, current and previous imported catalog snapshots, import disposition, check cadence/timestamps, stable internal imported ids, and alias/rename/provider-move mappings. Storage keeps underlying provider/account/model/source identity intact and stores secret material only as credential references, never raw secrets.
+L00015946	gui_related: false
+L00015947	gui_classification_reason: Defines persistence records, not user-visible visual presentation.
+L00015948	depends_on: []
+L00015949	unblocks: []
+L00015950	acceptance_criteria:
+L00015951	  - Import snapshots preserve current and previous source state with hashes and source refs.
+L00015952	  - Alias/rename/provider-move mappings keep top-10 lists, section settings, Usage history, and diagnostics stable across upstream churn.
+L00015953	  - Secrets are represented only by refs and never raw secret/token values.
+L00015954	validation_surfaces:
+L00015955	  - python3 scripts/pm-plan-index.py validate
+L00015956	  - Free Models import snapshot persistence fixtures
+L00015957	  - Alias/rename/provider-move persistence fixtures
+L00015958	risk_class: import_snapshot_storage_drift
+L00015959	reasoning_tier: high
+L00015960	context_scope: free_models_import_storage
+L00015961	implementation_surfaces:
+L00015962	  - Plans/storage-plan.md
+L00015963	  - Plans/Contracts_V0.md
+L00015964	  - Plans/Models_System.md
+L00015965	node_compile_hint:
+L00015966	  mode: free_models_import_snapshot_storage_planunit
+L00015967	  create_worknodes: false
+L00015968	  create_nodeseeds: false
+L00015969	source_lineage:
+L00015970	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00015971	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_upstream_inspection_20260629.json
+L00015972	source_atom_ids: [atom-0011, atom-0017, atom-0020, atom-0025, atom-0051, atom-0052, atom-0057, atom-0071, atom-0129, atom-0193, atom-0194, atom-0197, atom-0198, atom-0242, atom-0250, atom-0258, atom-0262, atom-0289, atom-0290]
+L00015973	preserved_exact_tokens:
+L00015974	  - "source/ref/version"
+L00015975	  - "source/ref/hash"
+L00015976	  - "Last checked"
+L00015977	  - "Last updated"
+L00015978	  - "stable PM internal IDs"
+L00015979	  - "upstream alias/rename mappings"
+L00015980	negative_constraints:
+L00015981	  - Do not store raw secret material in Free Models import snapshots.
+L00015982	  - Do not lose alias/rename/provider-move history during Auto Apply updates.
+L00015983	owner_hints:
+L00015984	  - Plans/storage-plan.md
+L00015985	  - Plans/Contracts_V0.md
+L00015986	  - Plans/Models_System.md
+L00015987	```
+L00015988	
+
+<<< CONTEXT_AFTER canonical_document_lines=15989-16000 >>>
+L00015989	### SP-225 - Free Models Activation Quarantine Rollback And Diagnostics Storage
+L00015990	
+L00015991	```yaml
+L00015992	plan_unit_id: SP-225
+L00015993	unit_type: requirement
+L00015994	status: accepted
+L00015995	owner_doc: Plans/storage-plan.md
+L00015996	canonical_text: >-
+L00015997	  PM persists Free Models activation receipts, last-known-good refs, quarantine state, rollback evidence, failed-check state, route impact, affected provider/model ids, redaction profile, redaction summary, and support export manifests. Failed or quarantined updates keep the current known-good state active. Diagnostics/export may preserve source/ref/hash and route impact while raw secrets, tokens, provider error payloads, and sensitive provider responses remain redacted or Advanced/Support-only.
+L00015998	gui_related: false
+L00015999	gui_classification_reason: Defines stored receipts and export manifests; GUI projection is owned elsewhere.
+L00016000	depends_on: []

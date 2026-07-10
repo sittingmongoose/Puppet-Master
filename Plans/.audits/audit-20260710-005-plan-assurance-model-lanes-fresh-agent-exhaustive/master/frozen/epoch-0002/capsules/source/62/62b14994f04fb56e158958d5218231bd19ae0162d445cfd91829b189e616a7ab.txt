@@ -1,0 +1,407 @@
+<<< CONTEXT_BEFORE 746-757 >>>
+negative_constraints:
+- "The reference map must not be read as plugin behavior that supersedes the owner sections."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/Tools.md"
+- "Plans/Permissions_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 758-1135 >>>
+### PLUG-004 - Persona And Model Terminology Routing
+
+```yaml
+plan_unit_id: PLUG-004
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin-owned Persona and model references route through Glossary, plans index, Personas, and Models owner docs rather than defining duplicate terminology."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-002
+- PLUG-003
+unblocks: []
+acceptance_criteria:
+- "PLUG-004 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: terminology_owner_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0004
+preserved_exact_tokens:
+- "P5 plugin boundary recovery"
+- "Plans/Glossary.md"
+- "/Glossary.md"
+- "Plans/00-plans-index.md"
+- "/00-plans-index.md"
+- "Plans/Personas.md"
+- "/Personas.md"
+- "Plans/Models_System.md"
+- "/Models_System.md"
+negative_constraints:
+- "Plugins must not define duplicate Persona or model terminology."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Glossary.md"
+- "Plans/Personas.md"
+- "Plans/Models_System.md"
+```
+
+### PLUG-005 - Plugin UI Runtime Metadata Routing
+
+```yaml
+plan_unit_id: PLUG-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin UI and runtime references use canonical Persona and model metadata owners when presenting plugin-facing Persona or model metadata."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-004
+unblocks: []
+acceptance_criteria:
+- "PLUG-005 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_metadata_ui_routing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0004
+preserved_exact_tokens:
+- "Plugin UI"
+- "runtime references"
+- "plugin-facing Persona"
+- "model metadata"
+- "Plans/FinalGUISpec.md"
+- "/FinalGUISpec.md"
+negative_constraints:
+- "Plugin UI must not present plugin-facing Persona or model metadata from duplicate plugin-private terminology."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/Personas.md"
+- "Plans/Models_System.md"
+```
+
+### PLUG-006 - Central Policy And Hook Boundary Recovery
+
+```yaml
+plan_unit_id: PLUG-006
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Tooling enforcement boundaries are central policy rather than plugin-private behavior, and hook integration points for package, seam, corroboration, and concern remain subject to the plugin lifecycle and permission model."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-002
+unblocks: []
+acceptance_criteria:
+- "PLUG-006 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: policy_boundary_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0004
+preserved_exact_tokens:
+- "Tooling enforcement boundaries"
+- "central policy"
+- "Formatters_System"
+- "Plugins_System"
+- "Skills_System"
+- "LSPSupport.md"
+- "/policy"
+- "/runtime"
+- "/DAE"
+- "DAE"
+- "HTE"
+- "read-only"
+- "mutation-capable"
+- "env-var"
+- "bundling-off"
+- "internal-service"
+- "multi-project-tab"
+- "/seam/corroboration/concern"
+negative_constraints:
+- "Tooling enforcement boundaries must not become plugin-private behavior."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Formatters_System.md"
+- "Plans/Skills_System.md"
+- "Plans/LSPSupport.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Permissions_System.md"
+```
+
+### PLUG-007 - Plugin And Hook Definitions
+
+```yaml
+plan_unit_id: PLUG-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugins are self-contained extension modules loaded for a session, and Hooks are named callbacks for lifecycle events that receive typed context and return continue, modify, or block results in deterministic order."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-002
+unblocks: []
+acceptance_criteria:
+- "PLUG-007 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: definition_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0005
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0007
+preserved_exact_tokens:
+- "DEF-PLUGIN"
+- "DEF-HOOK"
+- "Plugin"
+- "Hook"
+- "self-contained extension module"
+- "loaded once at session start"
+- "deterministic order"
+- "typed context object"
+- "continue, modify, or block"
+negative_constraints:
+- "Plugin and Hook definitions must not be restated divergently outside Plugins_System."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Glossary.md"
+- "Plans/Tools.md"
+```
+
+### PLUG-008 - Discovery Source Priority
+
+```yaml
+plan_unit_id: PLUG-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin discovery walks internal plugins, project-local plugins, global plugins, and config package list entries in strict priority order."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-002
+unblocks: []
+acceptance_criteria:
+- "PLUG-008 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: discovery_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0008
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0009
+preserved_exact_tokens:
+- "DISCOVERY"
+- "Discovery paths"
+- "Internal plugins"
+- "Project-local"
+- ".puppet-master/plugins/<plugin_id>/"
+- "Global"
+- "~/.config/puppet-master/plugins/<plugin_id>/"
+- "Config package list"
+- "config.plugins[]"
+- "file://"
+negative_constraints:
+- "Plugin discovery priority must remain deterministic and must not be reordered by consumers."
+preserved_contractrefs:
+- "ContractRef: PolicyRule:Decision_Policy.md§2"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Decision_Policy.md"
+```
+
+### PLUG-009 - Plugin Manifest Schema
+
+```yaml
+plan_unit_id: PLUG-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Each plugin directory must contain plugin.json with id, name, version, description, hooks, tools, and entry fields, preserving the plugin id regex, directory-name match, field requirements, and manifest value types."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-008
+unblocks: []
+acceptance_criteria:
+- "PLUG-009 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: manifest_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0010
+preserved_exact_tokens:
+- "plugin.json"
+- "id"
+- "name"
+- "version"
+- "description"
+- "hooks"
+- "tools"
+- "entry"
+- "^[a-z][a-z0-9-]{1,48}[a-z0-9]$"
+- "MUST match directory name"
+- "WASM module"
+- "script"
+- "subprocess binary"
+negative_constraints:
+- "A plugin directory without a valid plugin.json manifest must not be loaded as a valid plugin."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+```
+
+### PLUG-010 - Discovery Deduplication
+
+```yaml
+plan_unit_id: PLUG-010
+unit_type: decision
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "When the same plugin id appears in multiple discovery sources, the first-discovered instance wins by priority order and later duplicates are skipped with a warning."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-008
+unblocks: []
+acceptance_criteria:
+- "PLUG-010 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: deduplication_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0011
+preserved_exact_tokens:
+- "Deduplication"
+- "same id"
+- "first-discovered instance wins"
+- "Later duplicates are skipped"
+- "warning"
+negative_constraints:
+- "Later duplicates must not override an earlier plugin id discovered by priority order."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+```
+
+
+<<< CONTEXT_AFTER 1136-1147 >>>
+### PLUG-011 - No Auto-Load Executable Code
+
+```yaml
+plan_unit_id: PLUG-011
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Puppet Master must not auto-load executable plugin code from config without explicit user approval; config-only discovery does not imply execution approval."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

@@ -1,0 +1,93 @@
+<<< CONTEXT_BEFORE 1039-1050 >>>
+      "projection_id": "mcp_projection.pm_site_reader.codex",
+      "mcp_server_id": "pm_site_reader",
+      "target_runtime": "codex",
+      "projection_state": "not_required",
+      "provider_config_ref": "projection-template:.codex/config.toml#pm_native_web",
+      "capability_refs": [
+        "webreg.pm_site_reader.v1"
+      ],
+      "no_secret_serialization": true,
+      "health_ref": "health:web.pm_site_reader"
+    }
+  ],
+
+<<< AUTHORITATIVE_CORE 1051-1128 >>>
+  "coding_agent_projection_examples": [
+    {
+      "target_runtime": "claude_code_cli",
+      "projection_kind": "mcp_projection_consumer",
+      "provider_ids": [
+        "firecrawl",
+        "exa",
+        "tavily",
+        "jina"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "secret_refs_only"
+    },
+    {
+      "target_runtime": "cursor_cli",
+      "projection_kind": "mcp_projection_consumer",
+      "provider_ids": [
+        "firecrawl",
+        "exa",
+        "tavily",
+        "jina"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "secret_refs_only"
+    },
+    {
+      "target_runtime": "codex",
+      "projection_kind": "directapi_pm_native",
+      "provider_ids": [
+        "pm_native",
+        "openai",
+        "zai_coding_plan"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "external_managed"
+    },
+    {
+      "target_runtime": "gemini_direct",
+      "projection_kind": "directapi_pm_native",
+      "provider_ids": [
+        "pm_native"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "external_managed"
+    },
+    {
+      "target_runtime": "github_copilot",
+      "projection_kind": "directapi_pm_native",
+      "provider_ids": [
+        "pm_native"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "external_managed"
+    },
+    {
+      "target_runtime": "zai_coding_plan",
+      "projection_kind": "directapi_pm_native",
+      "provider_ids": [
+        "pm_native",
+        "zai_coding_plan"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "external_managed"
+    },
+    {
+      "target_runtime": "opencode_server",
+      "projection_kind": "server_bridge_projection_consumer",
+      "provider_ids": [
+        "firecrawl",
+        "jina",
+        "openai",
+        "anthropic"
+      ],
+      "capability_source": "PM WebProviderAdapterRegistry",
+      "secret_policy": "secret_refs_only"
+    }
+  ]
+}

@@ -1,0 +1,737 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001040-ADVERSARIAL-WIN-749F06E4B796-0003",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_b_dispatcher_epoch_0012/bw5b_a1040",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Automated_Testing_System.md",
+    "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "core_sha256": "2cc003b1b11108ab79708eeca35d9828dfa9e61e88180defb2c68f6e30f5a7f2",
+    "core_range": [728, 1035]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "G001",
+      "item_type": "gap",
+      "title": "Executable acceptance oracles are absent from the declared validation surfaces",
+      "statement": "ATS-010 through ATS-013 describe rich behavioral suites, but the concrete validation surfaces in this core are plan and ledger validators, git diff checking, and multiple explicitly future suites. The core therefore cannot currently falsify incorrect runtime or GUI behavior, despite ATS-012 and ATS-013 explicitly rejecting validator-only evidence.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "A governance-green result can be mistaken for evidence that the specified workflows and failure cases execute correctly.",
+      "feature_keys": ["ATS-010", "ATS-011", "ATS-012", "ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 820,
+          "line_end": 820,
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 821,
+          "line_end": 821,
+          "exact_quote": "  - Future DiscoveryService conformance suite.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 945,
+          "line_end": 945,
+          "exact_quote": "- Do not treat validator success as evidence that user-facing History workflows were tested.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1025,
+          "line_end": 1025,
+          "exact_quote": "- Do not let validator success stand in for testing user-visible image bridge workflows.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G002",
+      "item_type": "gap",
+      "title": "Receipt producers, consumers, and authority are not assigned",
+      "statement": "ATS-010 lists entities to which typed receipts are linked, but never identifies which component must emit each receipt, which callers may consume it, whether any receipt is mandatory, or which record is authoritative after duplicate delivery or restart.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "Implementations can produce incompatible or incomplete receipt graphs while still satisfying the prose.",
+      "feature_keys": ["ATS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 735,
+          "line_end": 735,
+          "exact_quote": "canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G003",
+      "item_type": "gap",
+      "title": "Provisioning Preflight has an unclosed time-of-check/time-of-use transition",
+      "statement": "Preflight is required immediately before execution, but there is no state transition or response for capability, service, credential, command, browser, device, or simulator drift after the check and before or during WorkNode execution.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Execution can proceed on a stale or revoked capability while retaining a misleading successful preflight receipt.",
+      "feature_keys": ["ATS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 735,
+          "line_end": 735,
+          "exact_quote": "canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "NG004",
+      "item_type": "explicit_non_gap",
+      "title": "ATS-010 names a strong baseline matrix for duplicate, restart, cancellation, and repository states",
+      "statement": "The fixture suite explicitly includes duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repositories, remote SSH, plan revision, cancellation on both sides of mutation, missing parallel receipts, and an intentionally incomplete item.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 736,
+          "line_end": 736,
+          "exact_quote": "  optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G005",
+      "item_type": "gap",
+      "title": "Test mutation and cleanup lack authority, containment, and rollback contracts",
+      "statement": "ATS-010 requires receipts for installation, commands, visible sessions, artifacts, exceptions, and cleanup and tests dirty/non-Git/remote repositories, yet it does not state who may authorize mutation, what paths and external services are in scope, how cleanup failure is surfaced, or what state must be restored after cancellation or failure.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_and_recovery",
+      "impact": "A test harness could modify protected project or remote state and fail to restore it without violating a measurable acceptance rule.",
+      "feature_keys": ["ATS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 735,
+          "line_end": 735,
+          "exact_quote": "canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 736,
+          "line_end": 736,
+          "exact_quote": "  optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G006",
+      "item_type": "gap",
+      "title": "Receipt privacy and data lifecycle are unspecified",
+      "statement": "Receipts may cover credentials, visible sessions, user interactions, artifacts, exceptions, commands, and source currentness, but ATS-010 supplies no field-level redaction, access-control, retention, deletion, encryption, export, or support-disclosure rules.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive session and project data can become durable or broadly visible through otherwise conforming receipts.",
+      "feature_keys": ["ATS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 735,
+          "line_end": 735,
+          "exact_quote": "canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G007",
+      "item_type": "gap",
+      "title": "Typed receipt compatibility and migration behavior are missing",
+      "statement": "The receipt graph spans several durable entity types and explicitly preserves compatibility notes, but the core does not specify receipt schema versions, backward/forward compatibility, migration, unknown-field behavior, or how historical receipts are interpreted after capability and source changes.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Upgrades can break audit chains or silently reinterpret historical execution evidence.",
+      "feature_keys": ["ATS-010"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 735,
+          "line_end": 735,
+          "exact_quote": "canonical_text: 'Discovery, research, selection, installation, harness probe, visible session, user interaction, test result, artifact, exception, and cleanup operations produce typed receipts linked to project, PlanCompileRun, GoalRun, WorkNode, attempt, capability, and source currentness. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "NG008",
+      "item_type": "explicit_non_gap",
+      "title": "Discovery conformance explicitly tests policy non-leak and GUI truth",
+      "statement": "ATS-011 closes several common negative spaces by requiring hidden and denied candidates not to leak through counts, ids, rank gaps, summaries, diagnostics, or receipts, while also covering GUI/agent parity and Assistant Chat visibility.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-011"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 817,
+          "line_end": 817,
+          "exact_quote": "  - Tests prove denied/hidden candidates cannot leak through counts, selected ids, rank gaps, summaries, diagnostics, or receipts.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 811,
+          "line_end": 811,
+          "exact_quote": "gui_classification_reason: This validates GUI parity, Assistant Chat visibility, visible degraded states, screenshots/receipts, and user-facing discovery surfaces.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "NG009",
+      "item_type": "explicit_non_gap",
+      "title": "Discovery covers scheduler, cache migration, and resource-budget failure modes",
+      "statement": "ATS-011 explicitly includes scheduler deduplication, cancellation and fairness, cache migration/rebuild/discard, remote freshness, timeouts, memory and disk budgets, and over-budget fallback receipts.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-011"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 809,
+          "line_end": 809,
+          "exact_quote": "  Automated_Testing_System owns validation for native DiscoveryService conformance, not service semantics. Tests cover ordinary no-exact-path bug-fix agent discovery, Builder orientation, Verifier exact-evidence follow-up, GUI/agent parity, every consumer conformance row, Assistant Chat discovery visibility on/off, SSH-backed discovery with no local checkout, remote/cache freshness, no local fallback, denied/hidden-by-policy no-leak behavior, root/home refusal, ignore and symlink policy, deterministic ranking, disabled/unsupported/backpressure/over-budget fallback receipts, frecency reset versus durable receipt retention, path identity versus display_path, cache migration/rebuild/discard behavior, scheduler dedupe/cancellation/fairness, and PlanUnit index discovery conformance without WorkNode creation.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 816,
+          "line_end": 816,
+          "exact_quote": "  - Performance budgets cover local warm query, GUI query, agent discover_paths, cold indexing, remote/SSH manifest query and refresh, watcher/reindex, cancellation, memory, disk, timeout, and over-budget fallback.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G010",
+      "item_type": "gap",
+      "title": "Discovery lacks a mid-operation network-loss oracle and measurable budget thresholds",
+      "statement": "Remote/SSH freshness, no-local-fallback behavior, timeout, and over-budget fallback are named, but the core does not say what happens when connectivity drops during query, refresh, cancellation, or result delivery, and it provides no numeric thresholds or pass/fail measurement method for its performance budgets.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "offline_network_and_scale",
+      "impact": "Two implementations can expose different stale or partial results and incompatible latency/resource behavior while both claim conformance.",
+      "feature_keys": ["ATS-011"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 816,
+          "line_end": 816,
+          "exact_quote": "  - Performance budgets cover local warm query, GUI query, agent discover_paths, cold indexing, remote/SSH manifest query and refresh, watcher/reindex, cancellation, memory, disk, timeout, and over-budget fallback.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G011",
+      "item_type": "gap",
+      "title": "Discovery GUI accessibility and localization are not tested",
+      "statement": "ATS-011 declares GUI-facing scope and tests visibility, ranking, and degraded states, but no keyboard, focus, screen-reader, zoom, contrast, bidirectional text, localized search, collation, or path-display behavior is included.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "accessibility_localization",
+      "impact": "The same discovery state can be unusable or misleading for assistive-technology and non-English users while still passing the listed cases.",
+      "feature_keys": ["ATS-011"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 811,
+          "line_end": 811,
+          "exact_quote": "gui_classification_reason: This validates GUI parity, Assistant Chat visibility, visible degraded states, screenshots/receipts, and user-facing discovery surfaces.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G012",
+      "item_type": "gap",
+      "title": "The every-consumer discovery seam has no locally defined completeness oracle",
+      "statement": "ATS-011 requires every consumer row to have a scenario, but this core neither enumerates those rows nor binds a versioned manifest or completeness check. The dependency list and owner hints do not establish which consumers are required or how an added consumer makes the suite fail.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "A consumer can be omitted from conformance coverage without creating a deterministic failure in this contract.",
+      "feature_keys": ["ATS-011"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 815,
+          "line_end": 815,
+          "exact_quote": "  - Each discovery consumer row has a validation scenario proving shared-substrate access and policy/freshness/fallback handling.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 812,
+          "line_end": 812,
+          "exact_quote": "depends_on: [T-160, T-161, T-162, T-163, CV-291, SP-217, SP-218, F2-191, PS-118, ACD-422, F3-399, OSI-429, EP-106, PNC-020, RAP-031]",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "NG013",
+      "item_type": "explicit_non_gap",
+      "title": "History tests cover important visible states and immutable-source safety",
+      "statement": "ATS-012 explicitly covers project locking, approved-only and expanded history, archived visibility, structured filters, compare and export views, stale projection warnings, rebuild, blocking authority-sensitive actions before rebuild, and immutable source preservation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-012"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 888,
+          "line_end": 888,
+          "exact_quote": "  manifests and evidence/redaction profile, stale projection read-only warning, rebuild action, blocked authority-sensitive",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 889,
+          "line_end": 889,
+          "exact_quote": "  actions before rebuild, immutable source preservation, and no WorkNodes/NodeSeeds/executable queues created by",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G014",
+      "item_type": "gap",
+      "title": "History rebuild and export omit concurrency, partial-failure, and rollback states",
+      "statement": "ATS-012 names rebuild and several export scopes but does not cover new history arriving during rebuild, export racing rebuild/archive changes, cancellation, partial output, overwrite, disk-full or destination failure, crash recovery, projection rollback, or the point at which blocked actions safely re-enable.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_partial_failure_recovery",
+      "impact": "Users can receive mixed-version exports, corrupt projections, or prematurely enabled actions with no specified recovery oracle.",
+      "feature_keys": ["ATS-012"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 887,
+          "line_end": 887,
+          "exact_quote": "  deep compare with rendered/source-lineage/manifest views, export selected rows/multi-select/filtered view with",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 888,
+          "line_end": 888,
+          "exact_quote": "  manifests and evidence/redaction profile, stale projection read-only warning, rebuild action, blocked authority-sensitive",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G015",
+      "item_type": "gap",
+      "title": "History export redaction is named without fail-closed privacy and authority behavior",
+      "statement": "A redaction profile is included in export scope, but the core does not specify who may export which rows, whether redaction is previewed and mandatory, how missing or invalid profiles behave, whether manifests and evidence are recursively redacted, or the retention and deletion lifecycle of exported files.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_privacy_data_lifecycle",
+      "impact": "Protected history, manifests, or evidence can be exported under an incomplete profile without a defined blocking result.",
+      "feature_keys": ["ATS-012"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 887,
+          "line_end": 887,
+          "exact_quote": "  deep compare with rendered/source-lineage/manifest views, export selected rows/multi-select/filtered view with",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 888,
+          "line_end": 888,
+          "exact_quote": "  manifests and evidence/redaction profile, stale projection read-only warning, rebuild action, blocked authority-sensitive",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G016",
+      "item_type": "gap",
+      "title": "History has no scale, accessibility, or localization acceptance coverage",
+      "statement": "Dense rows, All history, text search, deep comparison, and filtered multi-row export are specified without dataset limits, pagination or virtualization behavior, latency/memory budgets, keyboard and screen-reader navigation, zoom/reflow, locale-aware dates and sorting, Unicode search, or bidirectional text cases.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_accessibility_localization",
+      "impact": "Large or localized histories can become slow, inaccessible, or semantically misordered while satisfying every listed workflow token.",
+      "feature_keys": ["ATS-012"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 885,
+          "line_end": 885,
+          "exact_quote": "canonical_text: History MVP tests cover current-project lock, approved-only default, All history expansion, Include",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 886,
+          "line_end": 886,
+          "exact_quote": "  archived as extra step, dense row schema, structured filter chips plus text search, Documents and Runs subviews,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "NG017",
+      "item_type": "explicit_non_gap",
+      "title": "Vision bridge tests explicitly cover consent, degraded truth, cache staleness, and no-guessing behavior",
+      "statement": "ATS-013 includes reject/accept/always-accept, scoped revocation, redaction block/override, fail-closed unavailable results for every degraded reason, cache invalidation and stale labels, retry/cost/reroute disclosure, and no guessing after failure.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 968,
+          "line_end": 968,
+          "exact_quote": "  ambiguous screenshot picker, FileSafe project-file guard, disclosure popup reject/accept/always accept, scoped",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 969,
+          "line_end": 969,
+          "exact_quote": "  revocation, redaction blocking/override policy, fail-closed unavailable results for every degraded reason, structured",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 971,
+          "line_end": 971,
+          "exact_quote": "  disclosure, and no guessing after failure.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G018",
+      "item_type": "gap",
+      "title": "Untrusted image and OCR content is not adversarially tested",
+      "statement": "The vision bridge accepts clipboard, OS screenshot, project-file, OCR, prompt, and provider output surfaces, but the core has no cases for malformed or oversized images, metadata leakage, decompression bombs, OCR or visual prompt injection, adversarial text embedded in an image, hostile provider output, or safe treatment of extracted instructions as untrusted data.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "Image content can cross the model/tool trust boundary, exfiltrate data, exhaust resources, or steer actions while all declared acceptance cases pass.",
+      "feature_keys": ["ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 967,
+          "line_end": 967,
+          "exact_quote": "  input is reliable, manual rerun, deterministic source precedence, clipboard and recent OS screenshots in MVP,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 970,
+          "line_end": 970,
+          "exact_quote": "  prompt/output including uncertainty/OCR/limitations, cache invalidation and stale labels, provider retry/cost/reroute",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G019",
+      "item_type": "gap",
+      "title": "Vision consent, revocation, cache, and artifact lifecycle are not closed under races",
+      "statement": "Consent and scoped revocation are named, but the core does not define the scope key for always-accept, whether consent precedes every provider-bound disclosure, what revocation does to in-flight retries and reroutes, or whether cached images, prompts, OCR, outputs, and lineage artifacts are deleted, re-redacted, or merely hidden.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_privacy_concurrency",
+      "impact": "Revoked or differently scoped image data may remain usable, retry to another provider, or persist in cache and artifacts after the user believes access ended.",
+      "feature_keys": ["ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 968,
+          "line_end": 968,
+          "exact_quote": "  ambiguous screenshot picker, FileSafe project-file guard, disclosure popup reject/accept/always accept, scoped",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 969,
+          "line_end": 969,
+          "exact_quote": "  revocation, redaction blocking/override policy, fail-closed unavailable results for every degraded reason, structured",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 970,
+          "line_end": 970,
+          "exact_quote": "  prompt/output including uncertainty/OCR/limitations, cache invalidation and stale labels, provider retry/cost/reroute",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G020",
+      "item_type": "gap",
+      "title": "Vision source changes and network loss have no atomicity or recovery oracle",
+      "statement": "Automatic fallback, manual rerun, screenshot selection, and provider retry/reroute are covered individually, but not clipboard or screenshot mutation after selection, simultaneous automatic and manual runs, network loss after upload, partial streamed output, late results after cancellation or revocation, retry deduplication, or recovery without double charging.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_partial_failure_offline",
+      "impact": "A result can be attributed to the wrong image or consent state, appear after cancellation, or incur duplicate provider work and cost.",
+      "feature_keys": ["ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 966,
+          "line_end": 966,
+          "exact_quote": "canonical_text: Vision bridge MVP tests cover automatic fallback for non-vision models, no bridge when native image",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 967,
+          "line_end": 967,
+          "exact_quote": "  input is reliable, manual rerun, deterministic source precedence, clipboard and recent OS screenshots in MVP,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 970,
+          "line_end": 970,
+          "exact_quote": "  prompt/output including uncertainty/OCR/limitations, cache invalidation and stale labels, provider retry/cost/reroute",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G021",
+      "item_type": "gap",
+      "title": "Vision bridge omits compatibility, scale, accessibility, and localization cases",
+      "statement": "The core does not test provider or native-capability version changes, cache schema migration, unsupported image formats, very large images or screenshot lists, OCR time and cost limits, keyboard and screen-reader use of the picker/disclosure, localized OCR and uncertainty text, or locale-sensitive screenshot metadata.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_scale_accessibility_localization",
+      "impact": "Provider upgrades and real-world image sets can break the bridge or its consent UI for specific users without violating the current suite.",
+      "feature_keys": ["ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 967,
+          "line_end": 967,
+          "exact_quote": "  input is reliable, manual rerun, deterministic source precedence, clipboard and recent OS screenshots in MVP,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 970,
+          "line_end": 970,
+          "exact_quote": "  prompt/output including uncertainty/OCR/limitations, cache invalidation and stale labels, provider retry/cost/reroute",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "G022",
+      "item_type": "gap",
+      "title": "Operational correlation and support-safe diagnostics are not specified across suites",
+      "statement": "The core mentions receipts, diagnostics, artifacts, and source lineage, but it provides no required correlation keys across user action, attempt, remote request, cache entry, export or rebuild; no support bundle contract; and no rule for balancing diagnostic usefulness with redaction and policy non-leak.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Operators may be unable to reconstruct partial failures, while ad hoc diagnostics risk exposing the same protected data the tests intend to hide.",
+      "feature_keys": ["ATS-010", "ATS-011", "ATS-012", "ATS-013"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 817,
+          "line_end": 817,
+          "exact_quote": "  - Tests prove denied/hidden candidates cannot leak through counts, selected ids, rank gaps, summaries, diagnostics, or receipts.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1020,
+          "line_end": 1020,
+          "exact_quote": "- artifact/source lineage",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Receipt producer/consumer ownership and the complete Discovery consumer set are not bound to enforceable manifests.",
+      "evidence_item_ids": ["G002", "G012"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Preflight drift, History rebuild completion, and vision consent/cache transitions have unspecified intermediate and terminal states.",
+      "evidence_item_ids": ["G003", "G014", "G019"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Duplicate/restart and scheduler cases are explicitly covered, but preflight TOCTOU, History rebuild/export races, and vision source/revocation races remain.",
+      "evidence_item_ids": ["G003", "NG004", "NG009", "G014", "G019", "G020"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "History partial export/rebuild and vision partial upload/output/reroute behavior lack pass/fail and cleanup rules.",
+      "evidence_item_ids": ["G014", "G020"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Restart/cancellation fixtures exist, but mutation cleanup, History projection rollback, and export recovery are not defined.",
+      "evidence_item_ids": ["NG004", "G005", "G014"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Discovery policy and vision consent are named, but test mutation authority, History export authority, and revocation effects remain incomplete.",
+      "evidence_item_ids": ["G005", "NG008", "G015", "NG017", "G019"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Policy non-leak and redaction are covered, while receipt retention, History export lifecycle, and vision cache/artifact deletion are unspecified.",
+      "evidence_item_ids": ["G006", "NG008", "G015", "G019"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "The image/OCR/provider path has no malformed-input, resource-exhaustion, metadata, or visual prompt-injection cases.",
+      "evidence_item_ids": ["G018"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "addressed",
+      "summary": "Discovery parity and degraded states, History stale projection warnings, and vision fail-closed/stale/no-guessing states are explicitly tested.",
+      "evidence_item_ids": ["NG008", "NG013", "NG017"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Remote and provider-unavailable cases are named, but mid-operation disconnection, partial delivery, and reconnect behavior are not.",
+      "evidence_item_ids": ["G010", "G020"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Discovery budget categories exist without thresholds, and History and vision lack large-dataset/image acceptance limits.",
+      "evidence_item_ids": ["NG009", "G010", "G016", "G021"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "All three GUI-related PlanUnits omit concrete keyboard, focus, screen-reader, zoom, contrast, and reflow cases.",
+      "evidence_item_ids": ["G011", "G016", "G021"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Localized search, path display, dates, sorting, bidi text, OCR, and consent/error messaging are absent.",
+      "evidence_item_ids": ["G011", "G016", "G021"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Discovery cache migration is explicit, while typed receipts and vision providers/cache have no version evolution contract.",
+      "evidence_item_ids": ["G007", "NG009", "G021"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Receipts, diagnostics, artifacts, and lineage are named but lack cross-operation correlation and support-safe bundle rules.",
+      "evidence_item_ids": ["G022"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "No-build constraints are strong, but test mutation/cleanup and History rebuild lack containment, confirmation, and rollback acceptance rules.",
+      "evidence_item_ids": ["G005", "G014"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Many dependency and owner references exist, but the Discovery every-consumer obligation is not locally enumerable or version-bound.",
+      "evidence_item_ids": ["G012"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Behavioral claims are not connected to present executable test surfaces, expected outputs, or measurable oracles.",
+      "evidence_item_ids": ["G001", "G010"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "gap_found",
+      "summary": "TOCTOU drift and adversarial image/OCR content expose unmodeled trust and timing failures beyond the enumerated happy/degraded matrices.",
+      "evidence_item_ids": ["G003", "G018", "G020"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

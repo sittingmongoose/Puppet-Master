@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE 1042-1053 >>>
+  - "TierContext"
+  - "tier_runtime_record"
+  - "execution_unit_context"
+negative_constraints:
+  - "Commands must not invent alternate requested/effective account history or erase switch notifications."
+  - "TierContext and tier_runtime_record must not act as rewrite-era canonical execution context."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Executor_Protocol.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1054-1397 >>>
+### CS-008 - Widget Artifact Checklist Availability and Confirmation Consumers
+
+```yaml
+plan_unit_id: CS-008
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Commands may expose widget, native-surface, artifact, checklist, availability,
+  summary, and mutation entries only as owner-routed consumers that preserve
+  widget trust, artifact provenance, checklist freshness, availability classes,
+  alias/deprecation gates, stale or degraded projection revalidation, and
+  confirmation requirements for strong or non-reversible actions.
+gui_related: true
+gui_classification_reason: Widgets, native surfaces, artifact panels, command-palette summaries, badges, and confirmation gates are visible user-facing surfaces.
+split_recommended: true
+split_recommendation_reason: Source span S0005 mixes GUI-facing consumer constraints with backend mutation and availability gates.
+depends_on: [CS-006, CS-007]
+unblocks: [CS-013]
+acceptance_criteria:
+  - Widget_System owns chrome slots, /trust-state, projection-trust semantics, hostability, tab-boundary direction, and risky widget config boundaries.
+  - Runtime_Artifacts_Panel owns artifact-type semantics, panel behavior, schema family references, and artifact evidence/provenance.
+  - Section15_MVP_Promoted_Features_Spec remains verification-only unless upstream reconciliation requires direct edits.
+  - GATE-010 evaluates subject-open commands, wrappers, route-payload completeness, alias /deprecation, blocked-action admissibility, allowed_action_ids, and stale or /degraded projection revalidation.
+  - Command definitions and UICommands declare live-run only, historical-safe, or record-only/export-only before palette, shortcut, or route dispatch.
+  - strong, hard_gate, non_reversible, and compensating_action_only actions preserve owner-defined confirmation, gating, preview, and blocked-action checks before dispatch.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_consumer_surface_drift
+reasoning_tier: high
+context_scope: command_widget_artifact_confirmation_consumers
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Widget_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: command_widget_artifact_confirmation_consumers
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0005
+preserved_exact_tokens:
+  - "/trust-state"
+  - "/completed/integration"
+  - "/historical-run"
+  - "GATE-010"
+  - "allowed_action_ids"
+  - "live-run only"
+  - "historical-safe"
+  - "record-only/export-only"
+  - "strong"
+  - "hard_gate"
+  - "non_reversible"
+  - "compensating_action_only"
+negative_constraints:
+  - "Commands must not define a parallel widget trust schema, widget-local state classification, artifact schema family, or stale Tiers scope through command metadata."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/Widget_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### CS-009 - Debug and Launcher Command Boundary
+
+```yaml
+plan_unit_id: CS-009
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Command-facing Debug terminology distinguishes DAP debugging, agentic
+  app/runtime investigation, and assistant-session inspection; any command that
+  requests wrapper-script, launcher-file, launch-command/env, external-directory,
+  degraded-runtime, or browser-health-sensitive actions must preserve revert
+  paths and central permission/capability gate routing.
+gui_related: false
+gui_classification_reason: Debug terminology, launcher mutation cleanup, and permission/capability gates are runtime and policy behavior.
+split_recommended: false
+depends_on: [CS-004]
+unblocks: []
+acceptance_criteria:
+  - Debug terminology does not collapse classical DAP debugging, agentic app/runtime investigation, and assistant-session inspection.
+  - Wrapper script, /launcher file, or /launch-command/env edits record an exact revert path.
+  - Cleanup restores from a restore point or generated revert patch.
+  - External directory access outside the active policy /allowlist resolves through central permission/capability gates.
+  - Actions unavailable or degraded for the active runtime or /browser health state resolve through central permission/capability gates before command injection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_launcher_boundary_drift
+reasoning_tier: high
+context_scope: command_debug_launcher_boundary
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Permissions_System.md
+  - Plans/BinaryLocator_Spec.md
+node_compile_hint:
+  mode: command_debug_launcher_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0006
+preserved_exact_tokens:
+  - "Debug"
+  - "/launcher"
+  - "/launch-command/env"
+  - "/allowlist"
+  - "/browser"
+negative_constraints:
+  - "Command templates may request launcher cleanup workflow, but they do not themselves become persistent launcher owners."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-010 - User Command Definition
+
+```yaml
+plan_unit_id: CS-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  A User Command is a user-authored or catalog-installed Markdown preset with
+  YAML frontmatter whose resolved template body is submitted to the active chat
+  thread or run as a repeatable prompt workflow.
+gui_related: false
+gui_classification_reason: The User Command definition is data/model semantics for command presets.
+split_recommended: true
+split_recommendation_reason: Source span S0008 includes the next anchor for UICommand distinction, so lineage is shared with CS-011.
+depends_on: [CS-002]
+unblocks: [CS-011, CS-014]
+acceptance_criteria:
+  - DEF-USER-COMMAND remains the anchor for the User Command definition.
+  - User Commands are user-authored or catalog-installed command presets stored as Markdown files with YAML frontmatter.
+  - Invocation resolves placeholders, file includes, and shell output injection before submission.
+  - User Commands package repeatable prompt workflows without requiring code.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: user_command_definition_drift
+reasoning_tier: standard
+context_scope: command_definitions
+implementation_surfaces:
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: user_command_definition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0007
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0008
+preserved_exact_tokens:
+  - "DEF-USER-COMMAND"
+  - "User Command"
+  - "YAML frontmatter"
+negative_constraints: []
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-011 - UICommand Distinction and Invocation Surfaces
+
+```yaml
+plan_unit_id: CS-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  UICommands are developer-defined internal dispatch identifiers distinct from
+  user-authored User Commands; User Commands may be invoked from Assistant chat,
+  the command palette, and optional Orchestrator shortcut triggers through the
+  command execution seam without becoming UICommand definitions.
+gui_related: true
+gui_classification_reason: UICommand dispatch, slash autocomplete, command palette entries, and shortcut triggers are visible UI interaction surfaces.
+split_recommended: true
+split_recommendation_reason: Source spans S0008 and S0010 mix definition anchors with visible invocation surfaces.
+depends_on: [CS-006, CS-010]
+unblocks: [CS-013, CS-022]
+acceptance_criteria:
+  - DEF-UICOMMAND-DISTINCTION remains the anchor for UICommand distinction.
+  - UICommands are stable IDs that bind UI elements to handlers and are developer-defined, code-registered, and wiring-matrix-verified.
+  - User Commands are content presets and UICommands are internal dispatch actions.
+  - User Command invocation ultimately dispatches cmd.chat.run_user_command without making the User Command itself a UICommand.
+  - Assistant chat uses slash-command prefix / with custom /x-<command-name> support.
+  - Command palette entries appear as Run command: <name>.
+  - Orchestrator shortcut trigger keybindings remain optional via Settings > Shortcuts.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: uicommand_user_command_conflation
+reasoning_tier: high
+context_scope: command_invocation_surfaces
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: uicommand_distinction_invocation_surfaces
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0008
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0009
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0010
+preserved_exact_tokens:
+  - "DEF-UICOMMAND-DISTINCTION"
+  - "UICommand"
+  - "cmd.chat.run_user_command"
+  - "project-local `/symbols/commands/other`"
+  - "Run command: <name>"
+  - "Settings > Shortcuts"
+negative_constraints:
+  - "User Commands are not user-authored UICommands."
+  - "File tree actions and editor/file operations use canonical UICommands, not user-authored command presets."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### CS-012 - Command Storage Roots and Resolution
+
+```yaml
+plan_unit_id: CS-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  User Command files use a deterministic project-local and global two-tier
+  layout where project-local commands override global commands by name and
+  unresolved command names surface the exact Unknown command error.
+gui_related: false
+gui_classification_reason: Command file storage roots and resolution order are filesystem and lookup semantics.
+split_recommended: false
+depends_on: [CS-002]
+unblocks: [CS-013, CS-014]
+acceptance_criteria:
+  - STORAGE-LAYOUT remains the anchor for User Command storage layout.
+  - Project-local commands live at <project_root>/.puppet-master/commands/<name>.md and are available only when that project is active.
+  - Global commands live at ~/.config/puppet-master/commands/<name>.md and are overridden by a project-local command with the same name.
+  - Resolution checks project-local commands first, global commands second, and returns unresolved when neither path exists.
+  - Unresolved invocation surfaces display "Unknown command: <name>".
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_storage_resolution_drift
+reasoning_tier: standard
+context_scope: command_storage_discovery
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: command_storage_roots_resolution
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0011
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0012
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0013
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0014
+preserved_exact_tokens:
+  - "STORAGE-LAYOUT"
+  - "<project_root>/.puppet-master/commands/<name>.md"
+  - "~/.config/puppet-master/commands/<name>.md"
+  - "Unknown command: <name>"
+negative_constraints: []
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/storage-plan.md
+```
+
+### CS-013 - Reserved Names Collisions and Name Validation
+
+```yaml
+plan_unit_id: CS-013
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Reserved built-in slash commands and their families cannot be overridden by
+  provider, skill, plugin, extension, natural-language, or custom User Command
+  names; command creation also enforces the canonical lowercase name regex and
+  disambiguates /mode by owner context.
+gui_related: false
+gui_classification_reason: Reserved-name collision handling and regex validation are command registry and schema constraints.
+split_recommended: false
+depends_on: [CS-011, CS-012]
+unblocks: [CS-014, CS-016]
+acceptance_criteria:
+  - /web reserves the family namespace for /web search, /web fetch, /web extract, /web research, /web crawl, and /web map.
+  - override_builtin: true is /forbid for reserved Assistant Chat built-ins and cannot override /web, /skill, /cancel, /clear, /stop, or canonical chat commands.
+  - /web commands are network /external-read operations, not /shell mutation commands.
+  - /worktree is reserved and cannot be re-bound by a custom command.
+  - /skill cannot be rebound by User Commands or override_builtin.
+  - /plugins remains plugin-management/navigation, not a User Command namespace.
+  - Natural-language and slash dispatch share the same dispatcher collision handling.
+  - GPT-era registry audits do not create new event names by observation.
+  - Ask /Plan behavior for command-triggered tools follows Run_Modes and Permissions_System permission rows.
+  - Names match ^[a-z][a-z0-9_-]{0,48}[a-z0-9]$ and length 2-50 characters.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_reserved_name_drift
+reasoning_tier: high
+context_scope: command_name_validation
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: command_reserved_name_validation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0015
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0016
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0017
+preserved_exact_tokens:
+  - "/web"
+  - "/web search"
+  - "/web fetch"
+  - "/web extract"
+  - "/web research"
+  - "/web crawl"
+  - "/web map"
+  - "override_builtin: true"
+  - "/forbid"
+  - "/worktree"
+  - "/skill"
+  - "/plugins"
+  - "chat.thread.created"
+  - "chat.thread_created"
+  - "chat.message.submitted"
+  - "^[a-z][a-z0-9_-]{0,48}[a-z0-9]$"
+negative_constraints:
+  - "Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming."
+  - "GPT-era registry audits do not create new event names by observation."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< CONTEXT_AFTER 1398-1409 >>>
+### CS-014 - Command File Schema and Frontmatter Fields
+
+```yaml
+plan_unit_id: CS-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  A User Command file consists of YAML frontmatter plus a Markdown template body,
+  with canonical fields for name, description, arguments, persona/model/mode
+  overrides, permissions_profile_override, and override_builtin.
+gui_related: false

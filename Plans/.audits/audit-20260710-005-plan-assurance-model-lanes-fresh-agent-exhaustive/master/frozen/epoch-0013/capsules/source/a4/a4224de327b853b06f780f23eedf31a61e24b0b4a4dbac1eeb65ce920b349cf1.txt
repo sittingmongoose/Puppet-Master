@@ -1,0 +1,403 @@
+<<< CONTEXT_BEFORE canonical_document_lines=20731-20742 >>>
+L00020731	- "Comprehensive"
+L00020732	- "default selection: `Balanced`"
+L00020733	- "Deep Plan and Plan share the same PT labels"
+L00020734	- "tooltip/help copy"
+L00020735	negative_constraints: []
+L00020736	compatibility_only_notes: []
+L00020737	stale_retired_dispositions: []
+L00020738	owner_boundary_notes: []
+L00020739	owner_hints:
+L00020740	- "Plans/FinalGUISpec.md"
+L00020741	```
+L00020742	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=20743-21116 >>>
+L00020743	### F3-319 - Plan Lightweight Thread Artifact Flow
+L00020744	
+L00020745	```yaml
+L00020746	plan_unit_id: F3-319
+L00020747	unit_type: requirement
+L00020748	status: accepted
+L00020749	owner_doc: Plans/FinalGUISpec.md
+L00020750	canonical_text: >-
+L00020751	  Plan mode produces a lightweight plan artifact in the thread, keeps the sticky plan panel
+L00020752	  visible, shows the normalized TODO list before approval, allows TODO structure revision
+L00020753	  before approval, and begins execution only after explicit approval.
+L00020754	gui_related: true
+L00020755	gui_classification_reason: >-
+L00020756	  This unit defines visible FinalGUISpec GUI behavior.
+L00020757	split_recommended: false
+L00020758	depends_on: []
+L00020759	unblocks: []
+L00020760	acceptance_criteria:
+L00020761	- "The covered source span remains losslessly available for exact-text audit."
+L00020762	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00020763	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00020764	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00020765	validation_surfaces:
+L00020766	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00020767	- "python3 scripts/pm-plan-index.py validate"
+L00020768	risk_class: finalgui_drift
+L00020769	reasoning_tier: standard
+L00020770	context_scope: finalgui_standardization
+L00020771	implementation_surfaces:
+L00020772	- "Plans/FinalGUISpec.md"
+L00020773	node_compile_hint:
+L00020774	  mode: plan_lightweight_thread_artifact_flow
+L00020775	  create_worknodes: false
+L00020776	source_lineage:
+L00020777	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0191"
+L00020778	preserved_exact_tokens:
+L00020779	- "Plan"
+L00020780	- "lightweight plan artifact in thread"
+L00020781	- "sticky plan panel"
+L00020782	- "normalized TODO list"
+L00020783	- "explicit approval"
+L00020784	negative_constraints: []
+L00020785	compatibility_only_notes: []
+L00020786	stale_retired_dispositions: []
+L00020787	owner_boundary_notes:
+L00020788	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00020789	owner_hints:
+L00020790	- "Plans/FinalGUISpec.md"
+L00020791	```
+L00020792	
+L00020793	### F3-320 - Deep Plan Artifact Review Surface
+L00020794	
+L00020795	```yaml
+L00020796	plan_unit_id: F3-320
+L00020797	unit_type: requirement
+L00020798	status: accepted
+L00020799	owner_doc: Plans/FinalGUISpec.md
+L00020800	canonical_text: >-
+L00020801	  Deep Plan opens a richer planning artifact in a preview-capable document/editor surface,
+L00020802	  keeps the same normalized TODO contract visible in the thread plan panel, supports document
+L00020803	  review, annotations, and targeted revision, and remains more intensive than Plan at the same
+L00020804	  PT.
+L00020805	gui_related: true
+L00020806	gui_classification_reason: >-
+L00020807	  This unit defines visible FinalGUISpec GUI behavior.
+L00020808	split_recommended: false
+L00020809	depends_on: []
+L00020810	unblocks: []
+L00020811	acceptance_criteria:
+L00020812	- "The covered source span remains losslessly available for exact-text audit."
+L00020813	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00020814	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00020815	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00020816	validation_surfaces:
+L00020817	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00020818	- "python3 scripts/pm-plan-index.py validate"
+L00020819	risk_class: finalgui_drift
+L00020820	reasoning_tier: standard
+L00020821	context_scope: finalgui_standardization
+L00020822	implementation_surfaces:
+L00020823	- "Plans/FinalGUISpec.md"
+L00020824	node_compile_hint:
+L00020825	  mode: deep_plan_artifact_review_surface
+L00020826	  create_worknodes: false
+L00020827	source_lineage:
+L00020828	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0191"
+L00020829	preserved_exact_tokens:
+L00020830	- "Deep Plan"
+L00020831	- "preview-capable document/editor surface"
+L00020832	- "normalized TODO contract"
+L00020833	- "targeted revision"
+L00020834	- "PT"
+L00020835	negative_constraints: []
+L00020836	compatibility_only_notes: []
+L00020837	stale_retired_dispositions: []
+L00020838	owner_boundary_notes:
+L00020839	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00020840	owner_hints:
+L00020841	- "Plans/FinalGUISpec.md"
+L00020842	```
+L00020843	
+L00020844	### F3-321 - Shared Planning TODO Tracker State
+L00020845	
+L00020846	```yaml
+L00020847	plan_unit_id: F3-321
+L00020848	unit_type: requirement
+L00020849	status: accepted
+L00020850	owner_doc: Plans/FinalGUISpec.md
+L00020851	canonical_text: >-
+L00020852	  The sticky plan panel is the authoritative TODO tracker; inline chat updates are
+L00020853	  milestone-style rather than a competing tracker; TODO statuses include pending, in_progress,
+L00020854	  completed, blocked, and skipped; TODO identity survives single-agent, subagent, and crew
+L00020855	  execution; and plan states draft, approved, executing, completed, blocked, and superseded
+L00020856	  remain visible and restorable.
+L00020857	gui_related: true
+L00020858	gui_classification_reason: >-
+L00020859	  This unit defines visible FinalGUISpec GUI behavior.
+L00020860	split_recommended: false
+L00020861	depends_on: []
+L00020862	unblocks: []
+L00020863	acceptance_criteria:
+L00020864	- "The covered source span remains losslessly available for exact-text audit."
+L00020865	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00020866	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00020867	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00020868	validation_surfaces:
+L00020869	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00020870	- "python3 scripts/pm-plan-index.py validate"
+L00020871	risk_class: finalgui_drift
+L00020872	reasoning_tier: standard
+L00020873	context_scope: finalgui_standardization
+L00020874	implementation_surfaces:
+L00020875	- "Plans/FinalGUISpec.md"
+L00020876	node_compile_hint:
+L00020877	  mode: shared_planning_todo_tracker_state
+L00020878	  create_worknodes: false
+L00020879	source_lineage:
+L00020880	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0191"
+L00020881	preserved_exact_tokens:
+L00020882	- "sticky plan panel"
+L00020883	- "authoritative TODO tracker"
+L00020884	- "pending"
+L00020885	- "in_progress"
+L00020886	- "completed"
+L00020887	- "blocked"
+L00020888	- "skipped"
+L00020889	- "single-agent"
+L00020890	- "subagent"
+L00020891	- "crew"
+L00020892	- "draft"
+L00020893	- "approved"
+L00020894	- "executing"
+L00020895	- "superseded"
+L00020896	negative_constraints: []
+L00020897	compatibility_only_notes: []
+L00020898	stale_retired_dispositions: []
+L00020899	owner_boundary_notes:
+L00020900	- "Assistant/chat planning semantics remain owned with Plans/assistant-chat-design.md, Plans/Tools.md, Plans/Permissions_System.md, and Plans/storage-plan.md; FinalGUISpec owns visible consumer presentation."
+L00020901	owner_hints:
+L00020902	- "Plans/FinalGUISpec.md"
+L00020903	```
+L00020904	
+L00020905	### F3-322 - Deep Plan Annotation And Revision Surface
+L00020906	
+L00020907	```yaml
+L00020908	plan_unit_id: F3-322
+L00020909	unit_type: requirement
+L00020910	status: accepted
+L00020911	owner_doc: Plans/FinalGUISpec.md
+L00020912	canonical_text: >-
+L00020913	  Deep Plan documents reuse the Embedded Document Pane annotation and revision contract:
+L00020914	  highlighted text opens an annotation action palette, margin markers and an annotation
+L00020915	  drawer/list show annotations, Resubmit with Annotations launches targeted revision,
+L00020916	  annotation anchors re-anchor deterministically after edits, annotation loss is never silent,
+L00020917	  and Multi-Pass Review is not automatically required before approval or execution.
+L00020918	gui_related: true
+L00020919	gui_classification_reason: >-
+L00020920	  This unit defines visible FinalGUISpec GUI behavior.
+L00020921	split_recommended: false
+L00020922	depends_on: []
+L00020923	unblocks: []
+L00020924	acceptance_criteria:
+L00020925	- "The covered source span remains losslessly available for exact-text audit."
+L00020926	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00020927	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00020928	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00020929	validation_surfaces:
+L00020930	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00020931	- "python3 scripts/pm-plan-index.py validate"
+L00020932	risk_class: finalgui_drift
+L00020933	reasoning_tier: standard
+L00020934	context_scope: finalgui_standardization
+L00020935	implementation_surfaces:
+L00020936	- "Plans/FinalGUISpec.md"
+L00020937	node_compile_hint:
+L00020938	  mode: deep_plan_annotation_and_revision_surface
+L00020939	  create_worknodes: false
+L00020940	source_lineage:
+L00020941	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0192"
+L00020942	preserved_exact_tokens:
+L00020943	- "Embedded Document Pane"
+L00020944	- "highlight text -> annotation action palette"
+L00020945	- "annotation markers in margin"
+L00020946	- "annotation list/drawer"
+L00020947	- "Resubmit with Annotations"
+L00020948	- "deterministic annotation re-anchoring"
+L00020949	- "no silent annotation loss"
+L00020950	- "no automatic Multi-Pass Review requirement"
+L00020951	negative_constraints:
+L00020952	- "No silent annotation loss is allowed."
+L00020953	- "No automatic Multi-Pass Review requirement is created before plan approval or execution."
+L00020954	compatibility_only_notes: []
+L00020955	stale_retired_dispositions: []
+L00020956	owner_boundary_notes:
+L00020957	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00020958	owner_hints:
+L00020959	- "Plans/FinalGUISpec.md"
+L00020960	```
+L00020961	
+L00020962	### F3-323 - Deep Plan Document Rendering Scope
+L00020963	
+L00020964	```yaml
+L00020965	plan_unit_id: F3-323
+L00020966	unit_type: requirement
+L00020967	status: accepted
+L00020968	owner_doc: Plans/FinalGUISpec.md
+L00020969	canonical_text: >-
+L00020970	  Deep Plan documents may contain headings, lists, tables, fenced code blocks, Mermaid
+L00020971	  diagrams, file paths, references, validation notes, and rollout notes while staying inside
+L00020972	  the preview-capable editor/document rendering contract.
+L00020973	gui_related: true
+L00020974	gui_classification_reason: >-
+L00020975	  This unit defines visible FinalGUISpec GUI behavior.
+L00020976	split_recommended: false
+L00020977	depends_on: []
+L00020978	unblocks: []
+L00020979	acceptance_criteria:
+L00020980	- "The covered source span remains losslessly available for exact-text audit."
+L00020981	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00020982	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00020983	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00020984	validation_surfaces:
+L00020985	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00020986	- "python3 scripts/pm-plan-index.py validate"
+L00020987	risk_class: finalgui_drift
+L00020988	reasoning_tier: standard
+L00020989	context_scope: finalgui_standardization
+L00020990	implementation_surfaces:
+L00020991	- "Plans/FinalGUISpec.md"
+L00020992	node_compile_hint:
+L00020993	  mode: deep_plan_document_rendering_scope
+L00020994	  create_worknodes: false
+L00020995	source_lineage:
+L00020996	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0192"
+L00020997	preserved_exact_tokens:
+L00020998	- "headings"
+L00020999	- "lists / tables"
+L00021000	- "fenced code blocks"
+L00021001	- "Mermaid diagrams"
+L00021002	- "file paths / references"
+L00021003	- "validation and rollout notes"
+L00021004	negative_constraints: []
+L00021005	compatibility_only_notes: []
+L00021006	stale_retired_dispositions: []
+L00021007	owner_boundary_notes:
+L00021008	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021009	owner_hints:
+L00021010	- "Plans/FinalGUISpec.md"
+L00021011	```
+L00021012	
+L00021013	### F3-324 - Assistant Planning Wizard Recommendation Card
+L00021014	
+L00021015	```yaml
+L00021016	plan_unit_id: F3-324
+L00021017	unit_type: requirement
+L00021018	status: accepted
+L00021019	owner_doc: Plans/FinalGUISpec.md
+L00021020	canonical_text: >-
+L00021021	  When Assistant Chat or Deep Plan recommends the Planning Wizard, the GUI shows a visible
+L00021022	  recommendation card with reason summary, primary CTA Add a new Feature or Enhancement,
+L00021023	  secondary action Stay in Chat or Not now, and optional supporting copy about phase pruning
+L00021024	  and imported context carry-through.
+L00021025	gui_related: true
+L00021026	gui_classification_reason: >-
+L00021027	  This unit defines a visible recommendation card; the source span inference is corrected from
+L00021028	  false to GUI-related true.
+L00021029	split_recommended: false
+L00021030	depends_on: []
+L00021031	unblocks: []
+L00021032	acceptance_criteria:
+L00021033	- "The covered source span remains losslessly available for exact-text audit."
+L00021034	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021035	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021036	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021037	validation_surfaces:
+L00021038	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021039	- "python3 scripts/pm-plan-index.py validate"
+L00021040	risk_class: finalgui_drift
+L00021041	reasoning_tier: standard
+L00021042	context_scope: finalgui_standardization
+L00021043	implementation_surfaces:
+L00021044	- "Plans/FinalGUISpec.md"
+L00021045	node_compile_hint:
+L00021046	  mode: assistant_planning_wizard_recommendation_card
+L00021047	  create_worknodes: false
+L00021048	source_lineage:
+L00021049	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0193"
+L00021050	preserved_exact_tokens:
+L00021051	- "Assistant recommendation card for Planning Wizard"
+L00021052	- "This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow."
+L00021053	- "Add a new Feature or Enhancement"
+L00021054	- "Stay in Chat"
+L00021055	- "Not now"
+L00021056	negative_constraints: []
+L00021057	compatibility_only_notes: []
+L00021058	stale_retired_dispositions: []
+L00021059	owner_boundary_notes:
+L00021060	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021061	owner_hints:
+L00021062	- "Plans/FinalGUISpec.md"
+L00021063	```
+L00021064	
+L00021065	### F3-325 - Imported Context Planning Wizard Handoff Surface
+L00021066	
+L00021067	```yaml
+L00021068	plan_unit_id: F3-325
+L00021069	unit_type: requirement
+L00021070	status: accepted
+L00021071	owner_doc: Plans/FinalGUISpec.md
+L00021072	canonical_text: >-
+L00021073	  Accepting the wizard recommendation switches to the Planning Wizard intake/interview flow, shows an
+L00021074	  Imported from Assistant Chat or Imported from Deep Plan banner, shows whether a plan
+L00021075	  artifact was included, shows imported goal and scope summary, and opens an existing project
+L00021076	  on the preloaded feature/enhancement path instead of a blank intent picker.
+L00021077	gui_related: true
+L00021078	gui_classification_reason: >-
+L00021079	  This unit defines visible FinalGUISpec GUI behavior.
+L00021080	split_recommended: false
+L00021081	depends_on: []
+L00021082	unblocks: []
+L00021083	acceptance_criteria:
+L00021084	- "The covered source span remains losslessly available for exact-text audit."
+L00021085	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021086	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021087	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021088	validation_surfaces:
+L00021089	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021090	- "python3 scripts/pm-plan-index.py validate"
+L00021091	risk_class: finalgui_drift
+L00021092	reasoning_tier: standard
+L00021093	context_scope: finalgui_standardization
+L00021094	implementation_surfaces:
+L00021095	- "Plans/FinalGUISpec.md"
+L00021096	node_compile_hint:
+L00021097	  mode: imported_context_wizard_handoff_surface
+L00021098	  create_worknodes: false
+L00021099	source_lineage:
+L00021100	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0194"
+L00021101	preserved_exact_tokens:
+L00021102	- "Imported from Assistant Chat"
+L00021103	- "Imported from Deep Plan"
+L00021104	- "included plan yes/no"
+L00021105	- "open questions count"
+L00021106	- "has_gui"
+L00021107	- "preloaded feature/enhancement path"
+L00021108	negative_constraints: []
+L00021109	compatibility_only_notes: []
+L00021110	stale_retired_dispositions: []
+L00021111	owner_boundary_notes:
+L00021112	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021113	owner_hints:
+L00021114	- "Plans/FinalGUISpec.md"
+L00021115	```
+L00021116	
+
+<<< CONTEXT_AFTER canonical_document_lines=21117-21128 >>>
+L00021117	### F3-326 - Planning Recommendation Non-Goals
+L00021118	
+L00021119	```yaml
+L00021120	plan_unit_id: F3-326
+L00021121	unit_type: requirement
+L00021122	status: accepted
+L00021123	owner_doc: Plans/FinalGUISpec.md
+L00021124	canonical_text: >-
+L00021125	  Planning recommendation UI must not copy external GUI layout from OpenCode, Cursor, VSCode,
+L00021126	  or other tools; must not auto-create repo files for planning artifacts without explicit user
+L00021127	  action; and must not silently redirect the user from chat into the wizard.
+L00021128	gui_related: true

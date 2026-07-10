@@ -1,0 +1,401 @@
+<<< CONTEXT_BEFORE canonical_document_lines=16325-16336 >>>
+L00016325	- "Slint native global/window scale factor"
+L00016326	- "Iced token-multiplication layers"
+L00016327	negative_constraints:
+L00016328	- "Do not port Iced token-multiplication layers into Slint view code."
+L00016329	- "Live terminal rendering is not a normal text-editor/list widget."
+L00016330	compatibility_only_notes: []
+L00016331	stale_retired_dispositions: []
+L00016332	owner_boundary_notes: []
+L00016333	owner_hints:
+L00016334	- "Plans/FinalGUISpec.md"
+L00016335	```
+L00016336	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=16337-16708 >>>
+L00016337	### F3-237 - Rust Data Type Preservation
+L00016338	
+L00016339	```yaml
+L00016340	plan_unit_id: F3-237
+L00016341	unit_type: constraint
+L00016342	status: accepted
+L00016343	owner_doc: Plans/FinalGUISpec.md
+L00016344	canonical_text: >-
+L00016345	  Current data types including AppTheme, Page, CurrentItem, ProgressState, OutputLine,
+L00016346	  BudgetDisplayInfo, and DoctorCheckResult remain in Rust; only their Slint representations
+L00016347	  via properties and models change, while backend event system, orchestrator state, and
+L00016348	  persistence remain unchanged.
+L00016349	gui_related: false
+L00016350	gui_classification_reason: >-
+L00016351	  This unit preserves backend data-type ownership and event/persistence continuity rather than
+L00016352	  GUI presentation.
+L00016353	split_recommended: false
+L00016354	depends_on: []
+L00016355	unblocks: []
+L00016356	acceptance_criteria:
+L00016357	- "The covered source span remains losslessly available for exact-text audit."
+L00016358	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016359	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016360	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016361	validation_surfaces:
+L00016362	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016363	- "python3 scripts/pm-plan-index.py validate"
+L00016364	risk_class: finalgui_drift
+L00016365	reasoning_tier: standard
+L00016366	context_scope: finalgui_standardization
+L00016367	implementation_surfaces:
+L00016368	- "Plans/FinalGUISpec.md"
+L00016369	node_compile_hint:
+L00016370	  mode: rust_data_type_preservation
+L00016371	  create_worknodes: false
+L00016372	source_lineage:
+L00016373	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0153"
+L00016374	preserved_exact_tokens:
+L00016375	- "16.4"
+L00016376	- "AppTheme"
+L00016377	- "Page"
+L00016378	- "CurrentItem"
+L00016379	- "ProgressState"
+L00016380	- "OutputLine"
+L00016381	- "BudgetDisplayInfo"
+L00016382	- "DoctorCheckResult"
+L00016383	- "Rust"
+L00016384	- "Slint representations"
+L00016385	- "properties and models"
+L00016386	- "backend event system"
+L00016387	- "orchestrator state"
+L00016388	- "persistence remain unchanged"
+L00016389	negative_constraints:
+L00016390	- "Backend event system, orchestrator state, and persistence must not be changed by GUI representation migration."
+L00016391	compatibility_only_notes: []
+L00016392	stale_retired_dispositions: []
+L00016393	owner_boundary_notes: []
+L00016394	owner_hints:
+L00016395	- "Plans/FinalGUISpec.md"
+L00016396	```
+L00016397	
+L00016398	### F3-238 - Clipboard Migration Gate
+L00016399	
+L00016400	```yaml
+L00016401	plan_unit_id: F3-238
+L00016402	unit_type: validation_rule
+L00016403	status: accepted
+L00016404	owner_doc: Plans/FinalGUISpec.md
+L00016405	canonical_text: >-
+L00016406	  Clipboard migration gate status is PASS only when native editor/chat/terminal input
+L00016407	  clipboard behavior works, read-only terminal/log output supports selection/copy without
+L00016408	  editable paste, no custom text-widget clipboard handler remains, non-text copy exceptions
+L00016409	  remain scoped to ClipboardHelper path/value contexts, build verification passes, and GUI
+L00016410	  scenarios meet expected results.
+L00016411	gui_related: true
+L00016412	gui_classification_reason: >-
+L00016413	  This unit defines a GUI validation gate for clipboard migration.
+L00016414	split_recommended: false
+L00016415	depends_on: []
+L00016416	unblocks: []
+L00016417	acceptance_criteria:
+L00016418	- "The covered source span remains losslessly available for exact-text audit."
+L00016419	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016420	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016421	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016422	validation_surfaces:
+L00016423	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016424	- "python3 scripts/pm-plan-index.py validate"
+L00016425	risk_class: finalgui_drift
+L00016426	reasoning_tier: standard
+L00016427	context_scope: finalgui_standardization
+L00016428	implementation_surfaces:
+L00016429	- "Plans/FinalGUISpec.md"
+L00016430	node_compile_hint:
+L00016431	  mode: clipboard_migration_gate
+L00016432	  create_worknodes: false
+L00016433	source_lineage:
+L00016434	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0154"
+L00016435	preserved_exact_tokens:
+L00016436	- "Clipboard migration gate status"
+L00016437	- "PASS"
+L00016438	- "Native Copy/Paste/Select All"
+L00016439	- "File Editor input"
+L00016440	- "chat composer input"
+L00016441	- "terminal command input"
+L00016442	- "Read-only terminal/log output"
+L00016443	- "No custom text-widget clipboard handler"
+L00016444	- "ClipboardHelper"
+L00016445	- "cargo check"
+L00016446	- "Ctrl/Cmd+A/C/X/V"
+L00016447	- "Non-text Copy Path/Copy Value"
+L00016448	- "ContractName:Plans/FinalGUISpec.md#10.9.1"
+L00016449	- "ContractName:Plans/DRY_Rules.md#7"
+L00016450	- "SchemaID:Spec_Lock.json#locked_decisions.ui"
+L00016451	negative_constraints:
+L00016452	- "Clipboard gate cannot pass unless all required criteria are true."
+L00016453	compatibility_only_notes: []
+L00016454	stale_retired_dispositions: []
+L00016455	owner_boundary_notes: []
+L00016456	owner_hints:
+L00016457	- "Plans/FinalGUISpec.md"
+L00016458	```
+L00016459	
+L00016460	### F3-239 - ImageFit Repeat Fallback Risk
+L00016461	
+L00016462	```yaml
+L00016463	plan_unit_id: F3-239
+L00016464	unit_type: constraint
+L00016465	status: accepted
+L00016466	owner_doc: Plans/FinalGUISpec.md
+L00016467	canonical_text: >-
+L00016468	  The `ImageFit.repeat` availability risk is mitigated as follows: Check current stable Slint,
+L00016469	  then use SharedPixelBuffer generated tiles or manual GridLayout tiling and test at build time.
+L00016470	gui_related: true
+L00016471	gui_classification_reason: >-
+L00016472	  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+L00016473	split_recommended: false
+L00016474	depends_on: []
+L00016475	unblocks: []
+L00016476	acceptance_criteria:
+L00016477	- "The covered source span remains losslessly available for exact-text audit."
+L00016478	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016479	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016480	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016481	validation_surfaces:
+L00016482	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016483	- "python3 scripts/pm-plan-index.py validate"
+L00016484	risk_class: finalgui_risk
+L00016485	reasoning_tier: standard
+L00016486	context_scope: finalgui_standardization
+L00016487	implementation_surfaces:
+L00016488	- "Plans/FinalGUISpec.md"
+L00016489	node_compile_hint:
+L00016490	  mode: imagefit_repeat_fallback_risk
+L00016491	  create_worknodes: false
+L00016492	source_lineage:
+L00016493	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+L00016494	preserved_exact_tokens:
+L00016495	- "ImageFit.repeat"
+L00016496	- "Slint 1.17.1"
+L00016497	- "SharedPixelBuffer"
+L00016498	- "GridLayout"
+L00016499	negative_constraints: []
+L00016500	compatibility_only_notes: []
+L00016501	stale_retired_dispositions: []
+L00016502	owner_boundary_notes:
+L00016503	- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+L00016504	owner_hints:
+L00016505	- "Plans/FinalGUISpec.md"
+L00016506	```
+L00016507	
+L00016508	### F3-240 - Multi Window Lifecycle Risk
+L00016509	
+L00016510	```yaml
+L00016511	plan_unit_id: F3-240
+L00016512	unit_type: constraint
+L00016513	status: accepted
+L00016514	owner_doc: Plans/FinalGUISpec.md
+L00016515	canonical_text: >-
+L00016516	  The `Multi-window lifecycle edge cases` risk is mitigated as follows: Rust state machine
+L00016517	  manages create/destroy, close-to-dock/collapse, layout state, focus, data sync, and
+L00016518	  disconnected monitor redock behavior.
+L00016519	gui_related: true
+L00016520	gui_classification_reason: >-
+L00016521	  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+L00016522	split_recommended: false
+L00016523	depends_on: []
+L00016524	unblocks: []
+L00016525	acceptance_criteria:
+L00016526	- "The covered source span remains losslessly available for exact-text audit."
+L00016527	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016528	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016529	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016530	validation_surfaces:
+L00016531	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016532	- "python3 scripts/pm-plan-index.py validate"
+L00016533	risk_class: finalgui_risk
+L00016534	reasoning_tier: standard
+L00016535	context_scope: finalgui_standardization
+L00016536	implementation_surfaces:
+L00016537	- "Plans/FinalGUISpec.md"
+L00016538	node_compile_hint:
+L00016539	  mode: multi_window_lifecycle_risk
+L00016540	  create_worknodes: false
+L00016541	source_lineage:
+L00016542	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+L00016543	preserved_exact_tokens:
+L00016544	- "Multi-window lifecycle edge cases"
+L00016545	- "window create/destroy"
+L00016546	- "dock or collapse"
+L00016547	- "focus management"
+L00016548	- "data sync"
+L00016549	- "disconnected monitor"
+L00016550	negative_constraints: []
+L00016551	compatibility_only_notes: []
+L00016552	stale_retired_dispositions: []
+L00016553	owner_boundary_notes:
+L00016554	- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+L00016555	owner_hints:
+L00016556	- "Plans/FinalGUISpec.md"
+L00016557	```
+L00016558	
+L00016559	### F3-241 - Limited Screen Reader Risk
+L00016560	
+L00016561	```yaml
+L00016562	plan_unit_id: F3-241
+L00016563	unit_type: constraint
+L00016564	status: accepted
+L00016565	owner_doc: Plans/FinalGUISpec.md
+L00016566	canonical_text: >-
+L00016567	  The `Limited screen reader support` risk is mitigated as follows: Comprehensive keyboard
+L00016568	  navigation, accessible-role/label where Slint supports them, documented limitations, and
+L00016569	  Basic theme readability mitigate limited screen reader support.
+L00016570	gui_related: true
+L00016571	gui_classification_reason: >-
+L00016572	  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+L00016573	split_recommended: false
+L00016574	depends_on: []
+L00016575	unblocks: []
+L00016576	acceptance_criteria:
+L00016577	- "The covered source span remains losslessly available for exact-text audit."
+L00016578	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016579	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016580	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016581	validation_surfaces:
+L00016582	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016583	- "python3 scripts/pm-plan-index.py validate"
+L00016584	risk_class: finalgui_risk
+L00016585	reasoning_tier: standard
+L00016586	context_scope: finalgui_standardization
+L00016587	implementation_surfaces:
+L00016588	- "Plans/FinalGUISpec.md"
+L00016589	node_compile_hint:
+L00016590	  mode: limited_screen_reader_risk
+L00016591	  create_worknodes: false
+L00016592	source_lineage:
+L00016593	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+L00016594	preserved_exact_tokens:
+L00016595	- "Limited screen reader support"
+L00016596	- "accessible-role"
+L00016597	- "accessible-label"
+L00016598	- "Basic theme"
+L00016599	negative_constraints: []
+L00016600	compatibility_only_notes: []
+L00016601	stale_retired_dispositions: []
+L00016602	owner_boundary_notes:
+L00016603	- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+L00016604	owner_hints:
+L00016605	- "Plans/FinalGUISpec.md"
+L00016606	```
+L00016607	
+L00016608	### F3-242 - Context Menu Risk
+L00016609	
+L00016610	```yaml
+L00016611	plan_unit_id: F3-242
+L00016612	unit_type: constraint
+L00016613	status: accepted
+L00016614	owner_doc: Plans/FinalGUISpec.md
+L00016615	canonical_text: >-
+L00016616	  The `No built-in context menu` risk is mitigated as follows: Custom ContextMenu uses
+L00016617	  TouchArea pointer events and delegates clipboard operations to native TextInput
+L00016618	  copy/paste/select-all without custom clipboard state.
+L00016619	gui_related: true
+L00016620	gui_classification_reason: >-
+L00016621	  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+L00016622	split_recommended: false
+L00016623	depends_on: []
+L00016624	unblocks: []
+L00016625	acceptance_criteria:
+L00016626	- "The covered source span remains losslessly available for exact-text audit."
+L00016627	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016628	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016629	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016630	validation_surfaces:
+L00016631	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016632	- "python3 scripts/pm-plan-index.py validate"
+L00016633	risk_class: finalgui_risk
+L00016634	reasoning_tier: standard
+L00016635	context_scope: finalgui_standardization
+L00016636	implementation_surfaces:
+L00016637	- "Plans/FinalGUISpec.md"
+L00016638	node_compile_hint:
+L00016639	  mode: context_menu_risk
+L00016640	  create_worknodes: false
+L00016641	source_lineage:
+L00016642	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+L00016643	preserved_exact_tokens:
+L00016644	- "No built-in context menu"
+L00016645	- "ContextMenu"
+L00016646	- "TouchArea"
+L00016647	- "TextInput.copy()"
+L00016648	- "paste()"
+L00016649	- "select-all()"
+L00016650	negative_constraints: []
+L00016651	compatibility_only_notes: []
+L00016652	stale_retired_dispositions: []
+L00016653	owner_boundary_notes:
+L00016654	- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+L00016655	owner_hints:
+L00016656	- "Plans/FinalGUISpec.md"
+L00016657	```
+L00016658	
+L00016659	### F3-243 - Docking Framework Risk
+L00016660	
+L00016661	```yaml
+L00016662	plan_unit_id: F3-243
+L00016663	unit_type: constraint
+L00016664	status: accepted
+L00016665	owner_doc: Plans/FinalGUISpec.md
+L00016666	canonical_text: >-
+L00016667	  The `No built-in docking framework` risk is mitigated as follows: Custom PanelRegistry
+L00016668	  handles dock/undock state, snap detection, and window lifecycle and should be implemented
+L00016669	  early.
+L00016670	gui_related: true
+L00016671	gui_classification_reason: >-
+L00016672	  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+L00016673	split_recommended: false
+L00016674	depends_on: []
+L00016675	unblocks: []
+L00016676	acceptance_criteria:
+L00016677	- "The covered source span remains losslessly available for exact-text audit."
+L00016678	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00016679	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00016680	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00016681	validation_surfaces:
+L00016682	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00016683	- "python3 scripts/pm-plan-index.py validate"
+L00016684	risk_class: finalgui_risk
+L00016685	reasoning_tier: standard
+L00016686	context_scope: finalgui_standardization
+L00016687	implementation_surfaces:
+L00016688	- "Plans/FinalGUISpec.md"
+L00016689	node_compile_hint:
+L00016690	  mode: docking_framework_risk
+L00016691	  create_worknodes: false
+L00016692	source_lineage:
+L00016693	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+L00016694	preserved_exact_tokens:
+L00016695	- "No built-in docking framework"
+L00016696	- "PanelRegistry"
+L00016697	- "dock/undock"
+L00016698	- "snap detection"
+L00016699	- "window lifecycle"
+L00016700	negative_constraints: []
+L00016701	compatibility_only_notes: []
+L00016702	stale_retired_dispositions: []
+L00016703	owner_boundary_notes:
+L00016704	- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+L00016705	owner_hints:
+L00016706	- "Plans/FinalGUISpec.md"
+L00016707	```
+L00016708	
+
+<<< CONTEXT_AFTER canonical_document_lines=16709-16720 >>>
+L00016709	### F3-244 - Font Family Restart Risk
+L00016710	
+L00016711	```yaml
+L00016712	plan_unit_id: F3-244
+L00016713	unit_type: constraint
+L00016714	status: accepted
+L00016715	owner_doc: Plans/FinalGUISpec.md
+L00016716	canonical_text: >-
+L00016717	  The `Font family change requires restart` risk is mitigated as follows: Font-family setting
+L00016718	  changes show restart prompt and fonts preload at startup for instant within-family switches.
+L00016719	gui_related: true
+L00016720	gui_classification_reason: >-

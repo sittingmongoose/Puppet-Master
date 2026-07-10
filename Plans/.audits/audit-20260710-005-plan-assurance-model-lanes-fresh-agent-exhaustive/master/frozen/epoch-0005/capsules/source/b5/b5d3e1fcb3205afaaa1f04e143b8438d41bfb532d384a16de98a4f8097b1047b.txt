@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2568-2579 >>>
+L00002568	  - "parts"
+L00002569	  - "Parse response parts"
+L00002570	  - "normalized events"
+L00002571	  - "DELETE /session/{id}"
+L00002572	negative_constraints: []
+L00002573	preserved_contractrefs: []
+L00002574	owner_hints:
+L00002575	  - "Plans/Provider_OpenCode.md"
+L00002576	  - "Plans/Contracts_V0.md"
+L00002577	  - "Plans/Executor_Protocol.md"
+L00002578	```
+L00002579	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2580-2945 >>>
+L00002580	### PO-036 - Asynchronous SSE Invocation Sequence
+L00002581	
+L00002582	```yaml
+L00002583	plan_unit_id: PO-036
+L00002584	unit_type: requirement
+L00002585	status: accepted
+L00002586	owner_doc: Plans/Provider_OpenCode.md
+L00002587	canonical_text: >-
+L00002588	  The asynchronous OpenCode run sequence subscribes to GET /event, sends POST /session/{id}/prompt_async with
+L00002589	  the same request body as the synchronous path, maps SSE events to normalized events, emits done on
+L00002590	  completion, and deletes the session.
+L00002591	gui_related: false
+L00002592	gui_classification_reason: "This unit defines asynchronous transport sequencing rather than visual presentation."
+L00002593	split_recommended: false
+L00002594	depends_on:
+L00002595	  - "PO-016"
+L00002596	  - "PO-035"
+L00002597	unblocks: []
+L00002598	acceptance_criteria:
+L00002599	  - "Asynchronous SSE Invocation Sequence remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00002600	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002601	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002602	validation_surfaces:
+L00002603	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002604	  - "python3 scripts/pm-plan-index.py validate"
+L00002605	risk_class: opencode_provider_drift
+L00002606	reasoning_tier: standard
+L00002607	context_scope: provider_opencode_async_sse
+L00002608	implementation_surfaces:
+L00002609	  - "Plans/Provider_OpenCode.md"
+L00002610	node_compile_hint:
+L00002611	  mode: opencode_async_sse_invocation_sequence
+L00002612	  create_worknodes: false
+L00002613	source_lineage:
+L00002614	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0041"
+L00002615	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0043"
+L00002616	preserved_exact_tokens:
+L00002617	  - "Asynchronous Run (SSE)"
+L00002618	  - "GET /event"
+L00002619	  - "SSE stream"
+L00002620	  - "POST /session/{id}/prompt_async"
+L00002621	  - "same as sync"
+L00002622	  - "204 No Content"
+L00002623	  - "Receive SSE events"
+L00002624	  - "map to normalized events"
+L00002625	  - "emit done"
+L00002626	  - "delete session"
+L00002627	negative_constraints: []
+L00002628	preserved_contractrefs: []
+L00002629	owner_hints:
+L00002630	  - "Plans/Provider_OpenCode.md"
+L00002631	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00002632	  - "Plans/Contracts_V0.md"
+L00002633	```
+L00002634	
+L00002635	### PO-037 - Cancellation And Abort Contract
+L00002636	
+L00002637	```yaml
+L00002638	plan_unit_id: PO-037
+L00002639	unit_type: requirement
+L00002640	status: accepted
+L00002641	owner_doc: Plans/Provider_OpenCode.md
+L00002642	canonical_text: >-
+L00002643	  OpenCode cancellation is a first-class provider control distinct from ordinary failure: PM cancels the
+L00002644	  active transport, retains received partial tokens, marks completion_reason cancelled, distinguishes timeout
+L00002645	  from user cancel, manages connection-pool health, and emits provider.request_cancelled.
+L00002646	gui_related: false
+L00002647	gui_classification_reason: "This unit defines runtime cancellation semantics rather than visual presentation."
+L00002648	split_recommended: false
+L00002649	depends_on:
+L00002650	  - "PO-016"
+L00002651	  - "PO-034"
+L00002652	unblocks: []
+L00002653	acceptance_criteria:
+L00002654	  - "Cancellation And Abort Contract remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00002655	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002656	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002657	validation_surfaces:
+L00002658	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002659	  - "python3 scripts/pm-plan-index.py validate"
+L00002660	risk_class: opencode_provider_drift
+L00002661	reasoning_tier: standard
+L00002662	context_scope: provider_opencode_cancellation
+L00002663	implementation_surfaces:
+L00002664	  - "Plans/Provider_OpenCode.md"
+L00002665	node_compile_hint:
+L00002666	  mode: opencode_cancel_abort_contract
+L00002667	  create_worknodes: false
+L00002668	source_lineage:
+L00002669	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0044"
+L00002670	preserved_exact_tokens:
+L00002671	  - "Cancellation and abort contract"
+L00002672	  - "first-class provider control"
+L00002673	  - "distinct from ordinary request failure"
+L00002674	  - "closing the HTTP stream"
+L00002675	  - "canceling the SSE subscription"
+L00002676	  - "abort signal"
+L00002677	  - "partial output tokens"
+L00002678	  - "completion_reason: cancelled"
+L00002679	  - "timeout and cancel are distinct"
+L00002680	  - "request_timeout_ms"
+L00002681	  - "connection pool"
+L00002682	  - "provider.request_cancelled"
+L00002683	  - "tokens_received"
+L00002684	  - "reason: \"user\" | \"timeout\" | \"budget\" | \"error\""
+L00002685	negative_constraints:
+L00002686	  - "Timeout and cancel must remain distinct runtime outcomes."
+L00002687	preserved_contractrefs:
+L00002688	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md"
+L00002689	owner_hints:
+L00002690	  - "Plans/Provider_OpenCode.md"
+L00002691	  - "Plans/Contracts_V0.md"
+L00002692	  - "Plans/Executor_Protocol.md"
+L00002693	  - "Plans/storage-plan.md"
+L00002694	```
+L00002695	
+L00002696	### PO-038 - Provider-Account Scoped Concurrency
+L00002697	
+L00002698	```yaml
+L00002699	plan_unit_id: PO-038
+L00002700	unit_type: requirement
+L00002701	status: accepted
+L00002702	owner_doc: Plans/Provider_OpenCode.md
+L00002703	canonical_text: >-
+L00002704	  OpenCode dispatch is queue-backed and provider-account scoped: sequential by default, parallel only when
+L00002705	  explicitly enabled, configurable per-account concurrency, FIFO queueing, queue_timeout_ms expiry,
+L00002706	  independent account queues, and provider.request_queued emission.
+L00002707	gui_related: false
+L00002708	gui_classification_reason: "This unit defines provider dispatch and queueing semantics rather than visual presentation."
+L00002709	split_recommended: false
+L00002710	depends_on:
+L00002711	  - "PO-006"
+L00002712	  - "PO-012"
+L00002713	unblocks: []
+L00002714	acceptance_criteria:
+L00002715	  - "Provider-Account Scoped Concurrency remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00002716	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002717	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002718	validation_surfaces:
+L00002719	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002720	  - "python3 scripts/pm-plan-index.py validate"
+L00002721	risk_class: opencode_provider_drift
+L00002722	reasoning_tier: standard
+L00002723	context_scope: provider_opencode_concurrency
+L00002724	implementation_surfaces:
+L00002725	  - "Plans/Provider_OpenCode.md"
+L00002726	node_compile_hint:
+L00002727	  mode: opencode_provider_account_queueing
+L00002728	  create_worknodes: false
+L00002729	source_lineage:
+L00002730	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0045"
+L00002731	preserved_exact_tokens:
+L00002732	  - "Concurrency model"
+L00002733	  - "queue-backed"
+L00002734	  - "provider-account scoped"
+L00002735	  - "default mode is sequential"
+L00002736	  - "parallel mode is allowed only when explicitly enabled"
+L00002737	  - "subagent execution"
+L00002738	  - "orchestrator-controlled fan-out flows"
+L00002739	  - "concurrency limit"
+L00002740	  - "default = `1`"
+L00002741	  - "FIFO queue"
+L00002742	  - "queue_timeout_ms"
+L00002743	  - "default `30000ms`"
+L00002744	  - "different accounts"
+L00002745	  - "independent concurrency limits"
+L00002746	  - "provider.request_queued"
+L00002747	  - "queue_position"
+L00002748	  - "queue_depth"
+L00002749	negative_constraints:
+L00002750	  - "Parallel OpenCode dispatch must not be enabled implicitly."
+L00002751	preserved_contractrefs:
+L00002752	  - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
+L00002753	owner_hints:
+L00002754	  - "Plans/Provider_OpenCode.md"
+L00002755	  - "Plans/Multi-Account.md"
+L00002756	  - "Plans/Executor_Protocol.md"
+L00002757	  - "Plans/Contracts_V0.md"
+L00002758	```
+L00002759	
+L00002760	### PO-039 - Streaming Error Recovery And Budget Handling
+L00002761	
+L00002762	```yaml
+L00002763	plan_unit_id: PO-039
+L00002764	unit_type: requirement
+L00002765	status: accepted
+L00002766	owner_doc: Plans/Provider_OpenCode.md
+L00002767	canonical_text: >-
+L00002768	  OpenCode streaming recovery retains already-received output, marks stream errors, optionally reconnects with
+L00002769	  partial_response context, avoids fabricated seamless continuation when unsupported, handles HTTP 429
+L00002770	  retry/backoff, and records length or budget_exceeded completion reasons.
+L00002771	gui_related: false
+L00002772	gui_classification_reason: "This unit defines streaming recovery policy rather than visual presentation."
+L00002773	split_recommended: false
+L00002774	depends_on:
+L00002775	  - "PO-016"
+L00002776	  - "PO-037"
+L00002777	  - "PO-038"
+L00002778	unblocks: []
+L00002779	acceptance_criteria:
+L00002780	  - "Streaming Error Recovery And Budget Handling remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00002781	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002782	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002783	validation_surfaces:
+L00002784	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002785	  - "python3 scripts/pm-plan-index.py validate"
+L00002786	risk_class: opencode_provider_drift
+L00002787	reasoning_tier: standard
+L00002788	context_scope: provider_opencode_streaming_recovery
+L00002789	implementation_surfaces:
+L00002790	  - "Plans/Provider_OpenCode.md"
+L00002791	node_compile_hint:
+L00002792	  mode: opencode_streaming_recovery_policy
+L00002793	  create_worknodes: false
+L00002794	source_lineage:
+L00002795	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0046"
+L00002796	preserved_exact_tokens:
+L00002797	  - "Streaming error recovery"
+L00002798	  - "retain all tokens received so far"
+L00002799	  - "completion_reason: stream_error"
+L00002800	  - "auto_retry_stream: true"
+L00002801	  - "partial_response"
+L00002802	  - "provider supports continuation from partial output"
+L00002803	  - "without fabricating a seamless continuation"
+L00002804	  - "HTTP `429`"
+L00002805	  - "Retry-After"
+L00002806	  - "exponential backoff `1s -> 2s -> 4s`"
+L00002807	  - "maximum rate-limit retries = `3`"
+L00002808	  - "failure_class: rate_limited"
+L00002809	  - "completion_reason: length"
+L00002810	  - "budget_exceeded"
+L00002811	negative_constraints:
+L00002812	  - "PM must not fabricate a seamless continuation when the provider does not support continuation from partial output."
+L00002813	preserved_contractrefs:
+L00002814	  - "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md"
+L00002815	owner_hints:
+L00002816	  - "Plans/Provider_OpenCode.md"
+L00002817	  - "Plans/Executor_Protocol.md"
+L00002818	  - "Plans/Contracts_V0.md"
+L00002819	  - "Plans/storage-plan.md"
+L00002820	```
+L00002821	
+L00002822	### PO-040 - Seglog Event Persistence Mapping
+L00002823	
+L00002824	```yaml
+L00002825	plan_unit_id: PO-040
+L00002826	unit_type: requirement
+L00002827	status: accepted
+L00002828	owner_doc: Plans/Provider_OpenCode.md
+L00002829	canonical_text: >-
+L00002830	  OpenCode runs persist to seglog using the shared provider event types: run.started with run_id, thread_id,
+L00002831	  platform opencode, mode, and http transport; tool.invoked/tool.denied from response parts; usage.event from
+L00002832	  message metadata; and run.completed on session completion.
+L00002833	gui_related: false
+L00002834	gui_classification_reason: "This unit defines persistence event mapping rather than visual presentation."
+L00002835	split_recommended: true
+L00002836	depends_on:
+L00002837	  - "PO-016"
+L00002838	  - "PO-022"
+L00002839	  - "PO-034"
+L00002840	unblocks: []
+L00002841	acceptance_criteria:
+L00002842	  - "Seglog Event Persistence Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00002843	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002844	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002845	validation_surfaces:
+L00002846	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002847	  - "python3 scripts/pm-plan-index.py validate"
+L00002848	risk_class: opencode_provider_drift
+L00002849	reasoning_tier: standard
+L00002850	context_scope: provider_opencode_seglog_mapping
+L00002851	implementation_surfaces:
+L00002852	  - "Plans/Provider_OpenCode.md"
+L00002853	node_compile_hint:
+L00002854	  mode: opencode_seglog_event_mapping
+L00002855	  create_worknodes: false
+L00002856	source_lineage:
+L00002857	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0047"
+L00002858	preserved_exact_tokens:
+L00002859	  - "Persistence Mapping (seglog)"
+L00002860	  - "seglog"
+L00002861	  - "run.started"
+L00002862	  - "run_id"
+L00002863	  - "thread_id"
+L00002864	  - "platform: \"opencode\""
+L00002865	  - "mode"
+L00002866	  - "transport: \"http\""
+L00002867	  - "tool.invoked"
+L00002868	  - "tool.denied"
+L00002869	  - "OpenCode response parts"
+L00002870	  - "usage.event"
+L00002871	  - "message metadata"
+L00002872	  - "input/output tokens"
+L00002873	  - "run.completed"
+L00002874	  - "status"
+L00002875	negative_constraints: []
+L00002876	preserved_contractrefs:
+L00002877	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord"
+L00002878	owner_hints:
+L00002879	  - "Plans/Provider_OpenCode.md"
+L00002880	  - "Plans/storage-plan.md"
+L00002881	  - "Plans/Contracts_V0.md"
+L00002882	```
+L00002883	
+L00002884	### PO-041 - Cost Certainty And Provider-Local Persistence Boundary
+L00002885	
+L00002886	```yaml
+L00002887	plan_unit_id: PO-041
+L00002888	unit_type: constraint
+L00002889	status: accepted
+L00002890	owner_doc: Plans/Provider_OpenCode.md
+L00002891	canonical_text: >-
+L00002892	  OpenCode cost and persistence evidence remains provider-local reference state: PM must not copy OpenCode
+L00002893	  visuals, overclaim cost certainty, treat estimated-cost as provider-authoritative pricing without evidence,
+L00002894	  or use OpenCode SQLite/snapshot/NFS-incompatible state as PM canonical ledger, event log, or recovery
+L00002895	  source.
+L00002896	gui_related: false
+L00002897	gui_classification_reason: "This unit defines cost and persistence authority boundaries rather than visual presentation."
+L00002898	split_recommended: true
+L00002899	depends_on:
+L00002900	  - "PO-014"
+L00002901	  - "PO-040"
+L00002902	unblocks: []
+L00002903	acceptance_criteria:
+L00002904	  - "Cost Certainty And Provider-Local Persistence Boundary remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00002905	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00002906	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00002907	validation_surfaces:
+L00002908	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002909	  - "python3 scripts/pm-plan-index.py validate"
+L00002910	risk_class: opencode_persistence_authority_drift
+L00002911	reasoning_tier: standard
+L00002912	context_scope: provider_opencode_persistence_boundary
+L00002913	implementation_surfaces:
+L00002914	  - "Plans/Provider_OpenCode.md"
+L00002915	node_compile_hint:
+L00002916	  mode: opencode_persistence_boundary
+L00002917	  create_worknodes: false
+L00002918	source_lineage:
+L00002919	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0047"
+L00002920	preserved_exact_tokens:
+L00002921	  - "Do not copy OpenCode visuals directly"
+L00002922	  - "overclaim OpenCode-derived cost certainty"
+L00002923	  - "provider-cache and provider-normalization caveats"
+L00002924	  - "estimated-cost"
+L00002925	  - "provider-authoritative pricing"
+L00002926	  - "raw/debug evidence"
+L00002927	  - "upstream cache/input reporting caveat"
+L00002928	  - "provider-local reference state"
+L00002929	  - "not PM canonical state"
+L00002930	  - "non-atomic writes"
+L00002931	  - "shared snapshot indexes"
+L00002932	  - "SQLite stores"
+L00002933	  - "NFS-incompatible filesystem assumptions"
+L00002934	  - "authoritative PM ledger, event log, or recovery source"
+L00002935	negative_constraints:
+L00002936	  - "OpenCode visuals must not be copied directly into PM canonical surfaces."
+L00002937	  - "OpenCode SQLite, snapshot, and NFS-incompatible provider-local state must not become the authoritative PM ledger, event log, or recovery source."
+L00002938	preserved_contractrefs:
+L00002939	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord"
+L00002940	owner_hints:
+L00002941	  - "Plans/Provider_OpenCode.md"
+L00002942	  - "Plans/storage-plan.md"
+L00002943	  - "Plans/Contracts_V0.md"
+L00002944	```
+L00002945	
+
+<<< CONTEXT_AFTER canonical_document_lines=2946-2957 >>>
+L00002946	### PO-042 - Testable Acceptance Bundle
+L00002947	
+L00002948	```yaml
+L00002949	plan_unit_id: PO-042
+L00002950	unit_type: acceptance
+L00002951	status: accepted
+L00002952	owner_doc: Plans/Provider_OpenCode.md
+L00002953	canonical_text: >-
+L00002954	  OpenCode acceptance requires reachable enabled sessions, provider/model discovery and GUI model picker
+L00002955	  display, health/auth user-facing errors, normalized provider events, per-iteration session deletion,
+L00002956	  enabled-only tier visibility, Doctor checks, credential-store secrets, and unified Provider facade behavior
+L00002957	  without consumer branching.

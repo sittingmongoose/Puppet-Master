@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4068-4079 >>>
+L00004068	- Tavily
+L00004069	- 'Searching Web: <refined query>'
+L00004070	- 'Reading Site: <url>'
+L00004071	negative_constraints:
+L00004072	- 'When `autonomous: false` or omitted on `webresearch`, the agent does NOT navigate or interact with pages.'
+L00004073	preserved_contractrefs: []
+L00004074	compatibility_only_notes: []
+L00004075	stale_retired_dispositions: []
+L00004076	owner_hints:
+L00004077	- Plans/Tools.md
+L00004078	```
+L00004079	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4080-4476 >>>
+L00004080	### T-033 - Agent Web Activity And Audit Evidence Surface
+L00004081	
+L00004082	```yaml
+L00004083	plan_unit_id: T-033
+L00004084	unit_type: requirement
+L00004085	status: accepted
+L00004086	owner_doc: Plans/Tools.md
+L00004087	canonical_text: Agent-web-research is shared by Assistant, Interview, Orchestrator, requirements-doc-builder, and doc-builder
+L00004088	  surfaces; activity cards and audit trails expose search plus `/fetch/read` steps and browser-interaction sub-annotations
+L00004089	  when needed.
+L00004090	gui_related: true
+L00004091	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
+L00004092	  activity, or visible rendering behavior.
+L00004093	split_recommended: true
+L00004094	depends_on:
+L00004095	- T-030
+L00004096	- T-032
+L00004097	unblocks: []
+L00004098	acceptance_criteria:
+L00004099	- Activity labels and audit-trail visibility remain preserved.
+L00004100	- '`Reading Site: <url> (with browser interaction)` remains explicit when browser interaction is involved.'
+L00004101	- Web operation child payload refs remain visible through `tool.invoked` and `tool.denied`.
+L00004102	validation_surfaces:
+L00004103	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004104	- python3 scripts/pm-plan-index.py validate
+L00004105	risk_class: web_evidence_hidden
+L00004106	reasoning_tier: standard
+L00004107	context_scope: tools_phase2b_batch_182
+L00004108	implementation_surfaces:
+L00004109	- Plans/Tools.md
+L00004110	node_compile_hint:
+L00004111	  mode: web_activity_audit_surface
+L00004112	  create_worknodes: false
+L00004113	source_lineage:
+L00004114	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004115	preserved_exact_tokens:
+L00004116	- /brittle
+L00004117	- /fetch/read
+L00004118	- tool.invoked
+L00004119	- tool.denied
+L00004120	- payload.meta
+L00004121	- warnings_count
+L00004122	- error_code
+L00004123	- 'Reading Site: <url> (with browser interaction)'
+L00004124	negative_constraints: []
+L00004125	preserved_contractrefs: []
+L00004126	compatibility_only_notes: []
+L00004127	stale_retired_dispositions:
+L00004128	- Research-session action subset remains bounded to web-operation evidence access, not a full visible browser-session product
+L00004129	  surface.
+L00004130	owner_hints:
+L00004131	- Plans/Tools.md
+L00004132	```
+L00004133	
+L00004134	### T-034 - WebAction Browser Action And Safety Contract
+L00004135	
+L00004136	```yaml
+L00004137	plan_unit_id: T-034
+L00004138	unit_type: requirement
+L00004139	status: accepted
+L00004140	owner_doc: Plans/Tools.md
+L00004141	canonical_text: WebAction and browser testing use named action IDs, exact aliases, sequential execution, timing caps, explicit
+L00004142	  safety layers, and degraded-capability reason codes rather than arbitrary browser-code execution.
+L00004143	gui_related: true
+L00004144	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
+L00004145	  activity, or visible rendering behavior.
+L00004146	split_recommended: true
+L00004147	depends_on:
+L00004148	- T-029
+L00004149	- T-030
+L00004150	unblocks: []
+L00004151	acceptance_criteria:
+L00004152	- Action enum, aliases, everyday/advanced IDs, 5000ms default, 30000ms max, and 30s total cap remain preserved.
+L00004153	- Action execution remains sequential in array order.
+L00004154	- Degraded or blocked browser capabilities return explicit reason codes.
+L00004155	validation_surfaces:
+L00004156	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004157	- python3 scripts/pm-plan-index.py validate
+L00004158	risk_class: browser_automation_overreach
+L00004159	reasoning_tier: standard
+L00004160	context_scope: tools_phase2b_batch_182
+L00004161	implementation_surfaces:
+L00004162	- Plans/Tools.md
+L00004163	node_compile_hint:
+L00004164	  mode: browser_action_contract
+L00004165	  create_worknodes: false
+L00004166	source_lineage:
+L00004167	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004168	preserved_exact_tokens:
+L00004169	- press key
+L00004170	- press_key
+L00004171	- select option
+L00004172	- select_option
+L00004173	- fill form
+L00004174	- fill_form
+L00004175	- file upload
+L00004176	- upload_file
+L00004177	- dialog handle
+L00004178	- handle_dialog
+L00004179	- session_granted
+L00004180	- /safety
+L00004181	- platform_unsupported
+L00004182	- runtime_unavailable
+L00004183	- permission_not_granted
+L00004184	- 5000ms
+L00004185	- 30000ms
+L00004186	- 30s
+L00004187	negative_constraints:
+L00004188	- WebAction/browser testing uses named action IDs rather than arbitrary browser-code execution.
+L00004189	preserved_contractrefs: []
+L00004190	compatibility_only_notes: []
+L00004191	stale_retired_dispositions: []
+L00004192	owner_hints:
+L00004193	- Plans/Tools.md
+L00004194	```
+L00004195	
+L00004196	### T-035 - Web Extraction Schema Validation Contract
+L00004197	
+L00004198	```yaml
+L00004199	plan_unit_id: T-035
+L00004200	unit_type: requirement
+L00004201	status: accepted
+L00004202	owner_doc: Plans/Tools.md
+L00004203	canonical_text: Schema-backed `webextract` and `webresearch` use JSON Schema draft-07, strict/lenient validation modes, explicit
+L00004204	  empty/invalid/too-large errors, and prompt+schema two-phase behavior without silently rewriting prompts.
+L00004205	gui_related: false
+L00004206	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004207	split_recommended: false
+L00004208	depends_on:
+L00004209	- T-031
+L00004210	unblocks: []
+L00004211	acceptance_criteria:
+L00004212	- '`schema_mode?: "strict" | "lenient"` remains preserved with default `"lenient"`.'
+L00004213	- 'Strict and lenient output behavior remains preserved, including `_schema_violation: true`.'
+L00004214	- Schema size and schema validation errors remain explicit.
+L00004215	validation_surfaces:
+L00004216	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004217	- python3 scripts/pm-plan-index.py validate
+L00004218	risk_class: schema_prompt_mutation
+L00004219	reasoning_tier: standard
+L00004220	context_scope: tools_phase2b_batch_182
+L00004221	implementation_surfaces:
+L00004222	- Plans/Tools.md
+L00004223	node_compile_hint:
+L00004224	  mode: web_extraction_schema_contract
+L00004225	  create_worknodes: false
+L00004226	source_lineage:
+L00004227	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004228	preserved_exact_tokens:
+L00004229	- 'schema_mode?: "strict" | "lenient"'
+L00004230	- '"lenient"'
+L00004231	- '_schema_violation: true'
+L00004232	- extraction_schema_mismatch
+L00004233	- extraction_empty
+L00004234	- schema_too_large
+L00004235	- schema_invalid
+L00004236	- 50KB
+L00004237	- JSON Schema draft-07
+L00004238	negative_constraints:
+L00004239	- Schema validation must not silently rewrite the LLM prompt.
+L00004240	preserved_contractrefs: []
+L00004241	compatibility_only_notes: []
+L00004242	stale_retired_dispositions: []
+L00004243	owner_hints:
+L00004244	- Plans/Tools.md
+L00004245	```
+L00004246	
+L00004247	### T-036 - Web Formats Firecrawl Mapping And Retired Claims
+L00004248	
+L00004249	```yaml
+L00004250	plan_unit_id: T-036
+L00004251	unit_type: requirement
+L00004252	status: accepted
+L00004253	owner_doc: Plans/Tools.md
+L00004254	canonical_text: Web format semantics preserve browser artifact behavior, adapter-internal Firecrawl mappings, and retired/unconfirmed
+L00004255	  claims without making them PM canon.
+L00004256	gui_related: true
+L00004257	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
+L00004258	  activity, or visible rendering behavior.
+L00004259	split_recommended: true
+L00004260	depends_on:
+L00004261	- T-031
+L00004262	- T-034
+L00004263	- T-035
+L00004264	unblocks: []
+L00004265	acceptance_criteria:
+L00004266	- Screenshot/PDF runtime warnings and browser-runtime requirements remain preserved.
+L00004267	- '`html` versus `rawHtml` semantics remain preserved.'
+L00004268	- '`detail_hint -> scrapeOptions depth` remains removed as unconfirmed.'
+L00004269	- The Firecrawl PDF `LlamaParse` claim remains retired as unconfirmed.
+L00004270	validation_surfaces:
+L00004271	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004272	- python3 scripts/pm-plan-index.py validate
+L00004273	risk_class: adapter_internal_overlock
+L00004274	reasoning_tier: standard
+L00004275	context_scope: tools_phase2b_batch_182
+L00004276	implementation_surfaces:
+L00004277	- Plans/Tools.md
+L00004278	node_compile_hint:
+L00004279	  mode: web_format_adapter_disposition
+L00004280	  create_worknodes: false
+L00004281	source_lineage:
+L00004282	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004283	preserved_exact_tokens:
+L00004284	- capability_unavailable
+L00004285	- 'formats: ["pdf"]'
+L00004286	- '"rawHtml"'
+L00004287	- scripts/nav/ads
+L00004288	- 'onlyMainContent: true'
+L00004289	- detail_hint → scrapeOptions depth
+L00004290	- LlamaParse
+L00004291	- export_pdf
+L00004292	negative_constraints: []
+L00004293	preserved_contractrefs: []
+L00004294	compatibility_only_notes:
+L00004295	- '`export_pdf` is retired for research access; trace/video are excluded from `research_session`; Firecrawl PDF `LlamaParse`
+L00004296	  is retired as unconfirmed.'
+L00004297	stale_retired_dispositions:
+L00004298	- Firecrawl PDF processing does not make `LlamaParse` PM canon.
+L00004299	owner_hints:
+L00004300	- Plans/Tools.md
+L00004301	```
+L00004302	
+L00004303	### T-037 - Web Crawl Map Scope Change Tracking And Dedup
+L00004304	
+L00004305	```yaml
+L00004306	plan_unit_id: T-037
+L00004307	unit_type: requirement
+L00004308	status: accepted
+L00004309	owner_doc: Plans/Tools.md
+L00004310	canonical_text: '`webcrawl` and `webmap` preserve scope filters, effective depth reporting, content-hash dedup, robots/change-tracking
+L00004311	  inputs, per-page change status, and structured warnings for narrowed provider behavior.'
+L00004312	gui_related: false
+L00004313	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004314	split_recommended: false
+L00004315	depends_on:
+L00004316	- T-031
+L00004317	unblocks: []
+L00004318	acceptance_criteria:
+L00004319	- Scope filters, effective depth, and per-page change status remain preserved.
+L00004320	- Content-hash dedup and `dedup_skipped` behavior remain preserved.
+L00004321	- Provider narrowing returns structured warnings rather than silent drift.
+L00004322	validation_surfaces:
+L00004323	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004324	- python3 scripts/pm-plan-index.py validate
+L00004325	risk_class: crawl_scope_ambiguity
+L00004326	reasoning_tier: standard
+L00004327	context_scope: tools_phase2b_batch_182
+L00004328	implementation_surfaces:
+L00004329	- Plans/Tools.md
+L00004330	node_compile_hint:
+L00004331	  mode: web_crawl_map_contract
+L00004332	  create_worknodes: false
+L00004333	source_lineage:
+L00004334	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004335	preserved_exact_tokens:
+L00004336	- depth_limit?
+L00004337	- include_paths
+L00004338	- exclude_paths
+L00004339	- dedup
+L00004340	- respect_robots
+L00004341	- change_status
+L00004342	- change_summary
+L00004343	- new|same|changed|removed
+L00004344	- /docs/*
+L00004345	- /api/**
+L00004346	- '!/internal/*'
+L00004347	- /exclude_paths
+L00004348	negative_constraints: []
+L00004349	preserved_contractrefs: []
+L00004350	compatibility_only_notes: []
+L00004351	stale_retired_dispositions: []
+L00004352	owner_hints:
+L00004353	- Plans/Tools.md
+L00004354	```
+L00004355	
+L00004356	### T-038 - Web Result Envelope Cache And Audit Payload
+L00004357	
+L00004358	```yaml
+L00004359	plan_unit_id: T-038
+L00004360	unit_type: requirement
+L00004361	status: accepted
+L00004362	owner_doc: Plans/Tools.md
+L00004363	canonical_text: Web outputs share locked execution-path, cache, common envelope, operation-specific result fields, citation
+L00004364	  provenance, semantic audit values, default limits, and child payload refs.
+L00004365	gui_related: false
+L00004366	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004367	split_recommended: false
+L00004368	depends_on:
+L00004369	- T-029
+L00004370	- T-031
+L00004371	unblocks: []
+L00004372	acceptance_criteria:
+L00004373	- TTL defaults, `cache_state`, and `execution_path` remain preserved.
+L00004374	- The common result envelope and operation-specific extensions remain preserved.
+L00004375	- Semantic audit `read` maps to the canonical `webfetch` tool.
+L00004376	- '`operation_input` is the canonical structured routing/audit input; legacy `web_input` normalizes to it.'
+L00004377	validation_surfaces:
+L00004378	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004379	- python3 scripts/pm-plan-index.py validate
+L00004380	risk_class: web_audit_cache_extras_drift
+L00004381	reasoning_tier: standard
+L00004382	context_scope: tools_phase2b_batch_182
+L00004383	implementation_surfaces:
+L00004384	- Plans/Tools.md
+L00004385	node_compile_hint:
+L00004386	  mode: web_result_cache_audit_contract
+L00004387	  create_worknodes: false
+L00004388	source_lineage:
+L00004389	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0030
+L00004390	preserved_exact_tokens:
+L00004391	- provider_search_native
+L00004392	- pm_search_plus_site_reader
+L00004393	- provider_extract_native
+L00004394	- pm_extract_composed
+L00004395	- pm_site_reader
+L00004396	- provider_firecrawl_scrape
+L00004397	- pm_fetch_fallback
+L00004398	- provider_firecrawl_agent
+L00004399	- pm_research_composed
+L00004400	- 'provenance_badge?: string'
+L00004401	- cache_state
+L00004402	- operation_input
+L00004403	- operation_input_preview
+L00004404	- denial_reason_code
+L00004405	negative_constraints:
+L00004406	- '`operation_input_preview` must not replace structured `operation_input`.'
+L00004407	preserved_contractrefs: []
+L00004408	compatibility_only_notes:
+L00004409	- Legacy `web_input` and `web_input_preview` normalize to `operation_input` and `operation_input_preview`.
+L00004410	- Legacy child payload `blocked_reason_code?` aliases normalize to `denial_reason_code`.
+L00004411	stale_retired_dispositions: []
+L00004412	owner_hints:
+L00004413	- Plans/Tools.md
+L00004414	```
+L00004415	
+L00004416	### T-039 - Site Reader Structured Runtime And PageRepresentation
+L00004417	
+L00004418	```yaml
+L00004419	plan_unit_id: T-039
+L00004420	unit_type: requirement
+L00004421	status: accepted
+L00004422	owner_doc: Plans/Tools.md
+L00004423	canonical_text: Site Reader is the native structured browser-reading runtime behind `webfetch` and `Reading Site`; it builds
+L00004424	  typed `PageRepresentation`, handles iframes, returns rendered representations after navigation, and owns page/session state.
+L00004425	gui_related: false
+L00004426	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004427	split_recommended: true
+L00004428	depends_on:
+L00004429	- T-029
+L00004430	- T-031
+L00004431	unblocks:
+L00004432	- T-040
+L00004433	- T-041
+L00004434	acceptance_criteria:
+L00004435	- The representation preserves accessibility tree, layout bounds, landmarks, headings, interactive elements, forms, and optional
+L00004436	  iframes.
+L00004437	- Iframe discovery remains bounded to 3 levels with warning behavior for blocked content.
+L00004438	- Navigation returns a rendered page representation with default detail level `minimal`.
+L00004439	- Page/session state remains owned by the Site Reader runtime.
+L00004440	validation_surfaces:
+L00004441	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004442	- python3 scripts/pm-plan-index.py validate
+L00004443	risk_class: untyped_page_dump_drift
+L00004444	reasoning_tier: standard
+L00004445	context_scope: tools_phase2b_batch_182
+L00004446	implementation_surfaces:
+L00004447	- Plans/Tools.md
+L00004448	node_compile_hint:
+L00004449	  mode: structured_site_reader_runtime
+L00004450	  create_worknodes: false
+L00004451	source_lineage:
+L00004452	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0031
+L00004453	preserved_exact_tokens:
+L00004454	- Site Reader
+L00004455	- PageRepresentation
+L00004456	- accessibility tree
+L00004457	- layout bounds
+L00004458	- landmarks
+L00004459	- headings
+L00004460	- interactive elements
+L00004461	- forms
+L00004462	- iframe
+L00004463	- 3 levels deep
+L00004464	- CDP sessions
+L00004465	- minimal
+L00004466	- PageManager
+L00004467	negative_constraints:
+L00004468	- Site Reader is not a browser-display feature, thin search helper, full built-in browser, click-to-context, DevTools-linked
+L00004469	  capture, or visible browser-session product surface.
+L00004470	preserved_contractrefs: []
+L00004471	compatibility_only_notes: []
+L00004472	stale_retired_dispositions: []
+L00004473	owner_hints:
+L00004474	- Plans/Tools.md
+L00004475	```
+L00004476	
+
+<<< CONTEXT_AFTER canonical_document_lines=4477-4488 >>>
+L00004477	### T-040 - Site Reader Product Boundary And Vocabulary
+L00004478	
+L00004479	```yaml
+L00004480	plan_unit_id: T-040
+L00004481	unit_type: requirement
+L00004482	status: accepted
+L00004483	owner_doc: Plans/Tools.md
+L00004484	canonical_text: Site Reader remains the default structured-reader engine; `/raw` is fallback, read/observe stays separate
+L00004485	  from act/interact, and PM product vocabulary excludes non-PM implementation/source names.
+L00004486	gui_related: true
+L00004487	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, preview, settings, usage, routing, browser,
+L00004488	  activity, or visible rendering behavior.

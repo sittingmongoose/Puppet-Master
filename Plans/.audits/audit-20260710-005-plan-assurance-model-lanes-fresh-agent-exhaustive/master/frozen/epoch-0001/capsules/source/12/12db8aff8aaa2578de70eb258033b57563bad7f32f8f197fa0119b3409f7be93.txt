@@ -1,0 +1,303 @@
+<<< CONTEXT_BEFORE 8369-8380 >>>
+- SchemaID:evidence.schema.json
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Containers_Registry_and_Unraid.md, FinalGUISpec, Orchestrator_Page, and evidence schema remain cross-doc consumers/authorities through the preserved ContractRef.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json'
+```
+
+
+<<< AUTHORITATIVE_CORE 8381-8668 >>>
+### N2-001 - GUI Testing Tools Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: N2-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: N2-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 107 because newtools-S0001 through newtools-S0078 are covered by N2-002 through N2-150 or explicit structural, reference-only, retired, and migration-coverage dispositions. N2-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+gui_related: false
+gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained newtools PlanUnits and coverage_map proof.
+split_recommended: false
+depends_on:
+- N2-002
+- N2-003
+- N2-004
+- N2-005
+- N2-006
+- N2-007
+- N2-008
+- N2-009
+- N2-010
+- N2-011
+- N2-012
+- N2-013
+- N2-014
+- N2-015
+- N2-016
+- N2-017
+- N2-018
+- N2-019
+- N2-020
+- N2-021
+- N2-022
+- N2-023
+- N2-024
+- N2-025
+- N2-026
+- N2-027
+- N2-028
+- N2-029
+- N2-030
+- N2-031
+- N2-032
+- N2-033
+- N2-034
+- N2-035
+- N2-036
+- N2-037
+- N2-038
+- N2-039
+- N2-040
+- N2-041
+- N2-042
+- N2-043
+- N2-044
+- N2-045
+- N2-046
+- N2-047
+- N2-048
+- N2-049
+- N2-050
+- N2-051
+- N2-052
+- N2-053
+- N2-054
+- N2-055
+- N2-056
+- N2-057
+- N2-058
+- N2-059
+- N2-060
+- N2-061
+- N2-062
+- N2-063
+- N2-064
+- N2-065
+- N2-066
+- N2-067
+- N2-068
+- N2-069
+- N2-070
+- N2-071
+- N2-072
+- N2-073
+- N2-074
+- N2-075
+- N2-076
+- N2-077
+- N2-078
+- N2-079
+- N2-080
+- N2-081
+- N2-082
+- N2-083
+- N2-084
+- N2-085
+- N2-086
+- N2-087
+- N2-088
+- N2-089
+- N2-090
+- N2-091
+- N2-092
+- N2-093
+- N2-094
+- N2-095
+- N2-096
+- N2-097
+- N2-098
+- N2-099
+- N2-100
+- N2-101
+- N2-102
+- N2-103
+- N2-104
+- N2-105
+- N2-106
+- N2-107
+- N2-108
+- N2-109
+- N2-110
+- N2-111
+- N2-112
+- N2-113
+- N2-114
+- N2-115
+- N2-116
+- N2-117
+- N2-118
+- N2-119
+- N2-120
+- N2-121
+- N2-122
+- N2-123
+- N2-124
+- N2-125
+- N2-126
+- N2-127
+- N2-128
+- N2-129
+- N2-130
+- N2-131
+- N2-132
+- N2-133
+- N2-134
+- N2-135
+- N2-136
+- N2-137
+- N2-138
+- N2-139
+- N2-140
+- N2-141
+- N2-142
+- N2-143
+- N2-144
+- N2-145
+- N2-146
+- N2-147
+- N2-148
+- N2-149
+- N2-150
+unblocks: []
+acceptance_criteria:
+- N2-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 107.
+- newtools-S0001 through newtools-S0078 product coverage is owned by N2-002 through N2-150 or explicit structural, reference-only, retired, and migration-coverage dispositions.
+- N2-001 remains only to preserve migration lineage for the former source-preserving bridge.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0072
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0073
+preserved_exact_tokens:
+- N2-001
+- GUI Testing Tools Residual Source-Preserving PlanUnit
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- 15. References
+- 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum
+- Result payload minima
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- N2-001 must not re-own newtools-S0001 through newtools-S0078 after Phase 2B batch 107.
+- N2-001 must not use node_compile_hint.mode=source_preserving_planunit.
+- Retired bridge lineage must not be treated as implementation-ready product coverage.
+- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+compatibility_only_notes:
+- N2-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+stale_retired_dispositions:
+- The former N2-001 residual source-preserving bridge is retired by Phase 2B batch 107.
+owner_boundary_notes:
+- N2-002 through N2-150 and explicit coverage dispositions own newtools product coverage after bridge retirement.
+- newtools-S0072 is reference-only lineage/provenance coverage after bridge retirement.
+- newtools-S0073 is a structural addendum heading after bridge retirement.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+split_recommendation_reason: The former source-preserving bridge has been atomized or structurally/reference dispositioned and is now retired.
+```
+
+## Migration Coverage
+
+Original hash: `e71a3c15b076255cc614c4ef56c333212e88f0cb72c6d02b58af24ebe454f904`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batches 104 through 107 atomized source spans `newtools-S0002` through `newtools-S0078` into fine-grained PlanUnits `N2-002` through `N2-150`, except for structural, reference-only, and migration-lineage dispositions. `newtools-S0001`, `newtools-S0007`, `newtools-S0013`, `newtools-S0017`, `newtools-S0030`, `newtools-S0035`, `newtools-S0057`, `newtools-S0072`, `newtools-S0073`, and `newtools-S0076` are structurally or reference-only dispositioned; `newtools-S0034` is fully covered by `N2-048` and `N2-049`; `newtools-S0052` is split across `N2-096`, `N2-097`, and `N2-098`. `N2-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum is canonical newtools spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+### Framework And Tool Catalog Entry Schemas
+
+Repairs row `sfk-88d1096d2627a98e841dc23e`.
+
+`FrameworkEntry` fields: `framework_id`, `display_name`, `language_family`, `default_tool_ids[]`, `detection_patterns[]`, `install_strategy`, `support_state`, `owner_doc_ref`, and `schema_version`.
+
+`ToolEntry` fields: `tool_id`, `display_name`, `framework_id?`, `command_ref?`, `capability_tags[]`, `default_enabled`, `support_classification`, `requires_credentials`, `health_check_id?`, `policy_refs[]`, and `schema_version`.
+
+### Action Catalog And Scenario File Contract
+
+Repairs row `sfk-4d4d2855408c239af5a00ef3`.
+
+- Action catalog records use `action_id`, `display_name`, `scenario_file`, `trigger_kind`, `required_tool_ids[]`, `input_schema_ref`, `output_schema_ref?`, `permission_class`, `default_enabled`, and `owner_doc_ref`.
+- Scenario files use JSON with top-level fields `scenario_id`, `schema_version`, `steps[]`, `fixtures[]?`, `expected_results[]`, and `cleanup[]?`.
+- Step fields are `step_id`, `action_id`, `inputs`, `timeout_ms`, `retry_policy_ref?`, and `on_failure`.
+
+### Doctor Check Registry
+
+Repairs row `sfk-daa3fd5eb054bd8c6be82b8d`.
+
+Canonical doctor check ids include `doctor.mcp.context7`, `doctor.registry.auth`, `doctor.dockerhub.auth.capability`, `doctor.docker.buildx`, `doctor.debug.launch_config`, `doctor.debug.browser_session`, and `doctor.debug.attach_pid`.
+
+Each doctor check record fields: `check_id`, `owner_doc_ref`, `input_schema_ref?`, `success_state`, `failure_codes[]`, `remediation_action_ids[]`, `credential_scope?`, `network_required`, `cache_ttl_seconds`, and `support_state`.
+
+### Preflight Failure Enums
+
+Repairs row `sfk-8d03b002e270c0c2db010037`.
+
+- `severity` values are `info`, `warning`, `blocked`, and `fatal`.
+- `code` values are `dependency_missing`, `dependency_version_unsupported`, `credential_missing`, `permission_denied`, `network_unavailable`, `policy_blocked`, `host_unreachable`, `runtime_unavailable`, `schema_invalid`, and `unknown`.
+- Preflight failure fields are `code`, `severity`, `dependency?`, `expected?`, `observed?`, `remediation`, `owner_doc_ref`, and `retryable`.
+
+### Manifest Render Hints
+
+Repairs row `sfk-181db601e331e0d9b1cd52c7`.
+
+`manifest.json` fields are `manifest_id`, `schema_version`, `tool_ids[]`, `framework_ids[]`, `render_hints`, `policy_refs[]`, `credential_refs[]?`, and `generated_at_utc`.
+
+`render_hints` fields are `group_by`, `sort_order`, `compact_labels`, `show_health_badges`, `default_filter?`, and `empty_state_copy_id?`.
+
+### Shared Trust Proxy Deny Codes
+
+Repairs row `sfk-c5e20efd85f389d003c5cf07`.
+
+Canonical deny-code families are `permission_denied`, `credential_missing`, `trust_proxy_unavailable`, `network_forbidden`, `policy_blocked`, `registry_auth_failed`, `capability_unverified`, and `unsafe_target`. These deny codes must map to the corresponding permission or preflight reason before a tool action can surface as retryable.
+
+### Instrumentation Scope And Debug Target Storage
+
+Repairs rows `sfk-d832771f93a3e3541cd1b774` and `sfk-18048251633869d004e48189`.
+
+- Instrumentation scope records use storage key `instrumentation_scope.v1:{project_id}:{scope_id}` with fields `scope_id`, `project_id`, `target_ref`, `status`, `temporary`, `cleanup_path?`, `created_at_utc`, `expires_at_utc?`, and `owner_doc_ref`.
+- Debug target registry records use storage key `debug_target.v1:{project_id}:{target_id}` with fields `target_id`, `target_kind`, `launch_config_ref?`, `url?`, `attach_pid?`, `browser_session_ref?`, `permission_snapshot_id?`, `last_verified_at_utc?`, and `support_state`.
+
+### Split Recommendation Closure And Deprecated Registry Auth Constraint
+
+Repairs rows `sfk-69876bef3b441cb17b89d231` and `sfk-db7708202eb32b69931bb737`.
+
+- `split_recommended: true` on N2-096 through N2-140 is a planning-quality signal, not a buildability claim. A row may remain unsplit only when it has an explicit `split_deferred_reason`, `owner_doc_ref`, and `reopen_condition`.
+- The canonical registry auth constraint is: `doctor.registry.auth` is deprecated for DockerHub auth; use `doctor.dockerhub.auth.capability` for DockerHub-specific capability checks. Any N2-120/N2-141 duplicate wording must normalize to that single sentence.

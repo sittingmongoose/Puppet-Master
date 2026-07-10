@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 4358-4369 >>>
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0026
+preserved_exact_tokens:
+  - "User Commands"
+  - "PM-native Ask"
+  - "Plan"
+negative_constraints:
+  - "User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Commands_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4370-4731 >>>
+### ACD-019 - Dispatcher Parity For Web Intents
+
+```yaml
+plan_unit_id: ACD-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.
+gui_related: true
+gui_classification_reason: Dispatcher parity affects user-visible command routing, help, and activity behavior.
+depends_on: [ACD-015]
+unblocks: []
+acceptance_criteria:
+  - Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents resolve through the same dispatcher.
+  - Reading intents such as read this URL and fetch this page resolve to webfetch, not websearch.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_dispatch_drift
+reasoning_tier: standard
+context_scope: command_surface
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: dispatcher_parity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0027
+preserved_exact_tokens:
+  - "read this site"
+  - "read this URL"
+  - "fetch this page"
+  - "webfetch"
+  - "websearch"
+  - "webextract"
+  - "webresearch"
+  - "site/page reading is not search"
+negative_constraints:
+  - "Reading intents MUST resolve to `webfetch`, not `websearch`."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-020 - Teach Capture Workflow
+
+```yaml
+plan_unit_id: ACD-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Teach is an explicit capture workflow for durable codebase knowledge, user preferences, and workflow constraints. It uses user-locked records and requires explicit user confirmation before storage; it is not a separate closed mode_overlay.
+gui_related: false
+gui_classification_reason: Teach capture and memory persistence behavior are backend/chat workflow behavior rather than visual implementation.
+depends_on: []
+unblocks: [ACD-021, ACD-022]
+acceptance_criteria:
+  - Teach may be invoked through /teach or equivalent natural-language persistence intent.
+  - Persistence requires explicit user-confirming action before knowledge is stored.
+  - Teach does not create a separate closed mode_overlay.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_capture_boundary
+reasoning_tier: standard
+context_scope: teach
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: teach_capture_workflow
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+preserved_exact_tokens:
+  - "user-locked"
+  - "/teach"
+  - "remember that..."
+  - "for this repo always..."
+  - "please prefer..."
+  - "mode_overlay"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-021 - Teach Scope And Record Fields
+
+```yaml
+plan_unit_id: ACD-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Every Teach record declares thread, project, or user scope before commit and stores the required durable memory fields, including identity, provenance, capture time, normalized fact, supersession, and revocation metadata.
+gui_related: false
+gui_classification_reason: Teach scope and record fields are persistence/schema requirements, not GUI implementation.
+depends_on: [ACD-020]
+unblocks: [ACD-022]
+acceptance_criteria:
+  - Each taught item declares thread, project, or user scope before commit.
+  - Persisted Teach records store the required minimum identity, provenance, normalized_fact, supersession, and revocation fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persistence_scope
+reasoning_tier: standard
+context_scope: teach_storage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: teach_scope_schema
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+preserved_exact_tokens:
+  - "thread"
+  - "project"
+  - "user"
+  - "memory_id"
+  - "scope"
+  - "source_thread_id"
+  - "author_message_id"
+  - "captured_at"
+  - "normalized_fact"
+  - "supersedes_memory_id"
+  - "revoked_at"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-022 - Teach Audit And Safety Rules
+
+```yaml
+plan_unit_id: ACD-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Teach retrieval, disclosure, conflict handling, inspection, narrowing, supersession, revocation, and secret exclusion are auditable safety rules. Taught knowledge enters prompts as explicit memory/context rather than undocumented hidden prompt mutation.
+gui_related: false
+gui_classification_reason: Teach audit and secret-exclusion behavior are memory governance requirements, not GUI implementation.
+depends_on: [ACD-020, ACD-021]
+unblocks: []
+acceptance_criteria:
+  - Conflicting teachings record supersession or revocation rather than silently overwriting prior knowledge.
+  - Users can inspect, narrow, supersede, or revoke taught knowledge later.
+  - Teach does not persist secrets, tokens, passwords, or other credentials.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: safety_audit
+reasoning_tier: high
+context_scope: teach
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Decision_Policy.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: teach_audit_safety
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0028
+preserved_exact_tokens:
+  - "explicit memory/context"
+  - "MUST NOT persist secrets, tokens, passwords, or other credentials"
+negative_constraints:
+  - "Teach MUST NOT persist secrets, tokens, passwords, or other credentials."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Decision_Policy.md
+```
+
+### ACD-023 - Structured Input And External Capability Provenance
+
+```yaml
+plan_unit_id: ACD-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Assistant Chat accepts structured inputs and external capability integrations beyond plain text while preserving provenance. Attachments, web search, and extensibility surfaces do not hide origin or capability use.
+gui_related: false
+gui_classification_reason: This unit owns provenance and external capability boundaries rather than concrete visual rendering.
+depends_on: []
+unblocks: [ACD-024, ACD-025, ACD-026]
+acceptance_criteria:
+  - Structured inputs retain provenance instead of being flattened into hidden context.
+  - External capability use remains attributable to its source or integration.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provenance_boundary
+reasoning_tier: standard
+context_scope: attachments_web
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Media_Generation_and_Capabilities.md
+  - Plans/Tools.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: external_capability_provenance
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0029
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0032
+preserved_exact_tokens:
+  - "Attachments, Web Search, and Extensibility"
+  - "provenance"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-024 - Attachment Payload Schema
+
+```yaml
+plan_unit_id: ACD-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Attachments persist as structured message payloads with defined attachment families and minimum fields for identity, display, source, media type, size, and preview state.
+gui_related: false
+gui_classification_reason: Attachment payload persistence and field shape are storage/schema behavior, not GUI implementation.
+depends_on: [ACD-023]
+unblocks: [ACD-025]
+acceptance_criteria:
+  - Supported attachment families include files, images, URLs, inline code snippets, and browser capture chips.
+  - Attachment payloads include the minimum field set required by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: payload_schema
+reasoning_tier: standard
+context_scope: attachments
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: attachment_payload_schema
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0030
+preserved_exact_tokens:
+  - "files"
+  - "images"
+  - "URLs"
+  - "inline code snippets"
+  - "attachment_id"
+  - "attachment_type"
+  - "display_name"
+  - "source_ref"
+  - "mime_type?"
+  - "size_bytes?"
+  - "preview_state"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-025 - Visible Composer And Browser Capture Attachments
+
+```yaml
+plan_unit_id: ACD-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Composer attachments, voice drafts, browser capture chips, and browser-to-agent selection lifecycle remain visible, pending, removable, and user-triggered. Browser capture never arrives as hidden automatic context injection.
+gui_related: true
+gui_classification_reason: Composer drafts, chips, browser highlight/share flows, and removability are visible interaction surfaces.
+depends_on: [ACD-023, ACD-024]
+unblocks: []
+acceptance_criteria:
+  - Voice input becomes a visible draft or pending input transcript before send.
+  - Browser capture chips remain pending, visible, and removable until the user sends.
+  - Browser selection and element-pick commands do not auto-send chat messages.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hidden_context_injection
+reasoning_tier: high
+context_scope: composer
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: attachment_composer_capture
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0030
+preserved_exact_tokens:
+  - "browser_selection_context"
+  - "browser_element_context"
+  - "document_selection_context"
+  - "cmd.browser.add_selection_to_chat"
+  - "cmd.browser.pick_element_for_chat"
+  - "/primary"
+  - "/highlight"
+  - "/new-thread"
+negative_constraints:
+  - "Ordinary browser capture never arrives as hidden automatic context injection."
+stale_retired_terms:
+  - "Plans/newfeatures.md"
+  - "/newfeatures.md"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-026 - Web Search Chat Disclosure
+
+```yaml
+plan_unit_id: ACD-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Web search is a first-class chat capability with explicit web activity cards, related-turn citations, provenance-preserving source disclosure, policy limitation disclosure, and distinct origin labels for user-supplied URLs versus assistant-triggered web results.
+gui_related: true
+gui_classification_reason: Web activity cards, source blocks, citations, and limitation disclosures are visible chat UI behavior.
+depends_on: [ACD-019, ACD-023]
+unblocks: []
+acceptance_criteria:
+  - Web use shows explicit web activity cards and later source or citation disclosure in the related assistant turn.
+  - Fetched or extracted content preserves provenance distinct from synthesized conclusions.
+  - Provider or policy inability to use web search is disclosed instead of implied away.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_provenance
+reasoning_tier: standard
+context_scope: chat_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: web_search_chat_disclosure
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0031
+preserved_exact_tokens:
+  - "web activity cards"
+  - "operation cards"
+  - "source blocks"
+  - "citations"
+  - "search snippets"
+  - "extracted page text"
+  - "synthesized conclusions"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 4732-4743 >>>
+### ACD-027 - Question Flow Lifecycle
+
+```yaml
+plan_unit_id: ACD-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Question flows are PM-managed, draft-backed, resumable, and follow the canonical lifecycle draft -> incomplete -> ready_to_submit -> submitted -> paused.
+gui_related: true
+gui_classification_reason: Question draft state, completion state, submission state, and pause/resume behavior are user-visible interaction behavior.
+depends_on: []
+unblocks: [ACD-028, ACD-029, ACD-030, ACD-031]

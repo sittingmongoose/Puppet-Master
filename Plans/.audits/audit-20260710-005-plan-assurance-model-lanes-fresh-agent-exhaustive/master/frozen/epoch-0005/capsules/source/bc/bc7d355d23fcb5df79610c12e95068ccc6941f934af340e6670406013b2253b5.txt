@@ -1,0 +1,252 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1396-1407 >>>
+L00001396	- Search-panel integration
+L00001397	negative_constraints:
+L00001398	- Instant Grep is not a second tool name and not a separate index family.
+L00001399	compatibility_only_notes: []
+L00001400	stale_retired_dispositions: []
+L00001401	owner_boundary_notes: []
+L00001402	owner_hints:
+L00001403	- Plans/Glossary.md
+L00001404	preserved_contractrefs:
+L00001405	- 'ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+L00001406	```
+L00001407	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1408-1630 >>>
+L00001408	### G-023 - SparseNgramIndex Query And Storage Semantics
+L00001409	
+L00001410	```yaml
+L00001411	plan_unit_id: G-023
+L00001412	unit_type: requirement
+L00001413	status: accepted
+L00001414	owner_doc: Plans/Glossary.md
+L00001415	canonical_text: SparseNgramIndex vocabulary defines sparse n-gram regex acceleration, build/query extraction, Roaring Bitmap postings keyed by xxh3, generation-numbered snapshots, ArcSwap publish, and ripgrep final verification.
+L00001416	gui_related: true
+L00001417	gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
+L00001418	split_recommended: false
+L00001419	depends_on: []
+L00001420	unblocks: []
+L00001421	acceptance_criteria:
+L00001422	- The covered source span remains losslessly available for exact-text audit.
+L00001423	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00001424	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001425	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001426	validation_surfaces:
+L00001427	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001428	- python3 scripts/pm-plan-index.py validate
+L00001429	risk_class: glossary_drift
+L00001430	reasoning_tier: standard
+L00001431	context_scope: glossary_standardization
+L00001432	implementation_surfaces:
+L00001433	- Plans/Glossary.md
+L00001434	node_compile_hint:
+L00001435	  mode: sparse_ngram_index_query_storage_semantics
+L00001436	  create_worknodes: false
+L00001437	source_lineage:
+L00001438	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0024
+L00001439	preserved_exact_tokens:
+L00001440	- SparseNgramIndex
+L00001441	- sparse n-grams
+L00001442	- Roaring Bitmaps
+L00001443	- xxh3
+L00001444	- generation-numbered directories
+L00001445	- ArcSwap
+L00001446	- ripgrep
+L00001447	negative_constraints:
+L00001448	- The index narrows candidate files only; ripgrep verifies final correctness.
+L00001449	compatibility_only_notes: []
+L00001450	stale_retired_dispositions: []
+L00001451	owner_boundary_notes: []
+L00001452	owner_hints:
+L00001453	- Plans/Glossary.md
+L00001454	preserved_contractrefs:
+L00001455	- 'ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md'
+L00001456	```
+L00001457	
+L00001458	### G-024 - DirtyLayer Freshness Model
+L00001459	
+L00001460	```yaml
+L00001461	plan_unit_id: G-024
+L00001462	unit_type: requirement
+L00001463	status: accepted
+L00001464	owner_doc: Plans/Glossary.md
+L00001465	canonical_text: DirtyLayer vocabulary defines generation-aware dirty path tracking, synchronous PM-mediated write updates, external file watcher updates, verification inclusion, and generation-stamped clearing for SparseNgramIndex freshness.
+L00001466	gui_related: false
+L00001467	gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+L00001468	split_recommended: false
+L00001469	depends_on: []
+L00001470	unblocks: []
+L00001471	acceptance_criteria:
+L00001472	- The covered source span remains losslessly available for exact-text audit.
+L00001473	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00001474	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001475	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001476	validation_surfaces:
+L00001477	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001478	- python3 scripts/pm-plan-index.py validate
+L00001479	risk_class: glossary_drift
+L00001480	reasoning_tier: standard
+L00001481	context_scope: glossary_standardization
+L00001482	implementation_surfaces:
+L00001483	- Plans/Glossary.md
+L00001484	node_compile_hint:
+L00001485	  mode: dirtylayer_freshness_model
+L00001486	  create_worknodes: false
+L00001487	source_lineage:
+L00001488	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0025
+L00001489	preserved_exact_tokens:
+L00001490	- DirtyLayer
+L00001491	- generation-aware
+L00001492	- dirty paths
+L00001493	- PM-mediated writes
+L00001494	- file watcher
+L00001495	- generation-stamped clearing
+L00001496	negative_constraints: []
+L00001497	compatibility_only_notes: []
+L00001498	stale_retired_dispositions: []
+L00001499	owner_boundary_notes: []
+L00001500	owner_hints:
+L00001501	- Plans/Glossary.md
+L00001502	preserved_contractrefs:
+L00001503	- 'ContractRef: Primitive:SparseNgramIndex, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md'
+L00001504	```
+L00001505	
+L00001506	### G-025 - SearchDomainSplit Boundary
+L00001507	
+L00001508	```yaml
+L00001509	plan_unit_id: G-025
+L00001510	unit_type: requirement
+L00001511	status: accepted
+L00001512	owner_doc: Plans/Glossary.md
+L00001513	canonical_text: SearchDomainSplit vocabulary defines grep-vs-keyword ownership where grep owns raw regex over file content, codesearch owns Tantivy/LSP keyword/snippet/symbol retrieval, File Manager search remains tree filtering, and LSP symbol/reference surfaces keep their own semantics.
+L00001514	gui_related: false
+L00001515	gui_classification_reason: This unit defines canonical terminology, runtime/storage/search/evidence/security semantics, or owner boundaries, not GUI presentation.
+L00001516	split_recommended: false
+L00001517	depends_on: []
+L00001518	unblocks: []
+L00001519	acceptance_criteria:
+L00001520	- The covered source span remains losslessly available for exact-text audit.
+L00001521	- The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
+L00001522	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001523	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001524	validation_surfaces:
+L00001525	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001526	- python3 scripts/pm-plan-index.py validate
+L00001527	risk_class: glossary_drift
+L00001528	reasoning_tier: standard
+L00001529	context_scope: glossary_standardization
+L00001530	implementation_surfaces:
+L00001531	- Plans/Glossary.md
+L00001532	node_compile_hint:
+L00001533	  mode: search_domain_split_boundary
+L00001534	  create_worknodes: false
+L00001535	source_lineage:
+L00001536	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0026
+L00001537	preserved_exact_tokens:
+L00001538	- SearchDomainSplit
+L00001539	- grep-vs-keyword
+L00001540	- grep
+L00001541	- codesearch
+L00001542	- Tantivy
+L00001543	- LSP-backed keyword
+L00001544	- File Manager search
+L00001545	- LSP symbol/reference
+L00001546	negative_constraints: []
+L00001547	compatibility_only_notes: []
+L00001548	stale_retired_dispositions: []
+L00001549	owner_boundary_notes: []
+L00001550	owner_hints:
+L00001551	- Plans/Glossary.md
+L00001552	preserved_contractrefs:
+L00001553	- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md'
+L00001554	```
+L00001555	
+L00001556	### G-001 - Glossary Retired Source-Preserving Bridge
+L00001557	
+L00001558	```yaml
+L00001559	plan_unit_id: G-001
+L00001560	unit_type: compatibility_disposition
+L00001561	status: accepted
+L00001562	owner_doc: Plans/Glossary.md
+L00001563	canonical_text: G-001 is retained only as migration-lineage compatibility disposition for the retired Glossary source-preserving bridge. Product coverage has been atomized into G-002 through G-025 or structurally dispositioned, and G-001 must not re-own Glossary product spans or use source_preserving_planunit compile mode.
+L00001564	gui_related: false
+L00001565	gui_classification_reason: This retired bridge records migration lineage only; the old bridge span mentions GUI/help tokens, but product GUI coverage is owned by fine-grained Glossary PlanUnits.
+L00001566	split_recommended: false
+L00001567	depends_on: []
+L00001568	unblocks: []
+L00001569	acceptance_criteria:
+L00001570	- G-001 no longer uses source_preserving_planunit compile mode.
+L00001571	- G-002 through G-025 own product coverage for atomized Glossary spans.
+L00001572	- Glossary-S0001, S0003, S0007, S0019, S0027, S0028, S0029, and S0031 are explicit structural dispositions.
+L00001573	- G-001 maps only to retired bridge lineage Glossary-S0030.
+L00001574	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001575	validation_surfaces:
+L00001576	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001577	- python3 scripts/pm-plan-index.py validate
+L00001578	risk_class: migration_lineage
+L00001579	reasoning_tier: standard
+L00001580	context_scope: residual_plan_standardization
+L00001581	implementation_surfaces:
+L00001582	- Plans/Glossary.md
+L00001583	node_compile_hint:
+L00001584	  mode: source_preserving_bridge_retired
+L00001585	  create_worknodes: false
+L00001586	source_lineage:
+L00001587	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Glossary-S0030
+L00001588	preserved_exact_tokens:
+L00001589	- G-001
+L00001590	- Glossary-S0030
+L00001591	- source_preserving_planunit
+L00001592	- source_preserving_bridge_retired
+L00001593	- Glossary (Canonical)
+L00001594	- g-001-glossary-canonical-source-preserving-planunit
+L00001595	- Owner / Consumer Map
+L00001596	- PlanUnits
+L00001597	- Migration Coverage
+L00001598	negative_constraints:
+L00001599	- G-001 must not re-own Glossary-S0001 through Glossary-S0029 product coverage.
+L00001600	- G-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00001601	- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.
+L00001602	compatibility_only_notes:
+L00001603	- G-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00001604	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00001605	stale_retired_dispositions:
+L00001606	- The former G-001 residual source-preserving bridge is retired by Phase 2B batch 079.
+L00001607	owner_boundary_notes:
+L00001608	- G-002 through G-025 own atomized Glossary body coverage.
+L00001609	- Glossary-S0030 is migration-lineage coverage only after bridge retirement.
+L00001610	owner_hints:
+L00001611	- Plans/Glossary.md
+L00001612	```
+L00001613	
+L00001614	## Migration Coverage
+L00001615	
+L00001616	Original hash: `9c5a6506e244d091954f576977d8078604cedcd5402dd92a0a17f107acb49bd3`.
+L00001617	
+L00001618	Run-scoped proof artifacts:
+L00001619	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00001620	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00001621	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00001622	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00001623	
+L00001624	Phase 2B batch 078 atomized `Glossary-S0002`, `Glossary-S0004` through `Glossary-S0018`, and `Glossary-S0020` through `Glossary-S0026` into `G-002` through `G-025`, with dense runtime/routing and help spans split where safe. `Glossary-S0001`, `Glossary-S0003`, `Glossary-S0007`, `Glossary-S0019`, `Glossary-S0027`, `Glossary-S0028`, and `Glossary-S0029` are structural or reference dispositions. Phase 2B batch 079 retired `G-001` as migration-lineage compatibility coverage for `Glossary-S0030` and structurally dispositioned `Glossary-S0031`; `Glossary.md` has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00001625	
+L00001626	
+L00001627	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00001628	
+L00001629	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00001630	
+
+<<< CONTEXT_AFTER canonical_document_lines=1631-1642 >>>
+L00001631	### G-026 - Teach Help Glossary Content Pack
+L00001632	
+L00001633	```yaml
+L00001634	plan_unit_id: G-026
+L00001635	unit_type: requirement
+L00001636	status: accepted
+L00001637	owner_doc: Plans/Glossary.md
+L00001638	canonical_text: Teach-specific Help/Glossary content includes canonical entries for Teach, Teacher, taught memory,
+L00001639	  memory scope, user-locked record, Sources used / PM context, guided GUI step, safe guided action, mutation confirmation,
+L00001640	  Teach model default/setting, Teacher handoff, missing PM coverage, Help icon, and summon phrases. Teach uses inline,
+L00001641	  context, and canonical help depths; Teacher resolves Help/Glossary content through current surface context, canonical
+L00001642	  owner entries, related-concept clusters, source confidence/currentness, and missing-coverage disclosure. Entries

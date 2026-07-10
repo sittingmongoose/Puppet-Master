@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15190-15201 >>>
+L00015190	  - Plans/Runtime_Artifacts_Panel.md
+L00015191	  - Plans/Models_System.md
+L00015192	  - Plans/Multi-Account.md
+L00015193	  - Plans/WorktreeGitImprovement.md
+L00015194	  - Plans/Permissions_System.md
+L00015195	```
+L00015196	
+L00015197	
+L00015198	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00015199	
+L00015200	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00015201	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15202-15590 >>>
+L00015202	### SP-216 - PlanningRun, PlanCompile, WorkNode, And Audit Persistence
+L00015203	
+L00015204	```yaml
+L00015205	plan_unit_id: SP-216
+L00015206	unit_type: requirement
+L00015207	status: accepted
+L00015208	owner_doc: Plans/storage-plan.md
+L00015209	canonical_text: 'PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. Planning Wizard child-thread records persist thread_type planning_wizard, thread_role, and Planning Run membership so intake, topic, final_integration, audit_review, and final_review conversations stay one typed thread family rather than unrelated top-level thread types. PlanCompileRun persists stage, cursor, bounded worklists, assignment receipts, source hashes, currentness status, blockers, repairs, artifacts, retries, cancellation, supersession, and exact next action across context and process restarts. After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point
+L00015210	  refs, evidence, currentness, cancellation, invalidation, and replan generation. Plans-to-code runtime records carry schema version, project, planning run, plan pack, PlanCompileRun, GoalRun, WorkGraph and revision, WorkNode, attempt, actor, status, revision, hashes, currentness, correlation, causation, idempotency, source, artifact, evidence, and supersession fields as applicable. Audit findings have stable finding keys, source and artifact hashes, closure status, evidence, reason, repair attempts, and reopen conditions so unchanged closed findings become previously closed rather than recurring forever.'
+L00015211	gui_related: false
+L00015212	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00015213	depends_on: []
+L00015214	unblocks: []
+L00015215	acceptance_criteria:
+L00015216	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00015217	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00015218	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00015219	validation_surfaces:
+L00015220	- python3 scripts/pm-plan-index.py validate
+L00015221	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00015222	risk_class: execution_boundary
+L00015223	reasoning_tier: high
+L00015224	context_scope: ledger_to_plans_compile
+L00015225	implementation_surfaces:
+L00015226	- Plans/storage-plan.md
+L00015227	- Plans/Planning_Wizard.md
+L00015228	- Plans/Contracts_V0.md
+L00015229	- Plans/assistant-chat-design.md
+L00015230	- Plans/Plan_To_Node_Compilation.md
+L00015231	- Plans/Goal_Runtime_System.md
+L00015232	- Plans/Executor_Protocol.md
+L00015233	node_compile_hint:
+L00015234	  mode: canonical_planunit_from_bootstrap_ledger
+L00015235	  create_worknodes: false
+L00015236	  create_nodeseeds: false
+L00015237	source_lineage:
+L00015238	- pldg-20260618-001-prd-planning-wizard:atom-0008
+L00015239	- pldg-20260618-001-prd-planning-wizard:atom-0042
+L00015240	- pldg-20260618-001-prd-planning-wizard:atom-0111
+L00015241	- pldg-20260618-001-prd-planning-wizard:atom-0121
+L00015242	- pldg-20260618-001-prd-planning-wizard:atom-0122
+L00015243	- pldg-20260618-001-prd-planning-wizard:atom-0128
+L00015244	- pldg-20260618-001-prd-planning-wizard:atom-0134
+L00015245	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00015246	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00015247	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+L00015248	source_atom_ids:
+L00015249	- atom-0008
+L00015250	- atom-0042
+L00015251	- atom-0111
+L00015252	- atom-0121
+L00015253	- atom-0122
+L00015254	- atom-0128
+L00015255	- atom-0134
+L00015256	decision_refs:
+L00015257	- dec-0010
+L00015258	- dec-0025
+L00015259	- dec-0026
+L00015260	correction_refs: []
+L00015261	preserved_exact_tokens:
+L00015262	- PlanningRun
+L00015263	- 'thread_type: planning_wizard'
+L00015264	- thread_role
+L00015265	- thread_group_id
+L00015266	- topic map
+L00015267	- PlanCompileRun
+L00015268	- currentness
+L00015269	- resume
+L00015270	- WorkNodeRecord
+L00015271	- WorkNodeMaterializationReceipt
+L00015272	- worknode_id
+L00015273	- goal_run_id
+L00015274	- workgraph_revision
+L00015275	- attempt_id
+L00015276	- replan generation
+L00015277	- correlation_id
+L00015278	- causation_id
+L00015279	- idempotency_key
+L00015280	- currentness_status
+L00015281	- finding_key
+L00015282	- previously_closed
+L00015283	- reopen conditions
+L00015284	negative_constraints:
+L00015285	- Do not define planning_topic or audit_review as unrelated top-level thread types.
+L00015286	owner_hints:
+L00015287	- Plans/Planning_Wizard.md
+L00015288	- Plans/Contracts_V0.md
+L00015289	- Plans/storage-plan.md
+L00015290	- Plans/Plan_To_Node_Compilation.md
+L00015291	- Plans/Goal_Runtime_System.md
+L00015292	- Plans/Executor_Protocol.md
+L00015293	```
+L00015294	
+L00015295	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00015296	
+L00015297	### SP-217 - Discovery Index Persistence, Cache Identity, And History Boundaries
+L00015298	
+L00015299	```yaml
+L00015300	plan_unit_id: SP-217
+L00015301	unit_type: requirement
+L00015302	status: accepted
+L00015303	owner_doc: Plans/storage-plan.md
+L00015304	canonical_text: >-
+L00015305	  storage-plan owns DiscoveryIndex persistence, cache identity, lifecycle state, and frecency/history boundaries for native DiscoveryService. Discovery indexes are scoped per project, worktree, and remote identity, with separate canonical_path_identity, identity_scope, display_path, normalization_profile, case_sensitivity, symlink_policy, cache_schema_version, ranking_policy_version, policy_hash, ignore_hash, identity_hash, source_manifest_generation, source_index_generation, and remote_identity when applicable. Warm, reindex, teardown, progress, health, stale, fallback, disabled, unsupported, over_budget, and backpressure states are persisted or projected without merging unrelated projects. Frecency/query/open history is on-device, user-scoped, and project/worktree-local by default; reset/disable controls stop future ranking use for the selected identity without deleting durable redacted discovery receipts by default.
+L00015306	gui_related: true
+L00015307	gui_classification_reason: This includes user-visible reset/disable behavior, display_path identity, freshness/fallback projection, and GUI score explanations.
+L00015308	depends_on: [PDS-003, PDS-005, SP-016, SP-017, SP-020, SP-188, SP-206, T-160]
+L00015309	unblocks: [SP-218, F3-399, ATS-011, RAP-031]
+L00015310	acceptance_criteria:
+L00015311	  - Cache keys separate project, worktree, branch, remote, and SSH identity variants.
+L00015312	  - Path identity, display path, normalization, case, and symlink policy are explicit in cached results and receipts.
+L00015313	  - Frecency/history reset or disable removes future ranking use for the selected identity while durable receipts remain under Runtime Artifacts retention/redaction policy.
+L00015314	validation_surfaces:
+L00015315	  - python3 scripts/pm-plan-index.py validate
+L00015316	  - Future cache identity tests for schema/ranking/policy/ignore/identity/manifest changes.
+L00015317	  - Future frecency reset versus durable receipt retention tests.
+L00015318	risk_class: persistence_identity_drift
+L00015319	reasoning_tier: standard
+L00015320	context_scope: discovery_storage
+L00015321	implementation_surfaces: [Plans/storage-plan.md, future DiscoveryIndex, future Runtime Artifacts receipt store]
+L00015322	node_compile_hint: {mode: discovery_index_persistence, create_worknodes: false, create_nodeseeds: false}
+L00015323	source_lineage:
+L00015324	  - pldg-20260622-001-fff:atom-0023
+L00015325	  - pldg-20260622-001-fff:atom-0024
+L00015326	  - pldg-20260622-001-fff:atom-0040
+L00015327	  - pldg-20260622-001-fff:atom-0042
+L00015328	  - pldg-20260622-001-fff:atom-0053
+L00015329	  - pldg-20260622-001-fff:atom-0062
+L00015330	  - pldg-20260622-001-fff:atom-0078
+L00015331	  - pldg-20260622-001-fff:atom-0081
+L00015332	  - pldg-20260622-001-fff:atom-0082
+L00015333	  - pldg-20260622-001-fff:atom-0083
+L00015334	  - pldg-20260622-001-fff:atom-0086
+L00015335	  - pldg-20260622-001-fff:atom-0089
+L00015336	  - pldg-20260622-001-fff:state/precision_contract.json#cache_identity_contract_required_fields
+L00015337	  - pldg-20260622-001-fff:state/implementation_gap_defaults.json
+L00015338	source_atom_ids: [atom-0023, atom-0024, atom-0040, atom-0042, atom-0053, atom-0062, atom-0078, atom-0081, atom-0082, atom-0083, atom-0086, atom-0089]
+L00015339	preserved_exact_tokens: ["DiscoveryIndex", "canonical_path_identity", "identity_scope", "display_path", "normalization_profile", "case_sensitivity", "symlink_policy", "cache_schema_version", "ranking_policy_version", "policy_hash", "ignore_hash", "identity_hash", "source_manifest_generation", "source_index_generation", "project-local frecency", "reset/disable", "durable redacted discovery receipts"]
+L00015340	negative_constraints:
+L00015341	  - Do not persist frecency globally across unrelated projects by default.
+L00015342	  - Do not treat display_path as canonical identity.
+L00015343	  - Do not delete durable Runtime Artifacts receipts merely because Assistant Chat activity is hidden or frecency is reset.
+L00015344	owner_hints: [Plans/storage-plan.md, Plans/Runtime_Artifacts_Panel.md, Plans/assistant-chat-design.md]
+L00015345	```
+L00015346	
+L00015347	### SP-218 - Remote SSH Discovery Manifest Cache And Verification Handoff
+L00015348	
+L00015349	```yaml
+L00015350	plan_unit_id: SP-218
+L00015351	unit_type: requirement
+L00015352	status: accepted
+L00015353	owner_doc: Plans/storage-plan.md
+L00015354	canonical_text: >-
+L00015355	  Remote/cache/SSH discovery uses a local DiscoveryService plus SSH remote manifest adapter for MVP. The adapter uses Git-tracked file manifests such as git ls-files when available, or an allowed remote directory walk only inside the authorized remote project root, then normalizes, policy-filters, annotates, and indexes remote entries locally. Cache/index keys derive from normalized remote identity hashes including project_id, remote_kind, host alias or host fingerprint, user/account alias, remote_root, repo_id when available, branch/worktree ref, and index_generation, and must not include secrets or merge unrelated local paths. Exact verification for SSH results reads through the authorized remote identity/path or a provenance-equivalent remote cache entry; it must not verify an unrelated local checkout as if it were the SSH result.
+L00015356	gui_related: false
+L00015357	gui_classification_reason: This defines remote cache and SSH manifest persistence/verification authority, not GUI presentation.
+L00015358	depends_on: [SP-217, W-074, F2-191, PS-118]
+L00015359	unblocks: [ATS-011, GI-033]
+L00015360	acceptance_criteria:
+L00015361	  - SSH-backed project roots can discover candidates without requiring a local checkout.
+L00015362	  - Stale remote_cache or ssh_manifest fallback is explicitly disclosed and never reported as fresh remote truth.
+L00015363	  - Remote cache keys contain no credential or secret material.
+L00015364	validation_surfaces:
+L00015365	  - python3 scripts/pm-plan-index.py validate
+L00015366	  - Future SSH project with no local checkout test.
+L00015367	  - Future stale remote cache and wrong-branch invalidation tests.
+L00015368	risk_class: remote_identity_drift
+L00015369	reasoning_tier: high
+L00015370	context_scope: remote_ssh_discovery_storage
+L00015371	implementation_surfaces: [Plans/storage-plan.md, future SSH remote manifest adapter, future DiscoveryIndex]
+L00015372	node_compile_hint: {mode: remote_manifest_cache_contract, create_worknodes: false, create_nodeseeds: false}
+L00015373	source_lineage:
+L00015374	  - pldg-20260622-001-fff:atom-0054
+L00015375	  - pldg-20260622-001-fff:atom-0061
+L00015376	  - pldg-20260622-001-fff:atom-0069
+L00015377	  - pldg-20260622-001-fff:atom-0070
+L00015378	  - pldg-20260622-001-fff:atom-0079
+L00015379	  - pldg-20260622-001-fff:atom-0083
+L00015380	  - pldg-20260622-001-fff:atom-0085
+L00015381	  - pldg-20260622-001-fff:atom-0091
+L00015382	  - pldg-20260622-001-fff:state/precision_contract.json#ssh_topology
+L00015383	source_atom_ids: [atom-0054, atom-0061, atom-0069, atom-0070, atom-0079, atom-0083, atom-0085, atom-0091]
+L00015384	preserved_exact_tokens: ["local DiscoveryService plus SSH remote manifest adapter", "git ls-files", "authorized remote project root", "remote_identity", "host_alias_or_host_fingerprint", "credential_handle_ref without secret material", "remote_cache", "ssh_manifest", "no silent local substitution"]
+L00015385	negative_constraints:
+L00015386	  - Do not require a persistent PM remote daemon for MVP.
+L00015387	  - Do not silently fallback from SSH or remote projects to unrelated local filesystem paths.
+L00015388	  - Do not include secrets in cache keys, receipts, diagnostics, or prompts.
+L00015389	owner_hints: [Plans/storage-plan.md, Plans/WorktreeGitImprovement.md, Plans/FileSafe.md, Plans/Permissions_System.md]
+L00015390	```
+L00015391	
+L00015392	
+L00015393	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00015394	
+L00015395	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00015396	
+L00015397	### SP-219 - Project Scoped Unified History Projection
+L00015398	
+L00015399	```yaml
+L00015400	plan_unit_id: SP-219
+L00015401	unit_type: requirement
+L00015402	status: accepted
+L00015403	owner_doc: Plans/storage-plan.md
+L00015404	canonical_text: History uses a project-scoped unified read projection for wizard documents, Orchestrator runs, artifacts,
+L00015405	  evidence, source lineage, package manifests, retention/archive state, and currentness/action availability. The
+L00015406	  projection is not the mutable authority; it preserves stable refs to immutable source records and is rebuildable
+L00015407	  from wizard save/approval, run lifecycle, artifact/evidence write, archive/unarchive, lineage, and manifest events.
+L00015408	  Stale, corrupt, incomplete, or out-of-sync projection state is detected and surfaced; rebuild never rewrites immutable
+L00015409	  source history or approved/final outputs.
+L00015410	gui_related: false
+L00015411	gui_classification_reason: Projection storage, rebuild, and identity rules are storage/read-model behavior; GUI
+L00015412	  consumers are separate.
+L00015413	depends_on:
+L00015414	- CV-295
+L00015415	unblocks:
+L00015416	- OP-026
+L00015417	- OP-027
+L00015418	- RAP-034
+L00015419	acceptance_criteria:
+L00015420	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00015421	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00015422	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00015423	  are created by this compile.
+L00015424	validation_surfaces:
+L00015425	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00015426	- python3 scripts/pm-plan-index.py validate
+L00015427	- git diff --check
+L00015428	risk_class: history_projection_drift
+L00015429	reasoning_tier: high
+L00015430	context_scope: project_history_projection
+L00015431	implementation_surfaces:
+L00015432	- Plans/storage-plan.md
+L00015433	- future History projection store
+L00015434	node_compile_hint:
+L00015435	  mode: history_projection_read_model
+L00015436	  create_worknodes: false
+L00015437	  create_nodeseeds: false
+L00015438	source_lineage:
+L00015439	- pldg-20260626-001-feature-name:atom-0008
+L00015440	- pldg-20260626-001-feature-name:atom-0009
+L00015441	- pldg-20260626-001-feature-name:atom-0012
+L00015442	- pldg-20260626-001-feature-name:atom-0024
+L00015443	- pldg-20260626-001-feature-name:atom-0025
+L00015444	- pldg-20260626-001-feature-name:atom-0047
+L00015445	- pldg-20260626-001-feature-name:atom-0048
+L00015446	- pldg-20260626-001-feature-name:atom-0049
+L00015447	- pldg-20260626-001-feature-name:atom-0051
+L00015448	- pldg-20260626-001-feature-name:atom-0052
+L00015449	- pldg-20260626-001-feature-name:atom-0053
+L00015450	- pldg-20260626-001-feature-name:atom-0054
+L00015451	- pldg-20260626-001-feature-name:atom-0056
+L00015452	- pldg-20260626-001-feature-name:atom-0057
+L00015453	- pldg-20260626-001-feature-name:atom-0058
+L00015454	- pldg-20260626-001-feature-name:atom-0059
+L00015455	- chat:misc-history-scope
+L00015456	- Plans/PRD_Builder.md
+L00015457	- Plans/Planning_Wizard.md
+L00015458	- Plans/Project_Output_Artifacts.md
+L00015459	- Plans/Runtime_Artifacts_Panel.md
+L00015460	- Plans/Orchestrator_Page.md
+L00015461	- chat:history-scope-retention-actions-answers
+L00015462	- chat:history-source-index-answer
+L00015463	- chat:history-projection-lifecycle-answer
+L00015464	- chat:history-degraded-mode-answer
+L00015465	source_atom_ids:
+L00015466	- atom-0008
+L00015467	- atom-0009
+L00015468	- atom-0012
+L00015469	- atom-0024
+L00015470	- atom-0025
+L00015471	- atom-0047
+L00015472	- atom-0048
+L00015473	- atom-0049
+L00015474	- atom-0051
+L00015475	- atom-0052
+L00015476	- atom-0053
+L00015477	- atom-0054
+L00015478	- atom-0056
+L00015479	- atom-0057
+L00015480	- atom-0058
+L00015481	- atom-0059
+L00015482	decision_refs:
+L00015483	- dec-0002
+L00015484	- dec-0004
+L00015485	- dec-0008
+L00015486	- dec-0009
+L00015487	- dec-0010
+L00015488	preserved_exact_tokens:
+L00015489	- see historical documents that are made
+L00015490	- by documents I mean the plans and PRD docs that are created by the wizard
+L00015491	- plans and PRD docs
+L00015492	- created by the wizard
+L00015493	- historical orchestrator runs in PM
+L00015494	- historical orchestrator runs
+L00015495	- Runtime-artifact route-state answers "where should the user land," not "how should every panel be laid out when
+L00015496	  they get there."
+L00015497	- artifact_id
+L00015498	- run_id
+L00015499	- thread_id
+L00015500	- attempt_id
+L00015501	- identity-based open
+L00015502	- History versus Ledger
+L00015503	- final/approved outputs
+L00015504	- retained forever by default
+L00015505	- 'yes'
+L00015506	- show everything
+L00015507	- retention/archive rules
+L00015508	- project-scoped unified History index/projection
+L00015509	- source-of-truth shape
+L00015510	- immutable wizard, run, artifact, evidence, and lineage records
+L00015511	- manifest
+L00015512	- History surface
+L00015513	- filters
+L00015514	- exports
+L00015515	- compare
+L00015516	- artifact
+L00015517	- evidence
+L00015518	- rebuildable from immutable source records
+L00015519	- wizard
+L00015520	- run
+L00015521	- lineage
+L00015522	- wizard save/approval
+L00015523	- run lifecycle
+L00015524	- artifact/evidence write
+L00015525	- archive/unarchive
+L00015526	- lineage/manifest events
+L00015527	- stale/out-of-sync state detected and surfaced
+L00015528	- History
+L00015529	- rebuildable
+L00015530	- immutable source records
+L00015531	- approved/final outputs
+L00015532	- sounds good
+L00015533	- read-only viewing with a warning
+L00015534	- stale/out-of-sync
+L00015535	- Rebuild
+L00015536	- block compare/export/reopen/send-forward until rebuild succeeds
+L00015537	- until rebuild succeeds
+L00015538	- currentness
+L00015539	- authority
+L00015540	negative_constraints:
+L00015541	- Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous
+L00015542	  flat document list.
+L00015543	- Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots.
+L00015544	- Do not show historical runs as ambiguous text summaries without stable run identity.
+L00015545	- Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical.
+L00015546	- Do not use shell-state, current tab, filesystem path, or timestamp heuristics as the primary identity for historical
+L00015547	  documents or runs.
+L00015548	- Do not mint shadow IDs for manifest-backed bundles or receipt-like historical objects.
+L00015549	- Do not apply ordinary draft/intermediate retention cleanup to final/approved outputs by default.
+L00015550	- Do not silently remove final/approved outputs from History.
+L00015551	- Do not promise draft/intermediate rows remain visible forever by default.
+L00015552	- Do not make archived/hidden all-history rows indistinguishable from deleted records.
+L00015553	- Do not implement the History surface as fragile cross-subsystem ad hoc scans at view time.
+L00015554	- Do not make the History read model global or cross-project by default.
+L00015555	- Do not duplicate mutable source-of-truth content into the projection as if it were authoritative.
+L00015556	- Do not lose canonical IDs or lineage refs when projecting History rows.
+L00015557	- Do not mutate historical records through projection updates.
+L00015558	- Do not let UI rows, exports, or compare flows drift into different identity models.
+L00015559	- Do not open or export stale copies without resolving preserved source refs and currentness/authority checks where
+L00015560	  required.
+L00015561	- Do not make the projection the only copy of historical truth.
+L00015562	- Do not make projection corruption unrecoverable when source records remain valid.
+L00015563	- Do not rely on view-time scanning as the primary way to discover normal History changes.
+L00015564	- Do not omit archive/unarchive or lineage/manifest updates from the projection lifecycle.
+L00015565	- Do not let stale projection state silently drive History, export, or compare behavior without detection.
+L00015566	- Do not hide projection corruption/out-of-sync status in logs only.
+L00015567	- Do not repair the projection by rewriting immutable source history.
+L00015568	- Do not mutate approved/final wizard outputs in place during projection rebuild.
+L00015569	- Do not erase source refs when rebuilding.
+L00015570	- Do not hide stale/out-of-sync status while still showing rows.
+L00015571	- Do not allow normal-looking mutable history actions when the projection is stale.
+L00015572	- Do not make rebuild available only as hidden developer tooling.
+L00015573	- Do not rebuild by mutating immutable source records.
+L00015574	- Do not allow compare/export/reopen/send-forward from stale projection state.
+L00015575	- Do not bypass currentness/authority checks just because rebuild is requested.
+L00015576	- Do not treat successful rebuild as automatic permission to bypass currentness or authority checks.
+L00015577	- Do not mutate immutable historical records after rebuild.
+L00015578	owner_hints:
+L00015579	- Plans/PRD_Builder.md
+L00015580	- Plans/Planning_Wizard.md
+L00015581	- Plans/Project_Output_Artifacts.md
+L00015582	- Plans/Runtime_Artifacts_Panel.md
+L00015583	- Plans/storage-plan.md
+L00015584	- Plans/Contracts_V0.md
+L00015585	- Plans/Orchestrator_Page.md
+L00015586	- Plans/UI_Command_Catalog.md
+L00015587	- Plans/FinalGUISpec.md
+L00015588	- Plans/Permissions_System.md
+L00015589	```
+L00015590	
+
+<<< CONTEXT_AFTER canonical_document_lines=15591-15602 >>>
+L00015591	### SP-220 - Teach Memory Capture Storage Boundary
+L00015592	
+L00015593	```yaml
+L00015594	plan_unit_id: SP-220
+L00015595	unit_type: requirement
+L00015596	status: accepted
+L00015597	owner_doc: Plans/storage-plan.md
+L00015598	canonical_text: Teach memory capture is explicit and separate from one-off Teacher-guided instruction. Eligible
+L00015599	  Teacher answers may offer Save as taught memory; durable records preserve normalized fact, scope selector thread/project/user,
+L00015600	  source message/thread, secret-safety warning, conflict or supersession state, and user-locked record state. Users
+L00015601	  can inspect, narrow, supersede, revoke, or unlock records; one-off guidance is not auto-saved and secrets must
+L00015602	  not be persisted.

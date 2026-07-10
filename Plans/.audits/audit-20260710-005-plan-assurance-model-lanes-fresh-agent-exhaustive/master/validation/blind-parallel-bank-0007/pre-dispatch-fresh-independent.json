@@ -1,0 +1,20 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "fresh-independent-parallel-bank-gate-v1",
+  "parallel_bank_id": "blind-parallel-bank-0007",
+  "epoch_id": "epoch-0013",
+  "status": "pass",
+  "fresh_agent_path": "/root/a005_parallel48_gate",
+  "read_only": true,
+  "live_coverage_primary_status": "pass",
+  "live_coverage_cross_status": "pass",
+  "parallel_bank_status": "pass",
+  "companion_receipt_count": 24,
+  "companion_assignment_count": 24,
+  "bank_assignment_count": 24,
+  "combined_assignment_count": 48,
+  "maximum_concurrent_cohort_count": 6,
+  "error_count": 0,
+  "errors": [],
+  "terminal_prefix": "PMR1"
+}

@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 3452-3463 >>>
+- registry
+negative_constraints:
+- Custom/plugin commands may compose with reserved first-party families only by using explicit extension verbs that do not replace canonical meaning.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Existing cmd.actions.* rows are compatibility aliases until migrated.
+- Existing cmd.k8s.* rows are compatibility aliases unless updated to cmd.docker.k8s.*.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3464-3820 >>>
+### UCC-042 - Operational Coverage Breadth And Disabled State Requirements
+
+```yaml
+plan_unit_id: UCC-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Operational command coverage must include Source Control navigation/history/graph/worktrees/git operations, GitHub Actions rerun/cancel/pin/admin/current-branch/log pivots, Docker Manager images/compose/bake/context/network/volume/Kubernetes/auth/publish/remediation families, and deterministic disabled-state/help behavior.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-042 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: operational_coverage_breadth_disabled_states
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0027
+preserved_exact_tokens:
+- /history/graph/worktrees
+- /conflict/graph
+- /unstage/discard/diff/commit/push/pull/sync/fetch/branch/stash
+- /cancel/pin/admin/current-branch
+- /detail/logs
+- /detail/job-expand/view-logs/download-log
+- /images/compose/build-bake/contexts/networks/volumes/runtime
+- /auth/Unraid
+- /publish/template
+- /underdefined
+- /admin/help
+negative_constraints:
+- The command catalog must not remain publish-centric or underdefined.
+- Any underdefined command family must resolve to a first-class owner command or documented compatibility alias.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Existing Git basics, Actions list/detail/logs, and Docker publish/auth/template flows are well-covered but no longer sufficient.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-043 - Operational Route Wiring Persistence And Owner Boundaries
+
+```yaml
+plan_unit_id: UCC-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Operational wiring uses first-class route commands and per-project persistence for Source Control, GitHub Actions, and Docker Manager, while GitHub API remains backend plumbing and owner boundaries stay explicit across catalog consumers.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-043 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: operational_route_wiring_persistence_boundaries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0027
+preserved_exact_tokens:
+- Open in Source Control
+- SCM
+- repo
+- worktree
+- compare target
+- baseline
+- run/attempt lineage
+- restore-before-rerun
+- baseline_target
+- source_control.project_state.{project_id}
+- github_actions.project_state.{project_id}
+- Docker Manager
+- GitHub API
+- backend plumbing
+- Plans/00-plans-index.md
+- Plans/Crosswalk.md
+- Plans/UI_Wiring_Rules.md
+- Plans/Wiring_Matrix.md
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-044 - Source Control Review Diff Conflict Command Rows
+
+```yaml
+plan_unit_id: UCC-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Source Control review, conflict, merge editor, git diff, hunk staging, discard, and conflict resolution command rows define stable command IDs, payloads, confirmations, and preconditions for review and conflict workflows.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-044 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: source_control_review_diff_conflict_rows
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0028
+preserved_exact_tokens:
+- cmd.source_control.open_review
+- cmd.source_control.review.open
+- cmd.source_control.review.swap
+- cmd.source_control.set_compare_target
+- cmd.source_control.open_conflict
+- cmd.source_control.open_merge_editor
+- cmd.git.diff_open
+- cmd.git.diff_toggle_mode
+- cmd.git.diff_set_compare_target
+- cmd.git.stage_hunks
+- cmd.git.unstage_hunks
+- cmd.git.discard_hunks
+- cmd.git.conflict_apply_resolution
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes:
+- cmd.source_control.review.open is a compatibility alias for cmd.source_control.open_review.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-045 - Source Control Graph History Stash And Commit Assistance Rows
+
+```yaml
+plan_unit_id: UCC-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Source Control graph focus/filter/layout, history open, tab selection, stash controls, AI commit batching, accepted commit groups, and generated commit-message rows preserve graph/history/stash and advisory commit-assistance behavior.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-045 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: source_control_graph_history_stash_commit_rows
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0028
+preserved_exact_tokens:
+- cmd.source_control.graph.focus
+- cmd.source_control.graph.filter
+- cmd.source_control.graph.layout
+- cmd.source_control.graph.focus/filter/layout
+- cmd.source_control.graph_focus
+- cmd.source_control.graph_filter
+- cmd.source_control.history_open_commit
+- cmd.source_control.select_tab
+- cmd.source_control.stash
+- cmd.source_control.stash.*
+- cmd.source_control.suggest_commit_batches
+- cmd.source_control.suggest_commit_groups
+- cmd.source_control.accept_commit_group
+- cmd.source_control.generate_commit_message
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- Graph focus/filter/layout grouped names and suggest_commit_groups are compatibility alias families.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-046 - Source Control Compare Persistence And Disabled Boundary
+
+```yaml
+plan_unit_id: UCC-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Compare-open identity is repository-scoped, review state persists per project, conflict assistant records events and blocked handoffs without persisting conflicted file content, disabled states explain concrete blockers, and route/view ownership remains Source Control-owned.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-046 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: source_control_compare_persistence_disabled_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0028
+preserved_exact_tokens:
+- compare_open
+- project_id
+- repo_id
+- repo_relative_path
+- worktree_id
+- side_by_side
+- unified
+- stage_hunk
+- unstage_hunk
+- discard_hunk
+- /open-resolution
+- Review mode state
+- per-project persistence
+- /event/storage
+- /disabled
+- stale-target
+- Source Control > Changes
+negative_constraints:
+- No consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.
+- Conflict assistant commands do not persist conflicted file content.
+preserved_contractrefs: []
+compatibility_only_notes:
+- compare_open maps to cmd.source_control.open_review or cmd.git.diff_open.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-047 - Github Actions Run Job Log Browser Rows
+
+```yaml
+plan_unit_id: UCC-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: GitHub Actions command rows cover show/switch/rerun/cancel, workflow pin/unpin/settings, dispatch-readiness validation, compare-last-success, open current branch, open related diff, logs, workflow/job detail, retry, copy URL, copy logs, open in GitHub, branch-to-diff, and run-to-browser pivots.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-047 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: github_actions_run_job_log_browser_rows
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0029
+preserved_exact_tokens:
+- cmd.actions.show
+- cmd.actions.switch_subview
+- cmd.actions.rerun
+- cmd.actions.cancel
+- cmd.github.actions.pin
+- cmd.github.actions.unpin
+- cmd.github.actions.settings.open
+- cmd.github.actions.open_current_branch
+- cmd.github.actions.validate_dispatch_readiness
+- cmd.github.actions.compare_last_success
+- cmd.github.actions.open_related_diff
+- cmd.actions.view_logs
+- cmd.github.actions.open_step_logs
+- cmd.github.actions.open_in_github
+- cmd.github.actions.open_run_diff
+- cmd.github.actions.open_run_in_browser
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 3821-3832 >>>
+### UCC-048 - Github Actions Correlation And Legacy Alias Rules
+
+```yaml
+plan_unit_id: UCC-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: GitHub Actions commands carry workflow/run/job/step/check/log identity for route-open pivots, preserve source-control correlation, and treat legacy cmd.github_actions.* and cmd.actions pin/unpin names as compatibility aliases rather than a second namespace.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:

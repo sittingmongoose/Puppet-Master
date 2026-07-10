@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE 1702-1713 >>>
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 1714-2096 >>>
+    "goal_completion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "all_worknodes_terminal",
+        "all_tests_passed_or_dispositioned",
+        "source_control_receipts_valid",
+        "no_active_blockers",
+        "rollback_requirements_satisfied",
+        "safe_point_requirements_satisfied",
+        "no_stale_plan_workgraph_currentness_mismatch",
+        "final_source_state",
+        "final_summary_ref",
+        "auditor_passed",
+        "final_certifier_decision",
+        "evidence_refs",
+        "child_receipt_refs",
+        "worknode_receipt_refs",
+        "changed_artifact_refs",
+        "validator_outcomes",
+        "authority_check_refs",
+        "source_control_receipt_refs",
+        "test_receipt_refs",
+        "model_resolution_receipt_refs",
+        "unresolved_risks",
+        "evidence_layers",
+        "handoff",
+        "final_source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "all_worknodes_terminal": {
+          "type": "boolean"
+        },
+        "all_tests_passed_or_dispositioned": {
+          "type": "boolean"
+        },
+        "source_control_receipts_valid": {
+          "type": "boolean"
+        },
+        "no_active_blockers": {
+          "type": "boolean"
+        },
+        "rollback_requirements_satisfied": {
+          "type": "boolean"
+        },
+        "safe_point_requirements_satisfied": {
+          "type": "boolean"
+        },
+        "no_stale_plan_workgraph_currentness_mismatch": {
+          "type": "boolean"
+        },
+        "final_source_state": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "intentionally_preserved",
+            "blocked"
+          ]
+        },
+        "final_summary_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "auditor_passed": {
+          "type": "boolean"
+        },
+        "final_certifier_decision": {
+          "enum": [
+            "certified",
+            "blocked",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "child_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "worknode_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "changed_artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "validator_outcomes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validator_outcome"
+          }
+        },
+        "authority_check_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "model_resolution_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unresolved_risks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/risk_record"
+          }
+        },
+        "evidence_layers": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "source_evidence",
+            "canonical_plan_evidence",
+            "process_evidence",
+            "governance_evidence",
+            "test_evidence",
+            "source_control_evidence",
+            "completion_receipts"
+          ],
+          "properties": {
+            "source_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "canonical_plan_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "process_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "governance_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "test_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "source_control_evidence": {
+              "$ref": "#/$defs/ref_list"
+            },
+            "completion_receipts": {
+              "$ref": "#/$defs/ref_list"
+            }
+          }
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "final_source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "compile_worklist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "compile_id",
+        "stage",
+        "parallelism_policy",
+        "items",
+        "source_plan_index_hash",
+        "status",
+        "blocked_route",
+        "wave_assignments"
+      ],
+      "properties": {
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "parallelism_policy": {
+          "$ref": "#/$defs/compile_parallelism_policy"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_worklist_item"
+          }
+        },
+        "source_plan_index_hash": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready",
+            "running",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        },
+        "blocked_route": {
+          "$ref": "#/$defs/compile_worklist_blocked_route"
+        },
+        "resume_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "wave_assignments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/compile_wave_contract"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stage": {
+                "enum": [
+                  "planunit_normalization",
+                  "test_repository_discovery",
+                  "typed_dependency_analysis",
+                  "implementation_surface_mapping",
+                  "work_risk_classification",
+                  "nodeseed_candidate_drafting",
+                  "split_merge_sizing",
+                  "candidate_review",
+                  "worknode_request_construction",
+                  "final_compile_audit_repair"
+                ]
+              }
+            },
+            "required": [
+              "stage"
+            ]
+          },
+          "then": {
+            "properties": {
+              "parallelism_policy": {
+                "properties": {
+                  "parallelism_required": {
+                    "const": true
+                  },
+                  "minimum_parallel_assignments": {
+                    "type": "integer",
+                    "minimum": 2
+                  },
+                  "assignment_receipt_refs": {
+                    "$ref": "#/$defs/non_empty_ref_list"
+                  },
+                  "completion_receipt_refs": {
+                    "$ref": "#/$defs/non_empty_ref_list"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "complete"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          },
+          "then": {
+            "properties": {
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/compile_worklist_item"
+                }
+              },
+              "wave_assignments": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/compile_wave_contract"
+                }
+              },
+              "parallelism_policy": {
+                "properties": {
+                  "completion_receipt_refs": {
+                    "$ref": "#/$defs/non_empty_ref_list"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "node_seed_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_ref",
+        "review_status",
+        "findings",
+        "decision",
+        "reviewer_role"
+      ],
+      "properties": {
+        "candidate_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "review_status": {
+          "enum": [
+            "pending",
+            "approved",
+            "changes_required",
+            "rejected",
+            "blocked"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auditor_finding"
+          }
+        },
+        "decision": {
+          "$ref": "#/$defs/node_seed_review_decision"
+        },
+        "reviewer_role": {
+          "$ref": "#/$defs/node_seed_reviewer_role"
+        },
+        "required_changes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "compiler_model_routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_plan_unit_ids",
+        "requested_lane",
+        "requested_model_profile",
+        "effective_model_profile",
+        "fallback_used",
+        "capability_checks"
+      ],
+      "properties": {
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "requested_lane": {
+          "$ref": "#/$defs/capability_lane"
+        },
+        "requested_model_profile": {
+          "$ref": "#/$defs/model_profile"
+        },
+        "effective_model_profile": {
+          "$ref": "#/$defs/model_profile"
+        },
+        "fallback_used": {
+          "type": "boolean"
+        },
+        "fallback_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_check"
+          }
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 2097-2108 >>>
+    "codex_work_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_id",
+        "stage",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "instructions",
+        "validation_commands",
+        "status"

@@ -1,0 +1,693 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000027-EXACT-WIN-0C5FC67FDB44-0002",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_a_parallel_dispatcher_epoch_0013/a005_27_exact_w2_e13",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Decision_Log.md",
+    "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d",
+    "core_sha256": "6b641348454056f8a8a1dc2f2c83f06637839d64291564265d8ca8aec9992338",
+    "core_range": [395, 772]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-27-I001",
+      "item_type": "contract",
+      "title": "Weak Integration is a first-class multi-category scope",
+      "statement": "Weak Integration must remain first-class and covers runtime/GUI mismatch, contract mismatch, workflow gaps, and architecture drift; it may not be downgraded to a secondary concern.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 403,
+          "line_end": 403,
+          "exact_quote": "  Weak integration remains first-class and includes runtime/GUI mismatch,",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 404,
+          "line_end": 404,
+          "exact_quote": "  contract mismatch, workflow gaps, and architecture drift.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-008"]
+    },
+    {
+      "item_id": "A005-27-I002",
+      "item_type": "authority",
+      "title": "High-impact claim authority requires deterministic corroboration",
+      "statement": "A high-impact claim is governed by deterministic 2-of-3 corroboration, while lesser unresolved concerns remain visible and advisory rather than blocking.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 448,
+          "line_end": 448,
+          "exact_quote": "  High-impact claims use deterministic 2-of-3 corroboration, while lesser",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 449,
+          "line_end": 449,
+          "exact_quote": "  unresolved concerns remain visible as non-blocking advisory concerns.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-009"]
+    },
+    {
+      "item_id": "A005-27-I003",
+      "item_type": "state_transition",
+      "title": "Graph patching advances generation and preserves visible lineage",
+      "statement": "Applying a graph patch creates a new graph generation; superseded historical paths remain visible rather than being overwritten without lineage.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 492,
+          "line_end": 492,
+          "exact_quote": "  Graph patching creates a new graph generation and preserves superseded",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 493,
+          "line_end": 493,
+          "exact_quote": "  historical paths as visible lineage.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-010"]
+    },
+    {
+      "item_id": "A005-27-I004",
+      "item_type": "authority",
+      "title": "Source Control and Orchestrator have separate operational authority",
+      "statement": "Source Control owns a compact worktree-first scope, while Orchestrator owns lane, package, and seam operational context; Source Control must not absorb that context.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 537,
+          "line_end": 537,
+          "exact_quote": "  Source Control is worktree-first and compact, while Orchestrator carries",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 538,
+          "line_end": 538,
+          "exact_quote": "  lane/package/seam operational context.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-011"]
+    },
+    {
+      "item_id": "A005-27-I005",
+      "item_type": "contract",
+      "title": "Requested and effective runtime identity span distinct actor types",
+      "statement": "Requested/effective runtime identity is shared across assistant, interviewer, builders, overseers, and node workers, without merging those actor types into one ontology.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 582,
+          "line_end": 582,
+          "exact_quote": "  Requested/effective runtime identity is shared across assistant, interviewer,",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 583,
+          "line_end": 583,
+          "exact_quote": "  builders, overseers, and node workers without collapsing those actors into",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 584,
+          "line_end": 584,
+          "exact_quote": "  one ontology.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-012"]
+    },
+    {
+      "item_id": "A005-27-I006",
+      "item_type": "contract",
+      "title": "Blocked episodes are the canonical runtime approval identity",
+      "statement": "Runtime approval scope is keyed by run_id, node_id, blocked_sequence, and optionally attempt_id; this blocked-episode identity supersedes request-centric HITL identity.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 632,
+          "line_end": 632,
+          "exact_quote": "  Blocked episodes anchored by run_id, node_id, blocked_sequence, and optional",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 633,
+          "line_end": 633,
+          "exact_quote": "  attempt_id supersede request-centric HITL identity as canonical runtime",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 634,
+          "line_end": 634,
+          "exact_quote": "  approval scope.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-013"]
+    },
+    {
+      "item_id": "A005-27-I007",
+      "item_type": "contract",
+      "title": "Navigation primitives have non-overlapping canonical roles",
+      "statement": "route_target is the canonical navigation contract, OpenSubject is the canonical identity-native source-open contract, and resume_url is transport serialization only.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 680,
+          "line_end": 680,
+          "exact_quote": "  route_target is the canonical navigation contract, OpenSubject is the",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 681,
+          "line_end": 681,
+          "exact_quote": "  canonical identity-native source-open contract, and resume_url is serialized",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 682,
+          "line_end": 682,
+          "exact_quote": "  transport only.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-014"]
+    },
+    {
+      "item_id": "A005-27-I008",
+      "item_type": "failure_recovery",
+      "title": "Debug capture must use constrained structured shapes",
+      "statement": "Debug and investigation evidence uses a non-citation operational ledger rule; secrets in logs, PII, and diff fatigue are planned up front, and downstream capture uses allowlisted shapes or structured fields instead of free-form dumps.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 728,
+          "line_end": 728,
+          "exact_quote": "  Debug instrumentation and investigation evidence follow a non-citation",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 729,
+          "line_end": 729,
+          "exact_quote": "  operational ledger rule: secrets in logs, PII, and diff fatigue must be",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 730,
+          "line_end": 730,
+          "exact_quote": "  planned for up front, and downstream captures use allowlisted log shapes or",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 731,
+          "line_end": 731,
+          "exact_quote": "  structured fields rather than free-form dump capture.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-015"]
+    },
+    {
+      "item_id": "A005-27-I009",
+      "item_type": "gap",
+      "title": "Weak Integration detection and resolution mechanics are unspecified",
+      "statement": "The four included mismatch/gap/drift categories are named, but the window does not define detection inputs, classification precedence, lifecycle states, responsible adjudicator, blocking effect, recovery action, or closure oracle for a Weak Integration finding.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 411,
+          "line_end": 411,
+          "exact_quote": "  - Weak integration remains first-class.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 412,
+          "line_end": 412,
+          "exact_quote": "  - Weak integration includes runtime/GUI mismatch, contract mismatch, workflow gaps, and architecture drift.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "underspecified_behavior_and_lifecycle",
+      "impact": "Independent builders can classify the same evidence differently and cannot deterministically decide whether or how a finding blocks progress or closes.",
+      "builder_discretion": "Builders would have to invent detection, adjudication, state, severity, and closure rules.",
+      "feature_keys": ["DL-008"]
+    },
+    {
+      "item_id": "A005-27-I010",
+      "item_type": "gap",
+      "title": "The deterministic 2-of-3 rule lacks its decision function",
+      "statement": "The window does not identify the three corroboration sources/voters, define high-impact versus lesser concerns, specify agreement equivalence and abstention/conflict handling, or state when and by whom the outcome is committed.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 456,
+          "line_end": 456,
+          "exact_quote": "  - High-impact claims use deterministic 2-of-3 corroboration.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 457,
+          "line_end": 457,
+          "exact_quote": "  - Lesser unresolved concerns remain visible as non-blocking advisory concerns.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_deterministic_decision_contract",
+      "impact": "The supposedly deterministic gate can produce divergent blocking outcomes and advisory classifications.",
+      "builder_discretion": "Builders must invent the voter set, impact classifier, equivalence rule, tie/absence semantics, timing, and outcome authority.",
+      "feature_keys": ["DL-009"]
+    },
+    {
+      "item_id": "A005-27-I011",
+      "item_type": "gap",
+      "title": "Graph generation and lineage transition semantics are incomplete",
+      "statement": "The new-generation requirement does not specify generation identity, atomicity, concurrent-patch behavior, lineage edge schema, visibility consumer, rollback, retention, or the behavior when generation creation or lineage persistence fails.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 500,
+          "line_end": 500,
+          "exact_quote": "  - Graph patching creates a new graph generation.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 501,
+          "line_end": 501,
+          "exact_quote": "  - Superseded historical paths remain visible lineage.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "underspecified_state_transition_and_recovery",
+      "impact": "Storage and Run Graph implementations can disagree on ordering, identity, visibility, and recovery, risking lineage loss or split-brain generations.",
+      "builder_discretion": "Builders must choose the generation key, persistence transaction, concurrency policy, lineage representation, rollback, and retention behavior.",
+      "feature_keys": ["DL-010"]
+    },
+    {
+      "item_id": "A005-27-I012",
+      "item_type": "gap",
+      "title": "Runtime identity sharing has no propagation or reconciliation contract",
+      "statement": "The actor scope is enumerated, but requested/effective identity shapes, authority for resolving effective identity, propagation timing, snapshot/version rules, actor-specific access, failure behavior, and requested-versus-effective reconciliation are absent.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 591,
+          "line_end": 591,
+          "exact_quote": "  - Requested/effective runtime identity spans all named runtime actors.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 592,
+          "line_end": 592,
+          "exact_quote": "  - Actor types do not collapse into one ontology.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_identity_propagation_contract",
+      "impact": "Actors can execute under inconsistent accounts/providers or conflate actor identity with runtime identity, undermining auditability and authorization.",
+      "builder_discretion": "Builders must invent identity schemas, resolution authority, propagation boundaries, consistency semantics, and degraded-mode behavior.",
+      "feature_keys": ["DL-012"]
+    },
+    {
+      "item_id": "A005-27-I013",
+      "item_type": "gap",
+      "title": "Blocked approval identity lacks allocation and lifecycle semantics",
+      "statement": "The key fields are named, but blocked_sequence allocation and scope, optional attempt_id inclusion rules, uniqueness/idempotency, stale-request treatment, transition states, authorization, resume behavior, and migration from request-centric identity are not specified.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 641,
+          "line_end": 641,
+          "exact_quote": "  - Blocked approval identity is anchored by run_id, node_id, blocked_sequence, and optional attempt_id.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 642,
+          "line_end": 642,
+          "exact_quote": "  - Request-centric HITL identity is superseded as canonical runtime approval scope.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_identity_lifecycle_and_migration",
+      "impact": "Approvals may attach to the wrong blocked episode, be replayed, be lost across retries, or become incompatible with persisted request-centric records.",
+      "builder_discretion": "Builders must choose sequence scope/allocation, optionality rules, transition and resume semantics, authorization, replay protection, and migration behavior.",
+      "feature_keys": ["DL-013"]
+    },
+    {
+      "item_id": "A005-27-I014",
+      "item_type": "gap",
+      "title": "Navigation boundary omits schemas and conversion/error behavior",
+      "statement": "The three primitive roles are distinguished, but their field schemas, versioning, conversion between route_target and resume_url, OpenSubject resolution, invalid/stale target behavior, security validation, and cross-platform compatibility are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 689,
+          "line_end": 689,
+          "exact_quote": "  - route_target remains the canonical navigation contract.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 690,
+          "line_end": 690,
+          "exact_quote": "  - OpenSubject remains the canonical identity-native source-open contract.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 691,
+          "line_end": 691,
+          "exact_quote": "  - resume_url remains serialized transport only.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_input_output_and_failure_contract",
+      "impact": "Producers and consumers can serialize, validate, resolve, and reject navigation targets inconsistently, with potential unsafe or non-portable opens.",
+      "builder_discretion": "Builders must define all wire/data shapes, translation rules, validation, authorization, failure recovery, and version compatibility.",
+      "feature_keys": ["DL-014"]
+    },
+    {
+      "item_id": "A005-27-I015",
+      "item_type": "gap",
+      "title": "Debug capture hygiene has no enforceable security and operations contract",
+      "statement": "The policy direction does not define allowlisted schemas, redaction point and failure mode, PII/secret classification, access control, encryption, retention/deletion, audit events, diff-fatigue thresholds, incident recovery, or treatment of legacy free-form captures.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 738,
+          "line_end": 738,
+          "exact_quote": "  - Secrets in logs, PII, and diff fatigue are planned for up front.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 739,
+          "line_end": 739,
+          "exact_quote": "  - Downstream debug captures use allowlisted log shapes or structured fields.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 740,
+          "line_end": 740,
+          "exact_quote": "  - Free-form dump capture is avoided.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_security_privacy_operations_contract",
+      "impact": "Sensitive data can leak or persist despite nominal allowlisting, and operators lack deterministic prevention, detection, deletion, and recovery behavior.",
+      "builder_discretion": "Builders must invent schemas, classification/redaction, controls, retention, monitoring, thresholds, failure handling, and legacy-data migration.",
+      "feature_keys": ["DL-015"]
+    },
+    {
+      "item_id": "A005-27-I016",
+      "item_type": "gap",
+      "title": "Acceptance surfaces prove plan structure, not runtime behavior",
+      "statement": "Every unit names only the plan migration validator and plan index validator. The reviewed window supplies no executable oracle for the runtime transitions, identity decisions, navigation serialization, GUI lineage visibility, ownership separation, or sensitive-capture behavior it requires.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 742,
+          "line_end": 742,
+          "exact_quote": "  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 743,
+          "line_end": 743,
+          "exact_quote": "  - python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_runtime_acceptance_oracles",
+      "impact": "Plan-governance checks can pass while mutually incompatible or unsafe runtime implementations still satisfy the prose.",
+      "builder_discretion": "Builders and reviewers must invent executable scenarios, fixtures, invariants, failure tests, and GUI observability checks for all eight requirements.",
+      "feature_keys": ["DL-008", "DL-009", "DL-010", "DL-011", "DL-012", "DL-013", "DL-014", "DL-015"]
+    },
+    {
+      "item_id": "A005-27-I017",
+      "item_type": "gap",
+      "title": "Operational consumers, scale limits, and compatibility policies remain mostly implicit",
+      "statement": "Implementation and owner documents are listed, but the window does not identify concrete producing/consuming components or data flows, availability and observability responsibilities, volume/latency/storage limits, backpressure, or compatibility/migration policies for generations, identities, navigation payloads, and debug captures.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 747,
+          "line_end": 747,
+          "exact_quote": "implementation_surfaces:",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 766,
+          "line_end": 766,
+          "exact_quote": "owner_hints:",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "gap_kind": "missing_consumers_operations_scale_and_compatibility",
+      "impact": "Cross-document implementers cannot derive stable producer/consumer ownership or bounded operational behavior, and persisted/serialized artifacts may not survive upgrades.",
+      "builder_discretion": "Builders must select consumer topology, operational SLOs and telemetry, capacity bounds, backpressure, versioning, retention, and migration strategy.",
+      "feature_keys": ["DL-008", "DL-009", "DL-010", "DL-011", "DL-012", "DL-013", "DL-014", "DL-015"]
+    },
+    {
+      "item_id": "A005-27-I018",
+      "item_type": "explicit_non_gap",
+      "title": "GUI relevance is explicitly classified per requirement",
+      "statement": "The window explicitly classifies DL-008, DL-010, and DL-015 as GUI-related, and DL-009, DL-011, DL-012, DL-013, and DL-014 as not GUI-related, each with a stated reason.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 405,
+          "line_end": 405,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 406,
+          "line_end": 406,
+          "exact_quote": "gui_classification_reason: Weak integration explicitly includes runtime/GUI mismatch and user-visible workflow gaps.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 732,
+          "line_end": 732,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ],
+      "feature_keys": ["DL-008", "DL-009", "DL-010", "DL-011", "DL-012", "DL-013", "DL-014", "DL-015"]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "Eight accepted requirements state their primary behavior and negative boundary.",
+      "evidence_item_ids": ["A005-27-I001", "A005-27-I002", "A005-27-I003", "A005-27-I004", "A005-27-I005", "A005-27-I006", "A005-27-I007", "A005-27-I008"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "The window identifies classification, corroboration, patch lineage, scoped source-control operation, shared runtime identity, blocked approval identity, navigation, and hygienic debug capture capabilities.",
+      "evidence_item_ids": ["A005-27-I001", "A005-27-I002", "A005-27-I003", "A005-27-I004", "A005-27-I005", "A005-27-I006", "A005-27-I007", "A005-27-I008"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Several nouns and key fields are named, but concrete schemas, producer/consumer payloads, conversion rules, and output guarantees are missing.",
+      "evidence_item_ids": ["A005-27-I010", "A005-27-I012", "A005-27-I013", "A005-27-I014", "A005-27-I015"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "addressed",
+      "summary": "Canonical contract boundaries are explicit for weak integration, corroboration, identity, approval scope, navigation, and debug capture.",
+      "evidence_item_ids": ["A005-27-I001", "A005-27-I002", "A005-27-I005", "A005-27-I006", "A005-27-I007", "A005-27-I008"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Graph patching states one transition, but transition atomicity and recovery are absent; blocked-episode and identity lifecycles are not defined.",
+      "evidence_item_ids": ["A005-27-I003", "A005-27-I011", "A005-27-I012", "A005-27-I013"]
+    },
+    {
+      "dimension": "authority",
+      "status": "gap_found",
+      "summary": "Several canonical authorities are declared, but the decision authority for corroboration, effective identity, approvals, and policy enforcement is incomplete.",
+      "evidence_item_ids": ["A005-27-I002", "A005-27-I004", "A005-27-I006", "A005-27-I007", "A005-27-I010", "A005-27-I012", "A005-27-I013"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Each PlanUnit supplies owner_doc, implementation surfaces, and owner hints, including an explicit Source Control versus Orchestrator boundary.",
+      "evidence_item_ids": ["A005-27-I004", "A005-27-I017"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "gap_found",
+      "summary": "Documents and actor classes are named, but concrete runtime producers, consumers, data paths, and responsibility handoffs are not.",
+      "evidence_item_ids": ["A005-27-I005", "A005-27-I017"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "Every reviewed PlanUnit carries explicit GUI relevance and rationale; graph lineage and debug capture are marked user-visible or inspection-related.",
+      "evidence_item_ids": ["A005-27-I003", "A005-27-I008", "A005-27-I018"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Negative constraints exist, but failure detection, degraded modes, retry/rollback, stale input, and recovery semantics are absent across the operational contracts.",
+      "evidence_item_ids": ["A005-27-I009", "A005-27-I010", "A005-27-I011", "A005-27-I012", "A005-27-I013", "A005-27-I014", "A005-27-I015"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Secrets and PII are recognized, but enforceable classification, redaction, access, retention, deletion, and incident handling are unspecified; navigation and approval authorization are also absent.",
+      "evidence_item_ids": ["A005-27-I013", "A005-27-I014", "A005-27-I015"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Runtime identity is said to span actors, but propagation, consistency, versioning, and reconciliation rules are missing.",
+      "evidence_item_ids": ["A005-27-I005", "A005-27-I012"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Operational ownership is partly named, but SLOs, telemetry, enforcement, on-call/recovery behavior, and retention operations are not defined.",
+      "evidence_item_ids": ["A005-27-I004", "A005-27-I015", "A005-27-I017"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "No volume, latency, lineage-depth, storage-growth, concurrency, backpressure, or capture-size constraints are supplied.",
+      "evidence_item_ids": ["A005-27-I011", "A005-27-I015", "A005-27-I017"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Request-centric HITL identity is superseded and serialized/generation artifacts are required, but versioning and migration policies are absent.",
+      "evidence_item_ids": ["A005-27-I011", "A005-27-I013", "A005-27-I014", "A005-27-I015", "A005-27-I017"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "Prose acceptance criteria and plan validators exist, but executable runtime and GUI behavioral oracles do not.",
+      "evidence_item_ids": ["A005-27-I016"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains in classification, voting, persistence, identity propagation, approval lifecycle, navigation translation, security enforcement, operations, scaling, and migration.",
+      "evidence_item_ids": ["A005-27-I009", "A005-27-I010", "A005-27-I011", "A005-27-I012", "A005-27-I013", "A005-27-I014", "A005-27-I015", "A005-27-I016", "A005-27-I017"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Key terms such as first-class, high-impact, 2-of-3, compact, generation, shared identity, optional attempt, identity-native, allowlisted, and planned up front lack operational definitions in this window.",
+      "evidence_item_ids": ["A005-27-I009", "A005-27-I010", "A005-27-I011", "A005-27-I012", "A005-27-I013", "A005-27-I014", "A005-27-I015"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

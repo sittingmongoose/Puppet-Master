@@ -205,8 +205,18 @@
   function resolveFile(name) {
     if (!name) return null;
     if (FILES[name]) return name;
+    var tf = null;
+    try { tf = window.PM_DEMO_TEXT && window.PM_DEMO_TEXT.files; } catch (e) {}
+    if (tf && tf[name]) return name;
     var b = String(name).split('/').pop();
-    return BASENAMES[b] || null;
+    if (BASENAMES[b]) return BASENAMES[b];
+    if (tf) {
+      var keys = Object.keys(tf);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].split('/').pop() === b) return keys[i];
+      }
+    }
+    return null;
   }
   function fileBody(path) {
     try {
@@ -217,6 +227,31 @@
       }
     } catch (e) {}
     return FILES[path];
+  }
+
+  function updateMinimapVp(minimap, code) {
+    if (!minimap || !code) return;
+    var vp = minimap.querySelector('.minimap-viewport');
+    if (!vp) return;
+    var mmH = minimap.offsetHeight || 200;
+    var sh = code.scrollHeight || 1;
+    vp.style.height = Math.max((code.clientHeight / sh) * mmH, 20) + 'px';
+    vp.style.top = ((code.scrollTop / sh) * mmH) + 'px';
+  }
+
+  function setupDiffFlash(code) {
+    if (!('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !entry.target._pm6Flashed) {
+          entry.target._pm6Flashed = true;
+          entry.target.classList.add('diff-scroll-flash');
+          setTimeout(function () { entry.target.classList.remove('diff-scroll-flash'); }, 400);
+        }
+      });
+    }, { root: code, threshold: 0.5 });
+    var marked = code.querySelectorAll('.code-line.diff-added, .code-line.diff-modified, .code-line.diff-conflict');
+    Array.prototype.forEach.call(marked, function (el) { obs.observe(el); });
   }
 
   function pm6RenderFile(name, prefix) {
@@ -233,10 +268,27 @@
       var dt = (fd.diffs && fd.diffs[i]) || '';
       g += '<div class="gutter-line"><span class="gutter-line-num' + (dt ? ' diff-' + dt : '') + '">' + (i + 1) + '</span></div>';
       var px = pre[dt] ? '<span class="diff-prefix ' + dt + '">' + pre[dt] + '</span>' : '<span class="diff-prefix">&nbsp;</span>';
-      c += '<span class="code-line' + (dt ? ' diff-' + dt : '') + '">' + px + (line || '&nbsp;') + '</span>';
+      c += '<span class="code-line' + (dt ? ' diff-' + dt : '') + ' revealing" style="animation-delay:' + (i * 8) + 'ms">' + px + (line || '&nbsp;') + '</span>';
     });
     gutter.innerHTML = g;
     code.innerHTML = '<div class="cursor-line-highlight"></div>' + c;
+    /* cursor line highlight follows the pointer (parity with the original renderer) */
+    var hl = code.querySelector('.cursor-line-highlight');
+    code.onmousemove = function (e) {
+      if (!hl) return;
+      var rect = code.getBoundingClientRect();
+      var y = e.clientY - rect.top + code.scrollTop;
+      hl.style.top = (Math.floor(y / 18) * 18) + 'px';
+      hl.style.display = 'block';
+    };
+    code.onmouseleave = function () { if (hl) hl.style.display = 'none'; };
+    /* gutter follows code scroll; minimap viewport tracks on rAF */
+    code.onscroll = function () {
+      gutter.scrollTop = code.scrollTop;
+      if (minimap) {
+        requestAnimationFrame(function () { updateMinimapVp(minimap, code); });
+      }
+    };
     if (minimap) {
       try {
         var canvas = minimap.querySelector('.minimap-canvas');
@@ -252,18 +304,21 @@
             var dt = (fd.diffs && fd.diffs[i]) || '';
             ctx.fillStyle = (dt === 'added' ? cs.getPropertyValue('--accent-lime') :
                              dt === 'modified' ? cs.getPropertyValue('--accent-blue') :
+                             dt === 'conflict' ? cs.getPropertyValue('--accent-orange') :
                              cs.getPropertyValue('--text-muted')).trim() || '#666';
             ctx.globalAlpha = dt ? 0.4 : 0.14;
             ctx.fillRect(1, (i / n) * h, Math.max(Math.min(plain.trim().length * 0.4, w - 6), 1), lh);
           });
           ctx.globalAlpha = 1;
-          var vp = minimap.querySelector('.minimap-viewport');
-          if (vp) { vp.style.top = '0px'; vp.style.height = '30%'; }
+          /* viewport thumb sized to the visible fraction (min 20px), tracks scroll */
+          requestAnimationFrame(function () { updateMinimapVp(minimap, code); });
         }
       } catch (e) {}
     }
+    setupDiffFlash(code);
     return true;
   }
+  window.PM6_RENDER_FILE = pm6RenderFile;
 
   function activatePaneTab(paneId, fname, codeOnly) {
     var pane = document.getElementById(paneId);

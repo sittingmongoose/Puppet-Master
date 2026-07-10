@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-002311-EXACT-WIN-DF5F1BFBD3B7-0009",
+  "attempt_id": "attempt-0011",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      2827,
+      2838
+    ]
+  ],
+  "core_range": [
+    2839,
+    3119
+  ],
+  "core_sha256": "1f93e3b9f9c558d28dbb2b07597630e763b5c6a5e4717adcbc19282dabfc2ef4",
+  "document_path": "Plans/Goal_Runtime_System.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/9e/9ef98e07a19b8fb78ea4d4404d05a8a7dca79af494ba4c353ff4dd068d6ed6b8.txt",
+  "source_excerpt_sha256": "9ef98e07a19b8fb78ea4d4404d05a8a7dca79af494ba4c353ff4dd068d6ed6b8",
+  "source_sha256": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
+  "window_id": "WIN-DF5F1BFBD3B7-0009"
+}

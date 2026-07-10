@@ -1,0 +1,403 @@
+<<< CONTEXT_BEFORE canonical_document_lines=469-480 >>>
+L00000469	
+L00000470	### 10.1 Breadcrumbs and outline
+L00000471	
+L00000472	FileManager owns the editor breadcrumb strip and outline. When LSP is available, breadcrumbs and outline data use `documentSymbol`; when LSP is unavailable, the fallback path uses heuristic or regex outline data and labels the degraded state.
+L00000473	
+L00000474	The broad-sweep meta-findings are canonical for the editor surface. Better-specified implementation-level areas include file-tree behavior, tabs and `/buffers`, split panes, save `/dirty` state, `/drop`, LSP, image `/HTML` preview, keyboard shortcuts, persistence, and click-to-open. Sparse areas that must remain visible as product seams include rename, delete, duplicate, `/compare`, patch/conflict handling, symbol-index fallback, file watcher behavior, remote SSH/LSP, terminal tabs, build/debug integration, session-view restore, file-tree refresh, and bulk operations.
+L00000475	
+L00000476	Already-strong coverage remains explicit: image viewing is first-class in `§8.1` and `§14`, HTML/browser preview and hot reload are covered in `§8.2` and `§14`, browser evidence capture includes screenshots/traces/videos, and `cmd.browser` / `cmd.browser.*` command routing belongs to the browser command family. Click-to-open from files-touched, `Read:`, and `Edited:` entries remains shared with `assistant-chat-design.md`.
+L00000477	
+L00000478	### 10.2 Go to symbol and semantic navigation
+L00000479	
+L00000480	FileManager §10.2 is the canonical owner for Go to symbol. The command-palette and quick-open symbol picker use `documentSymbol` and `workspace/symbol` when LSP is available, and use heuristic, regex, or indexed symbol fallback behavior when it is not. References to `FileManager §10.9` as the Go to symbol owner are stale and must be corrected rather than inventing a new §10.9 owner.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=481-854 >>>
+L00000481	
+L00000482	In `Plans/FileManager.md` (`/FileManager.md`), symbol-index `/status` language is scoped to Go to symbol and semantic navigation. It must not imply that the regex index owns File Manager search or symbol indexing; FileManager consumes search results and fallback labels while `grep` and Search regex acceleration stay under Tools and storage-plan.
+L00000483	
+L00000484	### 10.3 Diagnostics, gutter markers, and change markers
+L00000485	
+L00000486	Diagnostics, gutter markers, and editor change markers render in the editor surface, consume LSP or fallback projections, and preserve the open-file identity from §4.1.
+L00000487	
+L00000488	### 10.4 Definition, references, hover, and code actions
+L00000489	
+L00000490	Definition, references, hover, code actions, formatting, rename, and apply-edit flows route through the FileManager editor surface and use FileSafe where a mutation is applied.
+L00000491	
+L00000492	## 11. File tree actions, local filter, and chat handoff
+L00000493	
+L00000494	FileManager owns the file-tree action surface. `cmd.chat.add_file_reference` is a lock, not a recommendation: Add to Assistant Chat inserts a visible file reference chip into the active composer/thread context and does not inline full file contents as a hidden side effect. File references are file-only in MVP; folder insertion is out of scope.
+L00000495	
+L00000496	Search entrypoints from command palette, keyboard shortcuts, Search panel chrome, and context menus normalize to the Search-owned `cmd.search.*` family. FileManager may reveal or open selected file results, but it must not duplicate search semantics under file-manager-local or legacy `/chat/lsp-local` names.
+L00000497	
+L00000498	### 11.1 Canonical tree action catalog
+L00000499	
+L00000500	File-tree context menus expose create, rename, delete, copy path, Add to Assistant Chat, Open in Terminal, Open With, Save Local Copy, compare, and reveal actions through canonical `cmd.file.*`, `cmd.chat.*`, and related command IDs rather than ad hoc UI callbacks.
+L00000501	
+L00000502	Tree-level and tree-node `/menu` contracts include Copy / Cut / Paste, Copy relative path, Add to Assistant Chat, Open With, Download / Save Local Copy, and `/open-containing-folder` or reveal when supported. `Save As` remains editor-oriented; tree copy/cut/paste and `/export` flows use copy-vs-move and transfer semantics, so this area is no longer under-specified by a short menu label list.
+L00000503	
+L00000504	Copy/Cut/Paste for tree nodes uses a dedicated file-operation clipboard model across FileManager `/surfaces`, not text-selection clipboard semantics. `Copy` duplicates on paste, `Cut` marks a pending move, paste targets must be a folder or project root, and path validation plus conflict handling reuse drag/drop rules. Open With selects PM-native surfaces first; `system-default` remains a separate future handoff rather than part of the MVP PM-native target set.
+L00000505	
+L00000506	### 11.2 Clipboard, drag/drop, and transfer engine
+L00000507	
+L00000508	Clipboard, drag/drop, upload, download, and archive flows reuse the File Manager transfer contracts from the external discovery constraints and must keep path hardening, read-only state, and transfer progress explicit.
+L00000509	
+L00000510	### 11.3 Local tree filter, selection, and current-file reveal
+L00000511	
+L00000512	The local tree filter is a File Manager filter/type-ahead, not semantic search. Current-file reveal uses the open-file contract and may reveal an existing tree node instead of opening a duplicate buffer.
+L00000513	
+L00000514	### 11.4 Open With and Save Local Copy
+L00000515	
+L00000516	`cmd.file.open_with` is the PM-native Open With command for MVP editor and preview targets. The MVP-native target set is exactly `source_editor`, `image_viewer`, `workspace_preview`, `detached_preview`, and `diff_review`. `system_default` is not part of the canonical MVP target enum for this command; future OS handoff must use a separate explicit command such as `cmd.file.open_in_system_default`.
+L00000517	
+L00000518	`Open With…` is the user-facing chooser label for `cmd.file.open_with`; it must resolve to one of the PM-native targets above rather than a hidden preview host or system-default fallback.
+L00000519	
+L00000520	`cmd.file.save_local_copy` is the explicit Download / Save Local Copy `/copy-out` flow for workspace nodes: it exports a readable source to a user-chosen local destination without changing the node's project-relative path identity. For remote projects, this is the canonical remote-to-local escape hatch and remains distinct from tree Copy/Paste, editor Save As, or a move into the workspace.
+L00000521	
+L00000522	## 12. Source Control handoff, compare, and review
+L00000523	
+L00000524	Source Control handoff from FileManager keeps file identity, worktree identity, and compare targets explicit. Handoff prose must not leave unresolved `if needed` or `only if clarification text is needed` conditions; a handoff either routes through a canonical command or is recorded as out of scope for the current surface.
+L00000525	
+L00000526	### 12.1 File-tree Source Control strip and diff entrypoints
+L00000527	
+L00000528	The file tree may expose Source Control status, compare, and diff entrypoints, but ownership of repository state remains with Source Control and worktree contracts.
+L00000529	
+L00000530	File/file-manager surfaces may expose `Open in Source Control`, `Open diff`, and `Open compare`, but they must not absorb branch/history/worktree ownership. Those actions hand off file identity, active `repo_id`, `worktree_id`, and compare target to Source Control instead of inventing a file-surface history model.
+L00000531	
+L00000532	Chat owns inline operation cards for `files changed` and `code diffs`, while File Editor and compare surfaces own source-level `/diff` viewing and `/focus` for concrete files and `/subjects`. FileManager may route preview-generated edits, Open diff, Open compare, `/file-manager` and `/file-manager/source-control` entrypoints, and `/history/worktree` handoff for repo-wide or multi-file changes, but FileSafe owns mutation safety and restore-before-rerun enforcement and Source Control remains the git-native owner.
+L00000533	
+L00000534	The GUI ownership split is stable: the Source Control side panel owns change lists, Git mutations, compare target selection, and `history/graph/worktree` pivots; docked editor diff/review is the canonical detailed in-shell surface; detached review windows are optional large-screen focused review surfaces; chat remains compact preview/audit only; and editor gutter plus scrollbar overview own heat-map summaries and change-marker state-feedback.
+L00000535	
+L00000536	### 12.2 Compare-target defaults
+L00000537	
+L00000538	Compare targets default from the active worktree and source-control state. Ambiguous compare targets must surface choices instead of silently selecting a stale branch, remote, or generated artifact.
+L00000539	
+L00000540	### 12.3 Hunk actions, conflict review, and diff-local search
+L00000541	
+L00000542	Hunk actions and conflict review use the diff/review owner contracts. FileManager may launch or reveal those flows but does not bypass review policy. Stage, unstage, discard, apply, expand/collapse, search-within-diff, and conflict-resolution review UX stay Source Control or review-owner behavior even when FileManager provides the entrypoint.
+L00000543	
+L00000544	FileManager diff/review entrypoints must preserve the later reconciliation ownership: `GitHub_Integration.md` owns compare-target defaults, hunk actions, conflict review, and diff-local search; `UI_Command_Catalog.md` owns `cmd.git` / `cmd.git.*` coverage; `assistant-chat-design.md` owns `cmd.chat.revert` default semantics and chat-thread diff exposure. The hunk catalog includes `/apply/review/conflict`, `/reject/stage/unstage/revert/collapse`, `/unstage`, `/comments`, `/reanchor`, and large-directory-safe review loading; if merge strategy is unavailable, the surface must show conflict UI or reject rather than silently applying. Generated-vs-workspace-file visibility, `/file-manager` location, `/unstaged/conflicted` ownership, and conflict-resolution routing remain explicit.
+L00000545	
+L00000546	### 12.4 Change-marker ownership and revert boundaries
+L00000547	
+L00000548	Change markers in the editor are visual projections over source-control and FileSafe state. Revert actions must identify the exact file, hunk, or persisted mutation being reverted.
+L00000549	
+L00000550	Git/source-control discard/compare/stage actions are not ordinary editor undo. Restore points, rollback, and revert-last-agent-edit remain explicit restore-history actions and must not be hidden behind git-panel affordances. Diff-specific heat-map/change-marker, diff-edit, per-hunk controls, open-in-diff, scrollbar change-marker behavior, and diff-surface undo grouping are required editor projections over compare state, not optional source-control decoration. Top-level-doc and `assistant-chat-design.md` links such as files-touched and open-in-editor are routing affordances, not replacements for source-buffer review state.
+L00000551	
+L00000552	Conflicted markers override staged/unstaged styling until resolved, and staged and unstaged state remain visually distinguishable when both exist for one file. Revert/restore outcomes surface through audit/history state plus toast/banner and MUST NOT create a new persistent heat-map class.
+L00000553	
+L00000554	The diff-affecting taxonomy is canonical: source-buffer edits include typing, preview-originated bounded patch apply, assistant patch apply, and conflict-result text edits in source-backed panes; git mutations include stage, unstage, discard, `stash push/pop`, mark conflict resolved, and hunk-level Git actions; restore/rollback actions include Revert last agent edit, `Restore to…`, checkpoint restore, rewind, and rollback. These resolve to confirmed restore events that refresh affected buffers rather than popping a local editor stack.
+L00000555	
+L00000556	Diff undo/redo remains scoped by action class: single-file assistant edits, multi-file assistant edits, hunk-level Git actions, patch-apply / preview-apply actions, and conflict-resolution actions use the grouping rules above and never collapse into one global editor undo stack. Chat routing exposes the `files-touched strip`, `diff card`, `open-in-editor`, and `open-in-diff` as distinct affordances; revert scope must be declared as `last edit`, `last turn`, per-file, or per-thread, with audit/history representation preserved after revert or rollback. GUI ownership remains split across docked editor diff, detached review window, Source Control side-panel pivot / selection state, scrollbar heat-map / gutter change markers, and dirty / staged / conflicted / reverted feedback loops.
+L00000557	
+L00000558	## 13. Preview refresh and hot reload controls
+L00000559	
+L00000560	Preview refresh and hot reload controls live where the preview subject is visible. FileManager may expose refresh, reopen, detach, and reveal actions for workspace previews and browser-backed previews, but command ids and browser/session behavior remain with the browser and UI command owners. Hot reload state is visible as preview/runtime status, not as a hidden file watcher side effect.
+L00000561	
+L00000562	## 14. Rendering, browser preview, and detached preview compatibility
+L00000563	
+L00000564	Section 14 is the FileManager anchor for rendering and preview placement. It preserves the source-backed rendering split for Markdown, Mermaid, HTML, SVG, and images; browser preview remains editor-tab-first and detached-window-capable through `workspace_preview`, `detached_preview`, `preview_subject_id`, and `browser_session_id`. `/cap/browser-tab` is compatibility shorthand only and not a live tab type.
+L00000565	
+L00000566	### 14.6 Browser preview and hot reload controls
+L00000567	
+L00000568	Hot reload controls appear only when the owning preview/runtime session exposes a refreshable subject. FileManager may reveal, refresh, detach, or reopen that subject, while browser runtime behavior and command ids remain with the browser and UI command owners.
+L00000569	
+L00000570	## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
+L00000571	
+L00000572	
+L00000573	<a id="fm-runtime-artifact-open-identity-acceptance"></a>
+L00000574	#### Acceptance carry-through
+L00000575	- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
+L00000576	- Resolve artifact open flows by artifact_id and then by linked envelope refs
+L00000577	
+L00000578	## Owner / Consumer Map
+L00000579	
+L00000580	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/FileManager.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000581	
+L00000582	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000583	
+L00000584	## PlanUnits
+L00000585	
+L00000586	### F-002 - File Manager Editor Scope And Compliance
+L00000587	
+L00000588	```yaml
+L00000589	plan_unit_id: F-002
+L00000590	unit_type: requirement
+L00000591	status: accepted
+L00000592	owner_doc: Plans/FileManager.md
+L00000593	canonical_text: >-
+L00000594	  FileManager owns the File Manager, in-app IDE-style editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancement scope while deferring chat UX, layout, browser actions, and storage terms to their owner docs.
+L00000595	gui_related: true
+L00000596	gui_classification_reason: This unit defines user-visible File Manager/editor/chat integration scope and authored help-copy alignment.
+L00000597	split_recommended: false
+L00000598	depends_on: []
+L00000599	unblocks: []
+L00000600	acceptance_criteria:
+L00000601	- The covered source span remains losslessly available for exact-text audit.
+L00000602	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00000603	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000604	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000605	validation_surfaces:
+L00000606	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000607	- python3 scripts/pm-plan-index.py validate
+L00000608	risk_class: file_manager_drift
+L00000609	reasoning_tier: standard
+L00000610	context_scope: file_manager_standardization
+L00000611	implementation_surfaces:
+L00000612	- Plans/FileManager.md
+L00000613	node_compile_hint:
+L00000614	  mode: file_manager_editor_scope_and_compliance
+L00000615	  create_worknodes: false
+L00000616	source_lineage:
+L00000617	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0001
+L00000618	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0002
+L00000619	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0003
+L00000620	preserved_exact_tokens:
+L00000621	- Puppet Master
+L00000622	- File Manager
+L00000623	- IDE-style editor
+L00000624	- "@ mention"
+L00000625	- click-to-open
+L00000626	- redb
+L00000627	- seglog
+L00000628	- ELI5/Expert copy alignment
+L00000629	- ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000630	negative_constraints: []
+L00000631	compatibility_only_notes: []
+L00000632	stale_retired_dispositions: []
+L00000633	owner_boundary_notes:
+L00000634	- Chat UX details defer to assistant-chat-design; layout defers to FinalGUISpec; browser click-to-context and agent-driven browser actions defer to the promoted browser owner docs.
+L00000635	owner_hints:
+L00000636	- Plans/FileManager.md
+L00000637	```
+L00000638	
+L00000639	### F-003 - Project Driven Capability Activation
+L00000640	
+L00000641	```yaml
+L00000642	plan_unit_id: F-003
+L00000643	unit_type: requirement
+L00000644	status: accepted
+L00000645	owner_doc: Plans/FileManager.md
+L00000646	canonical_text: >-
+L00000647	  File Manager/editor capability packs are activated by detected project signals after explicit detection/import logic, with plausible interpretations visible and overridable, indexing degraded states explicit, remote attachment state visible, and capability-pack breadth bounded and lazy-loaded.
+L00000648	gui_related: true
+L00000649	gui_classification_reason: This unit governs visible project-open detection, degraded states, and remote support affordances.
+L00000650	split_recommended: true
+L00000651	depends_on: []
+L00000652	unblocks: []
+L00000653	acceptance_criteria:
+L00000654	- The covered source span remains losslessly available for exact-text audit.
+L00000655	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00000656	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000657	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000658	validation_surfaces:
+L00000659	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000660	- python3 scripts/pm-plan-index.py validate
+L00000661	risk_class: file_manager_drift
+L00000662	reasoning_tier: standard
+L00000663	context_scope: file_manager_standardization
+L00000664	implementation_surfaces:
+L00000665	- Plans/FileManager.md
+L00000666	node_compile_hint:
+L00000667	  mode: project_driven_capability_activation
+L00000668	  create_worknodes: false
+L00000669	source_lineage:
+L00000670	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0004
+L00000671	preserved_exact_tokens:
+L00000672	- MUST assemble
+L00000673	- Project open MUST run explicit detection/import logic
+L00000674	- autodetection visible and overridable
+L00000675	- reduced-capability/degraded-mode state
+L00000676	- Remote mode MUST NOT pretend remote is only local with different paths
+L00000677	- bounded/reused
+L00000678	- lazy-loaded
+L00000679	- ContractName:Plans/Architecture_Invariants.md
+L00000680	negative_constraints:
+L00000681	- Remote mode must not pretend remote is only local with different paths.
+L00000682	- Indexing and external-model sync must be bounded/reused and must not dominate project open, navigation, or editor responsiveness.
+L00000683	compatibility_only_notes:
+L00000684	- Remote project support uses a thin local client/launcher with backend attachment/version management.
+L00000685	stale_retired_dispositions: []
+L00000686	owner_boundary_notes: []
+L00000687	owner_hints:
+L00000688	- Plans/FileManager.md
+L00000689	split_recommendation_reason: Mixed project-detection backend behavior and visible degraded/remote UI state are kept together for source preservation; later implementation may split detection service and UI projection work.
+L00000690	```
+L00000691	
+L00000692	### F-004 - External Discovery Cluster Constraints
+L00000693	
+L00000694	```yaml
+L00000695	plan_unit_id: F-004
+L00000696	unit_type: requirement
+L00000697	status: accepted
+L00000698	owner_doc: Plans/FileManager.md
+L00000699	canonical_text: >-
+L00000700	  External discovery research-lineage anchors constrain the editor/File Manager toward local-first remote-capable operation, incremental scanning, first-class preview/manage operations, durable recovery, native diff/test/task widgets, reusable Rust text core, atomic save/watch handling, and explicit histories while rejecting known fragility modes.
+L00000701	gui_related: true
+L00000702	gui_classification_reason: This unit carries file-tree/sidebar, preview, and editor recovery product constraints with visible surface implications.
+L00000703	split_recommended: true
+L00000704	depends_on: []
+L00000705	unblocks: []
+L00000706	acceptance_criteria:
+L00000707	- The covered source span remains losslessly available for exact-text audit.
+L00000708	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00000709	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000710	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000711	validation_surfaces:
+L00000712	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000713	- python3 scripts/pm-plan-index.py validate
+L00000714	risk_class: file_manager_drift
+L00000715	reasoning_tier: standard
+L00000716	context_scope: file_manager_standardization
+L00000717	implementation_surfaces:
+L00000718	- Plans/FileManager.md
+L00000719	node_compile_hint:
+L00000720	  mode: external_discovery_cluster_constraints
+L00000721	  create_worknodes: false
+L00000722	source_lineage:
+L00000723	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0005
+L00000724	preserved_exact_tokens:
+L00000725	- bench-01
+L00000726	- bench-04
+L00000727	- bench-05
+L00000728	- bench-06
+L00000729	- bench-08
+L00000730	- bench-15
+L00000731	- bench-23
+L00000732	- bench-25
+L00000733	- bench-27
+L00000734	- bench-30
+L00000735	- Rust text core
+L00000736	- atomic save
+L00000737	- watcher-driven external-change handling
+L00000738	- persistent search/replace/location histories
+L00000739	negative_constraints:
+L00000740	- Puppet Master must avoid monolithic customization debt and harden auth/path behavior.
+L00000741	- A marker-based split comparison is not enough for PM diff/merge goals.
+L00000742	- Fragile worker /path/SSR/shadow-DOM integration remains a failure mode to design against.
+L00000743	compatibility_only_notes:
+L00000744	- External discovery labels are research-lineage anchors, not product names.
+L00000745	stale_retired_dispositions: []
+L00000746	owner_boundary_notes: []
+L00000747	owner_hints:
+L00000748	- Plans/FileManager.md
+L00000749	split_recommendation_reason: Span mixes implementation-reference architecture constraints with visible File Manager/editor behavior; this PlanUnit preserves the grouped research-lineage cluster.
+L00000750	```
+L00000751	
+L00000752	### F-005 - Editor Archetype Constraints
+L00000753	
+L00000754	```yaml
+L00000755	plan_unit_id: F-005
+L00000756	unit_type: requirement
+L00000757	status: accepted
+L00000758	owner_doc: Plans/FileManager.md
+L00000759	canonical_text: >-
+L00000760	  Editor archetype evidence is grouped by AI-native workbench/IDE, traditional IDE/workbench, embedded wrapper, collaborative/online editor, and terminal-native editor, preserving useful strengths while rejecting hidden defaults such as ephemeral state, weak recovery, limited workspace models, and terminal ownership of the broader surface.
+L00000761	gui_related: true
+L00000762	gui_classification_reason: This unit constrains visible editor/workbench behavior and collaboration affordances.
+L00000763	split_recommended: true
+L00000764	depends_on: []
+L00000765	unblocks: []
+L00000766	acceptance_criteria:
+L00000767	- The covered source span remains losslessly available for exact-text audit.
+L00000768	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00000769	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000770	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000771	validation_surfaces:
+L00000772	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000773	- python3 scripts/pm-plan-index.py validate
+L00000774	risk_class: file_manager_drift
+L00000775	reasoning_tier: standard
+L00000776	context_scope: file_manager_standardization
+L00000777	implementation_surfaces:
+L00000778	- Plans/FileManager.md
+L00000779	node_compile_hint:
+L00000780	  mode: editor_archetype_constraints
+L00000781	  create_worknodes: false
+L00000782	source_lineage:
+L00000783	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0006
+L00000784	preserved_exact_tokens:
+L00000785	- AI-native workbench/IDE
+L00000786	- full traditional IDE/workbench
+L00000787	- embedded editor engine/wrapper
+L00000788	- collaborative/online editor
+L00000789	- terminal-native editor
+L00000790	- room/share-link
+L00000791	- terminal-native editor
+L00000792	negative_constraints:
+L00000793	- Puppet Master must not inherit ephemeral or memory-backed state, weak durable storage, reconnect/forced-refresh flows, limited multi-buffer/workspace models, no synced scrolling, sanitization shortcuts, or backend/API dependency risk as hidden defaults.
+L00000794	- Terminal-native strengths can inform command design without making the broader File Manager/editor surface terminal-owned.
+L00000795	compatibility_only_notes:
+L00000796	- Lightweight native editors validate direction but also carry plugin compatibility, memory, rendering, and incomplete split/history/navigation risks.
+L00000797	stale_retired_dispositions: []
+L00000798	owner_boundary_notes: []
+L00000799	owner_hints:
+L00000800	- Plans/FileManager.md
+L00000801	split_recommendation_reason: Archetype evidence includes visible UI strengths and backend architecture risks; kept source-preserving as one archetype summary.
+L00000802	```
+L00000803	
+L00000804	### F-006 - Editor Adapter Implementation Reference Constraints
+L00000805	
+L00000806	```yaml
+L00000807	plan_unit_id: F-006
+L00000808	unit_type: requirement
+L00000809	status: accepted
+L00000810	owner_doc: Plans/FileManager.md
+L00000811	canonical_text: >-
+L00000812	  The editor adapter stays thin: host/workspace owns file, project, runtime, execution transport, and project identity while the editor renders and edits; selection/caret, guarded updates, split-pane undo ownership, Unicode/revision transforms, degraded language fallback, and execution-transport separation remain explicit.
+L00000813	gui_related: false
+L00000814	gui_classification_reason: This unit defines adapter/runtime ownership constraints, not GUI presentation.
+L00000815	split_recommended: false
+L00000816	depends_on: []
+L00000817	unblocks: []
+L00000818	acceptance_criteria:
+L00000819	- The covered source span remains losslessly available for exact-text audit.
+L00000820	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00000821	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000822	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000823	validation_surfaces:
+L00000824	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000825	- python3 scripts/pm-plan-index.py validate
+L00000826	risk_class: file_manager_drift
+L00000827	reasoning_tier: standard
+L00000828	context_scope: file_manager_standardization
+L00000829	implementation_surfaces:
+L00000830	- Plans/FileManager.md
+L00000831	node_compile_hint:
+L00000832	  mode: editor_adapter_implementation_reference_constraints
+L00000833	  create_worknodes: false
+L00000834	source_lineage:
+L00000835	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0007
+L00000836	preserved_exact_tokens:
+L00000837	- thin
+L00000838	- host/workspace own file/project/runtime identity
+L00000839	- selection/caret
+L00000840	- silent/guarded update paths
+L00000841	- split-pane/editor-instance undo ownership
+L00000842	- Unicode-aware OT/revision transforms
+L00000843	- Deterministic extension/file-name based language fallback
+L00000844	- degraded path
+L00000845	negative_constraints:
+L00000846	- Deterministic extension/file-name based language fallback is degraded only, not a substitute for real detection/indexing/LSP.
+L00000847	- The editor surface does not own workspace truth, execution transport, or project identity.
+L00000848	compatibility_only_notes: []
+L00000849	stale_retired_dispositions: []
+L00000850	owner_boundary_notes: []
+L00000851	owner_hints:
+L00000852	- Plans/FileManager.md
+L00000853	```
+L00000854	
+
+<<< CONTEXT_AFTER canonical_document_lines=855-866 >>>
+L00000855	### F-007 - File Manager Editor Definitions
+L00000856	
+L00000857	```yaml
+L00000858	plan_unit_id: F-007
+L00000859	unit_type: requirement
+L00000860	status: accepted
+L00000861	owner_doc: Plans/FileManager.md
+L00000862	canonical_text: >-
+L00000863	  FileManager defines Buffer, Tab, Editor group, Dirty, Preset, redb, seglog, and FileSafe terms for the editor and File Manager surface.
+L00000864	gui_related: true
+L00000865	gui_classification_reason: Definitions describe user-visible editor concepts such as buffers, tabs, groups, dirty state, and presets.
+L00000866	split_recommended: false

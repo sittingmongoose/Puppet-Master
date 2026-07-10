@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE canonical_document_lines=23316-23327 >>>
+L00023316	- Platform usage distribution
+L00023317	negative_constraints: []
+L00023318	compatibility_only_notes:
+L00023319	- Future enhancement source coverage only until metric owners accept durable collection semantics.
+L00023320	stale_retired_dispositions: []
+L00023321	owner_boundary_notes:
+L00023322	- Usage/storage own durable metrics; Final GUI owns display projections.
+L00023323	owner_hints:
+L00023324	- Plans/orchestrator-subagent-integration.md
+L00023325	preserved_contractrefs: []
+L00023326	```
+L00023327	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=23328-23691 >>>
+L00023328	### OSI-288 - Crew Learning And Adaptation
+L00023329	
+L00023330	```yaml
+L00023331	plan_unit_id: OSI-288
+L00023332	unit_type: requirement
+L00023333	status: accepted
+L00023334	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023335	canonical_text: >-
+L00023336	  Future crew learning may track effective subagent combinations, suggest optimal crew compositions, and adapt crew behavior
+L00023337	  based on success patterns.
+L00023338	gui_related: false
+L00023339	gui_classification_reason: This unit covers backend learning/adaptation behavior rather than GUI presentation.
+L00023340	split_recommended: true
+L00023341	depends_on:
+L00023342	- OSI-279
+L00023343	unblocks: []
+L00023344	acceptance_criteria:
+L00023345	- Covered source span remains losslessly available for exact-text audit.
+L00023346	- Learning/adaptation remains future source-lineage coverage until storage, privacy, and policy owners accept live semantics.
+L00023347	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023348	validation_surfaces:
+L00023349	- >-
+L00023350	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023351	- python3 scripts/pm-plan-index.py validate
+L00023352	reasoning_tier: standard
+L00023353	context_scope: orchestrator_subagent_standardization
+L00023354	implementation_surfaces:
+L00023355	- Plans/orchestrator-subagent-integration.md
+L00023356	risk_class: crew_learning_and_adaptation
+L00023357	node_compile_hint:
+L00023358	  mode: crew_learning_and_adaptation
+L00023359	  create_worknodes: false
+L00023360	source_lineage:
+L00023361	- >-
+L00023362	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023363	preserved_exact_tokens:
+L00023364	- Enhancement #3: Crew learning and adaptation
+L00023365	- Track which subagent combinations work best
+L00023366	- Suggest optimal crew compositions
+L00023367	- Adapt crew behavior based on success patterns
+L00023368	negative_constraints: []
+L00023369	compatibility_only_notes:
+L00023370	- Future enhancement source-lineage coverage; storage/privacy/policy owner acceptance is required before live canon.
+L00023371	stale_retired_dispositions: []
+L00023372	owner_boundary_notes:
+L00023373	- Storage, privacy, and policy owners must adjudicate durable learning semantics before implementation.
+L00023374	owner_hints:
+L00023375	- Plans/orchestrator-subagent-integration.md
+L00023376	preserved_contractrefs: []
+L00023377	```
+L00023378	
+L00023379	### OSI-289 - Crew Scheduling By Tier And Quota
+L00023380	
+L00023381	```yaml
+L00023382	plan_unit_id: OSI-289
+L00023383	unit_type: requirement
+L00023384	status: accepted
+L00023385	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023386	canonical_text: Queued crews may be prioritized by tier dependency and scheduled against platform quota availability.
+L00023387	gui_related: false
+L00023388	gui_classification_reason: This unit covers scheduling policy rather than GUI presentation.
+L00023389	split_recommended: false
+L00023390	depends_on:
+L00023391	- OSI-281
+L00023392	unblocks: []
+L00023393	acceptance_criteria:
+L00023394	- Covered source span remains losslessly available for exact-text audit.
+L00023395	- Scheduling remains subordinate to `executionLimits` and policy admission.
+L00023396	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023397	validation_surfaces:
+L00023398	- >-
+L00023399	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023400	- python3 scripts/pm-plan-index.py validate
+L00023401	reasoning_tier: standard
+L00023402	context_scope: orchestrator_subagent_standardization
+L00023403	implementation_surfaces:
+L00023404	- Plans/orchestrator-subagent-integration.md
+L00023405	risk_class: crew_scheduling_by_tier_and_quota
+L00023406	node_compile_hint:
+L00023407	  mode: crew_scheduling_by_tier_and_quota
+L00023408	  create_worknodes: false
+L00023409	source_lineage:
+L00023410	- >-
+L00023411	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023412	preserved_exact_tokens:
+L00023413	- Enhancement #4: Crew scheduling and prioritization
+L00023414	- Prioritize crews by tier dependency
+L00023415	- Schedule crews based on platform quota availability
+L00023416	negative_constraints:
+L00023417	- Crew scheduling must not bypass `executionLimits` or policy admission.
+L00023418	compatibility_only_notes: []
+L00023419	stale_retired_dispositions: []
+L00023420	owner_boundary_notes:
+L00023421	- Orchestrator admission and platform quota policy remain authoritative.
+L00023422	owner_hints:
+L00023423	- Plans/orchestrator-subagent-integration.md
+L00023424	preserved_contractrefs: []
+L00023425	```
+L00023426	
+L00023427	### OSI-290 - User Reorders Queued Crew Execution
+L00023428	
+L00023429	```yaml
+L00023430	plan_unit_id: OSI-290
+L00023431	unit_type: requirement
+L00023432	status: accepted
+L00023433	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023434	canonical_text: When the Assistant feature is added, users may reorder crew execution.
+L00023435	gui_related: true
+L00023436	gui_classification_reason: This unit covers a future user-visible queue reordering affordance.
+L00023437	split_recommended: false
+L00023438	depends_on:
+L00023439	- OSI-284
+L00023440	- OSI-289
+L00023441	unblocks: []
+L00023442	acceptance_criteria:
+L00023443	- Covered source span remains losslessly available for exact-text audit.
+L00023444	- User reordering remains a future Assistant surface and does not override orchestrator admission.
+L00023445	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023446	validation_surfaces:
+L00023447	- >-
+L00023448	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023449	- python3 scripts/pm-plan-index.py validate
+L00023450	reasoning_tier: standard
+L00023451	context_scope: orchestrator_subagent_standardization
+L00023452	implementation_surfaces:
+L00023453	- Plans/orchestrator-subagent-integration.md
+L00023454	risk_class: user_reorders_queued_crew_execution
+L00023455	node_compile_hint:
+L00023456	  mode: user_reorders_queued_crew_execution
+L00023457	  create_worknodes: false
+L00023458	source_lineage:
+L00023459	- >-
+L00023460	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023461	preserved_exact_tokens:
+L00023462	- Allow users to reorder crew execution
+L00023463	- when Assistant feature is added
+L00023464	negative_constraints:
+L00023465	- User-visible reordering must not replace orchestrator admission authority.
+L00023466	compatibility_only_notes:
+L00023467	- Future Assistant feature only.
+L00023468	stale_retired_dispositions: []
+L00023469	owner_boundary_notes:
+L00023470	- Assistant/Final GUI own the user-visible reorder control; orchestrator still owns admission.
+L00023471	owner_hints:
+L00023472	- Plans/orchestrator-subagent-integration.md
+L00023473	preserved_contractrefs: []
+L00023474	```
+L00023475	
+L00023476	### OSI-291 - Crew-Aware PRD Plan Generation Hints
+L00023477	
+L00023478	```yaml
+L00023479	plan_unit_id: OSI-291
+L00023480	unit_type: requirement
+L00023481	status: accepted
+L00023482	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023483	canonical_text: >-
+L00023484	  PRD and plan generation may include crew recommendations, task/subtask crew hints, crew template references, and
+L00023485	  orchestrator consumption of crew hints when appropriate.
+L00023486	gui_related: false
+L00023487	gui_classification_reason: This unit covers PRD/plan metadata and orchestrator consumption rather than GUI presentation.
+L00023488	split_recommended: true
+L00023489	depends_on:
+L00023490	- OSI-279
+L00023491	- OSI-284
+L00023492	unblocks: []
+L00023493	acceptance_criteria:
+L00023494	- Covered source span remains losslessly available for exact-text audit.
+L00023495	- Question-form gap language is preserved as deferred source-lineage, not a forced product decision.
+L00023496	- Automatic crew creation cannot bypass confirmation or admission constraints.
+L00023497	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023498	validation_surfaces:
+L00023499	- >-
+L00023500	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023501	- python3 scripts/pm-plan-index.py validate
+L00023502	reasoning_tier: standard
+L00023503	context_scope: orchestrator_subagent_standardization
+L00023504	implementation_surfaces:
+L00023505	- Plans/orchestrator-subagent-integration.md
+L00023506	risk_class: crew_aware_prd_plan_generation_hints
+L00023507	node_compile_hint:
+L00023508	  mode: crew_aware_prd_plan_generation_hints
+L00023509	  create_worknodes: false
+L00023510	source_lineage:
+L00023511	- >-
+L00023512	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023513	preserved_exact_tokens:
+L00023514	- Gap #52: Crew integration with PRD/plan generation
+L00023515	- Crew-aware plan generation
+L00023516	- Plan annotations
+L00023517	- Crew templates in plans
+L00023518	- Orchestrator awareness
+L00023519	negative_constraints:
+L00023520	- Automatic crew creation must respect confirmation, admission, and `executionLimits`.
+L00023521	compatibility_only_notes:
+L00023522	- Question-form gap retained as deferred source-lineage until owner docs accept live behavior.
+L00023523	stale_retired_dispositions: []
+L00023524	owner_boundary_notes:
+L00023525	- PRD/interview plan owners must accept schema semantics before crew hints become live schema canon.
+L00023526	owner_hints:
+L00023527	- Plans/orchestrator-subagent-integration.md
+L00023528	preserved_contractrefs: []
+L00023529	```
+L00023530	
+L00023531	### OSI-292 - Crew Recommendation PRD JSON Example
+L00023532	
+L00023533	```yaml
+L00023534	plan_unit_id: OSI-292
+L00023535	unit_type: requirement
+L00023536	status: accepted
+L00023537	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023538	canonical_text: >-
+L00023539	  The source preserves the `prd.json` example containing `crew_recommendation`, `suggested`, `subagents`, and `rationale`
+L00023540	  for `ST-001-001-001`.
+L00023541	gui_related: false
+L00023542	gui_classification_reason: This unit covers a JSON example rather than GUI presentation.
+L00023543	split_recommended: false
+L00023544	depends_on:
+L00023545	- OSI-291
+L00023546	unblocks: []
+L00023547	acceptance_criteria:
+L00023548	- Covered JSON example remains losslessly available for exact-text audit.
+L00023549	- The JSON example is not promoted into schema canon by this standardization batch.
+L00023550	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023551	validation_surfaces:
+L00023552	- >-
+L00023553	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023554	- python3 scripts/pm-plan-index.py validate
+L00023555	reasoning_tier: standard
+L00023556	context_scope: orchestrator_subagent_standardization
+L00023557	implementation_surfaces:
+L00023558	- Plans/orchestrator-subagent-integration.md
+L00023559	risk_class: crew_recommendation_prd_json_example
+L00023560	node_compile_hint:
+L00023561	  mode: crew_recommendation_prd_json_example
+L00023562	  create_worknodes: false
+L00023563	source_lineage:
+L00023564	- >-
+L00023565	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023566	preserved_exact_tokens:
+L00023567	- prd.json
+L00023568	- crew_recommendation
+L00023569	- suggested
+L00023570	- subagents
+L00023571	- rationale
+L00023572	- ST-001-001-001
+L00023573	- Implement authentication API
+L00023574	negative_constraints:
+L00023575	- The JSON example must not be treated as live schema canon by this batch.
+L00023576	compatibility_only_notes:
+L00023577	- JSON is example evidence only.
+L00023578	stale_retired_dispositions: []
+L00023579	owner_boundary_notes:
+L00023580	- PRD schema ownership remains outside this source-preserving example.
+L00023581	owner_hints:
+L00023582	- Plans/orchestrator-subagent-integration.md
+L00023583	preserved_contractrefs: []
+L00023584	```
+L00023585	
+L00023586	### OSI-293 - Interview Phase Crew Uses
+L00023587	
+L00023588	```yaml
+L00023589	plan_unit_id: OSI-293
+L00023590	unit_type: requirement
+L00023591	status: accepted
+L00023592	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023593	canonical_text: >-
+L00023594	  Interview phases may use crews internally for architecture, research, document generation, and cross-phase coordination.
+L00023595	gui_related: false
+L00023596	gui_classification_reason: This unit covers interview-flow orchestration rather than GUI presentation.
+L00023597	split_recommended: true
+L00023598	depends_on:
+L00023599	- OSI-135
+L00023600	- OSI-279
+L00023601	unblocks: []
+L00023602	acceptance_criteria:
+L00023603	- Covered source span remains losslessly available for exact-text audit.
+L00023604	- Interview-specific crew behavior remains distinct from execution-tier crew behavior.
+L00023605	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023606	validation_surfaces:
+L00023607	- >-
+L00023608	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023609	- python3 scripts/pm-plan-index.py validate
+L00023610	reasoning_tier: standard
+L00023611	context_scope: orchestrator_subagent_standardization
+L00023612	implementation_surfaces:
+L00023613	- Plans/orchestrator-subagent-integration.md
+L00023614	risk_class: interview_phase_crew_uses
+L00023615	node_compile_hint:
+L00023616	  mode: interview_phase_crew_uses
+L00023617	  create_worknodes: false
+L00023618	source_lineage:
+L00023619	- >-
+L00023620	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023621	preserved_exact_tokens:
+L00023622	- Gap #53: Crew coordination with interview phases
+L00023623	- Interview phase crews
+L00023624	- Research crews
+L00023625	- Document generation crews
+L00023626	- Cross-phase coordination
+L00023627	negative_constraints:
+L00023628	- Interview-flow crews must not be merged with execution-tier crew canon.
+L00023629	compatibility_only_notes:
+L00023630	- Question-form gap retained as source-lineage coverage pending interview owner acceptance.
+L00023631	stale_retired_dispositions: []
+L00023632	owner_boundary_notes:
+L00023633	- interview-subagent-integration remains the phase-specific owner for interview crew behavior.
+L00023634	owner_hints:
+L00023635	- Plans/orchestrator-subagent-integration.md
+L00023636	preserved_contractrefs: []
+L00023637	```
+L00023638	
+L00023639	### OSI-294 - Research Coverage Caveat
+L00023640	
+L00023641	```yaml
+L00023642	plan_unit_id: OSI-294
+L00023643	unit_type: requirement
+L00023644	status: accepted
+L00023645	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023646	canonical_text: >-
+L00023647	  Research crews must record coverage limits when comparator products have mixed or limited public source availability, use
+L00023648	  official `/docs`, public community feedback, and `/web` evidence as fallback, and maximize clone-based or source-level
+L00023649	  inspection through GitHub/web tools wherever cloning is possible or meaningful.
+L00023650	gui_related: false
+L00023651	gui_classification_reason: This unit covers research evidence policy rather than GUI presentation.
+L00023652	split_recommended: false
+L00023653	depends_on:
+L00023654	- OSI-293
+L00023655	unblocks: []
+L00023656	acceptance_criteria:
+L00023657	- Covered source line remains losslessly available for exact-text audit.
+L00023658	- Research outputs cannot imply full source coverage when the source is not available.
+L00023659	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023660	validation_surfaces:
+L00023661	- >-
+L00023662	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023663	- python3 scripts/pm-plan-index.py validate
+L00023664	reasoning_tier: standard
+L00023665	context_scope: orchestrator_subagent_standardization
+L00023666	implementation_surfaces:
+L00023667	- Plans/orchestrator-subagent-integration.md
+L00023668	risk_class: research_coverage_caveat
+L00023669	node_compile_hint:
+L00023670	  mode: research_coverage_caveat
+L00023671	  create_worknodes: false
+L00023672	source_lineage:
+L00023673	- >-
+L00023674	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023675	preserved_exact_tokens:
+L00023676	- Research /coverage caveat
+L00023677	- official `/docs`
+L00023678	- public community feedback
+L00023679	- '`/web` evidence'
+L00023680	- GitHub/web tools
+L00023681	negative_constraints:
+L00023682	- Research crews must not imply full source coverage when comparator source availability is mixed or limited.
+L00023683	compatibility_only_notes: []
+L00023684	stale_retired_dispositions: []
+L00023685	owner_boundary_notes:
+L00023686	- Research evidence policy must preserve coverage limits and source availability caveats.
+L00023687	owner_hints:
+L00023688	- Plans/orchestrator-subagent-integration.md
+L00023689	preserved_contractrefs: []
+L00023690	```
+L00023691	
+
+<<< CONTEXT_AFTER canonical_document_lines=23692-23703 >>>
+L00023692	### OSI-295 - Interview Crews Are Separate From Execution-Tier Crews
+L00023693	
+L00023694	```yaml
+L00023695	plan_unit_id: OSI-295
+L00023696	unit_type: requirement
+L00023697	status: accepted
+L00023698	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023699	canonical_text: Interview crews are separate from orchestrator-initiated crews for execution tiers.
+L00023700	gui_related: false
+L00023701	gui_classification_reason: This unit covers orchestration boundary semantics rather than GUI presentation.
+L00023702	split_recommended: false
+L00023703	depends_on:

@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE 18499-18510 >>>
+- "worktree allocation state"
+- "widget-recent-results"
+- "results-v1"
+- "artifact links"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 18511-18881 >>>
+### F3-278 - Dashboard Add Widget Flow And Control
+
+```yaml
+plan_unit_id: F3-278
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Dashboard exposes Add Widget through a menu, floating action button, or toolbar control; it
+  opens the Widget Catalog overlay filtered to the named Dashboard catalog unless an owner has
+  promoted another dashboard widget, lets the user choose placement and sizing, places widgets at
+  the next available grid position with default size, and persists layout immediately.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines the visible Dashboard add-widget workflow and control.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "The Dashboard Add Widget selectable set uses the four-entry named catalog unless another owner promotes a new dashboard widget."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: dashboard_add_widget_flow_and_control
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0162"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0164"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:10"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:8"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:17"
+preserved_exact_tokens:
+- "Add Widget"
+- "Dashboard menu"
+- "floating action button"
+- "bottom-right corner"
+- "Dashboard toolbar"
+- "Widget Catalog overlay"
+- "Plans/Widget_System.md section 4.2"
+- "Hostable Pages"
+- "Dashboard"
+- "widget.quota_summary"
+- "widget.budget_donuts"
+- "widget.analytics_chart"
+- "widget.tool_usage"
+- "widget.multi_account"
+- "widget.orchestrator_status"
+- "widget.current_task"
+- "widget.progress_bars"
+- "Layout persisted immediately"
+- "ContractName:Plans/Widget_System.md#4"
+negative_constraints: []
+compatibility_only_notes:
+- "The broader widget.* list is compatibility/candidate-library lineage unless promoted by an owner doc."
+stale_retired_dispositions:
+- "The duplicated C.3/C.4 add-widget/catalog blocks are reconciled; the larger widget.* list is not the Dashboard named catalog."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-279 - Exact Four-Widget Dashboard Catalog Canon
+
+```yaml
+plan_unit_id: F3-279
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Dashboard named widget catalog is exactly `widget-orchestrator-progress`,
+  `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; Widget_System
+  consumes this named catalog directly without inventing or synthesizing widget IDs.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves the Dashboard named-widget catalog.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The Dashboard named widget catalog contains exactly four entries."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: exact_four_widget_dashboard_catalog
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0163"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:10"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:8"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:17"
+preserved_exact_tokens:
+- "named widget catalog"
+- "exactly 4 widgets"
+- "widget-orchestrator-progress"
+- "widget-active-lanes"
+- "widget-recent-results"
+- "widget-custom-metrics"
+- "Puppet Master native"
+- "user-generated, optional"
+- "Core widgets"
+- "Custom widgets"
+- "Widget_System"
+- "does not invent new widget IDs"
+- "synthesize missing entries"
+- "widget.quota_summary"
+- "widget.budget_donuts"
+- "widget.analytics_chart"
+- "widget.tool_usage"
+- "widget.multi_account"
+- "widget.orchestrator_status"
+- "widget.current_task"
+- "widget.progress_bars"
+negative_constraints:
+- "Widget_System must not invent new widget IDs or synthesize missing entries."
+compatibility_only_notes:
+- "The broader widget.* catalog is future/candidate/library lineage unless promoted by an owner doc."
+stale_retired_dispositions:
+- "Duplicate Appendix C C.3/C.4 sections and the broader widget.* Dashboard list are not peer canon."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-280 - Atomic Vs Page Widget Catalog Boundary
+
+```yaml
+plan_unit_id: F3-280
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  FinalGUISpec section 8 owns atomic UI components, while Plans/Widget_System.md section 2
+  owns composed page widgets that users add, remove, move, or resize on Dashboard, Usage, and
+  Orchestrator tabs; page widgets compose atomic components and the two catalogs must not be
+  conflated.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves the UI catalog ownership boundary.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: atomic_vs_page_widget_catalog_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0165"
+preserved_exact_tokens:
+- "FinalGUISpec Widget Catalog"
+- "atomic UI components"
+- "StyledButton"
+- "StyledInput"
+- "StyledBadge"
+- "TreeView"
+- "CodeBlock"
+- "Plans/Widget_System.md section 2"
+- "composed page widgets"
+- "OrchestratorStatus"
+- "BudgetDonuts"
+- "NodeTree"
+- "LedgerTable"
+- "Dashboard, Usage page, and Orchestrator tabs"
+negative_constraints:
+- "Atomic UI components must not be treated as page widgets."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns atomic UI components; Widget_System owns composed page widgets."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-281 - Dashboard Layout Key Migration
+
+```yaml
+plan_unit_id: F3-281
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Dashboard layout persistence migrates from `dashboard_layout:v1` card-order input to
+  `widget_layout:v1:dashboard` by mapping card IDs to Widget Catalog IDs, assigning default
+  grid positions/sizes, and writing the richer widget layout schema.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines storage migration logic rather than a visible GUI surface.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: dashboard_layout_key_migration
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0160"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0166"
+preserved_exact_tokens:
+- "dashboard_layout:v1"
+- "widget_layout:v1:dashboard"
+- "card-order list"
+- "richer schema"
+- "On first load"
+- "card ID list"
+- "Widget Catalog ID"
+- "default grid positions and sizes"
+- "ContractName:Plans/storage-plan.md"
+- "ContractName:Plans/Widget_System.md#7"
+negative_constraints: []
+compatibility_only_notes:
+- "`dashboard_layout:v1` is migration input only."
+stale_retired_dispositions:
+- "`dashboard_layout:v1` is deprecated after migration."
+owner_boundary_notes:
+- "storage-plan.md and Widget_System.md own storage namespace and widget schema details."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-282 - Dashboard Layout Legacy Retirement And Precedence
+
+```yaml
+plan_unit_id: F3-282
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  After widget layout migration, future reads use `widget_layout:v1:dashboard` only; if both
+  dashboard layout keys exist, `widget_layout:v1:dashboard` takes precedence and
+  `dashboard_layout:v1` does not remain canonical.
+gui_related: false
+gui_classification_reason: >-
+  This unit constrains legacy dashboard layout key usage.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: dashboard_layout_legacy_retirement_and_precedence
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0166"
+preserved_exact_tokens:
+- "Future reads"
+- "widget_layout:v1:dashboard only"
+- "If both keys exist"
+- "takes precedence"
+- "dashboard_layout:v1"
+- "deprecated migration input only"
+- "does not remain canonical"
+negative_constraints:
+- "`dashboard_layout:v1` must not remain canonical after migration completes."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-283 - Persona Editor Compatibility State Matrix
+
+```yaml
+plan_unit_id: F3-283
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Persona editor shows provider support states `supported`, `partially supported`, and
+  `unsupported` for Persona controls and renders normal editing, warning styling/tooltips, or
+  disabled controls with explanations for Claude Code, Cursor CLI, OpenCode, and Direct/API
+  providers.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines the visible Persona editor compatibility matrix.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: persona_editor_compatibility_state_matrix
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0169"
+preserved_exact_tokens:
+- "Persona editor"
+- "supported"
+- "partially supported"
+- "unsupported"
+- "platform/model/variant/temperature/top_p/reasoning_effort/talkativeness/tool-permission coupling/subagents"
+- "warning styling"
+- "explanatory tooltip"
+- "disabled control plus explanation"
+- "Claude Code"
+- "Cursor CLI"
+- "OpenCode"
+- "Direct/API providers"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 18882-18893 >>>
+### F3-284 - Talkativeness Support State Rule
+
+```yaml
+plan_unit_id: F3-284
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  `talkativeness` is a Persona instruction-layer control, not a transport/runtime sampling
+  knob; its support state follows Persona prompt-body support.
+gui_related: false
+gui_classification_reason: >-

@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 2621-2632 >>>
+- run/attempt/thread/node/artifact/provider/usage anchors
+- rate cards
+- surcharges
+negative_constraints:
+- Provider `/billing` and `/usage/billing` metadata remains attribution and pressure evidence; it does not replace canonical contracts.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2633-3017 >>>
+### UF-033 - Artifact Bridge And Inspector Routing
+
+```yaml
+plan_unit_id: UF-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Artifact drill-through and receipt lineage use attempt_id, provider_attempt_ref, usage_event_ref, receipt refs, and explicit inspector_target values for details/evidence/usage/lineage, avoiding timestamp heuristics, tier_id pivots, eager deref, and feature-local routing semantics.
+gui_related: true
+gui_classification_reason: The unit governs user-visible inspector routing and artifact drill-through behavior.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-033 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: artifact_bridge_and_inspector_routing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0053
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0054
+preserved_exact_tokens:
+- attempt_id
+- provider_attempt_ref
+- usage_event_ref
+- receipt refs
+- inspector_target = details | evidence | usage | lineage
+- timestamp heuristics
+- tier_id
+- on-demand
+- payload.meta
+- ref/blob pointers
+- click-to-expand
+negative_constraints:
+- None of those bridge fields replace the primary local key.
+- Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger.
+- History inspector deref policy is on-demand only, never eager.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-034 - Notification Projection Health Gating
+
+```yaml
+plan_unit_id: UF-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage help, notification, quiet-window, projection-health, and sensitive-action behavior routes notifications by severity, execution impact, blocked owner, persistence, and projection trust; quiet windows apply only to advisory warnings; degraded projections expose current/refreshing/stale/degraded/unavailable states and record-backed fallback.
+gui_related: true
+gui_classification_reason: The unit governs user-visible notification, projection-health, and degraded-state behavior.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-034 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: notification_projection_health_gating
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0056
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0057
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0058
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0059
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0060
+preserved_exact_tokens:
+- severity
+- execution impact
+- blocked owner
+- persistence
+- projection trust
+- quiet windows
+- current/refreshing/stale/degraded/unavailable
+- record-backed fallback
+negative_constraints:
+- Quiet windows are allowed for advisory warnings but not for canonical blocked episodes.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-035 - UsageRecord Schema Source Attribution
+
+```yaml
+plan_unit_id: UF-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: UsageRecord schema expectations preserve unified schema alias lineage such as usage_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, provider_error_hint, project_rollup, local-estimated, API-key-derived, and OAuth-quota-derived source detail, but those aliases normalize into usage_record_id, source_class, source_confidence, source_authority, provider/usage/quota projections, and UF-085 fields before persistence, aggregation, GUI projection, or route/open drill-through.
+gui_related: false
+gui_classification_reason: The unit preserves backend UsageRecord schema and attribution fields.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-035 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usagerecord_schema_source_attribution
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0061
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0062
+preserved_exact_tokens:
+- UsageRecord
+- usage_id
+- created_at_utc
+- account_id
+- provider_id
+- model_id
+- usage_source_kind
+- provider_runtime_usage
+- provider_quota_api
+- local-estimated
+- API-key-derived
+- OAuth-quota-derived
+negative_constraints:
+- Do not present usage_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, or provider_error_hint as competing canonical UsageRecord fields.
+preserved_contractrefs: []
+compatibility_only_notes:
+- usage_id and usage_source_kind are legacy import/display aliases only and must not replace usage_record_id, source_class, source_confidence, or source_authority.
+- provider_runtime_usage, provider_quota_api, provider_usage_api, and provider_error_hint are source-lineage/provider projection hints, not competing canonical UsageRecord fields.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-036 - Cost Precision Display Boundary
+
+```yaml
+plan_unit_id: UF-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage cost display uses clamp/derived-field precision rules derived from cost_microdollars or exact provider minor-unit receipts, including <$0.01 = 6dp, <$1 = 4dp, otherwise 2dp, while cost_usd is display/migration material and raw provider cost values remain provenance/debug evidence only.
+gui_related: true
+gui_classification_reason: The unit defines visible cost precision and display boundaries.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-036 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: cost_precision_display_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0061
+preserved_exact_tokens:
+- /clamp/derived-field
+- cost_microdollars
+- <$0.01 = 6dp
+- <$1 = 4dp
+- cost_usd = cost_microdollars / 1_000_000
+- raw-cost provider values
+negative_constraints:
+- Raw-cost provider values must not become independent billing authority.
+- cost_usd is not a persisted UsageRecord authority field.
+preserved_contractrefs: []
+compatibility_only_notes:
+- cost_usd = cost_microdollars / 1_000_000 is derived only at display/export boundaries or compatibility import/migration edges.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-037 - Blocked Escalation Observability
+
+```yaml
+plan_unit_id: UF-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage blocked-state observability preserves attention_required, blocked_notice, blocked_family, allowed_action_ids[] stale-token retirement, escalation_level, action_available ownership, an 8-kind blocked-owner taxonomy, and a 5-level escalation ladder across Orchestrator, Dashboard, thread badges, and notifications.
+gui_related: true
+gui_classification_reason: The unit governs user-visible blocked/escalation rows and badges.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-037 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: blocked_escalation_observability
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0063
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0064
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0065
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0066
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0067
+preserved_exact_tokens:
+- attention_required
+- blocked_notice
+- blocked_family
+- allowed_action_ids[]
+- escalation_level
+- action_available
+- 8-kind taxonomy
+- 5-level escalation ladder
+- Dashboard
+- thread badges
+- notifications
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- allowed_action_ids[] is preserved as a stale-token disposition in this usage-side carry-through span.
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-038 - Usage Secrets Fallback Source Labeling
+
+```yaml
+plan_unit_id: UF-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: When platform APIs require secrets such as ANTHROPIC_API_KEY or GITHUB_TOKEN/GH_TOKEN, Usage must label missing live data honestly and always show project-local canonical usage summaries from rollups/projections as fallback.
+gui_related: true
+gui_classification_reason: The unit defines user-visible source labels, env-var help, and fallback messages.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-038 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_secrets_fallback_source_labeling
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0068
+preserved_exact_tokens:
+- ANTHROPIC_API_KEY
+- GITHUB_TOKEN
+- GH_TOKEN
+- N/A
+- Set ANTHROPIC_API_KEY
+- From this project's usage
+- From Claude (API)
+negative_constraints:
+- Users must not be led to assume no data means no usage.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-039 - Usage Api Refresh Rate Limiting
+
+```yaml
+plan_unit_id: UF-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage refreshes provider API data at reasonable cached intervals, supports explicit Refresh, updates from run results when available, and avoids excessive polling that could hit rate limits or consume quota.
+gui_related: false
+gui_classification_reason: The unit preserves backend/provider refresh policy with limited visible Refresh behavior.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-039 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_api_refresh_rate_limiting
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0069
+preserved_exact_tokens:
+- 5-15 min
+- cache last result
+- Refresh
+- After each run
+- rate limits
+- API errors
+negative_constraints:
+- Polling usage endpoints too frequently must not consume user quota or cause blocked requests.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 3018-3029 >>>
+### UF-040 - Canonical UsageRecord Write Path
+
+```yaml
+plan_unit_id: UF-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage must unify around one canonical write path and one UsageRecord schema so Ledger, rollups, and UI projections read the same attribution model rather than parsing ad hoc JSON or duplicate tracker types.
+gui_related: true
+gui_classification_reason: The unit affects user-visible correctness in Ledger/rollup/UI projections and shared backend schema.
+split_recommended: true
+depends_on:

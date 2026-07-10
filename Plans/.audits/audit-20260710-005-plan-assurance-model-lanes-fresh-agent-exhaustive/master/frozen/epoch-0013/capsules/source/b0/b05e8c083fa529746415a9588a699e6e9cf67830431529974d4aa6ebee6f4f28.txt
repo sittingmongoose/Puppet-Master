@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3584-3595 >>>
+L00003584	compatibility_only_notes: []
+L00003585	stale_retired_dispositions:
+L00003586	- Stale Codex browser/device-code/API-key matrix is retired as the primary Codex setup model.
+L00003587	owner_boundary_notes:
+L00003588	- Provider setup surfaces expose only actions valid for the selected provider entry and account state.
+L00003589	owner_hints:
+L00003590	- Plans/Multi-Account.md
+L00003591	preserved_contractrefs:
+L00003592	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00003593	split_recommendation_reason: Provider-specific setup is split from registration schema and removal safety.
+L00003594	```
+L00003595	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3596-3946 >>>
+L00003596	### MA-044 - Button State Contract And Removal Safety Rules
+L00003597	
+L00003598	```yaml
+L00003599	plan_unit_id: MA-044
+L00003600	unit_type: requirement
+L00003601	status: accepted
+L00003602	owner_doc: Plans/Multi-Account.md
+L00003603	canonical_text: Row-level setup actions use explicit in-progress and terminal label transitions. Account/profile removal preserves
+L00003604	  requested/effective history, default-account removal atomically promotes an eligible account or leaves explicit no-default
+L00003605	  state, disabling does not delete roots, and removal avoids deleting non-PM-managed provider data outside the owned root.
+L00003606	gui_related: true
+L00003607	gui_classification_reason: The unit defines user-visible button states, terminal labels, and removal confirmations.
+L00003608	split_recommended: true
+L00003609	depends_on:
+L00003610	- MA-043
+L00003611	unblocks: []
+L00003612	acceptance_criteria:
+L00003613	- Covered source spans remain losslessly available for exact-text audit.
+L00003614	- Button-state labels remain explicit for sign in, save key, import, validate, refresh usage, and log out.
+L00003615	- Non-default removal preserves requested/effective history for past runs.
+L00003616	- Current-default removal promotes another eligible account or creates explicit no-default blocking state.
+L00003617	- Disabling an account/profile does not delete its root.
+L00003618	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003619	validation_surfaces:
+L00003620	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003621	- python3 scripts/pm-plan-index.py validate
+L00003622	risk_class: button_state_removal_safety
+L00003623	reasoning_tier: standard
+L00003624	context_scope: multi_account_standardization
+L00003625	implementation_surfaces:
+L00003626	- Plans/Multi-Account.md
+L00003627	node_compile_hint:
+L00003628	  mode: button_state_removal_safety
+L00003629	  create_worknodes: false
+L00003630	source_lineage:
+L00003631	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0028
+L00003632	preserved_exact_tokens:
+L00003633	- Sign In -> Signing In...
+L00003634	- Save Key -> Saving...
+L00003635	- Import -> Importing...
+L00003636	- Validate -> Validating...
+L00003637	- Refresh Usage -> Refreshing...
+L00003638	- Log Out -> Logging Out...
+L00003639	- Logged In
+L00003640	- Saved
+L00003641	- Logged Out
+L00003642	negative_constraints:
+L00003643	- Disabling an account/profile MUST NOT delete its root.
+L00003644	- Removal MUST avoid deleting non-PM-managed provider data outside the owned root.
+L00003645	compatibility_only_notes:
+L00003646	- Row-level setup actions use an explicit button-state contract.
+L00003647	stale_retired_dispositions: []
+L00003648	owner_boundary_notes:
+L00003649	- Backups and archives are for PM-managed artifacts only, not whole provider-home snapshots by default.
+L00003650	owner_hints:
+L00003651	- Plans/Multi-Account.md
+L00003652	preserved_contractrefs:
+L00003653	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00003654	split_recommendation_reason: Button states and removal safety close the S0028 split.
+L00003655	```
+L00003656	
+L00003657	### MA-045 - Auth Flow Disclosure And Recovery Boundary
+L00003658	
+L00003659	```yaml
+L00003660	plan_unit_id: MA-045
+L00003661	unit_type: requirement
+L00003662	status: accepted
+L00003663	owner_doc: Plans/Multi-Account.md
+L00003664	canonical_text: Authentication walkthroughs define PM-side orchestration around provider-native auth mechanisms. Every account
+L00003665	  setup/auth flow surfaces its active auth path, token refresh is either PM-managed or visibly delegated, and credential
+L00003666	  expiry produces user-visible notification and recovery action instead of silently degrading the account row.
+L00003667	gui_related: true
+L00003668	gui_classification_reason: The unit covers user-visible auth path disclosure, expiry notification, and recovery actions.
+L00003669	split_recommended: false
+L00003670	depends_on:
+L00003671	- MA-044
+L00003672	unblocks: []
+L00003673	acceptance_criteria:
+L00003674	- Covered source spans remain losslessly available for exact-text audit.
+L00003675	- OAuth flows surface redirect, verification URL, or localhost callback state.
+L00003676	- API-key flows surface secure key entry.
+L00003677	- Token refresh ownership is visible.
+L00003678	- Credential expiry is visible and recoverable.
+L00003679	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003680	validation_surfaces:
+L00003681	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003682	- python3 scripts/pm-plan-index.py validate
+L00003683	risk_class: auth_flow_disclosure
+L00003684	reasoning_tier: standard
+L00003685	context_scope: multi_account_standardization
+L00003686	implementation_surfaces:
+L00003687	- Plans/Multi-Account.md
+L00003688	node_compile_hint:
+L00003689	  mode: auth_flow_disclosure
+L00003690	  create_worknodes: false
+L00003691	source_lineage:
+L00003692	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0029
+L00003693	preserved_exact_tokens:
+L00003694	- Authentication flow walkthroughs
+L00003695	- redirect
+L00003696	- verification URL
+L00003697	- localhost callback
+L00003698	- secure API key entry
+L00003699	- token refresh
+L00003700	- user-visible notification
+L00003701	- recovery action
+L00003702	negative_constraints:
+L00003703	- Credential expiry must not silently degrade the account row.
+L00003704	compatibility_only_notes: []
+L00003705	stale_retired_dispositions: []
+L00003706	owner_boundary_notes:
+L00003707	- Provider-native auth mechanisms are orchestrated by PM setup flows without replacing provider auth ownership.
+L00003708	owner_hints:
+L00003709	- Plans/Multi-Account.md
+L00003710	preserved_contractrefs: []
+L00003711	split_recommendation_reason: The setup/auth flow disclosure span is narrow enough for one PlanUnit.
+L00003712	```
+L00003713	
+L00003714	### MA-046 - API Key Setup Flow And Credential Storage
+L00003715	
+L00003716	```yaml
+L00003717	plan_unit_id: MA-046
+L00003718	unit_type: requirement
+L00003719	status: accepted
+L00003720	owner_doc: Plans/Multi-Account.md
+L00003721	canonical_text: API-key setup lets the user select API Key, enter the key in a secure input, validate it with a lightweight
+L00003722	  provider call, store the key in the OS credential store on success, write the resulting credential_ref, mark the account
+L00003723	  active, and keep failed setup recoverable with a concrete reason.
+L00003724	gui_related: true
+L00003725	gui_classification_reason: The unit covers the visible API-key setup flow and secure input behavior.
+L00003726	split_recommended: false
+L00003727	depends_on:
+L00003728	- MA-045
+L00003729	unblocks: []
+L00003730	acceptance_criteria:
+L00003731	- Covered source spans remain losslessly available for exact-text audit.
+L00003732	- API key entry uses a secure input field.
+L00003733	- PM validates the key before marking the account active.
+L00003734	- Secret material is stored in the OS credential store.
+L00003735	- Failure reasons are concrete and recoverable.
+L00003736	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003737	validation_surfaces:
+L00003738	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003739	- python3 scripts/pm-plan-index.py validate
+L00003740	risk_class: api_key_setup_flow
+L00003741	reasoning_tier: standard
+L00003742	context_scope: multi_account_standardization
+L00003743	implementation_surfaces:
+L00003744	- Plans/Multi-Account.md
+L00003745	node_compile_hint:
+L00003746	  mode: api_key_setup_flow
+L00003747	  create_worknodes: false
+L00003748	source_lineage:
+L00003749	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0030
+L00003750	preserved_exact_tokens:
+L00003751	- API Key
+L00003752	- secure input field
+L00003753	- list models
+L00003754	- OS credential store
+L00003755	- credential_ref
+L00003756	- invalid key
+L00003757	- expired
+L00003758	- quota exceeded
+L00003759	negative_constraints:
+L00003760	- Failed API-key setup must not pretend setup succeeded.
+L00003761	compatibility_only_notes: []
+L00003762	stale_retired_dispositions: []
+L00003763	owner_boundary_notes:
+L00003764	- credential_ref is the stored non-secret handle after OS credential storage succeeds.
+L00003765	owner_hints:
+L00003766	- Plans/Multi-Account.md
+L00003767	preserved_contractrefs: []
+L00003768	split_recommendation_reason: API-key setup is narrow enough for one PlanUnit.
+L00003769	```
+L00003770	
+L00003771	### MA-047 - OAuth Device-Code Setup Flow
+L00003772	
+L00003773	```yaml
+L00003774	plan_unit_id: MA-047
+L00003775	unit_type: requirement
+L00003776	status: accepted
+L00003777	owner_doc: Plans/Multi-Account.md
+L00003778	canonical_text: OAuth device-code setup requests a provider device code, shows the device code, verification URL, and QR code,
+L00003779	  lets the user complete authorization outside PM, polls for the token every five seconds for up to five minutes, stores
+L00003780	  refresh tokens in the OS credential store, keeps short-lived access tokens in memory only, and exposes clear retry on failure.
+L00003781	gui_related: true
+L00003782	gui_classification_reason: The unit covers visible device-code, URL, QR, timeout, and retry behavior.
+L00003783	split_recommended: false
+L00003784	depends_on:
+L00003785	- MA-046
+L00003786	unblocks: []
+L00003787	acceptance_criteria:
+L00003788	- Covered source spans remain losslessly available for exact-text audit.
+L00003789	- Device code, verification URL, and QR code are shown.
+L00003790	- Browser authorization happens outside PM.
+L00003791	- Token polling cadence and timeout remain explicit.
+L00003792	- Refresh tokens and access tokens use the specified storage/cache split.
+L00003793	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003794	validation_surfaces:
+L00003795	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003796	- python3 scripts/pm-plan-index.py validate
+L00003797	risk_class: oauth_device_code_flow
+L00003798	reasoning_tier: standard
+L00003799	context_scope: multi_account_standardization
+L00003800	implementation_surfaces:
+L00003801	- Plans/Multi-Account.md
+L00003802	node_compile_hint:
+L00003803	  mode: oauth_device_code_flow
+L00003804	  create_worknodes: false
+L00003805	source_lineage:
+L00003806	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0031
+L00003807	preserved_exact_tokens:
+L00003808	- Sign in with [Provider]
+L00003809	- device code
+L00003810	- verification URL
+L00003811	- QR code
+L00003812	- 5 seconds
+L00003813	- 5 minutes
+L00003814	- refresh token
+L00003815	- short-lived access token
+L00003816	negative_constraints: []
+L00003817	compatibility_only_notes: []
+L00003818	stale_retired_dispositions: []
+L00003819	owner_boundary_notes:
+L00003820	- OAuth authorization remains provider/browser-native while PM orchestrates polling and credential storage.
+L00003821	owner_hints:
+L00003822	- Plans/Multi-Account.md
+L00003823	preserved_contractrefs: []
+L00003824	split_recommendation_reason: OAuth device-code setup is narrow enough for one PlanUnit.
+L00003825	```
+L00003826	
+L00003827	### MA-048 - Retired Gemini CLI Token Flow And Import Boundary
+L00003828	
+L00003829	```yaml
+L00003830	plan_unit_id: MA-048
+L00003831	unit_type: compatibility_disposition
+L00003832	status: accepted
+L00003833	owner_doc: Plans/Multi-Account.md
+L00003834	canonical_text: Gemini CLI token setup/import vocabulary is retired and retained only as source-lineage. Active PM setup
+L00003835	  must not present Gemini CLI token options, invoke Gemini CLI auth, import Gemini CLI credentials, or create a PM-owned
+L00003836	  GEMINI_CLI_HOME root. Active CLI-runtime setup for this lane belongs to Antigravity CLI.
+L00003837	gui_related: false
+L00003838	gui_classification_reason: The unit covers CLI auth orchestration and import boundaries rather than GUI layout.
+L00003839	split_recommended: false
+L00003840	depends_on:
+L00003841	- MA-047
+L00003842	unblocks: []
+L00003843	acceptance_criteria:
+L00003844	- Covered source spans remain losslessly available for exact-text audit.
+L00003845	- Gemini CLI token/import tokens remain losslessly available for exact-text audit.
+L00003846	- Active setup does not present Gemini CLI token options.
+L00003847	- Active setup does not import Gemini CLI auth-bearing state.
+L00003848	- Antigravity CLI setup is separate and does not reuse GEMINI_CLI_HOME.
+L00003849	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003850	validation_surfaces:
+L00003851	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003852	- python3 scripts/pm-plan-index.py validate
+L00003853	risk_class: retired_gemini_cli_token_flow_resurrection
+L00003854	reasoning_tier: standard
+L00003855	context_scope: multi_account_standardization
+L00003856	implementation_surfaces:
+L00003857	- Plans/Multi-Account.md
+L00003858	node_compile_hint:
+L00003859	  mode: retired_gemini_cli_token_flow
+L00003860	  create_worknodes: false
+L00003861	source_lineage:
+L00003862	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0032
+L00003863	preserved_exact_tokens:
+L00003864	- Gemini CLI
+L00003865	- credential_ref
+L00003866	- Import Existing Gemini CLI Auth
+L00003867	- GEMINI_CLI_HOME
+L00003868	- native OAuth/browser flow
+L00003869	negative_constraints:
+L00003870	- Do not invoke Gemini CLI auth commands.
+L00003871	- Do not import Existing Gemini CLI Auth as an active setup mode.
+L00003872	- Do not create a PM-owned GEMINI_CLI_HOME root.
+L00003873	compatibility_only_notes:
+L00003874	- Ongoing token refresh delegated to the Gemini CLI runtime is retained only as source-lineage vocabulary.
+L00003875	stale_retired_dispositions:
+L00003876	- Gemini CLI token flow and import boundary are retired by CBP-019/MA-062.
+L00003877	owner_boundary_notes:
+L00003878	- Gemini CLI token setup is retired; active CLI-runtime account evidence is owned by Antigravity setup/probe contracts.
+L00003879	owner_hints:
+L00003880	- Plans/Multi-Account.md
+L00003881	preserved_contractrefs:
+L00003882	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md'
+L00003883	split_recommendation_reason: Retired Gemini CLI token flow is narrow enough for one compatibility PlanUnit.
+L00003884	```
+L00003885	
+L00003886	### MA-049 - Usage Runtime Visibility And Usage Consumer Boundary
+L00003887	
+L00003888	```yaml
+L00003889	plan_unit_id: MA-049
+L00003890	unit_type: requirement
+L00003891	status: accepted
+L00003892	owner_doc: Plans/Multi-Account.md
+L00003893	canonical_text: Usage and status surfaces show current effective account/profile, effective auth mode, billing/entity context,
+L00003894	  pressure/cooldown state, source-confidence/stale/estimated labels, and switch/failover reason. Plans/usage-feature.md
+L00003895	  consumes this account/provider owner contract and must not reintroduce stale buckets or flatten direct-provider quota
+L00003896	  context into one generic account label.
+L00003897	gui_related: true
+L00003898	gui_classification_reason: The unit defines user-visible usage/status surface fields and labels.
+L00003899	split_recommended: false
+L00003900	depends_on:
+L00003901	- MA-048
+L00003902	unblocks: []
+L00003903	acceptance_criteria:
+L00003904	- Covered source spans remain losslessly available for exact-text audit.
+L00003905	- Usage/status surfaces show account, auth, billing/entity, pressure/cooldown, confidence, and switch reason fields.
+L00003906	- Plans/usage-feature.md remains a consumer and does not flatten provider quota context.
+L00003907	- Usage rows prefer plain-language statuses or concrete failure reasons over transport-internal terminology.
+L00003908	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003909	validation_surfaces:
+L00003910	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003911	- python3 scripts/pm-plan-index.py validate
+L00003912	risk_class: usage_runtime_visibility
+L00003913	reasoning_tier: standard
+L00003914	context_scope: multi_account_standardization
+L00003915	implementation_surfaces:
+L00003916	- Plans/Multi-Account.md
+L00003917	node_compile_hint:
+L00003918	  mode: usage_runtime_visibility
+L00003919	  create_worknodes: false
+L00003920	source_lineage:
+L00003921	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0033
+L00003922	preserved_exact_tokens:
+L00003923	- current effective account or server profile
+L00003924	- current effective auth mode
+L00003925	- current effective billing/entity context
+L00003926	- pressure/cooldown state
+L00003927	- source-confidence
+L00003928	- stale
+L00003929	- estimated labels
+L00003930	- switch/failover reason
+L00003931	- Plans/usage-feature.md
+L00003932	- Working
+L00003933	negative_constraints:
+L00003934	- Usage sections must not reintroduce stale provider buckets or flatten direct-provider quota context into one generic account label.
+L00003935	compatibility_only_notes: []
+L00003936	stale_retired_dispositions:
+L00003937	- source-confidence, stale, or estimated labels are retained when data is not authoritative.
+L00003938	owner_boundary_notes:
+L00003939	- Plans/usage-feature.md consumes the Multi-Account account/provider owner contract.
+L00003940	owner_hints:
+L00003941	- Plans/Multi-Account.md
+L00003942	preserved_contractrefs:
+L00003943	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md'
+L00003944	split_recommendation_reason: Usage/runtime visibility is narrow enough for one PlanUnit.
+L00003945	```
+L00003946	
+
+<<< CONTEXT_AFTER canonical_document_lines=3947-3958 >>>
+L00003947	### MA-050 - Instruction Skills And MCP Agent-Config Exposure
+L00003948	
+L00003949	```yaml
+L00003950	plan_unit_id: MA-050
+L00003951	unit_type: requirement
+L00003952	status: accepted
+L00003953	owner_doc: Plans/Multi-Account.md
+L00003954	canonical_text: Agent-Config exposes shared instruction panes sourced from PM AGENTS-layer intent, provider-native advanced
+L00003955	  panes for GitHub Copilot, PM-native skills with readiness/fix text/actions, and PM-native MCP servers with per-provider
+L00003956	  and per-runtime effective status in inspectors.
+L00003957	gui_related: true
+L00003958	gui_classification_reason: The unit defines Agent-Config instruction, skill, MCP, and inspector GUI exposure.

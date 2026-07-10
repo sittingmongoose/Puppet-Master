@@ -1,0 +1,398 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3194-3205 >>>
+L00003194	  - "`kubectl`"
+L00003195	  - "`apply`"
+L00003196	  - "`diff`"
+L00003197	  - "`logs`"
+L00003198	  - "`exec`"
+L00003199	  - "`port_forward`"
+L00003200	negative_constraints:
+L00003201	  - "Failed doctor checks must not silently hide the Kubernetes subview when cached inspection or manifest editing can remain available."
+L00003202	owner_hints:
+L00003203	  - Plans/Containers_Registry_and_Unraid.md
+L00003204	```
+L00003205	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3206-3574 >>>
+L00003206	### CRAU-041 - Active Docker Manager Operation Anchors
+L00003207	
+L00003208	```yaml
+L00003209	plan_unit_id: CRAU-041
+L00003210	unit_type: requirement
+L00003211	status: accepted
+L00003212	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003213	canonical_text: >-
+L00003214	  Registry promotion, drift detection, access intelligence, and project-focused
+L00003215	  K8s deep linkage are active Docker Manager contract areas. They require typed
+L00003216	  operation identity, status/result payloads, preflight and permission outcomes,
+L00003217	  review/failure fields where applicable, and GUI action derivation from structured
+L00003218	  payloads. They must not disappear from the Docker Manager contract, be replaced
+L00003219	  by generic runtime wording, or render as vague planned placeholders.
+L00003220	gui_related: false
+L00003221	gui_classification_reason: This unit defines Docker Manager runtime operation contracts rather than visual presentation.
+L00003222	split_recommended: false
+L00003223	depends_on: [CRAU-012, CRAU-013, CRAU-040]
+L00003224	unblocks: []
+L00003225	acceptance_criteria:
+L00003226	  - Registry promotion, drift detection, access intelligence, and project-focused K8s deep linkage remain named Docker Manager contract areas.
+L00003227	  - Each area has typed operation identity, status/result payloads, preflight and permission outcomes, and review/failure fields where applicable.
+L00003228	  - These areas are not replaced by generic runtime wording or vague planned placeholders.
+L00003229	validation_surfaces:
+L00003230	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003231	  - python3 scripts/pm-plan-index.py validate
+L00003232	risk_class: docker_contract_placeholder_drift
+L00003233	reasoning_tier: standard
+L00003234	context_scope: active_docker_manager_operation_anchors
+L00003235	implementation_surfaces:
+L00003236	  - Plans/Containers_Registry_and_Unraid.md
+L00003237	node_compile_hint:
+L00003238	  mode: docker_operation_anchor_contract
+L00003239	  create_worknodes: false
+L00003240	source_lineage:
+L00003241	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0035
+L00003242	  - pldg-20260614-002-part-3-fable-cleanup:atom-0027
+L00003243	  - pldg-20260614-002-part-3-fable-cleanup:atom-0028
+L00003244	  - pldg-20260614-002-part-3-fable-cleanup:atom-0046
+L00003245	  - pldg-20260614-002-part-3-fable-cleanup:atom-0064
+L00003246	  - pldg-20260614-002-part-3-fable-cleanup:atom-0067
+L00003247	  - pldg-20260614-002-part-3-fable-cleanup:atom-0070
+L00003248	  - pldg-20260614-002-part-3-fable-cleanup:atom-0073
+L00003249	  - pldg-20260614-002-part-3-fable-cleanup:atom-0076
+L00003250	  - pldg-20260614-002-part-3-fable-cleanup:atom-0079
+L00003251	preserved_exact_tokens:
+L00003252	  - "Docker Manager future-scope placeholders"
+L00003253	  - "Registry promotion"
+L00003254	  - "drift detection"
+L00003255	  - "access intelligence"
+L00003256	  - "project-focused K8s deep linkage"
+L00003257	  - "needs_review vs failure-payload disagreement"
+L00003258	  - "design it"
+L00003259	negative_constraints:
+L00003260	  - "Do not leave Docker Manager registry promotion, drift detection, access intelligence, or project-focused K8s deep linkage as future-scope placeholders."
+L00003261	  - "Do not render these areas as vague planned placeholders without typed operation payloads."
+L00003262	owner_hints:
+L00003263	  - Plans/Containers_Registry_and_Unraid.md
+L00003264	```
+L00003265	
+L00003266	### CRAU-042 - Event Registration Boundary
+L00003267	
+L00003268	```yaml
+L00003269	plan_unit_id: CRAU-042
+L00003270	unit_type: constraint
+L00003271	status: accepted
+L00003272	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003273	canonical_text: >-
+L00003274	  This plan defines Docker, registry, Kubernetes, and Unraid event producers and
+L00003275	  payload expectations for its owner surface while Contracts_V0 remains the
+L00003276	  registration authority for stable cross-product event names and storage-plan
+L00003277	  owns concrete persisted payload schemas; new event families register there
+L00003278	  before consumers treat them as durable canonical events.
+L00003279	gui_related: false
+L00003280	gui_classification_reason: Event producer, registration, and persisted payload ownership are backend contract boundaries.
+L00003281	split_recommended: false
+L00003282	depends_on: [CRAU-010, CRAU-015]
+L00003283	unblocks: [CRAU-057]
+L00003284	acceptance_criteria:
+L00003285	  - Containers_Registry_and_Unraid defines Docker, registry, Kubernetes, and Unraid event producers and payload expectations for its owner surface.
+L00003286	  - Plans/Contracts_V0.md remains registration authority for stable cross-product event names.
+L00003287	  - Plans/storage-plan.md owns concrete persisted payload schemas.
+L00003288	  - New event families register with those owners before consumers treat them as durable canonical events.
+L00003289	validation_surfaces:
+L00003290	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003291	  - python3 scripts/pm-plan-index.py validate
+L00003292	risk_class: event_authority_drift
+L00003293	reasoning_tier: high
+L00003294	context_scope: event_registration_boundary
+L00003295	implementation_surfaces:
+L00003296	  - Plans/Containers_Registry_and_Unraid.md
+L00003297	  - Plans/Contracts_V0.md
+L00003298	  - Plans/storage-plan.md
+L00003299	node_compile_hint:
+L00003300	  mode: event_registration_boundary
+L00003301	  create_worknodes: false
+L00003302	source_lineage:
+L00003303	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0036
+L00003304	preserved_exact_tokens:
+L00003305	  - "Docker, registry, Kubernetes, and Unraid event producers"
+L00003306	  - "Contracts_V0.md"
+L00003307	  - "storage-plan.md"
+L00003308	negative_constraints:
+L00003309	  - "Consumers must not treat new Docker/Unraid/Kubernetes event families as durable canonical events before registration."
+L00003310	owner_hints:
+L00003311	  - Plans/Containers_Registry_and_Unraid.md
+L00003312	  - Plans/Contracts_V0.md
+L00003313	  - Plans/storage-plan.md
+L00003314	```
+L00003315	
+L00003316	### CRAU-043 - Publish Execution Approval And Blocked Outcome Contract
+L00003317	
+L00003318	```yaml
+L00003319	plan_unit_id: CRAU-043
+L00003320	unit_type: constraint
+L00003321	status: accepted
+L00003322	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003323	canonical_text: >-
+L00003324	  Publishing is a two-step model: cmd.orchestrator.build_run performs local
+L00003325	  build and preview preparation only, cmd.orchestrator.push_image performs
+L00003326	  remote DockerHub publication only, direct Build approval approves build only,
+L00003327	  direct Push image approval approves image push only, missing repository
+L00003328	  creation and managed Unraid template-repo remote push remain separate side
+L00003329	  effects, and docker.publish.failed remains distinct from docker.publish.blocked.
+L00003330	gui_related: true
+L00003331	gui_classification_reason: Build and Push image approvals, blocked outcomes, and user-facing side-effect separation are visible publish workflow behavior.
+L00003332	split_recommended: true
+L00003333	split_recommendation_reason: Source span S0038 mixes approval UI with runtime side-effect outcome semantics.
+L00003334	depends_on: [CRAU-032, CRAU-039]
+L00003335	unblocks: [CRAU-044, CRAU-045]
+L00003336	acceptance_criteria:
+L00003337	  - cmd.orchestrator.build_run performs local build/preview preparation only.
+L00003338	  - cmd.orchestrator.push_image performs remote DockerHub publication only.
+L00003339	  - push_policy after_build dispatches push_image after a successful local build result and does not fold remote publish into build_run.
+L00003340	  - Direct Build approves only build, and direct Push image approves only image push.
+L00003341	  - docker.publish.failed means an attempted publish failed at runtime.
+L00003342	  - docker.publish.blocked means a remote side effect intentionally did not execute because confirmation or permission approval was missing, rejected, or cancelled.
+L00003343	validation_surfaces:
+L00003344	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003345	  - python3 scripts/pm-plan-index.py validate
+L00003346	risk_class: remote_side_effect_conflation
+L00003347	reasoning_tier: high
+L00003348	context_scope: publish_execution_approval_blocked_outcome
+L00003349	implementation_surfaces:
+L00003350	  - Plans/Containers_Registry_and_Unraid.md
+L00003351	  - Plans/Orchestrator_Page.md
+L00003352	node_compile_hint:
+L00003353	  mode: publish_approval_blocked_outcome
+L00003354	  create_worknodes: false
+L00003355	source_lineage:
+L00003356	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0038
+L00003357	preserved_exact_tokens:
+L00003358	  - "`cmd.orchestrator.build_run`"
+L00003359	  - "`cmd.orchestrator.push_image`"
+L00003360	  - "`push_policy = after_build`"
+L00003361	  - "`docker.publish.failed`"
+L00003362	  - "`docker.publish.blocked`"
+L00003363	negative_constraints:
+L00003364	  - "`cmd.orchestrator.build_run` MUST NOT create DockerHub repositories, push images, create remote template repos, or push remote template repos."
+L00003365	owner_hints:
+L00003366	  - Plans/Containers_Registry_and_Unraid.md
+L00003367	```
+L00003368	
+L00003369	### CRAU-044 - Missing Repository Push Resume
+L00003370	
+L00003371	```yaml
+L00003372	plan_unit_id: CRAU-044
+L00003373	unit_type: requirement
+L00003374	status: accepted
+L00003375	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003376	canonical_text: >-
+L00003377	  When cmd.orchestrator.push_image resolves a missing target repository, Puppet
+L00003378	  Master preserves the local build result, enters
+L00003379	  awaiting_repo_creation_confirmation, emits
+L00003380	  docker.repository.create.confirmation_requested, resumes the pending push after
+L00003381	  successful repository creation without forcing rebuild, or emits
+L00003382	  docker.publish.blocked with reason_code repo_creation_not_confirmed,
+L00003383	  blocked_step create_repository, and allowed_action_ids[] while preserving the
+L00003384	  local image/result.
+L00003385	gui_related: true
+L00003386	gui_classification_reason: Missing-repository confirmation, pending state, blocked payload, and retry affordance are visible publish workflow behavior.
+L00003387	split_recommended: false
+L00003388	depends_on: [CRAU-031, CRAU-043]
+L00003389	unblocks: [CRAU-045]
+L00003390	acceptance_criteria:
+L00003391	  - Missing repository during push preserves the local build result.
+L00003392	  - The flow enters awaiting_repo_creation_confirmation and emits docker.repository.create.confirmation_requested.
+L00003393	  - Successful repository creation resumes the pending push attempt without forcing rebuild.
+L00003394	  - Cancelled, rejected, or policy-blocked creation emits docker.publish.blocked with reason_code repo_creation_not_confirmed, blocked_step create_repository, and allowed_action_ids[].
+L00003395	  - docker.publish.blocked preserves the already-built local image/result for retry.
+L00003396	validation_surfaces:
+L00003397	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003398	  - python3 scripts/pm-plan-index.py validate
+L00003399	risk_class: resume_state_loss
+L00003400	reasoning_tier: high
+L00003401	context_scope: missing_repository_push_resume
+L00003402	implementation_surfaces:
+L00003403	  - Plans/Containers_Registry_and_Unraid.md
+L00003404	node_compile_hint:
+L00003405	  mode: missing_repo_resume_contract
+L00003406	  create_worknodes: false
+L00003407	source_lineage:
+L00003408	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0039
+L00003409	preserved_exact_tokens:
+L00003410	  - "`awaiting_repo_creation_confirmation`"
+L00003411	  - "`docker.repository.create.confirmation_requested`"
+L00003412	  - "`reason_code: repo_creation_not_confirmed`"
+L00003413	  - "`blocked_step: create_repository`"
+L00003414	  - "`allowed_action_ids[]`"
+L00003415	negative_constraints:
+L00003416	  - "Repository creation resume must not force a rebuild when the local build result is preserved."
+L00003417	owner_hints:
+L00003418	  - Plans/Containers_Registry_and_Unraid.md
+L00003419	```
+L00003420	
+L00003421	### CRAU-045 - Auto Push Approval Gate
+L00003422	
+L00003423	```yaml
+L00003424	plan_unit_id: CRAU-045
+L00003425	unit_type: constraint
+L00003426	status: accepted
+L00003427	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003428	canonical_text: >-
+L00003429	  push_policy = after_build does not grant standing approval for remote side
+L00003430	  effects; at the auto-dispatch point Puppet Master evaluates
+L00003431	  external_publish_side_effect for cmd.orchestrator.push_image, emits
+L00003432	  docker.publish.blocked with blocked_step push_image when approval is absent,
+L00003433	  preserves the local build result, surfaces Push image as recovery CTA, and
+L00003434	  keeps DockerHub repository creation plus managed-template remote repo
+L00003435	  create/push as separately approved side effects.
+L00003436	gui_related: true
+L00003437	gui_classification_reason: Auto-push blocked state, Push image recovery CTA, and separated approvals are visible publish workflow behavior.
+L00003438	split_recommended: true
+L00003439	split_recommendation_reason: Source span S0041 also includes canonical publish reference selection and tag template resolution.
+L00003440	depends_on: [CRAU-043]
+L00003441	unblocks: [CRAU-046, CRAU-047, CRAU-048]
+L00003442	acceptance_criteria:
+L00003443	  - push_policy after_build does not grant standing approval for remote side effects.
+L00003444	  - Build click approves only local build execution.
+L00003445	  - Auto-dispatch evaluates external_publish_side_effect for cmd.orchestrator.push_image.
+L00003446	  - Missing approval emits docker.publish.blocked with blocked_step push_image, preserves local build result, and surfaces Push image as recovery CTA.
+L00003447	  - Repository creation and managed-template remote repo create/push remain separately approved side effects.
+L00003448	validation_surfaces:
+L00003449	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003450	  - python3 scripts/pm-plan-index.py validate
+L00003451	risk_class: auto_push_bypass
+L00003452	reasoning_tier: high
+L00003453	context_scope: auto_push_approval_gate
+L00003454	implementation_surfaces:
+L00003455	  - Plans/Containers_Registry_and_Unraid.md
+L00003456	node_compile_hint:
+L00003457	  mode: auto_push_approval_gate
+L00003458	  create_worknodes: false
+L00003459	source_lineage:
+L00003460	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0041
+L00003461	preserved_exact_tokens:
+L00003462	  - "`push_policy = after_build`"
+L00003463	  - "`external_publish_side_effect`"
+L00003464	  - "`cmd.orchestrator.push_image`"
+L00003465	  - "`blocked_step: push_image`"
+L00003466	  - "Push image"
+L00003467	negative_constraints:
+L00003468	  - "Auto-push must not grant standing approval for remote side effects."
+L00003469	owner_hints:
+L00003470	  - Plans/Containers_Registry_and_Unraid.md
+L00003471	```
+L00003472	
+L00003473	### CRAU-046 - Canonical Publish Reference Selection
+L00003474	
+L00003475	```yaml
+L00003476	plan_unit_id: CRAU-046
+L00003477	unit_type: requirement
+L00003478	status: accepted
+L00003479	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003480	canonical_text: >-
+L00003481	  Canonical template source image selection uses primary_publish_tag first, then
+L00003482	  the first tag emitted by the resolved tag-template list, then the
+L00003483	  lexicographically smallest tag only for legacy results lacking ordering
+L00003484	  metadata; docker_publish_result.digests[] manifest-list digest wins for
+L00003485	  image_digest otherwise the single pushed digest is used, and the generated
+L00003486	  application template Repository is namespace/repository:primary_publish_tag.
+L00003487	gui_related: false
+L00003488	gui_classification_reason: Publish reference selection is backend artifact identity and generation semantics.
+L00003489	split_recommended: true
+L00003490	split_recommendation_reason: Source span S0041 also includes visible auto-push approval and tag-template sanitization rules.
+L00003491	depends_on: [CRAU-045]
+L00003492	unblocks: [CRAU-047, CRAU-048, CRAU-050, CRAU-053]
+L00003493	acceptance_criteria:
+L00003494	  - primary_publish_tag wins when set.
+L00003495	  - Otherwise the first emitted tag from the resolved tag-template list wins.
+L00003496	  - Lexicographically smallest tag is a fallback only for legacy results without ordering metadata.
+L00003497	  - docker_publish_result.digests[] manifest-list digest becomes canonical image_digest when present.
+L00003498	  - Generated Repository value uses namespace/repository:primary_publish_tag.
+L00003499	validation_surfaces:
+L00003500	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003501	  - python3 scripts/pm-plan-index.py validate
+L00003502	risk_class: publish_reference_ambiguity
+L00003503	reasoning_tier: high
+L00003504	context_scope: canonical_publish_reference_selection
+L00003505	implementation_surfaces:
+L00003506	  - Plans/Containers_Registry_and_Unraid.md
+L00003507	node_compile_hint:
+L00003508	  mode: publish_reference_selection
+L00003509	  create_worknodes: false
+L00003510	source_lineage:
+L00003511	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0041
+L00003512	preserved_exact_tokens:
+L00003513	  - "`primary_publish_tag`"
+L00003514	  - "`docker_publish_result.digests[]`"
+L00003515	  - "`image_digest`"
+L00003516	  - "`<Repository>`"
+L00003517	  - "`<namespace>/<repository>:<primary_publish_tag>`"
+L00003518	compatibility_only_notes:
+L00003519	  - "Lexicographically smallest tag fallback is only for legacy results that lack ordering metadata."
+L00003520	negative_constraints:
+L00003521	  - "Legacy tag fallback must not override primary_publish_tag or resolved tag-template order."
+L00003522	owner_hints:
+L00003523	  - Plans/Containers_Registry_and_Unraid.md
+L00003524	```
+L00003525	
+L00003526	### CRAU-047 - Tag Template Resolution And Sanitization
+L00003527	
+L00003528	```yaml
+L00003529	plan_unit_id: CRAU-047
+L00003530	unit_type: requirement
+L00003531	status: accepted
+L00003532	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003533	canonical_text: >-
+L00003534	  Tag templates resolve {commit}, {version}, and {timestamp} from exact sources
+L00003535	  with documented formats and failure behavior, may combine literals and
+L00003536	  variables, lowercase after substitution, replace characters outside
+L00003537	  [a-z0-9_.-] with hyphen, collapse consecutive hyphens, and block publish with
+L00003538	  explicit remediation text when post-sanitization tag is empty.
+L00003539	gui_related: false
+L00003540	gui_classification_reason: Tag resolution and sanitization are deterministic backend publish semantics.
+L00003541	split_recommended: true
+L00003542	split_recommendation_reason: Source span S0041 combines tag rules with auto-push approval and publish reference selection.
+L00003543	depends_on: [CRAU-046]
+L00003544	unblocks: [CRAU-048]
+L00003545	acceptance_criteria:
+L00003546	  - "{commit} resolves to first 12 lowercase HEAD commit hex chars and blocks if required but missing."
+L00003547	  - "{version} resolves from Cargo.toml, package.json, then explicit user override and blocks if unresolved without user override."
+L00003548	  - "{timestamp} resolves to UTC publish-start time in YYYYMMDD-HHMMSSZ format and never fails."
+L00003549	  - Tags lowercase, replace outside [a-z0-9_.-] with hyphen, collapse consecutive hyphens, and block when empty after sanitization.
+L00003550	validation_surfaces:
+L00003551	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003552	  - python3 scripts/pm-plan-index.py validate
+L00003553	risk_class: invalid_tag_generation
+L00003554	reasoning_tier: standard
+L00003555	context_scope: tag_template_resolution_sanitization
+L00003556	implementation_surfaces:
+L00003557	  - Plans/Containers_Registry_and_Unraid.md
+L00003558	node_compile_hint:
+L00003559	  mode: tag_template_contract
+L00003560	  create_worknodes: false
+L00003561	source_lineage:
+L00003562	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0041
+L00003563	preserved_exact_tokens:
+L00003564	  - "`{commit}`"
+L00003565	  - "`{version}`"
+L00003566	  - "`{timestamp}`"
+L00003567	  - "`YYYYMMDD-HHMMSSZ`"
+L00003568	  - "`[a-z0-9_.-]`"
+L00003569	negative_constraints:
+L00003570	  - "An empty post-sanitization tag is invalid and must block publish with explicit remediation text."
+L00003571	owner_hints:
+L00003572	  - Plans/Containers_Registry_and_Unraid.md
+L00003573	```
+L00003574	
+
+<<< CONTEXT_AFTER canonical_document_lines=3575-3586 >>>
+L00003575	### CRAU-048 - Post Publish Unraid Follow On Sequence
+L00003576	
+L00003577	```yaml
+L00003578	plan_unit_id: CRAU-048
+L00003579	unit_type: requirement
+L00003580	status: accepted
+L00003581	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00003582	canonical_text: >-
+L00003583	  After successful image publishing, Puppet Master generates or updates Unraid
+L00003584	  XML when enabled, updates the target template repo when managed workflow is
+L00003585	  enabled, auto-commits template-repo changes by default, does not auto-push by
+L00003586	  default, and presents a one-click push action from the UI.

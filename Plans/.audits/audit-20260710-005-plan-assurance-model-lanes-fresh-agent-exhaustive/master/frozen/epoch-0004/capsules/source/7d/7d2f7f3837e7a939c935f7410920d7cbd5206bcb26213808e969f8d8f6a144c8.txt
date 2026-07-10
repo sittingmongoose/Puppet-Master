@@ -1,0 +1,371 @@
+<<< CONTEXT_BEFORE 1889-1900 >>>
+preserved_exact_tokens:
+  - "`trust_tier`"
+  - "`projection-state`"
+negative_constraints:
+  - "preview/browser `trust_tier` must not be reused as a generic `projection-state` term."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/Permissions_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1901-2242 >>>
+### C-029 - Execution Command Cleanup And Scheduler Truth
+
+```yaml
+plan_unit_id: C-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  Execution and command cleanup stays owner-specific: Executor_Protocol owns
+  execution_role, blocked_sequence minting, and startup-recovery scheduler
+  handoff; UI_Command_Catalog owns command-family migration; scheduler truth
+  must not split among lexicographic, scored, and UI-derived recovery models
+  across Executor_Protocol, Progression_Gates, plan_graph.schema, and
+  Run_Graph_View.
+gui_related: false
+gui_classification_reason: This unit defines execution-core and scheduler ownership routing.
+split_recommended: true
+split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+depends_on: [C-015, C-017, C-019, C-020, C-021, C-027]
+unblocks: [C-037]
+acceptance_criteria:
+  - "Executor_Protocol owns execution_role, blocked_sequence minting, and startup-recovery scheduler handoff."
+  - "UI_Command_Catalog owns command-family migration."
+  - "One scheduler truth is required across the listed owner docs."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: scheduler_truth_split
+reasoning_tier: high
+context_scope: execution_command_cleanup_scheduler_truth
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/Executor_Protocol.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Progression_Gates.md
+  - Plans/plan_graph.schema.json
+  - Plans/Run_Graph_View.md
+node_compile_hint:
+  mode: execution_command_cleanup_scheduler_truth
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+preserved_exact_tokens:
+  - "`execution_role`"
+  - "`blocked_sequence`"
+  - "`startup-recovery`"
+  - "`scheduler.pass`"
+  - "`cmd.runtime.*`"
+negative_constraints:
+  - "Scheduler truth must not split among lexicographic, scored, and UI-derived recovery models across Plans/Executor_Protocol.md, Plans/Progression_Gates.md, Plans/plan_graph.schema.json, and Plans/Run_Graph_View.md."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/Executor_Protocol.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Progression_Gates.md
+  - Plans/Run_Graph_View.md
+```
+
+### C-030 - Artifact Runtime Operational Identity Routing
+
+```yaml
+plan_unit_id: C-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  Artifact, file, storage, runtime, operational identity, and generated subject
+  routing promote project_id, attempt_id, doc/artifact subject IDs, generated
+  runtime subject identity, and environment-specific target context to
+  first-class owner-routed identities without making generated transport or raw
+  path opens the canonical persisted subject model.
+gui_related: true
+gui_classification_reason: This unit governs runtime artifact, file, report, and open/show surface navigation.
+split_recommended: true
+split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+depends_on: [C-022, C-023, C-024]
+unblocks: [C-032]
+acceptance_criteria:
+  - "Project/artifact/file surfaces route by project_id, attempt_id, runtime subject identity, and artifact/file pivots."
+  - "generated:// remains implementation-level transient representation rather than persisted subject ID."
+  - "operational_identity records external side-effect target context."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: artifact_runtime_identity_owner_drift
+reasoning_tier: high
+context_scope: artifact_runtime_operational_identity_routing
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/FileManager.md
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: artifact_runtime_operational_identity_routing
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+preserved_exact_tokens:
+  - "`project_id`"
+  - "`attempt_id`"
+  - "`doc:`"
+  - "`artifact:`"
+  - "`generated://`"
+  - "`operational_identity`"
+  - "`Open Artifact`"
+  - "`Open Report`"
+negative_constraints:
+  - "Orchestrator/Evidence surface copy such as Open in Editor must not imply raw-path opens for artifact-backed or report-backed subjects."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/FileManager.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### C-031 - Usage Attention Help Labels And Acknowledged Semantics
+
+```yaml
+plan_unit_id: C-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  Usage navigation, attention surfaces, help labels, lane/worktree copy,
+  blocked/recovery terminology, concerns/promotions/patches/history/ledger copy,
+  and acknowledged semantics are route consumers of the shared route/open model;
+  acknowledged is escalation noise control and ownership visibility only.
+gui_related: true
+gui_classification_reason: This unit governs user-visible Usage, attention, help label, blocked/recovery, and ledger copy.
+split_recommended: true
+split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+depends_on: [C-010, C-020, C-024]
+unblocks: [C-032]
+acceptance_criteria:
+  - "usage_event is a first-class routed object."
+  - "Attention and CtA surfaces normalize local field conventions to route-target."
+  - "acknowledged does not close concerns, remove blockers, or replace resolved/dismissed lifecycle states."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_attention_acknowledged_semantics_drift
+reasoning_tier: high
+context_scope: usage_attention_help_labels_acknowledged_semantics
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/Glossary.md
+node_compile_hint:
+  mode: usage_attention_help_labels_acknowledged_semantics
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+preserved_exact_tokens:
+  - "`usage_event`"
+  - "`/CtA`"
+  - "`acknowledged`"
+  - "`concerns/promotions/patches/history/ledger`"
+negative_constraints:
+  - "`acknowledged` is escalation `/noise` control and ownership visibility only; it does not close a concern, remove a blocker, or replace resolved/dismissed lifecycle states."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/Glossary.md
+```
+
+### C-032 - Durable Route Identity Across History Surfaces
+
+```yaml
+plan_unit_id: C-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  Ledger records, history chronology, graph generations, seams completion,
+  promotions, runtime lineage, blocked episodes, scheduler passes, graph
+  generations, attempts, concerns, graph patches, recovery records, and
+  lane/worktree objects preserve durable route identity and lifecycle semantics
+  across graph, evidence, history, ledger, runtime-artifact, and chat consumers.
+gui_related: true
+gui_classification_reason: This unit governs graph, evidence, history, ledger, runtime-artifact, chat, and blocked/runtime resume navigation.
+split_recommended: true
+split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+depends_on: [C-011, C-013, C-019, C-022, C-024, C-026, C-027, C-030, C-031]
+unblocks: [C-033]
+acceptance_criteria:
+  - "Durable route identity distinguishes none selection, open/focus/navigate/deep-link, and tab-local filter/sort/search changes."
+  - "Runtime lineage is object-first, not attempt-first."
+  - "Shared record-semantic vocabulary spans attempts, promotions, concerns, graph patches, recovery records, and lane/worktree objects."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: durable_route_identity_drift
+reasoning_tier: high
+context_scope: durable_route_identity_history_surfaces
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/storage-plan.md
+  - Plans/Run_Graph_View.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: durable_route_identity_history_surfaces
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+preserved_exact_tokens:
+  - "`/history/ledger/source`"
+  - "`/focus/navigate/deep-link`"
+  - "`jump-to-message`"
+  - "`cost_usage`"
+  - "`runtime-lineage`"
+negative_constraints:
+  - "Runtime lineage is object-first, not attempt-first."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/storage-plan.md
+  - Plans/Run_Graph_View.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/assistant-chat-design.md
+```
+
+### C-033 - Tier Bound Identity Replacement
+
+```yaml
+plan_unit_id: C-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  Tier-bound selection, override-owner, execution-framing, per-tier worktree,
+  tier/subtask, and owner run/tier assumptions must yield to package-based
+  lane-pool, package/seam/lane-aware, graph/seam/package, effective identity,
+  lane/worktree, and execution-context models.
+gui_related: true
+gui_classification_reason: This unit governs shell/Orchestrator migration away from Tiers and linear UI assumptions.
+split_recommended: true
+split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+depends_on: [C-025, C-026, C-032]
+unblocks: []
+acceptance_criteria:
+  - "Tiers is retired as a primary view and route identity."
+  - "Tier/rooted worktree identity yields to lane/worktree plus execution-context models."
+  - "Owner docs retire tier-bound selection, override-owner, and execution-framing assumptions."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tier_bound_identity_resurrection
+reasoning_tier: high
+context_scope: tier_bound_identity_replacement
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/FinalGUISpec.md
+  - Plans/Orchestrator_Page.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Models_System.md
+  - Plans/Personas.md
+node_compile_hint:
+  mode: tier_bound_identity_replacement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+preserved_exact_tokens:
+  - "`Tiers`"
+  - "`/tier`"
+  - "`/tier/subtask`"
+  - "`lane-pool`"
+  - "`/package/seam/lane-aware`"
+  - "`execution-context`"
+negative_constraints:
+  - "SCM/runtime flows replace tier-bound worktree identity with the lane/worktree plus execution-context model."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/FinalGUISpec.md
+  - Plans/Orchestrator_Page.md
+  - Plans/storage-plan.md
+```
+
+### C-034 - Document Inline Notes Annotation Boundary
+
+```yaml
+plan_unit_id: C-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  DocumentInlineNotes routes durable document annotation behavior across
+  FinalGUISpec, storage-plan, chain-wizard-flexibility,
+  interview-subagent-integration, and assistant-chat-design; user-facing
+  Annotations preserve note_record.v1 continuity, operation shapes, lifecycle,
+  anchoring selectors, deterministic re-anchoring, coexistence/conflict rules,
+  and send-selection-to-chat boundaries.
+gui_related: true
+gui_classification_reason: This unit governs embedded document annotations, source surfaces, and user-facing annotation behavior.
+split_recommended: false
+depends_on: [C-024, C-028]
+unblocks: [C-035, C-036]
+acceptance_criteria:
+  - "DocumentInlineNotes preserves durable annotation operation shapes and lifecycle."
+  - "Anchor storage includes TextPositionSelector and TextQuoteSelector when deterministic source text exists."
+  - "Send selection to chat remains adjacent behavior and not durable annotation lifecycle or patch-apply semantics."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: document_inline_notes_boundary_drift
+reasoning_tier: high
+context_scope: document_inline_notes_annotation_boundary
+implementation_surfaces:
+  - Plans/Crosswalk.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/interview-subagent-integration.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: document_inline_notes_annotation_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0025
+preserved_exact_tokens:
+  - "`Primitive:DocumentInlineNotes`"
+  - "`Annotations`"
+  - "`note_record.v1`"
+  - "`operation = comment | replace | insert_after | remove`"
+  - "`TextPositionSelector { start, end }`"
+  - "`TextQuoteSelector { exact, prefix, suffix }`"
+  - "`Anchor not found — reselect to re-anchor`"
+negative_constraints:
+  - "`Send selection to chat` is a thread-scoped chip/handoff path; it must not be collapsed into the durable `/annotation` lifecycle, and it does not create patch-apply semantics."
+owner_hints:
+  - Plans/Crosswalk.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/interview-subagent-integration.md
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< CONTEXT_AFTER 2243-2254 >>>
+### C-035 - Targeted Revision Pass Boundary
+
+```yaml
+plan_unit_id: C-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Crosswalk.md
+canonical_text: >-
+  TargetedRevisionPass routes targeted revision through workflow, UI, prompt,
+  persistence, interview, and permission owners; Resubmit with Annotations
+  consumes ordered annotation records, records addressed/still_open/cannot_apply
+  outcomes, supports explicit requested/effective revision capability, exposes

@@ -1,0 +1,812 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001019-EXACT-WIN-7414C6C901F8-0012",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001019_exact_0012_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "05cc0f49875564c03e04d929fda6665e511b04139ee1024640fde562639ad1cf",
+    "core_range": [4073, 4466]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001019-I001",
+      "item_type": "behavior",
+      "title": "LSP trigger and refresh behavior",
+      "statement": "Completion, hover, inlay hints, code actions, and signature help are all subject to defined trigger or refresh behavior, including hover delay and cancellation and diagnostic context for code actions.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-055"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4080,
+          "line_end": 4080,
+          "exact_quote": "canonical_text: LSP triggers and refresh behavior cover completion trigger kinds, hover idle delay and cancellation, inlay hint refresh on document activity or visible range, code action requests from UI affordances with diagnostics context, and signature help trigger behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I002",
+      "item_type": "contract",
+      "title": "Hover anti-flood contract",
+      "statement": "Hover requests must be delayed and a prior request canceled when the cursor moves, explicitly to prevent request flooding.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-055"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4121,
+          "line_end": 4121,
+          "exact_quote": "- Hover requests must be delayed and canceled on cursor movement to avoid flooding.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I003",
+      "item_type": "gap",
+      "title": "Trigger matrix and request semantics are incomplete",
+      "statement": "LSPS-055 names five trigger/refresh concerns but does not fully specify the event-to-request mapping, request payloads, deduplication, stale-response handling, or cancellation rules outside hover.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "behavioral_under_specification",
+      "impact": "Different builders can issue different request sequences and accept different stale results while still satisfying the summary.",
+      "builder_discretion": "Choose detailed trigger events, payload composition, coalescing, cancellation, and stale-result policy except for the stated hover constraint.",
+      "feature_keys": ["LSPS-055"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4080,
+          "line_end": 4080,
+          "exact_quote": "canonical_text: LSP triggers and refresh behavior cover completion trigger kinds, hover idle delay and cancellation, inlay hint refresh on document activity or visible range, code action requests from UI affordances with diagnostics context, and signature help trigger behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I004",
+      "item_type": "behavior",
+      "title": "workspaceFolders initialization policy",
+      "statement": "Initialization sends only roots containing open documents, limits the list to ten, falls back to a single project root or an empty list when nothing is open, and does not require later reinitialization for a newly opened root.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-056"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4138,
+          "line_end": 4138,
+          "exact_quote": "canonical_text: workspaceFolders initialization sends only roots with at least one open document, capped at ten roots, with single-root fallback when no files are open and no required reinitialize when later opening files in a new root.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I005",
+      "item_type": "explicit_non_gap",
+      "title": "Broad workspace initialization is explicitly prohibited",
+      "statement": "The negative constraint prevents an implementation from sending an unconstrained project-wide workspaceFolders list.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-056"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4170,
+          "line_end": 4170,
+          "exact_quote": "- Initialize should not send broad workspaceFolders beyond the open-document root cap.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I006",
+      "item_type": "contract",
+      "title": "Chat virtual-document identity and routing",
+      "statement": "Non-file Chat blocks receive dedicated virtual URIs and are routed through the effective host/root LSP session for their language, while blocks mapped to project files use the real file URI.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-057"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4187,
+          "line_end": 4187,
+          "exact_quote": "canonical_text: Chat code blocks not backed by project files use dedicated virtual-document URIs, one opaque block identity, language tags, and the effective host/root LSP session for that language; code blocks mapped to real project files use the real file URI instead.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I007",
+      "item_type": "explicit_non_gap",
+      "title": "Virtual URIs are non-disk identities",
+      "statement": "The plan explicitly distinguishes virtual Chat identities from real project-file identities and prohibits treating a virtual URI as a disk path.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-057"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4222,
+          "line_end": 4222,
+          "exact_quote": "- Virtual URI never points to disk and real project-file snippets use the real file URI instead.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I008",
+      "item_type": "gap",
+      "title": "Virtual URI canonicalization and collision policy are open",
+      "statement": "The URI shape and two example identity strategies are preserved, but encoding, normalization, collision resistance, persistence scope, and the required choice of opaque identity algorithm are not fixed.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "identity_contract_under_specification",
+      "impact": "Implementations can generate incompatible or colliding virtual-document identities and disagree on whether identities survive view or process boundaries.",
+      "builder_discretion": "Choose URI component encoding and the opaque-id algorithm, including UUID versus message-id plus block index.",
+      "feature_keys": ["LSPS-057"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4213,
+          "line_end": 4213,
+          "exact_quote": "- puppet-master-virtual://chat/{language_id}/{opaque_id}",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4216,
+          "line_end": 4216,
+          "exact_quote": "- UUID or message-id + block index",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I009",
+      "item_type": "state_transition",
+      "title": "Immutable virtual-document lifecycle",
+      "statement": "A Chat block transitions to open only when it needs LSP, closes on eviction or idle cleanup, never changes in place, and receives a new opaque identity if edited content changes.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-058"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4241,
+          "line_end": 4241,
+          "exact_quote": "canonical_text: Chat virtual documents send didOpen only when a block needs LSP, send didClose on view eviction or idle cleanup, may retain a small recent set, do not send didChange for immutable blocks, and create a new opaque identity when edited content changes.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I010",
+      "item_type": "gap",
+      "title": "Virtual-document retention transition precedence is unclear",
+      "statement": "The plan preserves a 300-second cleanup value and a last-five retention value, but does not define whether either is normative, how they interact, or which event wins when view eviction, idle cleanup, and recent retention overlap; it also does not define when a block 'needs LSP'.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "state_machine_under_specification",
+      "impact": "Clients can retain different documents, send didClose at different times, and expose inconsistent server resource use.",
+      "builder_discretion": "Define the predicate for LSP need and the precedence of eviction, timeout, and recent-set retention.",
+      "feature_keys": ["LSPS-058"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4241,
+          "line_end": 4241,
+          "exact_quote": "canonical_text: Chat virtual documents send didOpen only when a block needs LSP, send didClose on view eviction or idle cleanup, may retain a small recent set, do not send didChange for immutable blocks, and create a new opaque identity when edited content changes.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4271,
+          "line_end": 4271,
+          "exact_quote": "- 300 s",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4272,
+          "line_end": 4272,
+          "exact_quote": "- last 5",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I011",
+      "item_type": "contract",
+      "title": "ServerSpec is the catalog record contract",
+      "statement": "Built-in and custom LSP servers share one canonical machine-friendly ServerSpec record covering identity, provenance, selectors, platform and root rules, selection, support, enablement, provisioning, launch, initialization, host support, and degraded attach concerns.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-059"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4297,
+          "line_end": 4297,
+          "exact_quote": "canonical_text: ServerSpec is the canonical machine-friendly catalog record for built-in and custom LSP servers and includes server identity, provenance, language selectors, platform/requirement/root rules, selection metadata, support classification, enablement, provisioning, launch, initialization, host support, and degraded attach fields.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I012",
+      "item_type": "gap",
+      "title": "ServerSpec minimum field set lacks a machine-checkable schema",
+      "statement": "LSPS-059 calls the record machine-friendly and minimum, but the window does not define field types, required versus optional fields, defaults, enum domains, validation, or concrete field names for enablement, provisioning, launch, and initialization.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "data_contract_under_specification",
+      "impact": "Catalog producers and consumers cannot independently construct and validate interoperable ServerSpec records from this requirement.",
+      "builder_discretion": "Choose the schema, requiredness, defaults, and validation rules for the listed semantic categories.",
+      "feature_keys": ["LSPS-059"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4297,
+          "line_end": 4297,
+          "exact_quote": "canonical_text: ServerSpec is the canonical machine-friendly catalog record for built-in and custom LSP servers and includes server identity, provenance, language selectors, platform/requirement/root rules, selection metadata, support classification, enablement, provisioning, launch, initialization, host support, and degraded attach fields.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4342,
+          "line_end": 4342,
+          "exact_quote": "- degraded_attach_rules",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I013",
+      "item_type": "authority",
+      "title": "Effective catalog union and layering authority",
+      "statement": "The effective catalog is authoritative as the deduplicated union of three named data sources, with user enablement and custom settings layered above that base.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-060"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4362,
+          "line_end": 4362,
+          "exact_quote": "canonical_text: The effective support catalog is the deduplicated union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata; user enablement and custom server settings layer on top, and generated readable/settings/docs views do not replace the registry SSOT.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I014",
+      "item_type": "explicit_non_gap",
+      "title": "Generated views cannot become catalog authority",
+      "statement": "Readable prose and settings/documentation projections are explicitly non-authoritative and may not replace the registry SSOT.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-060"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4398,
+          "line_end": 4398,
+          "exact_quote": "- Derived prose tables and settings/docs views must not become the catalog SSOT.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I015",
+      "item_type": "gap",
+      "title": "Catalog deduplication and source precedence are unspecified",
+      "statement": "The three-way union is required to be deduplicated, but the window does not state the deduplication key, merge rules, field-level precedence, provenance retention, or conflict behavior among its sources and overlays.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_resolution_under_specification",
+      "impact": "Equivalent inputs can yield different effective catalogs and settings behavior across implementations.",
+      "builder_discretion": "Choose identity matching, source precedence, field merge behavior, and conflict reporting.",
+      "feature_keys": ["LSPS-060"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4362,
+          "line_end": 4362,
+          "exact_quote": "canonical_text: The effective support catalog is the deduplicated union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata; user enablement and custom server settings layer on top, and generated readable/settings/docs views do not replace the registry SSOT.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I016",
+      "item_type": "state_transition",
+      "title": "Support classification and effective-state layering",
+      "statement": "Support classification is separate from identity and effective state and is evaluated through catalog base, global override, project override, runtime availability, and final effective state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4417,
+          "line_end": 4417,
+          "exact_quote": "canonical_text: Support classification stays separate from server identity and effective state, using supported-by-registry, default-managed, toolchain-bound/manual, experimental/degraded, and deprecated/replaced outcomes layered through catalog base, global override, project override, runtime availability, and effective-state evaluation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I017",
+      "item_type": "explicit_non_gap",
+      "title": "Classification cannot fork server identity",
+      "statement": "Support outcomes are expressly prohibited from changing or forking the stable server_id identity.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4455,
+          "line_end": 4455,
+          "exact_quote": "- Support classification outcomes must not fork stable server_id identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I018",
+      "item_type": "gap",
+      "title": "Effective-state resolution semantics are incomplete",
+      "statement": "LSPS-061 lists resolution layers and outcome labels but does not define precedence, conflict handling, transitions when runtime availability changes, or the observable effective-state payload for each outcome.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "resolution_state_machine_under_specification",
+      "impact": "The same catalog and overrides can resolve to different availability or support results in different implementations.",
+      "builder_discretion": "Define override precedence, runtime-unavailable transitions, outcome mapping, and the effective-state output shape.",
+      "feature_keys": ["LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4417,
+          "line_end": 4417,
+          "exact_quote": "canonical_text: Support classification stays separate from server identity and effective state, using supported-by-registry, default-managed, toolchain-bound/manual, experimental/degraded, and deprecated/replaced outcomes layered through catalog base, global override, project override, runtime availability, and effective-state evaluation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I019",
+      "item_type": "gap",
+      "title": "Acceptance oracles validate plan structure, not runtime behavior",
+      "statement": "The repeated acceptance criteria and validation surfaces establish lineage, addressability, and plan-index validation but provide no executable oracle for the LSP behaviors in LSPS-055 through LSPS-061.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "acceptance_oracle_missing",
+      "impact": "A structurally valid plan can pass the named checks without demonstrating protocol behavior, lifecycle correctness, catalog merging, or effective-state resolution.",
+      "builder_discretion": "Choose runtime test cases, fixtures, observable outputs, and pass/fail thresholds.",
+      "feature_keys": ["LSPS-055", "LSPS-056", "LSPS-057", "LSPS-058", "LSPS-059", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4087,
+          "line_end": 4087,
+          "exact_quote": "- The covered source span remains losslessly available for exact-text audit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4092,
+          "line_end": 4092,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4093,
+          "line_end": 4093,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I020",
+      "item_type": "authority",
+      "title": "LSP owner boundary is explicit",
+      "statement": "Plans/LSPSupport.md owns LSP-specific protocol and client constraints while referenced documents keep their own SSOT boundaries.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-055", "LSPS-056", "LSPS-057", "LSPS-058", "LSPS-059", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4125,
+          "line_end": 4125,
+          "exact_quote": "- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I021",
+      "item_type": "gap",
+      "title": "Consumer interfaces and responsibilities are not assigned",
+      "statement": "The requirements imply editor UI affordances, Chat, LSP sessions, settings, docs views, and catalog readers as consumers, but do not name consumer-owned interfaces, call sites, or responsibility boundaries.",
+      "severity": "medium",
+      "confidence": "medium",
+      "gap_kind": "consumer_contract_missing",
+      "impact": "Integration ownership and the exact data each surface consumes remain open, increasing the risk of duplicate interpretation.",
+      "builder_discretion": "Assign consumer modules and define their input/output contracts.",
+      "feature_keys": ["LSPS-055", "LSPS-057", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4080,
+          "line_end": 4080,
+          "exact_quote": "canonical_text: LSP triggers and refresh behavior cover completion trigger kinds, hover idle delay and cancellation, inlay hint refresh on document activity or visible range, code action requests from UI affordances with diagnostics context, and signature help trigger behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4362,
+          "line_end": 4362,
+          "exact_quote": "canonical_text: The effective support catalog is the deduplicated union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata; user enablement and custom server settings layer on top, and generated readable/settings/docs views do not replace the registry SSOT.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I022",
+      "item_type": "gap",
+      "title": "Chat virtual-document privacy boundary is unspecified",
+      "statement": "The plan says virtual URIs do not point to disk, but does not define authorization, disclosure, redaction, logging, or retention rules for Chat block content sent to local or remote host-aware LSP sessions.",
+      "severity": "high",
+      "confidence": "medium",
+      "gap_kind": "security_privacy_contract_missing",
+      "impact": "Potentially sensitive Chat content may be transmitted or retained without a defined trust boundary or user-visible policy.",
+      "builder_discretion": "Choose what content may be disclosed to which LSP host, how it is logged, and when it is purged.",
+      "feature_keys": ["LSPS-057", "LSPS-058"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4187,
+          "line_end": 4187,
+          "exact_quote": "canonical_text: Chat code blocks not backed by project files use dedicated virtual-document URIs, one opaque block identity, language tags, and the effective host/root LSP session for that language; code blocks mapped to real project files use the real file URI instead.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4222,
+          "line_end": 4222,
+          "exact_quote": "- Virtual URI never points to disk and real project-file snippets use the real file URI instead.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I023",
+      "item_type": "gap",
+      "title": "Failure, recovery, and observability behavior is absent",
+      "statement": "The window specifies request, lifecycle, catalog, and resolution happy paths but no behavior for failed or timed-out didOpen/didClose, unavailable sessions, malformed catalog records, merge conflicts, retries, cleanup failures, or operator-visible diagnostics.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "failure_recovery_missing",
+      "impact": "Runtime failures can leave server/client state divergent or silently produce incomplete catalog and effective-state results.",
+      "builder_discretion": "Choose retry, rollback, reconciliation, logging, metrics, and user-facing failure behavior.",
+      "feature_keys": ["LSPS-055", "LSPS-056", "LSPS-057", "LSPS-058", "LSPS-059", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4241,
+          "line_end": 4241,
+          "exact_quote": "canonical_text: Chat virtual documents send didOpen only when a block needs LSP, send didClose on view eviction or idle cleanup, may retain a small recent set, do not send didChange for immutable blocks, and create a new opaque identity when edited content changes.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4417,
+          "line_end": 4417,
+          "exact_quote": "canonical_text: Support classification stays separate from server identity and effective state, using supported-by-registry, default-managed, toolchain-bound/manual, experimental/degraded, and deprecated/replaced outcomes layered through catalog base, global override, project override, runtime availability, and effective-state evaluation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I024",
+      "item_type": "explicit_non_gap",
+      "title": "Several scale controls are explicit",
+      "statement": "The core provides concrete or bounded controls for workspace roots, hover request flooding, and virtual-document retention, reducing unconstrained growth in these paths.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-055", "LSPS-056", "LSPS-058"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4121,
+          "line_end": 4121,
+          "exact_quote": "- Hover requests must be delayed and canceled on cursor movement to avoid flooding.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4165,
+          "line_end": 4165,
+          "exact_quote": "- capped at 10 roots",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4272,
+          "line_end": 4272,
+          "exact_quote": "- last 5",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I025",
+      "item_type": "gap",
+      "title": "Compatibility and migration behavior is largely unaddressed",
+      "statement": "The units repeatedly declare no compatibility-only notes. Beyond not requiring reinitialization for later roots and preserving stable server_id across classification, the window does not define migration for existing server settings, catalog identities, virtual-document behavior, or outcome labels.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration_missing",
+      "impact": "Existing configurations and persisted identities can be interpreted or upgraded differently.",
+      "builder_discretion": "Define versioning, upgrade, fallback, and backwards-compatibility behavior for catalog and settings data.",
+      "feature_keys": ["LSPS-056", "LSPS-057", "LSPS-058", "LSPS-059", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4171,
+          "line_end": 4171,
+          "exact_quote": "compatibility_only_notes: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4138,
+          "line_end": 4138,
+          "exact_quote": "canonical_text: workspaceFolders initialization sends only roots with at least one open document, capped at ten roots, with single-root fallback when no files are open and no required reinitialize when later opening files in a new root.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I026",
+      "item_type": "gui_truth",
+      "title": "GUI classification is explicit per PlanUnit",
+      "statement": "Trigger/refresh and Chat virtual-document units are GUI-related, while workspace initialization, ServerSpec, catalog union, and support resolution are classified as runtime/protocol concerns rather than direct presentation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-055", "LSPS-056", "LSPS-057", "LSPS-058", "LSPS-059", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4081,
+          "line_end": 4081,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4139,
+          "line_end": 4139,
+          "exact_quote": "gui_related: false",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4188,
+          "line_end": 4188,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4242,
+          "line_end": 4242,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4298,
+          "line_end": 4298,
+          "exact_quote": "gui_related: false",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4363,
+          "line_end": 4363,
+          "exact_quote": "gui_related: false",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4418,
+          "line_end": 4418,
+          "exact_quote": "gui_related: false",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001019-I027",
+      "item_type": "explicit_non_gap",
+      "title": "Planning artifacts do not authorize build task creation",
+      "statement": "Every unit is accepted planning content, and the core explicitly prohibits creating WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks in this phase.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-055", "LSPS-056", "LSPS-057", "LSPS-058", "LSPS-059", "LSPS-060", "LSPS-061"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4078,
+          "line_end": 4078,
+          "exact_quote": "status: accepted",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4090,
+          "line_end": 4090,
+          "exact_quote": "- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "All seven PlanUnits state a primary behavior or policy, with exact lifecycle, catalog, and support-resolution summaries.",
+      "evidence_item_ids": ["A005-001019-I001", "A005-001019-I004", "A005-001019-I006", "A005-001019-I009", "A005-001019-I013", "A005-001019-I016"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "The window establishes trigger/refresh, workspace initialization, Chat LSP, catalog, and effective-resolution capabilities.",
+      "evidence_item_ids": ["A005-001019-I001", "A005-001019-I004", "A005-001019-I006", "A005-001019-I011", "A005-001019-I013", "A005-001019-I016"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Named inputs and outputs exist, but payload schemas, URI canonicalization, ServerSpec types, and effective-state output shapes are incomplete.",
+      "evidence_item_ids": ["A005-001019-I003", "A005-001019-I008", "A005-001019-I012", "A005-001019-I018"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Several negative constraints and SSOT rules are exact, while the principal machine-data and merge contracts remain under-specified.",
+      "evidence_item_ids": ["A005-001019-I002", "A005-001019-I005", "A005-001019-I007", "A005-001019-I011", "A005-001019-I012", "A005-001019-I014", "A005-001019-I017"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Virtual-document and support-resolution states are named, but transition precedence and unavailable/error transitions are not fully defined.",
+      "evidence_item_ids": ["A005-001019-I009", "A005-001019-I010", "A005-001019-I016", "A005-001019-I018"]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Catalog SSOT, non-authoritative projections, stable identity, and the LSP document authority boundary are explicit.",
+      "evidence_item_ids": ["A005-001019-I013", "A005-001019-I014", "A005-001019-I017", "A005-001019-I020"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Plans/LSPSupport.md is repeatedly named as owner, with referenced owner documents retaining their own SSOT boundaries.",
+      "evidence_item_ids": ["A005-001019-I020"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "gap_found",
+      "summary": "Consumer surfaces are implied but their module ownership and interface responsibilities are not assigned.",
+      "evidence_item_ids": ["A005-001019-I021"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "Each PlanUnit carries an explicit GUI-related classification consistent with direct interaction versus runtime/catalog focus.",
+      "evidence_item_ids": ["A005-001019-I026"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "No failure, retry, reconciliation, timeout, malformed-input, or cleanup-recovery contract is provided.",
+      "evidence_item_ids": ["A005-001019-I023"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Virtual URIs are explicitly non-disk, but disclosure and retention boundaries for Chat content sent to LSP sessions are missing.",
+      "evidence_item_ids": ["A005-001019-I007", "A005-001019-I022"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Refresh and configuration layers are identified, but exact event propagation, merge precedence, and runtime-change propagation are incomplete.",
+      "evidence_item_ids": ["A005-001019-I001", "A005-001019-I003", "A005-001019-I013", "A005-001019-I015", "A005-001019-I018"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Resource bounds exist, but observability, operator diagnostics, retries, and reconciliation are not specified.",
+      "evidence_item_ids": ["A005-001019-I023", "A005-001019-I024"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "addressed",
+      "summary": "The core supplies explicit controls for hover flooding, initialization root count, and recent virtual-document retention.",
+      "evidence_item_ids": ["A005-001019-I002", "A005-001019-I024"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Stable identity and no-reinitialize behavior are present, but versioning and migration for catalogs, settings, and identities are otherwise absent.",
+      "evidence_item_ids": ["A005-001019-I004", "A005-001019-I017", "A005-001019-I025"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The named validation surfaces check plan migration/index structure rather than executable product behavior.",
+      "evidence_item_ids": ["A005-001019-I019"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains in trigger sequencing, identity encoding, retention precedence, schema design, catalog merging, effective-state resolution, security, and recovery.",
+      "evidence_item_ids": ["A005-001019-I003", "A005-001019-I008", "A005-001019-I010", "A005-001019-I012", "A005-001019-I015", "A005-001019-I018", "A005-001019-I022", "A005-001019-I023"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The principal unknowns are explicitly bounded to trigger details, virtual identity and retention, ServerSpec schema, merge precedence, effective-state semantics, consumer assignment, privacy, recovery, and migration.",
+      "evidence_item_ids": ["A005-001019-I003", "A005-001019-I008", "A005-001019-I010", "A005-001019-I012", "A005-001019-I015", "A005-001019-I018", "A005-001019-I021", "A005-001019-I022", "A005-001019-I023", "A005-001019-I025"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

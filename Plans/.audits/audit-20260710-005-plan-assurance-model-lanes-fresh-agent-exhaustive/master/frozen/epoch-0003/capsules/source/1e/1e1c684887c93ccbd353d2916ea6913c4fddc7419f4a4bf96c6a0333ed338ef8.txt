@@ -1,0 +1,359 @@
+<<< CONTEXT_BEFORE 1660-1671 >>>
+  - "The user can’t fix this"
+negative_constraints:
+  - Do not expose secrets or tokens in Advanced/Support diagnostics.
+  - Do not create normal UI noise for repeated automatic Free Models check failures unless routing availability is affected.
+  - Do not export raw secrets or tokens in diagnostics copy/export.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1672-2015 >>>
+### RAP-041 - Free Models Route Provenance And Usage Receipt Projection
+
+```yaml
+plan_unit_id: RAP-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts projects Free Models route provenance by showing friendly `Free Models` model/provider names normally while preserving underlying provider/model/account/source identity, exact snapshot ids, source hashes, upstream refs, alias/rename/provider-move lineage, attempted models, skipped entries, final result, and plain switch reasons in expanded details or Advanced/Support. Raw provider payloads remain Advanced/Support-only and redacted according to policy.
+gui_related: true
+gui_classification_reason: Runtime Artifacts and expanded Usage provenance are user-visible diagnostic panels.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Request-time friendly names stay stable in normal Usage even after upstream rename/provider move.
+  - Expanded details and Advanced/Support preserve exact snapshot ids, source hashes, upstream refs, and alias/rename/provider-move lineage.
+  - Every attempted/skipped entry and final selected/stopped result remains traceable.
+  - Raw provider error payloads stay out of normal expanded rows.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Free Models route provenance projection fixtures
+  - Usage receipt expanded detail fixtures
+risk_class: route_provenance_projection_drift
+reasoning_tier: high
+context_scope: free_models_runtime_provenance
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
+  - Plans/Models_System.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: free_models_route_provenance_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+source_atom_ids: [atom-0107, atom-0111, atom-0212, atom-0216, atom-0220, atom-0224, atom-0242, atom-0246, atom-0250, atom-0254, atom-0258, atom-0262, atom-0276, atom-0284, atom-0286]
+preserved_exact_tokens:
+  - "friendly model/provider names"
+  - "exact snapshot IDs"
+  - "source hashes"
+  - "upstream refs"
+  - "alias/rename/provider-move"
+  - "Show in Usage"
+  - "Show in Ledger"
+  - "attempted model"
+  - "skipped entries"
+negative_constraints:
+  - Do not show snapshot IDs, source hashes, or upstream refs as primary normal Usage receipt content.
+  - Do not rewrite normal Usage receipt names after upstream rename/provider move.
+  - Do not expose raw provider error payloads in normal expanded availability rows.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
+  - Plans/Models_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host evidence projection and receipt browsing boundaries. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or production build tasks.
+
+### RAP-042 - Containerized Host Evidence Projection And Receipt Browsing Boundary
+
+```yaml
+plan_unit_id: RAP-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts projects containerized-host evidence for browsing, inspection, and export without becoming receipt
+  truth. Docker/Hosts, Assistant, Orchestrator, Run Graph, Executor, and ATS may open Runtime Artifacts for logs,
+  screenshots, browser recordings, traces, health checks, ports, access URLs, command output, stale/gap markers,
+  TestRunReceipt, host_preflight_receipt, host_execution_receipt, cleanup_retention_receipt, evidence refs,
+  visual_evidence_refs, blocker payloads, and export profiles. The owning receipt, test, storage, executor, and
+  container records remain authoritative; stale or missing owner records degrade the view. `blocked != failed` is
+  preserved for permission_denied, user_declined, headless_ask_denied, filesafe_blocked, external_side_effect_blocked,
+  network_blocked_by_policy, host_unreachable, host_untrusted, test_gap_policy, capability_unavailable,
+  projection_stale, needs_review, and indeterminate_remote_outcome. Containerized-host runtime artifact rows link
+  `host_preflight_receipt`, `host_execution_receipt`, `cleanup_retention_receipt`, `port_access_record`,
+  `permission_snapshot_id`, `filesafe_scope_ref`, `host_assignment_id`, `host_instance_id`, `runtime_context_ref`,
+  `blocked_reason_code`, `allowed_action_ids[]`, and `projection_health` back to Docker/Hosts and owner records.
+gui_related: true
+gui_classification_reason: Runtime Artifacts evidence browsing, logs, screenshots, traces, access URLs, and degraded projection states are user-visible panel behavior.
+depends_on: [CV-303, SP-226, ATS-019, EP-109]
+unblocks: [ACD-430, OP-028, RGV-015]
+acceptance_criteria:
+  - Runtime Artifacts can show host/test/runtime evidence and receipt refs without replacing owner records as truth.
+  - Stale, missing, blocked, and degraded owner records produce visible projection health rather than optimistic success.
+  - Manual eyeballing, chat-only observation, and container-started claims cannot certify completion.
+  - Blocked permission, FileSafe, policy, host, trust, test-gap, and projection outcomes remain blocked states, not failures.
+  - Containerized-host receipt rows expose the receipt family, owning record ref, stale/degraded projection health, blocked reason code, and allowed actions without becoming the receipt authority.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Runtime Artifacts containerized-host projection fixtures
+  - future blocked != failed projection fixtures
+risk_class: runtime_artifact_receipt_authority_drift
+reasoning_tier: high
+context_scope: containerized_host_artifact_projection
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - future Runtime Artifacts containerized-host views
+node_compile_hint:
+  mode: containerized_host_evidence_projection_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0008
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0014
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0015
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0020
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0039
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0049
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0078
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-003-blocker-taxonomy-projection-boundary
+source_atom_ids: [atom-0008, atom-0014, atom-0015, atom-0020, atom-0039, atom-0041, atom-0049, atom-0053, atom-0069, atom-0075, atom-0078, atom-0079]
+decision_refs: [dec-0008, dec-0014, dec-0015, dec-0020]
+preserved_exact_tokens:
+  - "Runtime Artifacts as projection/evidence browsing rather than receipt truth"
+  - "blocked != failed"
+  - "TestRunReceipt"
+  - "host_preflight_receipt"
+  - "host_execution_receipt"
+  - "cleanup_retention_receipt"
+  - "logs"
+  - "screenshots"
+  - "browser recordings"
+  - "traces"
+  - "health checks"
+  - "ports"
+  - "access URLs"
+  - "stale/gap markers"
+  - "visual evidence refs"
+  - "permission_denied"
+  - "filesafe_blocked"
+  - "projection_stale"
+  - "indeterminate_remote_outcome"
+negative_constraints:
+  - Do not make Runtime Artifacts the receipt authority.
+  - Do not rely on manual eyeballing or chat-only claims as completion evidence.
+  - Do not let stale or missing owner records become final evidence.
+  - Do not count blocked permission/FileSafe/policy outcomes as execution failures.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+## Usage Artifact Schema Strictness Addendum - 2026-07-09
+
+This addendum tightens already-materialized runtime artifact schema expectations for usage-bearing artifacts. It creates no runtime artifacts, WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, final manifests, or PNC-019 receipts.
+
+### RAP-043 - Usage And Tool Trace Schema Strictness
+
+```yaml
+plan_unit_id: RAP-043
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  The materialized `cost_usage` and `tool_llm_trace` runtime artifact schemas must reject arbitrary non-empty `type_payload` values. `cost_usage` requires canonical usage identity through `usage_event_ref`, provider/route/account/model identity, normalized usage token buckets and counting semantics, nonnegative `reasoning_tokens` as the JSON wire alias for UF-085 reasoning/thoughts, normalized cost fields, quota/window evidence, authority/source/confidence/settlement fields, raw provider payload/redaction refs, and flags for estimated, provider-reported, CLI-reported, local-context-estimated, BYOK, subscription-hidden, and unknown states. `tool_llm_trace` requires `trace_ref`, trace_kind, tool_call_id, llm_call_id or stream_id, provider_attempt_ref, usage_event_ref when available, stream lifecycle timestamps or refs for start/partial/final/error/abort, provider payload/redaction refs, usage settlement link, retry/escalation relation, and quota/usage refs; provider_reported/cli_reported flags are signal flags only, not source authority, and Curated trace views must join UsageRecord authority through `usage_record_id` or `usage_artifact_ref`. Schema-only JSON validation must fail if these required payload fields are absent; repo-specific validators may add fixtures but must not be the only line of defense.
+gui_related: true
+gui_classification_reason: Cost usage and tool/LLM trace artifacts are user-visible drill-through surfaces, and schema strictness protects their displayed Usage/Ledger behavior.
+depends_on: [RAP-016, RAP-017, RAP-018, UF-085, CBP-027]
+unblocks: []
+acceptance_criteria:
+  - "`Plans/runtime_artifact_cost_usage.schema.json` rejects an artifact whose `type_payload` lacks provider, usage, cost, quota, authority, refs, or flags."
+  - "`Plans/runtime_artifact_cost_usage.schema.json` requires `usage_event_ref`, `usage_record_id`, and nonnegative `reasoning_tokens` as the UF-085 reasoning/thoughts wire alias with counting_semantics."
+  - "`Plans/runtime_artifact_tool_llm_trace.schema.json` rejects an artifact whose `type_payload` lacks `trace_ref`, `usage_record_id`, trace lifecycle, provider attempt linkage, usage settlement linkage, retry/escalation relation, or raw-payload/redaction refs."
+  - Schema-only validation can distinguish missing, unknown, disabled, estimated, provider-reported, CLI-reported, BYOK, and subscription-hidden states without accepting arbitrary payloads.
+  - Runtime Artifacts drill-through uses canonical `usage_event_ref`, `usage_record_id`, `provider_attempt_ref`, and `trace_ref` rather than timestamp heuristics or artifact-local cost models.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, production build tasks, generated governance artifacts, final manifests, or PNC-019 receipts are created by this PlanUnit.
+validation_surfaces:
+  - python3 -m json.tool Plans/runtime_artifact_cost_usage.schema.json
+  - python3 -m json.tool Plans/runtime_artifact_tool_llm_trace.schema.json
+  - python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: runtime_artifact_schema_false_pass
+reasoning_tier: high
+context_scope: runtime_artifact_usage_schema
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/runtime_artifact_cost_usage.schema.json
+  - Plans/runtime_artifact_tool_llm_trace.schema.json
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_runtime_artifact_schema_strictness
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Runtime_Artifacts_Panel.md:262-292"
+  - "Plans/runtime_artifact_cost_usage.schema.json:1"
+  - "Plans/runtime_artifact_tool_llm_trace.schema.json:1"
+  - "uploaded:Puppet-Master-main/Plans/runtime_artifact_cost_usage.schema.json:1"
+  - "uploaded:Puppet-Master-main/Plans/runtime_artifact_tool_llm_trace.schema.json:1"
+  - "uploaded:opencode-dev/packages/llm/src/schema/events.ts:7-69"
+  - "uploaded:cline-main/sdk/packages/llms/fixtures/usage.json:1-56"
+  - "uploaded:pi-main/packages/ai/src/types.ts:352-375"
+  - "uploaded:pi-main/packages/ai/src/api/anthropic-messages.ts:546-559"
+  - "uploaded:antigravity-cli-main/CHANGELOG.md:122-136"
+preserved_exact_tokens:
+  - cost_usage
+  - tool_llm_trace
+  - type_payload
+  - usage_event_ref
+  - provider_attempt_ref
+  - trace_ref
+  - reasoning_tokens
+  - provider_reported
+  - provider_header
+  - cli_reported
+  - local_estimated
+  - pricing_estimated
+  - unknown
+  - streaming_partial
+  - settled
+  - adjusted
+  - failed
+  - BYOK
+  - subscription-hidden
+negative_constraints:
+  - Do not accept arbitrary non-empty `type_payload` as a valid cost_usage or tool_llm_trace artifact.
+  - Do not rely only on custom repo validators when JSON Schema itself can express required payload fields.
+  - Do not create an artifact-local usage model separate from canonical UsageRecord.
+  - Do not use timestamp heuristics, run-only filters, or tier-only filters as the primary usage/cost join.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum is canonical Runtime Artifacts panel spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+### Gap-Analysis Prose Fence And Schema Currentness
+
+Repairs rows `sfk-b1d25fff07c3d23ad4bdf58f` and `sfk-69cf6e354bc8cdd2949fdd95`.
+
+- First-person gap-analysis prose in this document is source-lineage commentary only and must not override canonical runtime-artifact envelope fields.
+- The runtime artifact envelope pins `attempt_id` through the schema family and panel row contract.
+- The 19+1 runtime artifact schema files are current live doc targets when present and validated; wording that says they are "not current live doc targets until those files exist" is stale and superseded by this addendum.
+- Runtime Artifacts remains a GUI/inspection consumer. It does not certify runtime lifecycle and cannot close PNC-019.
+
+### RAP-028 Numbering Disposition
+
+Repairs row `sfk-f24fe6aacec9eba6b6f6fae4`.
+
+`RAP-028` is intentionally retired as a skipped migration number. The sequence is `RAP-027`, retired alias `RAP-028`, then `RAP-029`. New references must not cite `RAP-028` as a live requirement. Compatibility readers may map `RAP-028` to `RAP-029` only when the source row explicitly names the retired alias.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+
+These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 326` (explicitly_deferred; source line 1113; `sfk-69cf6e354bc8cdd2949fdd95`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L292,589-593: **ADJUDICATED the 19+1 `runtime_artifact_*.schema.json` files DO exist** (confirmed elsewhere in this audit); this doc's own "not current live doc targets until those files exist" framing is now stale and should be updated to reflect they've materialized.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds Runtime Artifacts usage drill-through to UsageRecord identity and strict per-type validation. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### RAP-044 - Usage Artifact Drill-Through And Raw Curated Contract
+
+```yaml
+plan_unit_id: RAP-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts usage drill-through is object-first. `Show in Usage` and `Show in Ledger` emit route_target.object_kind = usage_event and a stable object_id whenever usage_event_ref is present, plus secondary refs for usage_event_ref, usage_record_id, artifact_id, attempt_id, node_id, provider_attempt_ref, tool_call_id, trace_ref, receipt refs, raw_payload_ref, run_id, and thread_id. Run, thread, timestamp, and tier remain filters or display scope only. The Runtime Artifacts panel exposes Curated and Raw usage views: Curated shows normalized provider, usage, cost, quota, authority, settlement, counting_semantics, and correlation refs; Raw shows raw_payload_ref, redaction_status, provider_payload_hash, omitted counts, truncation/redaction reason, and permissioned-unavailable state. Append, indexing, and drill-through validation must validate the common envelope plus the matching per-type schema for cost_usage and tool_llm_trace; envelope-only validation or arbitrary non-empty type_payload cannot pass.
+gui_related: true
+gui_classification_reason: Runtime Artifacts drill-through, Curated/Raw views, and Usage/Ledger actions are visible inspection UI.
+depends_on: [RAP-043, UF-087, UF-088, UCC-109, CV-316]
+unblocks: []
+acceptance_criteria:
+  - "`Show in Usage` and `Show in Ledger` payloads include object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref exists."
+  - Route fixtures fail timestamp-only, run-only, thread-only, tier-only, and artifact-only Usage pivots when usage_event_ref is available.
+  - Curated view displays normalized token buckets, cost status, quota status, source_class, source_confidence, source_authority, settlement_status, counting_semantics, and correlation refs.
+  - Raw view displays redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted counts, and permissioned unavailable state without exposing raw secrets, account identifiers, credentials, or local paths.
+  - cost_usage and tool_llm_trace artifacts validate against the envelope plus their matching per-type schema before append, index, display, export, or drill-through.
+  - Negative fixtures reject envelope-only cost_usage/tool_llm_trace artifacts and arbitrary non-empty type_payload payloads.
+validation_surfaces:
+  - python3 -m json.tool Plans/runtime_artifact_cost_usage.schema.json
+  - python3 -m json.tool Plans/runtime_artifact_tool_llm_trace.schema.json
+  - python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check
+  - future GUI-RAP-001 fixture suite
+risk_class: runtime_artifact_usage_drillthrough_false_pass
+reasoning_tier: high
+context_scope: runtime_artifact_usage_drillthrough
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/runtime_artifact_cost_usage.schema.json
+  - Plans/runtime_artifact_tool_llm_trace.schema.json
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: runtime_artifact_usage_drillthrough_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Runtime_Artifacts_Panel.md:262-316"
+  - "Plans/runtime_artifact_envelope.schema.json:1"
+  - "Plans/runtime_artifact_cost_usage.schema.json:47-510"
+  - "Plans/runtime_artifact_tool_llm_trace.schema.json:122-225"
+  - "Plans/Contracts_V0.md:5665-5676"
+  - "Plans/storage-plan.md:109"
+  - "uploaded:opencode-dev/packages/llm/src/schema/events.ts:7-69"
+  - "uploaded:cline-main/sdk/packages/llms/fixtures/usage.json:1-56"
+preserved_exact_tokens:
+  - Show in Usage
+  - Show in Ledger
+  - route_target.object_kind = usage_event
+  - usage_event_ref
+  - provider_attempt_ref
+  - trace_ref
+  - raw_payload_ref
+  - Curated
+  - Raw
+  - type_payload
+  - cost_usage
+  - tool_llm_trace
+negative_constraints:
+  - Do not route usage drill-through primarily by timestamp, run, thread, tier, or artifact-only filters when usage_event_ref is available.
+  - Do not validate cost_usage or tool_llm_trace with envelope-only validation.
+  - Do not display Raw payload contents without redaction refs, permission state, and secret stripping.
+  - Do not create an artifact-local usage schema separate from UsageRecord.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Contracts_V0.md
+```

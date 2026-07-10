@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE canonical_document_lines=766-777 >>>
+L00000766	  - "runner"
+L00000767	  - "Session"
+L00000768	  - "probe layer"
+L00000769	  - "Provider-owned"
+L00000770	  - "discovery + validation + trace service"
+L00000771	  - "Primitive:Provider"
+L00000772	negative_constraints:
+L00000773	  - "Legacy terminology must not appear in user-facing text."
+L00000774	owner_hints:
+L00000775	  - Plans/BinaryLocator_Spec.md
+L00000776	```
+L00000777	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=778-1135 >>>
+L00000778	### BS-007 - BinaryLocateRequest Input Contract
+L00000779	
+L00000780	```yaml
+L00000781	plan_unit_id: BS-007
+L00000782	unit_type: requirement
+L00000783	status: accepted
+L00000784	owner_doc: Plans/BinaryLocator_Spec.md
+L00000785	canonical_text: BinaryLocateRequest is a conceptual Provider-domain contract with provider_cli and force_rescan required, and workspace_root, override_path, and env_path optional under the stated probing and cache-scope boundaries.
+L00000786	gui_related: false
+L00000787	gui_classification_reason: Request shape is backend provider-domain contract data; GUI manual controls are covered in the Override and UI mapping PlanUnits.
+L00000788	split_recommended: false
+L00000789	depends_on: [BS-006]
+L00000790	unblocks: [BS-010, BS-017]
+L00000791	acceptance_criteria:
+L00000792	  - provider_cli and force_rescan remain required fields.
+L00000793	  - workspace_root is used only for workspace-scoped caching keys.
+L00000794	  - workspace_root must not expand filesystem probing scope.
+L00000795	  - override_path is sourced only from Setup/Health manual path controls for Cursor/Claude.
+L00000796	  - env_path carries the effective PATH string used for PATH lookup.
+L00000797	validation_surfaces:
+L00000798	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000799	  - python3 scripts/pm-plan-index.py validate
+L00000800	risk_class: request_contract_drift
+L00000801	reasoning_tier: standard
+L00000802	context_scope: provider_contract
+L00000803	implementation_surfaces:
+L00000804	  - Plans/BinaryLocator_Spec.md
+L00000805	node_compile_hint:
+L00000806	  mode: binarylocaterequest_input_contract
+L00000807	  create_worknodes: false
+L00000808	source_lineage:
+L00000809	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0012
+L00000810	preserved_exact_tokens:
+L00000811	  - "BinaryLocateRequest"
+L00000812	  - "provider_cli"
+L00000813	  - "force_rescan"
+L00000814	  - "workspace_root"
+L00000815	  - "override_path"
+L00000816	  - "env_path"
+L00000817	  - "ConfigKey:advanced_config.cli_paths"
+L00000818	negative_constraints:
+L00000819	  - "workspace_root is used only for workspace-scoped caching keys and must not expand filesystem probing scope."
+L00000820	owner_hints:
+L00000821	  - Plans/BinaryLocator_Spec.md
+L00000822	```
+L00000823	
+L00000824	### BS-008 - BinaryLocateResult And Trace Emission Contract
+L00000825	
+L00000826	```yaml
+L00000827	plan_unit_id: BS-008
+L00000828	unit_type: requirement
+L00000829	status: accepted
+L00000830	owner_doc: Plans/BinaryLocator_Spec.md
+L00000831	canonical_text: >-
+L00000832	  BinaryLocateResult exposes deterministic status, resolved path/name, source
+L00000833	  layer, version, validation, and ordered trace fields; trace is returned to
+L00000834	  callers until persisted event writers are available, then emitted as full
+L00000835	  EventRecord diagnostics while still returned for deterministic UX/debuggability.
+L00000836	gui_related: false
+L00000837	gui_classification_reason: Result shape, trace structure, and event emission are provider and storage contract behavior.
+L00000838	split_recommended: false
+L00000839	depends_on: [BS-006]
+L00000840	unblocks: [BS-018, BS-019]
+L00000841	acceptance_criteria:
+L00000842	  - Status values remain Found, NotFound, and FoundButInvalid.
+L00000843	  - Source layers remain Override, PATH, CommonLocations, and Launchers.
+L00000844	  - Trace attempts preserve layer, candidate, probe_kind, and result fields.
+L00000845	  - probe_kind values preserve DirectPath, PATHLookup, DirectoryJoin, and LauncherResolution.
+L00000846	  - Implementations emit full EventRecord diagnostics once persisted event writers are available while readers may accept EventEnvelopeV1 during transition.
+L00000847	validation_surfaces:
+L00000848	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000849	  - python3 scripts/pm-plan-index.py validate
+L00000850	risk_class: result_trace_contract
+L00000851	reasoning_tier: high
+L00000852	context_scope: provider_contract
+L00000853	implementation_surfaces:
+L00000854	  - Plans/BinaryLocator_Spec.md
+L00000855	  - Plans/Contracts_V0.md
+L00000856	  - Plans/storage-plan.md
+L00000857	node_compile_hint:
+L00000858	  mode: binarylocateresult_trace_emission_contract
+L00000859	  create_worknodes: false
+L00000860	source_lineage:
+L00000861	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0013
+L00000862	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0014
+L00000863	preserved_exact_tokens:
+L00000864	  - "BinaryLocateResult"
+L00000865	  - "Found | NotFound | FoundButInvalid"
+L00000866	  - "Override | PATH | CommonLocations | Launchers"
+L00000867	  - "Valid | Invalid(BinaryErrorCode)"
+L00000868	  - "DirectPath | PATHLookup | DirectoryJoin | LauncherResolution"
+L00000869	  - "Hit | Miss | HitButInvalid(BinaryErrorCode)"
+L00000870	  - "EventEnvelopeV1"
+L00000871	  - "EventRecord"
+L00000872	  - "return `trace` only in `BinaryLocateResult`"
+L00000873	compatibility_only_notes:
+L00000874	  - "Readers may accept both EventEnvelopeV1 and EventRecord during transition, but implementations must emit full EventRecord envelopes."
+L00000875	owner_hints:
+L00000876	  - Plans/BinaryLocator_Spec.md
+L00000877	```
+L00000878	
+L00000879	### BS-009 - Probe Order And Tie-Break Rules
+L00000880	
+L00000881	```yaml
+L00000882	plan_unit_id: BS-009
+L00000883	unit_type: requirement
+L00000884	status: accepted
+L00000885	owner_doc: Plans/BinaryLocator_Spec.md
+L00000886	canonical_text: BinaryLocator probes Override, PATH, CommonLocations, then Launchers in that exact order, returns the first Valid hit, and resolves ties by layer, Provider-owned candidate-name order, then enumerated path order.
+L00000887	gui_related: false
+L00000888	gui_classification_reason: Probe ordering and tie-breaks are deterministic backend discovery algorithm behavior.
+L00000889	split_recommended: false
+L00000890	depends_on: [BS-004, BS-006]
+L00000891	unblocks: [BS-010, BS-011, BS-012, BS-013]
+L00000892	acceptance_criteria:
+L00000893	  - Probe layers run in the exact order Override, PATH, CommonLocations, Launchers.
+L00000894	  - The first Valid hit is returned.
+L00000895	  - Earlier probe layer, earlier Provider-owned candidate name, and earlier enumerated path order win ties.
+L00000896	  - Candidate name ordering comes from a single Provider-domain SSOT list.
+L00000897	validation_surfaces:
+L00000898	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000899	  - python3 scripts/pm-plan-index.py validate
+L00000900	risk_class: discovery_determinism
+L00000901	reasoning_tier: high
+L00000902	context_scope: provider_discovery
+L00000903	implementation_surfaces:
+L00000904	  - Plans/BinaryLocator_Spec.md
+L00000905	node_compile_hint:
+L00000906	  mode: binarylocator_probe_order_tiebreaks
+L00000907	  create_worknodes: false
+L00000908	source_lineage:
+L00000909	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0015
+L00000910	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0016
+L00000911	preserved_exact_tokens:
+L00000912	  - "Override"
+L00000913	  - "PATH"
+L00000914	  - "CommonLocations"
+L00000915	  - "Launchers"
+L00000916	  - "first Valid hit"
+L00000917	  - "earlier candidate name wins"
+L00000918	  - "SSOT list"
+L00000919	  - "PlatformSpec.cli_binary_names"
+L00000920	negative_constraints:
+L00000921	  - "Candidate ordering must not be duplicated outside the Provider domain SSOT list."
+L00000922	compatibility_only_notes:
+L00000923	  - "puppet-master-rs/src/platforms/platform_specs.rs PlatformSpec.cli_binary_names is a legacy anchor only."
+L00000924	owner_hints:
+L00000925	  - Plans/BinaryLocator_Spec.md
+L00000926	```
+L00000927	
+L00000928	### BS-010 - Override Probe Layer
+L00000929	
+L00000930	```yaml
+L00000931	plan_unit_id: BS-010
+L00000932	unit_type: requirement
+L00000933	status: accepted
+L00000934	owner_doc: Plans/BinaryLocator_Spec.md
+L00000935	canonical_text: >-
+L00000936	  The Override probe layer honors explicit Cursor/Claude user selection from
+L00000937	  Setup/Health manual path controls, normalizes paths deterministically, probes
+L00000938	  directory or file overrides as specified, and fails fast without fallback on
+L00000939	  OverrideInvalid or OverrideMissing.
+L00000940	gui_related: true
+L00000941	gui_classification_reason: The override layer includes Setup/Health manual-path controls, a Use manual path checkbox, and a native file picker.
+L00000942	split_recommended: false
+L00000943	depends_on: [BS-007, BS-009]
+L00000944	unblocks: [BS-018, BS-019]
+L00000945	acceptance_criteria:
+L00000946	  - Empty override_path values skip the Override layer.
+L00000947	  - Only Cursor Agent and Claude Code Setup/Health rows may emit override_path.
+L00000948	  - Use manual path checkbox off means callers pass override_path = None.
+L00000949	  - Path normalization expands Unix home, Windows environment tokens, and relative paths only against workspace_root when present.
+L00000950	  - Directory overrides probe override/candidate_name and file overrides probe the exact file path.
+L00000951	  - Missing or invalid overrides return FoundButInvalid with OverrideMissing or OverrideInvalid and do not fall back to later layers.
+L00000952	validation_surfaces:
+L00000953	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000954	  - python3 scripts/pm-plan-index.py validate
+L00000955	risk_class: override_semantics
+L00000956	reasoning_tier: high
+L00000957	context_scope: provider_discovery
+L00000958	implementation_surfaces:
+L00000959	  - Plans/BinaryLocator_Spec.md
+L00000960	  - Plans/FinalGUISpec.md
+L00000961	node_compile_hint:
+L00000962	  mode: binarylocator_override_probe_layer
+L00000963	  create_worknodes: false
+L00000964	source_lineage:
+L00000965	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0017
+L00000966	preserved_exact_tokens:
+L00000967	  - "override_path"
+L00000968	  - "Setup/Health"
+L00000969	  - "Use manual path"
+L00000970	  - "native file picker"
+L00000971	  - "override_path = None"
+L00000972	  - "~"
+L00000973	  - "%VAR%"
+L00000974	  - "$Env:VAR"
+L00000975	  - "FoundButInvalid(OverrideInvalid)"
+L00000976	  - "FoundButInvalid(OverrideMissing)"
+L00000977	negative_constraints:
+L00000978	  - "Other tools must not emit override_path."
+L00000979	  - "Invalid or missing override paths must not fall back to other probe layers."
+L00000980	owner_hints:
+L00000981	  - Plans/BinaryLocator_Spec.md
+L00000982	```
+L00000983	
+L00000984	### BS-011 - PATH Probe Layer
+L00000985	
+L00000986	```yaml
+L00000987	plan_unit_id: BS-011
+L00000988	unit_type: requirement
+L00000989	status: accepted
+L00000990	owner_doc: Plans/BinaryLocator_Spec.md
+L00000991	canonical_text: The PATH probe layer performs OS-native PATH lookup for each candidate name, continues after invalid PATH hits, and proceeds to CommonLocations only when no valid PATH hit exists.
+L00000992	gui_related: false
+L00000993	gui_classification_reason: OS-native PATH lookup is backend filesystem/provider discovery behavior.
+L00000994	split_recommended: false
+L00000995	depends_on: [BS-009]
+L00000996	unblocks: [BS-012]
+L00000997	acceptance_criteria:
+L00000998	  - Each candidate name is resolved using OS-native PATH lookup.
+L00000999	  - Invalid PATH hits do not stop the candidate search.
+L00001000	  - If no valid PATH hit exists, discovery proceeds to CommonLocations.
+L00001001	validation_surfaces:
+L00001002	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001003	  - python3 scripts/pm-plan-index.py validate
+L00001004	risk_class: path_lookup_drift
+L00001005	reasoning_tier: standard
+L00001006	context_scope: provider_discovery
+L00001007	implementation_surfaces:
+L00001008	  - Plans/BinaryLocator_Spec.md
+L00001009	node_compile_hint:
+L00001010	  mode: binarylocator_path_probe_layer
+L00001011	  create_worknodes: false
+L00001012	source_lineage:
+L00001013	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0018
+L00001014	preserved_exact_tokens:
+L00001015	  - "PATH"
+L00001016	  - "OS-native PATH lookup"
+L00001017	  - "continue searching other candidate names"
+L00001018	  - "CommonLocations"
+L00001019	  - "which::which()"
+L00001020	compatibility_only_notes:
+L00001021	  - "which::which() is a legacy behavior anchor only."
+L00001022	owner_hints:
+L00001023	  - Plans/BinaryLocator_Spec.md
+L00001024	```
+L00001025	
+L00001026	### BS-012 - CommonLocations Probe Layer
+L00001027	
+L00001028	```yaml
+L00001029	plan_unit_id: BS-012
+L00001030	unit_type: requirement
+L00001031	status: accepted
+L00001032	owner_doc: Plans/BinaryLocator_Spec.md
+L00001033	canonical_text: CommonLocations enumerates Provider-owned official/default candidate paths in stable order, expands home paths, de-duplicates normalized absolutes with first occurrence winning, validates each candidate, and excludes legacy/pre-rewrite binary locations.
+L00001034	gui_related: true
+L00001035	gui_classification_reason: The CommonLocations layer includes official GUI app footprints and install locations that feed user-visible setup/health outcomes.
+L00001036	split_recommended: false
+L00001037	depends_on: [BS-009, BS-011]
+L00001038	unblocks: [BS-013]
+L00001039	acceptance_criteria:
+L00001040	  - Candidate paths come from Provider-owned SSOT data in stable order.
+L00001041	  - Home expansion and normalized absolute path de-duplication are deterministic.
+L00001042	  - Each candidate path is checked for existence and validation.
+L00001043	  - Candidate paths are limited to official/default footprints plus explicit user override path.
+L00001044	  - Legacy/pre-rewrite binary locations are not included.
+L00001045	validation_surfaces:
+L00001046	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001047	  - python3 scripts/pm-plan-index.py validate
+L00001048	risk_class: common_locations_drift
+L00001049	reasoning_tier: high
+L00001050	context_scope: provider_discovery
+L00001051	implementation_surfaces:
+L00001052	  - Plans/BinaryLocator_Spec.md
+L00001053	node_compile_hint:
+L00001054	  mode: binarylocator_commonlocations_probe_layer
+L00001055	  create_worknodes: false
+L00001056	source_lineage:
+L00001057	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0019
+L00001058	preserved_exact_tokens:
+L00001059	  - "CommonLocations"
+L00001060	  - "Provider-owned SSOT data"
+L00001061	  - "stable order"
+L00001062	  - "Expand `~`"
+L00001063	  - "De-duplicate by normalized absolute path string"
+L00001064	  - "official/default footprints"
+L00001065	  - "legacy/pre-rewrite binary locations MUST NOT be included"
+L00001066	  - "PlatformSpec.default_install_paths"
+L00001067	  - "get_fallback_directories()"
+L00001068	negative_constraints:
+L00001069	  - "Candidate paths must not include legacy or pre-rewrite binary locations."
+L00001070	compatibility_only_notes:
+L00001071	  - "platform_specs.rs and path_utils.rs fallback directories are read-only legacy anchors."
+L00001072	owner_hints:
+L00001073	  - Plans/BinaryLocator_Spec.md
+L00001074	```
+L00001075	
+L00001076	### BS-013 - Launcher Resolution
+L00001077	
+L00001078	```yaml
+L00001079	plan_unit_id: BS-013
+L00001080	unit_type: requirement
+L00001081	status: accepted
+L00001082	owner_doc: Plans/BinaryLocator_Spec.md
+L00001083	canonical_text: >-
+L00001084	  The Launchers layer is restricted to explicit deterministic rules, supports
+L00001085	  Cursor Agent versioned bundle resolution from OS-specific versions roots using
+L00001086	  byte-order lexicographic child selection, validates cursor-agent executables
+L00001087	  and Windows .cmd/.bat launchers, and returns NotFound when no launcher rule
+L00001088	  yields a valid hit.
+L00001089	gui_related: false
+L00001090	gui_classification_reason: Launcher resolution is deterministic filesystem/provider discovery behavior.
+L00001091	split_recommended: false
+L00001092	depends_on: [BS-009, BS-012]
+L00001093	unblocks: [BS-015, BS-016]
+L00001094	acceptance_criteria:
+L00001095	  - The Launchers layer uses only explicit deterministic rules and no broad filesystem crawling.
+L00001096	  - Cursor Agent versions roots are probed for Unix/WSL and Windows Native.
+L00001097	  - Immediate child directories are treated as opaque strings and selected by lexicographically greatest byte-order comparison.
+L00001098	  - Unix/WSL probes cursor-agent and Windows Native probes cursor-agent.exe under the selected version.
+L00001099	  - .cmd and .bat candidates are treated as launchers and validated through the standard validation contract.
+L00001100	  - NotFound is returned when no launcher rule yields a valid hit.
+L00001101	validation_surfaces:
+L00001102	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001103	  - python3 scripts/pm-plan-index.py validate
+L00001104	risk_class: launcher_resolution_drift
+L00001105	reasoning_tier: high
+L00001106	context_scope: provider_discovery
+L00001107	implementation_surfaces:
+L00001108	  - Plans/BinaryLocator_Spec.md
+L00001109	node_compile_hint:
+L00001110	  mode: binarylocator_launcher_resolution
+L00001111	  create_worknodes: false
+L00001112	source_lineage:
+L00001113	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0020
+L00001114	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0021
+L00001115	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:BinaryLocator_Spec-S0022
+L00001116	preserved_exact_tokens:
+L00001117	  - "Launchers"
+L00001118	  - "no broad filesystem crawling"
+L00001119	  - "~/.local/share/cursor-agent/versions/"
+L00001120	  - "%LOCALAPPDATA%\\cursor-agent\\versions\\"
+L00001121	  - "lexicographically greatest name using byte-order string comparison"
+L00001122	  - "opaque strings"
+L00001123	  - "cursor-agent"
+L00001124	  - "cursor-agent.exe"
+L00001125	  - ".cmd"
+L00001126	  - ".bat"
+L00001127	  - "NotFound"
+L00001128	negative_constraints:
+L00001129	  - "Launcher resolution must not perform broad filesystem crawling."
+L00001130	compatibility_only_notes:
+L00001131	  - "puppet-master-rs/src/install/script_installer.rs is a legacy Cursor shim anchor only."
+L00001132	owner_hints:
+L00001133	  - Plans/BinaryLocator_Spec.md
+L00001134	```
+L00001135	
+
+<<< CONTEXT_AFTER canonical_document_lines=1136-1147 >>>
+L00001136	### BS-014 - Remote Indexer Binary Locator
+L00001137	
+L00001138	```yaml
+L00001139	plan_unit_id: BS-014
+L00001140	unit_type: requirement
+L00001141	status: accepted
+L00001142	owner_doc: Plans/BinaryLocator_Spec.md
+L00001143	canonical_text: >-
+L00001144	  For non-Git remote projects, BinaryLocator selects, transfers, verifies, and
+L00001145	  optionally cleans up the PM-managed sparse n-gram indexer helper binary while
+L00001146	  GitHub Integration owns remote project flow and storage-plan owns regex-index
+L00001147	  storage/cache semantics.

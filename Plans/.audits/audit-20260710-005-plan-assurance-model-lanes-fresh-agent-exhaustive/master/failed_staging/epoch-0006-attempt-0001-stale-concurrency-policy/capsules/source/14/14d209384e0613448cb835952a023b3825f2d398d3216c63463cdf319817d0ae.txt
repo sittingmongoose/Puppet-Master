@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6861-6872 >>>
+L00006861	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00006862	        },
+L00006863	        {
+L00006864	          "test_id": "wiring.catalog.dashboard_add_widget.events",
+L00006865	          "evidence_kind": "event_test",
+L00006866	          "requirement": "Assert cmd.dashboard.add_widget emits dashboard.widget_added with command_id, origin, correlation_id, and handler target."
+L00006867	        }
+L00006868	      ],
+L00006869	      "event_test_requirements": [
+L00006870	        "Assert cmd.dashboard.add_widget emits dashboard.widget_added with command_id, origin, correlation_id, and handler target."
+L00006871	      ]
+L00006872	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6873-7257 >>>
+L00006873	    "catalog.dashboard_catalog": {
+L00006874	      "ui_element_id": "catalog.dashboard_catalog",
+L00006875	      "ui_location": "Dashboard > Catalog",
+L00006876	      "ui_command_id": "cmd.dashboard.catalog",
+L00006877	      "handler_location": "handlers::dashboard::catalog",
+L00006878	      "expected_event_types": [],
+L00006879	      "acceptance_checks": [
+L00006880	        "cmd.dashboard.catalog is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00006881	        "cmd.dashboard.catalog exposes state selector and disabled reason before dispatch.",
+L00006882	        "cmd.dashboard.catalog dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00006883	        "cmd.dashboard.catalog uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00006884	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00006885	      ],
+L00006886	      "evidence_required": "Production wiring contract for cmd.dashboard.catalog. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00006887	      "state_selector": "state.commands.dashboard_catalog.availability",
+L00006888	      "disabled_reason_projection": "state.commands.dashboard_catalog.disabled_reason",
+L00006889	      "effect_contract": {
+L00006890	        "effect_kind": "receipt",
+L00006891	        "description": "cmd.dashboard.catalog records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event.",
+L00006892	        "receipt_or_event_refs": [
+L00006893	          "cmd.dashboard.catalog.dispatch_receipt"
+L00006894	        ]
+L00006895	      },
+L00006896	      "accessibility_contract": {
+L00006897	        "role_or_semantics": "catalog.dashboard_catalog exposes a stable role/name/description matching cmd.dashboard.catalog.",
+L00006898	        "keyboard_access": "catalog.dashboard_catalog is reachable and activatable by keyboard where the control is visible.",
+L00006899	        "focus_management": "catalog.dashboard_catalog preserves visible focus and returns focus deterministically after dispatch or error.",
+L00006900	        "disabled_announcement": "catalog.dashboard_catalog surfaces state.commands.dashboard_catalog.disabled_reason to assistive technology when unavailable."
+L00006901	      },
+L00006902	      "test_evidence": [
+L00006903	        {
+L00006904	          "test_id": "wiring.catalog.dashboard_catalog.dispatcher",
+L00006905	          "evidence_kind": "dispatcher_fixture",
+L00006906	          "requirement": "Dispatching cmd.dashboard.catalog reaches handlers::dashboard::catalog with typed args/result contract."
+L00006907	        },
+L00006908	        {
+L00006909	          "test_id": "wiring.catalog.dashboard_catalog.state_projection",
+L00006910	          "evidence_kind": "state_projection",
+L00006911	          "requirement": "Availability reads state.commands.dashboard_catalog.availability and disabled copy reads state.commands.dashboard_catalog.disabled_reason."
+L00006912	        },
+L00006913	        {
+L00006914	          "test_id": "wiring.catalog.dashboard_catalog.effect",
+L00006915	          "evidence_kind": "receipt_or_event_assertion",
+L00006916	          "requirement": "cmd.dashboard.catalog records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event."
+L00006917	        },
+L00006918	        {
+L00006919	          "test_id": "wiring.catalog.dashboard_catalog.accessibility",
+L00006920	          "evidence_kind": "accessibility_regression",
+L00006921	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00006922	        }
+L00006923	      ],
+L00006924	      "event_test_requirements": [
+L00006925	        "Assert cmd.dashboard.catalog records dispatch receipt cmd.dashboard.catalog.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00006926	      ]
+L00006927	    },
+L00006928	    "catalog.debug_add_breakpoint": {
+L00006929	      "ui_element_id": "catalog.debug_add_breakpoint",
+L00006930	      "ui_location": "Run & Debug > Debug controls > Add Breakpoint",
+L00006931	      "ui_command_id": "cmd.debug.add_breakpoint",
+L00006932	      "handler_location": "handlers::debug::add_breakpoint",
+L00006933	      "expected_event_types": [],
+L00006934	      "acceptance_checks": [
+L00006935	        "cmd.debug.add_breakpoint must be registered in the UICommand dispatcher with typed args and result contract",
+L00006936	        "cmd.debug.add_breakpoint must expose projected state selector and disabled reason before dispatch",
+L00006937	        "cmd.debug.add_breakpoint dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00006938	        "cmd.debug.add_breakpoint must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00006939	        "cmd.debug.add_breakpoint must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00006940	      ],
+L00006941	      "evidence_required": "Production wiring contract for cmd.debug.add_breakpoint; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00006942	      "state_selector": "state.commands.debug_add_breakpoint.availability",
+L00006943	      "disabled_reason_projection": "state.commands.debug_add_breakpoint.disabled_reason",
+L00006944	      "effect_contract": {
+L00006945	        "effect_kind": "receipt",
+L00006946	        "description": "cmd.debug.add_breakpoint has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00006947	        "receipt_or_event_refs": [
+L00006948	          "cmd.debug.add_breakpoint.dispatch_receipt"
+L00006949	        ]
+L00006950	      },
+L00006951	      "accessibility_contract": {
+L00006952	        "role_or_semantics": "catalog.debug_add_breakpoint exposes a stable role/name/description matching cmd.debug.add_breakpoint.",
+L00006953	        "keyboard_access": "catalog.debug_add_breakpoint is reachable and activatable by keyboard where the control is visible.",
+L00006954	        "focus_management": "catalog.debug_add_breakpoint preserves visible focus and returns focus deterministically after dispatch or error.",
+L00006955	        "disabled_announcement": "catalog.debug_add_breakpoint surfaces state.commands.debug_add_breakpoint.disabled_reason to assistive technology when unavailable."
+L00006956	      },
+L00006957	      "test_evidence": [
+L00006958	        {
+L00006959	          "test_id": "wiring.catalog.debug_add_breakpoint.dispatcher",
+L00006960	          "evidence_kind": "dispatcher_fixture",
+L00006961	          "requirement": "Dispatching cmd.debug.add_breakpoint reaches handlers::debug::add_breakpoint with typed args/result contract."
+L00006962	        },
+L00006963	        {
+L00006964	          "test_id": "wiring.catalog.debug_add_breakpoint.state_projection",
+L00006965	          "evidence_kind": "state_projection",
+L00006966	          "requirement": "Availability reads state.commands.debug_add_breakpoint.availability and disabled copy reads state.commands.debug_add_breakpoint.disabled_reason."
+L00006967	        },
+L00006968	        {
+L00006969	          "test_id": "wiring.catalog.debug_add_breakpoint.effect",
+L00006970	          "evidence_kind": "receipt_or_event_assertion",
+L00006971	          "requirement": "cmd.debug.add_breakpoint has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00006972	        },
+L00006973	        {
+L00006974	          "test_id": "wiring.catalog.debug_add_breakpoint.accessibility",
+L00006975	          "evidence_kind": "accessibility_regression",
+L00006976	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00006977	        }
+L00006978	      ],
+L00006979	      "event_test_requirements": [
+L00006980	        "Assert cmd.debug.add_breakpoint records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00006981	      ]
+L00006982	    },
+L00006983	    "catalog.debug_clear_breakpoints": {
+L00006984	      "ui_element_id": "catalog.debug_clear_breakpoints",
+L00006985	      "ui_location": "Run & Debug > Debug controls > Clear Breakpoints",
+L00006986	      "ui_command_id": "cmd.debug.clear_breakpoints",
+L00006987	      "handler_location": "handlers::debug::clear_breakpoints",
+L00006988	      "expected_event_types": [],
+L00006989	      "acceptance_checks": [
+L00006990	        "cmd.debug.clear_breakpoints must be registered in the UICommand dispatcher with typed args and result contract",
+L00006991	        "cmd.debug.clear_breakpoints must expose projected state selector and disabled reason before dispatch",
+L00006992	        "cmd.debug.clear_breakpoints dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00006993	        "cmd.debug.clear_breakpoints must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00006994	        "cmd.debug.clear_breakpoints must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00006995	      ],
+L00006996	      "evidence_required": "Production wiring contract for cmd.debug.clear_breakpoints; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00006997	      "state_selector": "state.commands.debug_clear_breakpoints.availability",
+L00006998	      "disabled_reason_projection": "state.commands.debug_clear_breakpoints.disabled_reason",
+L00006999	      "effect_contract": {
+L00007000	        "effect_kind": "receipt",
+L00007001	        "description": "cmd.debug.clear_breakpoints has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00007002	        "receipt_or_event_refs": [
+L00007003	          "cmd.debug.clear_breakpoints.dispatch_receipt"
+L00007004	        ]
+L00007005	      },
+L00007006	      "accessibility_contract": {
+L00007007	        "role_or_semantics": "catalog.debug_clear_breakpoints exposes a stable role/name/description matching cmd.debug.clear_breakpoints.",
+L00007008	        "keyboard_access": "catalog.debug_clear_breakpoints is reachable and activatable by keyboard where the control is visible.",
+L00007009	        "focus_management": "catalog.debug_clear_breakpoints preserves visible focus and returns focus deterministically after dispatch or error.",
+L00007010	        "disabled_announcement": "catalog.debug_clear_breakpoints surfaces state.commands.debug_clear_breakpoints.disabled_reason to assistive technology when unavailable."
+L00007011	      },
+L00007012	      "test_evidence": [
+L00007013	        {
+L00007014	          "test_id": "wiring.catalog.debug_clear_breakpoints.dispatcher",
+L00007015	          "evidence_kind": "dispatcher_fixture",
+L00007016	          "requirement": "Dispatching cmd.debug.clear_breakpoints reaches handlers::debug::clear_breakpoints with typed args/result contract."
+L00007017	        },
+L00007018	        {
+L00007019	          "test_id": "wiring.catalog.debug_clear_breakpoints.state_projection",
+L00007020	          "evidence_kind": "state_projection",
+L00007021	          "requirement": "Availability reads state.commands.debug_clear_breakpoints.availability and disabled copy reads state.commands.debug_clear_breakpoints.disabled_reason."
+L00007022	        },
+L00007023	        {
+L00007024	          "test_id": "wiring.catalog.debug_clear_breakpoints.effect",
+L00007025	          "evidence_kind": "receipt_or_event_assertion",
+L00007026	          "requirement": "cmd.debug.clear_breakpoints has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00007027	        },
+L00007028	        {
+L00007029	          "test_id": "wiring.catalog.debug_clear_breakpoints.accessibility",
+L00007030	          "evidence_kind": "accessibility_regression",
+L00007031	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00007032	        }
+L00007033	      ],
+L00007034	      "event_test_requirements": [
+L00007035	        "Assert cmd.debug.clear_breakpoints records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00007036	      ]
+L00007037	    },
+L00007038	    "catalog.debug_collect_snapshot": {
+L00007039	      "ui_element_id": "catalog.debug_collect_snapshot",
+L00007040	      "ui_location": "Run & Debug > Debug controls > Collect Snapshot",
+L00007041	      "ui_command_id": "cmd.debug.collect_snapshot",
+L00007042	      "handler_location": "handlers::debug::collect_snapshot",
+L00007043	      "expected_event_types": [],
+L00007044	      "acceptance_checks": [
+L00007045	        "cmd.debug.collect_snapshot must be registered in the UICommand dispatcher with typed args and result contract",
+L00007046	        "cmd.debug.collect_snapshot must expose projected state selector and disabled reason before dispatch",
+L00007047	        "cmd.debug.collect_snapshot dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00007048	        "cmd.debug.collect_snapshot must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00007049	        "cmd.debug.collect_snapshot must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00007050	      ],
+L00007051	      "evidence_required": "Production wiring contract for cmd.debug.collect_snapshot; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00007052	      "state_selector": "state.commands.debug_collect_snapshot.availability",
+L00007053	      "disabled_reason_projection": "state.commands.debug_collect_snapshot.disabled_reason",
+L00007054	      "effect_contract": {
+L00007055	        "effect_kind": "receipt",
+L00007056	        "description": "cmd.debug.collect_snapshot has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00007057	        "receipt_or_event_refs": [
+L00007058	          "cmd.debug.collect_snapshot.dispatch_receipt"
+L00007059	        ]
+L00007060	      },
+L00007061	      "accessibility_contract": {
+L00007062	        "role_or_semantics": "catalog.debug_collect_snapshot exposes a stable role/name/description matching cmd.debug.collect_snapshot.",
+L00007063	        "keyboard_access": "catalog.debug_collect_snapshot is reachable and activatable by keyboard where the control is visible.",
+L00007064	        "focus_management": "catalog.debug_collect_snapshot preserves visible focus and returns focus deterministically after dispatch or error.",
+L00007065	        "disabled_announcement": "catalog.debug_collect_snapshot surfaces state.commands.debug_collect_snapshot.disabled_reason to assistive technology when unavailable."
+L00007066	      },
+L00007067	      "test_evidence": [
+L00007068	        {
+L00007069	          "test_id": "wiring.catalog.debug_collect_snapshot.dispatcher",
+L00007070	          "evidence_kind": "dispatcher_fixture",
+L00007071	          "requirement": "Dispatching cmd.debug.collect_snapshot reaches handlers::debug::collect_snapshot with typed args/result contract."
+L00007072	        },
+L00007073	        {
+L00007074	          "test_id": "wiring.catalog.debug_collect_snapshot.state_projection",
+L00007075	          "evidence_kind": "state_projection",
+L00007076	          "requirement": "Availability reads state.commands.debug_collect_snapshot.availability and disabled copy reads state.commands.debug_collect_snapshot.disabled_reason."
+L00007077	        },
+L00007078	        {
+L00007079	          "test_id": "wiring.catalog.debug_collect_snapshot.effect",
+L00007080	          "evidence_kind": "receipt_or_event_assertion",
+L00007081	          "requirement": "cmd.debug.collect_snapshot has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00007082	        },
+L00007083	        {
+L00007084	          "test_id": "wiring.catalog.debug_collect_snapshot.accessibility",
+L00007085	          "evidence_kind": "accessibility_regression",
+L00007086	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00007087	        }
+L00007088	      ],
+L00007089	      "event_test_requirements": [
+L00007090	        "Assert cmd.debug.collect_snapshot records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00007091	      ]
+L00007092	    },
+L00007093	    "catalog.debug_pause": {
+L00007094	      "ui_element_id": "catalog.debug_pause",
+L00007095	      "ui_location": "Run & Debug > Debug controls > Pause",
+L00007096	      "ui_command_id": "cmd.debug.pause",
+L00007097	      "handler_location": "handlers::debug::pause",
+L00007098	      "expected_event_types": [],
+L00007099	      "acceptance_checks": [
+L00007100	        "cmd.debug.pause must be registered in the UICommand dispatcher with typed args and result contract",
+L00007101	        "cmd.debug.pause must expose projected state selector and disabled reason before dispatch",
+L00007102	        "cmd.debug.pause dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00007103	        "cmd.debug.pause must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00007104	        "cmd.debug.pause must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00007105	      ],
+L00007106	      "evidence_required": "Production wiring contract for cmd.debug.pause; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00007107	      "state_selector": "state.commands.debug_pause.availability",
+L00007108	      "disabled_reason_projection": "state.commands.debug_pause.disabled_reason",
+L00007109	      "effect_contract": {
+L00007110	        "effect_kind": "receipt",
+L00007111	        "description": "cmd.debug.pause has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00007112	        "receipt_or_event_refs": [
+L00007113	          "cmd.debug.pause.dispatch_receipt"
+L00007114	        ]
+L00007115	      },
+L00007116	      "accessibility_contract": {
+L00007117	        "role_or_semantics": "catalog.debug_pause exposes a stable role/name/description matching cmd.debug.pause.",
+L00007118	        "keyboard_access": "catalog.debug_pause is reachable and activatable by keyboard where the control is visible.",
+L00007119	        "focus_management": "catalog.debug_pause preserves visible focus and returns focus deterministically after dispatch or error.",
+L00007120	        "disabled_announcement": "catalog.debug_pause surfaces state.commands.debug_pause.disabled_reason to assistive technology when unavailable."
+L00007121	      },
+L00007122	      "test_evidence": [
+L00007123	        {
+L00007124	          "test_id": "wiring.catalog.debug_pause.dispatcher",
+L00007125	          "evidence_kind": "dispatcher_fixture",
+L00007126	          "requirement": "Dispatching cmd.debug.pause reaches handlers::debug::pause with typed args/result contract."
+L00007127	        },
+L00007128	        {
+L00007129	          "test_id": "wiring.catalog.debug_pause.state_projection",
+L00007130	          "evidence_kind": "state_projection",
+L00007131	          "requirement": "Availability reads state.commands.debug_pause.availability and disabled copy reads state.commands.debug_pause.disabled_reason."
+L00007132	        },
+L00007133	        {
+L00007134	          "test_id": "wiring.catalog.debug_pause.effect",
+L00007135	          "evidence_kind": "receipt_or_event_assertion",
+L00007136	          "requirement": "cmd.debug.pause has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00007137	        },
+L00007138	        {
+L00007139	          "test_id": "wiring.catalog.debug_pause.accessibility",
+L00007140	          "evidence_kind": "accessibility_regression",
+L00007141	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00007142	        }
+L00007143	      ],
+L00007144	      "event_test_requirements": [
+L00007145	        "Assert cmd.debug.pause records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00007146	      ]
+L00007147	    },
+L00007148	    "catalog.debug_remove_breakpoint": {
+L00007149	      "ui_element_id": "catalog.debug_remove_breakpoint",
+L00007150	      "ui_location": "Run & Debug > Debug controls > Remove Breakpoint",
+L00007151	      "ui_command_id": "cmd.debug.remove_breakpoint",
+L00007152	      "handler_location": "handlers::debug::remove_breakpoint",
+L00007153	      "expected_event_types": [],
+L00007154	      "acceptance_checks": [
+L00007155	        "cmd.debug.remove_breakpoint must be registered in the UICommand dispatcher with typed args and result contract",
+L00007156	        "cmd.debug.remove_breakpoint must expose projected state selector and disabled reason before dispatch",
+L00007157	        "cmd.debug.remove_breakpoint dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00007158	        "cmd.debug.remove_breakpoint must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00007159	        "cmd.debug.remove_breakpoint must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00007160	      ],
+L00007161	      "evidence_required": "Production wiring contract for cmd.debug.remove_breakpoint; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00007162	      "state_selector": "state.commands.debug_remove_breakpoint.availability",
+L00007163	      "disabled_reason_projection": "state.commands.debug_remove_breakpoint.disabled_reason",
+L00007164	      "effect_contract": {
+L00007165	        "effect_kind": "receipt",
+L00007166	        "description": "cmd.debug.remove_breakpoint has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00007167	        "receipt_or_event_refs": [
+L00007168	          "cmd.debug.remove_breakpoint.dispatch_receipt"
+L00007169	        ]
+L00007170	      },
+L00007171	      "accessibility_contract": {
+L00007172	        "role_or_semantics": "catalog.debug_remove_breakpoint exposes a stable role/name/description matching cmd.debug.remove_breakpoint.",
+L00007173	        "keyboard_access": "catalog.debug_remove_breakpoint is reachable and activatable by keyboard where the control is visible.",
+L00007174	        "focus_management": "catalog.debug_remove_breakpoint preserves visible focus and returns focus deterministically after dispatch or error.",
+L00007175	        "disabled_announcement": "catalog.debug_remove_breakpoint surfaces state.commands.debug_remove_breakpoint.disabled_reason to assistive technology when unavailable."
+L00007176	      },
+L00007177	      "test_evidence": [
+L00007178	        {
+L00007179	          "test_id": "wiring.catalog.debug_remove_breakpoint.dispatcher",
+L00007180	          "evidence_kind": "dispatcher_fixture",
+L00007181	          "requirement": "Dispatching cmd.debug.remove_breakpoint reaches handlers::debug::remove_breakpoint with typed args/result contract."
+L00007182	        },
+L00007183	        {
+L00007184	          "test_id": "wiring.catalog.debug_remove_breakpoint.state_projection",
+L00007185	          "evidence_kind": "state_projection",
+L00007186	          "requirement": "Availability reads state.commands.debug_remove_breakpoint.availability and disabled copy reads state.commands.debug_remove_breakpoint.disabled_reason."
+L00007187	        },
+L00007188	        {
+L00007189	          "test_id": "wiring.catalog.debug_remove_breakpoint.effect",
+L00007190	          "evidence_kind": "receipt_or_event_assertion",
+L00007191	          "requirement": "cmd.debug.remove_breakpoint has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00007192	        },
+L00007193	        {
+L00007194	          "test_id": "wiring.catalog.debug_remove_breakpoint.accessibility",
+L00007195	          "evidence_kind": "accessibility_regression",
+L00007196	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00007197	        }
+L00007198	      ],
+L00007199	      "event_test_requirements": [
+L00007200	        "Assert cmd.debug.remove_breakpoint records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00007201	      ]
+L00007202	    },
+L00007203	    "catalog.debug_resume": {
+L00007204	      "ui_element_id": "catalog.debug_resume",
+L00007205	      "ui_location": "Run & Debug > Debug controls > Resume",
+L00007206	      "ui_command_id": "cmd.debug.resume",
+L00007207	      "handler_location": "handlers::debug::resume",
+L00007208	      "expected_event_types": [],
+L00007209	      "acceptance_checks": [
+L00007210	        "cmd.debug.resume must be registered in the UICommand dispatcher with typed args and result contract",
+L00007211	        "cmd.debug.resume must expose projected state selector and disabled reason before dispatch",
+L00007212	        "cmd.debug.resume dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00007213	        "cmd.debug.resume must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00007214	        "cmd.debug.resume must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00007215	      ],
+L00007216	      "evidence_required": "Production wiring contract for cmd.debug.resume; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00007217	      "state_selector": "state.commands.debug_resume.availability",
+L00007218	      "disabled_reason_projection": "state.commands.debug_resume.disabled_reason",
+L00007219	      "effect_contract": {
+L00007220	        "effect_kind": "receipt",
+L00007221	        "description": "cmd.debug.resume has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00007222	        "receipt_or_event_refs": [
+L00007223	          "cmd.debug.resume.dispatch_receipt"
+L00007224	        ]
+L00007225	      },
+L00007226	      "accessibility_contract": {
+L00007227	        "role_or_semantics": "catalog.debug_resume exposes a stable role/name/description matching cmd.debug.resume.",
+L00007228	        "keyboard_access": "catalog.debug_resume is reachable and activatable by keyboard where the control is visible.",
+L00007229	        "focus_management": "catalog.debug_resume preserves visible focus and returns focus deterministically after dispatch or error.",
+L00007230	        "disabled_announcement": "catalog.debug_resume surfaces state.commands.debug_resume.disabled_reason to assistive technology when unavailable."
+L00007231	      },
+L00007232	      "test_evidence": [
+L00007233	        {
+L00007234	          "test_id": "wiring.catalog.debug_resume.dispatcher",
+L00007235	          "evidence_kind": "dispatcher_fixture",
+L00007236	          "requirement": "Dispatching cmd.debug.resume reaches handlers::debug::resume with typed args/result contract."
+L00007237	        },
+L00007238	        {
+L00007239	          "test_id": "wiring.catalog.debug_resume.state_projection",
+L00007240	          "evidence_kind": "state_projection",
+L00007241	          "requirement": "Availability reads state.commands.debug_resume.availability and disabled copy reads state.commands.debug_resume.disabled_reason."
+L00007242	        },
+L00007243	        {
+L00007244	          "test_id": "wiring.catalog.debug_resume.effect",
+L00007245	          "evidence_kind": "receipt_or_event_assertion",
+L00007246	          "requirement": "cmd.debug.resume has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00007247	        },
+L00007248	        {
+L00007249	          "test_id": "wiring.catalog.debug_resume.accessibility",
+L00007250	          "evidence_kind": "accessibility_regression",
+L00007251	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00007252	        }
+L00007253	      ],
+L00007254	      "event_test_requirements": [
+L00007255	        "Assert cmd.debug.resume records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00007256	      ]
+L00007257	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=7258-7269 >>>
+L00007258	    "catalog.debug_start": {
+L00007259	      "ui_element_id": "catalog.debug_start",
+L00007260	      "ui_location": "Run & Debug > Debug controls > Start",
+L00007261	      "ui_command_id": "cmd.debug.start",
+L00007262	      "handler_location": "handlers::debug::start",
+L00007263	      "expected_event_types": [],
+L00007264	      "acceptance_checks": [
+L00007265	        "cmd.debug.start must be registered in the UICommand dispatcher with typed args and result contract",
+L00007266	        "cmd.debug.start must expose projected state selector and disabled reason before dispatch",
+L00007267	        "cmd.debug.start dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00007268	        "cmd.debug.start must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00007269	        "cmd.debug.start must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

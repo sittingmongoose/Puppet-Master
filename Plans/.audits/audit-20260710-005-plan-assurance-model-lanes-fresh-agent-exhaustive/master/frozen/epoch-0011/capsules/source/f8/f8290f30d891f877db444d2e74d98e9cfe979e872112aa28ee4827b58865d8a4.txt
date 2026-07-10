@@ -1,0 +1,151 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3569-3580 >>>
+L00003569	- Plans/Prompt_Pipeline.md
+L00003570	- Plans/Models_System.md
+L00003571	- Plans/MCP_Integration.md
+L00003572	compatibility_only_notes:
+L00003573	- Concept/source-lineage references are preserved for routing and audit only; they do not make external plugins
+L00003574	  or PMConcept.html canonical implementation source.
+L00003575	```
+L00003576	
+L00003577	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00003578	
+L00003579	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00003580	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3581-3716 >>>
+L00003581	### PO-050 - opencode_v2_delta
+L00003582	
+L00003583	```yaml
+L00003584	plan_unit_id: PO-050
+L00003585	unit_type: requirement
+L00003586	status: accepted
+L00003587	owner_doc: Plans/Provider_OpenCode.md
+L00003588	canonical_text: >-
+L00003589	  opencode_v2_delta (P0) is compiled as canonical Puppet Master intent for opencode_v2_delta: Add OPEN-CODE-V2-DELTA-MATRIX The preserved PM gap/delta is: Older OpenCode limitations may remain treated as hard assumptions without v2 review The observed external-repo signal remains source-lineage evidence: OpenCode beta/specs/v2 config/provider/session/tools/API are major redesign
+L00003590	gui_related: false
+L00003591	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00003592	depends_on:
+L00003593	- PDS-003
+L00003594	- PNC-001
+L00003595	unblocks: []
+L00003596	acceptance_criteria:
+L00003597	- Research-mode import
+L00003598	- plan index
+L00003599	- audit closure registry
+L00003600	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00003601	validation_surfaces:
+L00003602	- python3 scripts/pm-plan-index.py validate
+L00003603	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00003604	- Research-mode import
+L00003605	- plan index
+L00003606	- audit closure registry
+L00003607	risk_class: p0_opencode_v2_delta_hardening
+L00003608	reasoning_tier: high
+L00003609	context_scope: opencode_v2_delta
+L00003610	implementation_surfaces:
+L00003611	- Plans/Provider_OpenCode.md
+L00003612	- Plans/OpenCode_Deep_Extraction.md
+L00003613	- Plans/OpenCode_Coverage_Matrix.md
+L00003614	node_compile_hint:
+L00003615	  mode: opencode_v2_delta
+L00003616	  create_worknodes: false
+L00003617	  create_nodeseeds: false
+L00003618	source_lineage:
+L00003619	- pldg-20260703-001-feature-intake:atom-0111
+L00003620	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0111
+L00003621	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0107/opencode_v2_delta@line=107
+L00003622	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0107/opencode_v2_delta
+L00003623	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00003624	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00003625	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:9
+L00003626	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+L00003627	source_atom_ids:
+L00003628	- atom-0111
+L00003629	external_atom_id: extrepo-20260703-0107
+L00003630	source_row_id: opencode_v2_delta
+L00003631	priority: P0
+L00003632	finding_family: opencode_v2_delta
+L00003633	target_docs:
+L00003634	- Plans/Provider_OpenCode.md
+L00003635	- Plans/OpenCode_Deep_Extraction.md
+L00003636	- Plans/OpenCode_Coverage_Matrix.md
+L00003637	owner_hints:
+L00003638	- Plans/Provider_OpenCode.md
+L00003639	- Plans/OpenCode_Deep_Extraction.md
+L00003640	- Plans/OpenCode_Coverage_Matrix.md
+L00003641	preserved_exact_tokens:
+L00003642	- extrepo-20260703-0107
+L00003643	- opencode_v2_delta
+L00003644	- P0
+L00003645	negative_constraints: []
+L00003646	observed_signal: OpenCode beta/specs/v2 config/provider/session/tools/API are major redesign
+L00003647	pm_current_coverage: Existing OpenCode docs and source-lineage boundaries exist
+L00003648	pm_gap_or_delta: Older OpenCode limitations may remain treated as hard assumptions without v2 review
+L00003649	proposal_or_recommendation: Add OPEN-CODE-V2-DELTA-MATRIX
+L00003650	compile_disposition: create_new_planunit
+L00003651	```
+L00003652	
+L00003653	### PO-051 - v2_sdk_stability
+L00003654	
+L00003655	```yaml
+L00003656	plan_unit_id: PO-051
+L00003657	unit_type: requirement
+L00003658	status: accepted
+L00003659	owner_doc: Plans/Provider_OpenCode.md
+L00003660	canonical_text: >-
+L00003661	  v2_sdk_stability (P2) is compiled as canonical Puppet Master intent for v2_sdk_stability: Add V2 SDK compatibility watchlist/status gate The preserved PM gap/delta is: Need explicit unstable SDK dependency gate The observed external-repo signal remains source-lineage evidence: OpenCode issues ask whether v2 client export/sdk is stable
+L00003662	gui_related: false
+L00003663	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00003664	depends_on:
+L00003665	- PDS-003
+L00003666	- PNC-001
+L00003667	unblocks: []
+L00003668	acceptance_criteria:
+L00003669	- Build blocks on unstable SDK without adopted compatibility proof
+L00003670	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00003671	validation_surfaces:
+L00003672	- python3 scripts/pm-plan-index.py validate
+L00003673	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00003674	- Build blocks on unstable SDK without adopted compatibility proof
+L00003675	risk_class: p2_provider_capability_and_metadata_coverage
+L00003676	reasoning_tier: standard
+L00003677	context_scope: provider_capability_and_metadata
+L00003678	implementation_surfaces:
+L00003679	- Plans/Provider_OpenCode.md
+L00003680	- Plans/CLI_Bridged_Providers.md
+L00003681	node_compile_hint:
+L00003682	  mode: v2_sdk_stability
+L00003683	  create_worknodes: false
+L00003684	  create_nodeseeds: false
+L00003685	source_lineage:
+L00003686	- pldg-20260703-001-feature-intake:atom-0117
+L00003687	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0117
+L00003688	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0113/v2_sdk_stability@line=113
+L00003689	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0113/v2_sdk_stability
+L00003690	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00003691	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00003692	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:15
+L00003693	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+L00003694	source_atom_ids:
+L00003695	- atom-0117
+L00003696	external_atom_id: extrepo-20260703-0113
+L00003697	source_row_id: v2_sdk_stability
+L00003698	priority: P2
+L00003699	finding_family: v2_sdk_stability
+L00003700	target_docs:
+L00003701	- Plans/Provider_OpenCode.md
+L00003702	- Plans/CLI_Bridged_Providers.md
+L00003703	owner_hints:
+L00003704	- Plans/Provider_OpenCode.md
+L00003705	- Plans/CLI_Bridged_Providers.md
+L00003706	preserved_exact_tokens:
+L00003707	- extrepo-20260703-0113
+L00003708	- v2_sdk_stability
+L00003709	- P2
+L00003710	negative_constraints: []
+L00003711	observed_signal: OpenCode issues ask whether v2 client export/sdk is stable
+L00003712	pm_current_coverage: Provider source-lineage boundaries already warn against overclaiming
+L00003713	pm_gap_or_delta: Need explicit unstable SDK dependency gate
+L00003714	proposal_or_recommendation: Add V2 SDK compatibility watchlist/status gate
+L00003715	compile_disposition: create_new_planunit
+L00003716	```

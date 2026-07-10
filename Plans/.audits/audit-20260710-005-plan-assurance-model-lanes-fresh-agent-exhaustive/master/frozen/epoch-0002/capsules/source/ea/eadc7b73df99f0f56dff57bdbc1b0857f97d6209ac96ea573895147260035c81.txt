@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 286-297 >>>
+
+`Gemini` is the direct key-only, API-key-backed provider entry.
+
+Rules:
+- direct Gemini account rows are API-key-backed only.
+- quota identity may depend on effective Google project context as well as the key itself.
+- Gemini direct API-key setup uses `GEMINI_API_KEY`; Vertex-family quota evidence may come through `ADC`, `gcloud`, service-account JSON, or a Google Cloud API key only when the selected provider entry and auth family support it.
+- For direct Gemini setup, `Use API Key` is the canonical setup path; optional future import of existing key material is not required for the core model.
+- when PM cannot prove authoritative remaining `/quota`, the UI must show `estimated`, `/unknown`, or equivalent source-qualified wording rather than pretending the numbers are definitive.
+- Gemini API key paths are pay-as-you-go with tier/model-based rate limits instead of fixed Code Assist daily `/minute` counters.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+<<< AUTHORITATIVE_CORE 298-696 >>>
+
+#### Retired Gemini CLI usage lineage
+
+`Gemini CLI` is not an active provider entry. The following tokens remain only as retired/source-lineage evidence.
+
+Rules:
+- Do not create active Gemini CLI usage rows.
+- Do not aggregate Gemini CLI OAuth/API/Vertex usage paths into live Gemini family usage.
+- Preserve exact lineage tokens such as OAuth, direct API key, Vertex/Google credentials, `/stats model`, `Configured`, `Working`, `Operational`, and requested/effective model differences for audit only.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+#### Family-pooling rule
+
+When policy pools active provider entries, the Usage surface must show which concrete runtime surface actually handled the run and why. Gemini Direct and Antigravity can participate only when their effective capabilities satisfy the request. Retired Gemini CLI cannot be selected as an active pool member.
+
+Gemini Direct account/plan UI and quota/usage tools are API-key/direct-route specific. Antigravity CLI usage rows carry their own effective model, account/profile/setup state, source confidence, and label. Family-level summaries may aggregate only after preserving requested/effective disclosures.
+
+Usage UI and `/settings` surfaces inherit the GUI requested-vs-effective pattern: per-platform labels remain visible because quota semantics differ by provider, and Gemini rows must expose the requested auth/account intent beside the effective mode, quota bucket, and source label.
+
+Before saving family-pooling changes, Usage shows the preferred provider inside the family plus a capability-guardrail explanation.
+
+Active shared-provider capability posture is locked for Usage and account-pressure interpretation:
+- `supports_multi_account = true`
+- `supports_threshold_switch = true`
+- `supports_hard_exhaustion_detection = true`
+- `supports_rate_limit_detection = true`
+- `supports_reset_countdown = true`
+- `supports_manual_set_active = true`
+- `supports_cooldown = true`
+- `supports_retry_budget = true`
+- `supports_role_scoped_account_pools = true`
+- `auth_recovery_methods` include browser relogin `/re-auth` for OAuth and key replacement/update for API-key accounts.
+- `quota_signal_sources` include direct provider quota signals when available, structured runtime output, provider heuristics, error hints, and local rollups.
+
+Gemini Direct `/quota` visibility is API-key/direct-route aware. Antigravity usage visibility depends on the verified CLI/runtime signals available for the selected account/profile/model. Stale `/AI-Studio-oriented` and Gemini CLI Code Assist-style copy is allowed only as historical context: live Usage UI and specs must label the resolved provider route, auth mode, usage source, source confidence, and quota bucket.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+### Summary table (augmentation sources)
+Provider/backend usage normalization distinguishes authoritative native usage `/quota`, authoritative session `/tool` stats from local runtime, and inferred `/estimated` usage. UI copy must label which evidence class is shown instead of presenting every provider row as equally authoritative.
+
+| Provider entry | Primary usage sources | Auth / setup context | UI disclosure rule |
+|---|---|---|---|
+| **Cursor CLI** | provider-reported plan data, team-admin reporting, inferred runtime refusal | `cursor-agent` login default; API key advanced/non-default | show source-confidence; do not fake precise remaining counters |
+| **Codex** | direct provider usage, plan windows, provider refusals, API-billed usage | `ChatGPT` or `API key` account rows | keep plan-backed and API-billed buckets separate |
+| **GitHub Copilot** | provider quotas, premium-request semantics, runtime refusals, policy blocks | GitHub login plus selected billing/entity context when required | show billing/entity and blocked reason explicitly |
+| **Claude Code CLI** | API/admin usage where available, runtime signals, softer subscriber stats | subscriber, console/API, or SSO account rows | show whether data is authoritative or inferred |
+| **Gemini** | provider usage, quota APIs, project attribution, error hints | direct API-key account rows | show project attribution and estimated-vs-authoritative status honestly |
+| **Antigravity CLI** | CLI/runtime signals, model-list/prompt-output evidence, provider counters when available | Google OAuth/system-keyring, ADC, and local profile-root setup where verified | show concrete runtime surface, model, account/profile, and source confidence |
+| **Gemini CLI (retired)** | source-lineage only | OAuth, API-key, `ADC`, `gcloud`, service-account, or Vertex account rows are not active setup paths | do not show as an active usage row |
+| **OpenCode** | server health/discovery plus upstream provider usage where exposed through the server | managed or attached server profiles; provider-scoped OAuth record pools may expose an active record and ordered account lists | separate connected/discovery status from actual provider availability |
+
+`Server Profiles` render inside the same runtime ontology as account-backed selectable units: they use a `row-type` badge and `/secondary` label instead of becoming a separate configuration system.
+
+Cooldown/reset display rule: `authoritative_rate_limit_or_cooldown` and explicit provider `/reset` or `/cooldown` values outrank local counters. Known reset/cooldown times tick live; unknown values render `Unknown reset` or `Unknown cooldown end`, never a fabricated countdown.
+
+Recovery reason codes include `cooldown_expired`, `health_recovered`, `credentials_revalidated`, and `provider_reconnected`; they restore eligibility only after the matching pressure, health, credential, or connection evidence is current.
+
+Per-profile usage reconstruction may inspect account-specific config/session data, but history isolation or merge decisions, auth/session state, trust, chat `/project` history, runtime caches, and provider-native ephemeral state remain provider/runtime facts rather than usage-ledger truth.
+
+Direct providers with coding-plan-branded products keep provider-specific reset semantics. `Alibaba Coding Plan` has fixed reset windows at 5-hour, weekly, and monthly boundaries from official docs; PM must preserve those window labels and evidence instead of flattening them into a generic quota bucket. `MiniMax Coding Plan` exposes dedicated remains and `/quota` state with 5-hour resets, so PM preserves the MiniMax reset label and source evidence.
+
+`Z.AI Coding Plan` usage remains `Z.AI` provider usage with plan-dependent quota/reset semantics on the coding-plan endpoint. Until the active plan proves exact windows, PM labels the reset evidence as plan-dependent instead of presenting a fixed reset countdown.
+
+Gemini CLI structured session stats from `gemini -p ... --output-format json` may include `usage`, `modelUsage`, `permission_denials`, and `fast_mode_state`; PM records these as provider/runtime evidence rather than as a universal quota counter.
+
+Usage evidence must keep the `documented/default expectation` separate from the `effective observed state` whenever provider docs, runtime output, or account-specific behavior disagree.
+
+Provider and `/account` setup is intentionally spread across Settings `/Auth/Health/Usage` surfaces; Usage consumes readiness and pressure facts without collapsing setup into one Agent-Config page.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
+### Direct-provider status probes
+
+Codex direct-provider setup may use `codex login status` as a local probe for account login state. When it reports logged-in state, PM records that as setup/status evidence only; it does not convert the probe into usage quantity, quota, or remaining-window evidence.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+## Data and Backend (conceptual)
+### Cost_usage runtime artifact and Show in Ledger / Show in Usage
+
+
+The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`.
+
+Required actions for `cost_usage` items are:
+- `Show in Ledger` — navigate to the canonical Ledger surface with the matching usage identity in scope
+- `Show in Usage` — navigate to app-wide Usage or to the thread-scoped Context Detail Pane depending on artifact scope, preserving the same thread/run filters
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- thread-scoped cost usage does not open a chat side-panel usage surface
+- thread-scoped cost usage lands on the same Context Detail Pane used by the chat context circle `More Details` action
+- app-wide cost usage lands on the app-wide Usage surface
+- the artifact does not create a second token or cost model outside the canonical usage schema
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+### OpenCode (product) usage pipeline reference
+
+For implementers: the flow by which usage is collected and stored can be referenced from the OpenCode product (anomalyco/opencode repo). Conceptual flow: **provider response** → adapter → **LanguageModelV2Usage** (or equivalent) → **getUsage-style normalization** (e.g. Session.getUsage) → **processor** applies on finish-step to assistant message + step-finish part; **UI reads from messages** and/or usage.event. Key paths in that repo: session-context-metrics (UI metrics from messages), processor finish-step (where token/cost is applied to message), Session.getUsage (normalization). Puppet Master does not replicate this exactly; all providers (CLI-bridged, OpenCode provider, Codex, Gemini, Copilot) normalize to the same usage.event / message usage shape; collection mechanism differs per provider. OpenCode the **provider** (Plans/Provider_OpenCode.md) is one transport; OpenCode the **product** is the reference for "how message-level usage becomes stored usage."
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
+### Backend implementation notes
+- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
+- **Primary input:** canonical usage projections and redb rollups derived from the seglog pipeline.
+- **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
+- **Compatibility input:** `usage.jsonl` may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
+- **Retired subagent side files:** In `Plans/usage-feature.md` (`/usage-feature.md`), `active-subagents.json` and other active-subagents `side-file` / `live-state` mirrors are compatibility projections only; they must not be presented as canonical or endorsed usage enrichment sources after side-file retirement.
+- Thread-scoped plan `/todo` state used by Usage and Context Detail views comes from storage-backed revision/status history, not from an ad hoc usage-side TODO store.
+- Web change-tracking usage rows preserve `change_status: "new"` when no previous version exists and compare against the most recent cached version of the same normalized `URL`.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+- Usage-linked planning widgets consume the sticky-card / execution-tracker contract from the planning UI: after approval, they show read-mostly status badges, item-focus navigation for the active or selected TODO item, and post-approval edit restrictions rather than becoming a second plan state owner.
+- **Gemini source model:** Prefer the shared `UsageRecord` pipeline and carry explicit source attribution instead of hardcoding Gemini to local counters only.
+- **Gemini signal weighting:** strong provider/account telemetry outranks structured runtime output; structured output outranks heuristics; heuristics outrank local-only counters.
+- **Persistence:** event-level data and rollups remain canonical storage concerns; account-health and quota-pressure updates must feed the same control loop used by multi-account routing.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+## GUI Placement Options
+The GUI placement model is fixed.
+
+Canonical placement:
+- app-wide Usage is its own page or view
+- compact usage visibility appears in shell and status surfaces where appropriate
+- thread-scoped context detail lives in the chat flow as the context circle plus the editor-tab Context Detail Pane
+- artifact deep-links and chat usage activation land on those same canonical surfaces based on scope
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Non-canonical after this section:
+- thread Usage in the chat shell or side panel as the primary detailed surface
+- detached usage pop-out as the canonical thread detail model
+- direct click on the context circle opening the detail pane without the hover/click split
+- unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+## Gaps (Current State vs. Desired)
+
+### Canonical usage pipeline
+- Usage events are emitted by tool invocation and aggregated into usage records.
+- UsageRecord is the canonical schema for all usage data (tokens, costs, tool calls, API calls).
+- Usage records are immutable once committed; corrections require a new record with explicit versioning.
+- Tool, helper, and `/helper/background` usage emission keeps lineage to the parent run/thread plus the concrete helper/tool invocation so background work can be attributed without flattening it into the foreground assistant message.
+
+#### Debug investigation phase attribution
+- Usage projections that summarize Debug Mode work may group usage by investigation lifecycle phase, including `instrumenting`, `reproducing`, `collecting_evidence`, `analyzing`, and `applying_fix`.
+- These labels are usage and analytics attribution dimensions on records and rollups; they do not make Usage the owner of Debug runtime state-machine semantics.
+
+### Billing identity, attribution, and pricing metadata
+- Billing identity is derived from account context and subscription tier.
+- Provider `/billing` and `/usage/billing` metadata remains attribution and pressure evidence; it does not replace the canonical usage_record, entitlement, or billing-entity contracts.
+
+#### Shared runtime identity
+- Carry execution_role plus requested/effective operational identity in shared runtime identity.
+- Project them into effective-resolution, attempt, usage, and inspector surfaces.
+- Role-scoped routing must appear in effective-resolution and usage schemas when policy/storage carries role scope; Usage must not rely on policy/storage-only role state for canonical usage attribution.
+- Canonical Usage routing stays on shared usage identity, not feature-local cost or receipt notions.
+
+#### Attribution family, anchors, and pricing metadata
+- Attribution metadata links usage to project, run, node, and account for cost allocation.
+- Share one attribution family across tool events, runtime artifacts, receipts, and usage records.
+- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields.
+- Pricing metadata includes rate cards and surcharges that apply to each usage event.
+
+#### export taxonomy
+- Export taxonomy documents which usage metrics are surfaced in export manifests and accounting reports.
+- Export taxonomy is versioned and stable across release boundaries.
+
+##### Export classes
+- Define record export, bundle export, and view export as distinct export classes.
+- cov-016 exact item present: Define record export, bundle export, and view export as distinct export classes
+
+##### Export manifest requirements
+- Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure.
+- cov-016 exact item present: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+
+#### account history
+##### Durable account-pressure and switch events
+- Add append-only account_pressure_episode and account_switch_event families.
+- Let Usage, History, Ledger, and Orchestrator consume the same durable event family.
+- Usage consumes Multi-Account selection flow, pressure `/switch` history, and role-aware routing through the same requested/effective disclosure model, so usage projections show both requested account intent and effective account outcome.
+- Usage switch explanations retain switch lineage in canonical records; rollups may explain selected/effective account outcomes only when the switch lineage remains reachable.
+- cov-092 exact item present: Add append-only account_pressure_episode and account_switch_event families
+- cov-092 exact item present: Let Usage, History, Ledger, and Orchestrator consume the same durable event family
+
+##### Recovery and execution-role continuity
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
+- Carry usage switch-history and usage execution-role follow-through.
+- cov-162 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- cov-162 exact item present: Carry usage switch-history and usage execution-role follow-through
+
+#### artifact drill-through section
+##### Local keys and bridge fields
+- Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge.
+- None of those bridge fields replace the primary local key.
+- Usage inspector routing uses `inspector_target = details | evidence | usage | lineage` so details, evidence, usage, and lineage pivots are explicit rather than inferred from timestamps or surrounding UI state.
+- Prefer `usage_event_ref` rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger.
+- Runtime artifacts summarizing external operations must carry receipt linkage.
+- Usage pivots move away from `tier_id` filters toward object-first `usage_event` and runtime-object pivots.
+
+##### Usage and receipt lineage routing
+
+History inspector deref policy is on-demand only, never eager. History rows combine the canonical runtime snapshot fields, web-operation details from `payload.meta`, and ref/blob pointers; dereferenced refs load only when the user chooses click-to-expand, preserving responsive log browsing and the inline/ref storage split.
+
+#### help surfaces
+##### Notification routing policy
+- Route notifications using severity, execution impact, blocked owner, persistence, and projection trust.
+
+##### Quiet-window policy
+- Allow quiet windows for advisory warnings but not for canonical blocked episodes.
+
+#### projection-health-aware degrade behavior
+##### Projection freshness and health states
+- Use current/refreshing/stale/degraded/unavailable projection states.
+
+##### Sensitive action gating and record-backed fallback
+- Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded.
+
+### Canonical UsageRecord fields
+- For gap-001 lineage, this section is also the usage-side partial-transfer anchor for ``### Unified `UsageRecord` schema expectations`` and the queue-escaped alias ``### Unified \`UsageRecord\` schema expectations``; both resolve here rather than creating a second schema section.
+- UF-085 is the implementation-ready UsageRecord contract. Older field names in this section are compatibility, import, export, or display aliases unless they are repeated by UF-085.
+- `usage_id` resolves to `usage_record_id` or `usage_event_ref` according to the importing source; UI routes prefer `usage_event_ref` normalized through `object_kind = usage_event` and `object_id`.
+- `input_tokens` resolves to `input_total`; `output_tokens` resolves to `output_total`; older `cache_read_tokens`, `cached_input_tokens`, and `cache_creation_input_tokens` aliases resolve to `cache_read`, `cache_write`, `cache_write_1h`, or `cache_write_ttl` only when the provider mapper states the TTL and inclusive/exclusive semantics.
+- `cost_usd` is display or migration material only. Canonical cost authority uses `cost_microdollars`, provider minor units, currency, cost_status, pricing_snapshot_id/version/date/source, and custom-provider price row refs where applicable.
+- `usage_source_kind` remains source-lineage vocabulary and maps to UF-085 `source_class`, `source_confidence`, and `source_authority`; it does not replace the closed source classes `provider_reported`, `provider_header`, `cli_reported`, `local_estimated`, `pricing_estimated`, and `unknown`.
+- Usage field-name rules follow the storage naming contract: shared runtime and attribution fields keep stable meanings across usage aggregation, persistence, events, and Config consumers instead of reviving tier-era labels.
+- Cost-integrity display rules are `/clamp/derived-field` rules: sub-cent and sub-dollar display precision is derived from `cost_microdollars` or exact provider minor-unit receipts when available; the canonical display tiers are `<$0.01 = 6dp`, `<$1 = 4dp`, and otherwise 2dp, while `cost_usd` remains display/migration material and must not be the only canonical precision source.
+- `cost_usd = cost_microdollars / 1_000_000` is derived only at display/export boundaries or compatibility import/migration edges; it is not a persisted UsageRecord authority field.
+- Raw-cost provider values are retained as provenance or debug evidence only after normalization to canonical token buckets and `cost_microdollars`; raw-cost fields must not become independent billing authority.
+
+### Ownership and consumption
+- Usage owns canonical UsageRecord aggregation and display semantics; History, Ledger, Orchestrator, and runtime-artifact consumers consume the same durable event family instead of defining parallel usage schemas.
+- All usage events are coerced into UsageRecord format before aggregation.
+
+### Blocked-state and escalation surfaces
+#### Shared escalation ladder and attention semantics
+#### blocked_notice contract and observability
+#### Blocked-owner taxonomy and surface mapping
+
+#### Acceptance carry-through
+- Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications
+- Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence
+- Expand blocked_notice beyond blocked_family and allowed_action_ids[]
+- Carry escalation_level, action_available ownership, and usage observability through blocked surfaces
+- Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+- cov-053 exact item present: Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications
+- cov-053 exact item present: Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence
+- cov-146 exact item present: Expand blocked_notice beyond blocked_family and allowed_action_ids[]
+- cov-146 exact item present: Carry escalation_level, action_available ownership, and usage observability through blocked surfaces
+- cov-146 stale token retired: allowed_action_ids[]
+- cov-198 exact item present: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+
+### Problem 1: Platform APIs require secrets
+
+- **Risk**
+  - Claude Admin API and Copilot metrics require `ANTHROPIC_API_KEY` and `GITHUB_TOKEN`/`GH_TOKEN`. Many users will not set these; 5h/7d from APIs would be missing or "N/A" for those platforms.
+- **Impact**
+  - Users might assume "no data" means "no usage" instead of "API not configured"; or they may not know how to enable live data.
+- **Mitigation**
+  - In Usage view (or tooltip), document which env vars enable live data per platform (e.g. "Set ANTHROPIC_API_KEY for Claude 5h/7d").
+  - **Always** show a fallback: display the project-local canonical usage summary available from current rollups/projections even when provider API quota data is unavailable.
+  - Clearly label source: "From this project's usage" vs "From Claude (API)" when both exist.
+
+### Problem 2: Rate limits on usage APIs
+
+- **Risk**
+  - Polling Claude/Copilot/Gemini usage endpoints too frequently could hit rate limits or consume quota.
+- **Impact**
+  - API errors, blocked requests, or user quota consumed by the app itself.
+- **Mitigation**
+  - Background refresh at a reasonable interval (e.g. 5-15 min); cache last result; expose "Refresh" for on-demand update.
+  - After each run, update usage from the run result (tokens/cost when available) without an extra API call.
+  - Document recommended refresh interval per platform if limits are known.
+
+### Problem 3: Two usage tracker types and ad-hoc Ledger parsing
+
+- **Risk**
+  - `state::UsageTracker` + `types::UsageRecord` vs. `platforms::UsageTracker` + `UsageEvent`/`UsageSummary`; Ledger parses raw JSON with different field names. Duplicate logic and schema drift: writers and readers can get out of sync.
+- **Impact**
+  - Ledger shows wrong or missing fields; 5h/7d aggregation might miss data or double-count if we add a second reader; bugs when we change one path and forget the other.
+- **Mitigation**
+  - Unify on one canonical write path and one `UsageRecord` schema. If `usage.jsonl` persists, it is a mirror / compatibility artifact rather than an independent canonical source.
+  - Document the schema in STATE_FILES and in code; use the same types for write and read where possible.
+  - Prefer one projector/reader path for local summaries so Ledger, rollups, and UI projections do not fork into separate attribution models.
+
+### Problem 4: 5h/7d semantics differ by platform
+
+- **Risk**
+  - Codex: 5h message limit. Claude/Copilot: org-specific windows. Gemini: quota window (e.g. reset after 8h44m). Cursor: API available for augmentation but window semantics may differ. A single "5h: X/Y" column implies identical meaning across platforms when it is not.
+- **Impact**
+  - User misinterprets "5h" for Gemini as the same as Codex; or we show misleading comparisons.
+- **Mitigation**
+  - Per-platform labels in the UI (e.g. "Codex 5h", "Claude 7d", "Gemini (estimated)") and a short tooltip or doc link explaining what each window means.
+  - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
+
+### Canonical usage-window model
+
+Usage/cooldown semantics use a generic `usage-window` model rather than hardcoded `5h/7d` assumptions.
+
+Fields:
+- `window_kind: rolling | fixed_reset | billing_cycle | session_only | unknown`
+- `window_label`
+- `window_scope: provider | account | account+model | org | server_profile`
+
+Rules:
+- `rolling` means the remaining amount changes against a sliding lookback interval.
+- `fixed_reset` means the provider reports a fixed reset boundary or countdown for the current window.
+- `billing_cycle` means quota pressure is tied to the plan or billing period rather than a short cooldown.
+- `session_only` means PM has authoritative session/tool stats from the local runtime but no durable provider quota window.
+- `unknown` means the UI may show inferred/estimated usage only if it labels the evidence source and avoids pretending to know reset semantics.
+- `MiniMax Coding Plan` is modeled as `MiniMax` direct-provider usage metadata with a fixed 5-hour window plus explicit remains endpoint from official docs. The Usage view must preserve that provider-specific `fixed_reset` evidence instead of flattening it into a generic 5h column.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+### Problem 5: Ledger file size
+
+- **Risk**
+  - Event storage (seglog) grows unbounded over long-running or high-throughput projects. Very large seglogs slow analytics scan jobs and increase startup recovery time.
+- **Impact**
+  - Slow UI refresh for 5h/7d windows, elevated memory during rollup recalculation, or degraded startup when the seglog requires extended CRC validation.
+- **Mitigation**
+  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step.
+  - Seglog compaction: periodic background job consolidates older fine-grained events into daily summary records, reducing scan time while preserving attribution fidelity.
+  - Rollup freshness: 5h/7d windows are served from redb rollups, not from raw event scans. Background analytics jobs refresh rollups incrementally; UI shows the last committed rollup plus an explicit freshness cue when a refresh is in progress.
+  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Problem 6: Stale data
+
+- **Risk**
+  - User sees 5h/7d that was last updated 30 minutes ago; they hit a limit in the meantime and are surprised.
+- **Impact**
+  - Loss of trust in the Usage view; unnecessary failed runs.
+- **Mitigation**
+  - Show "Last updated: &lt;time&gt;" next to 5h/7d and provide a prominent "Refresh" action.
+  - Optional: lightweight refresh when app gains focus or when starting a new run (with rate limiting to avoid thrash).
+
+### Problem 7: Multi-project usage
+
+- **Risk**
+  - `usage.jsonl` is per-project (`.puppet-master/usage/`). Users with many projects may expect "total usage across my projects" or get confused whether the view is project-scoped.
+- **Impact**
+  - Confusion about scope; feature requests for cross-project aggregation before we are ready.
+- **Mitigation**
+  - Clarify in UI: "Usage for this project" (or "Current project") for v1.
+  - If we later support "All projects", require an explicit scope selector and document where we read from (e.g. scan multiple `.puppet-master/usage/` dirs).
+
+---
+
+## Enhancements (Beyond Minimum)
+
+### Enhancement 1: Time-window selector
+
+- **Benefit**
+  - Power users can match platform windows (5h, 7d, 24h) or choose a custom range; avoids one-size-fits-all.
+- **Notes**
+  - Especially useful once we have multiple window types per platform. Implement as dropdown or preset buttons (5h, 7d, 24h, custom date range).
+- **Phase**
+  - v1 optional; can ship with fixed 5h/7d first.
+
+### Enhancement 2: Reset countdown
+
+- **Benefit**
+  - When we have reset time (from error parsing or API), showing "Resets in 2h 15m" next to 5h/7d reduces guesswork and supports planning.
+- **Notes**
+  - `QuotaInfo.resets_at` already exists in `platforms::usage_tracker`; surface in GUI and update when we have new error or API response.
+- **Phase**
+  - v1 if we already parse errors; low effort.
+
+### Enhancement 3: Per-run and execution-scope usage in Config
+
+
+- **Benefit**
+  - In execution settings, "This run / node / package used X tokens / Y requests in last 7d" helps users see which execution scope burns the most and adjust platform or model.
+- **Notes**
+  - Aggregate from canonical usage identity (`usage_event_ref`, `run_id`, `node_id`, `attempt_id`, and related runtime attribution fields) rather than by `tier_id`. Requires a shared aggregation API or module used by both Usage and Config.
+- **Phase**
+  - Post-v1 once 5h/7d and Ledger are stable.
+
+### Enhancement 4: Export from Usage page
+
+- **Benefit**
+  - Export current view (ledger filter, date range, or analytics table) as CSV/JSON for reporting or external tools.
+- **Notes**
+  - Aligns with OpenCode Monitor / yume. Ledger already has "Export Ledger"; unify under Usage and add date-range/analytics export.
+- **Phase**
+  - v1 for Ledger export; extend to analytics when analytics view exists.
+
+### Enhancement 5: Usage in header (compact)
+
+
+- **Benefit**
+  - One line in app header (e.g. "Cursor 5h: 80% - Claude 7d: 45%") reduces need to open Usage page for a quick check.
+- **Notes**
+  - Option C in GUI placement. Keep compact to avoid clutter; link to full Usage page.
+- **Phase**
+  - v1 or post-v1 depending on placement choice.
+
+### Enhancement 6: Doctor integration
+
+<<< CONTEXT_AFTER 697-708 >>>
+
+- **Benefit**
+  - Cross-links: "View in Usage" from Doctor when usage warning/error; "Run Doctor" for usage from Usage page. Keeps usage and health in one mental model.
+- **Notes**
+  - Doctor already has `usage_check`; add navigation message or button to Usage; from Usage add button to run Doctor (or open Doctor tab with usage checks).
+- **Phase**
+  - v1 optional; small UX improvement.
+
+### Enhancement 7: Cost column when available
+
+- **Benefit**
+  - When platforms expose cost (e.g. in stream-json result), persist and show in Ledger and analytics; enables "cost by project/date".

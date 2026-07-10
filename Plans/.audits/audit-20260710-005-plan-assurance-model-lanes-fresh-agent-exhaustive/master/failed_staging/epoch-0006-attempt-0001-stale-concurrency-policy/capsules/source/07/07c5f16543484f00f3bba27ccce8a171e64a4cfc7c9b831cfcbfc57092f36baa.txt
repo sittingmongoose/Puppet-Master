@@ -1,0 +1,398 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6475-6486 >>>
+L00006475	- S0228 is structurally dispositioned after Phase 2B batch 140.
+L00006476	- >-
+L00006477	  Residual generated standardization spans are audit material only and not implementation-ready product coverage.
+L00006478	stale_retired_dispositions: []
+L00006479	owner_boundary_notes:
+L00006480	- Fine-grained PlanUnits OSI-002 through OSI-424 carry product/source coverage for S0001 through S0223 and S0224 source lines 6414-6426; batch 139 structurally dispositioned S0224 source line 6427 and generated audit spans S0225 through S0227.
+L00006481	- Batch 140 structurally dispositioned generated Migration Coverage audit/reporting span S0228 and retired this bridge.
+L00006482	owner_hints:
+L00006483	- Plans/orchestrator-subagent-integration.md
+L00006484	preserved_contractrefs: []
+L00006485	```
+L00006486	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6487-6855 >>>
+L00006487	### OSI-002 - Document Canonical Owner Scope
+L00006488	
+L00006489	```yaml
+L00006490	plan_unit_id: OSI-002
+L00006491	unit_type: requirement
+L00006492	status: accepted
+L00006493	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006494	canonical_text: This owner document preserves product, runtime, storage, UI, and governance requirements for Orchestrator
+L00006495	  subagent integration.
+L00006496	gui_related: true
+L00006497	gui_classification_reason: This unit includes UI/user-visible governance scope in the canonical owner-section requirements.
+L00006498	split_recommended: false
+L00006499	depends_on: []
+L00006500	unblocks: []
+L00006501	acceptance_criteria:
+L00006502	- Covered source spans remain losslessly available for exact-text audit.
+L00006503	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006504	  bridge.
+L00006505	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006506	  retain their own contracts.
+L00006507	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006508	validation_surfaces:
+L00006509	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006510	- python3 scripts/pm-plan-index.py validate
+L00006511	risk_class: document_canonical_owner_scope
+L00006512	reasoning_tier: standard
+L00006513	context_scope: orchestrator_subagent_standardization
+L00006514	implementation_surfaces:
+L00006515	- Plans/orchestrator-subagent-integration.md
+L00006516	node_compile_hint:
+L00006517	  mode: document_canonical_owner_scope
+L00006518	  create_worknodes: false
+L00006519	source_lineage:
+L00006520	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0001
+L00006521	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0002
+L00006522	preserved_exact_tokens:
+L00006523	- Orchestrator Subagent Integration -- Implementation Plan
+L00006524	- Canonical owner-section requirements
+L00006525	- product, runtime, storage, UI, and governance details
+L00006526	negative_constraints: []
+L00006527	compatibility_only_notes: []
+L00006528	stale_retired_dispositions: []
+L00006529	owner_boundary_notes: []
+L00006530	owner_hints:
+L00006531	- Plans/orchestrator-subagent-integration.md
+L00006532	preserved_contractrefs: []
+L00006533	```
+L00006534	
+L00006535	### OSI-003 - Tier Era Vocabulary Retirement
+L00006536	
+L00006537	```yaml
+L00006538	plan_unit_id: OSI-003
+L00006539	unit_type: requirement
+L00006540	status: accepted
+L00006541	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006542	canonical_text: Compatibility-only tier-era and shadow-field vocabulary is noncanonical; live wording uses the owner terminology
+L00006543	  below.
+L00006544	gui_related: false
+L00006545	gui_classification_reason: This unit covers terminology retirement, not GUI behavior.
+L00006546	split_recommended: false
+L00006547	depends_on: []
+L00006548	unblocks: []
+L00006549	acceptance_criteria:
+L00006550	- Covered source spans remain losslessly available for exact-text audit.
+L00006551	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006552	  bridge.
+L00006553	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006554	  retain their own contracts.
+L00006555	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006556	validation_surfaces:
+L00006557	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006558	- python3 scripts/pm-plan-index.py validate
+L00006559	risk_class: tier_era_vocabulary_retirement
+L00006560	reasoning_tier: standard
+L00006561	context_scope: orchestrator_subagent_standardization
+L00006562	implementation_surfaces:
+L00006563	- Plans/orchestrator-subagent-integration.md
+L00006564	node_compile_hint:
+L00006565	  mode: tier_era_vocabulary_retirement
+L00006566	  create_worknodes: false
+L00006567	source_lineage:
+L00006568	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0003
+L00006569	preserved_exact_tokens:
+L00006570	- Retire tier-era canon and shadow fields
+L00006571	- Compatibility-only source vocabulary
+L00006572	- noncanonical
+L00006573	- owner terminology
+L00006574	negative_constraints: []
+L00006575	compatibility_only_notes:
+L00006576	- Compatibility-only source vocabulary is noncanonical.
+L00006577	stale_retired_dispositions: []
+L00006578	owner_boundary_notes: []
+L00006579	owner_hints:
+L00006580	- Plans/orchestrator-subagent-integration.md
+L00006581	preserved_contractrefs: []
+L00006582	```
+L00006583	
+L00006584	### OSI-004 - ProviderTransport Integration Boundary
+L00006585	
+L00006586	```yaml
+L00006587	plan_unit_id: OSI-004
+L00006588	unit_type: requirement
+L00006589	status: accepted
+L00006590	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006591	canonical_text: 'Runtime integration follows the ProviderTransport taxonomy: Cursor and Claude Code are CliBridge, Codex,
+L00006592	  Copilot, and Gemini are DirectApi, and OpenCode is ServerBridge; Codex/Copilot SDK references are historical context only
+L00006593	  and not implementation targets.'
+L00006594	gui_related: false
+L00006595	gui_classification_reason: This unit covers provider transport integration boundaries, not GUI behavior.
+L00006596	split_recommended: false
+L00006597	depends_on: []
+L00006598	unblocks: []
+L00006599	acceptance_criteria:
+L00006600	- Covered source spans remain losslessly available for exact-text audit.
+L00006601	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006602	  bridge.
+L00006603	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006604	  retain their own contracts.
+L00006605	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006606	validation_surfaces:
+L00006607	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006608	- python3 scripts/pm-plan-index.py validate
+L00006609	risk_class: providertransport_integration_boundary
+L00006610	reasoning_tier: standard
+L00006611	context_scope: orchestrator_subagent_standardization
+L00006612	implementation_surfaces:
+L00006613	- Plans/orchestrator-subagent-integration.md
+L00006614	node_compile_hint:
+L00006615	  mode: providertransport_integration_boundary
+L00006616	  create_worknodes: false
+L00006617	source_lineage:
+L00006618	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0004
+L00006619	preserved_exact_tokens:
+L00006620	- ProviderTransport
+L00006621	- CliBridge
+L00006622	- DirectApi
+L00006623	- ServerBridge
+L00006624	- Cursor/Claude Code
+L00006625	- Codex/Copilot/Gemini
+L00006626	- OpenCode
+L00006627	- historical context only
+L00006628	- not implementation targets
+L00006629	negative_constraints:
+L00006630	- Codex/Copilot SDK references in this file are historical context only and are not implementation targets.
+L00006631	compatibility_only_notes: []
+L00006632	stale_retired_dispositions: []
+L00006633	owner_boundary_notes:
+L00006634	- ProviderTransport taxonomy is SSOT in Plans/Contracts_V0.md.
+L00006635	owner_hints:
+L00006636	- Plans/orchestrator-subagent-integration.md
+L00006637	preserved_contractrefs: []
+L00006638	```
+L00006639	
+L00006640	### OSI-005 - Plan Only And Research Transfer Gate
+L00006641	
+L00006642	```yaml
+L00006643	plan_unit_id: OSI-005
+L00006644	unit_type: requirement
+L00006645	status: accepted
+L00006646	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006647	canonical_text: This remains a PLAN DOCUMENT ONLY; browser-capability rethink entries are research inputs until canonical
+L00006648	  product/runtime changes transfer into owning live Plans docs.
+L00006649	gui_related: false
+L00006650	gui_classification_reason: This unit covers plan status and research transfer gating, not GUI behavior.
+L00006651	split_recommended: false
+L00006652	depends_on: []
+L00006653	unblocks: []
+L00006654	acceptance_criteria:
+L00006655	- Covered source spans remain losslessly available for exact-text audit.
+L00006656	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006657	  bridge.
+L00006658	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006659	  retain their own contracts.
+L00006660	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006661	validation_surfaces:
+L00006662	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006663	- python3 scripts/pm-plan-index.py validate
+L00006664	risk_class: plan_only_and_research_transfer_gate
+L00006665	reasoning_tier: standard
+L00006666	context_scope: orchestrator_subagent_standardization
+L00006667	implementation_surfaces:
+L00006668	- Plans/orchestrator-subagent-integration.md
+L00006669	node_compile_hint:
+L00006670	  mode: plan_only_research_transfer_gate
+L00006671	  create_worknodes: false
+L00006672	source_lineage:
+L00006673	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0005
+L00006674	preserved_exact_tokens:
+L00006675	- PLAN DOCUMENT ONLY
+L00006676	- No code changes
+L00006677	- Browser-capability rethink
+L00006678	- research inputs
+L00006679	- owning live `Plans/**` docs
+L00006680	negative_constraints:
+L00006681	- Browser-capability rethink entries are not direct implementation authority by themselves.
+L00006682	compatibility_only_notes: []
+L00006683	stale_retired_dispositions: []
+L00006684	owner_boundary_notes: []
+L00006685	owner_hints:
+L00006686	- Plans/orchestrator-subagent-integration.md
+L00006687	preserved_contractrefs: []
+L00006688	```
+L00006689	
+L00006690	### OSI-006 - PM Native Child Orchestration Ownership
+L00006691	
+L00006692	```yaml
+L00006693	plan_unit_id: OSI-006
+L00006694	unit_type: requirement
+L00006695	status: accepted
+L00006696	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006697	canonical_text: Internal multi-agent orchestration is PM-native, with parent/child supervision, timeout propagation, thread/run
+L00006698	  lineage, shell isolation, cancellation, and crew scheduling owned by this document with Contracts_V0 and storage-plan.
+L00006699	gui_related: false
+L00006700	gui_classification_reason: This unit covers orchestration ownership, not GUI behavior.
+L00006701	split_recommended: false
+L00006702	depends_on: []
+L00006703	unblocks: []
+L00006704	acceptance_criteria:
+L00006705	- Covered source spans remain losslessly available for exact-text audit.
+L00006706	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006707	  bridge.
+L00006708	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006709	  retain their own contracts.
+L00006710	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006711	validation_surfaces:
+L00006712	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006713	- python3 scripts/pm-plan-index.py validate
+L00006714	risk_class: pm_native_child_orchestration_ownership
+L00006715	reasoning_tier: standard
+L00006716	context_scope: orchestrator_subagent_standardization
+L00006717	implementation_surfaces:
+L00006718	- Plans/orchestrator-subagent-integration.md
+L00006719	node_compile_hint:
+L00006720	  mode: pm_native_child_orchestration_ownership
+L00006721	  create_worknodes: false
+L00006722	source_lineage:
+L00006723	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0006
+L00006724	preserved_exact_tokens:
+L00006725	- PM-native
+L00006726	- Parent and child supervision
+L00006727	- timeout propagation
+L00006728	- thread and run lineage
+L00006729	- shell isolation
+L00006730	- cancellation
+L00006731	- crew scheduling
+L00006732	negative_constraints: []
+L00006733	compatibility_only_notes: []
+L00006734	stale_retired_dispositions: []
+L00006735	owner_boundary_notes:
+L00006736	- This doc owns PM-native child orchestration together with Contracts_V0 and storage-plan.
+L00006737	owner_hints:
+L00006738	- Plans/orchestrator-subagent-integration.md
+L00006739	preserved_contractrefs:
+L00006740	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+L00006741	```
+L00006742	
+L00006743	### OSI-007 - External Bridge And A2A Boundary
+L00006744	
+L00006745	```yaml
+L00006746	plan_unit_id: OSI-007
+L00006747	unit_type: requirement
+L00006748	status: accepted
+L00006749	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006750	canonical_text: External bridge or A2A mapping material is adapter guidance only and MUST NOT approve moving PM-internal child
+L00006751	  orchestration, control messages, budget propagation, or crew coordination onto A2A semantics.
+L00006752	gui_related: false
+L00006753	gui_classification_reason: This unit covers adapter boundary rules, not GUI behavior.
+L00006754	split_recommended: false
+L00006755	depends_on: []
+L00006756	unblocks: []
+L00006757	acceptance_criteria:
+L00006758	- Covered source spans remain losslessly available for exact-text audit.
+L00006759	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006760	  bridge.
+L00006761	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006762	  retain their own contracts.
+L00006763	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006764	validation_surfaces:
+L00006765	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006766	- python3 scripts/pm-plan-index.py validate
+L00006767	risk_class: external_bridge_and_a2a_boundary
+L00006768	reasoning_tier: standard
+L00006769	context_scope: orchestrator_subagent_standardization
+L00006770	implementation_surfaces:
+L00006771	- Plans/orchestrator-subagent-integration.md
+L00006772	node_compile_hint:
+L00006773	  mode: external_bridge_a2a_boundary
+L00006774	  create_worknodes: false
+L00006775	source_lineage:
+L00006776	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0006
+L00006777	preserved_exact_tokens:
+L00006778	- external bridge
+L00006779	- A2A mapping
+L00006780	- adapter guidance only
+L00006781	- PM-internal child orchestration
+L00006782	- child-run control messages
+L00006783	- budget propagation
+L00006784	- crew coordination
+L00006785	- A2A semantics
+L00006786	negative_constraints:
+L00006787	- External bridge or A2A mapping material MUST NOT be read as approval for PM-internal child orchestration to move onto A2A
+L00006788	  semantics.
+L00006789	compatibility_only_notes: []
+L00006790	stale_retired_dispositions: []
+L00006791	owner_boundary_notes: []
+L00006792	owner_hints:
+L00006793	- Plans/orchestrator-subagent-integration.md
+L00006794	preserved_contractrefs:
+L00006795	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md'
+L00006796	```
+L00006797	
+L00006798	### OSI-008 - Child Lineage And Resume Envelopes
+L00006799	
+L00006800	```yaml
+L00006801	plan_unit_id: OSI-008
+L00006802	unit_type: requirement
+L00006803	status: accepted
+L00006804	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006805	canonical_text: Every child spawn, retry, cancellation, timeout, pause, resume, and completion path preserves run_id, thread_id,
+L00006806	  parent_run_id, child_run_id, requested/effective runtime descriptors, parent oversight, audit visibility, and PM-owned resume
+L00006807	  envelopes without hidden channels or unbounded queues.
+L00006808	gui_related: false
+L00006809	gui_classification_reason: This unit covers child lifecycle and lineage, not GUI behavior.
+L00006810	split_recommended: false
+L00006811	depends_on: []
+L00006812	unblocks: []
+L00006813	acceptance_criteria:
+L00006814	- Covered source spans remain losslessly available for exact-text audit.
+L00006815	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00006816	  bridge.
+L00006817	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00006818	  retain their own contracts.
+L00006819	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006820	validation_surfaces:
+L00006821	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006822	- python3 scripts/pm-plan-index.py validate
+L00006823	risk_class: child_lineage_and_resume_envelopes
+L00006824	reasoning_tier: standard
+L00006825	context_scope: orchestrator_subagent_standardization
+L00006826	implementation_surfaces:
+L00006827	- Plans/orchestrator-subagent-integration.md
+L00006828	node_compile_hint:
+L00006829	  mode: child_lineage_resume_envelopes
+L00006830	  create_worknodes: false
+L00006831	source_lineage:
+L00006832	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0006
+L00006833	preserved_exact_tokens:
+L00006834	- run_id
+L00006835	- thread_id
+L00006836	- parent_run_id
+L00006837	- child_run_id
+L00006838	- requested/effective runtime descriptors
+L00006839	- PM-owned resume envelopes
+L00006840	- hidden inter-agent channels
+L00006841	- implicit shared state
+L00006842	- unbounded task queue
+L00006843	negative_constraints:
+L00006844	- Child re-entry must not create hidden inter-agent channels, implicit shared state, or an unbounded task queue outside the
+L00006845	  crew board contract.
+L00006846	compatibility_only_notes: []
+L00006847	stale_retired_dispositions: []
+L00006848	owner_boundary_notes: []
+L00006849	owner_hints:
+L00006850	- Plans/orchestrator-subagent-integration.md
+L00006851	preserved_contractrefs:
+L00006852	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md'
+L00006853	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+L00006854	```
+L00006855	
+
+<<< CONTEXT_AFTER canonical_document_lines=6856-6867 >>>
+L00006856	### OSI-009 - Child Authority Clamp And Outcomes
+L00006857	
+L00006858	```yaml
+L00006859	plan_unit_id: OSI-009
+L00006860	unit_type: requirement
+L00006861	status: accepted
+L00006862	owner_doc: Plans/orchestrator-subagent-integration.md
+L00006863	canonical_text: Child effective authority is clamped before dispatch and audited after completion across child-permission,
+L00006864	  tool policy, write/FileSafe scope, mode ceiling, provider/model/account availability, crew admission, and budget-outcome
+L00006865	  supervision.
+L00006866	gui_related: false
+L00006867	gui_classification_reason: This unit covers child authority and runtime outcomes, not GUI behavior.

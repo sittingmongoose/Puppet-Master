@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=420-431 >>>
+L00000420	  - pldg-20260624-001-provider-updates:atom-0018
+L00000421	  - pldg-20260624-001-provider-updates:atom-0103
+L00000422	  - pldg-20260624-001-provider-updates:atom-0118
+L00000423	source_atom_ids: [atom-0018, atom-0028, atom-0033, atom-0035, atom-0046, atom-0048, atom-0103, atom-0106, atom-0107, atom-0116, atom-0117, atom-0118, atom-0119, atom-0122, atom-0123, atom-0129, atom-0131, atom-0132, atom-0135, atom-0138, atom-0139, atom-0140]
+L00000424	preserved_exact_tokens: ["Provider -> models", "thinking effort", "honored", "skipped", "clamped", "unsupported", "partially supported", "disabled", "capability-gated", "unverified", "separate-profile", "Cursor API key can be obtained in https://cursor.com/dashboard/ in the API keys section.", "Gemini CLI", "Antigravity CLI"]
+L00000425	negative_constraints:
+L00000426	  - Do not display Gemini CLI as an active provider setup path.
+L00000427	  - Do not flatten provider setup failures into a generic provider error.
+L00000428	  - Do not show provider API keys or OAuth URLs in GUI, ledgers, logs, or artifacts.
+L00000429	owner_hints: [Plans/FinalGUISpec.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/usage-feature.md]
+L00000430	```
+L00000431	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=432-820 >>>
+L00000432	### F3-401 - Provider Media Capability Controls And Disclosures
+L00000433	
+L00000434	```yaml
+L00000435	plan_unit_id: F3-401
+L00000436	unit_type: requirement
+L00000437	status: accepted
+L00000438	owner_doc: Plans/FinalGUISpec.md
+L00000439	canonical_text: >-
+L00000440	  Media controls must consume route-specific media capability schemas and show media input, media output, and generated-media support separately. The GUI and Settings image-generation engine list must be route-specific rather than Gemini-primary: expose OpenAI API-key `gpt-image-2` generation/edit, OpenAI Responses hosted `image_generation`, mandatory ChatGPT/OpenAI/Codex subscription-backed image generation, MiniMax global `image-01` generation controls including aspect ratio or width/height, response format, seed, `n`, prompt optimizer, and 24-hour URL-expiry warnings, Antigravity OAuth/internal `gemini-3.1-flash-image` as a support-state-labeled capability-gated generated-image route, and Gemini Direct generated-image routes where direct API media proof exists. Kimi, GitHub Copilot, Cursor, Z.AI/Zhipu, public text-only `agy` rows, and other providers with partial or missing generated-artifact proof must remain visible as unsupported, disabled, capability-gated, or unverified rows with reasons rather than selectable image-generation engines.
+L00000441	gui_related: true
+L00000442	gui_classification_reason: Defines user-visible media controls, settings, disclosures, and disabled/gated states.
+L00000443	depends_on: [MGAC-094, MGAC-095, MGAC-096, MGAC-097, RAP-032, POA-050]
+L00000444	unblocks: []
+L00000445	acceptance_criteria:
+L00000446	  - GUI distinguishes media input, media output, and generated-media routes.
+L00000447	  - OpenAI API-key image routes and OpenAI/Codex subscription-backed routes are separate visible choices.
+L00000448	  - MiniMax Image-01 controls include route-specific parameters and expiry/partial-success disclosures.
+L00000449	  - Unsupported or gated media routes are shown as such, not hidden or implied green.
+L00000450	  - GUI and Settings image-generation selectors include Antigravity OAuth/internal `gemini-3.1-flash-image` only as a support-state-labeled capability-gated route, not as public `agy` CLI media.
+L00000451	  - Public `agy` text/coding rows remain capability metadata and do not become selectable image-generation engines unless the exact route later proves generated-media output.
+L00000452	validation_surfaces:
+L00000453	  - python3 scripts/pm-plan-index.py validate
+L00000454	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00000455	risk_class: media_capability_ui_overclaim
+L00000456	reasoning_tier: high
+L00000457	context_scope: media_generation_gui
+L00000458	implementation_surfaces: [Plans/FinalGUISpec.md, future media generation controls, future provider settings UI]
+L00000459	node_compile_hint: {mode: media_capability_controls_gui, create_worknodes: false, create_nodeseeds: false}
+L00000460	source_lineage:
+L00000461	  - pldg-20260624-001-provider-updates:atom-0029
+L00000462	  - pldg-20260624-001-provider-updates:atom-0133
+L00000463	  - pldg-20260624-001-provider-updates:atom-0137
+L00000464	  - pldg-20260624-001-provider-updates:atom-0142
+L00000465	  - pldg-20260624-001-provider-updates:atom-0143
+L00000466	  - pldg-20260624-001-provider-updates:atom-0144
+L00000467	source_atom_ids: [atom-0028, atom-0029, atom-0031, atom-0033, atom-0034, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0101, atom-0105, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0133, atom-0134, atom-0136, atom-0137, atom-0138, atom-0142, atom-0143, atom-0144]
+L00000468	preserved_exact_tokens: ["ChatGPT Images 2.0", "GPT Image 2", "ChatGPT", "gpt-image-2", "image_generation", "OpenAI/Codex subscription", "OpenAI/Codex subscription-backed image generation", "MiniMax Image-01", "image-01", "gemini-3.1-flash-image", "Gemini Direct", "agy models(The ones that actually support media generation)", "aspect_ratio", "width", "height", "response_format", "url", "base64", "seed", "n", "prompt_optimizer", "24-hour URL expiry", "unsupported", "disabled", "capability-gated", "unverified", "Settings > Models", "F3-401", "ACD-424"]
+L00000469	negative_constraints:
+L00000470	  - Do not represent image input as image generation.
+L00000471	  - Do not make the GUI the owner of media schema truth.
+L00000472	  - Do not hide expiry, partial success, provider account, or provenance caveats from generated-media results.
+L00000473	  - Do not leave GUI or Settings supported image-generation model sections Gemini-primary after compiling provider updates.
+L00000474	  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+L00000475	  - Do not collapse OpenAI API-key `gpt-image-2`, Responses `image_generation`, and OpenAI/Codex subscription-backed image generation into one generic OpenAI row.
+L00000476	  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
+L00000477	  - Do not show unsupported/gated providers as available image-generation choices; show disabled/capability-gated/unverified state and reason.
+L00000478	owner_hints: [Plans/FinalGUISpec.md, Plans/Media_Generation_and_Capabilities.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+L00000479	```
+L00000480	
+L00000481	The `cosmic` base style is used because it supports `ColorScheme` toggling and has a neutral appearance that does not conflict with custom theming. All visual differences are driven by a `Theme` global in `.slint` rather than the base style.
+L00000482	
+L00000483	### 2.4 Backend Selection
+L00000484	
+L00000485	Provider CLI backend eligibility is separate from Slint renderer selection: Cursor CLI must be re-evaluated as an ACP-capable first-class CLI backend, not only a stream-json bridge, before GUI diagnostics classify it as a legacy stream transport.
+L00000486	
+L00000487	
+L00000488	Backend is chosen at startup; all windows use the same backend. Selection uses `slint::BackendSelector::new().select()` with `SLINT_BACKEND` environment variable override. Cargo features control which renderers are compiled in (e.g., `default = ["renderer-skia"]`, optional `renderer-femtovg`).
+L00000489	
+L00000490	Deterministic selection order:
+L00000491	1. Explicit valid `SLINT_BACKEND` override wins.
+L00000492	2. Otherwise use the persisted app preference if it maps to a compiled-in backend.
+L00000493	3. Otherwise use compiled default order: `winit + Skia` → `winit + FemtoVG-wgpu` → emergency software renderer.
+L00000494	
+L00000495	Failure handling:
+L00000496	- An invalid override or unavailable preferred backend MUST emit a startup diagnostic and fall through deterministically to the next compiled-in backend.
+L00000497	- The selected backend MUST be shown in diagnostics/setup surfaces so fallback behavior is inspectable.
+L00000498	
+L00000499	```rust
+L00000500	// main.rs entry point
+L00000501	fn main() -> Result<(), Box<dyn std::error::Error>> {
+L00000502	    slint::BackendSelector::new().select()?;
+L00000503	    let ui = AppWindow::new()?;
+L00000504	    // ... state init, bridge wiring, effects generation
+L00000505	    ui.run()?;
+L00000506	    Ok(())
+L00000507	}
+L00000508	```
+L00000509	
+L00000510	---
+L00000511	
+L00000512	## 3. Master Layout
+L00000513	
+L00000514	### 3.1 IDE Shell Structure
+L00000515	
+L00000516	
+L00000517	```
+L00000518	+-----------------------------------------------------------------+
+L00000519	|  TITLE BAR: Puppet Master  [project v] [theme] [gear]           |  28px
+L00000520	+------+------------------------------------------+---------------+
+L00000521	|      |                                          |               |
+L00000522	| ACT  |   PRIMARY CONTENT AREA                   | SIDE PANEL    |
+L00000523	| BAR  |   (active page view)                     | Activity-bar  |
+L00000524	|      |                                          | surface slot  |
+L00000525	| 48px |                                          | 240-480px     |
+L00000526	|      |                                          |               |
+L00000527	|      +------------------------------------------+               |
+L00000528	|      |  BOTTOM PANEL (collapsible)              |               |
+L00000529	|      |  Terminal / Problems / Output             |               |
+L00000530	|      |  120-300px                                |               |
+L00000531	+------+------------------------------------------+---------------+
+L00000532	|  STATUS BAR: [mode] [platform v] [model v] [ctx: 42k/128k]     |  24px
+L00000533	+-----------------------------------------------------------------+
+L00000534	```
+L00000535	
+L00000536	### 3.2 Structural Zones
+L00000537	
+L00000538	| Zone | Slint Container | Size | Behavior |
+L00000539	|------|----------------|------|----------|
+L00000540	| **Title bar** | `HorizontalLayout` | height: 28px fixed | App name (Orbitron Bold 14px), compact current-project context, theme toggle, settings gear |
+L00000541	| **Activity bar** | `VerticalLayout` | width: 48px fixed | Icon-only vertical nav; always visible |
+L00000542	| **Primary content** | `VerticalLayout` (flex: 1) | fills remaining space | Active page view; scrollable internally per page |
+L00000543	| **Side panel** | `VerticalLayout` | width: 240-480px, resizable | Hosts the currently selected activity-bar side-panel surface; one visible at a time; detachable where supported |
+L00000544	| **Bottom panel** | `VerticalLayout` | height: 120-300px, collapsible | Terminal, Problems, Output tabs |
+L00000545	| **Status bar** | `HorizontalLayout` | height: 24px fixed | Chat mode, platform/model dropdowns, context usage, orchestrator status, and regex-index progress / refresh disclosure |
+L00000546	
+L00000547	`FinalGUISpec.md §3.1` is the shell confirmation for right-hand side-panel occupants: the side panel is the Activity Bar surface slot with a 240-480px width budget. Legacy labels such as `/File`, `/Source`, `/GitHub`, and `/etc` are migration labels for occupants or groups, not separate page surfaces that bypass the right-hand side-panel model.
+L00000548	
+L00000549	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+L00000550	
+L00000551	**Status bar - Indexing indicator:**
+L00000552	
+L00000553	When a sparse n-gram index build or refresh is in progress for any active project, the status bar shows an index-state indicator.
+L00000554	- Show only for work lasting >2 seconds so sub-second incremental updates do not flash.
+L00000555	- First build for a project: display `Building search index - first build may take several minutes` with progress percentage when available.
+L00000556	- Later rebuilds: display `Indexing` or `Refreshing index` with project-sensitive progress.
+L00000557	- If a stale-but-valid snapshot is still serving grep or Search, the indicator may show refresh progress, but the UI must not imply that Search is fully unindexed.
+L00000558	- The indicator disappears on completion or cancellation.
+L00000559	- The Search results pane, not the status bar, owns the subtle `(unindexed)` annotation when a query truly fell back to raw ripgrep.
+L00000560	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+L00000561	
+L00000562	### 3.3 System Tray
+L00000563	
+L00000564	When "minimize to tray" is enabled in Settings/General:
+L00000565	- **Close button** minimizes to tray instead of quitting (Quit via tray menu or File > Quit)
+L00000566	- **Tray icon:** Puppet Master icon; changes to accent color when orchestrator is running
+L00000567	- **Left-click tray icon:** Restore/focus the main window
+L00000568	- **Right-click tray menu:** Show/Hide | Pause/Resume Orchestrator | Quit
+L00000569	- **Tray notifications:** HITL approval required, run complete, rate limit hit (respects system notification settings)
+L00000570	
+L00000571	### 3.4 Project Bar (Title Bar)
+L00000572	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+L00000573	
+L00000574	The title bar no longer owns primary project switching.
+L00000575	
+L00000576	Canonical shell rule:
+L00000577	- project switching is a workspace-tab operation surfaced through the Projects view, project/session browser, command palette, and dedicated switch commands
+L00000578	- the active workspace tab changes project by default
+L00000579	- a separate command opens the target project in a new workspace tab
+L00000580	- the title bar may show compact current-project context, but it is not a project bar and does not own the multi-project shell model
+L00000581	
+L00000582	Required visible behavior:
+L00000583	- current project name/path summary for the active workspace tab
+L00000584	- badge when the active project has background activity, blocked items, or unsaved shell state that needs attention
+L00000585	- keyboard entrypoint for instant project switch
+L00000586	- responsive collapse without losing the command-palette project switch path
+L00000587	
+L00000588	Non-canonical after this section:
+L00000589	- title-bar dropdown/strip as the primary project-switch shell
+L00000590	- shell semantics that assume only one active project context exists in the application at a time
+L00000591	### 3.5 Spacing and Density
+L00000592	
+L00000593	**Global spacing tokens** (base design tokens; independent of UI scaling):
+L00000594	
+L00000595	| Token | Base (px) | Use |
+L00000596	|-------|-----------|-----|
+L00000597	| `XS` | 2 | Between icon and label in the same control |
+L00000598	| `SM` | 4 | Between controls in the same toolbar row |
+L00000599	| `MD` | 8 | Panel internal padding; gap between stacked cards |
+L00000600	| `LG` | 12 | Section separator within a page |
+L00000601	| `XL` | 16 | Gap between major layout zones (panel to panel) |
+L00000602	
+L00000603	**Border widths:**
+L00000604	- Primary panel borders: 2px (reduced from current 3px for density)
+L00000605	- Active/selected indicator: 3px left-edge accent stripe
+L00000606	- Dividers within panels: 1px
+L00000607	
+L00000608	**Hard shadow:** Offset `(2, 2)` on major containers; `(4, 4)` on floating/detached windows. No blur (retro aesthetic).
+L00000609	
+L00000610	**Density metric:** At 1920x1080, the primary content area is at minimum 900px wide when both side panel and bottom panel are open. At 1280x720, the side panel auto-collapses to an icon tab, and the bottom panel collapses to its header row.
+L00000611	
+L00000612	### 3.6 Space Accounting (1920x1080 reference)
+L00000613	
+L00000614	```
+L00000615	Title bar:      28px
+L00000616	Status bar:     24px
+L00000617	Activity bar:   48px wide
+L00000618	Side panel:     380px wide (default)
+L00000619	Bottom panel:   160px tall (default)
+L00000620	Primary content: 1920 - 48 - 380 = 1492px wide
+L00000621	                 1080 - 28 - 24 - 160 = 868px tall
+L00000622	```
+L00000623	
+L00000624	At 1280x720 with collapsed panels:
+L00000625	```
+L00000626	Side panel:     48px (icon tab)
+L00000627	Bottom panel:   24px (header only)
+L00000628	Primary content: 1280 - 48 - 48 = 1184px wide
+L00000629	                  720 - 28 - 24 - 24 = 644px tall
+L00000630	```
+L00000631	
+L00000632	---
+L00000633	
+L00000634	## 4. Navigation Architecture
+L00000635	
+L00000636	
+L00000637	### 4.1 Activity Bar
+L00000638	
+L00000639	The activity bar is the canonical entry point for persistent right-hand side-panel operational surfaces.
+L00000640	
+L00000641	Required side-panel items for this feature set:
+L00000642	- `search`
+L00000643	- `chat`
+L00000644	- `files`
+L00000645	- `source_control`
+L00000646	- `github_actions`
+L00000647	- `docker_manager`
+L00000648	- `artifacts`
+L00000649	- `run_debug`
+L00000650	
+L00000651	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+L00000652	
+L00000653	Required shell rules:
+L00000654	- Search, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, Chat, and Run & Debug occupy the single right-hand side-panel slot defined by the shell.
+L00000655	- None of those surfaces are described as canonical primary-content pages unless the statement is explicitly about a routed detail page launched from the surface.
+L00000656	- Activity-bar labels, tooltips, shortcuts, and command IDs MUST use the same surface vocabulary across shell chrome, command palette, and wiring tables.
+L00000657	- Detachable side-panel surfaces return to the same right-hand slot when re-docked.
+L00000658	- The bottom runtime zone remains terminal/output/problems/debug/ports territory; normal browsing and HTML preview remain editor/workspace-tab hosted.
+L00000659	
+L00000660	ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+L00000661	
+L00000662	Canonical side-panel descriptions:
+L00000663	
+L00000664	| Panel ID | Canonical label | Purpose |
+L00000665	|---|---|---|
+L00000666	| `search` | Search | Project-wide find-in-files and replace-in-files with persistent query/result state |
+L00000667	| `files` | File Manager | Project tree, local tree filter, file actions, and editor handoff |
+L00000668	| `source_control` | Source Control | Git-first repo state, changes, history, graph, branches/stash, and worktrees |
+L00000669	| `github_actions` | GitHub Actions | GitHub-hosted workflows, runs, logs, dispatch, and admin settings |
+L00000670	| `docker_manager` | Docker Manager | Containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes |
+L00000671	| `artifacts` | Artifacts | Runtime/browser/build artifacts and cross-surface evidence navigation |
+L00000672	| `chat` | Assistant Chat | Threaded assistant workflows, context management, and activity transparency |
+L00000673	| `run_debug` | Run & Debug | Runtime diagnostics, problems, debug, output, and ports entry surface |
+L00000674	
+L00000675	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+L00000676	
+L00000677	#### GitHub Actions side-panel owner
+L00000678	
+L00000679	GitHub Actions is the `github_actions` side-panel owner for shell entry, label, command-palette surface ID, detachable side-panel state, and route-open behavior for `Current Branch`, `Workflows`, and `Settings`. This shell-surface owner-boundary stops at the hosted workflow/admin contract: `Plans/GitHub_Integration.md` owns those semantics, while FinalGUISpec keeps shell summaries, disabled-state copy, cross-surface CTAs, and panel restore behavior aligned with that owner.
+L00000680	
+L00000681	#### Run & Debug side-panel owner
+L00000682	
+L00000683	Run & Debug is the `run_debug` side-panel owner for runtime diagnostics entry, Problems, Output, Debug Console, and Ports reveal/focus behavior. This shell-surface owner-boundary does not create duplicate runtime records; its actions reveal or focus the canonical bottom runtime zone panes while preserving linked dev-session identity, historical/live badges, and recovery outcome context.
+L00000684	
+L00000685	#### Search side-panel owner
+L00000686	
+L00000687	Search is a one-visible-at-a-time search-surface side-panel occupant under `FinalGUISpec.md §4.1` with explicit `/open-focus` behavior, not a hand-waved overlay or `/gap`. It owns `/user-search` and `/content-search` UI for project code-search and file-content-search results, grep-result and grep-style rows, minimum match options for case, `/word/regex`, optional path/file scope, virtualized result rows, and replace-in-files when MVP replace remains enabled. `FinalGUISpec.md §15.3` and the Search panel use shared `/routing`, `/evidence/ledger`, and file-opening rules so content-search rows open through the same `OpenFile` path/range highlight flow as chat, File Manager, and LSP opens.
+L00000688	
+L00000689	Search is also the `search-owner` for the full indexing control surface: enable/disable index, rebuild/re-anchor, large-file threshold default 10 MB, generated-file index-exclusion patterns, follow-symlinks toggle, and visible indexed/stale/unindexed/fallback state. If the user turns OFF indexing while a build is in progress, PM cancels the builder with `CancellationToken`, removes partial generation state, and on `re-enable` starts a fresh build. Settings may persist global defaults, but Search exposes the project-scoped same-freshness and `/freshness/degradation` control and status copy users need before interpreting results.
+L00000690	
+L00000691	Remote search freshness copy cross-references `Plans/GitHub_Integration.md` (`/GitHub_Integration.md`) for the SSH file-watcher channel; the regex-index dirty layer and Tantivy code index subscribe to the same notification channel, so the GUI must not imply duplicate watcher setup.
+L00000692	
+L00000693	`Tantivy` provides full-text indexing, but Orchestrator search cannot rely on full-text alone: search rows that target Orchestrator-owned content also expose object/record identity and a `/record` route target so result opening, inspectors, and audit views land on the canonical runtime object rather than only on a text match.
+L00000694	
+L00000695	Search-seam ownership is already-specified rather than a new universal bucket: `FinalGUISpec.md §4.2` owns command-palette `fuzzy-search` across pages, commands, `/commands/files/recent`, recent items, files, symbols, runs, artifacts, and chat threads; `FileManager.md §1` owns local structural tree search and type-ahead; `assistant-chat-design.md §10` owns `Chat History Search`, `chatsearch`, `codesearch`, `logsearch`, and agent-callable project-only retrieval; `Tools.md` owns the project-scoped codesearch backend for file-content; `LSPSupport.md` owns `Go to symbol`, `Find references`, the `References panel`, symbol-aware mention support, and `/code-intelligence`; Search owns content-search, find-in-files, replace-in-files, and grep-style results.
+L00000696	
+L00000697	GUI search ownership has explicit Activity Bar, side-panel, command-family, and detachable-panel IDs. `search_panel_state` and `cmd.search.*` result IDs may carry recent-file, `/modified`, or symbol-aware metadata, but those are routing facts for the canonical-doc search owner rather than an under-specified second File Manager or LSP search surface.
+L00000698	
+L00000699	The GUI concept artifact `Concepts/PuppetMasterDashComp.html` (`/PuppetMasterDashComp.html`) is historical design evidence for the side-panel model, not a live owner path. Its labels `GITHUB ACTIONS`, `DOCKER MANAGE`, and `SOURCE CONTROL` map to the canonical GitHub Actions, Docker Manager, and Source Control panels. `DOCKER MANAGE` / `Docker Manage` copy migrates to Docker Manager. A separate `UNRAID` panel/icon is retired by the concept-vs-plan reconciliation: Unraid behavior lives in Docker Manager > `Publish / Unraid`, preserving the accepted direction without adding another activity-bar slot.
+L00000700	
+L00000701	Panel-ownership is resolved before any plan-doc rewrite, shortcut map, or command-palette migration changes shell navigation. The activity bar MUST NOT expose a `Git` icon that opens `GITHUB ACTIONS`: `GITHUB ACTIONS` belongs to panel ID `github_actions`, and `SOURCE CONTROL` / `CONTROL` belongs to panel ID `source_control`. Older combined Git/GitHub or `Git (GitHub)` docs are migration evidence only. `cmd.panel.switch` and any `/shortcut` aliases use canonical side-panel IDs (`source_control`, `github_actions`, `docker_manager`) and preserve the separation between local SCM and hosted workflow administration. `unraid` does not survive as a first-class panel ID or first-class shell shortcut; any compatibility alias opens `docker_manager` with `Publish / Unraid` focused.
+L00000702	
+L00000703	Account-switch propagation is visible at the shell boundary. When the effective account changes, Source Control, GitHub Actions, Docker Manager, Kubernetes, receipts, and blocked-state projections hard-refresh or clear stale selections; Orchestrator CTAs are reclassified against the new requested/effective authority; background observation continues read-only or is marked interrupted until revalidation finishes. Export/share copy follows account-identity redaction separate from token secrecy: account handles, namespace ownership, kube user/context names, and SSH usernames/host aliases are masked by default unless the export profile explicitly permits disclosure.
+L00000704	
+L00000705	Help/copy inventory is authored by namespace instead of improvised in each surface. `source_control`, `github_actions`, `docker_manager`, `kubernetes`, `receipts`, `blocked_state`, and `requested_effective` each provide empty states, disabled-state explainers, first-use disclosure copy, expert variants, and eli5 variants. Worktree-native SCM first-use teaching triggers on the first worktree-backed run, conflict, orphan recovery, or compare-review open, and the persistent "what worktrees mean here" entry is reachable from Source Control and Orchestrator.
+L00000706	
+L00000707	`Critical workflow pinning / health badges` appears as a GitHub Actions affordance, with dashboard and Orchestrator mirrors only linking back to the owner surface. `GitHub Actions > Workflows` owns pin and unpin, including `cmd.github.actions.pin`, `cmd.github.actions.unpin`, pinned-workflow state, the persisted pinned workflow list, `/build/deploy` and `/deploy` badge mapping, noisy-workflow suppression, `/event/storage` provenance, stale-pin warnings, and the over-pinning tradeoff.
+L00000708	
+L00000709	#### Cross-Surface Scaling, Discoverability, And Panel State
+L00000710	
+L00000711	Graph-heavy and stream-heavy surfaces have a `/table` or list equivalent with full keyboard and `/screen-reader` parity; `/graph` views are never the only path to the same information. Source Control History and Graph on monorepos, `/Graph/Worktrees`, GitHub Actions run lists and `/job/step` logs, Docker asset explorers with many `/containers/tags`, Kubernetes workload `/log/watch` views, and receipt/history panes define `initial_window`, `page_size`, `max_live_rows`, `max_in_memory_rows`, load-older behavior, `/filter-first` rules, and pause plus `/follow/search/jump-to-latest` behavior for streams/logs.
+L00000712	
+L00000713	Deep and advanced subviews stay discoverable through persistent visible subview affordances, Command Palette coverage, and explicit Customize or `/Show` Advanced actions. This applies to Source Control History/Graph/Worktrees, Actions Current Branch/`/Workflows/Settings`, Docker Manager `Networks`/`Volumes`/`Contexts`/`Kubernetes` (`/Volumes/Contexts/Kubernetes`), and receipt-driven deep links from Orchestrator. Progressive disclosure defaults record `default-open`, `default-collapsed`, pinned sections, remembered expansion state, and simplified summary mode versus full detail mode so `/scaling` does not erase user orientation.
+L00000714	
+L00000715	Panel-specific UX state must not be `co-mingled` with global policy settings. Settings > Branching / Health owns global Git/worktree policy, recovery, and correctness controls; Settings > Advanced owns GitHub Actions generation/template controls and Docker/registry defaults. Per-panel expansion, filter, selected row, `/worktree`, `/template`, `/registry`, and restore state are panel-specific records with their own storage contract and restore behavior.
+L00000716	
+L00000717	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Orchestrator_Page.md
+L00000718	
+L00000719	### 4.2 Command Palette
+L00000720	
+L00000721	`Ctrl+K` (primary) or `Ctrl+P` (alternative) opens a centered overlay (~500-600px wide, top third of window) with fuzzy search across project navigation targets, commands, recent items, and explicit open targets.
+L00000722	
+L00000723	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+L00000724	
+L00000725	Prefix modes:
+L00000726	- no prefix: pages, commands, recent items, files, and explicit open targets
+L00000727	- `>`: commands only
+L00000728	- `@`: file and symbol mention flow for chat/context entry
+L00000729	- `/`: reserved slash commands
+L00000730	
+L00000731	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSPSupport.md
+L00000732	
+L00000733	Boundary rules:
+L00000734	- The command palette is a transient project-scoped navigation/command surface, not the owner of persistent find-in-files results.
+L00000735	- The Search side panel owns persistent project text search, replace-in-files, scope filters, and query-session result state.
+L00000736	- The command palette may launch or focus Search through `cmd.search.show`, but it does not keep the persistent result list after dismissal.
+L00000737	- File Manager search remains a local tree filter/type-ahead only.
+L00000738	- LSP symbol, reference, and diagnostic surfaces retain semantic ownership even when the command palette hosts a launcher or quick-open affordance.
+L00000739	- The broad `universal-search` surface is `Ctrl+K` / command-palette search over settings, pages, commands, files, symbols, recent items, runs, artifacts, and chat threads; `Open setting: {name}` remains settings deep-link copy. Dedicated editor `/code-intelligence` keeps `Ctrl+Shift+O`, symbol/ref navigation, and `/repair` flows separate; Assistant Chat owns `Chat History Search`, `chatsearch`, `codesearch`, and `logsearch` rather than turning the Search side panel into a chat-domain index.
+L00000740	- The command palette quick-open file search (`Ctrl+K` / `Ctrl+P`) searches across the full project navigation targets, not scoped to the active worktree. This is distinct from File Manager search, which follows the current file manager root, and from chat `@file` resolution, which resolves relative to the thread's `working_directory` when a worktree is bound.
+L00000741	- Auto-retrieval (Tantivy search, `@file` resolution) remains project-scoped, not worktree-scoped; GUI search surfaces may expose the results, but they must not imply that the retrieval corpus was narrowed to only the active worktree.
+L00000742	- The Search command-family is canonical at the GUI shell boundary: `cmd.search.show { project_id, focus?: "query"|"results"|"replace", workspace_tab_id? }`; `cmd.search.find_in_files { project_id, query, include_globs?, exclude_globs?, regex?, case_sensitive?, whole_word? }`; `cmd.search.replace_in_files` as the `- canonical replace-in-files action -`; `cmd.search.open_result` with `result_ref` that `- opens the file/location through the canonical open-file contract -`; plus `cmd.search.next_result`, `cmd.search.prev_result`, `cmd.search.toggle_regex`, `cmd.search.toggle_case_sensitive`, `cmd.search.toggle_whole_word`, `cmd.search.clear_scope`, `cmd.search.expand_all`, `cmd.search.collapse_all`, `cmd.search.replace_one`, and `cmd.search.replace_all`.
+L00000743	- Search-domain GUI taxonomy stays explicit: Command Palette owns project-scoped broad-search / universal navigation, including recent-file and quick-open targeting for `/commands/files`; Search side panel owns find-in-files, replace-in-files, regex/case/whole-word (`/case/whole-word`) toggles, include/exclude scope, persistent result trees, and replace preview/confirmation; File Manager search stays local type-ahead; LSP search owns semantic symbols/refs; Chat-domain search owns `/history/message` retrieval. These are all shell-wide discoverable surfaces, but they are not one vague search box.
+L00000744	
+L00000745	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Wiring_Matrix.md
+L00000746	
+L00000747	### 4.3 Breadcrumb
+L00000748	
+L00000749	At the top of the primary content area, a breadcrumb strip (20px) shows `Group > Page` (e.g., `Data > Ledger`). Breadcrumb items are clickable for quick navigation within the group.
+L00000750	
+L00000751	### 4.4 Keyboard Shortcuts
+L00000752	
+L00000753	Search, File Manager, Source Control, Chat, Artifacts, and runtime-surface shortcuts MUST be registered in the shortcut registry and appear in Settings > Shortcuts. Activity-bar icon clicks remain primary; shortcuts are additive and must stay consistent with `cmd.search.*`, `cmd.file.*`, `cmd.chat.*`, `cmd.source_control.*`, and shell layout rules.
+L00000754	
+L00000755	Orchestrator shortcut candidates include focus global Orchestrator search, next `/previous` tab, open `/close` right-side inspector, jump between current attention items, fit graph, focus selected node, and toggle generation overlay; each maps through command-catalog bindings before it becomes a default shortcut.
+L00000756	
+L00000757	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
+L00000758	
+L00000759	**Tier 1 -- Essential (learn day one):**
+L00000760	
+L00000761	| Shortcut | Action |
+L00000762	|----------|--------|
+L00000763	| `Ctrl+K` | Open command palette |
+L00000764	| `Ctrl+L` | Focus chat input |
+L00000765	| `Ctrl+N` | New chat thread |
+L00000766	| `Ctrl+Shift+E` | Toggle File Manager |
+L00000767	| `Ctrl+Shift+F` | Show Search with query focus |
+L00000768	| `Escape` | Close palette / panel / stop agent |
+L00000769	
+L00000770	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+L00000771	
+L00000772	**Tier 2 -- Productive (learn in first week):**
+L00000773	
+L00000774	| Shortcut | Action |
+L00000775	|----------|--------|
+L00000776	| `Ctrl+1` through `Ctrl+8` | Jump to activity-bar item 1-8 in current order |
+L00000777	| `Ctrl+Enter` | Send message (in chat) |
+L00000778	| `Tab` | Queue message (in chat, steer mode) |
+L00000779	| `Ctrl+Shift+,` | Open settings |
+L00000780	| `Ctrl+\` | Toggle current side-panel occupant |
+L00000781	| `Ctrl+Shift+H` | Show Search with replace focus |
+L00000782	| `Ctrl+Shift+\`` | Toggle bottom runtime panel |
+L00000783	| `Ctrl+W` | Close current tab/panel |
+L00000784	
+L00000785	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+L00000786	
+L00000787	**Tier 3 -- Power user (discoverable via palette):**
+L00000788	
+L00000789	| Shortcut | Action |
+L00000790	|----------|--------|
+L00000791	| `Ctrl+Shift+D` | Toggle Dashboard |
+L00000792	| `Ctrl+Shift+\` | Detach/re-dock active detachable side-panel or terminal section |
+L00000793	| `Alt+Up/Down` | Cycle through chat threads |
+L00000794	| `Ctrl+Shift+C` | Compact current session |
+L00000795	| `Ctrl+Shift+P` | Open project switcher |
+L00000796	| `F5` | Start/Continue debug |
+L00000797	| `F10` | Step Over (debug) |
+L00000798	| `F11` | Step Into (debug) |
+L00000799	| `Shift+F11` | Step Out (debug) |
+L00000800	| `Shift+F5` | Stop debug |
+L00000801	
+L00000802	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+L00000803	
+L00000804	Shortcut registry rule: A Rust-side registry maps (modifiers + key) to commands or route/open actions. Platform-specific modifier normalization (Cmd on macOS, Ctrl on Windows/Linux) remains mandatory, and the Keyboard Shortcuts help view is auto-generated from the registry.
+L00000805	
+L00000806	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00000807	
+L00000808	## 5. Panel System
+L00000809	
+L00000810	### 5.1 Detachable Panels
+L00000811	The shell supports detachable panels, but detachment never changes canonical surface identity.
+L00000812	
+L00000813	ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000814	
+L00000815	Required detachable surfaces:
+L00000816	- Search panel
+L00000817	- Chat panel
+L00000818	- File Manager panel
+L00000819	- bottom terminal workspace
+L00000820	- editor-embedded terminal panels when they are promoted out of the editor stack
+
+<<< CONTEXT_AFTER canonical_document_lines=821-832 >>>
+L00000821	
+L00000822	Rules:
+L00000823	- re-docking restores the same logical surface identity rather than minting a new panel type.
+L00000824	- the bottom terminal workspace remains the canonical host for runtime terminals.
+L00000825	- editor-embedded terminal panels are secondary presentations of terminal leaf panes, not separate PTY sessions.
+L00000826	- normal browsing and preview/browser sessions remain governed by the browser/session model, not by terminal detachment rules.
+L00000827	- desktop-first terminal `/presentation` is the MVP SSOT: browser or `/remoted` terminal access is a sibling transport/presentation layer over the same terminal tabs, panes, command metadata, and PTY model, not a provider-style or shell-like second ownership model.
+L00000828	- Terminal integration APIs may expose structured `/query`, `/focus/send-input/interrupt/resize/state` capture, `/create-terminal`, and `/input/session` controls for PM-owned `/workflows` and `/preview/summarization`, but arbitrary third-party plugins or open-ended extension hooks cannot mutate core rendering, input, or session semantics.
+L00000829	- Default terminal tab and `/pane` labels prefer stable `/project-folder-derived` or `/context-derived` names over command-derived titles; `/container/shell/profile` context appears as badges, sublabels, or `/details` unless a user-defined opt-in `/role` is `/active`.
+L00000830	- Generated `/derived` labels freeze after user rename, resume auto-derived behavior only on explicit reset-to-auto, and `/splitting` creates a split-created label suggestion instead of silently copying a misleading source-pane label.
+L00000831	- Terminal reduced-motion handling remains active for terminal enter animations; split `/grid` containers avoid `/fade` or `/motion` enter effects during drag `/reorder` so drag targets stay clear.
+L00000832	

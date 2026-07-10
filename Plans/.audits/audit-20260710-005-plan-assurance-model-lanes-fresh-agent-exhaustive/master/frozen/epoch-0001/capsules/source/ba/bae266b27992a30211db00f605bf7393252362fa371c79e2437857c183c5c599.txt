@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 1452-1463 >>>
+- parent_summary.md
+- 5–10 lines hard cap
+- injected into attempt context when enabled
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 1464-1861 >>>
+### ARC-021 - Promotion Contract
+
+```yaml
+plan_unit_id: ARC-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: 'Promotion is controlled and optional: stable, reusable learnings move into the nearest appropriate AGENTS.md
+  only when the learning is non-obvious, stable, and scope-relevant.'
+gui_related: false
+gui_classification_reason: This unit covers promotion policy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: promotion_contract
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: promotion_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0025
+preserved_exact_tokens:
+- D) Promotion (Controlled, optional)
+- stable, reusable learnings
+- nearest appropriate `AGENTS.md`
+- non-obvious
+- stable
+- scope-relevant
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-022 - Deterministic Bundle Cone
+
+```yaml
+plan_unit_id: ARC-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Context Assembly Semantics require Puppet Master to construct explicit Instruction Bundle, Work Bundle, and
+  Memory Bundle for each agent run; Instruction Bundle includes top-level and scoped AGENTS.md with closest-scope precedence
+  and deterministic deduplication; Work Bundle contains only current node/attempt objective, acceptance criteria, inputs,
+  allowed tools, and explicit constraints; Memory Bundle injects bounded Attempt Journal and/or Parent Summary only when enabled
+  and keeps Assistant-only memory out of unrelated runs.
+gui_related: false
+gui_classification_reason: This unit covers runtime context assembly and bundle semantics, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: deterministic_bundle_cone
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: deterministic_bundle_cone
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0026
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0028
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0029
+preserved_exact_tokens:
+- Context Assembly Semantics (Deterministic Cone)
+- Instruction Bundle
+- Work Bundle
+- Memory Bundle
+- top-level `AGENTS.md`
+- closest-scope precedence
+- deterministic deduplication
+- objective
+- acceptance criteria
+- inputs
+- allowed tools
+- explicit constraints
+- Assistant-only memory remains Assistant-only
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-023 - Visibility Rules
+
+```yaml
+plan_unit_id: ARC-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Visibility Rules preserve that coordinating runs/packages see coordinating objectives and summaries, node
+  execution sees the current node objective, scoped instruction chain, and node-relevant memory only, delegated child attempts
+  inherit the same Instruction Bundle ordering plus child-specific Work/Memory Bundles, and verification/review attempts use
+  the same assembly semantics without reintroducing deprecated execution-hierarchy vocabulary.
+gui_related: false
+gui_classification_reason: This unit covers runtime visibility and assembly boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: visibility_rules
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: visibility_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0030
+preserved_exact_tokens:
+- Visibility Rules
+- coordinating runs/packages
+- coordinating objectives and summaries
+- node execution
+- delegated child attempts
+- same Instruction Bundle ordering
+- verification/review attempts
+- deprecated execution-hierarchy vocabulary
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Verification/review attempts use the same assembly semantics; they do not reintroduce deprecated execution-hierarchy vocabulary.
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/DRY_Rules.md'
+```
+
+### ARC-024 - Coordinating Visibility Examples
+
+```yaml
+plan_unit_id: ARC-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Visibility examples preserve that coordinating runs and work-package coordinators see application/project
+  rules plus scoped instruction chain, run/work-package objectives and acceptance criteria, and bounded coordination/package
+  summaries rather than every child attempt journal or unrelated node-attempt journals by default.
+gui_related: false
+gui_classification_reason: This unit covers examples for coordination visibility, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: coordinating_visibility_examples
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: coordinating_visibility_examples
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0031
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0032
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0033
+preserved_exact_tokens:
+- Visibility examples (coordinating run → work package → node → attempt)
+- Coordinating run sees
+- Work-package coordinator sees
+- application/project rules
+- scoped instruction chain
+- run and work-package objectives / acceptance criteria
+- not every child attempt journal by default
+- not unrelated node-attempt journals
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-025 - Node And Attempt Visibility Examples
+
+```yaml
+plan_unit_id: ARC-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Node and attempt visibility examples preserve that node execution sees top-level plus applicable scoped instruction
+  chain, node objectives and acceptance criteria, and node-relevant memory only; attempt execution sees the same applicable
+  instruction chain, exact attempt objective plus acceptance criteria, latest attempt journal and parent summary when enabled,
+  and excludes unrelated branches, long histories, and parent full reasoning by default.
+gui_related: false
+gui_classification_reason: This unit covers examples for node/attempt context visibility, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: node_and_attempt_visibility_examples
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: node_and_attempt_visibility_examples
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0034
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0035
+preserved_exact_tokens:
+- Node execution sees
+- Attempt execution sees
+- node objectives / acceptance criteria
+- node-relevant memory only
+- this attempt's exact objective + acceptance criteria
+- latest attempt journal
+- parent summary
+- Excludes
+- unrelated branches
+- long histories
+- parent full reasoning by default
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-026 - Sidecar Workspace Storage
+
+```yaml
+plan_unit_id: ARC-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: Workspace and Storage behavior stores artifacts in a sidecar workspace by default to avoid polluting user
+  repos, support lifecycle management and truncation rules, and recommends .puppet-master/workspace/<project>/<run>/<node>/
+  containing AGENTS.md, parent_summary.md, attempt_journal.md, and attempt/run artifacts.
+gui_related: false
+gui_classification_reason: This unit covers project-facing storage behavior, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: sidecar_workspace_storage
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: sidecar_workspace_storage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0036
+preserved_exact_tokens:
+- Workspace & Storage (User-Project Facing Product Behavior)
+- sidecar workspace
+- prevents polluting user repos
+- lifecycle management
+- truncation rules
+- .puppet-master/workspace/<project>/<run>/<node>/
+- AGENTS.md
+- parent_summary.md
+- attempt_journal.md
+- attempt/run artifacts
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+### ARC-027 - Context Injection GUI
+
+```yaml
+plan_unit_id: ARC-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: GUI Requirements add Context Injection settings per project with optional per-run override for Parent Summary,
+  Scoped AGENTS.md beyond top-level, and Attempt Journal defaults ON; the GUI must show Injected Context breakdown with AGENTS.md
+  paths and byte counts, summary/journal inclusion byte counts, truncation occurrence and reason, and each instruction/rules
+  target has exactly one control mode PM Controlled or Manual Override with refresh rules for returning to PM Controlled.
+gui_related: true
+gui_classification_reason: This unit directly covers Context Injection settings, toggles, injected-context breakdown, control
+  modes, and truncation UI.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: context_injection_gui
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: context_injection_gui
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0037
+preserved_exact_tokens:
+- GUI Requirements (Product)
+- Context Injection
+- per project
+- override per run optional
+- Parent Summary — default ON
+- Scoped AGENTS.md (beyond top-level) — default ON
+- Attempt Journal — default ON
+- Injected Context
+- paths + byte counts
+- truncation occurred (and why)
+- PM Controlled
+- Manual Override
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Each instruction/rules target has exactly one control mode and PM Controlled targets regenerate only from saved canonical
+  instruction source.
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 1862-1873 >>>
+### ARC-028 - AGENTS.md Authoring Lint
+
+```yaml
+plan_unit_id: ARC-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: AGENTS.md Light Enforcement requires authoring-time lint when users edit AGENTS.md in Puppet Master, warning
+  or erroring on directory trees, long command encyclopedias, architecture tours, redundant discoverable info, and enforcing
+  budgets such as max bytes, max lines, and max headings.
+gui_related: false
+gui_classification_reason: This unit covers lint policy and content budgets, not GUI behavior.

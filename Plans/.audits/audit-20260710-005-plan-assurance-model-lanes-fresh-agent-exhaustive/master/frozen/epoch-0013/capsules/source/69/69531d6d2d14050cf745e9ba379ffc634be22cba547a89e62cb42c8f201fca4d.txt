@@ -1,0 +1,153 @@
+<<< CONTEXT_BEFORE canonical_document_lines=294-305 >>>
+L00000294	      "type": "object",
+L00000295	      "additionalProperties": false,
+L00000296	      "required": ["cas_fields", "reject_stale_but_valid_json", "negative_cases", "refresh_routes", "receipt_rule"],
+L00000297	      "properties": {
+L00000298	        "cas_fields": {"$ref": "#/$defs/string_list"},
+L00000299	        "reject_stale_but_valid_json": {"const": true},
+L00000300	        "negative_cases": {"$ref": "#/$defs/string_list"},
+L00000301	        "refresh_routes": {"$ref": "#/$defs/string_list"},
+L00000302	        "receipt_rule": {"$ref": "#/$defs/non_empty_string"}
+L00000303	      }
+L00000304	    }
+L00000305	  },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=306-443 >>>
+L00000306	  "$defs": {
+L00000307	    "non_empty_string": {
+L00000308	      "type": "string",
+L00000309	      "minLength": 1
+L00000310	    },
+L00000311	    "string_list": {
+L00000312	      "type": "array",
+L00000313	      "minItems": 1,
+L00000314	      "items": {
+L00000315	        "$ref": "#/$defs/non_empty_string"
+L00000316	      }
+L00000317	    },
+L00000318	    "family": {
+L00000319	      "type": "string",
+L00000320	      "enum": [
+L00000321	        "contract_materialization",
+L00000322	        "persistence_materialization",
+L00000323	        "gui_wiring",
+L00000324	        "security_boundary",
+L00000325	        "runtime_lifecycle",
+L00000326	        "provider_stream",
+L00000327	        "behavioral_acceptance",
+L00000328	        "structural_integrity",
+L00000329	        "owner_routing",
+L00000330	        "currentness",
+L00000331	        "clean_room_harness"
+L00000332	      ]
+L00000333	    },
+L00000334	    "family_list": {
+L00000335	      "type": "array",
+L00000336	      "minItems": 1,
+L00000337	      "uniqueItems": true,
+L00000338	      "items": {
+L00000339	        "$ref": "#/$defs/family"
+L00000340	      }
+L00000341	    },
+L00000342	    "closure_record": {
+L00000343	      "type": "object",
+L00000344	      "additionalProperties": false,
+L00000345	      "required": [
+L00000346	        "blocker_family",
+L00000347	        "status",
+L00000348	        "evidence_refs",
+L00000349	        "validator_refs",
+L00000350	        "remaining_boundary"
+L00000351	      ],
+L00000352	      "properties": {
+L00000353	        "blocker_family": {
+L00000354	          "$ref": "#/$defs/family"
+L00000355	        },
+L00000356	        "status": {
+L00000357	          "const": "closed_non_executable_spec_schema_fixture"
+L00000358	        },
+L00000359	        "evidence_refs": {
+L00000360	          "$ref": "#/$defs/string_list"
+L00000361	        },
+L00000362	        "validator_refs": {
+L00000363	          "$ref": "#/$defs/string_list"
+L00000364	        },
+L00000365	        "remaining_boundary": {
+L00000366	          "$ref": "#/$defs/non_empty_string"
+L00000367	        }
+L00000368	      }
+L00000369	    },
+L00000370	    "artifact_payload": {
+L00000371	      "type": "object",
+L00000372	      "additionalProperties": false,
+L00000373	      "required": [
+L00000374	        "artifact_kind",
+L00000375	        "payload_schema_id",
+L00000376	        "schema_ref",
+L00000377	        "owner_doc",
+L00000378	        "producer",
+L00000379	        "consumers",
+L00000380	        "negative_fixture"
+L00000381	      ],
+L00000382	      "properties": {
+L00000383	        "artifact_kind": {
+L00000384	          "$ref": "#/$defs/non_empty_string"
+L00000385	        },
+L00000386	        "payload_schema_id": {
+L00000387	          "$ref": "#/$defs/non_empty_string"
+L00000388	        },
+L00000389	        "schema_ref": {
+L00000390	          "$ref": "#/$defs/non_empty_string"
+L00000391	        },
+L00000392	        "owner_doc": {
+L00000393	          "$ref": "#/$defs/non_empty_string"
+L00000394	        },
+L00000395	        "producer": {
+L00000396	          "$ref": "#/$defs/non_empty_string"
+L00000397	        },
+L00000398	        "consumers": {
+L00000399	          "$ref": "#/$defs/string_list"
+L00000400	        },
+L00000401	        "negative_fixture": {
+L00000402	          "$ref": "#/$defs/non_empty_string"
+L00000403	        }
+L00000404	      }
+L00000405	    },
+L00000406	    "fixture": {
+L00000407	      "type": "object",
+L00000408	      "additionalProperties": false,
+L00000409	      "required": [
+L00000410	        "fixture_id",
+L00000411	        "kind",
+L00000412	        "given",
+L00000413	        "when",
+L00000414	        "then",
+L00000415	        "negative_case",
+L00000416	        "owner_refs"
+L00000417	      ],
+L00000418	      "properties": {
+L00000419	        "fixture_id": {
+L00000420	          "$ref": "#/$defs/non_empty_string"
+L00000421	        },
+L00000422	        "kind": {
+L00000423	          "$ref": "#/$defs/non_empty_string"
+L00000424	        },
+L00000425	        "given": {
+L00000426	          "$ref": "#/$defs/non_empty_string"
+L00000427	        },
+L00000428	        "when": {
+L00000429	          "$ref": "#/$defs/non_empty_string"
+L00000430	        },
+L00000431	        "then": {
+L00000432	          "$ref": "#/$defs/non_empty_string"
+L00000433	        },
+L00000434	        "negative_case": {
+L00000435	          "$ref": "#/$defs/non_empty_string"
+L00000436	        },
+L00000437	        "owner_refs": {
+L00000438	          "$ref": "#/$defs/string_list"
+L00000439	        }
+L00000440	      }
+L00000441	    }
+L00000442	  }
+L00000443	}

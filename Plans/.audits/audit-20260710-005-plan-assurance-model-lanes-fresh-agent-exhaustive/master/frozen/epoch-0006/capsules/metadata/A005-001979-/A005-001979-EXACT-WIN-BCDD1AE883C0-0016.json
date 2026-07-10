@@ -1,0 +1,57 @@
+{
+  "assignment_id": "A005-001979-EXACT-WIN-BCDD1AE883C0-0016",
+  "attempt_id": "attempt-0006",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      5413,
+      5424
+    ],
+    [
+      5743,
+      5754
+    ]
+  ],
+  "core_range": [
+    5425,
+    5742
+  ],
+  "core_sha256": "5ebbedc76cdada88bf30c0778e7d6c84f2a3572f1bd1d2731feeb06b4f124762",
+  "document_path": "Plans/Containers_Registry_and_Unraid.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/84/84ea41a18fceb30eda8cf735b5a3157ff48c62a33d0d9eb73b1e7c2b67de3a6a.txt",
+  "source_excerpt_sha256": "84ea41a18fceb30eda8cf735b5a3157ff48c62a33d0d9eb73b1e7c2b67de3a6a",
+  "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b",
+  "window_id": "WIN-BCDD1AE883C0-0016"
+}

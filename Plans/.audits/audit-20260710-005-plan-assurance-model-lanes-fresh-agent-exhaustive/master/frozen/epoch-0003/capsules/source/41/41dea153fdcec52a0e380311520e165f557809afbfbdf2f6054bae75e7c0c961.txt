@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE 3309-3320 >>>
+- File watchers, remote file-change notifications, and provider update streams are invalidation signals, not authoritative
+  state.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 3321-3696 >>>
+### AI-050 - Service Routing External Adapters And Anti DOM Constraints
+
+```yaml
+plan_unit_id: AI-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: File/open/search/undo/terminal/diff/preview routing resolves through service-registered/provider seams and
+  owner contracts; external engines and CLIs are adapters only; requested-vs-effective state remains explicit; browser-specific
+  assumptions such as DOM roots, service-worker persistence, hidden file inputs, Blob downloads, localStorage identity, query-string
+  routing, and browser-only clipboard/selection hacks must not shape PM architecture.
+gui_related: false
+gui_classification_reason: This unit covers service routing, adapter boundaries, and architecture constraints rather than
+  GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: service_routing_external_adapters_and_anti_dom_constraints
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: service_routing_external_adapters_anti_dom_constraints
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0035
+preserved_exact_tokens:
+- service-registered/provider-based seams
+- owner contract
+- External engines and CLIs
+- adapters only
+- requested-vs-effective state
+- /bootstrap/runtime/indexing
+- DOM roots
+- service-worker persistence
+- hidden file inputs
+- Blob downloads
+- localStorage identity
+- query-string routing
+- browser-only clipboard/selection hacks
+- thin-wrapper
+- Electron
+- DOM-first
+negative_constraints:
+- External engines and CLIs may be reused only as adapters inside PM-owned boundaries.
+- Browser-specific implementation assumptions must not shape Puppet Master architecture.
+- Puppet Master must avoid direct adoption of thin-wrapper, Electron, or DOM-first implementation assumptions as native workbench
+  foundations.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+### AI-051 - Typed Investigation Budget Exhaustion
+
+```yaml
+plan_unit_id: AI-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Debug/investigation flows MUST record typed budget exhaustion instead of collapsing every stop into generic
+  failed, failed_cleanup, attention_required, failure, or blocked state; lifecycle records may carry budget_kind?, and retry,
+  resume, and cleanup surfaces preserve the exact budget_kind? that tripped.
+gui_related: false
+gui_classification_reason: This unit covers investigation lifecycle state semantics and budget accounting, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: typed_investigation_budget_exhaustion
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: typed_investigation_budget_exhaustion
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0036
+preserved_exact_tokens:
+- INV-023 -- Investigation lifecycle budgets are typed
+- typed budget exhaustion
+- generic failure
+- blocked state
+- budget_kind?
+- failed
+- failed_cleanup
+- attention_required
+- retry
+- resume
+- cleanup surfaces
+negative_constraints:
+- Debug/investigation flows MUST record typed budget exhaustion rather than collapsing every stop into a generic failure or
+  blocked state.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md,
+  ContractName:Plans/FinalGUISpec.md'
+```
+
+### AI-052 - Investigation Budget Kinds And Defaults
+
+```yaml
+plan_unit_id: AI-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Allowed budget_kind? values are target_discovery_attempts, prepare_attempts, instrumentation_passes, invasive_instrumentation_passes,
+  fix_candidates, repro_attempts, verification_attempts, package_or_tool_installs, browser_scenario_branches, no_new_evidence_loops,
+  active_temporary_instrumentation_lanes, cleanup_retries, attention_required_resume_cycles, and elapsed_wall_time; MVP ceilings
+  are max_verification_attempts_per_fix_candidate = 2 and max_package_or_tool_installs = 2, with named keys persisted or exported
+  when they affect stop/retry decisions.
+gui_related: false
+gui_classification_reason: This unit covers investigation budget enumeration and defaults, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: investigation_budget_kinds_and_defaults
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: investigation_budget_kinds_defaults
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0036
+preserved_exact_tokens:
+- target_discovery_attempts
+- prepare_attempts
+- instrumentation_passes
+- invasive_instrumentation_passes
+- fix_candidates
+- repro_attempts
+- verification_attempts
+- package_or_tool_installs
+- browser_scenario_branches
+- no_new_evidence_loops
+- active_temporary_instrumentation_lanes
+- cleanup_retries
+- attention_required_resume_cycles
+- elapsed_wall_time
+- max_verification_attempts_per_fix_candidate = 2
+- max_package_or_tool_installs = 2
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md,
+  ContractName:Plans/FinalGUISpec.md'
+```
+
+### AI-053 - Package Install Budget Accounting
+
+```yaml
+plan_unit_id: AI-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Only package or tool installs that persist beyond a single process lifetime count against max_package_or_tool_installs;
+  ephemeral per-process installs may be logged as investigation context but do not consume the install budget.
+gui_related: false
+gui_classification_reason: This unit covers investigation package/tool install budget accounting, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: package_install_budget_accounting
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: package_install_budget_accounting
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0036
+preserved_exact_tokens:
+- package or tool installs
+- persist beyond a single process lifetime
+- max_package_or_tool_installs
+- ephemeral per-process installs
+- investigation context
+- install budget
+negative_constraints:
+- Ephemeral per-process installs do not consume max_package_or_tool_installs.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md,
+  ContractName:Plans/FinalGUISpec.md'
+```
+
+### AI-054 - Debug Evidence Plane Separation
+
+```yaml
+plan_unit_id: AI-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Debug Mode MUST preserve local ephemeral investigation, hosted runtime verification, production/data-plane
+  observability, assistant-session diagnostics, terminal/test observe loops, and DAP-grade interactive inspection as distinct
+  evidence planes; Devin, Replit, OpenHands, SWE-agent / mini-swe-agent, Cline, Roo Code, Continue, Aider, InspectCoder /
+  InspectWare, snooper-ai, and PySnooper remain examples and not collapsed owner models.
+gui_related: false
+gui_classification_reason: This unit covers debug evidence plane ownership and examples, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_evidence_plane_separation
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: debug_evidence_plane_separation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+preserved_exact_tokens:
+- INV-024 -- Debug Mode evidence planes stay explicit
+- local ephemeral investigation
+- hosted runtime verification
+- production/data-plane observability
+- assistant-session diagnostics
+- terminal/test observe loops
+- DAP-grade interactive inspection
+- Devin
+- Replit
+- OpenHands
+- SWE-agent / mini-swe-agent
+- Cline
+- Roo Code
+- Continue
+- Aider
+- InspectCoder / InspectWare
+- snooper-ai
+- PySnooper
+negative_constraints:
+- Debug Mode MUST preserve evidence planes instead of collapsing them into one owner model.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+```
+
+### AI-055 - Debug And Deep Plan Overlay Boundaries
+
+```yaml
+plan_unit_id: AI-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Debug Mode is a chat/workflow overlay and not a new execution-posture enum; assistant-chat-design may expose
+  Debug alongside Ask, Agent, Plan, and Deep Plan while Run_Modes keeps runtime posture separate. Deep Plan is single-threaded
+  read-only planning and does not create sub-task inheritance or widen child authority.
+gui_related: true
+gui_classification_reason: This unit covers user-visible Assistant mode labels and overlay behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_and_deep_plan_overlay_boundaries
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: debug_deep_plan_overlay_boundaries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+preserved_exact_tokens:
+- Debug Mode
+- chat/workflow overlay
+- execution-posture enum
+- Plans/assistant-chat-design.md
+- Ask
+- Agent
+- Plan
+- Deep Plan
+- Plans/Run_Modes.md
+- single-threaded read-only planning
+- sub-task inheritance
+- child authority
+negative_constraints:
+- Debug Mode must not become a new execution-posture enum.
+- Deep Plan does not create a sub-task inheritance path or widen child authority.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- assistant-chat-design owns Debug exposure as a chat/workflow overlay; Run_Modes owns runtime posture.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+```
+
+
+<<< CONTEXT_AFTER 3697-3708 >>>
+### AI-056 - Debug MVP Authority Seams
+
+```yaml
+plan_unit_id: AI-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Debug Mode is MVP only when remote targets keep /no-local-fallback, requested /effective capability /state
+  stays visible, and seams for investigation_id, instrumentation_id, storage, /contracts/prompt, permissions, and browser
+  evidence are explicitly owned rather than inferred from a debug label.
+gui_related: false
+gui_classification_reason: This unit covers authority seams and target/capability state, not GUI behavior.

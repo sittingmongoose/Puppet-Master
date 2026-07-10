@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1462-1473 >>>
+L00001462	- Silent data races are prohibited.
+L00001463	- Lock-free approaches are allowed only when formally justified.
+L00001464	compatibility_only_notes: []
+L00001465	stale_retired_dispositions: []
+L00001466	owner_boundary_notes: []
+L00001467	owner_hints:
+L00001468	- Plans/Architecture_Invariants.md
+L00001469	preserved_contractrefs:
+L00001470	- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md'
+L00001471	- 'ContractRef: Invariant:INV-014'
+L00001472	```
+L00001473	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1474-1873 >>>
+L00001474	### AI-019 - Monetary Values Are Microdollars
+L00001475	
+L00001476	```yaml
+L00001477	plan_unit_id: AI-019
+L00001478	unit_type: requirement
+L00001479	status: accepted
+L00001480	owner_doc: Plans/Architecture_Invariants.md
+L00001481	canonical_text: Persisted and in-memory monetary cost values are stored and accumulated as integer microdollars u64; float
+L00001482	  storage is forbidden, cost_usd is display-derived only, and linting rejects f64/f32 fields named cost*, price*, or amount*
+L00001483	  in persisted structs.
+L00001484	gui_related: false
+L00001485	gui_classification_reason: This unit covers usage/cost data representation, not GUI behavior.
+L00001486	split_recommended: false
+L00001487	depends_on: []
+L00001488	unblocks: []
+L00001489	acceptance_criteria:
+L00001490	- Covered source spans remain losslessly available for exact-text audit.
+L00001491	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001492	  bridge.
+L00001493	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001494	  own contracts.
+L00001495	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001496	validation_surfaces:
+L00001497	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001498	- python3 scripts/pm-plan-index.py validate
+L00001499	risk_class: monetary_values_are_microdollars
+L00001500	reasoning_tier: standard
+L00001501	context_scope: architecture_invariants_standardization
+L00001502	implementation_surfaces:
+L00001503	- Plans/Architecture_Invariants.md
+L00001504	node_compile_hint:
+L00001505	  mode: monetary_values_are_microdollars
+L00001506	  create_worknodes: false
+L00001507	source_lineage:
+L00001508	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0018
+L00001509	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0019
+L00001510	preserved_exact_tokens:
+L00001511	- INV-015 -- Monetary values are integer microdollars
+L00001512	- integer microdollars
+L00001513	- u64
+L00001514	- Float types
+L00001515	- cost_usd
+L00001516	- cost_microdollars / 1_000_000
+L00001517	- clippy
+L00001518	- cost*
+L00001519	- price*
+L00001520	- amount*
+L00001521	negative_constraints:
+L00001522	- Float types MUST NOT be used for cost storage or accumulation at any layer.
+L00001523	- cost_usd is derived display copy only and never a persisted billing field.
+L00001524	compatibility_only_notes: []
+L00001525	stale_retired_dispositions: []
+L00001526	owner_boundary_notes: []
+L00001527	owner_hints:
+L00001528	- Plans/Architecture_Invariants.md
+L00001529	preserved_contractrefs:
+L00001530	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md'
+L00001531	- 'ContractRef: Invariant:INV-015'
+L00001532	```
+L00001533	
+L00001534	### AI-020 - Token Buckets Are Not Storage Aggregated
+L00001535	
+L00001536	```yaml
+L00001537	plan_unit_id: AI-020
+L00001538	unit_type: requirement
+L00001539	status: accepted
+L00001540	owner_doc: Plans/Architecture_Invariants.md
+L00001541	canonical_text: Usage records store or explicitly represent UF-085 buckets input_total, input_non_cached, cache_read,
+L00001542	  cache_write, cache_write_1h/cache_write_ttl where exposed, output_total, output_visible, reasoning/thoughts,
+L00001543	  provider_total, and context_estimate individually, derive total_tokens without losing bucket detail or double-counting
+L00001544	  provider-inclusive fields, treat legacy input_tokens/output_tokens/cache_read_input_tokens/cache_creation_input_tokens/
+L00001545	  reasoning_tokens as compatibility aliases, and prohibit pre-aggregation or collapsing at the storage or event layer.
+L00001546	gui_related: false
+L00001547	gui_classification_reason: This unit covers usage event/storage schema, not GUI behavior.
+L00001548	split_recommended: false
+L00001549	depends_on: []
+L00001550	unblocks: []
+L00001551	acceptance_criteria:
+L00001552	- Covered source spans remain losslessly available for exact-text audit.
+L00001553	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001554	  bridge.
+L00001555	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001556	  own contracts.
+L00001557	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001558	validation_surfaces:
+L00001559	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001560	- python3 scripts/pm-plan-index.py validate
+L00001561	risk_class: token_buckets_are_not_storage_aggregated
+L00001562	reasoning_tier: standard
+L00001563	context_scope: architecture_invariants_standardization
+L00001564	implementation_surfaces:
+L00001565	- Plans/Architecture_Invariants.md
+L00001566	node_compile_hint:
+L00001567	  mode: token_buckets_not_storage_aggregated
+L00001568	  create_worknodes: false
+L00001569	source_lineage:
+L00001570	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0020
+L00001571	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0021
+L00001572	preserved_exact_tokens:
+L00001573	- INV-016 -- Token fields are never aggregated at storage layer
+L00001574	- input_tokens
+L00001575	- output_tokens
+L00001576	- cache_read_input_tokens
+L00001577	- cache_creation_input_tokens
+L00001578	- reasoning_tokens
+L00001579	- total_tokens
+L00001580	- token-bucket
+L00001581	- AGGREGATES
+L00001582	negative_constraints:
+L00001583	- Pre-aggregation or collapsing at the storage or event layer is prohibited.
+L00001584	- Provider records that AGGREGATES into fewer persisted DB fields are non-canonical.
+L00001585	- Legacy token names must not be presented as canonical UsageRecord fields.
+L00001586	compatibility_only_notes: []
+L00001587	stale_retired_dispositions: []
+L00001588	owner_boundary_notes: []
+L00001589	owner_hints:
+L00001590	- Plans/Architecture_Invariants.md
+L00001591	preserved_contractrefs:
+L00001592	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md'
+L00001593	- 'ContractRef: Invariant:INV-016'
+L00001594	```
+L00001595	
+L00001596	### AI-021 - FileSafe Atomic Mutation Pattern
+L00001597	
+L00001598	```yaml
+L00001599	plan_unit_id: AI-021
+L00001600	unit_type: requirement
+L00001601	status: accepted
+L00001602	owner_doc: Plans/Architecture_Invariants.md
+L00001603	canonical_text: All FileSafe-managed writes use temp file, fsync, and rename, while managed rewrites capture read_revision,
+L00001604	  re-check before promote, and abort with concurrent_edit_conflict on drift; non-atomic writes and missing safety paths are
+L00001605	  prohibited.
+L00001606	gui_related: false
+L00001607	gui_classification_reason: This unit covers FileSafe mutation safety, not GUI behavior.
+L00001608	split_recommended: false
+L00001609	depends_on: []
+L00001610	unblocks: []
+L00001611	acceptance_criteria:
+L00001612	- Covered source spans remain losslessly available for exact-text audit.
+L00001613	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001614	  bridge.
+L00001615	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001616	  own contracts.
+L00001617	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001618	validation_surfaces:
+L00001619	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001620	- python3 scripts/pm-plan-index.py validate
+L00001621	risk_class: filesafe_atomic_mutation_pattern
+L00001622	reasoning_tier: standard
+L00001623	context_scope: architecture_invariants_standardization
+L00001624	implementation_surfaces:
+L00001625	- Plans/Architecture_Invariants.md
+L00001626	node_compile_hint:
+L00001627	  mode: filesafe_atomic_mutation_pattern
+L00001628	  create_worknodes: false
+L00001629	source_lineage:
+L00001630	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0022
+L00001631	preserved_exact_tokens:
+L00001632	- INV-017 -- File mutations are atomic (temp-fsync-rename)
+L00001633	- temp file
+L00001634	- fsync
+L00001635	- rename
+L00001636	- os.WriteFile
+L00001637	- read_revision
+L00001638	- concurrent_edit_conflict
+L00001639	- MUST CHANGE
+L00001640	negative_constraints:
+L00001641	- Direct os.WriteFile or equivalent non-atomic write calls MUST NOT be used for managed files.
+L00001642	- Any missing path is a MUST CHANGE item, not an implementation preference.
+L00001643	compatibility_only_notes: []
+L00001644	stale_retired_dispositions: []
+L00001645	owner_boundary_notes: []
+L00001646	owner_hints:
+L00001647	- Plans/Architecture_Invariants.md
+L00001648	preserved_contractrefs:
+L00001649	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md'
+L00001650	- 'ContractRef: Invariant:INV-017'
+L00001651	```
+L00001652	
+L00001653	### AI-022 - Seglog CRC32 Recovery
+L00001654	
+L00001655	```yaml
+L00001656	plan_unit_id: AI-022
+L00001657	unit_type: requirement
+L00001658	status: accepted
+L00001659	owner_doc: Plans/Architecture_Invariants.md
+L00001660	canonical_text: Every seglog record includes CRC32, every read validates the checksum, failed records are skipped with a recovery
+L00001661	  event, and silently processing corrupt records is prohibited.
+L00001662	gui_related: false
+L00001663	gui_classification_reason: This unit covers storage/seglog integrity, not GUI behavior.
+L00001664	split_recommended: false
+L00001665	depends_on: []
+L00001666	unblocks: []
+L00001667	acceptance_criteria:
+L00001668	- Covered source spans remain losslessly available for exact-text audit.
+L00001669	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001670	  bridge.
+L00001671	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001672	  own contracts.
+L00001673	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001674	validation_surfaces:
+L00001675	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001676	- python3 scripts/pm-plan-index.py validate
+L00001677	risk_class: seglog_crc32_recovery
+L00001678	reasoning_tier: standard
+L00001679	context_scope: architecture_invariants_standardization
+L00001680	implementation_surfaces:
+L00001681	- Plans/Architecture_Invariants.md
+L00001682	node_compile_hint:
+L00001683	  mode: seglog_crc32_recovery
+L00001684	  create_worknodes: false
+L00001685	source_lineage:
+L00001686	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0023
+L00001687	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0024
+L00001688	preserved_exact_tokens:
+L00001689	- INV-018 -- Seglog CRC32 is mandatory
+L00001690	- CRC32 checksum
+L00001691	- every read
+L00001692	- recovery event
+L00001693	- corrupt record
+L00001694	negative_constraints:
+L00001695	- Silently processing a corrupt record is prohibited.
+L00001696	compatibility_only_notes: []
+L00001697	stale_retired_dispositions: []
+L00001698	owner_boundary_notes: []
+L00001699	owner_hints:
+L00001700	- Plans/Architecture_Invariants.md
+L00001701	preserved_contractrefs:
+L00001702	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md'
+L00001703	- 'ContractRef: Invariant:INV-018'
+L00001704	```
+L00001705	
+L00001706	### AI-023 - Interactive Element Command Mapping
+L00001707	
+L00001708	```yaml
+L00001709	plan_unit_id: AI-023
+L00001710	unit_type: requirement
+L00001711	status: accepted
+L00001712	owner_doc: Plans/Architecture_Invariants.md
+L00001713	canonical_text: Every interactive UI element maps to exactly one UICommandID, the mapping is recorded in the wiring matrix,
+L00001714	  every catalog UICommandID has a registered handler, and missing wiring entries or handlers are prohibited.
+L00001715	gui_related: true
+L00001716	gui_classification_reason: This unit governs interactive UI element mapping, wiring matrix coverage, and handlers.
+L00001717	split_recommended: false
+L00001718	depends_on: []
+L00001719	unblocks: []
+L00001720	acceptance_criteria:
+L00001721	- Covered source spans remain losslessly available for exact-text audit.
+L00001722	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001723	  bridge.
+L00001724	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001725	  own contracts.
+L00001726	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001727	validation_surfaces:
+L00001728	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001729	- python3 scripts/pm-plan-index.py validate
+L00001730	risk_class: interactive_element_command_mapping
+L00001731	reasoning_tier: standard
+L00001732	context_scope: architecture_invariants_standardization
+L00001733	implementation_surfaces:
+L00001734	- Plans/Architecture_Invariants.md
+L00001735	node_compile_hint:
+L00001736	  mode: interactive_element_command_mapping
+L00001737	  create_worknodes: false
+L00001738	source_lineage:
+L00001739	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0024
+L00001740	preserved_exact_tokens:
+L00001741	- Every interactive UI element
+L00001742	- exactly one UICommandID
+L00001743	- wiring matrix
+L00001744	- Plans/Wiring_Matrix.schema.json
+L00001745	- registered handler
+L00001746	- No interactive element
+L00001747	- no catalog command
+L00001748	negative_constraints:
+L00001749	- No interactive element may exist without a wiring matrix entry; no catalog command may lack a handler.
+L00001750	compatibility_only_notes: []
+L00001751	stale_retired_dispositions: []
+L00001752	owner_boundary_notes: []
+L00001753	owner_hints:
+L00001754	- Plans/Architecture_Invariants.md
+L00001755	preserved_contractrefs:
+L00001756	- 'ContractRef: Primitive:UICommand, ContractName:Plans/UI_Wiring_Rules.md#section-2, SchemaID:Wiring_Matrix.schema.json,
+L00001757	  Gate:GATE-010'
+L00001758	```
+L00001759	
+L00001760	### AI-024 - Contract Driven Code Generation
+L00001761	
+L00001762	```yaml
+L00001763	plan_unit_id: AI-024
+L00001764	unit_type: requirement
+L00001765	status: accepted
+L00001766	owner_doc: Plans/Architecture_Invariants.md
+L00001767	canonical_text: Plans/*.schema.json files are canonical sources for validation and optional code generation, and generated
+L00001768	  Rust code lives under one generated/ boundary that is not hand-edited.
+L00001769	gui_related: false
+L00001770	gui_classification_reason: This unit covers schema/codegen DRY policy, not GUI behavior.
+L00001771	split_recommended: false
+L00001772	depends_on: []
+L00001773	unblocks: []
+L00001774	acceptance_criteria:
+L00001775	- Covered source spans remain losslessly available for exact-text audit.
+L00001776	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001777	  bridge.
+L00001778	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001779	  own contracts.
+L00001780	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001781	validation_surfaces:
+L00001782	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001783	- python3 scripts/pm-plan-index.py validate
+L00001784	risk_class: contract_driven_code_generation
+L00001785	reasoning_tier: standard
+L00001786	context_scope: architecture_invariants_standardization
+L00001787	implementation_surfaces:
+L00001788	- Plans/Architecture_Invariants.md
+L00001789	node_compile_hint:
+L00001790	  mode: contract_driven_code_generation
+L00001791	  create_worknodes: false
+L00001792	source_lineage:
+L00001793	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0025
+L00001794	preserved_exact_tokens:
+L00001795	- Contract-driven code generation (lightweight; DRY)
+L00001796	- Plans/*.schema.json
+L00001797	- canonical source
+L00001798	- validation
+L00001799	- code generation
+L00001800	- generated/
+L00001801	- MUST NOT be hand-edited
+L00001802	negative_constraints:
+L00001803	- Generated Rust code MUST live under a single generated/ boundary and MUST NOT be hand-edited.
+L00001804	compatibility_only_notes: []
+L00001805	stale_retired_dispositions: []
+L00001806	owner_boundary_notes: []
+L00001807	owner_hints:
+L00001808	- Plans/Architecture_Invariants.md
+L00001809	preserved_contractrefs:
+L00001810	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+L00001811	- 'ContractRef: Primitive:Invariant, PolicyRule:Decision_Policy.md§2'
+L00001812	```
+L00001813	
+L00001814	### AI-025 - GATE 003 Non UI Invariant Checks
+L00001815	
+L00001816	```yaml
+L00001817	plan_unit_id: AI-025
+L00001818	unit_type: requirement
+L00001819	status: accepted
+L00001820	owner_doc: Plans/Architecture_Invariants.md
+L00001821	canonical_text: GATE-003 validates schemas and enforces INV-008 GitHub API-only operations and INV-010 naming compliance in
+L00001822	  Plans and relevant implementation surfaces.
+L00001823	gui_related: false
+L00001824	gui_classification_reason: This unit covers non-UI automated governance checks, not GUI behavior.
+L00001825	split_recommended: false
+L00001826	depends_on: []
+L00001827	unblocks: []
+L00001828	acceptance_criteria:
+L00001829	- Covered source spans remain losslessly available for exact-text audit.
+L00001830	- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00001831	  bridge.
+L00001832	- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+L00001833	  own contracts.
+L00001834	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001835	validation_surfaces:
+L00001836	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001837	- python3 scripts/pm-plan-index.py validate
+L00001838	risk_class: gate_003_non_ui_invariant_checks
+L00001839	reasoning_tier: standard
+L00001840	context_scope: architecture_invariants_standardization
+L00001841	implementation_surfaces:
+L00001842	- Plans/Architecture_Invariants.md
+L00001843	node_compile_hint:
+L00001844	  mode: gate_003_non_ui_invariant_checks
+L00001845	  create_worknodes: false
+L00001846	source_lineage:
+L00001847	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0026
+L00001848	preserved_exact_tokens:
+L00001849	- Validation (gated; autonomous)
+L00001850	- GATE-003
+L00001851	- Validate schemas
+L00001852	- plan graph
+L00001853	- evidence
+L00001854	- change budget
+L00001855	- auto decisions
+L00001856	- INV-008
+L00001857	- GitHub CLI usage
+L00001858	- INV-010
+L00001859	- naming compliance
+L00001860	negative_constraints:
+L00001861	- GitHub CLI usage must be enforced out of build-governing docs and implementation surfaces where INV-008 applies.
+L00001862	compatibility_only_notes: []
+L00001863	stale_retired_dispositions: []
+L00001864	owner_boundary_notes: []
+L00001865	owner_hints:
+L00001866	- Plans/Architecture_Invariants.md
+L00001867	preserved_contractrefs:
+L00001868	- 'ContractRef: Gate:GATE-001'
+L00001869	- 'ContractRef: Invariant:INV-008'
+L00001870	- 'ContractRef: Invariant:INV-010'
+L00001871	- 'ContractRef: Gate:GATE-003'
+L00001872	```
+L00001873	
+
+<<< CONTEXT_AFTER canonical_document_lines=1874-1885 >>>
+L00001874	### AI-026 - GATE 003 UI Invariant Checks
+L00001875	
+L00001876	```yaml
+L00001877	plan_unit_id: AI-026
+L00001878	unit_type: requirement
+L00001879	status: accepted
+L00001880	owner_doc: Plans/Architecture_Invariants.md
+L00001881	canonical_text: GATE-003 enforces INV-011 by verifying no UI code directly calls backend, storage, or provider modules, and
+L00001882	  enforces INV-012 plus GATE-010 wiring coverage for UICommandID handlers and interactive element wiring entries.
+L00001883	gui_related: true
+L00001884	gui_classification_reason: This unit governs UI static analysis/import-graph checks and wiring coverage gates.
+L00001885	split_recommended: false

@@ -1,0 +1,594 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000032-ADVERSARIAL-WIN-0C5FC67FDB44-0004",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_a_parallel_dispatcher_epoch_0013/a005_32_adv_w4_e13",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Decision_Log.md",
+    "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d",
+    "core_sha256": "5329c25bf250b3edf371144a7f0bbb2f6af2a3bb70e4cf69736901f68d166cf5",
+    "core_range": [1165, 1528]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-32-ADV-001",
+      "item_type": "gap",
+      "title": "Blocked-episode migration has no deterministic cutover state machine",
+      "statement": "The migration is conditioned on blocked-episode identity being available, but availability, cutover ownership, mixed old/new record handling, in-flight request disposition, and the point at which legacy identifiers become invalid are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Concurrent or partially upgraded callers can approve different logical episodes, reject valid approvals, or keep request-centric identity alive indefinitely.",
+      "builder_discretion": "Define an atomic, versioned cutover protocol with preconditions, dual-read limits, terminal legacy behavior, and an idempotent migration marker.",
+      "feature_keys": ["DL-023"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1173,
+          "line_end": 1177,
+          "exact_quote": "  Worktree and graph approval identity must stop hanging on tier_id,\n  request-centric HITL, or request_id payloads once blocked-episode runtime\n  identity is available; graph HITL command payload identity moves to\n  blocked-episode anchored identity while preserving Contracts_V0 compatibility\n  notes for the request-centric migration.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-002",
+      "item_type": "authority",
+      "title": "Approval identity migration omits authorization and anti-replay rules",
+      "statement": "The canonical identity anchor is named, but the unit does not specify which principal may issue, resume, cancel, or supersede a blocked-episode command, nor how stale blocked_sequence or attempt_id payloads are rejected.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "A correctly shaped but stale, cross-run, or unauthorized command can be accepted against the wrong blocked episode.",
+      "builder_discretion": "Bind every command to an authenticated principal, execution-unit context, monotonic blocked sequence, current episode status, and replay-safe command identifier.",
+      "feature_keys": ["DL-023"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1185,
+          "line_end": 1187,
+          "exact_quote": "  - Approval identity stops depending on tier_id, request-centric HITL, or request_id after blocked-episode identity is available.\n  - Graph HITL command payloads use blocked-episode anchored identity.\n  - Contracts_V0 compatibility notes for request-centric to blocked-episode migration are preserved.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-003",
+      "item_type": "failure_recovery",
+      "title": "Identity migration has no partial-failure recovery or rollback contract",
+      "statement": "No behavior is defined for a crash between persistence and graph update, retry after ambiguous acknowledgement, incompatible consumer, or rollback after some payload producers have switched.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "Approval truth can diverge across persistence, graph state, and GUI consumers with no deterministic reconciliation path.",
+      "builder_discretion": "Specify transaction boundaries, idempotency keys, reconciliation precedence, retry outcomes, and whether rollback is forbidden after the first canonical episode write.",
+      "feature_keys": ["DL-023"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1194,
+          "line_end": 1199,
+          "exact_quote": "implementation_surfaces:\n  - Plans/Decision_Log.md\n  - Plans/Contracts_V0.md\n  - Plans/WorktreeGitImprovement.md\n  - Plans/Orchestrator_Page.md\n  - Plans/Run_Graph_View.md",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-004",
+      "item_type": "gap",
+      "title": "The 2-of-3 rule does not define eligible or independent corroborators",
+      "statement": "The text counts three votes without defining who or what may vote, independence requirements, duplicate-provider or duplicate-evidence handling, evidence freshness, abstention, confidence, or conflict-of-interest exclusion.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "Two correlated or attacker-controlled observations can manufacture canonical high-impact truth.",
+      "builder_discretion": "Define voter eligibility, independence domains, evidence lineage, freshness, deduplication, and authority to open or close corroboration.",
+      "feature_keys": ["DL-024"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1229,
+          "line_end": 1232,
+          "exact_quote": "  Corroboration disagreement handling uses the 2-of-3 rule: 2-of-3 accepts a\n  high-impact claim as canonical, no 2-of-3 means a high-impact claim is not\n  accepted as blocking or canonical truth, and credible lesser concerns still\n  emit a non-blocking minor advisory visible on the Orchestrator page.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-005",
+      "item_type": "state_transition",
+      "title": "Corroboration has no timeout, reversal, or late-evidence transition semantics",
+      "statement": "The accepted/not-accepted outcomes omit pending, timed-out, withdrawn, superseded, reopened, and revoked states, including what happens when a second or third result arrives after action was taken.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "The same evidence set can produce unstable blocking and canonical outcomes across retries or arrival order.",
+      "builder_discretion": "Define a monotonic transition table, deadline policy, deterministic ordering, revocation effects, and recovery when previously canonical evidence is invalidated.",
+      "feature_keys": ["DL-024"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1240,
+          "line_end": 1242,
+          "exact_quote": "  - 2-of-3 accepts high-impact claims as canonical.\n  - No 2-of-3 means a high-impact claim is not accepted as blocking or canonical truth.\n  - Credible lesser concerns emit non-blocking minor advisories visible on the Orchestrator page.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-006",
+      "item_type": "gui_truth",
+      "title": "Minor-advisory GUI truth and lifecycle are underspecified",
+      "statement": "Visibility is required, but the Orchestrator presentation does not define pending/loading/stale/offline states, source and timestamp disclosure, dismissal persistence, later escalation or revocation, accessible announcement, or localized severity copy.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_states",
+      "impact": "Operators may interpret a stale or incomplete advisory as current non-blocking truth, and assistive-technology or localized users may miss the state entirely.",
+      "builder_discretion": "Expose provenance, freshness, lifecycle state, and action consequences with non-color-only status, programmatic labels, and localization-safe copy.",
+      "feature_keys": ["DL-024"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1233,
+          "line_end": 1234,
+          "exact_quote": "gui_related: true\ngui_classification_reason: Non-blocking minor advisory concerns remain visible on the Orchestrator page.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-007",
+      "item_type": "gap",
+      "title": "Help cluster and alias resolution contract is incomplete",
+      "statement": "The vocabulary list does not define canonical identifiers, normalization, exact matching, collision precedence, versioning, unknown-token behavior, deep-link stability, alias deprecation, or whether user-provided route text is treated as untrusted input.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "Malformed, localized, or legacy tokens can resolve to the wrong help topic, create broken links, or become an injection surface in route or rendered-help consumers.",
+      "builder_discretion": "Use immutable topic IDs, an allowlisted alias table, explicit normalization, safe rendering, collision rejection, and versioned deprecation behavior.",
+      "feature_keys": ["DL-025"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1278,
+          "line_end": 1283,
+          "exact_quote": "  The help system supports related-link clusters for Feature Seam, Work Package,\n  Weak Integration, Seam Complete, Promotion, Revoked, Reopened, Corroboration,\n  Concern, Review, Graph Patch, Generation Updated, Historical Path, Lane,\n  Worktree, Cleanup Eligible, Archived/Removed, Requested, Effective,\n  Skipped/Clamped, while Clamped and Removed remain aliases only where\n  explicitly documented.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-008",
+      "item_type": "gap",
+      "title": "Help behavior lacks accessibility, localization, and offline guarantees",
+      "statement": "Related links and aliases have no keyboard/focus, screen-reader naming, bidirectional-text, translation-key, fallback-locale, missing-content, or offline-cache behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "accessibility",
+      "impact": "Users can lose access to required definitions by input modality, locale, or network state, while aliases drift between translated labels and canonical routes.",
+      "builder_discretion": "Specify semantic link roles, focus order, stable translation keys, locale-independent route IDs, offline fallback, and deterministic missing-topic treatment.",
+      "feature_keys": ["DL-025"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1284,
+          "line_end": 1285,
+          "exact_quote": "gui_related: true\ngui_classification_reason: This unit defines user-facing help related-link clusters and aliases.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-009",
+      "item_type": "state_transition",
+      "title": "Retained cleanup is a predicate list, not a complete lifecycle",
+      "statement": "The unit defines reasons to enter retained but omits the source states, reason precedence, multiple simultaneous reasons, exit criteria, terminal states, expiry, re-evaluation triggers, and whether retained can be re-entered after cleanup begins.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Lanes may be retained forever, cleaned while a reason remains active, or oscillate under changing review and promotion inputs.",
+      "builder_discretion": "Define the full state machine with reason-set semantics, guarded transitions, expiry policy, and deterministic re-evaluation events.",
+      "feature_keys": ["DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1339,
+          "line_end": 1342,
+          "exact_quote": "  Lane cleanup may transition into retained instead of immediate cleanup when\n  recent completion is pending review or promotion, weak integration remains\n  under investigation, unresolved concern or corroboration is tied to lane\n  outputs, or manual operator retention is active.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-010",
+      "item_type": "failure_recovery",
+      "title": "Cleanup retention lacks race, lease, and destructive-action protection",
+      "statement": "No concurrency contract prevents a cleanup worker from deleting outputs while review, corroboration, or manual retention is being activated; no lease, compare-and-swap, tombstone, undo window, or partial-delete recovery is stated.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "concurrency_races",
+      "impact": "Irreplaceable lane outputs can be destroyed after a valid retention reason exists or left partially deleted with misleading retained state.",
+      "builder_discretion": "Require an atomic retention check under a cleanup lease, monotonic generation guard, durable deletion journal, quarantine or undo interval, and idempotent recovery.",
+      "feature_keys": ["DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1349,
+          "line_end": 1350,
+          "exact_quote": "acceptance_criteria:\n  - Lane cleanup may transition to retained instead of immediate cleanup under the listed review, promotion, weak integration, concern, corroboration, or manual retention conditions.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-011",
+      "item_type": "authority",
+      "title": "Manual retention has no authorization, audit, or privacy boundary",
+      "statement": "The plan does not identify who may activate, extend, or release manual retention, whether approval is required, how the reason is audited, or how retention is bounded by privacy deletion and data-minimization obligations.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "An unauthorized or forgotten hold can retain sensitive lane outputs indefinitely, while an unauthorized release can enable destructive cleanup.",
+      "builder_discretion": "Define role and scope checks, immutable audit events, reason and expiry fields, renewal policy, legal/privacy precedence, and emergency release controls.",
+      "feature_keys": ["DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1371,
+          "line_end": 1371,
+          "exact_quote": "  - \"Lane cleanup must not be immediate when retained conditions are active.\"",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-012",
+      "item_type": "gap",
+      "title": "Scale and resource limits are absent for retained lanes and help clusters",
+      "statement": "No upper bounds, eviction policy, quota behavior, backpressure, pagination, indexing limit, or overload response is defined for accumulated retained outputs, corroboration records, advisories, or related-link graphs.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Manual holds or unresolved concerns can grow storage and UI query costs without bound, and dense help graphs can degrade navigation or render cycles.",
+      "builder_discretion": "Define quotas and measured limits, safe backpressure, paginated retrieval, bounded graph traversal, and operator-visible saturation behavior.",
+      "feature_keys": ["DL-024", "DL-025", "DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1347,
+          "line_end": 1348,
+          "exact_quote": "depends_on: [DL-011, DL-021, DL-024, DL-025]\nunblocks: []",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-013",
+      "item_type": "consumer",
+      "title": "Named implementation surfaces lack caller and consumer conformance contracts",
+      "statement": "The units list owner documents and pages but do not enumerate payload producers, persistence readers, command handlers, background cleanup workers, notification consumers, or version-skew behavior, and no cross-surface conformance oracle is supplied.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "A producer or consumer can silently remain on legacy identity, stale advisory, alias, or cleanup semantics while plan-index checks still pass.",
+      "builder_discretion": "Maintain an explicit producer/consumer matrix with versioned contracts and executable round-trip fixtures for every listed surface.",
+      "feature_keys": ["DL-023", "DL-024", "DL-025", "DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1357,
+          "line_end": 1361,
+          "exact_quote": "implementation_surfaces:\n  - Plans/Decision_Log.md\n  - Plans/WorktreeGitImprovement.md\n  - Plans/Orchestrator_Page.md\n  - Plans/Run_Graph_View.md",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-014",
+      "item_type": "acceptance_oracle",
+      "title": "Validation surfaces cannot falsify runtime or GUI semantics",
+      "statement": "The repeated validation commands check plan migration and indexing, but no executable oracle covers identity cutover, replay rejection, corroboration ordering, accessible advisory truth, alias resolution, cleanup races, or recovery.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "All stated validations can pass while the critical behavioral and failure-mode requirements remain unimplemented or contradictory.",
+      "builder_discretion": "Add deterministic contract, model-based state-machine, concurrency, fault-injection, accessibility, localization, offline, and migration-version-skew tests.",
+      "feature_keys": ["DL-023", "DL-024", "DL-025", "DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1188,
+          "line_end": 1190,
+          "exact_quote": "validation_surfaces:\n  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\n  - python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-015",
+      "item_type": "gap",
+      "title": "Authoritative retained bridge metadata contains visibly truncated requirements",
+      "statement": "Several negative constraints, compatibility notes, and owner-boundary notes terminate mid-sentence or mid-token inside the authoritative core. Their intended semantics cannot be reconstructed safely from this window.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "unknown_unknowns",
+      "impact": "Consumers may treat corrupt fragments as canonical requirements, omit their missing constraints, or invent incompatible completions.",
+      "builder_discretion": "Restore each full source statement from verified lineage, preserve it losslessly, and reject migration output containing truncated prose before certification.",
+      "feature_keys": ["DL-001"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1470,
+          "line_end": 1470,
+          "exact_quote": "- 'Decision_Log is a human-authored decision ledger, not a derived decision log. `Plans/auto_decisions.jsonl` is pipeline-managed and must not be hand-edited here; `Plans/.pipeline/research_packet.json` (`/.pipeline/research_packet.json`) is regenerated after owner/consumer reconciliation and must not '",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        },
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1472,
+          "line_end": 1472,
+          "exact_quote": "- 'The shared provider-runtime contract applies beyond Orchestrator: `Multi-Account.md` governs assistant, interviewer, requirements builder, PRD builder, overseers, node workers, and provider-backed chat/tool turns. Requested and effective `/model/effort/persona/auth/account`, `/effective` identity, p'",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-016",
+      "item_type": "explicit_non_gap",
+      "title": "Retired bridge is explicitly barred from reclaiming product coverage",
+      "statement": "DL-001 clearly remains migration lineage only, may not re-own atomized coverage, and may not generate executable planning or production artifacts. This is an explicit non-gap for scope and authority containment.",
+      "severity": "none",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "The text prevents a compatibility bridge from becoming a shadow canonical owner or implementation source.",
+      "builder_discretion": "None; preserve and enforce these negative constraints.",
+      "feature_keys": ["DL-001"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1387,
+          "line_end": 1391,
+          "exact_quote": "  The former Decision Log source-preserving bridge is retired in place after\n  Phase 2B atomized or structurally dispositioned Decision_Log-S0001 through\n  Decision_Log-S0026 into DL-002 through DL-026 or explicit structural coverage.\n  DL-001 remains only as migration lineage for the retired bridge span and must\n  not re-own atomized source coverage.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-017",
+      "item_type": "gap",
+      "title": "DecisionRecord addendum specifies names but not an interoperable schema",
+      "statement": "The addendum lists fields without types, formats, required/optional rules beyond one marker, uniqueness, enum values, referential integrity, mutation and supersession rules, serialization version, redaction, retention, or compatibility behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Different producers can emit structurally incompatible records while each claims conformance to the same field list.",
+      "builder_discretion": "Provide a versioned machine-readable schema with invariants, canonical serialization, migration rules, privacy classification, and executable producer/consumer fixtures.",
+      "feature_keys": ["sfk-f6f04565ca3fcaa8bf3a4f6d"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1518,
+          "line_end": 1518,
+          "exact_quote": "- Repairs `sfk-f6f04565ca3fcaa8bf3a4f6d`: `DecisionRecord` fields are `decision_id`, `title`, `status`, `owner_doc_ref`, `decided_at_utc`, `supersedes[]`, `rationale_ref`, `affected_policy_axes[]`, and `gui_surface_ref?`. GUI visibility is through Settings > Governance > Decisions when surfaced by FinalGUISpec.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-018",
+      "item_type": "gui_truth",
+      "title": "Decision visibility is conditional without an absence-state contract",
+      "statement": "The phrase 'when surfaced by FinalGUISpec' does not define whether the Decisions screen exists, what users see when records are unavailable, stale, loading, unauthorized, or offline, or how hidden decisions are distinguished from no decisions.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_states",
+      "impact": "The GUI can imply that no decisions exist when the surface is unsupported, unauthorized, stale, or disconnected.",
+      "builder_discretion": "Define availability and permission states, provenance and freshness, offline behavior, localized empty/error copy, and accessible status announcements.",
+      "feature_keys": ["sfk-f6f04565ca3fcaa8bf3a4f6d"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1518,
+          "line_end": 1518,
+          "exact_quote": "- Repairs `sfk-f6f04565ca3fcaa8bf3a4f6d`: `DecisionRecord` fields are `decision_id`, `title`, `status`, `owner_doc_ref`, `decided_at_utc`, `supersedes[]`, `rationale_ref`, `affected_policy_axes[]`, and `gui_surface_ref?`. GUI visibility is through Settings > Governance > Decisions when surfaced by FinalGUISpec.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-019",
+      "item_type": "gap",
+      "title": "Operational observability and support procedures are missing",
+      "statement": "No metrics, structured events, correlation identifiers, alert thresholds, audit queries, operator diagnostics, or runbook actions are required for migration rejection, corroboration deadlock, stale advisories, alias failure, or retained-cleanup conflicts.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Silent divergence and destructive races can persist without detection, and support cannot explain which rule or transition produced the user-visible outcome.",
+      "builder_discretion": "Specify privacy-safe structured events and metrics keyed to canonical episode, claim, topic, and lane identities plus actionable alerts and reconciliation runbooks.",
+      "feature_keys": ["DL-023", "DL-024", "DL-025", "DL-026"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1493,
+          "line_end": 1494,
+          "exact_quote": "- 'Governance semantics stay graph-owned: a `run` is the full canonical graph under deterministic runtime control, a `work package` is a coherent precomputed subgraph with a local overseer, a `feature seam` is a cross-package oversight scope, and a `node` is the smallest executable work unit. Overseers'\n- 'Revocation and reopen semantics are explicit named states: `Promotion Revoked`, `Seam Completion Revoked`, `Reopened`, `Reopened by Patch`, and `Reopened by New Evidence`. Blocked states expose blocked reason, blocked owner, and recovery context. Weak-integration buckets include missing GUI represen'",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-32-ADV-020",
+      "item_type": "explicit_non_gap",
+      "title": "Audit-lineage addendum disclaims repair and buildability proof",
+      "statement": "The final addendum explicitly says its rows are lineage only, cannot prove repair, create no runtime/build artifacts, and do not make buildability pass. This prevents a misleading closure claim.",
+      "severity": "none",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Reviewers are warned not to treat bookkeeping prose as executable evidence.",
+      "builder_discretion": "None; retain this boundary until concrete owner-doc or explicit disposition evidence exists.",
+      "feature_keys": ["FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708"],
+      "evidence": [
+        {
+          "path": "Plans/Decision_Log.md",
+          "line_start": 1524,
+          "line_end": 1524,
+          "exact_quote": "These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.",
+          "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Document surfaces are named, but the producer/consumer set and version-skew obligations are not enumerated.",
+      "evidence_item_ids": ["A005-32-ADV-003", "A005-32-ADV-013"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Cutover, corroboration, and retention omit necessary intermediate, terminal, reversal, and expiry transitions.",
+      "evidence_item_ids": ["A005-32-ADV-001", "A005-32-ADV-005", "A005-32-ADV-009"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "No atomicity or lease prevents identity split-brain, arrival-order disagreement, or cleanup racing retention.",
+      "evidence_item_ids": ["A005-32-ADV-001", "A005-32-ADV-005", "A005-32-ADV-010"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Cross-surface migration and destructive cleanup lack crash and ambiguous-acknowledgement outcomes.",
+      "evidence_item_ids": ["A005-32-ADV-003", "A005-32-ADV-010"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "No reconciliation, replay, undo, or rollback boundary is defined for migrated identity, revised corroboration, or partial cleanup.",
+      "evidence_item_ids": ["A005-32-ADV-003", "A005-32-ADV-005", "A005-32-ADV-010"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Command principals, corroborator eligibility, and manual-retention authority are undefined; bridge non-ownership is explicitly bounded.",
+      "evidence_item_ids": ["A005-32-ADV-002", "A005-32-ADV-004", "A005-32-ADV-011", "A005-32-ADV-016"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Manual retention and DecisionRecord data have no classification, expiry, redaction, deletion, or privacy-precedence rules.",
+      "evidence_item_ids": ["A005-32-ADV-011", "A005-32-ADV-017"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Approval payload replay and help-token normalization/rendering are not constrained against hostile or malformed input.",
+      "evidence_item_ids": ["A005-32-ADV-002", "A005-32-ADV-007"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Advisory and Decisions views omit provenance, freshness, permission, loading, stale, offline, and absence semantics.",
+      "evidence_item_ids": ["A005-32-ADV-006", "A005-32-ADV-018"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "No offline behavior is specified for corroboration arrival, help content, advisory freshness, or DecisionRecord visibility.",
+      "evidence_item_ids": ["A005-32-ADV-005", "A005-32-ADV-008", "A005-32-ADV-018"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Retention, corroboration, advisory, and help-graph storage and query growth are unbounded.",
+      "evidence_item_ids": ["A005-32-ADV-012"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Required user-visible advisories and help links lack semantic, keyboard, focus, and announcement contracts.",
+      "evidence_item_ids": ["A005-32-ADV-006", "A005-32-ADV-008", "A005-32-ADV-018"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Canonical help aliases and GUI state copy lack locale-independent keys, fallback, and bidirectional-text behavior.",
+      "evidence_item_ids": ["A005-32-ADV-006", "A005-32-ADV-008", "A005-32-ADV-018"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Legacy identity cutover and DecisionRecord serialization lack versioned compatibility and mixed-version behavior; bridge scope is appropriately retired.",
+      "evidence_item_ids": ["A005-32-ADV-001", "A005-32-ADV-016", "A005-32-ADV-017"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "No diagnostic telemetry, alerts, correlation, or recovery runbooks make the new rules operationally supportable.",
+      "evidence_item_ids": ["A005-32-ADV-019"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Cleanup lacks atomic retention guards, quarantine, undo, and partial-deletion recovery.",
+      "evidence_item_ids": ["A005-32-ADV-010", "A005-32-ADV-011"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Owner and implementation surfaces are listed without executable cross-document convergence or consumer fixtures.",
+      "evidence_item_ids": ["A005-32-ADV-003", "A005-32-ADV-013", "A005-32-ADV-014"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Plan-index and migration checks cannot falsify the runtime, GUI, accessibility, race, or recovery claims; lineage-only notes correctly disclaim proof.",
+      "evidence_item_ids": ["A005-32-ADV-014", "A005-32-ADV-020"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "gap_found",
+      "summary": "Truncated authoritative prose prevents reliable interpretation and may conceal additional constraints.",
+      "evidence_item_ids": ["A005-32-ADV-015"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

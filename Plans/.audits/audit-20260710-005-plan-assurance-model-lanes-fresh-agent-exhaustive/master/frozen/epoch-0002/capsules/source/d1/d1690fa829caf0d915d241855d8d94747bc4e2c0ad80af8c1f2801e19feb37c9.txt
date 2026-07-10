@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 1129-1140 >>>
+  - "GUI/status projections"
+  - "last-known provider/model/auth facts"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/storage-plan.md"
+  - "Plans/usage-feature.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 1141-1497 >>>
+### PO-009 - Server Provider Auth Realm Mapping
+
+```yaml
+plan_unit_id: PO-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode has separate server-level auth and provider-level auth realms: PM sends configured server credentials to OpenCode endpoints and treats upstream provider auth as OpenCode-managed provider-native auth exposed by /provider/auth and callback endpoints.
+gui_related: false
+gui_classification_reason: This unit defines auth realm mapping rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-006"
+  - "CV-125"
+unblocks: []
+acceptance_criteria:
+  - "Server Provider Auth Realm Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_auth_realm_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0019"
+preserved_exact_tokens:
+  - "Server-level auth"
+  - "OPENCODE_SERVER_PASSWORD"
+  - "username/password"
+  - "Provider-level auth"
+  - "/provider/auth"
+  - "OAuth/callback endpoints"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/Multi-Account.md"
+```
+
+### PO-010 - Sign-In Refresh And Version Diagnostics
+
+```yaml
+plan_unit_id: PO-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  When a user chooses Sign in for an unconnected OpenCode provider, PM deep-links or opens OpenCode provider auth flows, refreshes provider/model discovery through GET /provider, records server version from health checks, and emits version_mismatch diagnostics when required while continuing best-effort operation.
+gui_related: true
+gui_classification_reason: This unit includes user-visible Sign in flow handling and diagnostics.
+split_recommended: false
+depends_on:
+  - "PO-009"
+unblocks: []
+acceptance_criteria:
+  - "Sign-In Refresh And Version Diagnostics remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_signin_version_diagnostics
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0019"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0020"
+preserved_exact_tokens:
+  - "Sign in"
+  - "GET /provider"
+  - "OpenCode server version"
+  - "diagnostic(category=\"version_mismatch\")"
+  - "best-effort operation"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-011 - Provider Envelope Identity Correlation
+
+```yaml
+plan_unit_id: PO-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode maps into the unified Provider facade while preserving PM lineage fields and expanded ProviderRequestEnvelope identity, including run/thread/parent/child lineage, attempt identity, execution role, requested/effective runtime descriptors, permission refs, working-directory/worktree identity, prompt parts, retry/approval context, normalized output/correlation IDs, and additive provider-native session IDs.
+gui_related: false
+gui_classification_reason: This unit defines provider envelope identity and correlation fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-002"
+  - "PO-004"
+  - "CBP-005"
+  - "CV-090"
+unblocks: []
+acceptance_criteria:
+  - "Provider Envelope Identity Correlation remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_envelope_identity_correlation
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0021"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0022"
+preserved_exact_tokens:
+  - "ProviderRequestEnvelope"
+  - "thread_id"
+  - "run_id"
+  - "parent_run_id"
+  - "child_run_id"
+  - "attempt_id"
+  - "execution role"
+  - "requested/effective runtime/provider/model/account descriptors"
+  - "permission/tool-policy snapshot refs"
+  - "working-directory or worktree identity"
+  - "provider-native session ids"
+  - "setCacheKey"
+negative_constraints:
+  - "PM must not rewrite thread_id into an OpenCode session id."
+  - "OpenCode provider-session identifiers remain provider-native correlation metadata; they never replace PM thread_id, run_id, parent_run_id, child_run_id, or attempt lineage."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-009"
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Models_System.md"
+  - "Plans/storage-plan.md"
+```
+
+### PO-012 - Discovered Upstream Provider Identity Facts
+
+```yaml
+plan_unit_id: PO-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode provider discovery records upstream provider entries as discovered OpenCode facts, keeps runtime platform opencode distinct from upstream provider/model namespaces, treats Alibaba-family, MiniMax, Z.AI, Codex, and Copilot observations as data, and does not invent provider entries absent discovery or owner contract evidence.
+gui_related: false
+gui_classification_reason: This unit defines provider discovery identity facts rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-011"
+unblocks: []
+acceptance_criteria:
+  - "Discovered Upstream Provider Identity Facts remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_provider_discovery_identity
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0022"
+preserved_exact_tokens:
+  - "opencode"
+  - "anthropic/..."
+  - "google/..."
+  - "anthropic/claude-sonnet-*"
+  - "/claude-sonnet-"
+  - "alibaba"
+  - "alibaba-cn"
+  - "DASHSCOPE_API_KEY"
+  - "MiniMax"
+  - "Z.AI"
+  - "https://docs.bigmodel.cn/cn/coding-plan/overview"
+  - "OpenCode-native skill tool behavior"
+negative_constraints:
+  - "PM must not invent a separate alibaba-coding-plan OpenCode provider entry unless discovery or an owner contract later proves it exists."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-013 - Boot Refresh Discovery Status Surface
+
+```yaml
+plan_unit_id: PO-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  On app boot-refresh, PM refreshes OpenCode provider/model discovery in the background, keeps last-known connected upstream models visible until refresh finishes, and reports progress or per-provider failure in the shell /status-bar without blocking runtime selection.
+gui_related: true
+gui_classification_reason: This unit defines visible status-bar progress and failure reporting.
+split_recommended: false
+depends_on:
+  - "PO-012"
+unblocks: []
+acceptance_criteria:
+  - "Boot Refresh Discovery Status Surface remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_boot_refresh_status_surface
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0022"
+preserved_exact_tokens:
+  - "boot-refresh"
+  - "last-known connected upstream models"
+  - "shell /status-bar"
+  - "per-provider failure"
+  - "runtime selection"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/FinalGUISpec.md"
+```
+
+### PO-014 - Provider Cache Metadata Boundary
+
+```yaml
+plan_unit_id: PO-014
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode cache/request metadata is adapter evidence, not PM storage canon: setCacheKey and options.setCacheKey remain session-scoped provider cache metadata, store=false does not imply durable PM storage, provider.ts request-shape behavior does not imply transcript deletion, and provider-specific cache markers remain provider evidence.
+gui_related: false
+gui_classification_reason: This unit defines cache/storage boundary constraints rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-011"
+unblocks: []
+acceptance_criteria:
+  - "Provider Cache Metadata Boundary remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_cache_metadata_boundary
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0022"
+preserved_exact_tokens:
+  - "setCacheKey"
+  - "options.setCacheKey"
+  - "session-scoped provider-side cache metadata"
+  - "store = false"
+  - "provider.ts"
+  - "Azure"
+  - "store=true"
+  - "/content-level"
+  - "#9803"
+negative_constraints:
+  - "PM must not infer durable PM storage from OpenCode store=false or provider request metadata."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/storage-plan.md"
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Contracts_V0.md"
+```
+
+### PO-015 - Session To Run Lifecycle Constraint
+
+```yaml
+plan_unit_id: PO-015
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode child sessions map to PM child runs without replacing them; provider task_id and parentID remain additive provider handles, adapter shorthands normalize into canonical task-tool launch paths, parent-mediated question/HITL handling stays PM-owned, and retry/reroute/resume/replacement semantics remain PM-owned.
+gui_related: false
+gui_classification_reason: This unit defines lifecycle ownership constraints rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-011"
+unblocks: []
+acceptance_criteria:
+  - "Session To Run Lifecycle Constraint remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_session_to_run_lifecycle
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0023"
+preserved_exact_tokens:
+  - "task_id"
+  - "parentID"
+  - "@agent-name"
+  - "agent-name"
+  - "parent-mediated question/HITL handling"
+  - "/message-board"
+  - "retry, reroute, resume, and replacement semantics"
+  - "completed disposable children"
+negative_constraints:
+  - "OpenCode child-session behavior is not evidence for native peer-to-peer subagent messaging or PM message-board behavior."
+  - "Completed disposable children are not durable reusable actors merely because OpenCode can reopen session history."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+  - "ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+
+<<< CONTEXT_AFTER 1498-1509 >>>
+### PO-016 - Normalized Event SSE Stream Mapping
+
+```yaml
+plan_unit_id: PO-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode response parts and SSE bus events map into PM normalized provider events for text_delta, thinking_delta, tool_use, tool_result, usage, error, and done, with PM subscribing to GET /event after prompt_async and emitting done when the session reaches completed or failed.
+gui_related: false
+gui_classification_reason: This unit defines event normalization rather than visual presentation.
+split_recommended: false

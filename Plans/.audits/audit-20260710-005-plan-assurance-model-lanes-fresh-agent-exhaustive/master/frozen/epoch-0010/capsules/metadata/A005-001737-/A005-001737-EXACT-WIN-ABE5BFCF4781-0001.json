@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-001737-EXACT-WIN-ABE5BFCF4781-0001",
+  "attempt_id": "attempt-0010",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      396,
+      407
+    ]
+  ],
+  "core_range": [
+    1,
+    395
+  ],
+  "core_sha256": "78bea540d00ac37afee7b602341493b8e4aae0db3c59b4ab91f393255da13b16",
+  "document_path": "Plans/newfeatures.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/57/57e76a8987901701edfa97020cc6bdc18e1560fe68c20a3a766d894dd5dc0bfa.txt",
+  "source_excerpt_sha256": "57e76a8987901701edfa97020cc6bdc18e1560fe68c20a3a766d894dd5dc0bfa",
+  "source_sha256": "09c9b55682dcc0d23f24a3512c14e70168dd50cbcdafcbdfc88e9518d3d2f9c2",
+  "window_id": "WIN-ABE5BFCF4781-0001"
+}

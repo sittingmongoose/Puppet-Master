@@ -1,0 +1,43 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000887-EXACT-WIN-6690C379876B-0001",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "019f4d32-cd77-79b3-b3a8-be344b8f1744",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "blocked",
+  "source_binding": {
+    "document_path": "UNAVAILABLE: dispatch receipt omitted capsule_path",
+    "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "core_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "core_range": [
+      1,
+      1
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "capsule_availability"
+    ]
+  },
+  "items": [],
+  "dimension_assessments": [
+    {
+      "dimension": "capsule_availability",
+      "status": "unknown",
+      "summary": "Blocked before semantic review because the dispatch receipt contains capsule_sha256 but no capsule path; the authorized-read boundary forbids discovering or guessing the missing path.",
+      "evidence_item_ids": []
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}
