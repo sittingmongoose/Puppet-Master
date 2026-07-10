@@ -1,0 +1,621 @@
+{
+  "assignment_id": "A004-000065-EXACT-WIN-74C788D8A63C-0003",
+  "file_validation": {
+    "status": "passed",
+    "metadata": {
+      "bytes_expected": 1630,
+      "bytes_observed": 1630,
+      "sha256_expected": "128c5ac6329f44a0896b742a26539d9a23a3406acbb4edbf46559abe0970e6b3",
+      "sha256_observed": "128c5ac6329f44a0896b742a26539d9a23a3406acbb4edbf46559abe0970e6b3"
+    },
+    "source_excerpt": {
+      "bytes_expected": 37754,
+      "bytes_observed": 37754,
+      "sha256_expected": "9440a25813988b1c160c53c49543b82daf1d74d4f80a688001a7051aff05aa04",
+      "sha256_observed": "9440a25813988b1c160c53c49543b82daf1d74d4f80a688001a7051aff05aa04"
+    },
+    "core": {
+      "sha256_expected": "83dcad546f5210ca6b04a94fd7db4a8a5dd2bc19a66cb54a4b2c7ce9dd6923aa",
+      "sha256_observed": "83dcad546f5210ca6b04a94fd7db4a8a5dd2bc19a66cb54a4b2c7ce9dd6923aa",
+      "bytes_observed": 35383
+    }
+  },
+  "observations": [
+    {
+      "id": "O01",
+      "statement": "WebAction is intended as a closed typed interface: its action type enum is enumerated, unknown types fail with invalid_input, actions run sequentially, timeout defaults to 5000 ms, each timeout is capped at 30000 ms, and aggregate action time is capped at 30 seconds.",
+      "evidence_refs": [
+        "Plans/Tools.md:623-623",
+        "Plans/Tools.md:683-704"
+      ]
+    },
+    {
+      "id": "O02",
+      "statement": "The web family is PM-owned and provider-pluggable. WebProviderAdapterRegistry is the declared capability authority, while provider files, projections, coding-agent projections, and GUI settings are consumers; those consumers may persist credential references but never raw secrets.",
+      "evidence_refs": [
+        "Plans/Tools.md:624-625"
+      ]
+    },
+    {
+      "id": "O03",
+      "statement": "All listed human, assistant, subagent, Goal Runtime, PRD Builder, and Planning Wizard entrypoints converge on one dispatcher, which validates before routing and persists invocation-source provenance and applicable source IDs.",
+      "evidence_refs": [
+        "Plans/Tools.md:626-627"
+      ]
+    },
+    {
+      "id": "O04",
+      "statement": "The excerpt gives adapter-stable minimal inputs for search, fetch, extract, research, crawl, and map, adds up to five normalized HTTP(S) starting URLs for research, and specifies default operation limits for result counts, source reads, crawl/map breadth, depth, and origin scope.",
+      "evidence_refs": [
+        "Plans/Tools.md:628-629",
+        "Plans/Tools.md:675-675"
+      ]
+    },
+    {
+      "id": "O05",
+      "statement": "Deep research is a mode of webresearch with coverage, receipt, citation, closure, and failure evidence. Autonomous research is capped at three search iterations, max_sources reads, and 120 seconds; the default non-autonomous branch is PM-composed, bounded, citation-producing, and expressly non-interactive.",
+      "evidence_refs": [
+        "Plans/Tools.md:630-632"
+      ]
+    },
+    {
+      "id": "O06",
+      "statement": "GUI and audit truth is explicitly required: activity cards expose search and read steps, approvals expose target/query patterns, help and Settings expose provider availability, support tiers remain visible, and browser-assisted reading receives a visible interaction annotation.",
+      "evidence_refs": [
+        "Plans/Tools.md:633-640",
+        "Plans/Tools.md:648-648",
+        "Plans/Tools.md:679-680"
+      ]
+    },
+    {
+      "id": "O07",
+      "statement": "Crawl/map path filters operate on URL paths with include-before-exclude ordering. Crawl dedup defaults true with content hashes, and change tracking compares pages with the prior crawl and produces new, same, changed, removed, and summary counts.",
+      "evidence_refs": [
+        "Plans/Tools.md:641-645"
+      ]
+    },
+    {
+      "id": "O08",
+      "statement": "Research sessions have a stated reading and evidence action subset, a conditional interaction subset, Firecrawl-to-PM aliases, a three-layer permission model, named browser-testing actions, long-name aliases, guaranteed everyday and advanced IDs, and explicit degradation reason codes.",
+      "evidence_refs": [
+        "Plans/Tools.md:646-660"
+      ]
+    },
+    {
+      "id": "O09",
+      "statement": "Schema-backed extraction uses JSON Schema draft-07, a 50 KB limit, named empty/invalid/oversize failures, prompt-then-schema two-phase behavior, strict and lenient validation modes, and optional WebAction preprocessing for webextract.",
+      "evidence_refs": [
+        "Plans/Tools.md:650-653",
+        "Plans/Tools.md:661-663"
+      ]
+    },
+    {
+      "id": "O10",
+      "statement": "The contract deliberately rejects several provider details as PM canon: Firecrawl action names normalize at the adapter boundary, detail_hint no longer maps to scrape depth, LlamaParse is not canonical PDF behavior, and cleaned HTML is distinct from rawHtml.",
+      "evidence_refs": [
+        "Plans/Tools.md:649-649",
+        "Plans/Tools.md:664-667"
+      ]
+    },
+    {
+      "id": "O11",
+      "statement": "Routing paths, exact cache TTL defaults, cache-state values, a common result envelope, operation-specific extensions, audit child fields, payload.meta fields, and evidence references are all specified as persistence and transparency contracts.",
+      "evidence_refs": [
+        "Plans/Tools.md:668-678"
+      ]
+    },
+    {
+      "id": "O12",
+      "statement": "The provider seam is intentionally left flexible for provider-internal classes, grouping, and row layout, while user-facing operation names, activity labels, support tiers, provenance, and permission defaults are declared stable.",
+      "evidence_refs": [
+        "Plans/Tools.md:679-680"
+      ]
+    },
+    {
+      "id": "O13",
+      "statement": "Site Reader owns rendered structured reading behind webfetch, must produce PageRepresentation rather than an untyped dump, handles nested iframes up to three levels, owns browser-session state, defaults navigation detail to minimal, and falls back to raw/plain fetch only when structured reading is unusable.",
+      "evidence_refs": [
+        "Plans/Tools.md:729-737"
+      ]
+    },
+    {
+      "id": "O14",
+      "statement": "webfetch rejects non-HTTP(S) and malformed URLs, normalizes bare domains to HTTPS, defaults max content to 5 MB, distinguishes text from binary by Content-Type, returns supported image types inline, avoids downloading unsupported large binaries, uses a 14400-second cache default, and exposes three named execution paths.",
+      "evidence_refs": [
+        "Plans/Tools.md:743-747"
+      ]
+    },
+    {
+      "id": "O15",
+      "statement": "The LSP surface lists nine recommended read operations, retains rename as a write-like action requiring approval before apply, complements context compilation, and does not require provider-native skill installation.",
+      "evidence_refs": [
+        "Plans/Tools.md:766-789"
+      ]
+    },
+    {
+      "id": "O16",
+      "statement": "chatsearch is project-scoped, has a specified hit shape, requires strict secret scrubbing before persistence, and must prevent muted Context Lens messages from entering agent context by exclusion or a drop-capable annotation.",
+      "evidence_refs": [
+        "Plans/Tools.md:791-802"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "CF01",
+      "severity": "high",
+      "title": "deep_research has conflicting canonical identity and no locked result placement",
+      "gap": "The dispatcher calls deep_research a canonical operation, while another rule calls it a mode over webresearch and the locked web_operation audit enum omits deep_research. closure_state and failure_reason_code are required for the run but are absent from the common envelope, webresearch extension, and child-payload field list.",
+      "consequence": "Implementations can persist the same run as either research or deep_research and place or omit closure evidence incompatibly, breaking consumers and audit queries.",
+      "evidence_refs": [
+        "Plans/Tools.md:626-630",
+        "Plans/Tools.md:671-678"
+      ]
+    },
+    {
+      "id": "CF02",
+      "severity": "high",
+      "title": "Unsupported-input error semantics conflict",
+      "gap": "The dispatcher rule says malformed or unsupported inputs are rejected as invalid_input, but unsupported requested sources or categories return unsupported_operation. For multi-valued source/category requests, the contract also does not say whether one unsupported member fails the invocation, returns partial results, or emits per-member status.",
+      "consequence": "Adapters and clients cannot implement deterministic error-code precedence or partial-request handling.",
+      "evidence_refs": [
+        "Plans/Tools.md:626-628"
+      ]
+    },
+    {
+      "id": "CF03",
+      "severity": "high",
+      "title": "Adapter selection and fallback behavior remain materially discretionary",
+      "gap": "The registry stores fallback rank, health, policies, and projections; inputs expose adapter_hint; research mentions a highest-priority provider; outputs expose requested/effective adapters and fallback facts. The excerpt never defines whether adapter_hint is hard or advisory, the ranking and tie-break algorithm, health/freshness gates, fallback-triggering failures, or retry boundaries.",
+      "consequence": "Equivalent requests can choose different providers, costs, permission paths, and evidence quality while still claiming conformance.",
+      "evidence_refs": [
+        "Plans/Tools.md:625-632",
+        "Plans/Tools.md:668-678"
+      ]
+    },
+    {
+      "id": "CF04",
+      "severity": "medium",
+      "title": "autonomous research leaves auto_read_cap and provider-native limit enforcement undefined",
+      "gap": "webresearch accepts auto_read_cap regardless of autonomous mode. The autonomous branch instead caps reads by max_sources, while only the non-autonomous branch uses auto_read_cap. It is also unstated how PM verifies three-iteration and 120-second caps when a provider-native agent performs the work.",
+      "consequence": "Callers cannot predict whether auto_read_cap is honored, and provider-native runs may report incomparable limit compliance.",
+      "evidence_refs": [
+        "Plans/Tools.md:628-632",
+        "Plans/Tools.md:653-653",
+        "Plans/Tools.md:675-675"
+      ]
+    },
+    {
+      "id": "CF05",
+      "severity": "high",
+      "title": "WebAction is not a complete discriminated schema",
+      "gap": "Although WebAction is called locked and exact, only type plus generic selector, value, timeout_ms, and description fields are supplied. Per-action required fields, forbidden fields, selector rules, scroll units/direction, navigation URL placement, viewport dimensions, fill_form structure, and action-result shape are not defined.",
+      "consequence": "Independent builders cannot serialize or validate actions such as navigate, scroll, set_viewport, fill_form, or select_option compatibly.",
+      "evidence_refs": [
+        "Plans/Tools.md:623-623",
+        "Plans/Tools.md:662-663",
+        "Plans/Tools.md:683-703"
+      ]
+    },
+    {
+      "id": "CF06",
+      "severity": "medium",
+      "title": "Browser action vocabularies have unmapped identity collisions",
+      "gap": "Research uses reload and wait_for; browser-testing coverage names refresh, wait, and tabs; guaranteed IDs use open_tab, select_tab, close_tab, and wait_for. Alias normalization is explicit only for press/select/fill/upload/dialog names, not reload versus refresh, wait versus wait_for, tabs versus tab IDs, or PDF versus pdf/export_pdf.",
+      "consequence": "Dispatch and persistence may create duplicate action identities or reject vocabulary that another contract paragraph declares supported.",
+      "evidence_refs": [
+        "Plans/Tools.md:646-660",
+        "Plans/Tools.md:683-704"
+      ]
+    },
+    {
+      "id": "CF07",
+      "severity": "high",
+      "title": "Operation approval and embedded browser-action approval are not composed",
+      "gap": "Extract/crawl/map/fetch receive host/site-scoped operation approval, while embedded browser actions range from always allowed to session_granted and high-risk confirmation. The excerpt does not state whether both approvals are required, which is requested first, how redirects and cross-origin actions alter scope, or how denial is represented.",
+      "consequence": "An approved webextract could accidentally authorize interaction beyond its host scope, or implementations could prompt inconsistently and persist incompatible denial records.",
+      "evidence_refs": [
+        "Plans/Tools.md:635-635",
+        "Plans/Tools.md:646-655",
+        "Plans/Tools.md:676-678"
+      ]
+    },
+    {
+      "id": "CF08",
+      "severity": "high",
+      "title": "Parent output lacks a schema for snapshot and action results",
+      "gap": "snapshot and screenshot action results must be included in the owning webfetch or webextract output, but the locked result extensions have only a screenshot field for webfetch and no snapshot, ordered action_results, or webextract screenshot/action field.",
+      "consequence": "Required browser evidence has no interoperable output location, ordering, success state, or reference shape.",
+      "evidence_refs": [
+        "Plans/Tools.md:640-640",
+        "Plans/Tools.md:671-672"
+      ]
+    },
+    {
+      "id": "CF09",
+      "severity": "high",
+      "title": "webfetch format outputs are not represented by the locked result schema",
+      "gap": "webfetch accepts pdf, summary, links, and images and gives behavioral meanings for them, but its result extension defines only content, status, formats_returned, screenshot, cache_state, and change_status. PDF artifact refs, summary placement, links, and images are absent; links/images fields are defined only for webextract.",
+      "consequence": "Clients cannot retrieve several accepted formats without provider-specific fields or overloading content.",
+      "evidence_refs": [
+        "Plans/Tools.md:636-640",
+        "Plans/Tools.md:671-672"
+      ]
+    },
+    {
+      "id": "CF10",
+      "severity": "high",
+      "title": "webcrawl input and output contracts do not carry mandated crawl behavior",
+      "gap": "The minimal input shape omits formats and change_tracking, later rules call both explicit inputs without defining the change_tracking type or default, and the result extension exposes only counts and scope_summary. It has no page collection/ref, per-page formats, per-page change_status, or required change_summary.",
+      "consequence": "A caller cannot request or consume the mandated per-page format and change-tracking results through the locked schema.",
+      "evidence_refs": [
+        "Plans/Tools.md:628-628",
+        "Plans/Tools.md:638-645",
+        "Plans/Tools.md:671-673"
+      ]
+    },
+    {
+      "id": "CF11",
+      "severity": "medium",
+      "title": "Shared cache_state requirement is omitted from most result schemas",
+      "gap": "Non-fetch operations using the shared cache are said to expose cache_state, but cache_state is absent from the locked common envelope and is listed only for webfetch and batch_webfetch.",
+      "consequence": "Search, extract, crawl, map, or research implementations cannot expose cache transparency without extending the locked envelope ad hoc.",
+      "evidence_refs": [
+        "Plans/Tools.md:669-672"
+      ]
+    },
+    {
+      "id": "CF12",
+      "severity": "medium",
+      "title": "execution_path requiredness conflicts",
+      "gap": "execution_path is introduced as execution_path?: string, but the locked common envelope and required audit child fields treat it as required.",
+      "consequence": "Schema validators can disagree on whether results or denial events lacking an execution path are valid.",
+      "evidence_refs": [
+        "Plans/Tools.md:668-668",
+        "Plans/Tools.md:671-676"
+      ]
+    },
+    {
+      "id": "CF13",
+      "severity": "high",
+      "title": "Valid but provider-unsupported schema constructs have no truthful error code",
+      "gap": "schema_invalid is defined to mean the input is not valid JSON Schema draft-07, yet providers that narrow otherwise supported constructs are told to use schema_invalid or schema_too_large. Neither code truthfully describes a valid, size-compliant schema containing an unsupported provider construct.",
+      "consequence": "Callers cannot distinguish author errors from adapter capability limits and may incorrectly modify valid schemas.",
+      "evidence_refs": [
+        "Plans/Tools.md:651-652"
+      ]
+    },
+    {
+      "id": "CF14",
+      "severity": "high",
+      "title": "Firecrawl content-selection defaults conflict for multi-format requests",
+      "gap": "Multiple formats may be requested together. Firecrawl mapping says rawHtml makes onlyMainContent and onlyCleanContent false, while markdown or html makes onlyMainContent true. A request containing rawHtml and markdown or html satisfies both rules, and no precedence or per-format fetch behavior is defined.",
+      "consequence": "The same request can yield cleaned or unprocessed content depending on adapter implementation order.",
+      "evidence_refs": [
+        "Plans/Tools.md:654-654",
+        "Plans/Tools.md:664-664"
+      ]
+    },
+    {
+      "id": "CF15",
+      "severity": "medium",
+      "title": "Structured capability warnings have no structured warning schema",
+      "gap": "Crawl narrowing requires structured warnings or capability disclosure, runtime-unavailable formats require a capability_unavailable warning, and degradation has reason codes, but the locked envelope defines warnings only as string[] and payload.meta records only warnings_count.",
+      "consequence": "Consumers cannot reliably distinguish, localize, or machine-handle capability reductions.",
+      "evidence_refs": [
+        "Plans/Tools.md:643-660",
+        "Plans/Tools.md:671-677"
+      ]
+    },
+    {
+      "id": "CF16",
+      "severity": "high",
+      "title": "SSRF, private-host, egress, and redirect enforcement are named but not behaviorally specified",
+      "gap": "Registry rows bind SSRF/private-host and egress policy, and URLs are normalized before routing, but the excerpt defines no redirect revalidation, DNS/IP checks, rebinding treatment, credentialed-URL handling, private-range rules, policy precedence, or canonical denial/error code.",
+      "consequence": "Security-critical behavior can diverge across adapters and fallback paths, especially after redirects or hostname resolution changes.",
+      "evidence_refs": [
+        "Plans/Tools.md:625-625",
+        "Plans/Tools.md:629-629",
+        "Plans/Tools.md:635-635",
+        "Plans/Tools.md:743-745"
+      ]
+    },
+    {
+      "id": "CF17",
+      "severity": "high",
+      "title": "respect_robots has no default or policy precedence",
+      "gap": "The registry owns robots behavior and webcrawl accepts respect_robots, but no default is stated and the default-limit paragraph omits it. The contract also does not say whether caller false may override registry, provider, or organizational policy.",
+      "consequence": "Crawlers may differ on whether robots rules are enforced by default and whether callers can disable them.",
+      "evidence_refs": [
+        "Plans/Tools.md:625-625",
+        "Plans/Tools.md:628-628",
+        "Plans/Tools.md:643-645",
+        "Plans/Tools.md:675-675"
+      ]
+    },
+    {
+      "id": "CF18",
+      "severity": "high",
+      "title": "Binary and oversized webfetch responses do not fit the declared output contract",
+      "gap": "Supported images return inline attachments and unsupported binaries return metadata only, while webfetch is declared to return content:string and its result extension contains no attachment or binary_metadata field. The 5 MB limit also has no specified measurement basis, overflow error, truncation rule, or safe upper bound for configuration.",
+      "consequence": "Binary fetches cannot be represented consistently, and size-limit behavior may vary in memory use and failure reporting.",
+      "evidence_refs": [
+        "Plans/Tools.md:743-747",
+        "Plans/Tools.md:671-672"
+      ]
+    },
+    {
+      "id": "CF19",
+      "severity": "medium",
+      "title": "Change-tracking comparison identity is too weak",
+      "gap": "Crawl comparison is keyed only as the previous crawl of the same root URL, despite scope-changing inputs such as include/exclude paths, search, max depth, same-origin policy, provider ceilings, dedup, and formats. Cache interaction and the success/error meaning of removed for webfetch are also unstated.",
+      "consequence": "Changing crawl scope can falsely classify excluded pages as removed, and cached runs may produce misleading change results.",
+      "evidence_refs": [
+        "Plans/Tools.md:641-645",
+        "Plans/Tools.md:669-672",
+        "Plans/Tools.md:746-747"
+      ]
+    },
+    {
+      "id": "CF20",
+      "severity": "medium",
+      "title": "Path glob and search-filter semantics are incomplete",
+      "gap": "The contract gives glob examples including a leading-bang exclusion but does not define whether bang syntax is valid in include_paths, exclude_paths, or both; it also omits glob dialect, case sensitivity, percent-decoding, slash normalization, and whether search matches URL, metadata, or page content.",
+      "consequence": "Crawl/map scope can differ materially across adapters for identical patterns.",
+      "evidence_refs": [
+        "Plans/Tools.md:642-642"
+      ]
+    },
+    {
+      "id": "CF21",
+      "severity": "high",
+      "title": "PageRepresentation is mandatory but not a buildable typed contract",
+      "gap": "The excerpt names many PageRepresentation contents but supplies no field names, types, requiredness, node identity format, redaction shape, prompt-injection chip schema, iframe attribution schema, error schema, or artifact-ref schema. Detail levels beyond the minimal default are also not enumerated.",
+      "consequence": "Site Reader producers and downstream agents cannot exchange or validate the mandated representation independently.",
+      "evidence_refs": [
+        "Plans/Tools.md:729-737"
+      ]
+    },
+    {
+      "id": "CF22",
+      "severity": "medium",
+      "title": "Persisted browser-session GUI states lack a state model",
+      "gap": "Sessions persist show_when_possible, collapsed, detached, background, runtime-unavailable, Open/Watch availability, and remediation action IDs, but their types, mutual exclusivity, transitions, action-ID vocabulary, and recovery acceptance condition are not specified.",
+      "consequence": "GUI and testing surfaces can display contradictory states or offer incompatible remediation actions.",
+      "evidence_refs": [
+        "Plans/Tools.md:735-735"
+      ]
+    },
+    {
+      "id": "CF23",
+      "severity": "medium",
+      "title": "LSP read capability is described as recommended rather than required",
+      "gap": "The section says the surface is widened, but labels all nine read operations Recommended. It does not state the guaranteed MVP subset, unsupported-operation behavior, capability discovery, or output schemas; only rename approval is normative.",
+      "consequence": "Builders can implement different LSP subsets while each claims compliance with the widened surface.",
+      "evidence_refs": [
+        "Plans/Tools.md:766-781"
+      ]
+    },
+    {
+      "id": "CF24",
+      "severity": "high",
+      "title": "chatsearch permits an exclusion annotation that its output cannot represent",
+      "gap": "Muted messages may be excluded or annotated for the context packer to drop, but the locked hit shape has no excluded/muted/status field and does not state whether annotated hits may be returned to direct callers or the agent before packing.",
+      "consequence": "Muted content can leak into a caller-visible result, or implementations must invent incompatible annotation fields.",
+      "evidence_refs": [
+        "Plans/Tools.md:795-800"
+      ]
+    },
+    {
+      "id": "CF25",
+      "severity": "medium",
+      "title": "chatsearch query and ranking behavior is underspecified",
+      "gap": "time_range has no syntax, timezone, or boundary semantics; k has no default or maximum; score has no scale or ranking contract; and tie-breaking, index freshness, deletion, and indexing-failure behavior are absent.",
+      "consequence": "Identical chatsearch calls can return different sets and ordering across implementations.",
+      "evidence_refs": [
+        "Plans/Tools.md:795-800"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "NG01",
+      "statement": "Support-tier storage values and allowed GUI aliases are explicitly separated from adapter kind, retrieval mechanism, and routing posture.",
+      "evidence_refs": [
+        "Plans/Tools.md:624-624"
+      ]
+    },
+    {
+      "id": "NG02",
+      "statement": "Authority and secret handling are explicit: WebProviderAdapterRegistry is the single source of provider capability truth, and projections serialize credential references rather than secrets.",
+      "evidence_refs": [
+        "Plans/Tools.md:625-625"
+      ]
+    },
+    {
+      "id": "NG03",
+      "statement": "The default non-autonomous research branch explicitly forbids navigation and interaction and routes interaction-capable work through the browser action contracts.",
+      "evidence_refs": [
+        "Plans/Tools.md:632-632"
+      ]
+    },
+    {
+      "id": "NG04",
+      "statement": "Extraction defines a concrete schema version, maximum schema size, empty-result behavior, strict/lenient defaults, required-field behavior, and prompt-plus-schema ordering.",
+      "evidence_refs": [
+        "Plans/Tools.md:650-653",
+        "Plans/Tools.md:661-663"
+      ]
+    },
+    {
+      "id": "NG05",
+      "statement": "Unconfirmed provider details are explicitly retired: scrapeOptions depth and LlamaParse do not become PM contract behavior.",
+      "evidence_refs": [
+        "Plans/Tools.md:665-666"
+      ]
+    },
+    {
+      "id": "NG06",
+      "statement": "Cache TTLs, principal operation limits, WebAction timeout defaults, per-action maximum, aggregate timeout, and sequential execution are numerically specified.",
+      "evidence_refs": [
+        "Plans/Tools.md:669-670",
+        "Plans/Tools.md:675-675",
+        "Plans/Tools.md:701-703"
+      ]
+    },
+    {
+      "id": "NG07",
+      "statement": "Site Reader ownership and product vocabulary are explicit: it owns structured rendered reading, not the full visible browser surface, and raw fetch is degraded fallback rather than the default.",
+      "evidence_refs": [
+        "Plans/Tools.md:729-737"
+      ]
+    },
+    {
+      "id": "NG08",
+      "statement": "webfetch URL normalization, rejected schemes, malformed-URL behavior, bare-domain HTTPS default, binary Content-Type detection, and default content-size cap are explicitly stated.",
+      "evidence_refs": [
+        "Plans/Tools.md:743-745"
+      ]
+    },
+    {
+      "id": "NG09",
+      "statement": "LSP rename is clearly classified as write-like and requires explicit approval before apply.",
+      "evidence_refs": [
+        "Plans/Tools.md:780-781"
+      ]
+    },
+    {
+      "id": "NG10",
+      "statement": "chatsearch project isolation and strict secret scrubbing before persistence are mandatory rather than discretionary.",
+      "evidence_refs": [
+        "Plans/Tools.md:798-800"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "question": "What is the complete canonical Web Error Taxonomy, including severity, retryability, and mappings from provider failures?",
+      "reason": "The excerpt references a canonical taxonomy but enumerates only scattered codes and does not provide the taxonomy or mapping table.",
+      "evidence_refs": [
+        "Plans/Tools.md:626-628",
+        "Plans/Tools.md:650-660",
+        "Plans/Tools.md:677-677"
+      ]
+    },
+    {
+      "id": "U02",
+      "question": "What values and precedence rules define provenance_badge?",
+      "reason": "The field delegates semantics to a Part P citation hierarchy that is not present in this capsule.",
+      "evidence_refs": [
+        "Plans/Tools.md:671-673",
+        "Plans/Tools.md:680-680"
+      ]
+    },
+    {
+      "id": "U03",
+      "question": "Are executable conformance fixtures or acceptance receipts defined for dispatcher equivalence, provider fallback, caching, URL safety, schemas, and GUI projections?",
+      "reason": "The excerpt mandates deep-research receipts and audit references but does not state pass/fail test vectors or acceptance conditions for the broader contract.",
+      "evidence_refs": [
+        "Plans/Tools.md:630-630",
+        "Plans/Tools.md:676-678"
+      ]
+    },
+    {
+      "id": "U04",
+      "question": "Does another allowed owner define the exact PageRepresentation, browser-session state, and remediation-action schemas?",
+      "reason": "This capsule mandates those artifacts and states but provides descriptive contents rather than serialized contracts.",
+      "evidence_refs": [
+        "Plans/Tools.md:729-737"
+      ]
+    },
+    {
+      "id": "U05",
+      "question": "Does the referenced per-tool table define chatsearch defaults, exclusion annotations, score semantics, and index lifecycle behavior?",
+      "reason": "The subsection says it supplements a table below, but that table is outside the supplied core/context window.",
+      "evidence_refs": [
+        "Plans/Tools.md:791-800"
+      ]
+    },
+    {
+      "id": "U06",
+      "question": "Is BrowserAction intentionally a distinct schema from WebAction, and if so, where is the conversion boundary defined?",
+      "reason": "The excerpt names a shared WebOperation/BrowserAction dispatcher, an exact WebAction subset, and a wider browser-testing action family without a complete relationship or conversion contract.",
+      "evidence_refs": [
+        "Plans/Tools.md:623-627",
+        "Plans/Tools.md:646-660",
+        "Plans/Tools.md:683-704"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    "Plans/Tools.md:623-623",
+    "Plans/Tools.md:623-627",
+    "Plans/Tools.md:624-624",
+    "Plans/Tools.md:624-625",
+    "Plans/Tools.md:625-625",
+    "Plans/Tools.md:625-632",
+    "Plans/Tools.md:626-627",
+    "Plans/Tools.md:626-628",
+    "Plans/Tools.md:626-630",
+    "Plans/Tools.md:628-628",
+    "Plans/Tools.md:628-629",
+    "Plans/Tools.md:628-632",
+    "Plans/Tools.md:629-629",
+    "Plans/Tools.md:630-630",
+    "Plans/Tools.md:630-632",
+    "Plans/Tools.md:632-632",
+    "Plans/Tools.md:633-640",
+    "Plans/Tools.md:635-635",
+    "Plans/Tools.md:636-640",
+    "Plans/Tools.md:638-645",
+    "Plans/Tools.md:640-640",
+    "Plans/Tools.md:641-645",
+    "Plans/Tools.md:642-642",
+    "Plans/Tools.md:643-645",
+    "Plans/Tools.md:646-655",
+    "Plans/Tools.md:646-660",
+    "Plans/Tools.md:648-648",
+    "Plans/Tools.md:649-649",
+    "Plans/Tools.md:650-653",
+    "Plans/Tools.md:650-660",
+    "Plans/Tools.md:651-652",
+    "Plans/Tools.md:653-653",
+    "Plans/Tools.md:654-654",
+    "Plans/Tools.md:661-663",
+    "Plans/Tools.md:662-663",
+    "Plans/Tools.md:664-664",
+    "Plans/Tools.md:664-667",
+    "Plans/Tools.md:665-666",
+    "Plans/Tools.md:668-668",
+    "Plans/Tools.md:668-678",
+    "Plans/Tools.md:669-670",
+    "Plans/Tools.md:669-672",
+    "Plans/Tools.md:671-672",
+    "Plans/Tools.md:671-673",
+    "Plans/Tools.md:671-676",
+    "Plans/Tools.md:671-678",
+    "Plans/Tools.md:675-675",
+    "Plans/Tools.md:676-677",
+    "Plans/Tools.md:676-678",
+    "Plans/Tools.md:677-677",
+    "Plans/Tools.md:679-680",
+    "Plans/Tools.md:680-680",
+    "Plans/Tools.md:683-704",
+    "Plans/Tools.md:701-703",
+    "Plans/Tools.md:729-737",
+    "Plans/Tools.md:735-735",
+    "Plans/Tools.md:743-745",
+    "Plans/Tools.md:743-747",
+    "Plans/Tools.md:744-747",
+    "Plans/Tools.md:746-747",
+    "Plans/Tools.md:766-781",
+    "Plans/Tools.md:766-789",
+    "Plans/Tools.md:780-781",
+    "Plans/Tools.md:791-800",
+    "Plans/Tools.md:791-802",
+    "Plans/Tools.md:795-800",
+    "Plans/Tools.md:796-800",
+    "Plans/Tools.md:798-800"
+  ]
+}

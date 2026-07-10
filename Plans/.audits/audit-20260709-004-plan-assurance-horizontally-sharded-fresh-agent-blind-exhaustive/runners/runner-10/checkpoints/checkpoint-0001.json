@@ -1,0 +1,74 @@
+{
+  "assignments_total": 211,
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "checkpoint_schema": "a004.runner_checkpoint.v2",
+  "cumulative_capsule_package_bytes_attempted": 390399,
+  "cumulative_token_estimate_attempted": 119128,
+  "duplicate_agent_instance_ids": 0,
+  "duplicate_agent_paths": 0,
+  "duplicate_agent_thread_ids": 0,
+  "elapsed_time_seconds": 2998,
+  "failed_attempt_records": 6,
+  "frozen_postrun_validator_v2_exit": 1,
+  "frozen_postrun_validator_v2_global_status": "fail",
+  "frozen_v2_runner_credited_assignment_ids": [
+    "A004-000010-ADVERSARIAL-WIN-C45446C7AC96-0004",
+    "A004-000060-ADVERSARIAL-WIN-E36B3E5CECA0-0001"
+  ],
+  "frozen_v2_runner_quarantine_candidates": [
+    {
+      "assignment_id": "A004-000016-ADVERSARIAL-WIN-18D335791D83-0001",
+      "attempt_id": null,
+      "reasons": [
+        "expected exactly one result-manifest row for assignment",
+        "explicit failed-attempt/quarantine veto: ['coordination/QUARANTINE_REGISTRY.jsonl:7', 'runners/runner-10/failed_attempts.jsonl:4']"
+      ],
+      "receipt": "runners/runner-10/result_manifest.jsonl:3",
+      "runner_id": "runner-10"
+    },
+    {
+      "assignment_id": "A004-000016-ADVERSARIAL-WIN-18D335791D83-0001",
+      "attempt_id": "attempt-3",
+      "reasons": [
+        "expected exactly one result-manifest row for assignment"
+      ],
+      "receipt": "runners/runner-10/result_manifest.jsonl:5",
+      "runner_id": "runner-10"
+    },
+    {
+      "assignment_id": "A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002",
+      "attempt_id": null,
+      "reasons": [
+        "exact_evidence_refs[1]: evidence range outside assigned capsule",
+        "expected exactly one result-manifest row for assignment",
+        "explicit failed-attempt/quarantine veto: ['runners/runner-10/failed_attempts.jsonl:3']"
+      ],
+      "receipt": "runners/runner-10/result_manifest.jsonl:2",
+      "runner_id": "runner-10"
+    },
+    {
+      "assignment_id": "A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002",
+      "attempt_id": "attempt-2",
+      "reasons": [
+        "expected exactly one result-manifest row for assignment"
+      ],
+      "receipt": "runners/runner-10/result_manifest.jsonl:6",
+      "runner_id": "runner-10"
+    }
+  ],
+  "frozen_v2_runner_validated_results": 2,
+  "immutable_completed_attempt_receipts": 4,
+  "immutable_prelaunch_dispatch_receipts": 5,
+  "note": "V2 recovery checkpoint after preserving two pre-notice in-flight attempts as zero-credit and completing compliant retries for assignments 000016 and 000036.",
+  "recorded_at": "2026-07-10T04:00:03.849212Z",
+  "registry_records": 10,
+  "result_manifest_records": 6,
+  "runner_id": "runner-10",
+  "runner_thread_id": "019f49e2-18cb-7101-b7cb-0027862d9fcb",
+  "status": "dispatching",
+  "unique_agents_recorded": 10,
+  "unique_assignment_ids_dispatched": 6,
+  "unresolved_infrastructure_issues": [
+    "Frozen V2 counts every result_manifest row for an assignment and therefore cannot credit a later valid retry while preserving an earlier rejected positive row; prior rows remain immutable under authority."
+  ]
+}

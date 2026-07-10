@@ -1,26 +1,9 @@
 <style id="pm6-css-dashboard">
 /* ============================================================
    PMConcept6 — Dashboard page (widgets, CTA cards, catalog)
-   Token-only. Zero-specificity token fallbacks below lose to
-   any real :root/[data-theme] definition from theme-tokens.
+   Token-only: all vars come from the part-02 contract tokens
+   (TOKENS.md) — no local standin definitions.
    ============================================================ */
-:where(:root) {
-  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-pill: 999px;
-  --accent-primary: var(--accent-blue);
-  --accent-soft: color-mix(in srgb, var(--accent-primary) 12%, transparent);
-  --accent-glow: color-mix(in srgb, var(--accent-primary) 25%, transparent);
-  --elev-1: 0 1px 2px rgba(0,0,0,.12);
-  --elev-2: 0 4px 14px rgba(0,0,0,.16);
-  --elev-hover: 0 10px 30px var(--accent-glow);
-  --motion-fast: 120ms; --motion-med: 240ms;
-  --ease-out: cubic-bezier(.22,1,.36,1);
-  --ease-spring: cubic-bezier(.34,1.56,.64,1);
-  --ease-smooth: cubic-bezier(.4,0,.2,1);
-  --ease-default: var(--ease-smooth);
-  --fs-2xs: 10px; --fs-xs: 11px; --fs-sm: 12px; --fs-md: 14px; --fs-lg: 16px;
-  --glass-alpha: .55; --glass-tint-rgb: 16,20,34;
-  --glass-hairline: rgba(255,255,255,.08); --glass-edge: rgba(255,255,255,.35);
-}
 
 /* ---------- header strip ---------- */
 .page-dashboard .dashboard-header {

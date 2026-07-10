@@ -1,0 +1,38 @@
+<<< AUTHORITATIVE_CORE 1-37 >>>
+{
+  "generated_at": "2026-07-07T22:24:00Z",
+  "excluded_tokens": [
+    "cmd.actions",
+    "cmd.alert",
+    "cmd.browser",
+    "cmd.browser.evaluate",
+    "cmd.browser.run_code",
+    "cmd.chat",
+    "cmd.chat.close_thread_usage",
+    "cmd.chat.focus_thread_usage",
+    "cmd.chat.open_thread_usage",
+    "cmd.container",
+    "cmd.concern",
+    "cmd.debug",
+    "cmd.discovery",
+    "cmd.docker",
+    "cmd.github_actions",
+    "cmd.graph",
+    "cmd.gui_dev_preview.*",
+    "cmd.k8s",
+    "cmd.nav",
+    "cmd.orchestrator",
+    "cmd.plan_compile",
+    "cmd.planning_wizard",
+    "cmd.persona",
+    "cmd.prd_builder",
+    "cmd.runtime",
+    "cmd.search",
+    "cmd.source_control",
+    "cmd.theme",
+    "cmd.web",
+    "cmd.web.*",
+    "cmd.widget"
+  ],
+  "reason": "Excluded from production wiring JSON because token is a parser artifact, invalid historical alias, generic family root, or compatibility-only namespace root. Web capability production commands are canonical under cmd.chat.web.*; cmd.web.* rows are compatibility-only and must not hide active chat, NL, palette, or agent-routed web capability."
+}

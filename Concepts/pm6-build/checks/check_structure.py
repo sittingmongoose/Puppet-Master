@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 """check_structure.py — tag balance global + per-part delta vs manifest.lock;
-single <body>; </html> last. Exit 0 = pass."""
+single <body>; </html> last. Exit 0 = pass.
+
+Sibling-split support (W2, 2026-07-09): part files that appear in manifest.json
+but have no manifest.lock entry (e.g. NN-name-a/-b sibling splits mandated by
+the PARTS.md write-size rule — the lock is generated at carve time and is not
+hand-edited) are checked against an expected delta of balanced-zero for every
+counted tag, and an advisory line is printed instead of hard-KeyErroring. The
+global-balance check still guards the assembled document as a whole. Do NOT
+regenerate manifest.lock to paper over a per-part imbalance."""
 import json
 import re
 import sys
@@ -10,10 +18,20 @@ HERE = Path(__file__).resolve().parent
 BUILD = HERE.parent
 TAGS = ["div", "span", "style", "script", "template"]
 
+# Tags counted as HTML structure must ignore markup that lives inside JS string
+# literals — PM_DEMO_TEXT carries pre-highlighted <span> file bodies. Script tags
+# themselves stay counted on the raw text.
+HTML_TAGS = ["div", "span", "template"]
+SCRIPT_BODY = re.compile(r"(<script\b[^>]*>)(.*?)(</script)", re.S | re.I)
+
 
 def tag_deltas(text):
-    return {t: len(re.findall(r"<%s\b" % t, text)) - len(re.findall(r"</%s\b" % t, text))
-            for t in TAGS}
+    stripped = SCRIPT_BODY.sub(r"\1\3", text)
+    out = {}
+    for t in TAGS:
+        src = stripped if t in HTML_TAGS else text
+        out[t] = len(re.findall(r"<%s\b" % t, src)) - len(re.findall(r"</%s\b" % t, src))
+    return out
 
 
 def main():
@@ -48,10 +66,19 @@ def main():
             fails.append(f"missing part file: {f}")
             continue
         d = tag_deltas(p.read_text(encoding="utf-8"))
-        want = lock["parts"][f]["deltas"]
+        entry = lock["parts"].get(f)
+        if entry is None:
+            # Not in the carve-time lock (added via manifest.json, e.g. a
+            # -a/-b sibling split): expect balanced-zero deltas per tag.
+            want = {t: 0 for t in TAGS}
+            print(f"check_structure: advisory — {f} has no manifest.lock entry; "
+                  f"expecting balanced-zero tag deltas (sibling-split rule)")
+        else:
+            want = entry["deltas"]
         for t in TAGS:
             if d[t] != want[t]:
-                fails.append(f"part {f}: {t} delta {d[t]} != lock {want[t]}")
+                fails.append(f"part {f}: {t} delta {d[t]} != expected {want[t]}"
+                             + ("" if entry is not None else " (no lock entry: balanced-zero)"))
 
     if fails:
         print("check_structure: FAIL")

@@ -1,0 +1,1782 @@
+{
+  "assignment_id": "A004-000070-ADVERSARIAL-WIN-BF7379C57A0F-0007",
+  "runner_id": "runner-06",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-BF7379C57A0F-0007",
+  "doc_id": "DOC-BF7379C57A0F",
+  "document_path": "Plans/assistant-chat-design.md",
+  "core_range": [
+    2240,
+    2614
+  ],
+  "context_ranges": [
+    [
+      2228,
+      2239
+    ],
+    [
+      2615,
+      2626
+    ]
+  ],
+  "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000070-ADVERSARIAL-WIN-BF7379C57A0F-0007.json",
+  "capsule_sha256": "7692254bcfeb5a4090c9889c53d1fdca668f3bf2a554fb14b1b7288e4f5643b5",
+  "capsule_bytes": 1649,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-BF7379C57A0F-0007.txt",
+  "source_excerpt_sha256": "6453e4059c89c655b88a03ed9d888d0d680068c6ef95996acf19f0dc619aaaca",
+  "source_excerpt_bytes": 37257,
+  "capsule_package_bytes": 38906,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "claim": "The performance section establishes concrete overscan and hot-memory bounds, but its render identity spans messages and blocks while other operations target message indexes.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2252,
+          "line_end": 2252,
+          "quote": "Only the **visible viewport** plus an **overscan of 10 items** above and below should be rendered at any time.",
+          "excerpt": "Only the **visible viewport** plus an **overscan of 10 items** above and below should be rendered at any time."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2255,
+          "line_end": 2255,
+          "quote": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id).",
+          "excerpt": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id)."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2269,
+          "line_end": 2269,
+          "quote": "In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand.",
+          "excerpt": "In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand."
+        }
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "claim": "Auditor selection is intended to be deterministic and immutable for a sweep once that sweep starts.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2350,
+          "line_end": 2350,
+          "quote": "- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).",
+          "excerpt": "- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching)."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2389,
+          "line_end": 2389,
+          "quote": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |",
+          "excerpt": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |"
+        }
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "claim": "Persona selection includes direct manual selection, persistent hybrid overrides, and explicit unresolved-reference handling.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2421,
+          "line_end": 2421,
+          "quote": "- **manual:** user selects the Persona directly.",
+          "excerpt": "- **manual:** user selects the Persona directly."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2423,
+          "line_end": 2423,
+          "quote": "- **hybrid:** auto selects by default, but the user may temporarily or persistently override it.",
+          "excerpt": "- **hybrid:** auto selects by default, but the user may temporarily or persistently override it."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2495,
+          "line_end": 2495,
+          "quote": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.",
+          "excerpt": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2496,
+          "line_end": 2496,
+          "quote": "- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context.",
+          "excerpt": "- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context."
+        }
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "claim": "The inline visualizer deliberately executes sandboxed scripts, denies several iframe privileges and external loads, and exposes host side effects through postMessage.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2568,
+          "line_end": 2568,
+          "quote": "MVP uses `sandbox=\"allow-scripts\"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`.",
+          "excerpt": "MVP uses `sandbox=\"allow-scripts\"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2568,
+          "line_end": 2568,
+          "quote": "all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge.",
+          "excerpt": "all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2570,
+          "line_end": 2570,
+          "quote": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`.",
+          "excerpt": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2575,
+          "line_end": 2575,
+          "quote": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;",
+          "excerpt": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;"
+        }
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "claim": "Natural-language mode invocation separates workflow overlay from runtime posture and explicitly preserves deep-plan identity.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2594,
+          "line_end": 2594,
+          "quote": "Natural-language mode invocation resolves workflow identity and runtime posture separately.",
+          "excerpt": "Natural-language mode invocation resolves workflow identity and runtime posture separately."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2612,
+          "line_end": 2612,
+          "quote": "- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning",
+          "excerpt": "- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning"
+        }
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "NEG-001",
+      "severity": "high",
+      "category": "state_transitions_privacy",
+      "title": "Virtualized slice responses have no stale-result rejection contract",
+      "claim": "The visible-window loader can complete after a fast scroll, thread switch, restore, or newer jump, but this capsule does not bind a response to a thread, snapshot revision, request generation, or current viewport before replacing placeholders.",
+      "why_it_matters": "A late result can paint the wrong slice, regress a newer viewport, or briefly expose content from the previously active thread while the GUI appears current.",
+      "missing_contract": "Define request keys containing thread_id, durable snapshot or projection revision, viewport generation, and requested stable-ID range; define cancellation, stale-response discard, retry ownership, and a no-cross-thread-render oracle.",
+      "primary_scope": "§24.4.1 virtualized slice loading and §24.5 scroll restoration",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2279,
+          "line_end": 2279,
+          "quote": "for any visible index without content, render skeleton; when slice loader returns data, re-render.",
+          "excerpt": "for any visible index without content, render skeleton; when slice loader returns data, re-render."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2292,
+          "line_end": 2292,
+          "quote": "Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint.",
+          "excerpt": "Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-002",
+      "severity": "high",
+      "category": "data_consistency_gui_truth",
+      "title": "Search-highlight cache ignores mutable message revisions",
+      "claim": "Streaming mutates a stable message in place while highlight ranges are cached only by message_id and query, with no content revision in the cache key or invalidation rule for streamed edits, rewinds, or replacement.",
+      "why_it_matters": "Offsets can point at stale or different text, producing incorrect highlights, out-of-range spans, and misleading Next/Previous navigation.",
+      "missing_contract": "Key match ranges by message_id plus content_revision plus normalized query; specify Unicode offset units and invalidate or incrementally repair ranges on stream append, edit, rewind, deletion, compaction, and renderer normalization.",
+      "primary_scope": "§24.2 streaming and §24.4.3 search highlights",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2259,
+          "line_end": 2259,
+          "quote": "When the assistant **streams** a response, the UI must **append** or **update in place** the current message node--**not** replace the entire message list or rebuild all visible items.",
+          "excerpt": "When the assistant **streams** a response, the UI must **append** or **update in place** the current message node--**not** replace the entire message list or rebuild all visible items."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2283,
+          "line_end": 2283,
+          "quote": "Store match ranges (start, end offset) per message; compute on search or when message enters view; cache by (message_id, query); thread search query available to chat view; clear on search clear or thread change.",
+          "excerpt": "Store match ranges (start, end offset) per message; compute on search or when message enters view; cache by (message_id, query); thread search query available to chat view; clear on search clear or thread change."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-003",
+      "severity": "high",
+      "category": "data_model_compatibility",
+      "title": "The virtualized item unit and ID-to-index mapping are not closed",
+      "claim": "The list can contain messages or nested blocks with message_id or event_id identities, but jump behavior resolves a message ID to a single index without defining the flattened render-item schema, ordering, or mapping revision.",
+      "why_it_matters": "Implementations can count overscan differently, disagree about which block owns an index, jump to the wrong nested item, or lose anchors when events are inserted, deleted, rewound, or compacted.",
+      "missing_contract": "Define one canonical RenderItem identity and ordering model, parent-child rules, stable-ID uniqueness scope, ID-to-index cursor revision, tombstones, and deterministic mapping behavior under mutation.",
+      "primary_scope": "§24.1 stable identity and §24.4.2 jump-to-message",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2255,
+          "line_end": 2255,
+          "quote": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id).",
+          "excerpt": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id)."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2281,
+          "line_end": 2281,
+          "quote": "Resolve message ID → index (or scroll offset); if paged, resolve via storage; use search result IDs as jump targets.",
+          "excerpt": "Resolve message ID → index (or scroll offset); if paged, resolve via storage; use search result IDs as jump targets."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-004",
+      "severity": "medium",
+      "category": "scale_resource_management",
+      "title": "The hot-memory cap has no accounting or eviction semantics",
+      "claim": "The 200-message/8-MB limit does not define what bytes count, whether the active stream and visible window are pinned, how an individual oversized item behaves, or whether decoded markup, diffs, images, assets, caches, and collapsed content count.",
+      "why_it_matters": "Two conforming implementations can have radically different memory use; one can evict visible or streaming content and thrash storage, while another can exceed the nominal limit by orders of magnitude.",
+      "missing_contract": "Specify inclusive byte accounting, pinned classes, eviction order, oversized-item policy, cache treatment, hysteresis, pressure behavior, and measurable resident-memory and page-thrash acceptance thresholds.",
+      "primary_scope": "§24.3 bounded in-memory thread state",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2269,
+          "line_end": 2269,
+          "quote": "In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand.",
+          "excerpt": "In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-005",
+      "severity": "medium",
+      "category": "gui_truth_test_oracle",
+      "title": "Estimated-height correction and anchor preservation lack a deterministic oracle",
+      "claim": "The design permits estimated heights and later scrollbar updates and suggests preserving a first-visible-item anchor, but does not define the correction algorithm when measurements, fonts, theme, width, streamed content, or preceding items change.",
+      "why_it_matters": "The scrollbar can drift, jumps can accumulate, restore can land on the wrong content, and teams cannot objectively decide whether flicker avoidance passes.",
+      "missing_contract": "Define anchor identity and intra-item offset, correction ordering, invalidation triggers, clamping, mutation-above-anchor behavior, restore fallback, and maximum permitted pixel drift or frame count.",
+      "primary_scope": "§24.5 item height, expand/collapse, and scroll restoration",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2290,
+          "line_end": 2290,
+          "quote": "update scrollbar as user scrolls and more heights are known.",
+          "excerpt": "update scrollbar as user scrolls and more heights are known."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2291,
+          "line_end": 2291,
+          "quote": "preserve \"anchor\" (e.g. first visible item id) so the list doesn't jump arbitrarily.",
+          "excerpt": "preserve \"anchor\" (e.g. first visible item id) so the list doesn't jump arbitrarily."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2292,
+          "line_end": 2292,
+          "quote": "Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint.",
+          "excerpt": "Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-006",
+      "severity": "medium",
+      "category": "performance_test_oracle",
+      "title": "Streaming cadence has no latency or terminal-flush contract",
+      "claim": "The text suggests throttling layout to one or two frames per second while elsewhere describing once-per-frame rendering, but does not separate text paint from expensive layout or require immediate flush on completion, error, cancel, tool state, or user interaction.",
+      "why_it_matters": "A conforming implementation could display visibly stale output for up to a second, hide terminal state behind a buffered chunk, or reintroduce excessive reflow without violating a measurable requirement.",
+      "missing_contract": "Define maximum chunk-to-paint latency, separate content and layout cadences, terminal and interaction flush triggers, backpressure behavior, and reproducible performance fixtures.",
+      "primary_scope": "§24.2 streaming update cadence",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2260,
+          "line_end": 2260,
+          "quote": "Batch or throttle UI updates if the stream is very fast (e.g. coalesce into 1-2 frames per second for layout).",
+          "excerpt": "Batch or throttle UI updates if the stream is very fast (e.g. coalesce into 1-2 frames per second for layout)."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2263,
+          "line_end": 2263,
+          "quote": "the renderer draws the current state once per frame (or on coalesced updates) rather than replacing the whole node on every chunk.",
+          "excerpt": "the renderer draws the current state once per frame (or on coalesced updates) rather than replacing the whole node on every chunk."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-007",
+      "severity": "high",
+      "category": "determinism",
+      "title": "First-eligible Auditor fallback has no canonical ordering",
+      "claim": "The final fallback selects the first eligible registry entry while the invariant forbids environment-dependent selection, yet no stable sort key or tie-break is specified for dynamically discovered account-bound providers and models.",
+      "why_it_matters": "Registry discovery or cache order can change the Auditor model across launches or machines despite identical logical settings, invalidating reproducibility and potentially changing certification results.",
+      "missing_contract": "Specify the eligible-entry ordering, account tie-break, model ordering, locale independence, registry snapshot revision, and a deterministic fixture proving the same result under permuted discovery order.",
+      "primary_scope": "§26.4 deterministic default resolution",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2347,
+          "line_end": 2347,
+          "quote": "4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering.",
+          "excerpt": "4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2350,
+          "line_end": 2350,
+          "quote": "- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).",
+          "excerpt": "- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching)."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-008",
+      "severity": "high",
+      "category": "failure_recovery",
+      "title": "Auditor fallback covers unavailable providers but not invalid models or partial settings",
+      "claim": "The stored provider/model pair can become incomplete or stale as models are dynamically discovered, but the acceptance criteria define fallback only when the provider is unavailable.",
+      "why_it_matters": "A present provider with a deleted, disabled, unauthorized, policy-blocked, or capability-ineligible model has no specified effective selection, warning, save repair, or sweep-start behavior.",
+      "missing_contract": "Validate the pair as one unit and define recovery for missing provider key, missing model key, unavailable model, account loss, readiness failure, capability drift, and policy revocation, including exact warning and retry states.",
+      "primary_scope": "§26.3-§26.8 Auditor model selection recovery",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2334,
+          "line_end": 2334,
+          "quote": "lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown).",
+          "excerpt": "lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown)."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2344,
+          "line_end": 2344,
+          "quote": "1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it.",
+          "excerpt": "1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2390,
+          "line_end": 2390,
+          "quote": "| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *\"Auditor validation provider [name] is unavailable; using Auditor Model default.\"* |",
+          "excerpt": "| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *\"Auditor validation provider [name] is unavailable; using Auditor Model default.\"* |"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-009",
+      "severity": "high",
+      "category": "concurrency_auditability",
+      "title": "Provider/model saves and sweep-start capture are not atomic",
+      "claim": "Provider and model are separate settings keys, while a sweep must capture one provider/model pair at start and later report that exact pair; no transactional save, pair revision, or capture boundary is specified.",
+      "why_it_matters": "A sweep starting between two key writes can use a mismatched pair, and concurrent settings windows can overwrite one half while the report still appears valid.",
+      "missing_contract": "Store and validate the pair atomically or attach a settings revision; define optimistic concurrency, sweep-start snapshot timing, rollback on failed save, and report linkage to the captured revision.",
+      "primary_scope": "§26.5 storage and §26.8 sweep acceptance",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2364,
+          "line_end": 2364,
+          "quote": "| `model_roles.auditor.provider` | Provider for the Auditor validation loop |",
+          "excerpt": "| `model_roles.auditor.provider` | Provider for the Auditor validation loop |"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2365,
+          "line_end": 2365,
+          "quote": "| `model_roles.auditor.model` | Model for the Auditor validation loop |",
+          "excerpt": "| `model_roles.auditor.model` | Model for the Auditor validation loop |"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2389,
+          "line_end": 2389,
+          "quote": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |",
+          "excerpt": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2395,
+          "line_end": 2395,
+          "quote": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |",
+          "excerpt": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-010",
+      "severity": "medium",
+      "category": "provenance_auditability",
+      "title": "Auditor reports omit requested-selection and fallback provenance",
+      "claim": "Settings are excluded from project artifacts and reports are required to mirror only the effective provider/model, leaving no visible report field for the requested pair, fallback rung, reason, or settings revision.",
+      "why_it_matters": "A later reviewer cannot distinguish an intentional Auditor choice from an unavailable-provider fallback or prove which configuration snapshot produced a certification.",
+      "missing_contract": "Add requested_provider, requested_model, effective_provider, effective_model, fallback_reason, capability snapshot reference, account-safe identity reference, and settings_revision to the cycle report contract.",
+      "primary_scope": "§26.5 Auditor storage and cycle-report auditability",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2356,
+          "line_end": 2356,
+          "quote": "Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports.",
+          "excerpt": "Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2395,
+          "line_end": 2395,
+          "quote": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |",
+          "excerpt": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-011",
+      "severity": "high",
+      "category": "misleading_gui_truth",
+      "title": "Fallback state conflicts with the Default indicator and warning copy",
+      "claim": "An unavailable saved provider causes use of the default chain, yet the Default indicator is forbidden once any explicit choice has been saved; the warning also promises the Auditor Model default even though the deterministic chain can descend to the first eligible registry entry.",
+      "why_it_matters": "The GUI can hide that the effective runtime is a fallback and can name a model source that was not actually selected.",
+      "missing_contract": "Represent explicit-valid, explicit-invalid-fallback, automatic-default, and no-eligible-choice as separate states; show requested and effective values, actual fallback rung and reason, and define whether a restored provider reactivates automatically.",
+      "primary_scope": "§26.4, §26.6, and §26.8 Auditor fallback UX",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2347,
+          "line_end": 2347,
+          "quote": "4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering.",
+          "excerpt": "4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2376,
+          "line_end": 2376,
+          "quote": "| Default indicator | Show \"(Default)\" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |",
+          "excerpt": "| Default indicator | Show \"(Default)\" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2390,
+          "line_end": 2390,
+          "quote": "| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *\"Auditor validation provider [name] is unavailable; using Auditor Model default.\"* |",
+          "excerpt": "| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *\"Auditor validation provider [name] is unavailable; using Auditor Model default.\"* |"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2393,
+          "line_end": 2393,
+          "quote": "| 5 | The \"(Default)\" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |",
+          "excerpt": "| 5 | The \"(Default)\" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-012",
+      "severity": "high",
+      "category": "schema_compatibility",
+      "title": "Persona rules simultaneously retire and retain local _id fields",
+      "claim": "The identity canon says local _id substitutes must be retired and specifically normalizes requested_persona_id/effective_persona_id, but the immediately following rules list includes those same two fields.",
+      "why_it_matters": "Implementers can serialize both schemas, diverge on precedence, or preserve deprecated fields as canonical, defeating cross-surface runtime identity consistency.",
+      "missing_contract": "Remove the deprecated fields from the normative list or mark them input-only aliases with one-way migration, conflict precedence, write prohibition, and compatibility sunset tests.",
+      "primary_scope": "§27.2 current Persona display schema",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2432,
+          "line_end": 2432,
+          "quote": "- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.",
+          "excerpt": "- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2433,
+          "line_end": 2433,
+          "quote": "`requested_persona_id` and `effective_persona_id` normalize to `requested_persona` and `effective_persona`",
+          "excerpt": "`requested_persona_id` and `effective_persona_id` normalize to `requested_persona` and `effective_persona`"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2439,
+          "line_end": 2439,
+          "quote": "- requested_persona_id",
+          "excerpt": "- requested_persona_id"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2440,
+          "line_end": 2440,
+          "quote": "- effective_persona_id",
+          "excerpt": "- effective_persona_id"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-013",
+      "severity": "high",
+      "category": "authority_state_transitions",
+      "title": "Persona and mode overrides lack a closed precedence and lifecycle state machine",
+      "claim": "The capsule introduces temporary and persistent overrides, turn and session scopes, expiration, lock/unlock, and a generic mode override_scope, but does not define precedence, persistence boundaries, in-flight-run behavior, or what event causes expiration.",
+      "why_it_matters": "The displayed Persona or mode can differ from the snapshot actually executing, locks can be bypassed by natural language or auto resolution, and restart or thread-resume behavior can vary across implementations.",
+      "missing_contract": "Define a transition table covering auto, manual, hybrid, natural-language override, lock, unlock, thread switch, restart, submission, in-flight run, child run, and expiration; define precedence and requested/effective snapshot fields for each run.",
+      "primary_scope": "§27.1-§27.5 Persona state and §29.1 mode override scope",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2423,
+          "line_end": 2423,
+          "quote": "- **hybrid:** auto selects by default, but the user may temporarily or persistently override it.",
+          "excerpt": "- **hybrid:** auto selects by default, but the user may temporarily or persistently override it."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2467,
+          "line_end": 2467,
+          "quote": "- `for this`, `for this answer`, `right now` -> turn scope,",
+          "excerpt": "- `for this`, `for this answer`, `right now` -> turn scope,"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2468,
+          "line_end": 2468,
+          "quote": "- `from now on`, `in this chat`, `for this session` -> session scope.",
+          "excerpt": "- `from now on`, `in this chat`, `for this session` -> session scope."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2474,
+          "line_end": 2474,
+          "quote": "When the override expires, the UI should return to auto display, for example:",
+          "excerpt": "When the override expires, the UI should return to auto display, for example:"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2506,
+          "line_end": 2506,
+          "quote": "- and a way to lock/unlock the current Persona.",
+          "excerpt": "- and a way to lock/unlock the current Persona."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2605,
+          "line_end": 2605,
+          "quote": "- `override_scope`",
+          "excerpt": "- `override_scope`"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-014",
+      "severity": "high",
+      "category": "determinism_test_oracle",
+      "title": "Persona fuzzy matching has no definition of a reliable match",
+      "claim": "Resolution accepts aliases and normalized natural language and acts automatically for one reliable match, but reliability threshold, normalization, tie-breaking, versioning, and locale behavior are unspecified.",
+      "why_it_matters": "The same phrase can silently choose different Personas after registry changes or across platforms, while the acceptance criterion against wrong-Persona resolution is not objectively testable.",
+      "missing_contract": "Specify normalization and scoring, exact versus alias precedence, threshold and margin, locale rules, stable tie-break, registry-version snapshot, and fixtures for ambiguity, misspellings, collisions, and aliases.",
+      "primary_scope": "§27.4 Persona aliases and fuzzy matching",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2492,
+          "line_end": 2492,
+          "quote": "If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction.",
+          "excerpt": "If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2495,
+          "line_end": 2495,
+          "quote": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.",
+          "excerpt": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-015",
+      "severity": "critical",
+      "category": "authority_security",
+      "title": "Natural-language control invocation has no provenance or quoting boundary",
+      "claim": "Persona and runtime mode changes are triggered by ordinary phrases, including don't edit and use agent mode, without specifying that only an intentional top-level user control utterance can mutate runtime state.",
+      "why_it_matters": "Quoted documentation, pasted repository text, tool output, retrieved content, or prompt-injected content could be misclassified as a control and switch Persona or execution posture; under an already permissive posture this can convert inspection into execution.",
+      "missing_contract": "Define trusted caller provenance, quoted/code/paste/tool-output exclusion, explicit escape syntax, parser precedence, UI confirmation for posture changes, and a rule that model-generated or retrieved text can never mutate controls.",
+      "primary_scope": "§27.3 Persona invocation and §29.1 mode invocation",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2457,
+          "line_end": 2457,
+          "quote": "- `Use Collaborator`",
+          "excerpt": "- `Use Collaborator`"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2617,
+          "line_end": 2617,
+          "quote": "- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`",
+          "excerpt": "- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2620,
+          "line_end": 2620,
+          "quote": "- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`",
+          "excerpt": "- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-016",
+      "severity": "high",
+      "category": "authority_recovery",
+      "title": "Natural-language subagent routing lacks an authority and lifecycle contract",
+      "claim": "A phrase can create or route a child run when the surrounding task permits delegation, but the capsule does not define who decides permission, whether creation requires confirmation, what runtime permissions inherit, or how users cancel, retry, or recover partial child work.",
+      "why_it_matters": "Implementations can spend resources, expose repository context, or perform actions with inconsistent inherited authority while the user sees only a Persona interpretation.",
+      "missing_contract": "Define the delegation-policy caller, confirmation rules, parent/child permission and context inheritance, provider/account selection, budgets, cancellation, timeout, retry, idempotency, and terminal/error display.",
+      "primary_scope": "§27.3 subagent-only Persona requests",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2477,
+          "line_end": 2477,
+          "quote": "Subagent-only requests such as `Ask Explorer` or `Run that with Bash` create or route a child run when the surrounding task permits delegation; they do not switch the direct chat Persona.",
+          "excerpt": "Subagent-only requests such as `Ask Explorer` or `Run that with Bash` create or route a child run when the surrounding task permits delegation; they do not switch the direct chat Persona."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-017",
+      "severity": "high",
+      "category": "misleading_gui_truth_compatibility",
+      "title": "Required runtime remap disclosure can degrade to hover-only or optional detail",
+      "claim": "The trust rule requires requested-versus-effective disclosure and prohibits silent fallback, but the collapsed card exposes provider/model only on hover and the expanded panel merely may show requested/effective runtime and fallback reason.",
+      "why_it_matters": "Touch, keyboard-only, automation, and collapsed-card users can miss the remap, and implementations can satisfy the text without ever presenting the requested value or reason.",
+      "missing_contract": "Require a persistent non-hover remap indicator, keyboard/touch-accessible details, mandatory requested/effective/fallback fields when remapped, exact timing, and accessibility and screenshot or semantic-tree oracles.",
+      "primary_scope": "§27.7 provider compatibility disclosure",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2521,
+          "line_end": 2521,
+          "quote": "Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.",
+          "excerpt": "Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2526,
+          "line_end": 2526,
+          "quote": "- provider/model for a child run is visible on hover in the collapsed card.",
+          "excerpt": "- provider/model for a child run is visible on hover in the collapsed card."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2527,
+          "line_end": 2527,
+          "quote": "- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.",
+          "excerpt": "- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2528,
+          "line_end": 2528,
+          "quote": "- explicit user-chosen runtime surfaces must not silently fallback without disclosure.",
+          "excerpt": "- explicit user-chosen runtime surfaces must not silently fallback without disclosure."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-018",
+      "severity": "medium",
+      "category": "authority_data_loss",
+      "title": "Selecting Copilot mutates the whole crew without confirmation or undo semantics",
+      "claim": "One member selection immediately normalizes every crew member to Copilot, but preservation of prior per-member choices, confirmation, cancellation, and undo are not specified.",
+      "why_it_matters": "A local edit can silently destroy a carefully configured crew and make later deselection unable to restore user intent.",
+      "missing_contract": "Define pre-normalization confirmation, reversible draft state, prior-selection preservation, undo, validation errors, and behavior when Copilot becomes unavailable after normalization.",
+      "primary_scope": "§27.7 crew-mode provider normalization",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2534,
+          "line_end": 2534,
+          "quote": "- `Copilot` is not a per-member freely mixed provider in the default crew editor; when Copilot is selected for any member, the UI immediately normalizes the entire crew to Copilot and explains that Copilot is being treated as a crew-level provider selection constraint.",
+          "excerpt": "- `Copilot` is not a per-member freely mixed provider in the default crew editor; when Copilot is selected for any member, the UI immediately normalizes the entire crew to Copilot and explains that Copilot is being treated as a crew-level provider selection constraint."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-019",
+      "severity": "medium",
+      "category": "ux_state_model",
+      "title": "Manual Persona mode has only an optional picker",
+      "claim": "Manual mode requires the user to select a Persona directly, yet the only stated manual picker in the chat controls is optional and no alternative mandatory selection mechanism is named here.",
+      "why_it_matters": "A product can expose Manual mode with no deterministic way to establish or repair its selection, especially after the stored Persona becomes unresolved.",
+      "missing_contract": "Make a direct selection control mandatory in Manual mode or identify the exact alternative command surface; define empty, invalid, loading, and restored-selection states.",
+      "primary_scope": "§27.1 and §27.5 Persona controls",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2421,
+          "line_end": 2421,
+          "quote": "- **manual:** user selects the Persona directly.",
+          "excerpt": "- **manual:** user selects the Persona directly."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2503,
+          "line_end": 2503,
+          "quote": "- optional manual Persona picker,",
+          "excerpt": "- optional manual Persona picker,"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-020",
+      "severity": "critical",
+      "category": "security_network",
+      "title": "The iframe sandbox does not enforce the asserted network denial",
+      "claim": "The module receives allow-scripts and the text asserts that arbitrary external network loads are denied, but no CSP, fetch interception, URL rewriting, embedded-resource policy, or host egress enforcement is specified.",
+      "why_it_matters": "An opaque-origin sandbox prevents PM-origin access but does not by itself prevent scripts, images, fetch, WebSocket, or other outbound requests, allowing visualized data or user interaction to be exfiltrated.",
+      "missing_contract": "Require an enforceable CSP or equivalent network broker with default-src none, explicit bundled-resource allowances, blocked URL schemes and redirects, violation handling, and tests covering fetch, XHR, WebSocket, EventSource, images, fonts, media, CSS URLs, and nested frames.",
+      "primary_scope": "§28.2 inline visualizer sandbox and third-party libraries",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2568,
+          "line_end": 2568,
+          "quote": "MVP uses `sandbox=\"allow-scripts\"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`.",
+          "excerpt": "MVP uses `sandbox=\"allow-scripts\"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2575,
+          "line_end": 2575,
+          "quote": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;",
+          "excerpt": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-021",
+      "severity": "critical",
+      "category": "security_message_boundary",
+      "title": "The postMessage bridge has no channel authentication or input envelope",
+      "claim": "All cross-boundary control is delegated to postMessage, but this capsule does not require event.source binding, a per-instance nonce, message versioning, method allowlist enforcement, payload validation, size bounds, sequencing, or rate limits.",
+      "why_it_matters": "A forged, replayed, cross-card, stale, or flood message can invoke host capabilities or affect the wrong visual module; sandboxed opaque origins make origin-only validation insufficient.",
+      "missing_contract": "Bind every bridge instance to the exact contentWindow plus an unguessable capability token, version and validate a closed message schema, reject unknown or stale messages, cap payload and rate, and test cross-frame spoofing and replay.",
+      "primary_scope": "§28.2 postMessage bridge",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2568,
+          "line_end": 2568,
+          "quote": "all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge.",
+          "excerpt": "all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2570,
+          "line_end": 2570,
+          "quote": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`.",
+          "excerpt": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-022",
+      "severity": "critical",
+      "category": "authority_privacy",
+      "title": "Visualizer scripts receive ambient prompt, navigation, and clipboard authority",
+      "claim": "A module can queue text into whichever thread composer or questionnaire is active, open external destinations, and write clipboard data, with no user-activation requirement, origin-thread binding, draft confirmation, URL-scheme policy, permission prompt, or revocation rule.",
+      "why_it_matters": "A malicious or stale artifact can impersonate user input, answer the wrong questionnaire, act after a thread switch, open unsafe links, or overwrite sensitive clipboard state without a deliberate user gesture.",
+      "missing_contract": "Bind capabilities to the originating thread and questionnaire revision, require explicit user activation and visible confirmation for prompt submission/navigation/clipboard writes, allow draft-only behavior by default, restrict URL schemes and redirects, and revoke capabilities when the card is stale or hidden.",
+      "primary_scope": "§28.2 visualizer host capabilities",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2570,
+          "line_end": 2570,
+          "quote": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`.",
+          "excerpt": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2572,
+          "line_end": 2572,
+          "quote": "`sendPrompt(text)` queues into the active thread composer outside question-flow contexts; dual-context enforcement means that if a questionnaire is active when `sendPrompt` is called from within a visualizer, the text is routed as a question answer rather than a new chat message, and if no questionnaire is active it is routed as a new chat input.",
+          "excerpt": "`sendPrompt(text)` queues into the active thread composer outside question-flow contexts; dual-context enforcement means that if a questionnaire is active when `sendPrompt` is called from within a visualizer, the text is routed as a question answer rather than a new chat message, and if no questionnaire is active it is routed as a new chat input."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2572,
+          "line_end": 2572,
+          "quote": "`openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external;",
+          "excerpt": "`openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external;"
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-023",
+      "severity": "high",
+      "category": "security_sanitization_compatibility",
+      "title": "The non-iframe sanitizer policy is not a closed, versioned contract",
+      "claim": "The baseline depends on DOMPurify DEFAULT_ALLOWED_TAGS and unspecified approved URL-bearing attributes, without pinning a DOMPurify version or defining exact attributes, protocols, SVG namespaces, CSS handling, parser configuration, or malformed-input behavior.",
+      "why_it_matters": "Library upgrades and platform parser differences can silently expand or shrink the attack surface, and Markdown, Mermaid, HTML, and SVG can receive inconsistent sanitization.",
+      "missing_contract": "Publish exact versioned tag, attribute, namespace, protocol, CSS, data-URL, target/rel, ID-clobbering, and mutation rules; define one parse-sanitize-render order and a hostile corpus with expected output.",
+      "primary_scope": "§28.2 non-iframe rendering sanitizer",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2569,
+          "line_end": 2569,
+          "quote": "The baseline sanitizer is the standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only; raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering.",
+          "excerpt": "The baseline sanitizer is the standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only; raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-024",
+      "severity": "medium",
+      "category": "availability_scale",
+      "title": "Visualizer resize requests have no numeric or rate bounds",
+      "claim": "requestResize accepts optional width and height and auto-height telemetry adjusts the host card, but host constraints are unspecified and there are no finite-number, range, frequency, oscillation, or hidden-card rules.",
+      "why_it_matters": "A module can request negative, enormous, NaN-like, rapidly oscillating, or high-frequency sizes, causing layout thrash, scroll jumps, memory pressure, or denial of service.",
+      "missing_contract": "Define integer and finite validation, min/max dimensions, rate and debounce limits, monotonic or hysteresis behavior, hidden/offscreen handling, rejection responses, and stress-test thresholds.",
+      "primary_scope": "§28.2 requestResize and auto-resize",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2570,
+          "line_end": 2570,
+          "quote": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`.",
+          "excerpt": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2572,
+          "line_end": 2572,
+          "quote": "auto-height/resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.",
+          "excerpt": "auto-height/resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2574,
+          "line_end": 2574,
+          "quote": "Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access.",
+          "excerpt": "Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access."
+        }
+      ]
+    },
+    {
+      "finding_id": "NEG-025",
+      "severity": "high",
+      "category": "persistence_privacy_operations",
+      "title": "Bounded visualizer persistence is asserted without actual bounds or lifecycle semantics",
+      "claim": "The capsule requires durable source or metadata references, claims bounded persistence, and permits local queues, fragment source, metadata, and generated assets, but specifies no schema, quota, retention, garbage collection, export, redaction, or reset behavior.",
+      "why_it_matters": "Artifacts can retain sensitive prompts or interaction state indefinitely, inflate projects and exports, leave orphaned assets, or restore stale executable state under a new runtime policy.",
+      "missing_contract": "Define persisted versus ephemeral state, per-card/thread/project quotas, serialization schema and versioning, encryption and redaction, retention and GC, export/import behavior, reset controls, stale-policy invalidation, and failure recovery.",
+      "primary_scope": "§28.1-§28.2 visualizer state and asset persistence",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2558,
+          "line_end": 2558,
+          "quote": "- neither path owns hidden mutable state outside durable source or metadata refs",
+          "excerpt": "- neither path owns hidden mutable state outside durable source or metadata refs"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2566,
+          "line_end": 2566,
+          "quote": "Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.",
+          "excerpt": "Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2574,
+          "line_end": 2574,
+          "quote": "Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access.",
+          "excerpt": "Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2576,
+          "line_end": 2576,
+          "quote": "Visualizer `/source/etc` handling keeps fragment source, copy/export metadata, and generated assets behind the visual-module contract so the sandbox can show the artifact without injecting raw controls into the main chat DOM.",
+          "excerpt": "Visualizer `/source/etc` handling keeps fragment source, copy/export metadata, and generated assets behind the visual-module contract so the sandbox can show the artifact without injecting raw controls into the main chat DOM."
+        }
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "claim": "Stable logical identity for virtualized messages and blocks is explicitly required.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2255,
+          "line_end": 2255,
+          "quote": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id).",
+          "excerpt": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id)."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "claim": "Skeleton loading includes an explicit terminal failure placeholder and Retry rather than permitting indefinite loading.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2279,
+          "line_end": 2279,
+          "quote": "On load failure, show error placeholder + Retry; do not leave skeletons indefinitely.",
+          "excerpt": "On load failure, show error placeholder + Retry; do not leave skeletons indefinitely."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "claim": "Tail-follow behavior explicitly respects a user who has scrolled away from the bottom.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2293,
+          "line_end": 2293,
+          "quote": "When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom.",
+          "excerpt": "When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "claim": "Auditor settings changes are explicitly deferred to the next sweep and emitted reports must mirror the sweep-start effective pair.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2389,
+          "line_end": 2389,
+          "quote": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |",
+          "excerpt": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2395,
+          "line_end": 2395,
+          "quote": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |",
+          "excerpt": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |"
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "claim": "Unresolved Persona handling is explicitly non-silent for manual, natural-language, and persisted references.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2494,
+          "line_end": 2494,
+          "quote": "- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state.",
+          "excerpt": "- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2495,
+          "line_end": 2495,
+          "quote": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.",
+          "excerpt": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2496,
+          "line_end": 2496,
+          "quote": "- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context.",
+          "excerpt": "- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-006",
+      "claim": "Explicit runtime choices and Copilot-native restrictions are expressly prohibited from silently degrading.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2528,
+          "line_end": 2528,
+          "quote": "- explicit user-chosen runtime surfaces must not silently fallback without disclosure.",
+          "excerpt": "- explicit user-chosen runtime surfaces must not silently fallback without disclosure."
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2529,
+          "line_end": 2529,
+          "quote": "- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.",
+          "excerpt": "- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-007",
+      "claim": "The visualizer explicitly denies same-origin, form, popup, and top-navigation iframe privileges and declares external network loads denied.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2568,
+          "line_end": 2568,
+          "quote": "`allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` are explicitly DENIED;",
+          "excerpt": "`allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` are explicitly DENIED;"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2575,
+          "line_end": 2575,
+          "quote": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;",
+          "excerpt": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;"
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-008",
+      "claim": "Question-flow embedded visualizers explicitly omit sendPrompt and receive a narrowed draft bridge.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2570,
+          "line_end": 2570,
+          "quote": "For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages.",
+          "excerpt": "For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-009",
+      "claim": "Mode overlay values are explicitly closed and deep_plan is explicitly preserved through normalization.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2610,
+          "line_end": 2610,
+          "quote": "- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`",
+          "excerpt": "- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`"
+        },
+        {
+          "document_path": "Plans/assistant-chat-design.md",
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2612,
+          "line_end": 2612,
+          "quote": "- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning",
+          "excerpt": "- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning"
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "question": "Does the linked storage or GUI owner define revisioned paging cursors, request cancellation, and stale-slice rejection?",
+      "reason": "Those linked owner documents were outside the allowed inputs, and this capsule does not close the asynchronous loader race."
+    },
+    {
+      "question": "Does Models_System or Contracts_V0 define registry ordering, atomic provider/model snapshots, and recovery for an unavailable model with an available provider?",
+      "reason": "The capsule references those owners but exposes only provider-unavailable recovery and an unordered first-eligible rule."
+    },
+    {
+      "question": "Does Project_Output_Artifacts record requested versus effective Auditor selection, fallback reason, account-safe identity, and settings revision?",
+      "reason": "This capsule only requires effective provider/model mirroring and the referenced artifact owner could contain additional provenance."
+    },
+    {
+      "question": "Does Personas define override precedence, lock behavior, persistence across restart, and run-start Persona snapshots?",
+      "reason": "The capsule references Personas but does not contain the required state-transition closure."
+    },
+    {
+      "question": "Does the delegation owner define permission inheritance, confirmation, cancellation, budgets, and recovery for natural-language child-run creation?",
+      "reason": "The capsule delegates eligibility to the surrounding task without naming an executable authority contract."
+    },
+    {
+      "question": "Does FinalGUISpec define CSP or equivalent egress enforcement, postMessage channel authentication, bridge quotas, and user-activation requirements?",
+      "reason": "The capsule names FinalGUISpec but the allowed window only asserts sandbox and bridge behavior without those enforcement details."
+    },
+    {
+      "question": "Is there a version-pinned sanitizer profile for Markdown, Mermaid, HTML, and SVG in another current owner?",
+      "reason": "The capsule says a dedicated security-sanitization owner does not yet exist and leaves approved URL-bearing attributes unspecified."
+    },
+    {
+      "question": "Does Prompt_Pipeline distinguish intentional control utterances from quoted, pasted, retrieved, tool-produced, or model-produced text?",
+      "reason": "The allowed mode and Persona examples use ordinary natural language, and no provenance boundary is present in this capsule."
+    },
+    {
+      "question": "Do later lines of §29 define the enum, default, expiry, and precedence of override_scope?",
+      "reason": "The assigned core ends after the initial mode fields and enum closure; reading beyond the provided context was forbidden."
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2252,
+      "line_end": 2252,
+      "quote": "Only the **visible viewport** plus an **overscan of 10 items** above and below should be rendered at any time.",
+      "excerpt": "Only the **visible viewport** plus an **overscan of 10 items** above and below should be rendered at any time."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2255,
+      "line_end": 2255,
+      "quote": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id).",
+      "excerpt": "Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id)."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2259,
+      "line_end": 2259,
+      "quote": "When the assistant **streams** a response, the UI must **append** or **update in place** the current message node--**not** replace the entire message list or rebuild all visible items.",
+      "excerpt": "When the assistant **streams** a response, the UI must **append** or **update in place** the current message node--**not** replace the entire message list or rebuild all visible items."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2260,
+      "line_end": 2260,
+      "quote": "Batch or throttle UI updates if the stream is very fast (e.g. coalesce into 1-2 frames per second for layout).",
+      "excerpt": "Batch or throttle UI updates if the stream is very fast (e.g. coalesce into 1-2 frames per second for layout)."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2263,
+      "line_end": 2263,
+      "quote": "the renderer draws the current state once per frame (or on coalesced updates) rather than replacing the whole node on every chunk.",
+      "excerpt": "the renderer draws the current state once per frame (or on coalesced updates) rather than replacing the whole node on every chunk."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2269,
+      "line_end": 2269,
+      "quote": "In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand.",
+      "excerpt": "In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2279,
+      "line_end": 2279,
+      "quote": "for any visible index without content, render skeleton; when slice loader returns data, re-render.",
+      "excerpt": "for any visible index without content, render skeleton; when slice loader returns data, re-render."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2279,
+      "line_end": 2279,
+      "quote": "On load failure, show error placeholder + Retry; do not leave skeletons indefinitely.",
+      "excerpt": "On load failure, show error placeholder + Retry; do not leave skeletons indefinitely."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2281,
+      "line_end": 2281,
+      "quote": "Resolve message ID → index (or scroll offset); if paged, resolve via storage; use search result IDs as jump targets.",
+      "excerpt": "Resolve message ID → index (or scroll offset); if paged, resolve via storage; use search result IDs as jump targets."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2283,
+      "line_end": 2283,
+      "quote": "Store match ranges (start, end offset) per message; compute on search or when message enters view; cache by (message_id, query); thread search query available to chat view; clear on search clear or thread change.",
+      "excerpt": "Store match ranges (start, end offset) per message; compute on search or when message enters view; cache by (message_id, query); thread search query available to chat view; clear on search clear or thread change."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2290,
+      "line_end": 2290,
+      "quote": "update scrollbar as user scrolls and more heights are known.",
+      "excerpt": "update scrollbar as user scrolls and more heights are known."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2291,
+      "line_end": 2291,
+      "quote": "preserve \"anchor\" (e.g. first visible item id) so the list doesn't jump arbitrarily.",
+      "excerpt": "preserve \"anchor\" (e.g. first visible item id) so the list doesn't jump arbitrarily."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2292,
+      "line_end": 2292,
+      "quote": "Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint.",
+      "excerpt": "Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2293,
+      "line_end": 2293,
+      "quote": "When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom.",
+      "excerpt": "When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2334,
+      "line_end": 2334,
+      "quote": "lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown).",
+      "excerpt": "lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown)."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2344,
+      "line_end": 2344,
+      "quote": "1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it.",
+      "excerpt": "1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2347,
+      "line_end": 2347,
+      "quote": "4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering.",
+      "excerpt": "4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2350,
+      "line_end": 2350,
+      "quote": "- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).",
+      "excerpt": "- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching)."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2356,
+      "line_end": 2356,
+      "quote": "Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports.",
+      "excerpt": "Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2364,
+      "line_end": 2364,
+      "quote": "| `model_roles.auditor.provider` | Provider for the Auditor validation loop |",
+      "excerpt": "| `model_roles.auditor.provider` | Provider for the Auditor validation loop |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2365,
+      "line_end": 2365,
+      "quote": "| `model_roles.auditor.model` | Model for the Auditor validation loop |",
+      "excerpt": "| `model_roles.auditor.model` | Model for the Auditor validation loop |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2376,
+      "line_end": 2376,
+      "quote": "| Default indicator | Show \"(Default)\" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |",
+      "excerpt": "| Default indicator | Show \"(Default)\" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2389,
+      "line_end": 2389,
+      "quote": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |",
+      "excerpt": "| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2390,
+      "line_end": 2390,
+      "quote": "| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *\"Auditor validation provider [name] is unavailable; using Auditor Model default.\"* |",
+      "excerpt": "| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *\"Auditor validation provider [name] is unavailable; using Auditor Model default.\"* |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2393,
+      "line_end": 2393,
+      "quote": "| 5 | The \"(Default)\" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |",
+      "excerpt": "| 5 | The \"(Default)\" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2395,
+      "line_end": 2395,
+      "quote": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |",
+      "excerpt": "| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2421,
+      "line_end": 2421,
+      "quote": "- **manual:** user selects the Persona directly.",
+      "excerpt": "- **manual:** user selects the Persona directly."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2423,
+      "line_end": 2423,
+      "quote": "- **hybrid:** auto selects by default, but the user may temporarily or persistently override it.",
+      "excerpt": "- **hybrid:** auto selects by default, but the user may temporarily or persistently override it."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2432,
+      "line_end": 2432,
+      "quote": "- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.",
+      "excerpt": "- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2433,
+      "line_end": 2433,
+      "quote": "`requested_persona_id` and `effective_persona_id` normalize to `requested_persona` and `effective_persona`",
+      "excerpt": "`requested_persona_id` and `effective_persona_id` normalize to `requested_persona` and `effective_persona`"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2439,
+      "line_end": 2439,
+      "quote": "- requested_persona_id",
+      "excerpt": "- requested_persona_id"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2440,
+      "line_end": 2440,
+      "quote": "- effective_persona_id",
+      "excerpt": "- effective_persona_id"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2457,
+      "line_end": 2457,
+      "quote": "- `Use Collaborator`",
+      "excerpt": "- `Use Collaborator`"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2467,
+      "line_end": 2467,
+      "quote": "- `for this`, `for this answer`, `right now` -> turn scope,",
+      "excerpt": "- `for this`, `for this answer`, `right now` -> turn scope,"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2468,
+      "line_end": 2468,
+      "quote": "- `from now on`, `in this chat`, `for this session` -> session scope.",
+      "excerpt": "- `from now on`, `in this chat`, `for this session` -> session scope."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2474,
+      "line_end": 2474,
+      "quote": "When the override expires, the UI should return to auto display, for example:",
+      "excerpt": "When the override expires, the UI should return to auto display, for example:"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2477,
+      "line_end": 2477,
+      "quote": "Subagent-only requests such as `Ask Explorer` or `Run that with Bash` create or route a child run when the surrounding task permits delegation; they do not switch the direct chat Persona.",
+      "excerpt": "Subagent-only requests such as `Ask Explorer` or `Run that with Bash` create or route a child run when the surrounding task permits delegation; they do not switch the direct chat Persona."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2492,
+      "line_end": 2492,
+      "quote": "If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction.",
+      "excerpt": "If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2494,
+      "line_end": 2494,
+      "quote": "- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state.",
+      "excerpt": "- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2495,
+      "line_end": 2495,
+      "quote": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.",
+      "excerpt": "- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2496,
+      "line_end": 2496,
+      "quote": "- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context.",
+      "excerpt": "- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2503,
+      "line_end": 2503,
+      "quote": "- optional manual Persona picker,",
+      "excerpt": "- optional manual Persona picker,"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2506,
+      "line_end": 2506,
+      "quote": "- and a way to lock/unlock the current Persona.",
+      "excerpt": "- and a way to lock/unlock the current Persona."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2521,
+      "line_end": 2521,
+      "quote": "Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.",
+      "excerpt": "Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2526,
+      "line_end": 2526,
+      "quote": "- provider/model for a child run is visible on hover in the collapsed card.",
+      "excerpt": "- provider/model for a child run is visible on hover in the collapsed card."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2527,
+      "line_end": 2527,
+      "quote": "- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.",
+      "excerpt": "- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2528,
+      "line_end": 2528,
+      "quote": "- explicit user-chosen runtime surfaces must not silently fallback without disclosure.",
+      "excerpt": "- explicit user-chosen runtime surfaces must not silently fallback without disclosure."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2529,
+      "line_end": 2529,
+      "quote": "- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.",
+      "excerpt": "- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2534,
+      "line_end": 2534,
+      "quote": "- `Copilot` is not a per-member freely mixed provider in the default crew editor; when Copilot is selected for any member, the UI immediately normalizes the entire crew to Copilot and explains that Copilot is being treated as a crew-level provider selection constraint.",
+      "excerpt": "- `Copilot` is not a per-member freely mixed provider in the default crew editor; when Copilot is selected for any member, the UI immediately normalizes the entire crew to Copilot and explains that Copilot is being treated as a crew-level provider selection constraint."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2558,
+      "line_end": 2558,
+      "quote": "- neither path owns hidden mutable state outside durable source or metadata refs",
+      "excerpt": "- neither path owns hidden mutable state outside durable source or metadata refs"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2566,
+      "line_end": 2566,
+      "quote": "Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.",
+      "excerpt": "Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2568,
+      "line_end": 2568,
+      "quote": "MVP uses `sandbox=\"allow-scripts\"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`.",
+      "excerpt": "MVP uses `sandbox=\"allow-scripts\"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2568,
+      "line_end": 2568,
+      "quote": "`allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` are explicitly DENIED;",
+      "excerpt": "`allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` are explicitly DENIED;"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2568,
+      "line_end": 2568,
+      "quote": "all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge.",
+      "excerpt": "all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2569,
+      "line_end": 2569,
+      "quote": "The baseline sanitizer is the standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only; raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering.",
+      "excerpt": "The baseline sanitizer is the standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only; raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2570,
+      "line_end": 2570,
+      "quote": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`.",
+      "excerpt": "The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: \"_blank\" | \"_self\"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2570,
+      "line_end": 2570,
+      "quote": "For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages.",
+      "excerpt": "For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2572,
+      "line_end": 2572,
+      "quote": "`sendPrompt(text)` queues into the active thread composer outside question-flow contexts; dual-context enforcement means that if a questionnaire is active when `sendPrompt` is called from within a visualizer, the text is routed as a question answer rather than a new chat message, and if no questionnaire is active it is routed as a new chat input.",
+      "excerpt": "`sendPrompt(text)` queues into the active thread composer outside question-flow contexts; dual-context enforcement means that if a questionnaire is active when `sendPrompt` is called from within a visualizer, the text is routed as a question answer rather than a new chat message, and if no questionnaire is active it is routed as a new chat input."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2572,
+      "line_end": 2572,
+      "quote": "`openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external;",
+      "excerpt": "`openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external;"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2572,
+      "line_end": 2572,
+      "quote": "auto-height/resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.",
+      "excerpt": "auto-height/resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2574,
+      "line_end": 2574,
+      "quote": "Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access.",
+      "excerpt": "Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2575,
+      "line_end": 2575,
+      "quote": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;",
+      "excerpt": "it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied;"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2576,
+      "line_end": 2576,
+      "quote": "Visualizer `/source/etc` handling keeps fragment source, copy/export metadata, and generated assets behind the visual-module contract so the sandbox can show the artifact without injecting raw controls into the main chat DOM.",
+      "excerpt": "Visualizer `/source/etc` handling keeps fragment source, copy/export metadata, and generated assets behind the visual-module contract so the sandbox can show the artifact without injecting raw controls into the main chat DOM."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2594,
+      "line_end": 2594,
+      "quote": "Natural-language mode invocation resolves workflow identity and runtime posture separately.",
+      "excerpt": "Natural-language mode invocation resolves workflow identity and runtime posture separately."
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2605,
+      "line_end": 2605,
+      "quote": "- `override_scope`",
+      "excerpt": "- `override_scope`"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2610,
+      "line_end": 2610,
+      "quote": "- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`",
+      "excerpt": "- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2612,
+      "line_end": 2612,
+      "quote": "- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning",
+      "excerpt": "- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2617,
+      "line_end": 2617,
+      "quote": "- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`",
+      "excerpt": "- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`"
+    },
+    {
+      "document_path": "Plans/assistant-chat-design.md",
+      "path": "Plans/assistant-chat-design.md",
+      "line_start": 2620,
+      "line_end": 2620,
+      "quote": "- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`",
+      "excerpt": "- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`"
+    }
+  ],
+  "scope_attestation": {
+    "only_allowed_inputs_read": true,
+    "prior_audits_read": false,
+    "other_results_read": false,
+    "canonical_document_read": false,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "prior_substantive_assignment_count": 0,
+    "terminal_after_result": true
+  }
+}

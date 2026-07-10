@@ -1,0 +1,377 @@
+{
+  "schema_version": "a004_window_review_result_v1",
+  "assignment_id": "A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001",
+  "runner_id": "runner-10",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-CC3C85D86FBD-0001",
+  "doc_id": "DOC-CC3C85D86FBD",
+  "document_path": "Plans/UI_Command_Catalog.md",
+  "core_range": [
+    1,
+    344
+  ],
+  "context_ranges": [
+    [
+      345,
+      356
+    ]
+  ],
+  "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7",
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-CC3C85D86FBD-0001.txt",
+  "source_excerpt_sha256": "bc054ae9b6097fd2f1558d9c6958ff8077d778938d697860d7c27cadac7f3bea",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001.json",
+  "capsule_sha256": "e82333ef3492807481f57870f7006a90f579a9257364aa2870236d022a6fc613",
+  "capsule_bytes": 1604,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "hash_validation": {
+    "capsule": true,
+    "source_excerpt": true,
+    "sizes": true
+  },
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "summary": "The catalog requires live rows to expose classification and normalization metadata directly and forbids gates from inferring it from handlers or prose.",
+      "evidence_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "summary": "UI availability is declared to depend on role, run and blocked state, approval context, jail posture, external-side-effect guards, and projection freshness.",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "summary": "The normalized command envelope has closed source and target enums, yet the same record is required for CLI and programmatic API ingestion.",
+      "evidence_ids": [
+        "EV-005"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "summary": "Wiring verification requires registration, success-event testing when events are declared, a GUI binding, and at least one acceptance assertion.",
+      "evidence_ids": [
+        "EV-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "summary": "The bounded rows include authentication lifecycle commands, multi-stage project creation, destructive and multi-select file mutations, and explicit file open/export behavior.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-009",
+        "EV-010",
+        "EV-011",
+        "EV-012"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FND-001",
+      "gap_type": "metadata_schema_contradiction",
+      "severity": "high",
+      "summary": "Project and File Manager rows omit metadata that the catalog itself makes mandatory and non-inferable.",
+      "why_gap": "Lines 52-65 require label, description, preconditions, command_kind, normalization.kind, normalizes_to_contract, and alias_of_command_id, and prohibit gate inference from handlers or prose. The project and file tables expose only command ID, argument keys, expected events, and affected surfaces. Within this bounded capsule there is no alternative machine-readable row, null convention, or alias classification for those commands, so command-palette, wiring, and permission gates cannot deterministically satisfy the declared contract.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-010",
+        "EV-011"
+      ]
+    },
+    {
+      "finding_id": "FND-002",
+      "gap_type": "caller_and_target_representation",
+      "severity": "high",
+      "summary": "The normalization envelope cannot represent several declared callers, surfaces, or command target shapes without undocumented synthesis.",
+      "why_gap": "The closed source_surface enum contains neither CLI nor API even though both must use this record, and it omits named surfaces such as Settings, Setup, Dashboard, File Manager, File Editor, and Preview. The closed target_scope enum omits project, file, folder, wizard, auth realm, and account, while target_id is mandatory even for arg-less authentication and commands whose target is paths[]. No mapping, sentinel, or defaulting rule exists in this bounded capsule, leaving ingestion and authorization classification nondeterministic.",
+      "evidence_ids": [
+        "EV-005",
+        "EV-008",
+        "EV-009",
+        "EV-010",
+        "EV-011"
+      ]
+    },
+    {
+      "finding_id": "FND-003",
+      "gap_type": "authority_and_freshness_binding",
+      "severity": "high",
+      "summary": "The action policy names required authorization and freshness inputs that are not bound into the normalized record or affected command rows.",
+      "why_gap": "The policy requires user role, execution_role, run mode, blocked_sequence, approval_scope_key plus approval_id, jail posture, and current projection health. The envelope carries approval_scope_key but not approval_id, role, execution_role, run mode, blocked_sequence, jail posture, a projection revision, or a freshness proof, and the project/file rows omit required preconditions entirely. Within this bounded capsule no deterministic snapshot or recheck point closes the build-to-dispatch race, so a handler cannot prove which authorization and freshness state it evaluated.",
+      "evidence_ids": [
+        "EV-002",
+        "EV-005",
+        "EV-010",
+        "EV-011"
+      ]
+    },
+    {
+      "finding_id": "FND-004",
+      "gap_type": "replay_concurrency_and_observability",
+      "severity": "high",
+      "summary": "The command envelope lacks identity and concurrency fields needed to correlate, deduplicate, cancel, or safely replay mutating dispatches.",
+      "why_gap": "The standard record has created_utc but no command-instance ID, schema version, idempotency key, attempt number, causation/correlation ID, expected resource revision, cancellation token, or result reference. Route completion references are said to be immutable audit records, but this bounded capsule gives no command/result join field. For provider, project, and multi-path file mutations, retries or duplicate deliveries therefore cannot be distinguished from separate user intent, and deterministic recovery or audit reconciliation has no stated oracle.",
+      "evidence_ids": [
+        "EV-004",
+        "EV-005",
+        "EV-010",
+        "EV-011"
+      ]
+    },
+    {
+      "finding_id": "FND-005",
+      "gap_type": "production_security_and_build_variants",
+      "severity": "high",
+      "summary": "The production escape hatch for development-preview controls is not backed by a deterministic authority, audit, or build-variant contract.",
+      "why_gap": "The controls may be compiled out or disabled, unless an explicit production configuration enables them with permission and audit receipts. This bounded capsule does not identify the configuration authority, permission scope, receipt schema or event, capability duration, revocation behavior, or tests proving that fixture/reload/capture controls cannot reach production runtime capabilities. The blanket requirement that every command have an actual GUI binding also has no variant-aware exception for a command compiled out of a production build.",
+      "evidence_ids": [
+        "EV-003",
+        "EV-007"
+      ]
+    },
+    {
+      "finding_id": "FND-006",
+      "gap_type": "authentication_recovery_state_machine",
+      "severity": "high",
+      "summary": "GitHub connect identifies contextual recovery requirements but does not catalog the recovery command or complete the device-code lifecycle.",
+      "why_gap": "The text says deferred reconnect and blocked recovery wrappers must bind project_id, auth_realm, actor context, effective-account state, and a source reference, yet the only bounded connect row is the fresh arg-less command. No recovery wrapper ID, normalization metadata, transition back to the blocked node/thread/wizard, or stale-context rejection rule appears. Its events also omit cancellation, device-code expiry, polling timeout, retry/backoff, concurrent-connect arbitration, and authenticated-account mismatch, leaving recovery and degraded GUI truth unspecified within the capsule.",
+      "evidence_ids": [
+        "EV-008"
+      ]
+    },
+    {
+      "finding_id": "FND-007",
+      "gap_type": "destructive_auth_security_and_failure",
+      "severity": "high",
+      "summary": "GitHub disconnect deletes a credential without an explicit target, confirmation, failure, or in-flight-operation contract.",
+      "why_gap": "The command takes no arguments, deletes the credential-store token, and declares only a success event. Within this bounded capsule there is no account or auth-realm selection, actor binding, confirmation strength, permission/precondition, behavior for active provider operations, failure or timeout event, idempotent already-disconnected result, or recovery disclosure. A destructive command can therefore target ambiguously and the GUI has no specified terminal truth when deletion fails or races active work.",
+      "evidence_ids": [
+        "EV-002",
+        "EV-009"
+      ]
+    },
+    {
+      "finding_id": "FND-008",
+      "gap_type": "partial_success_and_compensation",
+      "severity": "high",
+      "summary": "New GitHub repository creation has no atomicity or recovery contract for its two declared outcomes.",
+      "why_gap": "The row expects both project.created and git.clone.completed but states neither their required order nor whether they are one transaction. No failure event, cancellation point, compensation rule, resume behavior, or GUI state is defined for remote creation succeeding while local clone fails, or the reverse local-state failure after provider mutation. The simultaneous private and optional visibility inputs also have no conflict or precedence rule, so dispatch validation is not deterministic within this capsule.",
+      "evidence_ids": [
+        "EV-002",
+        "EV-010"
+      ]
+    },
+    {
+      "finding_id": "FND-009",
+      "gap_type": "filesystem_safety_and_batch_state",
+      "severity": "high",
+      "summary": "Destructive and multi-path file commands lack collision, boundary, partial-result, and recovery semantics.",
+      "why_gap": "Delete, cut, paste, move, copy, and export rows specify argument keys and success-event alternatives but no expected revision, symlink or project-root boundary behavior, protected-path rule, overwrite/conflict policy, self-descendant move rejection, confirmation or disposition for deletion, cancellation point, rollback, or per-item partial result. The use of or and slash-separated success event names gives no event cardinality or ordering for mixed file/folder batches. The context narrows valid target kinds but explicitly delegates multi-select permission and does not close these state transitions inside the bounded capsule.",
+      "evidence_ids": [
+        "EV-004",
+        "EV-011",
+        "EV-012"
+      ]
+    },
+    {
+      "finding_id": "FND-010",
+      "gap_type": "deterministic_negative_test_oracles",
+      "severity": "high",
+      "summary": "The acceptance contract can pass without testing any declared denial, degradation, race, or recovery behavior.",
+      "why_gap": "The gate requires a test only for declared non-empty expected events, one UI binding, and at least one unspecified acceptance assertion. It does not require executable oracles for role or approval denial, blocked/jail posture, stale projection, unreachable routes, cancellation, timeout, duplicate replay, partial batch failure, compensation, or degraded-state GUI disclosure. Because commands with no persisted event are exempt from event tests, a wiring row can satisfy the stated gate while substantial negative behavior remains unverified.",
+      "evidence_ids": [
+        "EV-002",
+        "EV-004",
+        "EV-007"
+      ]
+    },
+    {
+      "finding_id": "FND-011",
+      "gap_type": "compatibility_migration_lifecycle",
+      "severity": "medium",
+      "summary": "Optional navigation aliases and the retained chain-wizard alias have no executable migration or retirement lifecycle.",
+      "why_gap": "The capsule permits optional public navigation aliases and retains chain_wizard until a dedicated migration is accepted, but it defines no catalog version, alias precedence, collision rule, persisted-command replay normalization, telemetry threshold, acceptance authority, deadline, or deterministic retirement test. Consumers can therefore disagree on whether an old ID is accepted, canonicalized, or rejected across upgrades.",
+      "evidence_ids": [
+        "EV-006",
+        "EV-010"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "summary": "The capsule explicitly assigns approval, run-mode, and blocked-recovery decisions to the Orchestrator and requires external side effects to traverse permission and route/open contracts.",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "summary": "The capsule explicitly prohibits fallback mutation when a route target becomes unreachable and states that recorded route completion references are immutable audit evidence.",
+      "evidence_ids": [
+        "EV-004"
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "summary": "Development-preview controls are explicitly classified as dev/test controls and prohibited from being reused as production runtime, terminal, filesystem, browser, window, or process command families.",
+      "evidence_ids": [
+        "EV-003"
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "summary": "The File Manager context gives an exact MVP-native open target enum, excludes system_default from that command, and keeps remote-to-local export separate from Copy, Cut, and Paste.",
+      "evidence_ids": [
+        "EV-012"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "summary": "Whether FileSafe and FileManager owners define collision, symlink, deletion disposition, batch partial-failure, and rollback behavior is unknown.",
+      "why_unresolved_within_capsule": "The capsule points to FileSafe and FileManager but does not include those owner contracts. They were outside the permitted read set, so their ability to close the file-operation gaps cannot be assessed here.",
+      "evidence_ids": [
+        "EV-004",
+        "EV-011",
+        "EV-012"
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "summary": "Whether the GitHub auth owner defines cancellation, expiry, timeout, retry, account selection, and disconnect failure behavior is unknown.",
+      "why_unresolved_within_capsule": "The auth rows reference GitHub_API_Auth_and_Flows.md, but that document is outside this capsule and was not read. The bounded catalog text itself does not state those transitions.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-009"
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "summary": "Whether route_target is canonically a string or a structured target object is unresolved in this capsule.",
+      "why_unresolved_within_capsule": "The catalog assigns actual route-target structure to another owner while its normalization record types route_target as an optional string. The referenced route/open contract is outside the allowed capsule, so compatibility between those representations cannot be determined.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-004",
+        "EV-005"
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "summary": "Whether the wiring matrix supplies missing classification metadata or build-variant-aware assertions is unknown.",
+      "why_unresolved_within_capsule": "The capsule requires wiring-matrix records but does not include the matrix or schema. Those files were forbidden, so actual row coverage cannot be inspected; moreover, the catalog says gates must not infer required classification from handlers or prose.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-003",
+        "EV-007"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-001",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 52,
+      "line_end": 65,
+      "quote": "Live command rows must carry enough metadata for command-palette, shortcut, wiring, and permission gates to classify the action without reading the handler. The required metadata columns are `command_id`, `label`, `description`, `preconditions`, and `command_kind`; `command_kind` is one of `shell_view`, `navigation_wrapper`, or `domain_action`.\n\nWiring/gate consumers read `command_kind`, normalization kind, and canonical target contract from catalog metadata; `/gate` checks must not infer those fields from handler names or row-local prose.\n\nCommand-definition metadata belongs in the command catalog / command contract layer, the route schema remains owner of actual route-target structure, and wiring rows reference command IDs and handlers instead of restating the normalization model in full.\n\nCommand metadata must not inline route payload shape, object kinds, or argument mapping rules; doing so duplicates the route contract and turns the catalog into a second routing schema.\n\n\nRequired command metadata:\n- `command_kind`\n- `normalization.kind`\n- `normalizes_to_contract`\n- `alias_of_command_id`"
+    },
+    {
+      "evidence_id": "EV-002",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 73,
+      "line_end": 85,
+      "quote": "Actions available on the UI are scoped by:\n- User role and execution_role (from Permissions_System.md)\n- Active run mode (automate, interactive, diagnostic)\n- Concern state and blocked_sequence\n- approval_scope_key and approval_id context\n- DAE jail posture\n\nRules:\n- User cannot take an action unless the approval_scope_key allows it AND the operation is not contradicted by blocked_sequence or DAE jail posture.\n- Run mode changes, approval decisions, and blocked recovery are Orchestrator-owned; UI surfaces them but does not make the decision locally.\n- Actions that trigger external side-effects (file mutations, provider calls, route/open ops) MUST route through Permissions and route/open contracts.\n- Mutating `domain_action` commands MUST apply the catalog-wide projection-freshness gating clause before dispatch: the source projection freshness/health must be current for the selected project, repo, worktree, run, workflow, container, or Kubernetes scope. Stale, missing, or degraded projection health makes the mutation unavailable or forces a refresh/revalidation step before the command can execute.\n- Catalog verification lenses include UX / flow / action-surface behavior, state / storage / command / audit-trail behavior, tools / permissions / provider / identity integration, and cross-doc consistency / precedence / terminology / routing ownership; a handler row is not complete if it satisfies only flat command-to-handler wiring while route or audit semantics remain unowned."
+    },
+    {
+      "evidence_id": "EV-003",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 91,
+      "line_end": 100,
+      "quote": "The following command IDs are development-preview and automated-test controls only. They are not production runtime commands, do not grant OS-owned capability by themselves, and must be compiled out or disabled in production builds unless an explicit production configuration enables the corresponding dev/test surface with permission and audit receipts.\n\n| Command ID | Label | Description | Preconditions | command_kind |\n|------------|-------|-------------|----------------|--------------|\n| `cmd.gui_dev_preview.reload` | Reload GUI preview | Reloads the local static web route or native preview surface after a configured dev/test rebuild. | `dev_preview_enabled && explicit_dev_or_test_build` | `domain_action` |\n| `cmd.gui_dev_preview.fixture_mode.set` | Set GUI fixture mode | Selects an approved deterministic fixture state for GUI smoke tests, screenshots, state hooks, or replay. | `dev_preview_enabled && fixture_mode_available && explicit_dev_or_test_build` | `domain_action` |\n| `cmd.gui_dev_preview.capture_state` | Capture GUI state | Captures screenshot, visible state, and deterministic state-hook output for browser/native GUI smoke evidence. | `dev_preview_enabled && state_capture_available && explicit_dev_or_test_build` | `domain_action` |\n| `cmd.gui_dev_preview.daemon_capabilities.inspect` | Inspect daemon capabilities | Shows trusted local daemon capability probe results, degraded reasons, and test-hook availability without enabling a capability. | `dev_preview_enabled && trusted_local_daemon_probe_available && explicit_dev_or_test_build` | `shell_view` |\n\nThese commands normalize through the dev-preview test harness and capability-probe receipts. They must not be reused as production `cmd.runtime.*`, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container operation commands."
+    },
+    {
+      "evidence_id": "EV-004",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 104,
+      "line_end": 116,
+      "quote": "UI commands that route or open MUST preserve:\n- `route_target`: destination for output or side-effect (file path, GitHub issue URL, workspace concern, etc.)\n- `OpenSubject`: resource being opened (file, concern, help entry, project state)\n- `execution_unit_context`: which run, seam, package, or node is executing the command\n- `approval_scope_key`: reusable approval join key\n- `operational_identity`: attribution\nContractRef: Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md\n\nRoute side-effect rules:\n- File mutations go through FileSafe and route/open guards before execution.\n- Provider mutations (PRs, issue comments) go through Permissions and provider-identity checks.\n- Route completion refs are immutable once recorded; they form an audit trail of what was actually modified.\n- If route_target becomes unreachable between command build and execution, the UI displays an error and does not attempt fallback mutation."
+    },
+    {
+      "evidence_id": "EV-005",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 131,
+      "line_end": 154,
+      "quote": "All UI commands (button clicks, keyboard shortcuts, context menu items) normalize to a standard record:\n```\n\n{\n  command_id: string,\n  command_type: 'action' | 'navigation' | 'state_change' | 'modal',\n  source_surface: 'graph' | 'inspector' | 'approval_modal' | 'logs' | 'menu' | 'shortcut',\n  target_scope: 'run' | 'node' | 'concern' | 'evidence' | 'artifact',\n  target_id: string,\n  action_intent: string,\n  parameters: Record<string, any>,\n  route_target?: string,\n  open_subject?: OpenSubject,\n  execution_unit_context?: ExecutionUnitContext,\n  approval_scope_key: string,\n  operational_identity: string,\n  created_utc: string\n}\n```\n\nRules:\n- Commands from keyboard, menu, and context are all normalized to this record.\n- CLI commands and programmatic API calls use the same record format for Orchestrator ingestion.\n- Command normalization preserves user intent without rewriting route_target or OpenSubject."
+    },
+    {
+      "evidence_id": "EV-006",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 123,
+      "line_end": 126,
+      "quote": "- Compact navigation aliases, if adopted, are limited to `cmd.nav.open_subject`, `cmd.nav.open_usage_subject`, and `cmd.nav.focus_route` or an equivalent compact family that normalizes to `route_target` and `OpenSubject`; they must not expand into a second catalog language.\n- `cmd.nav.open_subject` or an equivalent compact wrapper resolves file, document, artifact, generated, and report subjects by carrying normalized `route_target` plus `OpenSubject`; `/document/artifact/generated/report` is shorthand for those subject families, not a fourth command-payload language.\n- Public `cmd.nav` / `cmd.nav.*` IDs are optional migration aliases, not a replacement target language; wrapper-style `/focus` and open commands may remain user-facing when they normalize to `route_target` and `OpenSubject`.\n- Navigation compatibility is not a winner/loser or `/loser` alias table: legacy names can point to wrapper commands, but wrapper classification, route payload, and owner command IDs stay visible instead of hiding route ownership behind a preferred alias."
+    },
+    {
+      "evidence_id": "EV-007",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 271,
+      "line_end": 278,
+      "quote": "Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:\n\n1. **Handler registration**: The command MUST have a registered handler in the UI Command Dispatcher. The handler's module/function location MUST be recorded in the wiring matrix.\n2. **Event emission verification**: If the command declares expected events (non-empty `expected_event_types`), a test MUST exist that dispatches the command and asserts the expected events are emitted.\n3. **UI element binding**: At least one UI element MUST be bound to the command in the wiring matrix, with its `ui_location` matching an actual GUI surface.\n4. **Acceptance checks**: Each wiring matrix entry MUST include at least one testable `acceptance_checks` assertion.\n\nCommands that declare `no persisted domain event` are still subject to handler registration and UI element binding checks; they are exempt only from event emission tests."
+    },
+    {
+      "evidence_id": "EV-008",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 286,
+      "line_end": 295,
+      "quote": "GitHub recovery binding note: `cmd.github.connect` remains arg-less only for a fresh device-code start locked by Spec Lock. Deferred reconnect and recovery wrappers must not stay `arg-less`, `under-keyed`, or `split-brain`; a blocked `/node/thread/wizard` recovery context binds `project_id`, `auth_realm`, actor context, effective-account snapshot/ref, and source `/ref` before resuming across `GitHub_Integration.md` and `UI_Command_Catalog.md`.\n\n\nStart GitHub OAuth device-code flow.\n\n- **Args schema:** `{}` (no args; host/scope are locked by Spec Lock).\n  ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, SchemaID:Spec_Lock.json#locked_decisions.auth_model\n- **Expected events:** `auth.github.device_code.issued`, `auth.github.token.polling`, terminal: `auth.github.authenticated` or `auth.github.failed`.\n  ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md\n- **Affected surfaces:** Settings > GitHub/Auth, Setup flow, Dashboard auth status."
+    },
+    {
+      "evidence_id": "EV-009",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 299,
+      "line_end": 306,
+      "quote": "#### `cmd.github.disconnect`\nDisconnect and delete token (credential store).\n\n- **Args schema:** `{}`\n  ContractRef: ContractName:Contracts_V0.md#AuthState\n- **Expected events:** `auth.github.disconnected`.\n  ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md\n- **Affected surfaces:** Settings > GitHub/Auth, Dashboard auth status."
+    },
+    {
+      "evidence_id": "EV-010",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 315,
+      "line_end": 323,
+      "quote": "These IDs are required by `Plans/GitHub_Integration.md` section D and the legacy compatibility flow in `Plans/chain-wizard-flexibility.md` section 13. New current-product surfaces route the deferred handoff to Planning Wizard; the old `chain_wizard` command spelling is retained here only as a compatibility alias until a dedicated command-ID migration is accepted.\n\n| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.project.add_existing` | `{ path?, ssh_remote_id?, ssh_path? }` | `project.added` | File menu, Dashboard, Add Existing Project flow |\n| `cmd.project.new_local` | `{ name, parent_path, init_git?, preset? }` | `project.created` | File menu, Dashboard, New Local Project flow |\n| `cmd.project.new_github_repo` | `{ name, description?, private, visibility?, gitignore_template?, license?, local_clone_path }` | `project.created`, `git.clone.completed` | File menu, Dashboard, New GitHub Repo flow |\n| `cmd.project.open` | `{ project_id }` | no persisted domain event (navigation) | File Manager, Dashboard, project finish screens |\n| `cmd.project.chain_wizard_open_deferred` | `{ project_id, wizard_id, default_intent, project_path, remote_repo_ref?, deferred_wizard_payload_ref? }` | `wizard.opened`, `wizard.deferred_payload.loaded` | Project finish screens, Dashboard, Planning Wizard deferred intake (legacy command alias) |"
+    },
+    {
+      "evidence_id": "EV-011",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 333,
+      "line_end": 344,
+      "quote": "| Command ID | Args schema (keys only) | Expected events | Affected surfaces |\n|---|---|---|---|\n| `cmd.file.new_file` | `{ project_id, parent_path, name }` | `file.created` | File Manager |\n| `cmd.file.new_folder` | `{ project_id, parent_path, name }` | `folder.created` | File Manager |\n| `cmd.file.rename` | `{ project_id, path, new_name }` | `file.renamed` or `folder.renamed` | File Manager, File Editor |\n| `cmd.file.delete` | `{ project_id, paths[] }` | `file.deleted` or `folder.deleted` | File Manager |\n| `cmd.file.copy_path` | `{ project_id, paths[], format?: \"absolute\"|\"relative\" }` | no persisted domain event (clipboard) | File Manager |\n| `cmd.file.copy_nodes` | `{ project_id, paths[] }` | no persisted domain event (clipboard intent) | File Manager |\n| `cmd.file.cut_nodes` | `{ project_id, paths[] }` | no persisted domain event (clipboard intent) | File Manager |\n| `cmd.file.paste_nodes` | `{ project_id, destination_path, mode?: \"copy\"|\"move\" }` | `file.copied` / `file.moved` / `folder.copied` / `folder.moved` | File Manager |\n| `cmd.file.open_with` | `{ project_id, path, target }` | no persisted domain event (navigation/open) | File Manager, File Editor, Preview surfaces |\n| `cmd.file.save_local_copy` | `{ project_id, paths[], destination_hint? }` | `file.exported` or `folder.exported` | File Manager |"
+    },
+    {
+      "evidence_id": "EV-012",
+      "path": "Plans/UI_Command_Catalog.md",
+      "line_start": 346,
+      "line_end": 352,
+      "quote": "Rules:\n- The File Manager command family uses stable snake-case operation names (`new_file`, `new_folder`, `copy_nodes`, `cut_nodes`, `paste_nodes`, `save_local_copy`) so menu labels can vary without changing dispatch identity.\n- `cmd.file.new_file` and `cmd.file.new_folder` are valid only for the project root or a folder target; `cmd.file.rename`, `cmd.file.delete`, and path-copy actions are valid for files or folders, with multi-select allowed only where the owner contract permits it.\n- `cmd.file.open_with` is PM-native for MVP editor and preview targets owned by FileManager §11.4.\n- The `cmd.file.open_with` MVP-native target enum is exactly `source_editor`, `image_viewer`, `workspace_preview`, `detached_preview`, and `diff_review`.\n- `system_default` is not part of this command's canonical MVP target enum. Future OS handoff must use a separate explicit command such as `cmd.file.open_in_system_default`.\n- `cmd.file.save_local_copy` is the explicit remote-to-local export command for file or folder nodes and remains separate from tree-node Copy / Cut / Paste."
+    }
+  ],
+  "scope_compliance": {
+    "allowed_files_read": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/validation/reviewer_protocol_v1.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-CC3C85D86FBD-0001.txt"
+    ],
+    "other_files_read": [],
+    "prior_audits_read": false,
+    "other_results_read": false,
+    "unrelated_windows_read": false,
+    "role_leakage": false
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-06",
+  "checkpoint_kind": "v2_recovery_prelaunch",
+  "observed_at": "2026-07-10T03:53:04.870168Z",
+  "validator_authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+  "validator_authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+  "frozen_validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+  "frozen_validator_sha256": "6df3b229ca48e028b5a88010574131c18208a1f0cad89dd2c1b92223abedb7e2",
+  "credited_assignment_ids_preserved": [
+    "A004-000006-ADVERSARIAL-WIN-7414C6C901F8-0001",
+    "A004-000042-ADVERSARIAL-WIN-ECB10B16CAAF-0001",
+    "A004-000052-ADVERSARIAL-WIN-E9F0FF594512-0001"
+  ],
+  "credited_assignment_count": 3,
+  "zero_credit_failed_attempt_count": 9,
+  "unique_agents_spawned_before_wave": 12,
+  "active_prelaunched_attempts": [
+    {
+      "assignment_id": "A004-000020-ADVERSARIAL-WIN-510B3DE676A3-0006",
+      "attempt": 3,
+      "agent_instance_id": "a004_r06_adv_000020_r3_ff43e531a9",
+      "agent_path": "/root/a004_r06_adv_000020_r3_ff43e531a9",
+      "dispatch_receipt_sha256": "3082310f733f63923d1006fb6716b4d1053a21d6083f7d988feec267efc89a08"
+    },
+    {
+      "assignment_id": "A004-000032-ADVERSARIAL-WIN-9AD3F0F54D94-0001",
+      "attempt": 4,
+      "agent_instance_id": "a004_r06_adv_000032_r4_906906e446",
+      "agent_path": "/root/a004_r06_adv_000032_r4_906906e446",
+      "dispatch_receipt_sha256": "b7745ede8e84f9d1865b4a34370009d7426cab82541e64a07bbcddfcb541f3ef"
+    },
+    {
+      "assignment_id": "A004-000070-ADVERSARIAL-WIN-BF7379C57A0F-0007",
+      "attempt": 3,
+      "agent_instance_id": "a004_r06_adv_000070_r3_ed5f749f8f",
+      "agent_path": "/root/a004_r06_adv_000070_r3_ed5f749f8f",
+      "dispatch_receipt_sha256": "c980df17b9cc8c1525f198f8a184295e6561c2974ef476e5058ab565d5a8406b"
+    }
+  ],
+  "unique_agents_spawned_after_prelaunch": 15,
+  "active_agent_count": 3,
+  "assignment_total": 212,
+  "uncredited_assignment_count": 209,
+  "prior_receipts_or_results_modified": false
+}

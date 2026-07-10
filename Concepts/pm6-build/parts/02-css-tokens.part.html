@@ -6,7 +6,7 @@
     .message.msg-focused .msg-body { border: 2px solid var(--accent-lime) !important; background: rgba(0, 255, 65, 0.15) !important; box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important; padding: var(--md) !important; margin: var(--xs) 0 !important; border-radius: 4px !important; color: var(--text-primary) !important; }
     [data-theme^="basic"] .message.msg-focused .msg-body { border-color: var(--accent-blue) !important; background: rgba(0, 71, 171, 0.1) !important; }
 
-    .role-badge { font-family: var(--display-font); font-size: 9px; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+    .role-badge { font-family: var(--display-font); font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
     .role-assistant { background: var(--accent-blue); color: #F5F0E8; }
     .role-interviewer { background: var(--accent-lime); color: #1a1a1a; }
     .role-builder { background: var(--accent-blue); color: var(--surface); }
@@ -322,9 +322,7 @@
       --elev-1: 0 2px 8px rgba(0,0,0,.28);
       --elev-2: 0 8px 24px rgba(0,0,0,.38);
       --elev-3: 0 16px 44px rgba(0,0,0,.46);
-      --glass-edge: rgba(255,255,255,.35);
-      --glass-hairline: rgba(255,255,255,.08);
-      --panel-blur: 16px;
+      /* --glass-edge / --glass-hairline / --panel-blur inherit :root (identical values; W3 duplicate prune) */
       --display-font: 'Inter', system-ui, sans-serif;
       --body-font: 'Inter', system-ui, sans-serif;
       --border-radius: 14px;
@@ -336,15 +334,6 @@
       --ease-default: var(--ease-out);
       --motion-med: 320ms;
       --sheen-dur: .7s;
-      /* legacy dual-tone palette (consumed by css-glass parts until W1 glass rewrite lands) */
-      --gd-teal: #2DD4BF;
-      --gd-teal-rgb: 45, 212, 191;
-      --gd-pink: #F472B6;
-      --gd-pink-rgb: 244, 114, 182;
-      --gd-panel-bevel-light: rgba(255, 255, 255, 0.14);
-      --gd-panel-bevel-shadow: rgba(0, 0, 0, 0.40);
-      --gd-chamfer: 14px;
-      --gd-chamfer-sm: 8px;
     }
 
     [data-theme="glass-light"] {
@@ -377,7 +366,6 @@
       --elev-3: 0 16px 44px rgba(40,55,90,.18);
       --glass-edge: rgba(255,255,255,.85);
       --glass-hairline: rgba(28,34,48,.08);
-      --panel-blur: 16px;
       --display-font: 'Inter', system-ui, sans-serif;
       --body-font: 'Inter', system-ui, sans-serif;
       --border-radius: 14px;
@@ -389,15 +377,6 @@
       --ease-default: var(--ease-out);
       --motion-med: 320ms;
       --sheen-dur: .7s;
-      /* legacy dual-tone palette (consumed by css-glass parts until W1 glass rewrite lands) */
-      --gl-teal: #0E7DD8;
-      --gl-teal-rgb: 14, 125, 216;
-      --gl-pink: #D6379B;
-      --gl-pink-rgb: 214, 55, 155;
-      --gl-panel-bevel-light: rgba(255, 255, 255, 0.55);
-      --gl-panel-bevel-shadow: rgba(0, 0, 0, 0.08);
-      --gl-chamfer: 14px;
-      --gl-chamfer-sm: 8px;
     }
 
     /* ====================================================================

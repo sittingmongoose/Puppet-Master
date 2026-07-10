@@ -1,0 +1,30 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "alert_id": "A004-PROTOCOL-ALERT-0003",
+  "recorded_by_thread_id": "019f4a04-5fe1-71f3-b992-e599aad3da5b",
+  "recorded_at": "2026-07-10T03:42:00Z",
+  "classification": "frozen_v2_fail_closed_undercredit_and_retry_incompatibility",
+  "severity": "high",
+  "affected_authority_ref": "validators/VALIDATOR_AUTHORITY_V2.json",
+  "affected_validator_ref": "validators/frozen/postrun_validator_v2.py",
+  "affected_validator_sha256": "6df3b229ca48e028b5a88010574131c18208a1f0cad89dd2c1b92223abedb7e2",
+  "evidence": {
+    "assignment_level_manifest_cardinality_check": "result_row_counts is keyed only by assignment_id and rejects any count other than one",
+    "contradicted_authority_rule": "A later fresh retry may qualify with a new attempt number and new identity while failed attempts remain immutable",
+    "consequence": "An assignment with one preserved failed manifest row plus one valid fresh-retry manifest row can never receive v2 credit.",
+    "crosscheck_gap": "The cross-check validates only the credited set reported by v2 and does not independently recompute omitted eligible attempts, so it cannot detect this under-credit.",
+    "missing_evidence_alias": "evidence_parts accepts quote, excerpt, exact_excerpt, and exact_quote but omits exact_text, a live runner output field for verbatim evidence.",
+    "credit_safety": "The defect is fail-closed; it does not invalidate the 17 assignments already reproduced by the independent cross-check."
+  },
+  "decision": {
+    "initial_17_credits_revoked": false,
+    "launch_packet_invalidation_required": false,
+    "v2_final_completion_authority": "requires_superseding_frozen_revision",
+    "required_fix": [
+      "Group result manifests and cardinality by normalized assignment plus attempt plus fresh identity, not assignment alone.",
+      "Independently recompute all eligible attempts in the cross-check rather than validating only the primary credited subset.",
+      "Normalize exact_text as an exact-evidence quote alias.",
+      "Preserve v2 and its evidence as immutable lineage."
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "assignment_gate_open": true,
+  "assurance_coverage_valid": false,
+  "audit_id": "audit-20260709-002-plan-assurance-windowed-blind-exhaustive",
+  "boundary_count": 1120,
+  "boundary_seam_reviewed_count": 0,
+  "complete": false,
+  "completion_blockers": [
+    "required_window_roles_not_complete",
+    "document_integrations_not_complete",
+    "seam_reviews_not_complete"
+  ],
+  "coverage_carry_forward": "none",
+  "crossing_semantic_block_count": 533,
+  "crossing_semantic_block_seam_reviewed_count": 0,
+  "documents": {
+    "classified": 142,
+    "in_scope_authoritative": 128,
+    "integrated": 0,
+    "seam_reviewed": 0,
+    "windowed": 128
+  },
+  "duplicate_agent_identity_count": 3,
+  "duplicate_agent_ids": [
+    "/root/window_worker_a",
+    "/root/window_worker_b",
+    "/root/window_worker_c"
+  ],
+  "duplicate_core_count": 0,
+  "forbidden_reuse": [
+    "assignments",
+    "results",
+    "claims",
+    "observations",
+    "candidate findings",
+    "role completion",
+    "coverage counts",
+    "integrations",
+    "seams",
+    "research",
+    "scenarios",
+    "shadow builders",
+    "mutations"
+  ],
+  "gap_count": 0,
+  "goal_continues_unchanged": true,
+  "hard_reset": true,
+  "interrupted_agent_ids": [
+    "/root/window_worker_a",
+    "/root/window_worker_b",
+    "/root/window_worker_c"
+  ],
+  "invalid_for_assurance_coverage": true,
+  "invalid_reason": "Substantive reviewer agent identities were reused across successive window/role assignments, violating the Fresh Agent Isolation Protocol.",
+  "invalidated_persisted_result_count": 5,
+  "invalidated_substantive_assignment_count": 11,
+  "lines": {
+    "authoritative": 434932,
+    "covered_by_exact_core": 434932,
+    "explicitly_dispositioned": 17258,
+    "total_source": 452190,
+    "unclassified": 0
+  },
+  "manifest_validation_passed": true,
+  "max_core_lines": 400,
+  "max_estimated_tokens": 12000,
+  "mechanical_lineage_reuse": "path census, hashes, and core-range manifest only, after independent source/hash/coverage revalidation",
+  "new_audit_id": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "old_audit_id": "audit-20260709-002-plan-assurance-windowed-blind-exhaustive",
+  "protocol_id": "hierarchical-document-sharding-v1",
+  "recycled_agent_count": 3,
+  "status": "SUPERSEDED_INVALID_AGENT_REUSE_FOR_ASSURANCE",
+  "substantive_coverage_credit": 0,
+  "superseded_at": "2026-07-10T02:19:17Z",
+  "superseded_by": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "token_estimate_method": "ceil(unicode_characters/3)",
+  "unique_reviewer_agent_count": 3,
+  "unreviewed_window_count": 1246,
+  "valid_integrated_document_count": 0,
+  "valid_reviewed_window_count": 0,
+  "valid_seam_review_count": 0,
+  "valid_substantive_assignment_count": 0,
+  "valid_substantive_result_count": 0,
+  "windows": {
+    "adversarial_role_complete": 2,
+    "both_required_roles_complete": 2,
+    "contract_role_complete": 3,
+    "specialist_assignments": 0,
+    "total_authoritative": 1248,
+    "unreviewed_authoritative": 1246
+  }
+}

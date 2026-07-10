@@ -1,0 +1,21 @@
+{
+  "assignment_id": "A004-000107-EXACT-WIN-1BF0967E88A5-0083",
+  "attempt_id": "A004-000107-EXACT-WIN-1BF0967E88A5-0083-attempt-002",
+  "errors": [
+    "exact_evidence_refs[19] quote mismatch",
+    "candidate_findings[0].evidence_refs[1] quote mismatch"
+  ],
+  "evidence_reference_count": 82,
+  "result_bytes": 46416,
+  "result_ref": "raw_results/A004-000107-EXACT-WIN-1BF0967E88A5-0083-attempt-002.json",
+  "result_sha256": "cdf78455884d69fc4dbe6e58176876328122ff952c6aa5f78a7c16ebc01dbce0",
+  "status": "fail",
+  "validation_passed": false,
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-03",
+  "coverage_credit": 0,
+  "validator_authority_ref": "validators/VALIDATOR_AUTHORITY_V2.json",
+  "validator_authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+  "candidate_validator_ref": "runners/runner-03/validation/validate_candidate_v2.py",
+  "validated_at": "2026-07-10T04:06:00Z"
+}

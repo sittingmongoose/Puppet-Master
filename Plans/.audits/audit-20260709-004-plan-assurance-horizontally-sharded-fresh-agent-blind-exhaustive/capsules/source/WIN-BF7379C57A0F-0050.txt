@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 18314-18325 >>>
+preserved_exact_tokens:
+  - "chat.thread_worktree_bound"
+  - "chat.thread_worktree_unbound"
+  - "git worktree list"
+  - "reason=path_missing"
+negative_constraints:
+  - "Missing worktrees must not be silently re-created."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 18326-18684 >>>
+### ACD-329 - Worktree Aware File Identity
+
+```yaml
+plan_unit_id: ACD-329
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  File identity for chat/debug/Source Control/GitHub pivots is `{ repo_id,
+  worktree_id, relative_path }`; turn start freezes
+  `execution_unit_context.worktree_id` and `working_directory`; historical cards
+  remain pinned.
+gui_related: false
+gui_classification_reason: Worktree-aware file identity and turn-start freezing are runtime/contract behavior.
+depends_on: [ACD-326]
+unblocks: [ACD-330, ACD-367]
+acceptance_criteria:
+  - Worktree-aware file identity uses repo, worktree, and relative path.
+  - Turn start freezes worktree ID and working directory for the whole turn.
+  - Historical cards, receipts, and debug evidence remain pinned to captured worktree identity.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_identity
+reasoning_tier: high
+context_scope: contracts
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/GitHub_Integration.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: worktree_aware_file_identity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+preserved_exact_tokens:
+  - "{ repo_id, worktree_id, relative_path }"
+  - "execution_unit_context.worktree_id"
+  - "working_directory"
+  - "HEAD_sha"
+negative_constraints:
+  - "Path alone is not sufficient."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+### ACD-330 - Mode Worktree Invariant
+
+```yaml
+plan_unit_id: ACD-330
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Worktree binding is thread-level and orthogonal to Ask, Agent, Debug, Plan,
+  and Deep Plan; mode transitions do not rebind, unbind, or change frozen
+  `working_directory` for an in-flight turn.
+gui_related: false
+gui_classification_reason: Mode/worktree orthogonality is runtime invariant behavior.
+depends_on: [ACD-329]
+unblocks: []
+acceptance_criteria:
+  - Mode transitions never rebind, unbind, or change frozen working directory for an in-flight turn.
+  - The next turn observes the same bound worktree unless the user explicitly changes binding.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: run_modes
+reasoning_tier: high
+context_scope: worktrees
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: mode_worktree_invariant
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0149
+preserved_exact_tokens:
+  - "Mode-worktree invariant"
+  - "working_directory"
+negative_constraints:
+  - "Mode transitions never mutate worktree binding."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-331 - Create Worktree Dialog Surface
+
+```yaml
+plan_unit_id: ACD-331
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Create Worktree dialog opens from `Create Worktree…`, with Branch name and Base ref fields, defaults, validation, and `Create`/`Cancel` buttons.
+gui_related: true
+gui_classification_reason: Create Worktree dialog fields, defaults, validation, and buttons are visible UI.
+depends_on: [ACD-324]
+unblocks: [ACD-332]
+acceptance_criteria:
+  - "`Create Worktree…` opens a dialog with Branch name and Base ref fields."
+  - Branch name and Base ref defaults and validation match the source span.
+  - Dialog exposes `Create` and `Cancel` buttons.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_create
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: create_worktree_dialog_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+preserved_exact_tokens:
+  - "Create Worktree…"
+  - "assistant/thread-<short_id>"
+  - "branching.assistant_worktree_base_ref"
+  - "branching.base_branch"
+  - "Create"
+  - "Cancel"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-332 - Worktree Create Backend Transaction
+
+```yaml
+plan_unit_id: ACD-332
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Backend create flow calls
+  `WorktreeManager::create_worktree(branch_name, base_ref, worktree_path)`,
+  writes `worktree_record`, writes thread binding, emits
+  `chat.thread_worktree_bound`, and uses the generated
+  `.puppet-master/worktrees/thread-{short_id}` path with numeric suffixes.
+gui_related: false
+gui_classification_reason: Worktree creation backend transaction is storage/runtime behavior.
+depends_on: [ACD-331]
+unblocks: [ACD-333, ACD-334]
+acceptance_criteria:
+  - Backend creates worktrees through `WorktreeManager::create_worktree`.
+  - Successful creation writes worktree record and thread binding and emits the bound event.
+  - Auto-generated worktree paths use the thread short-id path and numeric suffixes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_create
+reasoning_tier: high
+context_scope: storage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: worktree_create_backend_transaction
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+preserved_exact_tokens:
+  - "WorktreeManager::create_worktree(branch_name, base_ref, worktree_path)"
+  - "chat.thread_worktree_bound"
+  - "thread-{short_id}-2"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-333 - Create Worktree Dialog Result States
+
+```yaml
+plan_unit_id: ACD-333
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Create dialog success closes and updates bound state/thread selector; failure
+  keeps dialog open with inline error; branch collision warning is advisory with
+  `Create Anyway` and `Use Different Branch`; loading disables dropdown/create
+  button and shows `Creating…`.
+gui_related: true
+gui_classification_reason: Create Worktree success, failure, warning, and loading states are visible dialog UI.
+depends_on: [ACD-332]
+unblocks: []
+acceptance_criteria:
+  - Successful create closes the dialog and updates button and thread selector state.
+  - Failure keeps the dialog open with inline error and allows retry or cancel.
+  - Branch collision warning and loading states match the specified copy and buttons.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_create
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: create_worktree_dialog_result_states
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+preserved_exact_tokens:
+  - "Branch already exists"
+  - "Create Anyway"
+  - "Use Different Branch"
+  - "Creating…"
+negative_constraints:
+  - "Branch name collision warning is advisory only."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-334 - Worktree Creation Tool Boundary
+
+```yaml
+plan_unit_id: ACD-334
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Worktree creation/removal entrypoints are user-initiated or system-initiated by auto-create; the AI agent never invokes worktree creation/removal as a direct tool call.
+gui_related: false
+gui_classification_reason: Tool-call boundary is command/runtime behavior.
+depends_on: [ACD-332]
+unblocks: [ACD-335]
+acceptance_criteria:
+  - Worktree creation/removal starts from chat header dropdown, slash command, Source Control action, or auto-create setting.
+  - AI agents do not directly invoke worktree creation/removal as tools.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tool_boundary
+reasoning_tier: high
+context_scope: worktrees
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: worktree_creation_tool_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0150
+preserved_exact_tokens:
+  - "chat header dropdown"
+  - "slash command"
+  - "Source Control action"
+negative_constraints:
+  - "The AI agent never invokes worktree creation or removal as a direct tool call."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-335 - Assistant Auto Worktree Creation
+
+```yaml
+plan_unit_id: ACD-335
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: When `branching.assistant_auto_worktree` is true, new thread creation synchronously creates a worktree before first turn dispatch; failure creates the thread without a worktree and warns the user.
+gui_related: false
+gui_classification_reason: Auto-create timing is chat runtime behavior.
+depends_on: [ACD-326]
+unblocks: [ACD-336, ACD-337, ACD-338]
+acceptance_criteria:
+  - New thread creation checks `branching.assistant_auto_worktree`.
+  - Auto-create happens before first turn dispatch when enabled.
+  - Failure leaves the thread without a worktree and warns the user.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_auto_create
+reasoning_tier: high
+context_scope: chat_runtime
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: assistant_auto_worktree_creation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0151
+preserved_exact_tokens:
+  - "branching.assistant_auto_worktree"
+  - "cmd.chat.new"
+  - "Could not create worktree: {error}. Thread will use project root."
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-336 - Auto Worktree Title Rename
+
+```yaml
+plan_unit_id: ACD-336
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Title rename flow sanitizes generated titles, targets
+  `assistant/<sanitized_title>`, appends numeric suffixes silently, renames the
+  branch, updates records, emits `chat.thread_worktree_renamed`, and keeps the
+  temp name on failure.
+gui_related: false
+gui_classification_reason: Auto title rename is branch/runtime storage behavior.
+depends_on: [ACD-335]
+unblocks: [ACD-337]
+acceptance_criteria:
+  - Title generation sanitizes branch names using the specified examples and fallback.
+  - Existing target branch names receive numeric suffixes silently.
+  - Successful rename updates records and emits `chat.thread_worktree_renamed`; failure keeps the temp name without user interruption.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_auto_create
+reasoning_tier: high
+context_scope: chat_runtime
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: auto_worktree_title_rename
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0151
+preserved_exact_tokens:
+  - "Fix Auth Bug"
+  - "users-login-v2"
+  - "thread-a1b2c3d4"
+  - "assistant/<sanitized_title>"
+  - "chat.thread_worktree_renamed"
+negative_constraints:
+  - "Auto-create title suffixing uses no user dialog."
+  - "Rename failure keeps the temp name with no user interruption."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 18685-18696 >>>
+### ACD-337 - Auto Worktree Runtime Ownership
+
+```yaml
+plan_unit_id: ACD-337
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat runtime owns auto-create; Executor never invokes `WorktreeManager`
+  directly; create is serialized per project and reverse lookup write is atomic;
+  race failures retry with the next suffix, while non-race failures do not retry.
+gui_related: false

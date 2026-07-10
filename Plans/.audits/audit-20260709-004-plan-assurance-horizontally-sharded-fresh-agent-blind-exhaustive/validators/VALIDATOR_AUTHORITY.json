@@ -1,0 +1,22 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "authority_version": 1,
+  "source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753",
+  "original_ready_evidence": {
+    "ready_sha256": "aa353b8f33dfda7c2695d7325e843deb169a67b0d4d96778214c2e6674681b4c",
+    "validator_result_sha256": "488f0b2de1928b5e385103d7f68acebb29e1109ed35d80430c4a8c099181f1cb",
+    "executable_provenance": "incomplete_not_retroactively_repaired"
+  },
+  "supplemental_static_validator": {
+    "path": "validators/frozen/prelaunch_validator_supplement_v2.py",
+    "sha256": "990183a63308f3653cb61032da756dae14500d61a3101ea4854dee10afedd13c",
+    "authority": "non_retroactive_supplement"
+  },
+  "postrun_validator": {
+    "path": "validators/frozen/postrun_validator_v1.py",
+    "sha256": "72ba0e669253fcdd070e5d9f2691208ed82292363d85a230f5fdae6217b4aeeb",
+    "authority": "required_for_all_result_coverage_and_document_window_phase_completion"
+  },
+  "old_wrapper_sha256": "85a7813e430d7f09554e5d5bf4a3cd860578dce16962a0be93960522f9d00d3a",
+  "old_wrapper_authority": "deprecated_lineage_only"
+}

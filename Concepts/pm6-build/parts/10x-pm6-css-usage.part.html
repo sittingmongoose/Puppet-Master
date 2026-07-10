@@ -1,0 +1,24 @@
+<style id="pm6-css-usage">
+    /* ============================================================
+       PMConcept6 — Usage page additions (owner: usage agent)
+       Value-state chips + no-reading quota rows (addendum PM173).
+       The widget CSS itself lives in part 18's embedded style block
+       (that part stays whole); this block carries only the addendum
+       additions so they cascade in every theme. Token-only.
+       ============================================================ */
+    .pm6-usage-chip.pm6-usage-vs{margin-left:4px;vertical-align:1px;text-transform:none}
+    .pm6-usage-vs.vs-measured{background:color-mix(in srgb,var(--accent-lime) 14%,transparent);color:var(--accent-lime)}
+    .pm6-usage-vs.vs-estimated{background:color-mix(in srgb,var(--accent-orange) 14%,transparent);color:var(--accent-orange)}
+    .pm6-usage-vs.vs-stale{background:color-mix(in srgb,var(--accent-orange) 9%,transparent);color:var(--accent-orange);border:1px dashed color-mix(in srgb,var(--accent-orange) 55%,transparent)}
+    .pm6-usage-vs.vs-unknown{background:color-mix(in srgb,var(--text-muted) 12%,transparent);color:var(--text-secondary);border:1px dashed color-mix(in srgb,var(--text-muted) 45%,transparent)}
+    .pm6-usage-vs.vs-disabled{background:transparent;color:var(--text-muted);border:1px solid var(--border-light)}
+    .pm6-usage-vs.vs-not-exposed{background:color-mix(in srgb,var(--accent-blue) 10%,transparent);color:var(--accent-blue)}
+    .pm6-usage-vs.vs-hidden-byok,.pm6-usage-vs.vs-hidden-subscription{background:color-mix(in srgb,var(--accent-magenta) 12%,transparent);color:var(--accent-magenta)}
+    .pm6-usage-qbars-none{font-size:var(--fs-2xs);color:var(--text-muted);font-style:italic;display:flex;align-items:center;min-height:15px}
+    .pm6-usage-qrow-nv .pm6-usage-qname{color:var(--text-secondary)}
+    /* theme accents for the new chips (friendly-dark is the default look above) */
+    [data-theme^="retro"] .pm6-usage-vs{border-radius:2px}
+    [data-theme^="retro"] .pm6-usage-qbars-none{font-style:normal}
+    [data-theme^="glass"] .pm6-usage-vs.vs-disabled{border-color:var(--glass-hairline)}
+    [data-theme^="basic"] .pm6-usage-vs{font-weight:600}
+  </style>

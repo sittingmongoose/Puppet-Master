@@ -1,0 +1,617 @@
+<script id="pm6-js-panels">
+/* pm6-js-panels — shell chrome + side panels wiring.
+   Registers panel actions on PM_DEMO, renders live state (git / docker /
+   artifacts / notifications) from PM_DEMO events, drives the breadcrumb,
+   activity-bar page icons, docker subview chips, worktree row expansion,
+   theme persistence and the depth-background pointer parallax. */
+(function () {
+  'use strict';
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function byId(id) { return document.getElementById(id); }
+  function safeToast(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+  function demo() { return window.PM_DEMO || null; }
+
+  /* ================= action registrations ================= */
+  function regActions() {
+    var D = demo();
+    if (!D || !D.actions || !D.actions.register) return false;
+    var reg = function (id, fn) { try { D.actions.register(id, fn); } catch (e) {} };
+    var argOf = function (ctx) { return ctx && ctx.arg != null ? String(ctx.arg) : ''; };
+
+    /* open a side panel (optionally with a docker subview): "panel-docker:publish" */
+    reg('panels.show', function (ctx) {
+      var a = argOf(ctx).split(':');
+      var icon = $('.activity-bar .icon[data-target="' + a[0] + '"]');
+      var view = byId(a[0]);
+      if (!view) return { toast: 'That panel is not in this build.' };
+      $all('.side-panel-view').forEach(function (v) { v.classList.remove('active'); });
+      view.classList.add('active');
+      $all('.activity-bar .icon[data-target]').forEach(function (i) { i.classList.remove('active'); });
+      if (icon) icon.classList.add('active');
+      var slot = byId('sidePanelSlot');
+      if (slot) slot.classList.remove('hidden');
+      if (a[0] === 'panel-docker' && a[1]) showDockerView(a[1]);
+      return { ok: true };
+    });
+
+    reg('panels.open_chat', function () {
+      var chatIcon = $('.activity-bar .icon[title="Chat"]');
+      var chatPanel = byId('chatPanel');
+      if (chatPanel && chatPanel.classList.contains('hidden') && chatIcon) chatIcon.click();
+      else if (!chatPanel && chatIcon) chatIcon.click();
+      else safeToast('Chat panel is already open.');
+      return { ok: true };
+    });
+
+    reg('panels.git_commit', function () {
+      var D2 = demo();
+      var input = byId('scCommitMsg');
+      var msg = input && input.value ? input.value.trim() : '';
+      if (!msg) return { toast: 'Type a commit message — or let AI draft one.' };
+      var res = D2 && D2.git && D2.git.commit ? D2.git.commit(msg) : { toast: 'Demo engine still loading.' };
+      if (res && res.ok && input) input.value = '';
+      return res;
+    });
+
+    reg('panels.docker_view', function (ctx) {
+      showDockerView(argOf(ctx) || 'containers');
+      return { ok: true };
+    });
+
+    reg('panels.art_filter', function (ctx) {
+      var f = argOf(ctx) || 'all';
+      $all('#panel-artifacts .pm6-art-filters .pm6-dm-chip').forEach(function (c) {
+        c.classList.toggle('active', (c.dataset.demoArg || 'all') === f);
+      });
+      $all('#panel-artifacts [data-pm6-art-family]').forEach(function (r) {
+        r.style.display = (f === 'all' || r.getAttribute('data-pm6-art-family') === f) ? '' : 'none';
+      });
+      return { ok: true };
+    });
+
+    reg('panels.ack', function (ctx) {
+      var row = $('#pm6NotifyList [data-notify=' + JSON.stringify(argOf(ctx)) + ']');
+      if (!row) return { toast: 'Alert already handled.' };
+      if (row.classList.contains('pm6-acked')) return { disabled: true, reason: 'already_done' };
+      row.classList.add('pm6-acked');
+      var chip = row.querySelector('.pm6-chip');
+      if (chip) { chip.textContent = 'acknowledged'; chip.className = 'pm6-chip'; }
+      refreshNotifyState();
+      return { toast: 'Acknowledged — it stays in the log.' };
+    });
+
+    reg('panels.snooze', function (ctx) {
+      var row = $('#pm6NotifyList [data-notify=' + JSON.stringify(argOf(ctx)) + ']');
+      if (!row) return { toast: 'Alert already handled.' };
+      if (row.classList.contains('pm6-acked')) return { disabled: true, reason: 'already_done' };
+      row.classList.add('pm6-acked');
+      var chip = row.querySelector('.pm6-chip');
+      if (chip) { chip.textContent = 'snoozed 1h'; chip.className = 'pm6-chip'; }
+      refreshNotifyState();
+      return { toast: 'Snoozed — it returns in an hour (demo clock).' };
+    });
+
+    reg('panels.test_run', function () {
+      var btn = byId('pm6TestRunBtn');
+      if (btn && btn.dataset.pm6Busy) return { disabled: true, reason: 'busy' };
+      if (btn) { btn.dataset.pm6Busy = '1'; btn.textContent = 'Running…'; }
+      var chip = byId('pm6TestChip');
+      if (chip) { chip.textContent = 'running'; chip.className = 'pm6-chip pm6-chip-warn'; }
+      try {
+        var D2 = demo();
+        if (D2 && D2.term && D2.term.streamTo) {
+          D2.term.streamTo('ts-sess-alpha', [
+            '$ cargo test --workspace',
+            '   Compiling tastebook v0.4.2',
+            'running 214 tests ...',
+            'test result: ok. 214 passed; 0 failed; finished in 3.41s'
+          ], 700);
+        }
+      } catch (e) {}
+      setTimeout(function () {
+        if (chip) { chip.textContent = '214 passed'; chip.className = 'pm6-chip pm6-chip-ok'; }
+        var when = byId('pm6TestWhen');
+        if (when) when.textContent = 'just now · manual run';
+        if (btn) { delete btn.dataset.pm6Busy; btn.textContent = 'Run Tests'; }
+        safeToast('cargo test green — 214 passed, receipt filed to Runtime Artifacts');
+      }, 3400);
+      return { ok: true };
+    });
+
+    reg('panels.debug_start', function () {
+      var sel = byId('pm6RunConfig');
+      var cfg = sel ? sel.value : 'cargo run';
+      var st = byId('pm6RunState');
+      if (st) { st.textContent = 'Launching'; st.className = 'pm6-chip pm6-chip-warn'; }
+      try {
+        var D2 = demo();
+        if (D2 && D2.term && D2.term.streamTo) {
+          D2.term.streamTo('ts-sess-alpha', ['$ ' + cfg, 'DAP session on :54112 (1 session / project)', 'breakpoint set: import.rs:58'], 600);
+        }
+      } catch (e) {}
+      setTimeout(function () {
+        if (st) { st.textContent = 'Paused at breakpoint'; st.className = 'pm6-chip pm6-chip-warn'; }
+      }, 2200);
+      return { toast: 'Debug session starting: ' + cfg };
+    });
+
+    return true;
+  }
+
+  /* ================= docker subviews + containers ================= */
+  function showDockerView(name) {
+    $all('#panel-docker [data-pm6-dm-view]').forEach(function (v) {
+      v.classList.toggle('pm6-hidden', v.getAttribute('data-pm6-dm-view') !== name);
+    });
+    $all('#panel-docker .pm6-dm-chips .pm6-dm-chip').forEach(function (c) {
+      c.classList.toggle('active', c.dataset.demoArg === name);
+    });
+  }
+
+  function renderContainers() {
+    var host = byId('pm6DmContainers');
+    var D = demo();
+    if (!host) return;
+    var list = (D && D.state && D.state.docker && D.state.docker.containers) || [];
+    if (!list.length) { host.innerHTML = '<div class="pm6-sp-note">No containers — runtime detected but nothing is defined yet.</div>'; return; }
+    var running = 0, exited = 0, restarting = 0;
+    var html = list.map(function (c) {
+      var dot = 'pm6-dot-idle', chip = 'pm6-chip', label = c.state;
+      if (c.state === 'running') { dot = 'pm6-dot-ok'; chip = 'pm6-chip pm6-chip-ok'; running++; }
+      else if (c.state === 'exited') { dot = 'pm6-dot-err'; chip = 'pm6-chip'; exited++; label = 'exited' + (c.exitCode != null ? ' (' + c.exitCode + ')' : ''); }
+      else if (c.state === 'restarting') { dot = 'pm6-dot-run'; chip = 'pm6-chip pm6-chip-warn'; restarting++; }
+      var canStart = c.state !== 'running';
+      var canStop = c.state === 'running' || c.state === 'restarting';
+      return '' +
+        '<div class="pm6-dm-ct" data-ct="' + c.id + '">' +
+          '<span class="pm6-status-dot ' + dot + '">●</span>' +
+          '<span class="pm6-dm-ct-name"><span>' + c.name + '</span>' +
+            '<span class="pm6-dm-ct-meta">' + c.image + (c.ports ? ' · ' + c.ports : '') + '</span></span>' +
+          '<span class="' + chip + '">' + label + '</span>' +
+          '<span class="pm6-sc-acts">' +
+            (canStart
+              ? '<button class="pm6-sp-minibtn" data-demo-action="docker.start" data-demo-arg="' + c.id + '" title="Start">▸</button>'
+              : '<button class="pm6-sp-minibtn" aria-disabled="true" data-demo-reason="already_done" title="Already running">▸</button>') +
+            (canStop
+              ? '<button class="pm6-sp-minibtn" data-demo-action="docker.stop" data-demo-arg="' + c.id + '" title="Stop">✕</button>'
+              : '<button class="pm6-sp-minibtn" aria-disabled="true" data-demo-reason="already_done" title="Already stopped">✕</button>') +
+            '<button class="pm6-sp-minibtn" data-demo-action="docker.logs" data-demo-arg="' + c.id + '" title="Logs">⋮</button>' +
+          '</span>' +
+        '</div>';
+    }).join('');
+    host.innerHTML = html;
+    var count = byId('pm6DmCount');
+    if (count) count.textContent = running + ' running · ' + exited + ' exited · ' + restarting + ' restarting';
+  }
+
+  function renderCompose(payload) {
+    var host = byId('pm6DmCompose');
+    if (!host || !payload || !payload.services) return;
+    Object.keys(payload.services).forEach(function (svc) {
+      var row = host.querySelector('[data-svc="' + svc + '"] .pm6-status-dot');
+      if (row && payload.services[svc] === 'running') { row.className = 'pm6-status-dot pm6-dot-ok'; }
+    });
+  }
+
+  function renderChain(pc) {
+    var chain = byId('pm6DmChain');
+    if (!chain || !pc) return;
+    var set = function (stage, text, cls, done) {
+      var el = chain.querySelector('[data-stage="' + stage + '"]');
+      if (!el) return;
+      var chip = el.querySelector('[data-role="state"]');
+      if (chip) { chip.textContent = text; chip.className = 'pm6-chip ' + (cls || ''); }
+      el.classList.toggle('done', !!done);
+    };
+    set('build', pc.built ? 'built ' + (pc.digest ? String(pc.digest).slice(0, 14) + '…' : '') : 'pending', pc.built ? 'pm6-chip-ok' : '', pc.built);
+    set('push', pc.pushedImage ? 'pushed ' + pc.tag : (pc.built ? 'ready' : 'pending'), pc.pushedImage ? 'pm6-chip-ok' : '', pc.pushedImage);
+    set('hub', 'exists', 'pm6-chip-ok', true);
+    var tmpl = pc.template || 'unknown';
+    set('template', tmpl, (tmpl === 'ready_to_push' || tmpl === 'pushed' || tmpl === 'clean') ? 'pm6-chip-ok' : (tmpl === 'dirty' ? 'pm6-chip-warn' : ''), tmpl === 'pushed');
+    set('unraid', pc.pushedTemplate ? 'template live' : 'waiting', pc.pushedTemplate ? 'pm6-chip-ok' : '', pc.pushedTemplate);
+    var digest = byId('pm6DmDigest');
+    if (digest) digest.textContent = pc.digest ? pc.digest : '— not built yet';
+    var mirror = byId('pm6UnraidMirror');
+    if (mirror) { mirror.textContent = tmpl; mirror.className = 'pm6-chip ' + (tmpl === 'dirty' ? 'pm6-chip-warn' : 'pm6-chip-ok'); }
+  }
+
+  /* ================= git renders ================= */
+  function fileRow(f, staged) {
+    var act = staged
+      ? '<button class="pm6-sp-minibtn" title="Unstage" data-demo-action="demo.toast" data-demo-arg="cmd.git.unstage_hunks → ' + f + '">-</button>'
+      : '<button class="pm6-sp-minibtn" title="Stage" data-demo-action="git.stage" data-demo-arg="' + f + '">+</button>';
+    return '<div class="pm6-sc-file">' +
+      '<span class="pm6-sc-fname" data-demo-action="demo.toast" data-demo-arg="cmd.git.open_diff → ' + f + '">' + f +
+      ' <span class="git-status ' + (staged ? 'pm6-gs-staged' : 'pm6-gs-mod') + '">M</span></span>' +
+      '<span class="pm6-sc-acts">' + act +
+      '<button class="pm6-sp-minibtn pm6-danger" title="Discard" data-demo-action="demo.toast" data-demo-arg="cmd.git.discard_hunks → ' + f + ' (confirm required)">✕</button></span></div>';
+  }
+
+  function renderGitChanges() {
+    var D = demo();
+    var g = D && D.state && D.state.git;
+    if (!g) return;
+    var stagedHost = byId('pm6ScStaged'), unstagedHost = byId('pm6ScUnstaged');
+    if (stagedHost && Array.isArray(g.staged)) {
+      stagedHost.innerHTML = g.staged.length
+        ? g.staged.map(function (f) { return fileRow(f, true); }).join('')
+        : '<div class="pm6-sp-note">Nothing staged.</div>';
+    }
+    if (unstagedHost && Array.isArray(g.unstaged)) {
+      unstagedHost.innerHTML = g.unstaged.length
+        ? g.unstaged.map(function (f) { return fileRow(f, false); }).join('')
+        : '<div class="pm6-sp-note">Working tree clean.</div>';
+    }
+    var sc = byId('pm6ScStagedCount'); if (sc && g.staged) sc.textContent = g.staged.length;
+    var uc = byId('pm6ScUnstagedCount'); if (uc && g.unstaged) uc.textContent = g.unstaged.length;
+    var counts = byId('pm6ScCounts');
+    if (counts && g.staged && g.unstaged) counts.textContent = g.staged.length + ' staged, ' + g.unstaged.length + ' unstaged';
+  }
+
+  function renderPr(pr) {
+    if (!pr) return;
+    var prLine = byId('pm6ScPr');
+    if (prLine) {
+      prLine.textContent = pr.id + ' · ' + pr.state + ' · ' +
+        pr.checks.filter(function (c) { return c.state === 'success'; }).length + '/' + pr.checks.length + ' checks green';
+    }
+    var checks = byId('pm6GhChecks');
+    if (checks) {
+      checks.innerHTML = pr.checks.map(function (c) {
+        var cls = c.state === 'success' ? 'pm6-chip-ok' : (c.state === 'running' ? 'pm6-chip-warn' : '');
+        var dot = c.state === 'success' ? 'pm6-dot-ok' : (c.state === 'running' ? 'pm6-dot-run' : 'pm6-dot-idle');
+        return '<div class="pm6-gh-run"><span class="pm6-status-dot ' + dot + '">●</span>' +
+          '<span class="pm6-gh-run-name">' + c.id + ' <span class="pm6-sp-row-meta">' + pr.id + ' · ' + pr.branch + '</span></span>' +
+          '<span class="pm6-chip ' + cls + '">' + c.state + '</span></div>';
+      }).join('') + (pr.state === 'merged' ? '<div class="pm6-sp-note">PR #88 merged into main — publish chain is next.</div>' : '');
+    }
+  }
+
+  function renderActionsRun(run) {
+    if (!run) return;
+    if (run.id === 'wf-310') {
+      var chip = byId('pm6GhRun310Chip');
+      var row = $('#pm6GhRuns [data-run="wf-310"] .pm6-status-dot');
+      var triage = byId('pm6GhTriage');
+      if (chip) {
+        chip.textContent = run.status;
+        chip.className = 'pm6-chip ' + (run.status === 'success' ? 'pm6-chip-ok' : (run.status === 'failed' ? 'pm6-chip-err' : 'pm6-chip-warn'));
+      }
+      if (row) row.className = 'pm6-status-dot ' + (run.status === 'success' ? 'pm6-dot-ok' : (run.status === 'failed' ? 'pm6-dot-err' : 'pm6-dot-run'));
+      if (triage && run.status === 'success') triage.style.display = 'none';
+      var ready = byId('pm6GhReadiness');
+      if (ready && run.status === 'success') ready.textContent = '3 of 3 recent runs green';
+    }
+  }
+
+  function renderAuth(payload) {
+    var box = byId('pm6GhDevice');
+    if (!box || !payload) return;
+    if (payload.code) {
+      box.classList.add('active');
+      box.innerHTML = 'Enter this code at <span class="pm6-mono">' + (payload.uri || 'github.com/login/device') + '</span>' +
+        '<span class="pm6-gh-code">' + payload.code + '</span>' +
+        '<span class="pm6-sp-footnote">Polling for authorization… scopes: ' + (payload.scopes || []).join(', ') + '</span>';
+    } else if (payload.state === 'polling') {
+      var f = box.querySelector('.pm6-sp-footnote');
+      if (f) f.textContent = 'Polling for authorization' + new Array((payload.tick || 0) % 4 + 1).join('.') + '…';
+    } else if (payload.state === 'success') {
+      box.classList.add('active');
+      box.innerHTML = '<span class="pm6-chip pm6-chip-ok">connected</span> workflow scope granted — requested = effective: jared-dev';
+      var scopes = byId('pm6GhScopes');
+      if (scopes) scopes.textContent = 'repo, read:user, user:email, workflow';
+      var note = byId('pm6GhScopeNote');
+      if (note) note.innerHTML = '<span class="pm6-chip pm6-chip-ok">✓</span> all scopes present — dispatch enabled.';
+      $all('.pm6-gh-dispatch').forEach(function (b) {
+        b.removeAttribute('disabled');
+        b.setAttribute('aria-disabled', 'false');
+        delete b.dataset.demoReason;
+        b.dataset.demoAction = 'demo.toast';
+        b.dataset.demoArg = 'cmd.github.actions.dispatch → workflow_dispatch form (ref: main)';
+        b.title = 'Dispatch this workflow';
+      });
+      var dn = byId('pm6GhDispatchNote');
+      if (dn) dn.textContent = 'Dispatch enabled — workflow scope granted.';
+    }
+  }
+
+  function renderAiSpinner(payload) {
+    var spin = byId('pm6AiSpin');
+    var input = byId('scCommitMsg');
+    if (!spin) return;
+    if (payload && payload.state === 'thinking') {
+      spin.classList.add('active');
+      if (input) input.placeholder = 'AI drafting a conventional commit…';
+    } else {
+      spin.classList.remove('active');
+      if (input) input.placeholder = 'Commit message...';
+    }
+  }
+
+  /* ================= runtime artifacts (live rows) =================
+     Live api_web_call rows append here from runtime_artifact.created (research
+     run + every PM_DEMO.web.start run: search/fetch/extract/research/crawl/map).
+     Compact 5-item cap, newest first; row click routes to the owning surface as
+     a route-open receipt toast. */
+  function renderLiveArtifact(payload) {
+    var host = byId('pm6ArtLive');
+    if (!host || !payload || !payload.artifact) return;
+    var a = payload.artifact;
+    if (host.querySelector('[data-pm6-art-id="' + a.id + '"]')) return; /* idempotent per artifact */
+    var empty = host.querySelector('.pm6-art-empty');
+    if (empty) empty.remove();
+    var canceled = a.state === 'canceled' || a.partial;
+    var stateChip = canceled
+      ? '<span class="pm6-chip pm6-chip-warn">canceled · partial' + (a.pages != null ? ' (' + a.pages + ' pages)' : '') + '</span>'
+      : '<span class="pm6-chip pm6-chip-ok">' + (a.state || 'completed') + (a.pages != null ? ' · ' + a.pages + ' pages' : '') + '</span>';
+    var cits = (a.citations || []).map(function (c) {
+      return '<span class="pm6-chip">[' + c.n + '] ' + (c.source_confidence || 'unknown') + '</span>';
+    }).join('');
+    var row = document.createElement('div');
+    row.className = 'pm6-art-row pm6-art-typed pm6-enter-up';
+    row.setAttribute('data-pm6-art-family', 'web');
+    row.setAttribute('data-pm6-art-id', a.id || '');
+    row.setAttribute('data-demo-action', 'demo.toast');
+    row.setAttribute('data-demo-arg', 'Route-open receipt: ' + (a.id || 'artifact') + ' routes to its owning surface (Chat operation card). Payload lazy-loads from the artifact ref.');
+    row.innerHTML =
+      '<div class="pm6-art-l1"><span class="pm6-chip pm6-fam pm6-fam-web">' + (a.type || 'api_web_call') + '</span>' +
+        '<span class="pm6-art-label">' + (a.label || 'Web operation') + '</span>' + stateChip + '</div>' +
+      '<div class="pm6-art-prev">' + (a.command || '') + ' · provider ' + (a.provider || '—') +
+        (a.fallback_path ? ' · fallback ' + a.fallback_path : ' · no fallback') + '</div>' +
+      '<div class="pm6-art-meta">' + (a.source_count || 0) + ' sources · cache ' + (a.cache || '—') + ' · ' + (a.invocation_source || '') + ' · ' + (a.when || 'just now') + '</div>' +
+      ((a.agent_reason || cits) ? '<div class="pm6-art-prov">' + (a.agent_reason || '') + cits + '</div>' : '') +
+      '<div class="pm6-btnrow">' +
+        '<button class="pm6-sp-minibtn" data-demo-action="web.sources" data-demo-arg="' + String(a.id || '').replace('art-', '') + '">Citations</button>' +
+        '<button class="pm6-sp-minibtn" data-demo-action="panels.open_chat">Open in Chat</button>' +
+      '</div>';
+    host.insertBefore(row, host.firstChild);
+    var rows = host.querySelectorAll('.pm6-art-row');
+    for (var i = rows.length - 1; i >= 5; i--) rows[i].parentNode.removeChild(rows[i]); /* 5-item compact format */
+  }
+
+  /* ================= notifications ================= */
+  function refreshNotifyState() {
+    var list = byId('pm6NotifyList');
+    var empty = byId('pm6NotifyEmpty');
+    var dot = byId('pm6NotifyDot');
+    if (!list) return;
+    var open = $all('.pm6-notify-row', list).filter(function (r) { return !r.classList.contains('pm6-acked'); });
+    if (empty) empty.classList.toggle('pm6-hidden', open.length > 0);
+    if (dot) dot.classList.toggle('pm6-hidden', open.length === 0);
+  }
+
+  function addGateNotification(gate) {
+    var list = byId('pm6NotifyList');
+    if (!list || !gate || byId('pm6NotifyGateRow')) return;
+    var row = document.createElement('div');
+    row.className = 'pm6-notify-row pm6-notify-gate';
+    row.id = 'pm6NotifyGateRow';
+    row.setAttribute('data-notify', 'n-gate');
+    row.innerHTML =
+      '<div class="pm6-art-l1"><span class="pm6-note-glyph">⚠</span>' +
+        '<span class="pm6-art-label">Approval needed: ' + (gate.label || 'package gate') + '</span>' +
+        '<span class="pm6-chip pm6-chip-err">attention_required</span></div>' +
+      '<div class="pm6-art-prev">' + (gate.question || 'A run gate is waiting on you.') + '</div>' +
+      '<div class="pm6-btnrow">' +
+        '<button class="pm6-sp-minibtn" data-demo-action="run.approve_gate" data-demo-arg="' + (gate.id || '') + '">Approve</button>' +
+        '<button class="pm6-sp-minibtn pm6-danger" data-demo-action="run.decline_gate" data-demo-arg="' + (gate.id || '') + '">Decline</button>' +
+        '<button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="orchestrator">Open Orchestrator</button>' +
+      '</div>';
+    list.insertBefore(row, list.firstChild);
+    refreshNotifyState();
+  }
+
+  function resolveGateNotification(gate) {
+    var row = byId('pm6NotifyGateRow');
+    if (!row || !gate) return;
+    if (gate.state === 'approved' || gate.state === 'declined') {
+      row.classList.add('pm6-acked');
+      var chip = row.querySelector('.pm6-chip');
+      if (chip) { chip.textContent = gate.state; chip.className = 'pm6-chip ' + (gate.state === 'approved' ? 'pm6-chip-ok' : 'pm6-chip-warn'); }
+      refreshNotifyState();
+    }
+  }
+
+  function addUsageNotification(payload) {
+    var list = byId('pm6NotifyList');
+    if (!list || !payload || payload.kind !== 'threshold' || byId('pm6Notify80Row')) return;
+    var row = document.createElement('div');
+    row.className = 'pm6-notify-row pm6-notify-warn';
+    row.id = 'pm6Notify80Row';
+    row.setAttribute('data-notify', 'n-usage80');
+    row.innerHTML =
+      '<div class="pm6-art-l1"><span class="pm6-note-glyph">⚠</span>' +
+        '<span class="pm6-art-label">Claude 5h window crossed 80%</span>' +
+        '<span class="pm6-chip pm6-chip-warn">warning</span></div>' +
+      '<div class="pm6-art-prev">Suggested action: let the router shift heavy lanes to the Codex account.</div>' +
+      '<div class="pm6-btnrow">' +
+        '<button class="pm6-sp-minibtn" data-demo-action="panels.ack" data-demo-arg="n-usage80">Acknowledge</button>' +
+        '<button class="pm6-sp-minibtn" data-demo-action="page.go" data-demo-arg="usage">Open Usage</button>' +
+      '</div>';
+    list.insertBefore(row, list.firstChild);
+    refreshNotifyState();
+  }
+
+  /* ================= agents mirror ================= */
+  function renderAgents(runState) {
+    try {
+      var chip = byId('pm6AgentLaneB');
+      var count = byId('pm6AgentsCount');
+      if (!chip || !runState) return;
+      var stage = runState.state || runState.stage;
+      if (stage === 'complete') { chip.textContent = 'done'; chip.className = 'pm6-chip pm6-chip-ok'; if (count) count.textContent = '1'; }
+      else if (stage === 'executing' || stage === 'running') { chip.textContent = 'running'; chip.className = 'pm6-chip'; if (count) count.textContent = '3'; }
+    } catch (e) {}
+  }
+
+  /* ================= breadcrumb ================= */
+  var BC = {
+    dashboard: ['Home', 'Mission Control'],
+    projects: ['Home', 'Projects'],
+    wizard: ['Work', 'Planning Wizard'],
+    orchestrator: ['Work', 'Orchestrator'],
+    usage: ['System', 'Usage'],
+    settings: ['System', 'Settings']
+  };
+  function setBreadcrumb(pageId, subTab) {
+    var bc = byId('pm6ShellBreadcrumb');
+    if (!bc) return;
+    var pair = BC[pageId] || ['Home', pageId || ''];
+    var g = bc.querySelector('.pm6-bc-group');
+    var p = byId('pm6BcPage');
+    if (g) g.textContent = pair[0];
+    if (p) p.textContent = pair[1] + (subTab ? ' ▸ ' + String(subTab).replace(/_/g, ' ') : '');
+  }
+
+  /* ================= activity bar: page icons + Ctrl+1..8 ================= */
+  function wireActivityBar() {
+    var bar = byId('activityBar');
+    if (!bar) return;
+    /* capture stage: page-nav icons must not fall through to the legacy
+       data-target toggle (which would hide the side panel on second click). */
+    document.addEventListener('click', function (e) {
+      var icon = e.target && e.target.closest ? e.target.closest('.activity-bar .icon[data-demo-action="page.go"]') : null;
+      if (!icon) return;
+      e.stopPropagation();
+      e.preventDefault();
+      var D = demo();
+      var arg = icon.dataset.demoArg || '';
+      var a = arg.split(':');
+      try {
+        if (D && D.guard && D.guard.attempt) D.guard.attempt('page.go', { el: icon, arg: arg });
+        else if (window.PM_PAGES) window.PM_PAGES.go(a[0], a[1]);
+      } catch (err) {}
+    }, true);
+
+    document.addEventListener('keydown', function (e) {
+      if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
+      var n = parseInt(e.key, 10);
+      if (!(n >= 1 && n <= 8)) return;
+      var icons = $all('.activity-bar .icon[data-target]');
+      var icon = icons[n - 1];
+      if (icon) { e.preventDefault(); icon.click(); }
+    });
+  }
+
+  /* ================= theme persistence + parallax ================= */
+  function wireTheme() {
+    var sel = byId('themeSelect');
+    if (!sel) return;
+    try {
+      var saved = localStorage.getItem('pm.theme');
+      if (saved && sel.querySelector('option[value="' + saved + '"]')) sel.value = saved;
+      else sel.value = document.documentElement.getAttribute('data-theme') || 'friendly-dark';
+    } catch (e) {}
+    sel.addEventListener('change', function () {
+      try { localStorage.setItem('pm.theme', this.value); } catch (e) {}
+    });
+  }
+
+  function wireParallax() {
+    var bg = byId('glass-bg');
+    if (!bg) return;
+    var reduced = false;
+    try {
+      reduced = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) ||
+        document.documentElement.getAttribute('data-motion') === 'reduced';
+    } catch (e) {}
+    if (reduced) return;
+    var px = 0, py = 0, raf = null;
+    document.addEventListener('pointermove', function (e) {
+      px = (e.clientX / Math.max(1, window.innerWidth)) * 2 - 1;
+      py = (e.clientY / Math.max(1, window.innerHeight)) * 2 - 1;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        try {
+          bg.style.setProperty('--par-x', px.toFixed(3));
+          bg.style.setProperty('--par-y', py.toFixed(3));
+        } catch (e2) {}
+      });
+    }, { passive: true });
+  }
+
+  /* ================= source-control row expansion ================= */
+  function wireWorktreeRows() {
+    var panel = byId('panel-source');
+    if (!panel) return;
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('[data-demo-action]') || e.target.closest('button')) return;
+      var row = e.target.closest('.pm6-wt-row');
+      if (!row) return;
+      row.classList.toggle('expanded');
+      row.classList.toggle('sc-wt-expanded');
+    });
+  }
+
+  /* ================= subscriptions ================= */
+  function subscribe() {
+    var D = demo();
+    if (!D || !D.on) return;
+    var safe = function (fn) { return function (p, t) { try { fn(p, t); } catch (e) {} }; };
+    D.on('git.changed', safe(renderGitChanges));
+    D.on('git.commit', safe(function () { renderGitChanges(); }));
+    D.on('git.ai', safe(renderAiSpinner));
+    D.on('git.pr', safe(renderPr));
+    D.on('git.actions', safe(function (p) { renderActionsRun(p && p.run); }));
+    D.on('git.auth', safe(renderAuth));
+    D.on('docker.container', safe(function () { renderContainers(); }));
+    D.on('docker.compose', safe(renderCompose));
+    D.on('docker.chain', safe(renderChain));
+    D.on('docker.build', safe(function (p) {
+      var digest = byId('pm6DmDigest');
+      if (digest && p) digest.textContent = p.state === 'building' ? 'building…' : (p.digest || digest.textContent);
+    }));
+    D.on('runtime_artifact.created', safe(renderLiveArtifact));
+    D.on('run.gate', safe(function (g) {
+      if (g && g.state === 'attention_required') addGateNotification(g);
+      else resolveGateNotification(g);
+    }));
+    D.on('usage.alert', safe(addUsageNotification));
+    D.on('run.state', safe(renderAgents));
+    D.on('page.changed', safe(function (p) { if (p) setBreadcrumb(p.page, p.subTab); }));
+    D.on('files.open', safe(function (p) {
+      if (!p || !p.path) return;
+      $all('#panel-files .pm6-fm-file').forEach(function (f) {
+        f.classList.toggle('file-active', f.dataset.demoArg === p.path);
+      });
+    }));
+  }
+
+  /* ================= file filter ================= */
+  function wireFileFilter() {
+    var input = byId('pm6FmFilter');
+    if (!input) return;
+    input.addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      $all('#panel-files .pm6-fm-file').forEach(function (f) {
+        f.style.display = !q || f.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+      });
+      $all('#panel-files .pm6-fm-folder').forEach(function (f) {
+        f.style.display = q ? 'none' : '';
+      });
+    });
+  }
+
+  /* ================= boot ================= */
+  function boot() {
+    try { regActions(); } catch (e) {}
+    try { subscribe(); } catch (e) {}
+    try { renderContainers(); } catch (e) {}
+    try {
+      var D = demo();
+      if (D && D.state && D.state.docker && D.state.docker.publishChain) renderChain(D.state.docker.publishChain);
+    } catch (e) {}
+    try { wireActivityBar(); } catch (e) {}
+    try { wireTheme(); } catch (e) {}
+    try { wireParallax(); } catch (e) {}
+    try { wireWorktreeRows(); } catch (e) {}
+    try { wireFileFilter(); } catch (e) {}
+    try { setBreadcrumb('dashboard'); } catch (e) {}
+    try { refreshNotifyState(); } catch (e) {}
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>

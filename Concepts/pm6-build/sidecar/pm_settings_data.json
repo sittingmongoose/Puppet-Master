@@ -14253,18 +14253,26 @@
   {
    "id": "web.providers.provider-status",
    "label": "Provider Connection Status",
-   "desc": "Shows whether each web service is connected, needs a key, or recently failed — so you know why a search fell back or stopped.",
+   "desc": "Shows whether each web service is connected, needs a key, or recently failed - so you know why a search fell back or stopped. Keys live in your system keychain and are never shown here.",
    "type": "keyvalue",
    "default": {
     "Site Reader": "connected",
-    "Firecrawl": "needs_auth",
+    "model-native": "connected",
+    "Exa": "connected",
     "Tavily": "connected",
+    "Firecrawl": "needs_auth",
+    "Brave": "needs_auth",
+    "Jina": "needs_auth",
     "DuckDuckGo": "connected"
    },
    "value": {
     "Site Reader": "connected",
-    "Firecrawl": "needs_auth",
+    "model-native": "connected",
+    "Exa": "connected",
     "Tavily": "connected",
+    "Firecrawl": "needs_auth",
+    "Brave": "needs_auth",
+    "Jina": "needs_auth",
     "DuckDuckGo": "connected"
    },
    "scope": [
@@ -14283,7 +14291,11 @@
     "failed",
     "expired",
     "support level",
-    "last failure"
+    "last failure",
+    "brave",
+    "jina",
+    "model-native",
+    "credential status"
    ],
    "src": "Plugins_013-8+NewTools_013"
   },
@@ -14394,6 +14406,56 @@
    "src": "Models_009+020-10"
   },
   {
+   "id": "web.providers.exa-enable",
+   "label": "Exa Provider",
+   "desc": "A search-first service that shines at web search and deep research runs. Covers: search, research, and page extraction. Support level: partner adapter.",
+   "type": "toggle",
+   "default": true,
+   "value": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "status": {
+    "state": "ok",
+    "note": "Key in your system keychain · healthy"
+   },
+   "search": [
+    "exa",
+    "neural search",
+    "research provider",
+    "enable provider",
+    "support level",
+    "adapter"
+   ],
+   "src": "PM173_Addendum"
+  },
+  {
+   "id": "web.providers.tavily-enable",
+   "label": "Tavily Provider",
+   "desc": "A balanced service covering search, page reading, and extraction. Tune how deeply it reads with the setting below. Support level: partner adapter.",
+   "type": "toggle",
+   "default": true,
+   "value": true,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "status": {
+    "state": "ok",
+    "note": "Key in your system keychain · healthy"
+   },
+   "search": [
+    "tavily",
+    "enable provider",
+    "search fetch extract",
+    "adapter"
+   ],
+   "src": "PM173_Addendum"
+  },
+  {
    "id": "web.providers.tavily-fetch-mode",
    "label": "Tavily Reading Depth",
    "desc": "How hard Tavily works when reading a page. Light modes are fast and cheap; advanced digs deeper but costs more per page.",
@@ -14417,6 +14479,121 @@
     "precision fallback"
    ],
    "src": "Models_009"
+  },
+  {
+   "id": "web.providers.brave-enable",
+   "label": "Brave Search Provider",
+   "desc": "An independent search index used for web search only. Stays off until you add an API key. Support level: community adapter.",
+   "type": "toggle",
+   "default": false,
+   "value": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "status": {
+    "state": "needs-setup",
+    "note": "No key saved"
+   },
+   "search": [
+    "brave",
+    "search index",
+    "enable provider",
+    "adapter"
+   ],
+   "src": "PM173_Addendum"
+  },
+  {
+   "id": "web.providers.jina-enable",
+   "label": "Jina Reader Provider",
+   "desc": "A page-reading service used for fetching and extracting stubborn pages. Stays off until you add an API key. Support level: community adapter.",
+   "type": "toggle",
+   "default": false,
+   "value": false,
+   "scope": [
+    "global",
+    "project"
+   ],
+   "tier": "advanced",
+   "status": {
+    "state": "needs-setup",
+    "note": "No key saved"
+   },
+   "search": [
+    "jina",
+    "reader",
+    "extract",
+    "enable provider",
+    "adapter"
+   ],
+   "src": "PM173_Addendum"
+  },
+  {
+   "id": "web.providers.model-native-enable",
+   "label": "Model-Native Web Tools",
+   "desc": "Lets models that ship their own web search answer directly through your existing model account - no extra key needed. Sits last in the fallback chain.",
+   "type": "toggle",
+   "default": true,
+   "value": true,
+   "scope": [
+    "global"
+   ],
+   "tier": "advanced",
+   "status": {
+    "state": "ok",
+    "note": "Available through your model account"
+   },
+   "search": [
+    "model native",
+    "built-in search",
+    "provider fallback",
+    "no key",
+    "adapter"
+   ],
+   "src": "PM173_Addendum"
+  },
+  {
+   "id": "web.providers.capability-matrix",
+   "label": "Operation Coverage & Fallback",
+   "desc": "Which service answers each web operation first, and the fallback path behind it. Every operation card shows what actually ran (requested vs effective) plus cache state and credit warnings.",
+   "type": "keyvalue",
+   "default": {
+    "search": "Exa → Tavily → Brave → model-native",
+    "fetch": "Site Reader → Firecrawl → Jina → Tavily",
+    "extract": "Firecrawl → Jina → Tavily",
+    "research": "Exa → PM-composed search+read",
+    "crawl": "Firecrawl → Site Reader",
+    "map": "Firecrawl → Site Reader"
+   },
+   "value": {
+    "search": "Exa → Tavily → Brave → model-native",
+    "fetch": "Site Reader → Firecrawl → Jina → Tavily",
+    "extract": "Firecrawl → Jina → Tavily",
+    "research": "Exa → PM-composed search+read",
+    "crawl": "Firecrawl → Site Reader",
+    "map": "Firecrawl → Site Reader"
+   },
+   "scope": [
+    "global"
+   ],
+   "tier": "simple",
+   "badges": [
+    "new"
+   ],
+   "search": [
+    "capability matrix",
+    "fallback chain",
+    "searching web",
+    "reading site",
+    "extracting site",
+    "researching web",
+    "crawling site",
+    "mapping site",
+    "cmd.chat.web",
+    "requested vs effective"
+   ],
+   "src": "PM173_Addendum"
   },
   {
    "id": "web.providers.web-api-keys",

@@ -1,0 +1,47 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "wave": 2,
+  "checkpointed_at": "2026-07-10T03:32:37Z",
+  "attempt_ids": [
+    "A004-R07-ATTEMPT-000004",
+    "A004-R07-ATTEMPT-000005",
+    "A004-R07-ATTEMPT-000006"
+  ],
+  "assignment_ids": [
+    "A004-000037-EXACT-WIN-19B62D73B9EF-0006",
+    "A004-000057-EXACT-WIN-AFD15DC188C1-0001",
+    "A004-000063-EXACT-WIN-C619E4211C17-0002"
+  ],
+  "agent_instance_ids": [
+    "91f0411d-e333-468c-8693-c22a143cf6a8",
+    "91e11d93-c313-4627-b103-5c768aa337ba",
+    "35c98566-926a-4445-881a-9bd982158ad4"
+  ],
+  "agent_paths": [
+    "/root/a004_r07_exact_0037_91f0411d",
+    "/root/a004_r07_exact_0057_91e11d93",
+    "/root/a004_r07_exact_0063_35c98566"
+  ],
+  "agent_thread_ids": [
+    "019f4a0c-5e97-7c92-90b6-dd66f151a203",
+    "019f4a0c-b193-7332-9732-6099c3d9b097",
+    "019f4a0d-0301-7422-9121-f1a5f5c6ca2d"
+  ],
+  "unique_agents": 3,
+  "valid_results": 3,
+  "failed_attempts": 0,
+  "coverage_credit": 3,
+  "capsule_package_bytes": 117120,
+  "token_estimate": 35551,
+  "result_bytes": 119264,
+  "exact_evidence_refs": 146,
+  "validator_passed": true,
+  "duplicate_agent_instance_count": 0,
+  "duplicate_agent_path_count": 0,
+  "duplicate_agent_thread_count": 0,
+  "recycled_agent_count": 0,
+  "multi_scope_agent_count": 0,
+  "wrong_model_or_effort_count": 0,
+  "scope_spill_count": 0
+}

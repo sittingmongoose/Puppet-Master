@@ -1,0 +1,735 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000057-EXACT-WIN-AFD15DC188C1-0001",
+  "assignment_attempt_number": 2,
+  "attempt_id": "A004-R07-000057-ATTEMPT-2",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0057_cee94950",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-AFD15DC188C1-0001",
+  "doc_id": "DOC-AFD15DC188C1",
+  "document_path": "Plans/Decision_Policy.md",
+  "core_range": [
+    1,
+    395
+  ],
+  "context_ranges": [
+    [
+      396,
+      407
+    ]
+  ],
+  "source_sha256": "72a2faae8bec90e7e64eb6d845451a37b9f491de47e4bcb8e00339ff5bf4861d",
+  "core_sha256": "e5769b9bf9c8a1175c21875e21b9d93dc2e3012d74a804a42dfeace6364c8639",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000057-EXACT-WIN-AFD15DC188C1-0001.json",
+  "capsule_sha256": "d3c17ff1186d7f399d2c1578ffdbccfeef3874948de81785a44d8867b33adc36",
+  "capsule_bytes": 1604,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-AFD15DC188C1-0001.txt",
+  "source_excerpt_sha256": "ec2ce8b419533d5487342dc57a10df1de738ddfbd73550512fe31cdd9b671131",
+  "source_excerpt_bytes": 36610,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "O001",
+      "description": "Ambiguity resolution has an explicit five-level precedence order, with this policy last.",
+      "evidence_ref_ids": [
+        "E001"
+      ]
+    },
+    {
+      "observation_id": "O002",
+      "description": "Runtime identity policy separates operational identity, provider-account identity, execution role, and other execution-context dimensions.",
+      "evidence_ref_ids": [
+        "E038"
+      ]
+    },
+    {
+      "observation_id": "O003",
+      "description": "Projection-sensitive mutation is guarded both generally and for named infrastructure domains; observational actions are treated differently from truth-changing actions.",
+      "evidence_ref_ids": [
+        "E004",
+        "E027"
+      ]
+    },
+    {
+      "observation_id": "O004",
+      "description": "Every autonomously resolved ambiguity produces exactly one auto-decision row, with path-selection and field-level obligations.",
+      "evidence_ref_ids": [
+        "E012",
+        "E013",
+        "E014"
+      ]
+    },
+    {
+      "observation_id": "O005",
+      "description": "Spec Lock is treated as a protocol-managed lockfile and auto-decisions as pipeline-managed rather than manually maintained.",
+      "evidence_ref_ids": [
+        "E016"
+      ]
+    },
+    {
+      "observation_id": "O006",
+      "description": "Persistent-store secret exclusion has an explicit storage scope, credential-store destination, and P0 failure classification.",
+      "evidence_ref_ids": [
+        "E017"
+      ]
+    },
+    {
+      "observation_id": "O007",
+      "description": "Missing user intent is handled before execution through clarification, an attention-required wizard state, and a PASS-plus-empty-clarifications execution gate.",
+      "evidence_ref_ids": [
+        "E019",
+        "E020",
+        "E021"
+      ]
+    },
+    {
+      "observation_id": "O008",
+      "description": "Provider/account fallback has enumerated terminal blocked reasons, and blocked approval targeting uses runtime blocked-episode identity rather than request identity.",
+      "evidence_ref_ids": [
+        "E024",
+        "E025"
+      ]
+    },
+    {
+      "observation_id": "O009",
+      "description": "Agent-Config is the primary GUI owner for provider/model/account controls, while approval cards consume canonical blocked identity and cannot mutate Persona profiles.",
+      "evidence_ref_ids": [
+        "E030",
+        "E032"
+      ]
+    },
+    {
+      "observation_id": "O010",
+      "description": "Debug browser context must be visible and revocable, and missing runtime targets reopen in attention_required rather than being silently replaced.",
+      "evidence_ref_ids": [
+        "E033",
+        "E034"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "F001",
+      "severity": "high",
+      "title": "Bounded-retry behavior lacks executable parameters",
+      "description": "Retries are required to have explicit limits and backoff, but the reviewed core does not specify the retry ceiling, delay function, maximum delay, jitter rule, or which owner supplies them. Implementations can therefore satisfy the prose with materially different retry behavior.",
+      "evidence_ref_ids": [
+        "E002"
+      ]
+    },
+    {
+      "finding_id": "F002",
+      "severity": "medium",
+      "title": "First tie-break does not resolve multiple existing references",
+      "description": "The policy prefers an option referenced by an existing plan document, but gives no deterministic rule when several otherwise-equal options are each referenced by different plan documents. The lexicographic rule is introduced only after that unresolved comparison.",
+      "evidence_ref_ids": [
+        "E011"
+      ]
+    },
+    {
+      "finding_id": "F003",
+      "severity": "high",
+      "title": "Mixed-scope auto-decisions have no path-selection rule",
+      "description": "Exactly one row is required per ambiguity, while path selection separately covers internal-SSOT effects and generated-project effects. A single decision affecting both target classes has no declared destination, split prohibition, or cross-reference behavior.",
+      "evidence_ref_ids": [
+        "E012",
+        "E013"
+      ]
+    },
+    {
+      "finding_id": "F004",
+      "severity": "high",
+      "title": "inputs_hash byte canonicalization is subsystem-discretionary",
+      "description": "The owning subsystem may choose the deterministic byte representation used by inputs_hash, but this policy does not identify that owner or prescribe canonical serialization, field ordering, normalization, encoding, or versioning. Equivalent inputs can therefore hash differently across consumers.",
+      "evidence_ref_ids": [
+        "E014"
+      ]
+    },
+    {
+      "finding_id": "F005",
+      "severity": "high",
+      "title": "HITL exception classes lack deterministic trigger criteria",
+      "description": "Automation is the default and humans surface only for named critical, major, or safe-point cases, but those classes have no objective classifier or threshold in the reviewed core. Builders retain consequential discretion over when execution pauses for a human.",
+      "evidence_ref_ids": [
+        "E003"
+      ]
+    },
+    {
+      "finding_id": "F006",
+      "severity": "high",
+      "title": "Concern lineage obligation is declared but not specified",
+      "description": "Merge, split, and supersede require explicit lineage policy, yet the reviewed core supplies no identifiers, ancestry cardinality, event shape, conflict handling, or lifecycle effects for those operations.",
+      "evidence_ref_ids": [
+        "E005"
+      ]
+    },
+    {
+      "finding_id": "F007",
+      "severity": "high",
+      "title": "Projection freshness and revalidation success are undefined",
+      "description": "Truth-changing actions require fresh-enough state and named stale conditions require revalidation, but there is no freshness threshold, receipt-age rule, account-change comparison rule, successful-revalidation artifact, or atomicity requirement between revalidation and mutation.",
+      "evidence_ref_ids": [
+        "E004",
+        "E027"
+      ]
+    },
+    {
+      "finding_id": "F008",
+      "severity": "high",
+      "title": "Blocked-object minimum permits undefined identity substitutes",
+      "description": "A stable blocked-episode identity may be replaced by a family-local equivalent, and several minimum fields apply only when applicable. Neither equivalence requirements nor applicability predicates are defined, allowing incompatible blocked-object shapes.",
+      "evidence_ref_ids": [
+        "E007"
+      ]
+    },
+    {
+      "finding_id": "F009",
+      "severity": "high",
+      "title": "Cleanup lifecycle verbs lack mutation semantics",
+      "description": "Archive, remove, prune, recover, and restore must be distinguished, but the policy does not define their effects on visibility, durable bytes, references, lineage, authorization, reversibility, or recovery windows.",
+      "evidence_ref_ids": [
+        "E008"
+      ]
+    },
+    {
+      "finding_id": "F010",
+      "severity": "medium",
+      "title": "Large-run pagination policy is an unfulfilled requirement",
+      "description": "The policy states that Orchestrator views need large-run and pagination behavior, but supplies no activation threshold, cursor or snapshot model, ordering invariant, page size, incremental-update behavior, or navigation acceptance criteria.",
+      "evidence_ref_ids": [
+        "E009"
+      ]
+    },
+    {
+      "finding_id": "F011",
+      "severity": "high",
+      "title": "Secret-like redaction has no deterministic transformation contract",
+      "description": "Potential secrets and quality-report secret-like values must be redacted, but the policy does not define detection classes, false-positive handling, replacement representation, recursive-field treatment, or evidence that redaction occurred before persistence.",
+      "evidence_ref_ids": [
+        "E010",
+        "E022"
+      ]
+    },
+    {
+      "finding_id": "F012",
+      "severity": "high",
+      "title": "Ambiguity versus missing-intent classification is not executable",
+      "description": "The two categories have different mandatory outcomes, yet the reviewed core gives no deterministic test for equal satisfaction of user intent, material product impact, or when intent is inferable. The classifier can therefore change whether Puppet Master acts autonomously or blocks for clarification.",
+      "evidence_ref_ids": [
+        "E018",
+        "E019"
+      ]
+    },
+    {
+      "finding_id": "F013",
+      "severity": "high",
+      "title": "Requirements-quality severity predicates are subjective",
+      "description": "Contradiction and vagueness severity depends on whether behavior changes, autofix is full, or executable acceptance is prevented, but no evaluation algorithm or required evidence establishes those conditions consistently.",
+      "evidence_ref_ids": [
+        "E022"
+      ]
+    },
+    {
+      "finding_id": "F014",
+      "severity": "high",
+      "title": "Latest canonical requirements report is not deterministically selected",
+      "description": "Execution depends on the latest canonical report, but the reviewed core does not define report identity, ordering, supersession, invalidation, or how concurrent reports are resolved before Start Run is enabled.",
+      "evidence_ref_ids": [
+        "E021"
+      ]
+    },
+    {
+      "finding_id": "F015",
+      "severity": "high",
+      "title": "Setup and auth action lifecycle lacks transition and completion rules",
+      "description": "Six action states are enumerated and projection updates are explicitly insufficient completion evidence, but valid transitions, terminal-state criteria, timeout behavior, retry behavior, and authoritative success evidence are not defined.",
+      "evidence_ref_ids": [
+        "E028"
+      ]
+    },
+    {
+      "finding_id": "F016",
+      "severity": "medium",
+      "title": "Inferred provider-pressure display behavior is underspecified",
+      "description": "The authoritative counter threshold is numeric, but weaker inferred signals may also display pressure without specified source classes, confidence thresholds, severity mapping, expiry, or required disclosure distinguishing them from authoritative measurements.",
+      "evidence_ref_ids": [
+        "E029"
+      ]
+    },
+    {
+      "finding_id": "F017",
+      "severity": "medium",
+      "title": "Managed-target overwrite guidance is non-deterministic",
+      "description": "The policy uses should and where possible for managed sections or files, but does not define feasibility, fallback selection, protected-boundary detection, or when broad replacement becomes permissible.",
+      "evidence_ref_ids": [
+        "E031"
+      ]
+    },
+    {
+      "finding_id": "F018",
+      "severity": "high",
+      "title": "Approval ladder persistence and scope boundaries are incomplete",
+      "description": "The permission ladder includes always while in-chat approval is limited to session/project scope, but the exact meaning, storage duration, revocation, project boundary, and restart behavior of each level are not supplied.",
+      "evidence_ref_ids": [
+        "E032"
+      ]
+    },
+    {
+      "finding_id": "F019",
+      "severity": "high",
+      "title": "Debug browser-context bounds and revocation effects are undefined",
+      "description": "Auto-ingestion must be visible, bounded, and revocable, but the policy gives no item, byte, time, origin, or retention bounds and does not say whether revocation stops future capture, deletes prior items, or both.",
+      "evidence_ref_ids": [
+        "E033"
+      ]
+    },
+    {
+      "finding_id": "F020",
+      "severity": "high",
+      "title": "Deterministic runtime-target rebinding is not defined",
+      "description": "The policy specifies behavior when no deterministic rebinding target exists, but does not define candidate discovery, compatibility constraints, tie-breaking, user visibility, or evidence for concluding that a deterministic target exists.",
+      "evidence_ref_ids": [
+        "E034"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "N001",
+      "description": "The precedence sources and their order are explicit.",
+      "evidence_ref_ids": [
+        "E001"
+      ]
+    },
+    {
+      "non_gap_id": "N002",
+      "description": "The final tie-break is explicitly the lexicographically smallest stable ID.",
+      "evidence_ref_ids": [
+        "E011"
+      ]
+    },
+    {
+      "non_gap_id": "N003",
+      "description": "The cardinality of autonomous ambiguity logging is exactly one row, and the two ordinary destination paths are named.",
+      "evidence_ref_ids": [
+        "E012",
+        "E013"
+      ]
+    },
+    {
+      "non_gap_id": "N004",
+      "description": "The persistent-store secret prohibition names covered store classes, prohibited credential classes, the credential destination, and P0 severity.",
+      "evidence_ref_ids": [
+        "E017"
+      ]
+    },
+    {
+      "non_gap_id": "N005",
+      "description": "Unresolved pre-execution clarification explicitly produces attention_required and blocks Start Run.",
+      "evidence_ref_ids": [
+        "E020"
+      ]
+    },
+    {
+      "non_gap_id": "N006",
+      "description": "Execution eligibility explicitly requires a PASS verdict and an empty needs_user_clarification array.",
+      "evidence_ref_ids": [
+        "E021"
+      ]
+    },
+    {
+      "non_gap_id": "N007",
+      "description": "The terminal provider/account fallback reason vocabulary is explicitly enumerated in the reviewed core.",
+      "evidence_ref_ids": [
+        "E024"
+      ]
+    },
+    {
+      "non_gap_id": "N008",
+      "description": "Blocked-action targeting fields, request_id compatibility status, and the canonical allowed-action field are explicit.",
+      "evidence_ref_ids": [
+        "E025"
+      ]
+    },
+    {
+      "non_gap_id": "N009",
+      "description": "Deep Plan is explicitly preserved as a first-class workflow display identity rather than collapsed into normalized runtime mode.",
+      "evidence_ref_ids": [
+        "E026"
+      ]
+    },
+    {
+      "non_gap_id": "N010",
+      "description": "When a Debug runtime identity is missing and no deterministic target exists, the exact state and reason are specified and silent replacement is prohibited.",
+      "evidence_ref_ids": [
+        "E034"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "U001",
+      "description": "Whether any higher-precedence source overrides or narrows a reviewed default is unknown because those sources were outside the permitted read scope.",
+      "evidence_ref_ids": [
+        "E001"
+      ]
+    },
+    {
+      "unknown_id": "U002",
+      "description": "Whether the canonical route, runtime-identity, and blocked-identity schemas close identified shape gaps is unknown because Contracts_V0.md was not permitted for inspection.",
+      "evidence_ref_ids": [
+        "E006"
+      ]
+    },
+    {
+      "unknown_id": "U003",
+      "description": "Whether the auto-decision schema defines canonical input serialization beyond this policy is unknown because only its schema binding, not the schema content, appears in scope.",
+      "evidence_ref_ids": [
+        "E014",
+        "E037"
+      ]
+    },
+    {
+      "unknown_id": "U004",
+      "description": "Clarification-round limits and blocked-transition semantics cannot be validated because this policy delegates them to chain-wizard-flexibility.md, which was outside scope.",
+      "evidence_ref_ids": [
+        "E023"
+      ]
+    },
+    {
+      "unknown_id": "U005",
+      "description": "Provider identity, auth-surface, and bridge capability details cannot be validated because the policy explicitly delegates those facts to external owner documents.",
+      "evidence_ref_ids": [
+        "E035"
+      ]
+    },
+    {
+      "unknown_id": "U006",
+      "description": "The exact logical-root and storage-fallback canon used to derive lock-path cannot be validated from this window because the storage owner was outside scope.",
+      "evidence_ref_ids": [
+        "E036"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "E001",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 24,
+      "line_end": 30,
+      "range_class": "core",
+      "exact_quote": "## 1. Precedence (non-negotiable)\nResolve ambiguity in this order:\n1. `Plans/Spec_Lock.json`\n2. `Plans/Crosswalk.md`\n3. `Plans/DRY_Rules.md`\n4. `Plans/Glossary.md`\n5. This policy"
+    },
+    {
+      "evidence_ref_id": "E002",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 48,
+      "line_end": 50,
+      "range_class": "core",
+      "exact_quote": "4) **Prefer bounded retries**.\n   - Retries MUST have explicit limits and backoff.\n   ContractRef: PolicyRule:Decision_Policy.md§2"
+    },
+    {
+      "evidence_ref_id": "E003",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 67,
+      "line_end": 67,
+      "range_class": "core",
+      "exact_quote": "Approval and recovery policy treat `Plans/human-in-the-loop.md` (`/human-in-the-loop.md`) drift as a field-name and field-family normalization problem: `allowed_action_ids` is canonical over `allowed_actions`, and recovery, replay, storage, approval identity, and persistence semantics must share one compatible shape. HITL is off by default; users may configure `/review` or `/approval` checkpoints at work-package or feature-seam level, but automation remains the normal path and humans surface only for critical failure-class-to-restore, major `/decision`, or safe-point `/resolution` cases with GUI, `/thread`, and `/settings` implications visible."
+    },
+    {
+      "evidence_ref_id": "E004",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 97,
+      "line_end": 97,
+      "range_class": "core",
+      "exact_quote": "Degraded-projection action gating is action-class aware. Actions that change execution, `/promotion/recovery/approval` truth, or recovery state require fresh-enough projection state; observational `/navigation/export` actions generally remain safe. UI explanations identify what is stale, why it matters, and the available next action instead of hiding gating behind generic disabled controls."
+    },
+    {
+      "evidence_ref_id": "E005",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 87,
+      "line_end": 87,
+      "range_class": "core",
+      "exact_quote": "Concern closure requires action policy as well as lifecycle labels. A `dismissed` concern needs required rationale, a `resolved` concern needs `resolution_kind`, and `merge`, `split`, and `supersede` actions need explicit lineage policy so related concerns do not silently lose ancestry or semantic distinction."
+    },
+    {
+      "evidence_ref_id": "E006",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 121,
+      "line_end": 121,
+      "range_class": "core",
+      "exact_quote": "`Plans/Contracts_V0.md` remains the owner-contract seam for runtime identity, blocked identity, and route/open ownership. Decision Policy records deterministic posture for `/open`, approval, recovery, and projection trust, but it does not replace the Contracts schema owner for route/open contracts."
+    },
+    {
+      "evidence_ref_id": "E007",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 137,
+      "line_end": 137,
+      "range_class": "core",
+      "exact_quote": "Canonical blocked objects carry a cross-family minimum: blocked reason, ordered allowed actions when applicable, `preserved-work` and `local-state` disclosure when applicable, stable `blocked-episode` identity or a `family-local` equivalent, and detail `/report` inspection references. Reconciliation retires request-centric opening contracts and rebuilds around blocked `/runtime` approval identity, canonical runtime action families, and `lineage-preserving` persistence through blocked records."
+    },
+    {
+      "evidence_ref_id": "E008",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 145,
+      "line_end": 145,
+      "range_class": "core",
+      "exact_quote": "Cleanup `/lifecycle` policy must avoid destructive ambiguity between archive/remove/prune/recover behavior. `/remove/prune/recover` actions distinguish visibility archival, physical pruning, semantic removal, and recovery or restore posture before mutating live records or hiding historical lineage."
+    },
+    {
+      "evidence_ref_id": "E009",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 147,
+      "line_end": 147,
+      "range_class": "core",
+      "exact_quote": "Large-run interaction policy is Orchestrator-wide. `FinalGUISpec.md` virtualization language elsewhere is not enough; Orchestrator views need a `large-run` and `/pagination` policy that preserves progress, blocked, and evidence navigation without pretending every run graph can render as a single flat view."
+    },
+    {
+      "evidence_ref_id": "E010",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 153,
+      "line_end": 154,
+      "range_class": "core",
+      "exact_quote": "7) **Prefer redaction**.\n   - If data might be a secret, treat it as a secret and do not persist it."
+    },
+    {
+      "evidence_ref_id": "E011",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 160,
+      "line_end": 163,
+      "range_class": "core",
+      "exact_quote": "## 3. Tie-break rules (ordering)\nIf two choices are otherwise equal:\n- Choose the option that is already referenced by an existing plan document.\n- If still tied, choose lexicographically smallest stable ID."
+    },
+    {
+      "evidence_ref_id": "E012",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 169,
+      "line_end": 169,
+      "range_class": "core",
+      "exact_quote": "When Puppet Master resolves an ambiguity without human input, it MUST emit exactly one schema-valid auto-decision row for that resolved ambiguity."
+    },
+    {
+      "evidence_ref_id": "E013",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 173,
+      "line_end": 179,
+      "range_class": "core",
+      "exact_quote": "Two logging scopes exist:\n- `Plans/auto_decisions.jsonl` — internal Puppet Master plan-governance decisions.\n- `.puppet-master/project/auto_decisions.jsonl` — user-project decisions made while generating or validating project artifacts.\n\nPath selection rule:\n- If the decision changes or explains Puppet Master internal SSOT documents, write to `Plans/auto_decisions.jsonl`.\n- If the decision changes or explains generated user-project artifacts under `.puppet-master/project/**`, write to `.puppet-master/project/auto_decisions.jsonl`."
+    },
+    {
+      "evidence_ref_id": "E014",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 181,
+      "line_end": 190,
+      "range_class": "core",
+      "exact_quote": "Field semantics:\n- `scope` MUST identify the decision domain deterministically.\n- `inputs_hash` MUST be computed from the ambiguity inputs actually used to make the choice, using a deterministic byte representation chosen by the owning subsystem.\n- `decision` MUST name the winning choice in stable language.\n- `rationale` MUST state why the winning choice was required by the precedence stack or deterministic defaults.\n- `applied_to[]` MUST identify the concrete targets affected by the decision.\n- `contract_refs[]` MUST include the authoritative references that justified the choice.\n\nSecurity rule:\n- Auto-decision rows MUST NOT contain secrets or credential material in `decision`, `rationale`, or `applied_to[]`."
+    },
+    {
+      "evidence_ref_id": "E015",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 196,
+      "line_end": 198,
+      "range_class": "core",
+      "exact_quote": "## 4. \"No human in the loop\" rule\nPlans MUST NOT depend on humans making decisions mid-run.\nIf a plan describes optionality, it MUST declare a deterministic default and cite this policy."
+    },
+    {
+      "evidence_ref_id": "E016",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 207,
+      "line_end": 210,
+      "range_class": "core",
+      "exact_quote": "**Rule:** `Plans/Spec_Lock.json` is a lockfile; agents MUST only update it via this protocol and MUST proceed deterministically (no interactive human-decision pauses; deterministic logging remains required where this protocol says to append to `auto_decisions.jsonl`).\nContractRef: SchemaID:Spec_Lock.json, PolicyRule:Decision_Policy.md§2, SchemaID:pm.auto_decisions.schema.v1\n\nOperational handling: `Plans/Spec_Lock.json` is verified after canonical doc edits and MUST NOT be hand-edit updated outside this protocol. `Plans/auto_decisions.jsonl` is pipeline-managed by deterministic logging and MUST NOT be hand-edit maintained as a manual ledger."
+    },
+    {
+      "evidence_ref_id": "E017",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 242,
+      "line_end": 246,
+      "range_class": "core",
+      "exact_quote": "**Scope:** All persistent stores (seglog, redb, Tantivy indexes).\n\n**Rule:** Persistent stores MUST NOT contain secrets (tokens, passwords, API keys, OAuth refresh tokens). Tokens live only in the OS credential store (platform keyring). Violations are P0 bugs requiring immediate remediation.\n\n**Rationale:** Secrets in persistent stores risk exfiltration via backup, log export, or crash dump. The OS credential store provides encrypted, access-controlled storage."
+    },
+    {
+      "evidence_ref_id": "E018",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 264,
+      "line_end": 266,
+      "range_class": "core",
+      "exact_quote": "**Definition:** The specification leaves open a technical or design choice where multiple options would equally satisfy user intent.\n\n**Resolution rule:** Apply a deterministic default from §2. Log to `Plans/auto_decisions.jsonl` with schema `pm.auto_decisions.schema.v1`. No user interaction required."
+    },
+    {
+      "evidence_ref_id": "E019",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 279,
+      "line_end": 281,
+      "range_class": "core",
+      "exact_quote": "**Definition:** The user has not expressed what they want — the system cannot infer intent because the choice materially affects product behavior or scope. This is NOT a technical implementation detail; it is a product decision only the user can make.\n\n**Resolution rule:** The system MUST generate a clarification question. It MUST NOT apply a deterministic default. The clarification question is captured in the requirements quality report (`Plans/requirements_quality_report.schema.json`, field `needs_user_clarification[]`)."
+    },
+    {
+      "evidence_ref_id": "E020",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 293,
+      "line_end": 299,
+      "range_class": "core",
+      "exact_quote": "The §4 rule (\"plans must not depend on humans making decisions mid-run\") applies to **runtime execution** (orchestrator runs, agent iterations, verification gates).\n\nClarification questions under §6.2 are generated **prior to execution**, during wizard/interview artifact generation. This does NOT violate §4.\n\n**Timing:** Clarification questions surface during Planning Wizard finalization or a legacy Chain Wizard / Interview compatibility flow, before any orchestrator run begins.\n\n**Blocking rule:** If a clarification question cannot be resolved before an orchestrator run begins, the run MUST NOT start. The wizard state transitions to `attention_required` and blocks the \"Start Run\" action."
+    },
+    {
+      "evidence_ref_id": "E021",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 308,
+      "line_end": 315,
+      "range_class": "core",
+      "exact_quote": "The `requirements_quality_report` is a pre-execution artifact. It MUST be generated during the mandatory Auditor invariant loop defined in `Plans/chain-wizard-flexibility.md §12` after Contract Unification and before any orchestrator run, plan-node execution, or user-visible \"Start Run\" action begins. Legacy references to the former three-pass anchor are compatibility aliases only and do not revive fixed Pass 1 / Pass 2 / Pass 3 scheduling.\n\nContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md\n\nBlocking rule:\n- Execution MAY continue only when the latest canonical report has `verdict: \"PASS\"` and `needs_user_clarification[]` is empty.\n- If `needs_user_clarification[]` is non-empty, the workflow MUST transition to the clarification/escalation path instead of starting execution."
+    },
+    {
+      "evidence_ref_id": "E022",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 318,
+      "line_end": 324,
+      "range_class": "core",
+      "exact_quote": "Deterministic severity rules:\n- `missing_scenarios`, `missing_boundary`, `missing_anchor`, `missing_acceptance`, and `missing_research` are always `blocking`.\n- `contradiction` is `blocking` when it changes product behavior, acceptance expectations, or contract/plan routing; otherwise it MAY be `warning` only when a deterministic autofix resolves it fully.\n- `vagueness` is `blocking` when it prevents executable acceptance, boundary declaration, or user-intent resolution; otherwise it MAY be `warning`.\n\nPersistence safety rule:\n- Before persisting `description`, `before`, `after`, `context`, or `question` fields in the quality report, Puppet Master MUST redact secret-like values and MUST NOT copy credentials or tokens into the artifact."
+    },
+    {
+      "evidence_ref_id": "E023",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 329,
+      "line_end": 329,
+      "range_class": "core",
+      "exact_quote": "- Clarification-round limits and `blocked` transition semantics are owned by `Plans/chain-wizard-flexibility.md §15`; this section defines the pre-execution boundary and severity rules only."
+    },
+    {
+      "evidence_ref_id": "E024",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 338,
+      "line_end": 340,
+      "range_class": "core",
+      "exact_quote": "Runtime and consumer docs must not preserve tier-era or request-era canon as silent fallback behavior once replacement canon is locked.\n\nProvider and account fallback may resolve automatically only when an eligible unit exists and policy permits fallback. Otherwise the terminal blocked reason is one of `no_eligible_account`, `no_eligible_profile`, `policy_forbids_fallback`, `hard_constraint_forbids_fallback`, `provider_unavailable`, `no_eligible_units`, `provider_disabled`, `provider_unconfigured`, `all_units_cooldown`, or `all_units_hard_blocked`."
+    },
+    {
+      "evidence_ref_id": "E025",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 347,
+      "line_end": 352,
+      "range_class": "core",
+      "exact_quote": "Blocked and approval decisions resolve through runtime blocked episodes.\n\nRules:\n- blocked actions target `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`\n- `request_id` is lineage/compatibility only\n- `allowed_action_ids[]` is canonical"
+    },
+    {
+      "evidence_ref_id": "E026",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 359,
+      "line_end": 359,
+      "range_class": "core",
+      "exact_quote": "Deterministic defaults MUST preserve workflow overlay identity instead of collapsing it into runtime posture. In particular, `Deep Plan` remains a first-class `/workflow` display identity even when its normalized runtime mode is `plan`; any shared lower-level planning mechanics belong in subordinate `/profile` or behavior fields rather than replacing the `deep_plan` workflow identity."
+    },
+    {
+      "evidence_ref_id": "E027",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 364,
+      "line_end": 366,
+      "range_class": "core",
+      "exact_quote": "Mutating actions must not rely silently on stale or degraded projections.\n\nRegistry promotion flow, Docker Manager drift-detection, and Kubernetes operations are projection-sensitive mutation domains. Container panel state persistence and Docker/K8s event-registration coverage route to `Plans/Containers_Registry_and_Unraid.md` and `Plans/Contracts_V0.md`; Decision_Policy owns the shared guard: stale, partial, unknown, degraded, or account-changed receipt/state/drift evidence returns the action to blocked/preflight-gated posture and requires `/revalidate` immediately before mutation instead of treating a side-panel projection as authority. Registry promotion and drift-detection differentiators remain explicit future-scope anchors until owner docs promote narrower rules."
+    },
+    {
+      "evidence_ref_id": "E028",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 368,
+      "line_end": 368,
+      "range_class": "core",
+      "exact_quote": "Setup/auth actions expose an explicit action-state lifecycle: idle, pending, success, failure, disabled, and post-success. A `/auth` action may not be treated as complete merely because a projection updated."
+    },
+    {
+      "evidence_ref_id": "E029",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 370,
+      "line_end": 370,
+      "range_class": "core",
+      "exact_quote": "Provider pressure policy uses source-class evidence. An `authoritative_remaining_counter` drives `approaching_threshold` at `<= 20% remaining`; weaker inferred signals may be displayed as pressure but must not masquerade as authoritative counters."
+    },
+    {
+      "evidence_ref_id": "E030",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 372,
+      "line_end": 372,
+      "range_class": "core",
+      "exact_quote": "GUI provider/model/account controls belong primarily in Agent-Config; Health and /Usage pages are observability and diagnostics surfaces rather than configuration owners for `/model/account` policy."
+    },
+    {
+      "evidence_ref_id": "E031",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 374,
+      "line_end": 374,
+      "range_class": "core",
+      "exact_quote": "Cross-provider overwrite and /repair decisions for PM-managed targets should use explicit managed sections or /files where possible, avoiding broad free-form replacement when a managed target boundary exists."
+    },
+    {
+      "evidence_ref_id": "E032",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 379,
+      "line_end": 382,
+      "range_class": "core",
+      "exact_quote": "- `/G/L` question surfaces use parent-owned `question-flow` routing. Subagent access stays `default-denial`; `sendPrompt` has dual-context semantics for general prompts versus question-flow work and must not let a child answer the user through a child-local ask channel.\n- Permission-blocked and HITL-required work presents the blocked state with ordered `allowed_action_ids[]` and an approval path. Approval UX uses the canonical `permission-level` ladder (`deny`, `once`, `for session`, `always`) above any per-command approval card; a separate HITL approval card may summarize the same blocked episode, but it does not replace blocked episode identity.\n- Stale recovery action names are compatibility/display labels only: they must resolve to canonical `allowed_action_id` values and ordered `allowed_action_ids[]` in the runtime payload before any recovery button or menu item is executable.\n- Approval cards MUST NOT mutate Persona permission profiles; in-chat approval is session/project-scoped in v1 and never persona-scoped."
+    },
+    {
+      "evidence_ref_id": "E033",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 386,
+      "line_end": 386,
+      "range_class": "core",
+      "exact_quote": "- Debug `browser-context` auto-ingestion is visible, bounded, and revocable: storage-backed browser capture may feed active Debug investigations only as visible Investigation Context items or chips, never as silent chat capture or hidden messages."
+    },
+    {
+      "evidence_ref_id": "E034",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 388,
+      "line_end": 388,
+      "range_class": "core",
+      "exact_quote": "- When a linked Debug runtime identity no longer exists and no deterministic rebinding target exists, reopen into `attention_required` with reason `target_selection_required`; PM must not silently mint or infer a replacement target."
+    },
+    {
+      "evidence_ref_id": "E035",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 390,
+      "line_end": 390,
+      "range_class": "core",
+      "exact_quote": "Provider-owned identity and auth-surface wording must remain subordinate to `AuthState` and the bridge owner. Decision policy may decide fallback posture, but it must not redefine `provider_identity`, `auth_surface`, or bridge capability facts; those checks route to `Plans/Contracts_V0.md` and `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`)."
+    },
+    {
+      "evidence_ref_id": "E036",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 392,
+      "line_end": 392,
+      "range_class": "core",
+      "exact_quote": "Storage/runtime lock ambiguity resolves through the storage owner: `lock-path` is derived from the canonical `logical-root` and the storage fallback canon, not from surface-local path guesses."
+    },
+    {
+      "evidence_ref_id": "E037",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 229,
+      "line_end": 229,
+      "range_class": "core",
+      "exact_quote": "Schema-file binding: `Plans/auto_decisions.schema.json` defines `pm.auto_decisions.schema.v1`, and `Plans/evidence.schema.json` defines `pm.evidence.schema.v1`; schema file paths are existence and validation targets, not competing schema IDs."
+    },
+    {
+      "evidence_ref_id": "E038",
+      "document_path": "Plans/Decision_Policy.md",
+      "line_start": 65,
+      "line_end": 65,
+      "range_class": "core",
+      "exact_quote": "Operational identity is a separate policy layer from provider-account identity. `Multi-Account.md` distinguishes `github_api`, registry identity, Kubernetes context, provider-account routing, and operational side-effect identity; the shared effective-resolution record must not collapse those into `/model/persona/auth/account` or a generic GPT provider field family. Runtime and `/attempt` packets must carry `execution_role` when role-by-provider, role-by-account, and execution-role-aware policy decide the route."
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

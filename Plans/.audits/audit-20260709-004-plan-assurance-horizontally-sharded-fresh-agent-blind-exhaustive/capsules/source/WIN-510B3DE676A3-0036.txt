@@ -1,0 +1,383 @@
+<<< CONTEXT_BEFORE 12679-12690 >>>
+- user retry
+negative_constraints:
+- Remote-mode projects never restore into a silent local fallback path.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- restart/reconnect preserves enough state to disclose whether a projection is current, refreshing, stale, degraded, or unavailable.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 12691-13044 >>>
+### SP-177 - LSP Protocol Trace Inspection Buffer Boundary
+
+```yaml
+plan_unit_id: SP-177
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Each host-aware LSP session keeps a bounded protocol/state trace buffer for operational/debug inspection only, exposing session key, root, current state, last error, restart/backoff, and protocol trace reveal action without becoming canonical app history.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible LSP trace reveal action and debug inspection state.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: lsp_protocol_trace_inspection_buffer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0100
+preserved_exact_tokens:
+- bounded protocol/state trace buffer
+- operational/debug inspection only
+- canonical app history
+- session key
+- root
+- current state
+- last error
+- restart attempt/backoff
+- recent protocol trace reveal action
+negative_constraints:
+- The bounded protocol/state trace buffer is not canonical app history.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-178 - LSP Server State Key Recovery And Restart Count Persistence
+
+```yaml
+plan_unit_id: SP-178
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: LSP server state persists under lsp_server_state.v1:{host_id}:{server_id}:{root_hash} with server config, capabilities snapshot, last known status, restart count, recovery path, and persisted restart counts for stable budget enforcement and degraded-state disclosure.
+gui_related: false
+gui_classification_reason: This unit preserves backend LSP server state keys, recovery, and restart count persistence.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: lsp_server_state_key_recovery_and_restart_count_persistence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0100
+preserved_exact_tokens:
+- lsp_server_state.v1:{host_id}:{server_id}:{root_hash}
+- server config
+- capabilities snapshot
+- last known status
+- restart count
+- recovery path
+- session restore
+- persisted config
+- persisted restart counts
+- budget enforcement
+- degraded-state disclosure
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-179 - Seglog Redb Checkpoint Projector Recovery
+
+```yaml
+plan_unit_id: SP-179
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage recovery rules preserve seglog last-complete-record recovery, redb backup or canonical-seglog rebuild, bounded projector commits, checkpoint loss rebuild, and projector panic/crash behavior that restarts from the last good checkpoint without advancing it.
+gui_related: false
+gui_classification_reason: This unit preserves backend seglog, redb, checkpoint, and projector recovery rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: seglog_redb_checkpoint_projector_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0101
+preserved_exact_tokens:
+- seglog corruption or partial write
+- Append-only with flush
+- last-complete-record recovery
+- CRC32
+- corrupt record -> skip + recovery event
+- redb corruption
+- Restore from backup
+- canonical seglog
+- Projector falls behind
+- bounded batches
+- successful commit
+- Checkpoint lost
+- last retained segment
+- Projector panic or crash
+- Do not advance checkpoint
+- last good checkpoint
+negative_constraints:
+- 'Projector panic or crash: Do not advance checkpoint; restart from last good checkpoint.'
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-180 - User-Visible Storage Error Lock And Boot Recovery
+
+```yaml
+plan_unit_id: SP-180
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: User-visible storage problem handling keeps analytics scans in the background with freshness state, surfaces disk/storage errors, prevents half-migrated stores, enforces active durable-store lock-path/pm.lock read-only mode, and emits storage.boot_recovery after boot-time janitor cleanup.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible storage error, read-only, lock, and boot recovery behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: user_visible_storage_error_lock_and_boot_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0101
+preserved_exact_tokens:
+- Analytics scan blocks UI
+- background
+- last committed rollup
+- freshness state
+- Disk full / storage I/O
+- user-facing error
+- stop unsafe writes
+- storage I/O policy
+- Migration failure
+- previous version intact
+- half-migrated store
+- Multiple app instances
+- exclusive flock
+- lock-path
+- pm.lock
+- logical storage root
+- safe-local fallback
+- /read-only
+- notify the user
+- Boot-time janitor
+- .tmp.*
+- lock freshness
+- storage.boot_recovery
+negative_constraints:
+- Do not open a half-migrated store.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-181 - Storage API LRU And Shutdown Hygiene
+
+```yaml
+plan_unit_id: SP-181
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage API and hygiene rules require append/redb writes to return structured Result values without silent swallow, cap in-memory file records at 10,000 with lazy rebuild, and close the DB/redb handle in the shutdown sequence before process exit.
+gui_related: false
+gui_classification_reason: This unit preserves backend API, LRU, and shutdown hygiene rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: storage_api_lru_and_shutdown_hygiene
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0101
+preserved_exact_tokens:
+- append()
+- redb write operations
+- structured Result
+- no silent swallow
+- File record LRU eviction
+- 10,000
+- rebuild lazily on access
+- DB / redb shutdown hygiene
+- Close the DB handle
+- shutdown sequence
+- process exit
+negative_constraints:
+- append() / redb write operations return structured Result; no silent swallow.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-182 - Compaction And Backup Restore Authority
+
+```yaml
+plan_unit_id: SP-182
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Compaction and backup/restore enhancements preserve sequence order, exclude the active segment, keep replay/projector correctness intact, snapshot canonical stores at one shared boundary, validate checksums before restore, and rebuild JSONL/Tantivy disposable projections instead of treating them as authoritative.
+gui_related: false
+gui_classification_reason: This unit preserves backend compaction and backup/restore authority rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 179.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_179_body_tail
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: compaction_and_backup_restore_authority
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0102
+preserved_exact_tokens:
+- Compaction
+- §2.2.1
+- Optional for MVP
+- MUST preserve seq
+- exclude the active segment
+- replay/projector correctness
+- Backup/restore
+- Scheduled backups
+- canonical stores
+- one shared boundary
+- validate checksums before restore
+- rebuild disposable projections
+- JSONL/Tantivy
+- authoritative
+negative_constraints:
+- Backup/restore must rebuild disposable projections after restore rather than treating them as authoritative.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 13045-13056 >>>
+### SP-183 - Export Replica Per-Project Seglog Event Registry Enhancements
+
+```yaml
+plan_unit_id: SP-183
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Enhancement coverage preserves export from seglog or JSONL mirror, embedded redb read-replica non-applicability, per-project seglog default behavior, event schema registry ownership, and optional streaming projector correctness boundaries.
+gui_related: false
+gui_classification_reason: This unit preserves backend enhancement routing and owner boundaries.
+split_recommended: false
+depends_on:

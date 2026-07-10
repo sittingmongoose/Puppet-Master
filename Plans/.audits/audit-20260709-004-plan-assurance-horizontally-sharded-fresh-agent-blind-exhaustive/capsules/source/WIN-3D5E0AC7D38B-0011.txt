@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE 3847-3858 >>>
+- '40,000-token prune-protect'
+- 'experimental.chat.system.transform'
+- 'experimental.chat.messages.transform'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 3859-4247 >>>
+### ODE-060 - Permission Persistence Wildcard Reject Cascade Delta
+
+```yaml
+plan_unit_id: ODE-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master permission deltas preserve session-scoped always approvals as default, no cross-session persistence, a Rust wildcard engine or library, and reject-all cascade behavior for pending permissions.
+gui_related: false
+gui_classification_reason: This split unit covers backend permission storage and matching behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_persistence_wildcard_reject_cascade_delta
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: permission_persistence_wildcard_reject_cascade_delta
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0057'
+preserved_exact_tokens:
+- 'session-scoped approvals'
+- 'not persisted to disk'
+- 'Rust wildcard engine'
+- 'Reject-all cascade'
+negative_constraints:
+- 'Persistence across sessions is not supported.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+### ODE-061 - Permission Approval GUI CLI Delta
+
+```yaml
+plan_unit_id: ODE-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master approval-flow delta preserves the requirement to wire adopted OpenCode ask/reply semantics through PM-native Slint approval surfaces or CLI fallback, while older Tauri GUI wording is retired source-lineage only.
+gui_related: true
+gui_classification_reason: The unit covers user-visible GUI/CLI approval interaction.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_approval_gui_cli_delta
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: permission_approval_gui_cli_delta
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0057'
+preserved_exact_tokens:
+- 'GUI approval flow'
+- 'Slint approval surfaces'
+- 'CLI interface'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Older Tauri GUI wording is source-lineage only; current GUI owner docs use Rust + Slint.'
+owner_boundary_notes:
+- 'Permissions_System and human-in-the-loop own adopted PM approval behavior.'
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+### ODE-062 - Commands Discovery Template MCP Delta
+
+```yaml
+plan_unit_id: ODE-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master command deltas preserve .puppet-master/commands discovery paths, global config commands, Rust reimplementation of $ARGUMENTS, $1/$2, shell injection, @file syntax, and the caveat that MCP prompt integration may differ.
+gui_related: false
+gui_classification_reason: The unit records command runtime/template behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: commands_discovery_template_mcp_delta
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: commands_discovery_template_mcp_delta
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0058'
+preserved_exact_tokens:
+- '.puppet-master/commands/'
+- '~/.config/puppet-master/commands/'
+- '$ARGUMENTS'
+- '$1'
+- '$2'
+- 'shell injection'
+- '@file'
+- 'MCP prompt integration'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+### ODE-063 - Formatter Event Detection Invocation Delta
+
+```yaml
+plan_unit_id: ODE-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master formatter deltas preserve file.edited event triggering, Rust or delegated formatter auto-detection, and substitution of BunProc.which() with system which-based detection and direct process invocation.
+gui_related: false
+gui_classification_reason: The unit records formatter runtime behavior, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: formatter_event_detection_invocation_delta
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: formatter_event_detection_invocation_delta
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0059'
+preserved_exact_tokens:
+- 'file.edited'
+- 'Rust event system'
+- 'Formatter auto-detection'
+- 'BunProc.which()'
+- 'which'
+- 'direct process invocation'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+### ODE-064 - Skills Compatibility And PM Runtime Boundary
+
+```yaml
+plan_unit_id: ODE-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master skill deltas preserve OpenCode as architecture pattern only, PM-native skills as canonical runtime path, compatibility roots .claude/skills and .agents/skills, optional provider/tool-native projection, and PM registry/readiness/context bundling/skill tool authority.
+gui_related: false
+gui_classification_reason: The unit records skill runtime and compatibility boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_compatibility_and_pm_runtime_boundary
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: skills_compatibility_and_pm_runtime_boundary
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0060'
+preserved_exact_tokens:
+- 'Architecture pattern, not ownership transfer'
+- '.claude/skills'
+- '.agents/skills'
+- 'Projection posture'
+- 'Discovery vs runtime'
+- 'skill tool'
+negative_constraints: []
+compatibility_only_notes:
+- 'Compatibility import does not make external roots canonical.'
+- 'Provider-native or tool-native skill projection is optional compatibility only.'
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Skills_System and PM runtime registry remain authoritative.'
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Provider_OpenCode.md'
+```
+
+### ODE-065 - Plugins Runtime Hooks Auth Tool Override Delta
+
+```yaml
+plan_unit_id: ODE-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master plugin deltas preserve the OpenCode JavaScript/TypeScript plugin baseline as reference, require a PM Rust plugin API choice, support the hook subset defined in Plugins_System, implement auth providers natively, and require override_builtin: true for plugin tool overrides.
+gui_related: false
+gui_classification_reason: The unit records plugin/runtime behavior, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_runtime_hooks_auth_tool_override_delta
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: plugins_runtime_hooks_auth_tool_override_delta
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0061'
+preserved_exact_tokens:
+- 'JavaScript/TypeScript'
+- 'WASM'
+- 'dynamic libraries'
+- 'subprocess-based'
+- 'scripting language bindings'
+- 'Plans/Plugins_System.md §4'
+- 'auth providers natively'
+- 'override_builtin: true'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+### ODE-066 - Models Provider Transform Priority Overflow Boundary
+
+```yaml
+plan_unit_id: ODE-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Puppet Master model deltas preserve Vercel AI SDK as external baseline only, Rust-native provider abstraction, provider transform replication, configurable model priority list, maintained overflow regex patterns, and model/memory owner-boundary verification against Models_System and assistant-memory-subsystem.
+gui_related: false
+gui_classification_reason: The unit records model/provider runtime boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: models_provider_transform_priority_overflow_boundary
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: models_provider_transform_priority_overflow_boundary
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0062'
+preserved_exact_tokens:
+- 'Vercel AI SDK'
+- 'Plans/Models_System.md'
+- 'hardcoded priority list'
+- 'regex-based overflow detection'
+- 'Plans/assistant-memory-subsystem.md'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Models_System and assistant-memory-subsystem own adopted model and memory behavior.'
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+### ODE-067 - Upstream Notes Anti Equivalence Guard
+
+```yaml
+plan_unit_id: ODE-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Upstream notes exist to prevent downstream agents from assuming Puppet Master equals OpenCode by recording where key upstream models live and which deltas commonly cause mis-mapping.
+gui_related: false
+gui_classification_reason: The unit records audit guidance, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered OpenCode baseline or delta fact is represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.'
+- 'OpenCode-derived behavior remains reference lineage unless the named Puppet Master owner doc explicitly adopts it.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: upstream_notes_anti_equivalence_guard
+reasoning_tier: standard
+context_scope: opencode_deep_extraction_standardization
+implementation_surfaces:
+- Plans/OpenCode_Deep_Extraction.md
+node_compile_hint:
+  mode: upstream_notes_anti_equivalence_guard
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0063'
+preserved_exact_tokens:
+- 'assuming Puppet Master == OpenCode'
+- 'where'
+- 'deltas'
+- 'mis-mapping'
+negative_constraints:
+- 'Do not assume Puppet Master == OpenCode.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/OpenCode_Deep_Extraction.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 4248-4259 >>>
+### ODE-068 - ToolContext And Tool Lifecycle Pointers
+
+```yaml
+plan_unit_id: ODE-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/OpenCode_Deep_Extraction.md
+canonical_text: >-
+  Tool upstream notes preserve plugin and internal tool contracts, tool loading/registry paths, model-gated tool availability, and lifecycle hooks tool.execute.before and tool.execute.after as plugin triggers rather than Bus events.
+gui_related: false
+gui_classification_reason: The unit records tool/runtime pointers, not GUI behavior.
+split_recommended: false

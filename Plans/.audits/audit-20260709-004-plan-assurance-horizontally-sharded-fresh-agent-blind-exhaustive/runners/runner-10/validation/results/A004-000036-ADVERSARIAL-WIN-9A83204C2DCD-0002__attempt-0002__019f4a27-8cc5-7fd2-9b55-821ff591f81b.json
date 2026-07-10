@@ -1,0 +1,23 @@
+{
+  "agent_instance_id": "019f4a27-8cc5-7fd2-9b55-821ff591f81b",
+  "agent_nickname": "Arendt",
+  "agent_path": "/root/a004_r10_adv_000036_v2a2_3fb71d6c",
+  "agent_thread_id": "019f4a27-8cc5-7fd2-9b55-821ff591f81b",
+  "assignment_id": "A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002",
+  "attempt": 2,
+  "attempt_id": "attempt-2",
+  "completed_at": "2026-07-10T03:58:30.765Z",
+  "dispatch_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/dispatch_receipts/A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002__attempt-0002__a004_r10_adv_000036_v2a2_3fb71d6c.json",
+  "dispatch_receipt_sha256": "3831a7d313094f8ec623d89f0663c209eea489496e0c4652b27ca4d5b7edd23c",
+  "errors": [],
+  "model": "gpt-5.6-sol",
+  "no_followup_reuse": true,
+  "reasoning_effort": "ultra",
+  "result_bytes": 38839,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/raw_results/attempts/A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002__attempt-0002__019f4a27-8cc5-7fd2-9b55-821ff591f81b.json",
+  "result_sha256": "5b8f5176e7a6fc010f28e1379b796473699fc6c029e3d16352862f6f56ec002f",
+  "session_created_at": "2026-07-10T03:52:13.804Z",
+  "session_ref": "/Users/jaredsmacbookair/.codex/sessions/2026/07/09/rollout-2026-07-09T23-52-13-019f4a27-8cc5-7fd2-9b55-821ff591f81b.jsonl",
+  "terminal_after_result": true,
+  "validation_passed": true
+}

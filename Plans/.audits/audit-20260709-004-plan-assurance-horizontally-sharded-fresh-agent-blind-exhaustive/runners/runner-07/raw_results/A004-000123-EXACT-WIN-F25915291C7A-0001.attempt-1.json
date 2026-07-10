@@ -1,0 +1,733 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000123-EXACT-WIN-F25915291C7A-0001",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000123-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0123_3c96f392",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-F25915291C7A-0001",
+  "doc_id": "DOC-F25915291C7A",
+  "document_path": "Plans/Multi-Account.md",
+  "core_range": [
+    1,
+    386
+  ],
+  "context_ranges": [
+    [
+      387,
+      398
+    ]
+  ],
+  "source_sha256": "da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848",
+  "core_sha256": "b37b72db7fd8ef7261dce8e36e5d88031d673757ba55153a1aab59cf9b06e429",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000123-EXACT-WIN-F25915291C7A-0001.json",
+  "capsule_sha256": "520c419d6452d0dd00c6ac835709561092a6eda7afbec3185eafc6ad61b0c984",
+  "capsule_bytes": 1602,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-F25915291C7A-0001.txt",
+  "source_excerpt_sha256": "79a49cd3958c4d3be02e19683624a29050c202c0bae9737a0c6e82606a947e33",
+  "source_excerpt_bytes": 36960,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-A004-000123-001",
+      "statement": "Account identity is a shared runtime contract: account-bearing runtime, bridge, and permission envelopes preserve requested and effective identity while actor kind and execution context remain distinct.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-005",
+        "EVID-A004-000123-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000123-002",
+      "statement": "Provider registry identity is modeled around concrete provider entries, additive provider-family grouping, and an explicit transport kind rather than a fixed vendor-family catalog.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-011",
+        "EVID-A004-000123-012",
+        "EVID-A004-000123-014"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000123-003",
+      "statement": "Runtime resolution records requested and effective provider-family, transport, profile, account, health, pressure, projection, outcome, and reason information around a separately modeled selectable unit.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-025",
+        "EVID-A004-000123-026",
+        "EVID-A004-000123-028"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000123-004",
+      "statement": "Rotation is boundary-based and sticky, persists normalized reasons, and keeps health, cooldown, pressure, and resolution outcome separate.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-032",
+        "EVID-A004-000123-033",
+        "EVID-A004-000123-034"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000123-005",
+      "statement": "Auto-switch eligibility is policy-gated, and evidence evaluation is ordered from hard runtime failure through increasingly weaker heuristic sources.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-037",
+        "EVID-A004-000123-038"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000123-006",
+      "statement": "GUI truth includes account settings exposure, recent switch lineage with source confidence, and separate projections for health, cooldown, usage pressure, and resolution outcome.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-003",
+        "EVID-A004-000123-004",
+        "EVID-A004-000123-034"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000123-007",
+      "statement": "Context-only lines provide threshold defaults, routing preferences, soft-signal transitions, reset revalidation behavior, and optional exhausted-state copy; these context details were not used as evidence for a core finding.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-039",
+        "EVID-A004-000123-040",
+        "EVID-A004-000123-041"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-A004-000123-001",
+      "severity": "high",
+      "statement": "The canonical account-row contract has incompatible field vocabularies and auth representations. The locked minimum uses `label` and an `auth_surface` family of `oauth | api_key`; the canonical registration shape uses `display_name` and `auth_method`; the later `auth_surface` enum instead contains credential-attachment modes. No mapping, version boundary, or precedence rule determines the persisted and serialized representation.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-017",
+        "EVID-A004-000123-019",
+        "EVID-A004-000123-022"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-002",
+      "severity": "high",
+      "statement": "Account rows use `provider_id`, but provider-registry canon defines `provider_entry_id` as the concrete runtime key and `provider_family_id` as a separate grouping key. The window never defines which key `provider_id` references, leaving the account-to-runtime foreign-key contract ambiguous.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-014",
+        "EVID-A004-000123-018",
+        "EVID-A004-000123-019"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-003",
+      "severity": "high",
+      "statement": "Credential-storage authority conflicts internally. The schema describes the locator as an OS-credential-storage handle and says actual tokens or keys remain only in OS credential storage, while the supported stores explicitly include environment variables, encrypted files, and delegated CLI credentials. It does not say whether those are exceptions, contain credentials directly, or must indirect again through an OS store.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-017",
+        "EVID-A004-000123-019",
+        "EVID-A004-000123-020",
+        "EVID-A004-000123-021"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-004",
+      "severity": "medium",
+      "statement": "`requested_account_binding` allows `none`, yet every account-bearing envelope and resolver output requires `requested_account_id`. No nullability, omission, sentinel, or validation rule defines how an unbound request is represented.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-005",
+        "EVID-A004-000123-006",
+        "EVID-A004-000123-025"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-005",
+      "severity": "high",
+      "statement": "Preference semantics are not deterministic. Binding is said to distinguish preference from requirement and to control fallback, but a manual preferred-account override or `Set Preferred` is independently declared a no-fallback condition. The contract does not distinguish ordinary `preferred` binding from this hard preferred control or define their precedence.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-030",
+        "EVID-A004-000123-036"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-006",
+      "severity": "high",
+      "statement": "Resolver output requires `selectable_unit_id`, while selectable-unit identity defines the stable key as `unit_id`. No equality, alias, or derivation rule connects the two identifiers, so persistence and joins can diverge.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-025",
+        "EVID-A004-000123-026"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-007",
+      "severity": "high",
+      "statement": "Required lifecycle and runtime state fields lack closed vocabularies and transition/precedence rules. Only account `status` is closed; `availability_state`, `configuration_state`, `credential_state`, selectable-unit health and pressure, effective health and pressure, instruction projection, cooldown, and resolution outcome are required or projected without a state machine relating them.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-018",
+        "EVID-A004-000123-019",
+        "EVID-A004-000123-025",
+        "EVID-A004-000123-026",
+        "EVID-A004-000123-028",
+        "EVID-A004-000123-034"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-008",
+      "severity": "high",
+      "statement": "The canonical reason-code set cannot encode every mandated blocked/no-fallback path without invention. Explicit auth-mode binding, manual preferred control, policy-disabled fallback, `validation_required`, invalid or missing credentials, and absence of an eligible backup do not have explicit normalized codes or a documented mapping, even though the resolver requires ordered `reason_codes[]` and the no-fallback rule requires a persisted reason.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-025",
+        "EVID-A004-000123-029",
+        "EVID-A004-000123-033",
+        "EVID-A004-000123-036"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-009",
+      "severity": "high",
+      "statement": "Cooldown, hard block, invalid readiness, and unavailability have conflicting failover effects. Hard conditions may require an in-run retry and the reason set includes cooldown preemptive switching, yet the hard rule says a current unit in cooldown or hard block receives no fallback; auto-switch is also allowed for hard exhaustion and temporary unavailability. No precedence or new-attempt boundary resolves these outcomes.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-032",
+        "EVID-A004-000123-033",
+        "EVID-A004-000123-036",
+        "EVID-A004-000123-037"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-010",
+      "severity": "high",
+      "statement": "The resolver is not fully deterministic despite deterministic-default and implementation-ready framing. Ordered account rows, priorities, overrides, health, pressure, requested policy, binding, sticky behavior, and signal weights are present, but there is no eligibility order, policy-precedence table, equal-priority tie-breaker, or exact rule for choosing among multiple eligible selectable units.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-002",
+        "EVID-A004-000123-016",
+        "EVID-A004-000123-027",
+        "EVID-A004-000123-028",
+        "EVID-A004-000123-030",
+        "EVID-A004-000123-032",
+        "EVID-A004-000123-038"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-011",
+      "severity": "medium",
+      "statement": "Max-attempt failover caps and per-account retry budgets are required product/schema concepts, but the core defines no units, default value, decrement point, reset scope, exhaustion outcome, or interaction between account retry budget and run-level failover cap.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-042",
+        "EVID-A004-000123-017",
+        "EVID-A004-000123-018"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-012",
+      "severity": "medium",
+      "statement": "Delete and update operations must preserve requested/effective history, but the contract does not define tombstoning versus physical deletion, identifier reuse, historical label/display projection, credential cleanup, or how historical joins behave after mutation.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-030",
+        "EVID-A004-000123-035"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000123-013",
+      "severity": "medium",
+      "statement": "The core claims that the document is sufficient to derive implementation and that the necessary design exists, but it supplies no explicit acceptance scenarios or executable evidence for schema serialization, resolver precedence, credential handling, failure rotation, or history-preserving mutations.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-047",
+        "EVID-A004-000123-008"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NONGAP-A004-000123-001",
+      "statement": "Provider-using scope is explicitly cross-surface and not Orchestrator-only, while actor and run ontologies remain distinct.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-001",
+        "EVID-A004-000123-007"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-002",
+      "statement": "Stable internal account identity is explicitly separated from subordinate provider-native display metadata.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-006",
+        "EVID-A004-000123-015",
+        "EVID-A004-000123-030"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-003",
+      "statement": "Concrete runtime surfaces are not collapsed into provider families, and distinct Codex auth families plus Gemini Direct and Antigravity routes remain separate account rows or provider entries.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-011",
+        "EVID-A004-000123-012",
+        "EVID-A004-000123-023"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-004",
+      "statement": "Historical requested state and completed-attempt ownership are preserved, and normal switching is explicitly limited to attempt/message boundaries.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-030",
+        "EVID-A004-000123-032"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-005",
+      "statement": "Normalized scheduler reasons are explicitly persisted separately from raw provider conditions retained as evidence.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-033"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-006",
+      "statement": "Health, cooldown, usage pressure, and resolution outcome are explicitly separate state dimensions rather than aliases.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-034"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-007",
+      "statement": "The window explicitly prevents stale CLI-centric Codex and Copilot assumptions, retires Gemini CLI vocabulary, and identifies the active direct/CLI/server-bridge planning direction.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-009",
+        "EVID-A004-000123-010"
+      ]
+    },
+    {
+      "non_gap_id": "NONGAP-A004-000123-008",
+      "statement": "Regardless of the unresolved credential-backend authority, actual tokens and keys are explicitly prohibited from project config, redb state, and logs.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-024"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-A004-000123-001",
+      "statement": "It is unknown under the permitted scope whether referenced auth, prompt-pipeline, storage, GitHub credential, or assistant navigation contracts define the missing field mappings, enums, state transitions, and policy precedence.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-043",
+        "EVID-A004-000123-044",
+        "EVID-A004-000123-045"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000123-002",
+      "statement": "The factual currency and exact behavior of the cited external claude-nonstop and OpenCode sources are unknown because external research and those sources were outside the permitted inputs.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-046",
+        "EVID-A004-000123-008"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000123-003",
+      "statement": "It is unknown whether the referenced GUI owner specification supplies concrete control placement, authorization, loading/empty/error behavior, destructive-action confirmation, accessibility, and acceptance criteria for the required account settings surfaces.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-003",
+        "EVID-A004-000123-043"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000123-004",
+      "statement": "Context lines add threshold and softer-signal behavior, but it is unknown whether later unreviewed core windows close the complete resolver/state-machine and retry semantics.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-039",
+        "EVID-A004-000123-040",
+        "EVID-A004-000123-041"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-000123-005",
+      "statement": "It is unknown whether implementation acceptance tests, fixtures, or executable receipts exist outside this permitted window despite the core's sufficiency claims.",
+      "evidence_ref_ids": [
+        "EVID-A004-000123-047",
+        "EVID-A004-000123-008"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "EVID-A004-000123-001",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 23,
+      "line_end": 23,
+      "range_class": "core",
+      "exact_quote": "- **Scope:** Multi-account routing is shared provider-runtime behavior for every provider-using role, including assistant, interviewer, requirements builder, PRD builder, package/seam overseers, node workers, and overseer-spawned workers. It is not an Orchestrator-only feature."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-002",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 30,
+      "line_end": 32,
+      "range_class": "core",
+      "exact_quote": "- **Default behavior:** Multi-account auto-switching is ON by default for provider-using roles unless policy disables it.\n- **Policy ownership:** Multi-account policy is primarily project-owned. Runs snapshot the effective policy space at run start, and each attempt/message records the effective account actually used.\n- **Requested/effective identity:** Requested provider/model/effort/persona/auth mode/account policy and effective provider/model/effort/persona/auth mode/account MUST remain visible and queryable."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-003",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 43,
+      "line_end": 43,
+      "range_class": "core",
+      "exact_quote": "- **Settings-spec and GUI coverage:** multi-account support is both a runtime-policy seam and a settings-spec / GUI coverage requirement. `/runtime-side` behavior may exist at the `/concept` level before the settings `/GUI` is complete, but provider account selection, account pool policy, and switch thresholds must not stay under-specced or hidden from the account settings concept."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-004",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 53,
+      "line_end": 53,
+      "range_class": "core",
+      "exact_quote": "- **Current effective account state:** current effective account displays include recent switch reason, `/account`, current-state, and `source_confidence` so current health does not erase switch lineage. Legacy `signal_confidence` spelling is compatibility/source-lineage only."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-005",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 86,
+      "line_end": 93,
+      "range_class": "core",
+      "exact_quote": "Every runtime, bridged-provider, and permission-facing envelope that carries account identity must preserve:\n- `requested_account_id`\n- `requested_account_policy`\n- `requested_account_binding`\n- `effective_account_id`\n- `effective_provider_identity`\n- `execution_role`\n- `operational_identity`"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-006",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 97,
+      "line_end": 100,
+      "range_class": "core",
+      "exact_quote": "- Add `requested_account_binding` and govern `provider_account_id` as subordinate provider-native metadata.\n- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes.\n- Retire `provider_account_id` from canonical account-identity naming; keep it only as provider-native metadata that shadows the effective provider handle.\n- `requested_account_binding` remains the canonical selector for `none`, `preferred`, or `required` fallback behavior."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-007",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 103,
+      "line_end": 105,
+      "range_class": "core",
+      "exact_quote": "- Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator.\n- They remain distinct actor/run kinds rather than package/seam/node execution objects.\n- Cross-surface consumers may reuse the same requested/effective identity envelope, but they must preserve actor kind and execution context instead of collapsing everything into orchestration-only terms."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-008",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 114,
+      "line_end": 114,
+      "range_class": "core",
+      "exact_quote": "**Answer:** Yes. Design and patterns are documented and backed by claude-nonstop and both OpenCode PRs. Remaining work is Rust port and provider-specific clients (usage APIs, rate-limit parsing)."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-009",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 144,
+      "line_end": 144,
+      "range_class": "core",
+      "exact_quote": "Current-canon correction for this inventory: sections `3. Assessment` and `3.2/3.3` must not revive stale CLI-centric assumptions for Codex or GitHub Copilot. Codex and GitHub Copilot are direct providers in PM; Cursor account-isolation uses the runnable `cursor-agent` account boundary under PM-owned `HOME` / `XDG_*` roots; Gemini quota project-context can affect the effective quota identity even when the selected provider entry remains unchanged."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-010",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 154,
+      "line_end": 154,
+      "range_class": "core",
+      "exact_quote": "- **Stack:** Rust + Slint target; the planning model uses an open-ended Provider -> models catalog with direct, CLI-runtime, and server-bridge routes. Gemini CLI is retired/source-lineage only; Antigravity CLI replaces it in active CLI-runtime coverage. Codex/OpenAI, GitHub Copilot, Cursor API/SDK routes, Kimi For Coding, MiniMax Coding Plan, and Z.AI/Zhipu coding-plan routes are direct-provider/account-profile entries where verified. CLI-only text in this section is stale compatibility lineage unless reasserted by a later PlanUnit. **PlatformConfig** and `platform_specs.rs` are legacy vocabulary and must not be treated as the final account/provider registry."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-011",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 167,
+      "line_end": 167,
+      "range_class": "core",
+      "exact_quote": "The current planning model contains an open-ended Provider -> models catalog, not exactly 7 provider entries. Provider entries are concrete runtime/account/billing/transport routes; provider families only group those entries for policy and display."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-012",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 179,
+      "line_end": 179,
+      "range_class": "core",
+      "exact_quote": "`provider_family_id` is additive grouping metadata only and MUST NOT replace the concrete provider entry id."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-013",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 181,
+      "line_end": 181,
+      "range_class": "core",
+      "exact_quote": "Each provider entry MUST also declare the allowed `auth_surface` values its runtime accepts so PM can validate account compatibility before scheduling and so the HTTP/client layer knows how credentials must be attached or delegated."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-014",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 183,
+      "line_end": 188,
+      "range_class": "core",
+      "exact_quote": "Provider-entry identity fields are part of Agent-Config/provider registry canon:\n- `provider_entry_id`\n- `provider_family_id`\n- `transport_kind = direct_api | cli_runtime | server_bridge`\n\n`provider_entry_id` identifies the concrete runtime surface, `provider_family_id` groups compatible entries for policy and pooling, and `transport_kind` records whether PM calls the provider through a `direct_api`, `cli_runtime`, or `server_bridge` path. These fields are additive; they do not rename requested/effective runtime handles owned by Orchestrator or Prompt Pipeline snapshots."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-015",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 192,
+      "line_end": 192,
+      "range_class": "core",
+      "exact_quote": "Account records may carry `provider_identity` for upstream identity display, but that value is descriptive `/provider-native` metadata only; the stable PM key remains the account/profile id."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-016",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 203,
+      "line_end": 203,
+      "range_class": "core",
+      "exact_quote": "Account-backed providers store ordered account rows with stable ids."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-017",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 205,
+      "line_end": 220,
+      "range_class": "core",
+      "exact_quote": "Locked `account-profile` schema minimum:\n- `account_id`\n- `label`\n- `auth_surface` = `oauth | api_key` or the provider-specific canonical auth surface\n- `enabled`\n- `priority`\n- `threshold_override?`\n- `switch_mode_override?`\n- `cooldown_policy?`\n- `retry_budget?`\n- `quota_profile_ref?`\n- `allowed_roles?`\n- `disallowed_roles?`\n- `configured_project_id?` when project context affects quota or routing\n- `display_identity?`\n- `credential_locator` or `credential_ref` as the non-secret handle to OS credential storage"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-018",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 222,
+      "line_end": 238,
+      "range_class": "core",
+      "exact_quote": "Minimum fields:\n- `account_id`\n- `provider_id`\n- `label`\n- `auth_surface`\n- `enabled`\n- `priority`\n- `provider_identity?`\n- `credential_ref`\n- `configured_project_id?`\n- `selected_billing_entity_id?`\n- `threshold_override?`\n- `retry_budget?`\n- `cooldown_until?`\n- `availability_state`\n- `configuration_state`\n- `credential_state`"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-019",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 241,
+      "line_end": 246,
+      "range_class": "core",
+      "exact_quote": "- `account_id` is the internal stable key.\n- `provider_identity` is descriptive provider-native metadata only.\n- secrets remain outside config/state stores; actual `/tokens/keys` remain only in OS credential storage.\n- separate auth families that change quota semantics remain separate account rows.\n- the canonical account-registration shape is `{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }`; additive runtime/health fields may extend this shape without replacing the canonical keys.\n- `status` is the user-facing lifecycle summary and closes to `active | expired | revoked | error`."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-020",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 249,
+      "line_end": 249,
+      "range_class": "core",
+      "exact_quote": "- `credential_ref` is a pointer to where the credential lives, never the secret itself. Format: `{credential_store}:{key_path}`."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-021",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 250,
+      "line_end": 259,
+      "range_class": "core",
+      "exact_quote": "- supported `credential_ref` stores are:\n  - `os_keychain` for OS-native secret stores (macOS Keychain, Windows Credential Manager, Linux Secret Service)\n  - `env` for environment-variable indirection\n  - `file` for encrypted file-backed credentials\n  - `cli` for credentials delegated to an external CLI tool/runtime\n- example `credential_ref` values:\n  - `os_keychain:pm/openai/account_abc123`\n  - `env:OPENAI_API_KEY`\n  - `file:~/.config/pm/credentials/antigravity_cli.json`\n  - `cli:antigravity/default`"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-022",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 260,
+      "line_end": 267,
+      "range_class": "core",
+      "exact_quote": "- `auth_surface` is the enum describing where/how the credential is consumed at runtime.\n- `auth_surface` values are:\n  - `header_bearer` for `Authorization: Bearer <token>`\n  - `header_api_key` for provider-specific API-key headers such as `x-api-key`\n  - `query_param` for API key in query string; this path is deprecated and PM should warn before use\n  - `cli_managed` when the CLI runtime performs auth internally and PM delegates execution\n  - `oauth_token` for OAuth2 access tokens attached through the `Authorization` header\n- each provider definition MUST specify its supported `auth_surface` values so the HTTP client knows how to attach credentials and so account validation can reject incompatible pairings early."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-023",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 270,
+      "line_end": 272,
+      "range_class": "core",
+      "exact_quote": "- Codex `ChatGPT` and Codex `API key` rows are separate account rows.\n- many ChatGPT-backed Codex accounts and many API-key-backed Codex accounts may coexist under the same Codex provider entry; switching, usage display, cooldown behavior, and preferred-account logic must preserve the auth-family identity.\n- Gemini Direct API-key accounts remain separate from Antigravity CLI account/profile rows because direct API and CLI-runtime routes live on different provider entries. Gemini CLI auth-backed rows are retired/source-lineage only."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-024",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 280,
+      "line_end": 280,
+      "range_class": "core",
+      "exact_quote": "The canonical `account-profile` row schema includes `account_id`, `label`, `auth_surface`, `enabled`, `priority`, `threshold_override`, `switch_mode_override`, `cooldown_policy`, `retry_budget`, `quota_profile_ref`, `allowed_roles`, `disallowed_roles`, `configured_project_id`, `display_identity`, and `credential_locator` or `credential_ref` as the non-secret OS credential handle. Actual `/tokens/keys` never enter project config, redb state, or logs."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-025",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 282,
+      "line_end": 304,
+      "range_class": "core",
+      "exact_quote": "Required fields:\n- requested_account_id\n- requested_account_binding\n- requested_account_policy\n- effective_account_id\n- provider_account_id\n- login\n- auth_realm\n- effective_provider_identity\n- execution_role\n- operational_identity\n- selectable_unit_id\n- resolution_outcome\n- reason_codes[]\n- requested_provider_family_id?\n- effective_provider_family_id?\n- requested_transport_kind?\n- effective_transport_kind?\n- requested_connection_profile_id?\n- effective_connection_profile_id?\n- effective_health_state?\n- effective_pressure_state?\n- instruction_projection_state?"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-026",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 306,
+      "line_end": 318,
+      "range_class": "core",
+      "exact_quote": "Selectable-unit identity fields:\n- `selectable_unit`\n- `unit_id`\n- `provider_entry_id`\n- `provider_family_id`\n- `unit_kind = direct_account | cli_account_root | server_profile`\n- `root_path`\n- `health_state`\n- `pressure_state`\n- `last_usage_snapshot`\n- `last_cooldown_snapshot`\n\n`selectable_unit` is the runtime candidate PM can actually choose for an attempt. `unit_id` is stable within the provider registry, `provider_entry_id` links the unit back to the concrete runtime surface, `provider_family_id` preserves family-pooling context, and `unit_kind` distinguishes `direct_account`, `cli_account_root`, and `server_profile` candidates without treating those shapes as interchangeable. Runtime state snapshots also preserve the unit's `root_path`, `health_state`, `pressure_state`, `last_usage_snapshot`, and `last_cooldown_snapshot`."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-027",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 320,
+      "line_end": 320,
+      "range_class": "core",
+      "exact_quote": "Provider-registry-only discovery timestamps and `/status` caches stay in provider-registry internals, not canonical run snapshots. Per-account shared-overlay advanced knobs may influence candidate preparation, but they remain provider-registry state unless copied into requested/effective runtime evidence."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-028",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 322,
+      "line_end": 322,
+      "range_class": "core",
+      "exact_quote": "Requested/effective resolver output must keep provider-family, transport, and connection-profile intent distinct from the selected unit. `requested_provider_family_id`, `requested_transport_kind`, and `requested_connection_profile_id` record the explicit or policy-derived request; `effective_provider_family_id`, `effective_transport_kind`, and `effective_connection_profile_id` record the provider family, transport, and profile that actually executed after fallback, substitution, pressure, health, or policy filtering. `effective_health_state`, `effective_pressure_state`, and `instruction_projection_state` are effective runtime states for the selected unit/projection at dispatch time, not replacements for account `status`, generic availability, or provider-native drift records."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-029",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 324,
+      "line_end": 338,
+      "range_class": "core",
+      "exact_quote": "Canonical terms and values:\n- requested_account_id\n- requested_account_binding\n- requested_account_policy\n- effective_account_id\n- provider_account_id\n- login\n- account_id is the internal stable key.\n- provider_identity is descriptive metadata only.\n- the canonical account-registration shape is { account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }\n- requested/effective execution identity\n- effective_provider_identity\n- execution_role\n- operational_identity\n- `reason_codes` is the persisted reason-code family; `reason_codes[]` records the ordered concrete reasons for the selected `selectable_unit_id` and `resolution_outcome`."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-030",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 344,
+      "line_end": 351,
+      "range_class": "core",
+      "exact_quote": "Behavioral rules:\n- Stable internal account identity outranks provider-native display metadata.\n- Requested/effective account state remains explicit across runtime resolution.\n- Stable internal account identity is separate from provider-native display metadata.\n- Secrets remain outside config and state stores.\n- Requested state must remain recoverable in historical snapshots.\n- Binding distinguishes preference from requirement.\n- Fallback behavior depends on binding rather than ad hoc UI or provider policy."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-031",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 354,
+      "line_end": 354,
+      "range_class": "core",
+      "exact_quote": "- effective account identity must remain available to permission and approval consumers"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-032",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 356,
+      "line_end": 359,
+      "range_class": "core",
+      "exact_quote": "- **Switch boundary:** Switching happens only at attempt/message boundaries. Never switch mid-attempt.\n- **Soft-threshold boundary:** soft-threshold auto-switch behavior must not switch mid-turn; for soft-threshold pressure, PM waits until a turn/attempt boundary unless hard exhaustion, cooldown, unhealthy account, or another hard failover condition requires in-run retry.\n- **Completed ownership rule:** A completed message/attempt always belongs to the account it actually used. The next message/attempt re-resolves and may switch immediately.\n- **Sticky behavior:** Routing is conservative and sticky. A recovered higher-priority account does not immediately steal traffic back unless policy and health justify it."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-033",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 363,
+      "line_end": 363,
+      "range_class": "core",
+      "exact_quote": "Scheduler switch records MUST persist stable reason codes rather than UI-only text. The canonical account-selection reason set includes `soft_threshold_preemptive_switch`, `threshold_preemptive_switch`, `cooldown_preemptive_switch`, `preferred_recovered`, `hard_exhaustion_failover`, `cooldown_active`, `account_unhealthy`, `profile_unhealthy`, `credentials_expired`, `needs_configuration`, `provider_disconnected`, and `model_incompatible`. Provider adapters may surface raw provider conditions such as `unsupported-model`, `workspace-deactivated`, or `provider-unhealthy`, but the scheduler stores the normalized PM reason in the requested/effective runtime snapshot and keeps the raw condition as evidence."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-034",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 365,
+      "line_end": 365,
+      "range_class": "core",
+      "exact_quote": "GUI and `/runtime` projections MUST keep selectable-unit `health`, `cooldown`, `usage pressure`, and per-attempt `resolution outcome` as separate `/state` dimensions. A cooldown can be healthy evidence of a provider-reported block, usage pressure can exist without an auth failure, and resolution outcome records why the resolver chose or skipped a unit without overwriting account health."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-035",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 367,
+      "line_end": 368,
+      "range_class": "core",
+      "exact_quote": "Provider adapters surface raw health, `/pressure/usage`, and other runtime facts, but PM owns final selectable-unit resolution, requested `/effective` disclosure, and cross-provider switching policy.\nProvider-auth account operations include `/set-active/delete/update` routes for selecting, deleting, or updating account records; these mutate provider-auth metadata and must preserve requested/effective history rather than silently rewriting past runs."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-036",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 370,
+      "line_end": 370,
+      "range_class": "core",
+      "exact_quote": "The `/hard` no-fallback rule is explicit: no-fallback applies when the request names an explicit `auth-mode`, when manual preferred-account override or `Set Preferred` is active as `/control`, when policy disallows fallback, when the current selectable unit is in cooldown or hard block, when account readiness is `needs_configuration` or `validation_required`, when credentials are invalid or missing, or when no eligible backup account exists. In those cases PM records the blocked/no-fallback reason instead of silently crossing to another auth surface, provider entry, or account family."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-037",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 374,
+      "line_end": 378,
+      "range_class": "core",
+      "exact_quote": "Auto-switch is allowed when policy permits and one of these occurs:\n- hard exhaustion\n- projected remaining quota below threshold\n- severe rate-limit pressure\n- account temporarily unavailable or capacity-constrained"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-038",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 380,
+      "line_end": 386,
+      "range_class": "core",
+      "exact_quote": "Signal weighting order:\n1. hard runtime failure\n2. direct provider/account telemetry\n3. explicit structured runtime output\n4. provider-specific heuristics\n5. provider-doc/default expectations for that product/account class\n6. log-derived heuristics or heuristic/inferred local pressure only"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-039",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 388,
+      "line_end": 388,
+      "range_class": "context",
+      "exact_quote": "For authoritative remaining counters, PM drives `threshold_reached` at `<= configured switch threshold` and drives `exhausted` at `0 remaining` or explicit provider exhaustion. Provider `/accounts` may override these defaults, but the scheduler must not leave the state transition undefined when authoritative remaining quota is available."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-040",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 389,
+      "line_end": 389,
+      "range_class": "context",
+      "exact_quote": "Default threshold-aware policy uses warning threshold `20% remaining` and default auto-switch threshold `10% remaining` unless provider/account overrides say otherwise. Per-account observed `/provider-reported` effective limits outrank generic provider-doc defaults, while provider docs preserve documented/default expectations when effective observed state differs. Providers with named windows preserve provider window keys such as `fiveHour` and `weekly`, and authoritative Gemini quota or `/reset` data outranks runtime token stats when deciding whether to recover back to a primary account. For coding-plan direct providers, official `/reset` and `/remains` endpoints and documented windows are authoritative defaults until observed account-specific divergence wins. Runtime token stats alone can influence pressure, but they must not become a `hard_block` or exhausted state without explicit quota, refusal, cooldown, or equivalent authoritative evidence."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-041",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 390,
+      "line_end": 395,
+      "range_class": "context",
+      "exact_quote": "Default account routing prefers `sticky-primary`, `threshold-based-preemptive-switch`, and `reason-coded-failover`; naive `round-robin` may exist only as an advanced/debug strategy and is not PM's main provider-account routing policy.\nVertex/Gemini dynamic shared quota without a stable remaining counter stays in the softer `pattern_only_or_inferred` bucket until stronger provider evidence appears.\nFor softer provider/runtime evidence, one weak signal is informational, repeated soft signals move the account/profile to `approaching_threshold`, and explicit refusal, cooldown, or lockout moves it to `exhausted` or a blocked state.\nPM must not auto-switch purely on one soft `plan-warning`; repeated `plan-pressure` signals can move the account/profile to `approaching_threshold` before stronger refusal or cooldown evidence marks exhaustion.\nWhen a known provider `reset_at` passes, PM moves the affected account/profile to `validating` or `eligible_pending_recheck` rather than blindly marking it `ready`.\nGUI copy for an account/profile in `exhausted` pressure may use the title `Usage exhausted` and the subtext `Puppet Master will use another eligible account until this one resets` when fallback is available and policy permits."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-042",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 39,
+      "line_end": 39,
+      "range_class": "core",
+      "exact_quote": "- **Account-pool runtime shape:** account-pool routing includes `/code`, `/model`, `/config`, `/request`, `/failover`, `/namespace`, `/providers`, `/expiry`, `/OAuth-specific`, first-class account-scoped policy, per-request selection, max-attempt failover caps, async-local context, auto-relogin behavior, toast-centric recovery signals, active-account state, operator-visible history, and TUI surfaces."
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-043",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 65,
+      "line_end": 65,
+      "range_class": "core",
+      "exact_quote": "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/FinalGUISpec.md"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-044",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 107,
+      "line_end": 107,
+      "range_class": "core",
+      "exact_quote": "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-045",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 278,
+      "line_end": 278,
+      "range_class": "core",
+      "exact_quote": "ContractRef: Plans/Contracts_V0.md#4. Auth contracts, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules), Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical), Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/assistant-chat-design.md#Canonical navigation model"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-046",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 74,
+      "line_end": 76,
+      "range_class": "core",
+      "exact_quote": "| **External:** claude-nonstop | Config-dir per account, session migrate, resume, exhaustion sleep; rate-limit regex on PTY. |\n| **External:** OpenCode PR #11832 | Multi-record OAuth store (v2, ULID, active/order/records, health); rotating-fetch; AsyncLocalStorage-style context; credential-manager events; Anthropic browser relogin. |\n| **External:** OpenCode PR #8536 | Codex: accounts[] + activeIndex; wham/usage; 429 → mark rate-limited, get next, retry; CLI list/switch/usage. |"
+    },
+    {
+      "evidence_ref_id": "EVID-A004-000123-047",
+      "document_path": "Plans/Multi-Account.md",
+      "line_start": 16,
+      "line_end": 16,
+      "range_class": "core",
+      "exact_quote": "**Status:** Single spec for implementation -- another agent may derive an implementation plan from this document.  "
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

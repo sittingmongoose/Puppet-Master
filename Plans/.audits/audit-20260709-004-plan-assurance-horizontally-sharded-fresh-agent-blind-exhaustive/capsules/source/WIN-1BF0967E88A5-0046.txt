@@ -1,0 +1,375 @@
+<<< CONTEXT_BEFORE 16902-16913 >>>
+- created automatically
+negative_constraints: []
+compatibility_only_notes:
+- >-
+  Side-file paths are compatibility/source examples and must be reconciled with canonical storage projections before implementation.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 16914-17259 >>>
+### OSI-179 - Stale Verification-State Pruning Compatibility Envelope
+
+```yaml
+plan_unit_id: OSI-179
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Verification state pruning may be described as lazy stale cleanup after inactivity, but modification-time deletion and no-teardown
+  heuristics must not override canonical status and expiry logic.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: true
+depends_on:
+- OSI-175
+- SP-001
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: stale_verification_state_pruning_compatibility_envelope
+node_compile_hint:
+  mode: stale_verification_state_pruning_compatibility_envelope
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0115
+preserved_exact_tokens:
+- Stale pruning
+- 2 hours of inactivity
+- modification time
+- delete if older than threshold
+- No teardown command
+- platform-agnostic
+negative_constraints:
+- Modification-time deletion heuristics must not override canonical status and expiry logic.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- >-
+  mtime/delete pruning is preserved as source-lineage compatibility material unless mapped to canonical expiry policy.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-180 - Runtime Handoff Contract Enforcement Retry Policy
+
+```yaml
+plan_unit_id: OSI-180
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Runtime handoff contract enforcement validates Task Report, Downstream Context, and Findings through AfterTier validation,
+  blocks malformed responses, requests one retry with format instruction, and then proceeds with partial output complete-with-warnings
+  source disposition if still malformed.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-148
+- OSI-154
+- OSI-164
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: runtime_handoff_contract_enforcement_retry_policy
+node_compile_hint:
+  mode: runtime_handoff_contract_enforcement_retry_policy
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0116
+preserved_exact_tokens:
+- Task Report + Downstream Context + Findings
+- AfterTier hook
+- validate_subagent_output()
+- Block response
+- one retry
+- complete with warnings
+- AGENTS.md
+- subagent prompt templates
+negative_constraints: []
+compatibility_only_notes:
+- >-
+  complete with warnings is preserved source wording and must remain aligned with OSI-093/OSI-157 parser failure policy.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-181 - Platform Validators And Provider Capability Guard
+
+```yaml
+plan_unit_id: OSI-181
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Runtime contract enforcement uses platform-specific parser validation across Cursor, Codex, Claude, Gemini, and Copilot
+  while treating provider-doc schema findings as capability evidence rather than a bypass for local validation; provider-native
+  schema enforcement is preferred where available, and weak or unsupported transports fall back to locally validated structured
+  output or partial-output warnings.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-158
+- OSI-159
+- OSI-160
+- OSI-161
+- OSI-162
+- OSI-163
+- OSI-164
+- OSI-165
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_validators_provider_capability_guard
+node_compile_hint:
+  mode: platform_validators_provider_capability_guard
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0116
+preserved_exact_tokens:
+- Cursor/Codex/Claude/Gemini
+- Copilot
+- JSON output
+- JSONL
+- text output
+- provider-doc findings are capability evidence, not a blanket bypass
+- Structured Outputs
+- schema-bound structured output
+- SDK schema helpers
+- /transports
+- downgrade behavior
+- partial-output warnings
+negative_constraints: []
+compatibility_only_notes:
+- >-
+  Codex JSON wording is preserved as source shorthand only; Codex JSONL parser behavior remains represented by OSI-158 and
+  the platform summary.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-182 - Platform Implementation Responsibility Matrix
+
+```yaml
+plan_unit_id: OSI-182
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The platform implementation matrix preserves which lifecycle and quality features are orchestrator-level and which require
+  platform-specific parsers or validators across Cursor, Codex, Claude, Gemini, and Copilot.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-180
+- OSI-181
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_implementation_responsibility_matrix
+node_compile_hint:
+  mode: platform_implementation_responsibility_matrix
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0117
+preserved_exact_tokens:
+- Platform-Specific Implementation Summary
+- BeforeTier/AfterTier hooks
+- Handoff validation
+- Remediation loop
+- Cross-session memory
+- Active agent tracking
+- Safe error handling
+- Lazy lifecycle
+- Contract enforcement
+- Orchestrator
+- Platform-specific parser
+- Platform-specific validator
+negative_constraints: []
+compatibility_only_notes:
+- The platform table is plan evidence and responsibility mapping, not an executable output.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-183 - Orchestrator-Level Versus Parser-Specific Boundary
+
+```yaml
+plan_unit_id: OSI-183
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Most lifecycle features are orchestrator-level and platform-agnostic, while handoff validation and contract enforcement
+  require parser-specific JSON, JSONL, or text handling; platform-native hooks may be used where available while orchestrator
+  middleware remains the fallback for all platforms.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-182
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: orchestrator_level_versus_parser_specific_boundary
+node_compile_hint:
+  mode: orchestrator_level_versus_parser_specific_boundary
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0117
+preserved_exact_tokens:
+- Most features are orchestrator-level
+- platform-agnostic
+- JSON vs JSONL vs text
+- platform-native hooks
+- Cursor
+- Claude
+- Gemini
+- orchestrator-level middleware
+- all platforms
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 17260-17271 >>>
+### OSI-184 - Start/End Verification Lifecycle Ordering
+
+```yaml
+plan_unit_id: OSI-184
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Lifecycle and quality features complement start/end verification: BeforeTier runs before verify_tier_start, AfterTier runs
+  after verify_tier_end, remediation extends the required reviewer subagent, cross-session continuity enhances Phase 1 context,
+  and active tracking enhances logging/debugging.
+gui_related: false

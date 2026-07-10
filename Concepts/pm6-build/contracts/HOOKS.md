@@ -120,7 +120,7 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `.minimap-canvas` | qs | 14-page-dashboard | 26-js-prd-annotations | 19968, 20099 | MUST-EXIST |
 | `.minimap-viewport` | qs | 14-page-dashboard, 17-page-orchestrator | 26-js-prd-annotations | 19994, 20029 | MUST-EXIST |
 | `.open-count` | qs | 16-page-wizard | 26-js-prd-annotations | 18920 | MUST-EXIST |
-| `.orch-rungraph-node[data-node-id="` | qs | 17-page-orchestrator | 25-js-terminal-demo | 18340 | MUST-EXIST |
+| `.orch-rungraph-node[data-node-id="` | qs | 17-page-orchestrator | 25-js-terminal-demo | 18340 | OPTIONAL (null-safe; pm6 graph replaces; W2 retargets) |
 | `.page-tab[data-page='orchestrator']` | qs | 11-html-shell-open | 25-js-terminal-demo | 17933 | MUST-EXIST |
 | `.pm-term-overflow-menu` | qs | (runtime-created / not in static HTML) | 24-js-main | 16292 | DYNAMIC/unresolved |
 | `.settings-inspector-panel` | qs | (runtime-created / not in static HTML) | 25-js-terminal-demo | 18424 | DYNAMIC/unresolved |
@@ -168,7 +168,7 @@ Verdicts: **MUST-EXIST** = cross-part dependency (JS in one part targets DOM in 
 | `.messageStream` | qsa | 21-html-chat-panel, 23-html-floating-chat | 25-js-terminal-demo | 17595 | MUST-EXIST |
 | `.minimap-heat-strip` | qsa | (runtime-created / not in static HTML) | 26-js-prd-annotations | 19967 | DYNAMIC/unresolved |
 | `.mode` | qsa | 21-html-chat-panel, 23-html-floating-chat | 25-js-terminal-demo | 17598 | MUST-EXIST |
-| `.orch-rungraph-node, .orch-rungraph-row` | qsa | 17-page-orchestrator | 25-js-terminal-demo | 18338 | MUST-EXIST |
+| `.orch-rungraph-node, .orch-rungraph-row` | qsa | 17-page-orchestrator | 25-js-terminal-demo | 18338 | OPTIONAL (null-safe; pm6 graph replaces; W2 retargets) |
 | `.orch-tab` | qsa | 17-page-orchestrator | 25-js-terminal-demo | 18677, 18683, 18690 | MUST-EXIST |
 | `.orch-tab-content` | qsa | 17-page-orchestrator | 25-js-terminal-demo | 18685 | MUST-EXIST |
 | `.page-settings .bento-card` | qsa | 19-page-settings-shell | 25-js-terminal-demo | 18644, 18664 | MUST-EXIST |

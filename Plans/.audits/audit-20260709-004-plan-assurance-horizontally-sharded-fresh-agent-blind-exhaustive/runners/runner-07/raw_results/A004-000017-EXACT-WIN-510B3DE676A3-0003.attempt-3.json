@@ -1,0 +1,657 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000017-EXACT-WIN-510B3DE676A3-0003",
+  "assignment_attempt_number": 3,
+  "attempt_id": "A004-R07-000017-ATTEMPT-3",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "runner_thread_id": "019f49e2-1337-7ad1-bda0-71b4073cb8fc",
+  "agent_name": "a004_r07_exact_0017_42b8d24f",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-510B3DE676A3-0003",
+  "doc_id": "DOC-510B3DE676A3",
+  "document_path": "Plans/storage-plan.md",
+  "core_range": [
+    490,
+    874
+  ],
+  "context_ranges": [
+    [
+      478,
+      489
+    ],
+    [
+      875,
+      886
+    ]
+  ],
+  "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1",
+  "core_sha256": "ca1ae194da8548930980d2d6934ff029a408977f2d9fb0eeab9a83f1309ba2be",
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-510B3DE676A3-0003.txt",
+  "source_excerpt_sha256": "e4462d95f43a0fb8d5256949a14e60452c8bde97097edde10a33c4a06e514b73",
+  "source_excerpt_bytes": 38904,
+  "capsule_metadata_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000017-EXACT-WIN-510B3DE676A3-0003.json",
+  "capsule_metadata_sha256": "2f407c44111be5f450fb22f2873dccd0c23e97c1d31bda96b3a8a342ede3bb31",
+  "capsule_metadata_bytes": 1637,
+  "verification": {
+    "source_excerpt_sha256_expected": "e4462d95f43a0fb8d5256949a14e60452c8bde97097edde10a33c4a06e514b73",
+    "source_excerpt_sha256_actual": "e4462d95f43a0fb8d5256949a14e60452c8bde97097edde10a33c4a06e514b73",
+    "source_excerpt_sha256_match": true,
+    "source_excerpt_bytes_expected": 38904,
+    "source_excerpt_bytes_actual": 38904,
+    "source_excerpt_bytes_match": true,
+    "core_sha256_expected": "ca1ae194da8548930980d2d6934ff029a408977f2d9fb0eeab9a83f1309ba2be",
+    "core_sha256_actual": "ca1ae194da8548930980d2d6934ff029a408977f2d9fb0eeab9a83f1309ba2be",
+    "core_sha256_match": true,
+    "core_bytes_actual": 35823,
+    "assigned_document_range_bytes_actual": 38806,
+    "context_before_matches_canonical": true,
+    "core_matches_canonical": true,
+    "context_after_matches_canonical": true,
+    "whole_document_source_sha256_status": "metadata_value_preserved_not_recomputed_because_only_lines_478_886_were_authorized"
+  },
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "statement": "Implementation authority is assigned to the machine-readable storage-value registry, while prose key templates and deferred families cannot support buildability until promoted to materialized schemas.",
+      "evidence_ref_ids": [
+        "EV-001",
+        "EV-002",
+        "EV-004"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "statement": "Canonical coordination state is an EventRecord seglog folded into redb projections. Mutation admission, checkpoint advancement, stale-revision handling, and mirror non-authority are expressly constrained.",
+      "evidence_ref_ids": [
+        "EV-005",
+        "EV-006",
+        "EV-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "statement": "Canonical records are declared immutable and concerns are structurally distinct from findings, blocked episodes, and projections, with named lifecycle and resolution states.",
+      "evidence_ref_ids": [
+        "EV-008",
+        "EV-009",
+        "EV-010"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "statement": "The window supplies multiple receipt-field declarations, but does not expressly state whether the later required-field list is additive to or replaces the earlier baseline.",
+      "evidence_ref_ids": [
+        "EV-011",
+        "EV-012"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "statement": "Alert records are durable, root-cause-coalesced records with canonical surface-routing precedence, while several lifecycle and state-shape details remain implicit.",
+      "evidence_ref_ids": [
+        "EV-013",
+        "EV-014",
+        "EV-015"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "statement": "Evidence contracts distinguish source observations from projected summaries, assign exactly one stability class, preserve redaction provenance, and default sensitive exports to masked values.",
+      "evidence_ref_ids": [
+        "EV-021",
+        "EV-022",
+        "EV-023",
+        "EV-025",
+        "EV-026"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "statement": "Focused historical UI state must survive tab changes and restart, freshness and health remain separate axes, and execution_unit_context is the canonical runtime identity source for worker and inspector consumers.",
+      "evidence_ref_ids": [
+        "EV-027",
+        "EV-028"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "statement": "Storage migrations are forward-only and owner-first, while crash-critical receipt, blocked-state, follow-mode, inspector, and retention-anchor persistence has explicit durability behavior.",
+      "evidence_ref_ids": [
+        "EV-030",
+        "EV-032",
+        "EV-033"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "CF-001",
+      "severity": "medium",
+      "finding_type": "immutable_record_timestamp_ambiguity",
+      "statement": "Canonical records are immutable after commit, yet every canonical record must carry updated_at_utc. The window does not define whether updated_at_utc is fixed at initial commit, copied from a predecessor, or changed only on a successor record.",
+      "consequence": "Builders can implement incompatible audit timestamp and successor-lineage semantics while each appears consistent with the prose.",
+      "evidence_ref_ids": [
+        "EV-008"
+      ]
+    },
+    {
+      "finding_id": "CF-002",
+      "severity": "high",
+      "finding_type": "concern_contract_not_exactly_materialized_in_window",
+      "statement": "The concern section uses instructions such as Define and Create, and enumerates lifecycle values, but does not expose an exact concern schema, key version, field cardinalities, nullability, transition guards, confirmation matrix, or registry materialization status in this window.",
+      "consequence": "Concern writers, projectors, and consumers retain consequential discretion over record shape and lifecycle enforcement.",
+      "evidence_ref_ids": [
+        "EV-001",
+        "EV-009",
+        "EV-010"
+      ]
+    },
+    {
+      "finding_id": "CF-003",
+      "severity": "high",
+      "finding_type": "receipt_required_field_set_ambiguity",
+      "statement": "The receipt baseline requires execution_unit_id, result_summary, artifacts, and evidence_ref, while the later Required fields list enumerates a different set without declaring union, precedence, compatibility, or supersession.",
+      "consequence": "Independent receipt producers can omit different fields or mint incompatible schemas.",
+      "evidence_ref_ids": [
+        "EV-011",
+        "EV-012"
+      ]
+    },
+    {
+      "finding_id": "CF-004",
+      "severity": "medium",
+      "finding_type": "alert_lifecycle_and_coalescing_underdefined",
+      "statement": "The alert contract names an acknowledged/snoozed state and resolved_at, and says repeated root-cause events update one active thread, but does not define exact field names, enums, transition rules, terminal-thread reopening, ordering, or concurrent-update behavior.",
+      "consequence": "Alert history, notification retriggering, and coalescing can diverge across writers and surfaces.",
+      "evidence_ref_ids": [
+        "EV-013",
+        "EV-014"
+      ]
+    },
+    {
+      "finding_id": "CF-005",
+      "severity": "high",
+      "finding_type": "explicit_storage_reconciliation_backlog",
+      "statement": "The core explicitly retains an unresolved remediation.resolved conflict and open ownership or normalization seams for glossary, route payloads, attention versus project-summary projections, and worktree lifecycle.",
+      "consequence": "These boundaries are not exact enough for competing owners or consumers to implement without further adjudication.",
+      "evidence_ref_ids": [
+        "EV-016",
+        "EV-017"
+      ]
+    },
+    {
+      "finding_id": "CF-006",
+      "severity": "high",
+      "finding_type": "execution_and_base_branch_authority_unresolved",
+      "statement": "The core says other owner documents still must define blocked_sequence mint and ownership, startup recovery handshake, runtime-record joins, and base-branch ownership before implementation mints competing fields.",
+      "consequence": "Execution recovery and Source Control or UI joins remain exposed to incompatible identity and ownership choices.",
+      "evidence_ref_ids": [
+        "EV-019",
+        "EV-020"
+      ]
+    },
+    {
+      "finding_id": "CF-007",
+      "severity": "high",
+      "finding_type": "provenance_field_spelling_and_cardinality_ambiguity",
+      "statement": "Provenance requirements present source_event_ids[] beside source_event_ids, blob_ref? beside blob_ref, and missing_external_refs[] beside missing_external_refs without declaring canonical spellings, optionality notation, aliases, or migration behavior.",
+      "consequence": "Schemas, exports, and consumers can serialize structurally different provenance packets.",
+      "evidence_ref_ids": [
+        "EV-021",
+        "EV-024"
+      ]
+    },
+    {
+      "finding_id": "CF-008",
+      "severity": "medium",
+      "finding_type": "bulk_undo_and_hold_release_discretion",
+      "statement": "Bulk outcomes preserve rollback or undo expectations only where possible, and hold_state lasts until explicitly released, but feasibility criteria, release authority, release record, failure behavior, and atomic propagation are not specified.",
+      "consequence": "Builders decide when undo is available and how legal or preservation holds are released across linked records.",
+      "evidence_ref_ids": [
+        "EV-023",
+        "EV-024"
+      ]
+    },
+    {
+      "finding_id": "CF-009",
+      "severity": "high",
+      "finding_type": "sensitive_export_profile_authority_missing",
+      "statement": "A selected export profile may permit fuller disclosure of sensitive metadata, but this window does not identify who may select that profile, what confirmation is required, or what durable authorization evidence must accompany disclosure.",
+      "consequence": "A security-sensitive masking exception is left to implementation policy.",
+      "evidence_ref_ids": [
+        "EV-026"
+      ]
+    },
+    {
+      "finding_id": "CF-010",
+      "severity": "medium",
+      "finding_type": "projection_fallback_policy_discretion",
+      "statement": "Sensitive action gating must evaluate freshness and health, but stale projections only can require refresh and degraded projections only can fall back to canonical reads; no deterministic per-action fallback matrix is supplied in the authoritative core.",
+      "consequence": "Consumers can make inconsistent safety decisions for the same projection state.",
+      "evidence_ref_ids": [
+        "EV-018",
+        "EV-027"
+      ]
+    },
+    {
+      "finding_id": "CF-011",
+      "severity": "medium",
+      "finding_type": "redb_key_shape_inconsistency",
+      "statement": "The baseline declares colon-delimited entity keys and requires semantic alignment or an explicit translation layer, but the owner-reconciliation list contains orchestrator.project_state.{project_id} with dot-delimited syntax and no exception or translation.",
+      "consequence": "Builders cannot determine whether the project-state key is literal, a prose alias, or a malformed canonical key.",
+      "evidence_ref_ids": [
+        "EV-029",
+        "EV-030",
+        "EV-031"
+      ]
+    },
+    {
+      "finding_id": "CF-012",
+      "severity": "medium",
+      "finding_type": "temporal_field_applicability_and_flush_timing_ambiguity",
+      "statement": "The temporal section labels a field set Required while marking several fields optional, without mapping which fields apply to each trigger class. It also permits lifecycle changes to flush immediately or on lifecycle transition without defining the permitted durability deadline.",
+      "consequence": "Receipt and blocked-state implementations can persist different temporal packets and crash-recovery guarantees.",
+      "evidence_ref_ids": [
+        "EV-032",
+        "EV-033"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "statement": "Deferred families are expressly barred from supporting buildability until materialized, and the core explicitly keeps buildability_gate_passed false.",
+      "evidence_ref_ids": [
+        "EV-002",
+        "EV-004"
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "statement": "Persisted values require schema_version, reject secret-bearing content, and reject unsupported schema identifiers or versions during replay.",
+      "evidence_ref_ids": [
+        "EV-003"
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "statement": "Coordination mutation authority, CAS inputs, atomic checkpoint advancement, stale-revision recovery, and JSON mirror non-authority are explicitly defined.",
+      "evidence_ref_ids": [
+        "EV-006",
+        "EV-007"
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "statement": "Evidence stability classes are closed and exclusive, and provider-facing AI or LLM features cannot infer consent from local scrubbing.",
+      "evidence_ref_ids": [
+        "EV-022",
+        "EV-025"
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "statement": "Attention routing has a stated primary owner per issue class, and mirrors deep-link to that owner instead of minting parallel remediation records.",
+      "evidence_ref_ids": [
+        "EV-015"
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "statement": "Historical focused-run behavior, freshness versus health separation, and execution_unit_context ownership are explicit.",
+      "evidence_ref_ids": [
+        "EV-027",
+        "EV-028"
+      ]
+    },
+    {
+      "non_gap_id": "NG-007",
+      "statement": "Retention-anchor kinds are explicitly assigned by family, both anchor fields are mandatory for listed retention policies, and file mtime inference is prohibited.",
+      "evidence_ref_ids": [
+        "EV-033"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "statement": "Whether concern_record has a fully materialized registry row and exact value schema cannot be determined without reading the registry, which was outside this assignment.",
+      "evidence_ref_ids": [
+        "EV-001",
+        "EV-009"
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "statement": "An external owner schema may unify the two receipt-field declarations, but that cannot be verified from this window.",
+      "evidence_ref_ids": [
+        "EV-011",
+        "EV-012"
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "statement": "An external alert schema may define acknowledged, snoozed, resolved, reopen, and coalescing transitions, but no such exact contract is visible here.",
+      "evidence_ref_ids": [
+        "EV-013",
+        "EV-014"
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "statement": "The authority and confirmation rules for selecting a fuller-disclosure export profile may exist in another owner document, but cannot be established from this assignment.",
+      "evidence_ref_ids": [
+        "EV-026"
+      ]
+    },
+    {
+      "unknown_id": "UNK-005",
+      "statement": "No executable behavioral-acceptance evidence is present in the authoritative core; the core expressly states that behavioral acceptance and buildability remain unclosed.",
+      "evidence_ref_ids": [
+        "EV-004"
+      ]
+    },
+    {
+      "unknown_id": "UNK-006",
+      "statement": "The exact field-level schema and trigger-to-field applicability matrix for temporal receipt and blocked-state records cannot be established from this window.",
+      "evidence_ref_ids": [
+        "EV-032",
+        "EV-033"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "EV-001",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 491,
+      "line_end": 491,
+      "range_class": "core",
+      "exact_quote": "`Plans/storage_value_registry.json` is the canonical machine-readable registry for storage value families named in this document. `Plans/storage_value_registry.schema.json` owns the registry file shape. Key templates in this section are inventory and routing aids only; a persisted value family is implementation-authoritative only when the registry row identifies its key shape, value schema id/ref, owner doc, producer, consumers, schema version, encoding, required/optional/nullability fields, replay behavior, migration rule, retention/compaction rule, redaction/no-secret rule, and legacy/canonical crosswalk status."
+    },
+    {
+      "evidence_ref_id": "EV-002",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 506,
+      "line_end": 506,
+      "range_class": "core",
+      "exact_quote": "They are not allowed to rely on prose-only key templates as implementation authority; their rows must be promoted to materialized value schemas before a buildability claim can depend on them."
+    },
+    {
+      "evidence_ref_id": "EV-003",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 508,
+      "line_end": 508,
+      "range_class": "core",
+      "exact_quote": "All persisted values require `schema_version`. Stored values must not contain raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets. Secret-bearing or sensitive data is represented only by redacted refs, masked metadata, hashes, evidence refs, or external custody refs. Replay must reject unsupported schema ids/versions rather than inferring value shape from a key template."
+    },
+    {
+      "evidence_ref_id": "EV-004",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 510,
+      "line_end": 510,
+      "range_class": "core",
+      "exact_quote": "This Tier 0C-2 registry is partial persistence-materialization progress only. It does not close provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundary, behavioral acceptance, or broad redb-family blockers; it does not create WorkNodes, NodeSeeds, candidates, executable queues, manifests, implementation files, runtime launches, or product build tasks; and `buildability_gate_passed` remains false."
+    },
+    {
+      "evidence_ref_id": "EV-005",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 516,
+      "line_end": 516,
+      "range_class": "core",
+      "exact_quote": "Storage owns the durable coordination record/projection boundary used by Orchestrator and crew surfaces. Canonical coordination state is not a JSON file family. It is the `EventRecord` seglog coordination family folded into redb read models with explicit projector checkpoints."
+    },
+    {
+      "evidence_ref_id": "EV-006",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 537,
+      "line_end": 540,
+      "range_class": "core",
+      "exact_quote": "- A coordination mutation is admitted only through the PM-owned append API. Writers provide an idempotency key plus expected `agent_revision` or `last_applied_event_id`; the append and projection result are one logical append/CAS boundary.\n- The projector advances `coordination_*_projection.v1` rows and `projector.checkpoint.coordination:{project_id}` in one redb transaction. Readers that require authority must verify checkpoint coverage for the needed seglog sequence.\n- Lost updates are prohibited: a stale expected revision returns a coordination conflict diagnostic, and the caller reloads projections before appending a successor event.\n- Read-modify-write of `.puppet-master/state/*.json` is prohibited for canonical coordination state. Whole-file writes are allowed only in the debug/export mirror writer after a projection commit."
+    },
+    {
+      "evidence_ref_id": "EV-007",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 545,
+      "line_end": 546,
+      "range_class": "core",
+      "exact_quote": "- Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures. PM quarantines or overwrites the mirror from seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.\n- Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions. Authoritative consumers use `coordination_snapshot_projection.v1` or the narrower agent/file/operation projections."
+    },
+    {
+      "evidence_ref_id": "EV-008",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 553,
+      "line_end": 555,
+      "range_class": "core",
+      "exact_quote": "- Canonical records are the single source of truth for run, node, lane, and execution state.\n- Canonical records are immutable once committed; corrections require a new record with explicit lineage.\n- All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit."
+    },
+    {
+      "evidence_ref_id": "EV-009",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 561,
+      "line_end": 564,
+      "range_class": "core",
+      "exact_quote": "- Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata.\n- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics.\n- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section.\n- Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable."
+    },
+    {
+      "evidence_ref_id": "EV-010",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 645,
+      "line_end": 647,
+      "range_class": "core",
+      "exact_quote": "- lifecycle states are `active`, `acknowledged`, `resolved`, and `dismissed`\n- `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`\n- source-event refs, concern records, and concern projections are separate structural layers rather than one collapsed object"
+    },
+    {
+      "evidence_ref_id": "EV-011",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 585,
+      "line_end": 585,
+      "range_class": "core",
+      "exact_quote": "- Receipts include `execution_unit_id`, `result_summary`, `artifacts`, and `evidence_ref`."
+    },
+    {
+      "evidence_ref_id": "EV-012",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 673,
+      "line_end": 686,
+      "range_class": "core",
+      "exact_quote": "Required fields:\n- `attempt_id`\n- `provider_attempt_ref`\n- `usage_event_ref`\n- `workflow_refs`\n- `docker_refs`\n- `kubernetes_refs`\n- `auditor_cycle_report`\n- legacy `validation_pass_report` mirror only when `compatibility_only: true` and `cycle_report_ref` points to `auditor_cycle_report`\n- `workflow_run_id`\n- `run_id`\n- `pass_verdict`\n- `phase_plan_ref`\n- `requirements_quality_report_ref`"
+    },
+    {
+      "evidence_ref_id": "EV-013",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 698,
+      "line_end": 698,
+      "range_class": "core",
+      "exact_quote": "Required alert timeline fields are `raised_at`, `source_surface`, `severity`, `root_cause_key`, `owning_surface`, `acknowledged/snoozed state`, `resolved_at`, and linked receipt/run/worktree/workflow/container/workload ids (`receipt_id`, `run_id`, `worktree_id`, `workflow_run_id`, `container_id`, `workload_id`). The compact lineage key `/run/worktree/workflow/container/workload` is preserved alongside `/snoozed` state so historical records can answer what alerted, where the user acted, and whether it cleared."
+    },
+    {
+      "evidence_ref_id": "EV-014",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 700,
+      "line_end": 700,
+      "range_class": "core",
+      "exact_quote": "Active attention rows carry both `attention_key` and `root_cause_key`. `attention_key` identifies the user-visible attention thread and owning route, while `root_cause_key` identifies the durable causal cluster for `/coalescing`. Repeated events with the same `root_cause_key` update one active alert thread; interruptive notifications retrigger only on severity or state transition."
+    },
+    {
+      "evidence_ref_id": "EV-015",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 702,
+      "line_end": 702,
+      "range_class": "core",
+      "exact_quote": "Attention routing precedence is canonical: run-blocking issues route to Orchestrator and its CTA stack; branch and workflow issues route to GitHub Actions; runtime, `/container/rollout`, and Kubernetes issues route to Docker Manager; global degraded infrastructure routes to the status bar plus Dashboard. Mirrored surfaces store deep-link payloads to the primary owner instead of minting parallel remediation records."
+    },
+    {
+      "evidence_ref_id": "EV-016",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 710,
+      "line_end": 710,
+      "range_class": "core",
+      "exact_quote": "Historical and lifecycle terms stay `family-local`. `archived`, `removed`, and `deleted` remain distinct storage states, and generic `resolved` labels do not overwrite the owner-specific `remediation.resolved` contract; that conflict is a real reconciliation item. Boundary schemas migrate from `tier_boundary` to a versioned `governance_boundary`, with any compatibility alias documented as migration-only rather than as a peer canonical key."
+    },
+    {
+      "evidence_ref_id": "EV-017",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 712,
+      "line_end": 712,
+      "range_class": "core",
+      "exact_quote": "Trust and attention projections treat auth, `/scope/rate-limit`, account pressure, and provider limits as `concern-aware` and `trust-aware` storage facts rather than UI-only error strings. Remaining reconciliation seams include `/glossary` ownership, `route-payload` normalization, `attention-item` versus `project-summary` projection ownership, and `/worktree` lifecycle split; those are storage/schema cleanup items, not fresh design proposals."
+    },
+    {
+      "evidence_ref_id": "EV-018",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 714,
+      "line_end": 714,
+      "range_class": "core",
+      "exact_quote": "Projection records carry enough freshness and lineage to be trusted after restart: `projection_freshness`, `projection_health`, `last_projected_at_utc`, `source_seq` or an equivalent `/cursor`, `degraded_reason_code`, and `refresh_in_progress`. Mutating actions must read those fields before trusting a derived view."
+    },
+    {
+      "evidence_ref_id": "EV-019",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 716,
+      "line_end": 716,
+      "range_class": "core",
+      "exact_quote": "Execution ownership migrations are storage-visible. `Prompt_Pipeline.md` / `Prompt_Pipeline` still consumes `persona_override_owner_id`, but `tier_id` is a legacy scope for Orchestrator execution identity and must migrate toward `/node/attempt/subagent-owned` ownership. `Executor_Protocol.md` / `Executor_Protocol` and `orchestrator-subagent-integration.md` / `orchestrator-subagent-integration` must define the mint and `/ownership` rules for `blocked_sequence`, the `startup-recovery` to first `scheduler-pass` handshake using `startup_recovered`, `execution_role`, reviewer `/corroboration`, and the way `active-agent`, `TierContext`, and `/decomposition` records join to `attempt-keyed` runtime records."
+    },
+    {
+      "evidence_ref_id": "EV-020",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 718,
+      "line_end": 718,
+      "range_class": "core",
+      "exact_quote": "Source Control remains the worktree owner surface, but storage owns durable joins. `worktree_id` is the durable storage key, `/path` is a resolver/display attribute, `/source-control` owns Git-facing operations, and `base-branch` ownership must be reconciled before Source Control or UI code mint competing base-branch fields."
+    },
+    {
+      "evidence_ref_id": "EV-021",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 722,
+      "line_end": 724,
+      "range_class": "core",
+      "exact_quote": "Persisted or `/exported` evidence and `/receipt` summaries that include result state or spawned attempt/remediation refs carry derivation provenance fields: `source_event_ids[]`, `source_event_ids`, `blob_ref?`, `blob_ref`, `derived_by_projector`, `projector_version`, `redaction_profile_id`, and `derived_at`.\n\nConsumers distinguish source facts from projected summaries. `source_event_ids[]` and `blob_ref?` point to source observations, while `derived_by_projector`, `projector_version`, `redaction_profile_id`, and `derived_at` identify the projector and policy that produced the summary."
+    },
+    {
+      "evidence_ref_id": "EV-022",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 726,
+      "line_end": 726,
+      "range_class": "core",
+      "exact_quote": "Evidence refs declare exactly one stability class: `embedded_snapshot`, `local_blob_ref`, `external_live_ref`, or `external_missing`. Exports and history mark a record as not `self-contained` when remote evidence was not snapshotted, including `/exported` views and historical receipt views."
+    },
+    {
+      "evidence_ref_id": "EV-023",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 728,
+      "line_end": 728,
+      "range_class": "core",
+      "exact_quote": "Persisted/exported audit items include `mandatory_scrub_applied`, `heuristic_redaction_enabled`, `redaction_policy_version`, and `display_may_hide_details` so consumers can distinguish source absence from post-processing omissions. The provenance packet is also attached to bulk action families that cover stage/unstage/discard (`/unstage/discard`), rerun/cancel, cleanup/prune (`/prune`), apply/delete, and pin/unpin. Stored bulk outcomes preserve target preview reference, scope summary/count (`/count`), result state, `partial-success`, `per-target` failure list, spawned attempt/remediation refs, and rollback/undo expectations where possible."
+    },
+    {
+      "evidence_ref_id": "EV-024",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 730,
+      "line_end": 730,
+      "range_class": "core",
+      "exact_quote": "Audit/export bundles are provenance-preserving manifests, not copied folders with lost lineage. Each package records `exported_at`, `source_scope`, `source_seglog_range`, `included_event_count`, `/checksums`, `redaction_policy_version`, `missing_external_refs[]`, `missing_external_refs`, filtered item counts, and a `/rationale` when evidence is omitted or transformed. Export manifests include `command_invocation_id` when generated from a command and keep `blocked_resolution_record` links when a blocked episode, remediation, or recovery action contributed to the bundle. `hold_state` applies to runs, receipts, evidence, blocked episodes, and linked blobs/artifacts; a hold suspends pruning, cleanup, export garbage-collection, and linked-graph deletion until explicitly released."
+    },
+    {
+      "evidence_ref_id": "EV-025",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 736,
+      "line_end": 736,
+      "range_class": "core",
+      "exact_quote": "Runtime and provider evidence separates ephemeral in-memory view, scrubbed persisted blob, and `user-exported` file. Container/Kubernetes logs, inspect output, diff blobs, workflow YAML previews, manifest diffs, `/diffs/receipts`, and provider-bound summaries store the evidence class, data-class label, redaction profile, and whether `scrub-before-persist` and `scrub-before-index` ran before any local persistence or indexing. Provider-facing `/AI` or `LLM` features must receive only already-scrubbed payload refs and may not treat a local scrub as provider consent."
+    },
+    {
+      "evidence_ref_id": "EV-026",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 742,
+      "line_end": 742,
+      "range_class": "core",
+      "exact_quote": "Sensitive metadata persistence and export defaults cover remote URLs, private repo names, registry namespaces, Docker Hub account identity, account handles, namespace ownership, kube user/context names, namespace/workload names, SSH usernames/host aliases, discovered service URLs, port-forward endpoints, and screenshot-visible values. Local history may keep masked references for joinability, but exports, evidence bundles, and screenshots default to masked values unless the selected export profile explicitly permits fuller disclosure. Account-identity redaction is governed by `/redaction` policy and applies before help/copy text, screenshots, exported receipts, and provider-bound summaries reuse stored evidence. Logout, unlink, and project-delete cleanup invalidates non-secret residue such as validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts."
+    },
+    {
+      "evidence_ref_id": "EV-027",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 766,
+      "line_end": 770,
+      "range_class": "core",
+      "exact_quote": "- Project state stores `active_run_id`, `focused_run_id`, and `focus_mode = live | historical` so live dashboards, historical inspectors, and restart rehydration all resolve the same focused run.\n- Cross-tab deep links and search pivots MUST target the focused run context; switching tabs or reopening the app does not silently retarget links back to the active run when `focus_mode = historical`.\n- `projection_freshness` remains the recency axis and `projection_health` remains the integrity/availability axis; storage and consumers MUST NOT collapse them into a single trust field.\n- Sensitive action gating evaluates both axes together: stale-but-healthy projections can require refresh, degraded projections can fall back to canonical record reads, and unavailable projections block projection-dependent actions.\n- `trust_tier` is retired as canonical projection vocabulary and is reserved only for preview/browser semantics where UI transport trust must still be disclosed without replacing freshness or health."
+    },
+    {
+      "evidence_ref_id": "EV-028",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 782,
+      "line_end": 787,
+      "range_class": "core",
+      "exact_quote": "- `execution_unit_context` is the Executor-owned canonical runtime-facing context object defined in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; storage persists the packet or packet refs for account pressure episodes, switch history, runtime artifacts, receipts, and usage joins without redefining the field set.\n- Any `TierContext` or `tier_id` decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity.\n- Worker spawn, recovery, remediation, coordination, and UI inspection all resolve runtime identity from `execution_unit_context` so restart flows and inspectors reuse the same run/node/attempt/account anchors.\n- Executor_Protocol owns the execution_unit_context schema; Contracts_V0 owns cross-family envelope behavior that consumes that schema, including run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity.\n- storage-plan owns persistence and projection of the attempt/usage/receipt/artifact joins that materialize that packet for history, audit, and inspector consumers.\n- Persisted storage payloads MUST NOT embed `execution_unit_context` without `schema_version`, and the payload must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
+    },
+    {
+      "evidence_ref_id": "EV-029",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 615,
+      "line_end": 615,
+      "range_class": "core",
+      "exact_quote": "- Schema keys follow `entity_type:entity_id:sub_key` patterns for consistency."
+    },
+    {
+      "evidence_ref_id": "EV-030",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 808,
+      "line_end": 814,
+      "range_class": "core",
+      "exact_quote": "Storage migrations are forward-only and monotonic.\n\nRequired rules:\n- new fields are additive first; destructive renames require a migration note in the same section that introduces them\n- stable semantic names stay aligned across runtime, persistence, and events unless an explicit translation layer is defined\n- account/profile-backed runtime records and server-profile-backed runtime records stay distinct durable shapes even when surfaced through one GUI ontology\n- consumer docs follow owner-first reconciliation order: owner correction here first, then consumer propagation, then fidelity audit rerun"
+    },
+    {
+      "evidence_ref_id": "EV-031",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 829,
+      "line_end": 829,
+      "range_class": "core",
+      "exact_quote": "- `orchestrator.project_state.{project_id}`"
+    },
+    {
+      "evidence_ref_id": "EV-032",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 855,
+      "line_end": 863,
+      "range_class": "core",
+      "exact_quote": "Required fields on any receipt or blocked-state record that involves a wait, timeout, scheduled observation, reconnect, or stale observation:\n- `timeout_class?`\n- `wait_state_class?`\n- `source_timer_ref?`\n- `scheduled_workflow_ref?`\n- `last_observation_at_utc?`\n- `transitioned_at_utc`\n- `retention_anchor_kind`\n- `retention_anchor_at_utc`"
+    },
+    {
+      "evidence_ref_id": "EV-033",
+      "document_path": "Plans/storage-plan.md",
+      "line_start": 867,
+      "line_end": 872,
+      "range_class": "core",
+      "exact_quote": "- Active receipt/session lifecycle changes flush immediately or on lifecycle transition, not only on debounce.\n- Blocked episode creation/resolution flushes immediately or on lifecycle transition, not only on debounce.\n- Follow-mode intent flushes immediately when changed and remains separate from source liveness; restored `follow` still requires source revalidation before a new live stream session is claimed.\n- Last inspected run/node/log context, including `/node/log`, flushes immediately when it changes so crash recovery can restore the inspector without inventing continuity.\n- Retention-window anchor semantics are explicit per family: receipts use `creation time` unless a stronger legal-hold or preservation rule applies; log tails and watch buffers use `last observation`; explorer snapshots and stale caches use `last access`; run-scoped completion artifacts use `run completion`.\n- Retention policies for receipts, log tails, watch buffers, explorer snapshots, and stale caches MUST store both `retention_anchor_kind` and `retention_anchor_at_utc`; implementations MUST NOT infer the anchor from file mtime alone."
+    }
+  ],
+  "scope_attestation": {
+    "permitted_inputs_only": true,
+    "inputs_observed": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000017-EXACT-WIN-510B3DE676A3-0003.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-510B3DE676A3-0003.txt",
+      "Plans/storage-plan.md:478-886"
+    ],
+    "canonical_content_observed_outside_lines_478_886": false,
+    "finding_authority_limited_to_lines_490_874": true,
+    "context_promoted_to_standalone_finding": false,
+    "other_capsules_read": false,
+    "other_windows_read": false,
+    "runner_results_or_receipts_read": false,
+    "prior_audits_or_findings_read": false,
+    "git_state_read": false,
+    "web_sources_used": false,
+    "other_agents_used": false,
+    "files_written": false,
+    "all_exact_quotes_independently_verified_against_canonical_source": true
+  },
+  "result_status": "complete"
+}

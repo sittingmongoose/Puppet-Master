@@ -1,0 +1,23 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753",
+  "master_merge_thread_id": "019f4a04-5fe1-71f3-b992-e599aad3da5b",
+  "observed_at": "2026-07-10T03:53:43Z",
+  "source_thread_status": "systemError",
+  "failed_resume_turns": 2,
+  "failed_resume_behavior": "Each resume turn completed in approximately one second with no agent output.",
+  "runner_fleet_effect": "none",
+  "master_takeover_scope": [
+    "Read and test the existing postrun validator v3 working files.",
+    "Apply mechanical validator and cross-check fixes only after independent read-only review.",
+    "Freeze and publish a superseding validator authority only inside audit-004 validators and coordination."
+  ],
+  "forbidden_takeover_scope": [
+    "runner namespace edits",
+    "launch packet edits",
+    "canonical Plans edits",
+    "semantic document review",
+    "prior-audit credit"
+  ],
+  "goal_status": "active"
+}

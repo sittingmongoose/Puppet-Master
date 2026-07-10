@@ -1,0 +1,435 @@
+{
+  "assignment_id": "A004-000095-EXACT-WIN-ECB10B16CAAF-0002",
+  "observations": [
+    {
+      "id": "O-001",
+      "statement": "The generated-preview bridge has a closed v1 allowlist, and no other host-command family is implicitly exposed.",
+      "evidence_refs": ["E-001"]
+    },
+    {
+      "id": "O-002",
+      "statement": "The rendering stack names pulldown-cmark, syntect, ammonia, Mermaid pre-render validation, and a resvg/usvg/tiny-skia export pipeline. Full browser content and generated previews use different transports and trust tiers.",
+      "evidence_refs": ["E-002", "E-003"]
+    },
+    {
+      "id": "O-003",
+      "statement": "The browser product model is a PM-managed pinned bundled CEF-class Chromium runtime, primarily hosted in an editor tab with first-class detached windows; lower-level bindings plus a PM-owned bridge are preferred over making wef the architectural linchpin.",
+      "evidence_refs": ["E-004"]
+    },
+    {
+      "id": "O-004",
+      "statement": "The runtime lifecycle contract requires version pinning, integrity verification, rollback support, a versioned runtime-bundle, atomic matched-set replacement, and runtime_unavailable on mismatch or damage.",
+      "evidence_refs": ["E-005"]
+    },
+    {
+      "id": "O-005",
+      "statement": "Visible browser sessions are watchable and takeover-capable; background sessions must expose a live-session/watch route, while hidden backends are restricted to auth or testing evidence.",
+      "evidence_refs": ["E-006"]
+    },
+    {
+      "id": "O-006",
+      "statement": "Windows, macOS, Linux X11, and Linux Wayland share the editor-tab-plus-detached-window browser model. Runtime failure must preserve source/native surfaces, provide remediation, and must not silently switch browser models or use screenshots as a live-browser equivalent.",
+      "evidence_refs": ["E-007", "E-008"]
+    },
+    {
+      "id": "O-007",
+      "statement": "Direct preview mutation is a canonical shared-buffer patch path. The protocol enumerates six mutation operations, validates parse and source revisions, constrains edits to mapped spans, and explicitly rejects ambiguous or unsupported regions.",
+      "evidence_refs": ["E-009", "E-010", "E-011"]
+    },
+    {
+      "id": "O-008",
+      "statement": "Successful preview edits update dirty state, undo/redo history, and downstream rendering without writing directly to disk. The contract enumerates seven direct-mutation result codes and specifies source-focus behavior for three rejection classes.",
+      "evidence_refs": ["E-012"]
+    },
+    {
+      "id": "O-009",
+      "statement": "Selection annotations and chat handoff are intentionally distinct from direct mutation; unsupported selections fail non-destructively, and audit outcomes distinguish annotations and chat forwarding from patch outcomes.",
+      "evidence_refs": ["E-013"]
+    },
+    {
+      "id": "O-010",
+      "statement": "Markdown text remains canonical for Mermaid, SVG is the canonical render/export artifact, PNG is derived by rasterization, and hidden diagram state or a full-privilege shared bridge is prohibited.",
+      "evidence_refs": ["E-014"]
+    },
+    {
+      "id": "O-011",
+      "statement": "Scheduler-derived GUI/storage state must be event-driven, preserve safe-point versus restore-history distinctions, and retain blocked outcomes as first-class states.",
+      "evidence_refs": ["E-015"]
+    },
+    {
+      "id": "O-012",
+      "statement": "This memo claims temporary ownership of preserved behavior while delegating cross-document ownership through ContractRefs. The shown PlanUnits use generic preservation criteria and plan-migration/index validation surfaces.",
+      "evidence_refs": ["E-016", "E-017"]
+    },
+    {
+      "id": "O-013",
+      "statement": "RTIM-009 separates Gemini Direct and Gemini CLI identities and auth/quota planes; RTIM-010 requires requested/effective identity visibility across setup, health, usage, media, storage, prompt assembly, and runtime reporting.",
+      "evidence_refs": ["E-018", "E-019"]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "CF-001",
+      "summary": "Canonical rendering dependencies are not reproducibly pinned.",
+      "underspecification": "The excerpt names libraries but supplies no versions, feature sets, parser-extension profile, sanitizer policy/configuration, or compatibility test baseline. It also allows an unspecified later lock to supersede them.",
+      "consequence": "Builders can produce materially different parsing, sanitization, highlighting, validation, and export behavior while still claiming compliance.",
+      "evidence_refs": ["E-002"]
+    },
+    {
+      "id": "CF-002",
+      "summary": "The loopback browser transport lacks an exact security contract.",
+      "underspecification": "The full-browser server is workspace-rooted and separated from generated-preview trust, but the excerpt does not define bind interfaces, per-session authentication, origin/port lifetime, path and symlink containment, CSP, network egress, or the authority and checks for granting source-mutation privileges beyond the default.",
+      "consequence": "Security-sensitive transport and workspace-access behavior remains consequential builder discretion.",
+      "evidence_refs": ["E-003"]
+    },
+    {
+      "id": "CF-003",
+      "summary": "CEF selection and deviation gates are subjective.",
+      "underspecification": "Terms including mostly-full, clearly impractical, and proves non-viable have no measurable criteria, evidence threshold, adjudicating authority, deadline, or required fallback decision record.",
+      "consequence": "Implementers can diverge on browser capability scope or abandon the preferred integration path without a deterministic governance gate.",
+      "evidence_refs": ["E-004"]
+    },
+    {
+      "id": "CF-004",
+      "summary": "Runtime-bundle verification and recovery are incomplete.",
+      "underspecification": "The contract requires signature/hash verification and atomic replacement but does not define the signed manifest, trust root, key rotation/revocation, exact matched-file inventory, rollback trigger, retained-version policy, concurrent-update behavior, or crash-recovery receipt.",
+      "consequence": "Integrity and atomicity claims cannot be implemented or acceptance-tested uniformly.",
+      "evidence_refs": ["E-005"]
+    },
+    {
+      "id": "CF-005",
+      "summary": "Watch and takeover session behavior is not state-machine complete.",
+      "underspecification": "The user may take over and background sessions must expose watch/open-live actions, but no controller authority, handoff acknowledgement, agent pause/resume rule, conflict behavior, permission check, timeout, or audit event is specified.",
+      "consequence": "User and agent input can race or produce inconsistent custody and evidence semantics.",
+      "evidence_refs": ["E-006"]
+    },
+    {
+      "id": "CF-006",
+      "summary": "Linux support leaves required prerequisites undefined.",
+      "underspecification": "Both Linux rows defer prerequisites to the chosen embedding path and do not identify supported distributions, package/library versions, Wayland/X11 fallback behavior, installer responsibility, or prerequisite-specific remediation.",
+      "consequence": "The matrix asserts support without an exact installability or compatibility boundary.",
+      "evidence_refs": ["E-007"]
+    },
+    {
+      "id": "CF-007",
+      "summary": "Doctor and degraded-mode acceptance behavior lacks exact outputs.",
+      "underspecification": "Presence, version, startup, and host checks are listed, but the excerpt defines no probe algorithm, timeout, result schema, cause taxonomy, requested/effective disclosure fields, remediation mapping, recheck transition, or evidence artifact. Scroll/selection preservation is only required when possible.",
+      "consequence": "Different implementations can report the same failure differently and cannot be certified against a shared degraded-mode oracle.",
+      "evidence_refs": ["E-008"]
+    },
+    {
+      "id": "CF-008",
+      "summary": "The preview action protocol omits its common request and response envelope.",
+      "underspecification": "Operation-specific payloads are given, while later rules depend on node_id, parse_revision, and source_revision without defining their types, buffer/document identity, request identity, permission context, response revision, patch representation, or error-detail shape.",
+      "consequence": "Callers and runtime implementations cannot interoperate from this protocol alone.",
+      "evidence_refs": ["E-010", "E-011", "E-012"]
+    },
+    {
+      "id": "CF-009",
+      "summary": "Revision and source-span semantics are ambiguous.",
+      "underspecification": "The excerpt does not define the relationship between parse_revision and source_revision, validation order when both are stale, byte versus character offsets, inclusive/exclusive bounds, multi-span nodes, transformed-source mappings, or the precise condition producing rejected_stale_revision.",
+      "consequence": "Identical concurrent edits can yield different patches or error codes across implementations.",
+      "evidence_refs": ["E-011", "E-012"]
+    },
+    {
+      "id": "CF-010",
+      "summary": "Operation-level validation and editing semantics are incomplete.",
+      "underspecification": "The optional toggle target has no omission rule; replacement text, href/title, inline formatting overlap, Mermaid replacement validation, escaping, and normalization constraints are unspecified. Future undo coalescing is permitted without naming its governing contract.",
+      "consequence": "The same action can generate different canonical text or undo history.",
+      "evidence_refs": ["E-010", "E-012"]
+    },
+    {
+      "id": "CF-011",
+      "summary": "Several direct-mutation result codes lack deterministic UI behavior.",
+      "underspecification": "Source focusing and user-facing reasons are specified for rejected_stale_revision, ambiguous_mapping, and unsupported_region, but not for permission_denied, fallback_focus_source, or render_error; no result-to-copy, retry, focus, or state-transition table is supplied.",
+      "consequence": "Failure UX and recovery behavior remain inconsistent despite a closed result-code list.",
+      "evidence_refs": ["E-012"]
+    },
+    {
+      "id": "CF-012",
+      "summary": "Annotation and selection-handoff contracts are not payload- or lifecycle-complete.",
+      "underspecification": "The excerpt says mapped selections may create durable annotations or attachments but provides no selection anchor schema, payloads for comment/replace/insert/remove, storage owner, durability boundary, update/rebase behavior, deletion lifecycle, or exact triggers for created_annotation, selection_sent_to_chat, and selection_forward_blocked.",
+      "consequence": "Review-layer behavior can diverge and durable anchors may not survive document changes consistently.",
+      "evidence_refs": ["E-013"]
+    },
+    {
+      "id": "CF-013",
+      "summary": "Mermaid validation, rendering, and export lack an exact behavioral profile.",
+      "underspecification": "Detection inputs and canonical artifacts are stated, but the renderer/version, parse-versus-detect success criteria, supported diagram types, security configuration, font/resource resolution, sizing, transparency, deterministic SVG normalization, PNG scale, and render/export failure codes are absent.",
+      "consequence": "Preview and exported artifacts can vary materially across platforms and implementations.",
+      "evidence_refs": ["E-002", "E-014"]
+    },
+    {
+      "id": "CF-014",
+      "summary": "The scheduler tie-in explicitly remains unclosed.",
+      "underspecification": "The memo says it should cross-reference packet-applied SSOT documents after update, but it supplies neither a stable packet identifier, target-document list, closure condition, owner, nor validation receipt.",
+      "consequence": "The rewrite narrative can remain detached from the canonical scheduler contracts with no deterministic way to detect closure.",
+      "evidence_refs": ["E-015"]
+    },
+    {
+      "id": "CF-015",
+      "summary": "Owner and consumer allocation is too generic for implementation.",
+      "underspecification": "The owner map assigns the memo as batch owner and says cross-document ownership follows ContractRefs, but it does not assign concrete owners or consumers for runtime packaging, Doctor, preview hosting, source mapping, permissions, audit, storage, or GUI remediation.",
+      "consequence": "Responsibility for implementing and validating cross-cutting obligations can be duplicated or omitted.",
+      "evidence_refs": ["E-016"]
+    },
+    {
+      "id": "CF-016",
+      "summary": "Behavioral acceptance evidence is not defined for the detailed browser and preview contracts.",
+      "underspecification": "The shown PlanUnit validation surfaces exercise plan migration and indexing, not runtime installation, browser hosting, degraded UX, patch correctness, trust isolation, platform behavior, or annotation outcomes.",
+      "consequence": "Plan-structure validation can pass without executable evidence that the core behavior is implemented.",
+      "evidence_refs": ["E-008", "E-011", "E-012", "E-017"]
+    },
+    {
+      "id": "CF-017",
+      "summary": "RTIM-009 and RTIM-010 are broader than their exact runtime and GUI behavior definitions.",
+      "underspecification": "Separate Gemini identities and requested/effective visibility are required, but the excerpt does not define identity fields, quota-plane mapping, fallback transitions, refresh timing, redaction, unavailable/unknown states, capability-picker behavior, or per-surface acceptance evidence.",
+      "consequence": "Auth and capability truth can be represented inconsistently across the named consumers.",
+      "evidence_refs": ["E-018", "E-019"]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "NG-001",
+      "statement": "Generated previews do not receive an open-ended host bridge: the v1 actions are enumerated and all other command families are excluded by default.",
+      "evidence_refs": ["E-001"]
+    },
+    {
+      "id": "NG-002",
+      "statement": "Generated content and arbitrary workspace HTML are explicitly separated into different trust tiers, with generated HTML sanitization and prohibitions on arbitrary file/network behavior.",
+      "evidence_refs": ["E-003"]
+    },
+    {
+      "id": "NG-003",
+      "statement": "The browser runtime is explicitly bundled and app-managed rather than first-use-downloaded or dependent on a system browser, and mismatched updates must leave the prior bundle active or surface runtime_unavailable.",
+      "evidence_refs": ["E-005"]
+    },
+    {
+      "id": "NG-004",
+      "statement": "GUI placement is explicit: editor-tab is the primary browsing/preview host, detached windows are first-class, and the bottom panel must not become a competing primary Browser tab.",
+      "evidence_refs": ["E-007"]
+    },
+    {
+      "id": "NG-005",
+      "statement": "Degraded browser behavior explicitly preserves usable source/native surfaces, prohibits silent legacy-browser substitution, rejects blank panes as steady state, and rejects screenshots as a live-preview equivalent.",
+      "evidence_refs": ["E-008"]
+    },
+    {
+      "id": "NG-006",
+      "statement": "Preview edits cannot bypass the shared buffer, dirty state, undo/redo, downstream render pipeline, or normal save path.",
+      "evidence_refs": ["E-009", "E-012"]
+    },
+    {
+      "id": "NG-007",
+      "statement": "Ambiguous mappings and unsupported raw, malformed, unknown-extension, or opaque fenced regions have explicit non-mutating failure outcomes.",
+      "evidence_refs": ["E-011"]
+    },
+    {
+      "id": "NG-008",
+      "statement": "Annotations and chat handoff are explicitly non-equivalent to direct patches, and their audit outcomes are separately named.",
+      "evidence_refs": ["E-013"]
+    },
+    {
+      "id": "NG-009",
+      "statement": "Mermaid has one canonical text model and one canonical SVG export artifact; hidden diagram state is expressly prohibited.",
+      "evidence_refs": ["E-014"]
+    },
+    {
+      "id": "NG-010",
+      "statement": "Blocked scheduler outcomes are explicitly first-class and cannot be flattened into generic failures.",
+      "evidence_refs": ["E-015"]
+    },
+    {
+      "id": "NG-011",
+      "statement": "The shown PlanUnits explicitly prohibit creating WorkNodes, executable queues, production tasks, implementation files, or source code.",
+      "evidence_refs": ["E-017"]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U-001",
+      "unknown": "Whether a later lock section supplies dependency versions or superseding rendering choices.",
+      "why_unresolved": "The core explicitly permits later supersession, but no such section is available in this capsule.",
+      "evidence_refs": ["E-002"]
+    },
+    {
+      "id": "U-002",
+      "unknown": "Whether the referenced contract documents define the missing runtime, permission, storage, GUI, and patch details.",
+      "why_unresolved": "The core delegates through ContractRefs, and blindness constraints prohibit inspecting those documents.",
+      "evidence_refs": ["E-007", "E-008", "E-011", "E-013", "E-016"]
+    },
+    {
+      "id": "U-003",
+      "unknown": "Which CEF wrapper/binding path has been selected and whether non-viability evidence exists.",
+      "why_unresolved": "The excerpt retains wef and other integrations as candidates and defines no recorded selection outcome.",
+      "evidence_refs": ["E-004", "E-005"]
+    },
+    {
+      "id": "U-004",
+      "unknown": "Whether the scheduler packet has already been applied to its SSOT documents.",
+      "why_unresolved": "The tie-in note describes the cross-reference as future work and supplies no closure receipt.",
+      "evidence_refs": ["E-015"]
+    },
+    {
+      "id": "U-005",
+      "unknown": "Whether PlanUnits outside the core range provide dedicated browser, preview, Doctor, or annotation acceptance coverage.",
+      "why_unresolved": "The context shows that the PlanUnit sequence continues beyond RTIM-010, but review outside the supplied core/context is forbidden.",
+      "evidence_refs": ["E-020", "E-021"]
+    },
+    {
+      "id": "U-006",
+      "unknown": "Whether any executable runtime evidence currently exists for the contracts in this window.",
+      "why_unresolved": "The only validation surfaces visible in the shown PlanUnits are plan-migration and plan-index validators.",
+      "evidence_refs": ["E-017"]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "ref_id": "E-001",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 337,
+      "end_line": 347,
+      "excerpt": "Allowed bridge actions in v1: open_source, open_detached, request_edit, export_svg, export_png, copy_svg, copy_image. No other host command family is implicitly available to generated previews."
+    },
+    {
+      "ref_id": "E-002",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 349,
+      "end_line": 355,
+      "excerpt": "To keep implementations aligned, the rewrite uses these canonical libraries unless a later lock section supersedes them: pulldown-cmark; syntect; ammonia; Mermaid parse/detect-type validation before render; resvg + usvg + tiny-skia."
+    },
+    {
+      "ref_id": "E-003",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 357,
+      "end_line": 365,
+      "excerpt": "Full HTML/browser mode uses a loopback localhost preview server rooted to the workspace/project context. Generated previews are in a restricted trust tier. Full HTML/browser mode is a separate trust tier and must not inherit source-mutation privileges by default."
+    },
+    {
+      "ref_id": "E-004",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 371,
+      "end_line": 378,
+      "excerpt": "The rendering system must define one browser product model across supported desktop platforms: a PM-managed pinned bundled CEF-class Chromium runtime with editor-tab primary hosting and first-class detached windows. The preferred CEF integration starting point is lower-level bindings plus a PM-owned shim/bridge."
+    },
+    {
+      "ref_id": "E-005",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 379,
+      "end_line": 384,
+      "excerpt": "Browser installer/update policy must define a versioned runtime-bundle layout and replacement rules, require signature/hash verification for shipped CEF artifacts, and use atomic update steps so every CEF-matched file moves together or the previous bundle remains active."
+    },
+    {
+      "ref_id": "E-006",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 385,
+      "end_line": 385,
+      "excerpt": "Browser visibility is watchable by default: normal user-visible browser /window sessions let the user /take over; attachable background sessions must expose \"open live browser session\" / \"watch run\"; hidden utility backends are limited to auth or /testing/evidence."
+    },
+    {
+      "ref_id": "E-007",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 389,
+      "end_line": 398,
+      "excerpt": "Windows, macOS, Linux X11, and Linux Wayland guarantee an editor-tab browser plus detached window on the same PM browser model. FinalGUI keeps the editor-tab browser as the primary normal browsing and preview host."
+    },
+    {
+      "ref_id": "E-008",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 400,
+      "end_line": 415,
+      "excerpt": "Required doctor/preflight checks include runtime presence and health, expected-version match, startup health, and validation of editor-tab and detached hosts. Browser runtime failure must use explicit user-facing remediation and MUST NOT silently swap to an unrelated legacy webview/browser model."
+    },
+    {
+      "ref_id": "E-009",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 419,
+      "end_line": 424,
+      "excerpt": "Direct preview mutation remains a validated shared-buffer patch path; annotation and chat handoff remain review-layer operations until an explicit direct-edit bridge is invoked. All successful preview mutations resolve to canonical text patches."
+    },
+    {
+      "ref_id": "E-010",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 426,
+      "end_line": 432,
+      "excerpt": "Operation payloads: toggle_checkbox, edit_heading_text, edit_list_item_text, set_link_target, set_inline_format, and replace_mermaid_block."
+    },
+    {
+      "ref_id": "E-011",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 436,
+      "end_line": 441,
+      "excerpt": "The runtime MUST resolve node_id against the current parse tree for the provided parse_revision. The runtime MUST validate source_revision before patch application. Requests MUST fail with ambiguous_mapping or unsupported_region under the stated conditions."
+    },
+    {
+      "ref_id": "E-012",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 445,
+      "end_line": 456,
+      "excerpt": "Successful preview edits MUST update dirty state, undo/redo history, and downstream preview re-render. Preview actions MUST NOT write directly to disk. Direct preview mutation result codes remain: applied_patch, rejected_stale_revision, unsupported_region, ambiguous_mapping, permission_denied, fallback_focus_source, and render_error."
+    },
+    {
+      "ref_id": "E-013",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 462,
+      "end_line": 469,
+      "excerpt": "Selection actions such as comment, replace, insert_after, remove, and send_selection_to_chat are not direct preview-mutation operations. Audit must distinguish created_annotation, selection_sent_to_chat, and selection_forward_blocked from direct patch outcomes."
+    },
+    {
+      "ref_id": "E-014",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 473,
+      "end_line": 484,
+      "excerpt": "Mermaid uses text as the canonical artifact; do not introduce a hidden second diagram object model. SVG is the canonical Mermaid render/export artifact; PNG is derived from SVG rasterization. No full-privilege host bridge shared between generated preview content and arbitrary workspace HTML."
+    },
+    {
+      "ref_id": "E-015",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 488,
+      "end_line": 494,
+      "excerpt": "Blocked outcomes remain first-class and must not be flattened into generic failures in rewrite-era UI or storage. This memo should cross-reference the packet-applied SSOT docs after they are updated."
+    },
+    {
+      "ref_id": "E-016",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 498,
+      "end_line": 500,
+      "excerpt": "During this batch, Plans/rewrite-tie-in-memo.md remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text."
+    },
+    {
+      "ref_id": "E-017",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 504,
+      "end_line": 507,
+      "excerpt": "RTIM-002 acceptance criteria prohibit WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code; its validation surfaces are pm-plan-migration.py validate and pm-plan-index.py validate."
+    },
+    {
+      "ref_id": "E-018",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 546,
+      "end_line": 549,
+      "excerpt": "Gemini Direct gemini and Gemini CLI gemini_cli are separate provider entries; OAuth, API key, and Google/Vertex credentials are distinct auth surfaces and quota planes, and stale mixed-provider Gemini canon is retired."
+    },
+    {
+      "ref_id": "E-019",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 552,
+      "end_line": 555,
+      "excerpt": "Requested and effective Gemini auth/account identity must be visible across prompt assembly, storage, setup/health, usage, media capabilities, runtime reporting, and anti-key-centric GUI copy."
+    },
+    {
+      "ref_id": "E-020",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 558,
+      "end_line": 558,
+      "excerpt": "### RTIM-011 - Thin Client Command Boundary"
+    },
+    {
+      "ref_id": "E-021",
+      "file": "Plans/rewrite-tie-in-memo.md",
+      "start_line": 564,
+      "end_line": 564,
+      "excerpt": "### RTIM-012 - Implementation Interface Directives"
+    }
+  ]
+}

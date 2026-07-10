@@ -1,0 +1,58 @@
+{
+  "record_type": "dispatch_prelaunch",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "assignment_attempt_number": 3,
+  "required_model": "gpt-5.6-sol",
+  "required_reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "fork_turns": "none",
+  "immutable": true,
+  "created_at": "2026-07-10T09:18:04Z",
+  "agent_thread_id_state": "pending_native_spawn",
+  "validator_authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+  "validator_authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+  "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+  "validator_sha256": "6df3b229ca48e028b5a88010574131c18208a1f0cad89dd2c1b92223abedb7e2",
+  "required_evidence_quote_field": "exact_quote",
+  "canonical_source_line_validation_required": true,
+  "strict_top_level_schema_required": true,
+  "attempt_id": "A004-R07-000037-ATTEMPT-3",
+  "assignment_id": "A004-000037-EXACT-WIN-19B62D73B9EF-0006",
+  "assignment_seq": 37,
+  "agent_instance_id": "9b7bd46f-465b-4544-9224-f61d97b731da",
+  "agent_name": "a004_r07_exact_0037_9b7bd46f",
+  "agent_path": "/root/a004_r07_exact_0037_9b7bd46f",
+  "window_id": "WIN-19B62D73B9EF-0006",
+  "doc_id": "DOC-19B62D73B9EF",
+  "document_path": "Plans/Contracts_V0.md",
+  "core_range": [
+    1115,
+    1462
+  ],
+  "context_ranges": [
+    [
+      1103,
+      1114
+    ],
+    [
+      1463,
+      1474
+    ]
+  ],
+  "source_sha256": "4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5",
+  "core_sha256": "567a52a323e76e7ef60b75ba05fa9fdff2b1ce258dff25eaf519d0e764dcd772",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000037-EXACT-WIN-19B62D73B9EF-0006.json",
+  "capsule_sha256": "6a522d528fd3aa0dafc629253e8a059b09128c46911c72b2e63f5724e3a41a2d",
+  "capsule_bytes": 1643,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-19B62D73B9EF-0006.txt",
+  "source_excerpt_sha256": "cad56d6100e8cfe1607b194d30c61367b778bf28a9ce51912ffb75d1488010f1",
+  "source_excerpt_bytes": 37266,
+  "planned_result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-07/raw_results/A004-000037-EXACT-WIN-19B62D73B9EF-0006.attempt-3.json",
+  "planned_validation_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-07/validation/A004-000037-EXACT-WIN-19B62D73B9EF-0006.attempt-3.validation.json",
+  "prelaunch_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-07/dispatch_receipts/A004-000037-EXACT-WIN-19B62D73B9EF-0006.attempt-3.prelaunch.json"
+}

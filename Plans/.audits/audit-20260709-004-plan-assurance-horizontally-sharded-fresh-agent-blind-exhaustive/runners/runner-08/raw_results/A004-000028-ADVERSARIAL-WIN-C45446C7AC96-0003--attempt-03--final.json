@@ -1,0 +1,1326 @@
+{
+  "schema_version": "a004.document_window_result.v1",
+  "assignment_id": "A004-000028-ADVERSARIAL-WIN-C45446C7AC96-0003",
+  "runner_id": "runner-08",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-C45446C7AC96-0003",
+  "doc_id": "DOC-C45446C7AC96",
+  "document_path": "Plans/MiscPlan.md",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "agent_instance_id": "6DF60E46-C1A1-4E1D-AF95-4B0EF4894E05",
+  "agent_path": "/root/a004_r08_adversarial_000028_6df60e46",
+  "agent_thread_id": "019f4a18-b4f8-7e12-ace1-c03ca6ab5f84",
+  "hash_verification": {
+    "capsule_sha256_match": true,
+    "source_excerpt_sha256_match": true,
+    "capsule_bytes_match": true,
+    "source_excerpt_bytes_match": true
+  },
+  "scope_attestation": {
+    "files_read": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/reviewer_protocol_v2.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000028-ADVERSARIAL-WIN-C45446C7AC96-0003.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-C45446C7AC96-0003.txt"
+    ],
+    "other_files_read": false,
+    "prior_audits_seen": false,
+    "other_results_seen": false,
+    "unrelated_windows_seen": false
+  },
+  "observations": [
+    {
+      "observation_id": "O-001",
+      "category": "shortcut_state",
+      "summary": "Shortcut state is override-only and the central key map is intended to route application key events.",
+      "evidence": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 684,
+          "line_end": 684,
+          "quote": "Only overrides stored."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 669,
+          "line_end": 669,
+          "quote": "All key events (e.g. in composer, prompt fields) go through this map"
+        }
+      ],
+      "implication": "The centralization provides one active-state surface, but every representable state and event-precedence rule must be explicit."
+    },
+    {
+      "observation_id": "O-002",
+      "category": "skill_runtime",
+      "summary": "Skill readiness is computed before launch, while skill content may be both compiled into context and retrieved on demand.",
+      "evidence": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 702,
+          "line_end": 702,
+          "quote": "compute runtime readiness before launch from validation state, permission state, and tool availability."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 703,
+          "line_end": 703,
+          "quote": "bundle PM-selected skill content into the compiled context."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 704,
+          "line_end": 704,
+          "quote": "expose the PM `skill` tool for on-demand skill retrieval during the run."
+        }
+      ],
+      "implication": "The two delivery paths need a common immutable identity, authorization decision, and size policy."
+    },
+    {
+      "observation_id": "O-003",
+      "category": "projection_authority",
+      "summary": "Workspace projections, provider runtime state, and per-target manual overrides are intentionally separated.",
+      "evidence": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 713,
+          "line_end": 713,
+          "quote": "workspace-owned projections are tracked separately from provider-root-owned runtime state"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 714,
+          "line_end": 714,
+          "quote": "repair acts on the chosen target and must not silently revert sibling targets."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 715,
+          "line_end": 715,
+          "quote": "a projection failure does not mean PM-native skill runtime delivery failed."
+        }
+      ],
+      "implication": "Projection failure and PM-native runtime readiness should remain distinct operational and GUI states."
+    },
+    {
+      "observation_id": "O-004",
+      "category": "readiness_claim",
+      "summary": "The subsection claims both ambiguity closure and implementation-plan sufficiency.",
+      "evidence": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 720,
+          "line_end": 720,
+          "quote": "implementation plan can be derived without ambiguity."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 840,
+          "line_end": 840,
+          "quote": "All open decisions above are resolved or scoped"
+        }
+      ],
+      "implication": "Remaining implementation-dependent choices must be assessed against this explicit readiness assertion."
+    },
+    {
+      "observation_id": "O-005",
+      "category": "cleanup_lifecycle",
+      "summary": "Cleanup is specified as a sequential prepare, execute, cleanup lifecycle and the execution engine passes a literal process identifier.",
+      "evidence": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 881,
+          "line_end": 881,
+          "quote": "prepare → execute → cleanup; on prepare error log and continue"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 884,
+          "line_end": 884,
+          "quote": "`cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns."
+        }
+      ],
+      "implication": "Failure unwinding, process ownership, and sentinel semantics are safety-critical parts of the contract."
+    }
+  ],
+  "candidate_findings": [
+    {
+      "candidate_id": "CF-001",
+      "severity": "critical",
+      "category": "process_authority",
+      "claim": "The execution engine passes literal PID 0 to a cleanup operation that is specified to terminate a process, without defining 0 as a safe sentinel or proving ownership of the termination target.",
+      "why_it_matters": "A PID-like zero can be invalid or can acquire process-group semantics in lower-level termination code; either interpretation risks failure to clean the intended child or termination beyond the owned runner.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 875,
+          "line_end": 875,
+          "quote": "`cleanup_after_execution(pid, work_dir, config)` per §4.8 (terminate process; runner temp only; optional build-artifact dirs)"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 884,
+          "line_end": 884,
+          "quote": "`cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns."
+        }
+      ],
+      "bounded_remediation_need": "Replace the numeric sentinel with an owned child handle or an explicit `Option<OwnedPid>` contract, prohibit zero as an OS termination target, and test that cleanup cannot signal unrelated processes."
+    },
+    {
+      "candidate_id": "CF-002",
+      "severity": "high",
+      "category": "failure_and_recovery",
+      "claim": "The cleanup lifecycle is described only as sequential calls after normal return; it does not require cleanup on cancellation, panic, timeout, abort, or an early error path.",
+      "why_it_matters": "The exact failures most likely to leave runner temporaries or build artifacts behind can bypass a normal post-execution call.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 881,
+          "line_end": 881,
+          "quote": "prepare → execute → cleanup"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 884,
+          "line_end": 884,
+          "quote": "after it returns."
+        }
+      ],
+      "bounded_remediation_need": "Require a scope guard or equivalent finally-style mechanism, define cleanup behavior for every termination mode, preserve the primary execution error, and add cancellation, panic, timeout, and double-cleanup tests."
+    },
+    {
+      "candidate_id": "CF-003",
+      "severity": "high",
+      "category": "failure_policy",
+      "claim": "Every preparation error is specified to fail open by logging and continuing, with no error classification or user-visible degraded-state contract.",
+      "why_it_matters": "A benign non-repository condition, a path-resolution failure, an unsafe-root detection, and a destructive-cleanup validation failure should not all authorize execution under the same policy.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 881,
+          "line_end": 881,
+          "quote": "on prepare error log and continue"
+        }
+      ],
+      "bounded_remediation_need": "Classify preparation outcomes, make unsafe-root and destructive-operation validation failures fail closed, define explicitly recoverable warnings, and surface the degraded state before execution."
+    },
+    {
+      "candidate_id": "CF-004",
+      "severity": "medium",
+      "category": "states_and_transitions",
+      "claim": "The independent `clean_ignored` state is not reachable as written because preparation invokes git-clean only when `config.untracked` is true.",
+      "why_it_matters": "A user can select Clean ignored while leaving Clean untracked off, yet the documented backend transition performs no clean operation unless `untracked` is enabled.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 872,
+          "line_end": 872,
+          "quote": "fields: `untracked`, `clean_ignored`, `clear_agent_output`, `remove_build_artifacts`"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 874,
+          "line_end": 874,
+          "quote": "call run_git_clean_with_excludes if config.untracked"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 910,
+          "line_end": 910,
+          "quote": "Clean untracked, Clean ignored, Clear agent-output, Remove build artifacts, Evidence retention"
+        }
+      ],
+      "bounded_remediation_need": "Invoke git-clean when either clean flag is enabled, or explicitly define and enforce `untracked` as a master enable in the GUI and config schema; add a truth-table test for all flag combinations."
+    },
+    {
+      "candidate_id": "CF-005",
+      "severity": "high",
+      "category": "shortcut_state_model",
+      "claim": "The shortcut model cannot represent an intentionally unbound action: absence means use the default, while the GUI contract describes actions whose binding was removed.",
+      "why_it_matters": "Without a tombstone or explicit unbound variant, saving an unbind either silently restores the default or requires an undocumented sentinel, making persisted and displayed state diverge.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 684,
+          "line_end": 684,
+          "quote": "Only overrides stored."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 785,
+          "line_end": 785,
+          "quote": "If user removed the binding (e.g. no shortcut for that action)"
+        }
+      ],
+      "bounded_remediation_need": "Define `Default`, `Bound(KeyBinding)`, and `Unbound` semantics or declare unbinding unsupported; serialize the distinction and test edit, reset, export, import, and restart behavior."
+    },
+    {
+      "candidate_id": "CF-006",
+      "severity": "high",
+      "category": "event_authority",
+      "claim": "Routing every key event through the shortcut map has no defined precedence or consumption contract relative to native text editing, IME composition, accessibility input, focused-widget handlers, or reserved system shortcuts.",
+      "why_it_matters": "A central handler can duplicate actions or steal editing and composition events, while the only system-shortcut safeguard is optional.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 669,
+          "line_end": 669,
+          "quote": "All key events (e.g. in composer, prompt fields) go through this map"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 727,
+          "line_end": 727,
+          "quote": "Key map must be consulted on every key event in focusable text areas."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 730,
+          "line_end": 730,
+          "quote": "\"Warn on system shortcut\" is optional"
+        }
+      ],
+      "bounded_remediation_need": "Define capture and bubble order, handled-event semantics, native-editing and IME pass-through, repeat behavior, reserved combinations, and a focus/platform test matrix."
+    },
+    {
+      "candidate_id": "CF-007",
+      "severity": "medium",
+      "category": "compatibility_and_migration",
+      "claim": "The platform rule maps modifiers while reading, writing, or displaying, but the persistence rule does not define a canonical logical-versus-physical modifier representation or idempotent conversion boundary.",
+      "why_it_matters": "A binding can be double-transformed across repeated loads or exports, and the same serialized value can mean different physical keys on different platforms.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 661,
+          "line_end": 661,
+          "quote": "map Ctrl -> Cmd and Alt -> Option when reading/writing config or displaying in GUI"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 729,
+          "line_end": 729,
+          "quote": "use a format that is cross-platform and stable"
+        }
+      ],
+      "bounded_remediation_need": "Define one canonical serialized modifier vocabulary, perform platform conversion only at event/display boundaries, specify migration from prior forms, and add cross-platform round-trip fixtures."
+    },
+    {
+      "candidate_id": "CF-008",
+      "severity": "medium",
+      "category": "export_compatibility",
+      "claim": "The export contract leaves unresolved whether a file contains overrides or the full active map and does not bind the file to a default-table or action-schema version.",
+      "why_it_matters": "An override-only backup can restore to different active shortcuts after defaults change or on another app version, while a full-map import has different reset semantics.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 768,
+          "line_end": 768,
+          "quote": "Serialize current overrides only (or full key map) to JSON."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 771,
+          "line_end": 771,
+          "quote": "skip or reject entire import"
+        }
+      ],
+      "bounded_remediation_need": "Choose one export semantic, include action-schema and default-set identifiers, define migration and unknown-action handling, and test restore across changed defaults."
+    },
+    {
+      "candidate_id": "CF-009",
+      "severity": "high",
+      "category": "readiness_consistency",
+      "claim": "The assertion that an implementation plan can be derived without ambiguity conflicts with unresolved shortcut, version, import, partial-directory, and concurrent-edit choices.",
+      "why_it_matters": "Different implementers can produce materially different destructive, conflict, and recovery behavior while all claiming conformance.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 720,
+          "line_end": 720,
+          "quote": "implementation plan can be derived without ambiguity."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 731,
+          "line_end": 731,
+          "quote": "or (b) **steal** (assign to new action and remove from old); implementation must decide."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 733,
+          "line_end": 733,
+          "quote": "\"implementation must decide\": skip unknown version and attempt to parse known fields for best-effort import"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 744,
+          "line_end": 744,
+          "quote": "**Implementation must decide:**"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 840,
+          "line_end": 840,
+          "quote": "All open decisions above are resolved or scoped"
+        }
+      ],
+      "bounded_remediation_need": "Resolve each behavior-changing choice into one normative v1 rule or explicitly remove the ambiguity-free readiness claim and enumerate the blocking decisions."
+    },
+    {
+      "candidate_id": "CF-010",
+      "severity": "medium",
+      "category": "transactional_persistence",
+      "claim": "Shortcut import does not define an atomic ordering or rollback behavior for config persistence and key-map replacement, even though the same subsection gives bulk permissions an explicit persistence-failure rule.",
+      "why_it_matters": "A write failure can leave a new in-memory key map active but unsaved, or leave persisted config changed while the displayed map remains old.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 769,
+          "line_end": 769,
+          "quote": "On success, rebuild key map and persist; toast \"Imported N shortcuts.\""
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 800,
+          "line_end": 800,
+          "quote": "If config persist fails after Apply, show error toast; do not update in-memory state as \"saved\" so user can retry."
+        }
+      ],
+      "bounded_remediation_need": "Stage and validate the candidate map, atomically persist it, swap active state only after persistence succeeds, and define rollback plus user-visible retry behavior."
+    },
+    {
+      "candidate_id": "CF-011",
+      "severity": "high",
+      "category": "skill_trust_boundary",
+      "claim": "Permission resolution is tested as default-allow while discovery includes compatible import roots and users can copy arbitrary skill folders into a discovery root.",
+      "why_it_matters": "A newly discovered or imported skill can cross into runnable eligibility without an explicit trust decision, especially when source provenance or collisions are not prominently surfaced.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 700,
+          "line_end": 700,
+          "quote": "discover skills from PM roots plus compatible import roots defined by the canonical skill system."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 748,
+          "line_end": 748,
+          "quote": "we copy that folder into a chosen discovery base"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 752,
+          "line_end": 752,
+          "quote": "`resolve_skill_permission` (exact + wildcard, default allow)."
+        }
+      ],
+      "bounded_remediation_need": "Define trust tiers by root and import origin, default untrusted content to ask or deny, require explicit enablement before delivery, and show immutable provenance in readiness and Skills GUI."
+    },
+    {
+      "candidate_id": "CF-012",
+      "severity": "high",
+      "category": "name_authority",
+      "claim": "First-wins name deduplication lacks a fully normative total order and allows later duplicates to be silently skipped rather than mandatorily surfaced.",
+      "why_it_matters": "A higher-priority duplicate can shadow the intended skill, and discovery results can vary if implementations interpret the example order differently.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "Discovery walks paths in a defined order (e.g. project paths first, then global"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "later duplicates with the same name are skipped (or listed as \"shadowed\" in GUI)."
+        }
+      ],
+      "bounded_remediation_need": "Specify a complete ordered root list and tie-breaker, require collision records and provenance in GUI/readiness, define invalid-winner behavior, and test adversarial duplicate placement."
+    },
+    {
+      "candidate_id": "CF-013",
+      "severity": "high",
+      "category": "permission_state",
+      "claim": "The required GUI permits selecting Ask and readiness depends on permission state, but Ask enforcement is explicitly deferred to phase 2.",
+      "why_it_matters": "The GUI can persist a state that the runtime cannot enforce, creating misleading permission truth and a risk of fail-open loading.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 702,
+          "line_end": 702,
+          "quote": "compute runtime readiness before launch from validation state, permission state, and tool availability."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 746,
+          "line_end": 746,
+          "quote": "Implementation plan can mark \"ask\" as phase 2 and leave exact UI location to implementation."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 796,
+          "line_end": 796,
+          "quote": "selects Allow/Deny/Ask"
+        }
+      ],
+      "bounded_remediation_need": "Disable Ask until enforcement exists or define a fail-closed v1 Ask transition with an owned prompt, cancellation behavior, remembered-choice scope, and readiness tests."
+    },
+    {
+      "candidate_id": "CF-014",
+      "severity": "high",
+      "category": "permission_precedence",
+      "claim": "Permission precedence is defined only between explicit entries and patterns; no deterministic rule exists for two or more matching patterns with conflicting permissions.",
+      "why_it_matters": "Overlapping allow and deny patterns can resolve differently by map iteration or insertion order, turning authorization into nondeterministic behavior.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 747,
+          "line_end": 747,
+          "quote": "Explicit per-skill entry wins over pattern."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 797,
+          "line_end": 797,
+          "quote": "add or update pattern entry"
+        }
+      ],
+      "bounded_remediation_need": "Define wildcard grammar, normalization, specificity and tie-breaking, choose deny-wins or another explicit conflict rule, and add overlapping-pattern tests."
+    },
+    {
+      "candidate_id": "CF-015",
+      "severity": "high",
+      "category": "authorization_scope",
+      "claim": "Bulk permission confirmation counts only currently discovered matches, while one allowed implementation stores a persistent pattern that also affects future skills; the alternative writes per-skill entries and has different authority scope.",
+      "why_it_matters": "A confirmation such as three affected skills can silently authorize later arrivals, or two conforming implementations can grant different future permissions from the same action.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 797,
+          "line_end": 797,
+          "quote": "Show confirmation modal: \"Set Allow for 3 skills matching doc-*?\""
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 797,
+          "line_end": 797,
+          "quote": "or set per-skill entries for each match."
+        }
+      ],
+      "bounded_remediation_need": "Separate persistent rule creation from snapshot bulk application, choose one semantic per control, disclose future-match scope in confirmation, and record the resulting rule or exact affected names."
+    },
+    {
+      "candidate_id": "CF-016",
+      "severity": "high",
+      "category": "test_oracle",
+      "claim": "Validate All checks name, description, and directory-name rules but omits required and optional tool-reference validation that the backend says controls readiness.",
+      "why_it_matters": "The GUI can report a skill as OK even though a required tool reference makes it unrunnable, contradicting the promised exact failing-reference surface.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 701,
+          "line_end": 701,
+          "quote": "`required_tool_refs` problems block runnable `/readiness`, `optional_tool_refs` problems warn"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 832,
+          "line_end": 832,
+          "quote": "same rules as load_skill: frontmatter, name 1-64 chars and regex, name matches dir, description 1-1024 chars"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 833,
+          "line_end": 833,
+          "quote": "checks name and description and dir-name match"
+        }
+      ],
+      "bounded_remediation_need": "Make Validate All invoke the same canonical readiness validator, include required-tool errors and optional-tool warnings with exact refs, and test parity between table status and launch readiness."
+    },
+    {
+      "candidate_id": "CF-017",
+      "severity": "medium",
+      "category": "validation_coverage",
+      "claim": "Validate all SKILL.md on disk actually validates only the deduplicated discovery result, so shadowed duplicate files can escape validation.",
+      "why_it_matters": "A malformed or malicious shadowed skill can remain invisible until search order changes and it becomes the winner.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 742,
+          "line_end": 742,
+          "quote": "later duplicates with the same name are skipped"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 828,
+          "line_end": 828,
+          "quote": "Validate all SKILL.md on disk"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 833,
+          "line_end": 833,
+          "quote": "Then for each skill: `discover_skills` then for each path call `validate_skill`."
+        }
+      ],
+      "bounded_remediation_need": "Retain all discovered candidates, including shadowed entries, validate each physical path, and report winner, shadow status, provenance, and errors separately."
+    },
+    {
+      "candidate_id": "CF-018",
+      "severity": "high",
+      "category": "runtime_integrity",
+      "claim": "Prelaunch readiness, compiled-context delivery, and on-demand retrieval have no content hash or snapshot binding, while concurrent disk edits remain unresolved.",
+      "why_it_matters": "The content validated and authorized before launch can differ from content retrieved during the run, creating a time-of-check/time-of-use integrity gap.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 702,
+          "line_end": 702,
+          "quote": "compute runtime readiness before launch"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 703,
+          "line_end": 703,
+          "quote": "bundle PM-selected skill content into the compiled context."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 704,
+          "line_end": 704,
+          "quote": "on-demand skill retrieval during the run."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 744,
+          "line_end": 744,
+          "quote": "the file is changed on disk"
+        }
+      ],
+      "bounded_remediation_need": "Snapshot selected skill bytes and hashes at run start, bind readiness and permission to that snapshot, make on-demand retrieval use it, and define how later disk changes affect only subsequent runs or trigger reauthorization."
+    },
+    {
+      "candidate_id": "CF-019",
+      "severity": "high",
+      "category": "filesystem_security",
+      "claim": "Import copies an arbitrary folder into a trusted discovery root and validates only after copying, with no specified symlink, path-containment, size, file-type, collision, or rollback policy.",
+      "why_it_matters": "An invalid or hostile folder can place unexpected content inside the discovery tree, escape intended boundaries through links, consume excessive resources, or leave partial state that participates in first-wins discovery.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 743,
+          "line_end": 743,
+          "quote": "Implementation must decide whether to treat \"dir exists but no SKILL.md\" as error or as partial state"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 748,
+          "line_end": 748,
+          "quote": "we copy that folder into a chosen discovery base"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 748,
+          "line_end": 748,
+          "quote": "Validate name and frontmatter after copy."
+        }
+      ],
+      "bounded_remediation_need": "Canonicalize and prevalidate source and destination, reject escaping symlinks and unsafe file types, enforce file-count and byte limits, copy to a staging directory, validate fully, then atomically rename or roll back."
+    },
+    {
+      "candidate_id": "CF-020",
+      "severity": "medium",
+      "category": "scale",
+      "claim": "Skill delivery has no token or byte budget, deterministic ordering, overflow behavior, or fallback rule for many or very large selected skills.",
+      "why_it_matters": "Compiled context can exceed provider limits or crowd out user and system context, while on-demand retrieval exists but is not specified as the overflow mechanism.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 703,
+          "line_end": 703,
+          "quote": "bundle PM-selected skill content into the compiled context."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 704,
+          "line_end": 704,
+          "quote": "expose the PM `skill` tool for on-demand skill retrieval during the run."
+        }
+      ],
+      "bounded_remediation_need": "Define deterministic selection order, per-skill and total budgets, overflow diagnostics, and when content is bundled versus represented by an on-demand reference."
+    },
+    {
+      "candidate_id": "CF-021",
+      "severity": "medium",
+      "category": "callers_and_consumers",
+      "claim": "The app-level AI-turn caller is explicitly allowed to bypass cleanup, so cleanup-enabled behavior is not consistently defined across execution entry points.",
+      "why_it_matters": "Users and operators cannot infer whether an AI turn receives preparation and post-run cleanup from the shared configuration alone.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 887,
+          "line_end": 887,
+          "quote": "optionally use run_with_cleanup when working_dir is a known project; otherwise keep direct execute and skip prepare/cleanup."
+        }
+      ],
+      "bounded_remediation_need": "Publish an entry-point coverage matrix, make cleanup mandatory for every in-scope project run, define the no-project exception, and add caller-level tests that assert wrapper use."
+    },
+    {
+      "candidate_id": "CF-022",
+      "severity": "medium",
+      "category": "evidence_retention",
+      "claim": "The identity and ordering of a run for `retain_last_runs` remain undefined in an implementation checklist that otherwise presents the feature as ready.",
+      "why_it_matters": "Concurrent, partial, retried, or imported runs can be ordered differently and cause the wrong evidence to be pruned.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 904,
+          "line_end": 904,
+          "quote": "Define \"run\" for retain_last_runs or prefer retention_days"
+        }
+      ],
+      "bounded_remediation_need": "Define a stable run identifier, completion state, ordering timestamp, concurrency behavior, and active-run protection, or remove `retain_last_runs` from v1 in favor of the defined day-based policy."
+    },
+    {
+      "candidate_id": "CF-023",
+      "severity": "high",
+      "category": "destructive_path_boundary",
+      "claim": "Directory-clearing and build-artifact cleanup operations lack a required canonical-root and no-follow-symlink policy.",
+      "why_it_matters": "Clearing contents beneath a configured path can traverse or delete outside the working directory if a component is replaced with a symlink or if artifact paths are not strictly owned.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 875,
+          "line_end": 875,
+          "quote": "runner temp only; optional build-artifact dirs"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 900,
+          "line_end": 900,
+          "quote": "clear contents of agent_output_dir(work_dir) only; do not remove the dir."
+        }
+      ],
+      "bounded_remediation_need": "Require canonical containment under the validated work root, reject or unlink symlinks without following them, enumerate owned artifact directories, and test adversarial link swaps and path traversal."
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "claim": "Invalid shortcut configuration has an explicit non-crashing fallback, warning, and toast.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 689,
+          "line_end": 689,
+          "quote": "fall back to empty overrides, log warning, show toast \"Shortcuts reset to defaults due to config error\""
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "claim": "Projection failure is explicitly separated from PM-native runtime-delivery failure.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 715,
+          "line_end": 715,
+          "quote": "a projection failure does not mean PM-native skill runtime delivery failed."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "claim": "Invalid shortcut JSON is explicitly rejected without partial application.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 771,
+          "line_end": 771,
+          "quote": "Reject entire import with toast \"Invalid shortcut file\" (do not apply partial data)."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "claim": "Bulk-permission persistence failure has an explicit user-visible retry state.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 800,
+          "line_end": 800,
+          "quote": "If config persist fails after Apply, show error toast; do not update in-memory state as \"saved\" so user can retry."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "claim": "Validate All continues after an individual skill becomes unreadable and reports the error per skill.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 834,
+          "line_end": 834,
+          "quote": "do not abort entire run -- continue and report per-skill."
+        }
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "claim": "The cleanup checklist explicitly tests excludes and prohibits post-execution git-clean.",
+      "evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 891,
+          "line_end": 891,
+          "quote": "assert run_git_clean_with_excludes does not delete a test file matching an exclude."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 894,
+          "line_end": 894,
+          "quote": "cleanup_after_execution never calls run_git_clean_with_excludes"
+        }
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "U-001",
+      "question": "Does another canonical contract define event consumption, IME composition, native editing, accessibility input, and reserved-key precedence?",
+      "reason_unresolved_within_capsule": "This capsule requires every focusable-text event to consult the map but contains no event-arbitration contract, and outside documents were forbidden.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 669,
+          "line_end": 669,
+          "quote": "All key events (e.g. in composer, prompt fields) go through this map"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 727,
+          "line_end": 727,
+          "quote": "Key map must be consulted on every key event in focusable text areas."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-002",
+      "question": "Is PID 0 documented elsewhere as a non-signaling sentinel inside `cleanup_after_execution`?",
+      "reason_unresolved_within_capsule": "The capsule defines a termination-capable PID parameter and passes zero but provides no sentinel semantics; reading implementation or other plans was forbidden.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 875,
+          "line_end": 875,
+          "quote": "`cleanup_after_execution(pid, work_dir, config)` per §4.8 (terminate process; runner temp only; optional build-artifact dirs)"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 884,
+          "line_end": 884,
+          "quote": "`cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-003",
+      "question": "Is skill import delegated to an existing hardened, atomic, size-bounded copy helper?",
+      "reason_unresolved_within_capsule": "Only the copy-then-validate behavior is present in this window, and implementation or external contracts could not be inspected.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 748,
+          "line_end": 748,
+          "quote": "Validate name and frontmatter after copy."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-004",
+      "question": "Do platform specifications define immutable skill snapshots, context budgets, and delivery failure behavior?",
+      "reason_unresolved_within_capsule": "This window delegates per-platform receipt details and permits a stub until those specifications exist, but those documents were outside the allowed read boundary.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 847,
+          "line_end": 847,
+          "quote": "how each platform receives skill list (paths vs content; CLI env vs prompt injection)"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 851,
+          "line_end": 851,
+          "quote": "platform_specs (or equivalent) for skill injection per platform"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 852,
+          "line_end": 852,
+          "quote": "Skills backend can stub `list_skills_for_agent` until orchestrator and platform_specs define how runners receive the skill list."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-005",
+      "question": "How are compatible import roots classified into the GUI's Project and Global source filters?",
+      "reason_unresolved_within_capsule": "Discovery admits compatible roots, while the visible source taxonomy contains only Project and Global and supplies no mapping rule.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 700,
+          "line_end": 700,
+          "quote": "discover skills from PM roots plus compatible import roots defined by the canonical skill system."
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 805,
+          "line_end": 805,
+          "quote": "source (All / Project / Global)"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 807,
+          "line_end": 807,
+          "quote": "Source: All | Project only | Global only."
+        }
+      ]
+    },
+    {
+      "unknown_id": "U-006",
+      "question": "Is `untracked` intended as a master cleanup enable rather than the independently labeled Clean untracked toggle?",
+      "reason_unresolved_within_capsule": "The backend condition treats it as a gate while the config and GUI enumerate clean-ignored separately; no state truth table is present.",
+      "related_evidence_refs": [
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 874,
+          "line_end": 874,
+          "quote": "call run_git_clean_with_excludes if config.untracked"
+        },
+        {
+          "document_path": "Plans/MiscPlan.md",
+          "line_start": 910,
+          "line_end": 910,
+          "quote": "Clean untracked, Clean ignored, Clear agent-output, Remove build artifacts, Evidence retention"
+        }
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E-001",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 661,
+      "line_end": 661,
+      "quote": "map Ctrl -> Cmd and Alt -> Option when reading/writing config or displaying in GUI"
+    },
+    {
+      "evidence_id": "E-002",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 669,
+      "line_end": 669,
+      "quote": "All key events (e.g. in composer, prompt fields) go through this map"
+    },
+    {
+      "evidence_id": "E-003",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 684,
+      "line_end": 684,
+      "quote": "Only overrides stored."
+    },
+    {
+      "evidence_id": "E-004",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 689,
+      "line_end": 689,
+      "quote": "fall back to empty overrides, log warning, show toast \"Shortcuts reset to defaults due to config error\""
+    },
+    {
+      "evidence_id": "E-005",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 700,
+      "line_end": 700,
+      "quote": "discover skills from PM roots plus compatible import roots defined by the canonical skill system."
+    },
+    {
+      "evidence_id": "E-006",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 701,
+      "line_end": 701,
+      "quote": "`required_tool_refs` problems block runnable `/readiness`, `optional_tool_refs` problems warn"
+    },
+    {
+      "evidence_id": "E-007",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 702,
+      "line_end": 702,
+      "quote": "compute runtime readiness before launch from validation state, permission state, and tool availability."
+    },
+    {
+      "evidence_id": "E-008",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 703,
+      "line_end": 703,
+      "quote": "bundle PM-selected skill content into the compiled context."
+    },
+    {
+      "evidence_id": "E-009",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 704,
+      "line_end": 704,
+      "quote": "expose the PM `skill` tool for on-demand skill retrieval during the run."
+    },
+    {
+      "evidence_id": "E-010",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 713,
+      "line_end": 713,
+      "quote": "workspace-owned projections are tracked separately from provider-root-owned runtime state"
+    },
+    {
+      "evidence_id": "E-011",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 714,
+      "line_end": 714,
+      "quote": "repair acts on the chosen target and must not silently revert sibling targets."
+    },
+    {
+      "evidence_id": "E-012",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 715,
+      "line_end": 715,
+      "quote": "a projection failure does not mean PM-native skill runtime delivery failed."
+    },
+    {
+      "evidence_id": "E-013",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 720,
+      "line_end": 720,
+      "quote": "implementation plan can be derived without ambiguity."
+    },
+    {
+      "evidence_id": "E-014",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 727,
+      "line_end": 727,
+      "quote": "Key map must be consulted on every key event in focusable text areas."
+    },
+    {
+      "evidence_id": "E-015",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 729,
+      "line_end": 729,
+      "quote": "use a format that is cross-platform and stable"
+    },
+    {
+      "evidence_id": "E-016",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 730,
+      "line_end": 730,
+      "quote": "\"Warn on system shortcut\" is optional"
+    },
+    {
+      "evidence_id": "E-017",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 731,
+      "line_end": 731,
+      "quote": "or (b) **steal** (assign to new action and remove from old); implementation must decide."
+    },
+    {
+      "evidence_id": "E-018",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 733,
+      "line_end": 733,
+      "quote": "\"implementation must decide\": skip unknown version and attempt to parse known fields for best-effort import"
+    },
+    {
+      "evidence_id": "E-019",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 742,
+      "line_end": 742,
+      "quote": "Discovery walks paths in a defined order (e.g. project paths first, then global"
+    },
+    {
+      "evidence_id": "E-020",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 742,
+      "line_end": 742,
+      "quote": "later duplicates with the same name are skipped (or listed as \"shadowed\" in GUI)."
+    },
+    {
+      "evidence_id": "E-021",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 743,
+      "line_end": 743,
+      "quote": "Implementation must decide whether to treat \"dir exists but no SKILL.md\" as error or as partial state"
+    },
+    {
+      "evidence_id": "E-022",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 744,
+      "line_end": 744,
+      "quote": "**Implementation must decide:**"
+    },
+    {
+      "evidence_id": "E-023",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 746,
+      "line_end": 746,
+      "quote": "Implementation plan can mark \"ask\" as phase 2 and leave exact UI location to implementation."
+    },
+    {
+      "evidence_id": "E-024",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 747,
+      "line_end": 747,
+      "quote": "Explicit per-skill entry wins over pattern."
+    },
+    {
+      "evidence_id": "E-025",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 748,
+      "line_end": 748,
+      "quote": "we copy that folder into a chosen discovery base"
+    },
+    {
+      "evidence_id": "E-026",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 748,
+      "line_end": 748,
+      "quote": "Validate name and frontmatter after copy."
+    },
+    {
+      "evidence_id": "E-027",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 752,
+      "line_end": 752,
+      "quote": "`resolve_skill_permission` (exact + wildcard, default allow)."
+    },
+    {
+      "evidence_id": "E-028",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 768,
+      "line_end": 768,
+      "quote": "Serialize current overrides only (or full key map) to JSON."
+    },
+    {
+      "evidence_id": "E-029",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 769,
+      "line_end": 769,
+      "quote": "On success, rebuild key map and persist; toast \"Imported N shortcuts.\""
+    },
+    {
+      "evidence_id": "E-030",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 771,
+      "line_end": 771,
+      "quote": "skip or reject entire import"
+    },
+    {
+      "evidence_id": "E-031",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 771,
+      "line_end": 771,
+      "quote": "implementation must decide (recommend reject)."
+    },
+    {
+      "evidence_id": "E-032",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 771,
+      "line_end": 771,
+      "quote": "Reject entire import with toast \"Invalid shortcut file\" (do not apply partial data)."
+    },
+    {
+      "evidence_id": "E-033",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 785,
+      "line_end": 785,
+      "quote": "If user removed the binding (e.g. no shortcut for that action)"
+    },
+    {
+      "evidence_id": "E-034",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 796,
+      "line_end": 796,
+      "quote": "selects Allow/Deny/Ask"
+    },
+    {
+      "evidence_id": "E-035",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 797,
+      "line_end": 797,
+      "quote": "Show confirmation modal: \"Set Allow for 3 skills matching doc-*?\""
+    },
+    {
+      "evidence_id": "E-036",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 797,
+      "line_end": 797,
+      "quote": "add or update pattern entry"
+    },
+    {
+      "evidence_id": "E-037",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 797,
+      "line_end": 797,
+      "quote": "or set per-skill entries for each match."
+    },
+    {
+      "evidence_id": "E-038",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 800,
+      "line_end": 800,
+      "quote": "If config persist fails after Apply, show error toast; do not update in-memory state as \"saved\" so user can retry."
+    },
+    {
+      "evidence_id": "E-039",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 805,
+      "line_end": 805,
+      "quote": "source (All / Project / Global)"
+    },
+    {
+      "evidence_id": "E-040",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 807,
+      "line_end": 807,
+      "quote": "Source: All | Project only | Global only."
+    },
+    {
+      "evidence_id": "E-041",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 828,
+      "line_end": 828,
+      "quote": "Validate all SKILL.md on disk"
+    },
+    {
+      "evidence_id": "E-042",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 832,
+      "line_end": 832,
+      "quote": "same rules as load_skill: frontmatter, name 1-64 chars and regex, name matches dir, description 1-1024 chars"
+    },
+    {
+      "evidence_id": "E-043",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 833,
+      "line_end": 833,
+      "quote": "checks name and description and dir-name match"
+    },
+    {
+      "evidence_id": "E-044",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 834,
+      "line_end": 834,
+      "quote": "do not abort entire run -- continue and report per-skill."
+    },
+    {
+      "evidence_id": "E-045",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 840,
+      "line_end": 840,
+      "quote": "All open decisions above are resolved or scoped"
+    },
+    {
+      "evidence_id": "E-046",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 847,
+      "line_end": 847,
+      "quote": "how each platform receives skill list (paths vs content; CLI env vs prompt injection)"
+    },
+    {
+      "evidence_id": "E-047",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 851,
+      "line_end": 851,
+      "quote": "platform_specs (or equivalent) for skill injection per platform"
+    },
+    {
+      "evidence_id": "E-048",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 852,
+      "line_end": 852,
+      "quote": "Skills backend can stub `list_skills_for_agent` until orchestrator and platform_specs define how runners receive the skill list."
+    },
+    {
+      "evidence_id": "E-049",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 872,
+      "line_end": 872,
+      "quote": "fields: `untracked`, `clean_ignored`, `clear_agent_output`, `remove_build_artifacts`"
+    },
+    {
+      "evidence_id": "E-050",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 874,
+      "line_end": 874,
+      "quote": "call run_git_clean_with_excludes if config.untracked"
+    },
+    {
+      "evidence_id": "E-051",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 875,
+      "line_end": 875,
+      "quote": "`cleanup_after_execution(pid, work_dir, config)` per §4.8 (terminate process; runner temp only; optional build-artifact dirs)"
+    },
+    {
+      "evidence_id": "E-052",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 881,
+      "line_end": 881,
+      "quote": "prepare → execute → cleanup; on prepare error log and continue"
+    },
+    {
+      "evidence_id": "E-053",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 884,
+      "line_end": 884,
+      "quote": "`cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns."
+    },
+    {
+      "evidence_id": "E-054",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 887,
+      "line_end": 887,
+      "quote": "optionally use run_with_cleanup when working_dir is a known project; otherwise keep direct execute and skip prepare/cleanup."
+    },
+    {
+      "evidence_id": "E-055",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 891,
+      "line_end": 891,
+      "quote": "assert run_git_clean_with_excludes does not delete a test file matching an exclude."
+    },
+    {
+      "evidence_id": "E-056",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 894,
+      "line_end": 894,
+      "quote": "cleanup_after_execution never calls run_git_clean_with_excludes"
+    },
+    {
+      "evidence_id": "E-057",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 900,
+      "line_end": 900,
+      "quote": "clear contents of agent_output_dir(work_dir) only; do not remove the dir."
+    },
+    {
+      "evidence_id": "E-058",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 904,
+      "line_end": 904,
+      "quote": "Define \"run\" for retain_last_runs or prefer retention_days"
+    },
+    {
+      "evidence_id": "E-059",
+      "document_path": "Plans/MiscPlan.md",
+      "line_start": 910,
+      "line_end": 910,
+      "quote": "Clean untracked, Clean ignored, Clear agent-output, Remove build artifacts, Evidence retention"
+    }
+  ],
+  "infrastructure_failure": null,
+  "terminal_after_result": true
+}

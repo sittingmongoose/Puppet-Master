@@ -1,0 +1,70 @@
+{
+  "schema_version": "audit004.runner_checkpoint.v2",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "checkpoint_id": "checkpoint-v2-rolling-0011",
+  "created_at": "2026-07-10T12:47:15Z",
+  "validator_authority_version": 2,
+  "assignment_packet_count": 212,
+  "unique_agent_instances_dispatched": 81,
+  "dispatch_attempt_count": 81,
+  "terminal_completion_receipt_count": 71,
+  "failed_attempt_count": 17,
+  "result_manifest_row_count": 66,
+  "valid_assignment_count": 60,
+  "remaining_assignment_count": 152,
+  "active_assignments": [
+    {
+      "assignment_id": "A004-000729-EXACT-WIN-E0B2190245C6-0004",
+      "assignment_attempt_number": 1,
+      "agent_instance_id": "cbabc10c-e78d-4053-bd5b-10c860d6bc02",
+      "agent_path": "/root/a004_r07_exact_0729_cbabc10c",
+      "agent_thread_id": "019f4c0a-f5c5-7890-a877-3393e422a09a"
+    },
+    {
+      "assignment_id": "A004-000735-EXACT-WIN-9AD3F0F54D94-0002",
+      "assignment_attempt_number": 1,
+      "agent_instance_id": "1b7245de-4341-4d2e-89aa-5b77360eb6f0",
+      "agent_path": "/root/a004_r07_exact_0735_1b7245de",
+      "agent_thread_id": "019f4c0b-da04-74b2-ab57-81d18e0b02b2"
+    },
+    {
+      "assignment_id": "A004-000753-EXACT-WIN-19B62D73B9EF-0057",
+      "assignment_attempt_number": 1,
+      "agent_instance_id": "593ab4c7-d93c-4ed1-aa37-f10c67a9c694",
+      "agent_path": "/root/a004_r07_exact_0753_593ab4c7",
+      "agent_thread_id": "019f4c0f-37c7-7a22-bd89-c426885b966a"
+    }
+  ],
+  "capsule_package_bytes_dispatched": 2546369,
+  "token_estimate_dispatched": 753144,
+  "raw_result_file_count": 77,
+  "raw_result_bytes_recorded": 3078076,
+  "raw_exact_evidence_refs_recorded": 3222,
+  "manifest_result_bytes": 2621562,
+  "manifest_exact_evidence_refs": 2655,
+  "duplicate_agent_instance_count": 0,
+  "duplicate_agent_path_count": 0,
+  "duplicate_agent_thread_id_count": 0,
+  "reused_agent_count": 0,
+  "multi_scope_agent_count": 0,
+  "wrong_model_or_effort_count": 0,
+  "immutable_malformed_registry_line": {
+    "line_number": 22,
+    "coverage_credit": 0,
+    "sha256_with_newline": "bc7559dd5b47b2ce5240ea4f22cce4b6ec6b82afc55e8f39f25af1b2ef9944c1",
+    "preserved": true
+  },
+  "immutable_malformed_failed_attempt_line": {
+    "line_number": 12,
+    "coverage_credit": 0,
+    "sha256_with_newline": "ff489ea61bd0fc4720a61637a36c66883fa3c7027ff10aa4739198bdecca98d9",
+    "preserved": true
+  },
+  "notes": [
+    "This checkpoint supersedes checkpoint-v2-rolling-0010 only for raw-result aggregate byte/reference metrics; checkpoint-v2-rolling-0010 remains immutable.",
+    "A004-000597 attempt 1 remains immutable zero-credit; fresh attempt 2 is credited.",
+    "Six preserved pre-v2 positive manifest rows coexist with fresh credited retries; valid_assignment_count is unique by assignment_id.",
+    "No launch packet, frozen authority artifact, prior raw result, prior receipt, or malformed plus-prefixed line was mutated."
+  ]
+}

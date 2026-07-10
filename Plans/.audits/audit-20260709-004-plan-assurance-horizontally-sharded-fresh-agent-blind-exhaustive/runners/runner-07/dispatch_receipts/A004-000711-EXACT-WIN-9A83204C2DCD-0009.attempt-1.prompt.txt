@@ -1,0 +1,76 @@
+AUDIT-004 IMMUTABLE SINGLE-ASSIGNMENT REVIEWER PACKET
+You are the one-time fresh reviewer for exactly one document-window assignment. Required runtime identity: model gpt-5.6-sol, reasoning effort ultra. You are terminal after returning one result and must never accept follow-up work.
+
+READ-ONLY / BLIND SCOPE
+- Do not write or modify any file.
+- Do not browse, research externally, inspect prior audits, inspect other results, inspect other windows, or read unrelated Plan prose.
+- Read only this packet, the immutable metadata capsule, its named source excerpt, and canonical document lines within assigned core/context ranges for exact-quote verification.
+- Capsule: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000711-EXACT-WIN-9A83204C2DCD-0009.json
+- Excerpt: Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-9A83204C2DCD-0009.txt
+- Canonical document: Plans/Wiring_Matrix.md
+- Core range: lines 2885-3249
+- Context ranges: lines 2873-2884 and lines 3250-3261
+- Source SHA-256: 19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2
+- Core SHA-256: fc62cf0efb8d0b11530a6cfce36bbe0c39221901d75c221ddb40400db6a73733
+- Capsule SHA-256: 174188a779352699f4dc03ad012602bc5847e96f1b1ce623b2fdd95d38ce7662; bytes 1644
+- Excerpt SHA-256: fa24f5ad7bcaa33cd68b814ca9b6815dcb6ae861a141f5cde642468c6955f074; bytes 19467
+
+ROLE CARD — contract_capability_exact_behavior / exact
+Extract exact behavior, contracts, capabilities, states, authorities, consumers, GUI truth, failures, acceptance evidence, and consequential builder discretion from only this capsule. Identify underspecified obligations with exact source lines. Do not use external or prior-audit knowledge. Context may clarify core text but must not be promoted into a core finding.
+
+UNIVERSAL LENS
+Within the assigned core, identify explicit normative behavior; inputs/outputs and type/validation semantics; state models and transitions; authority/ownership and consumers; ordering, lifecycle, cancellation, retry, idempotency, concurrency, and failure behavior; GUI-visible truth and accessibility where present; persistence and evidence/acceptance oracles; cross-reference dependencies stated inside the window; consequential choices left to builders. Distinguish observations, candidate gaps, explicit non-gaps, and unknowns. Do not infer missing facts from outside this window.
+
+CANONICAL EVIDENCE RULES
+- Use canonical Plans/Wiring_Matrix.md line numbers, never excerpt-header or relative line numbers.
+- Every line range must fall wholly in core or one context range; range_class must match.
+- exact_quote must occur exactly, character-for-character, in those canonical lines. Preserve every source character, including indentation and commas, and verify every quote directly against the canonical lines.
+- Every semantic item property is exactly evidence_ref_ids and cites a defined evidence ref.
+- Every candidate finding cites at least one core evidence ref.
+- Context cannot substantiate a core finding.
+
+OUTPUT
+Return only one JSON object with no markdown or prose. Top-level keys exactly, in this order:
+schema_version, assignment_id, assignment_attempt_number, attempt_id, runner_id, agent_name, model, reasoning_effort, role, role_key, window_id, doc_id, document_path, core_range, context_ranges, source_sha256, core_sha256, capsule_ref, capsule_sha256, capsule_bytes, source_excerpt_ref, source_excerpt_sha256, source_excerpt_bytes, prior_substantive_assignment_count, terminal_after_result, no_followup_reuse, observations, candidate_findings, explicit_non_gaps, unknowns, exact_evidence_refs, scope_attestation, result_status.
+
+Fixed values:
+schema_version=audit004.document_window_result.v2
+assignment_id=A004-000711-EXACT-WIN-9A83204C2DCD-0009
+assignment_attempt_number=1
+attempt_id=A004-R07-000711-ATTEMPT-1
+runner_id=runner-07
+agent_name=a004_r07_exact_0711_011b544b
+model=gpt-5.6-sol
+reasoning_effort=ultra
+role=contract_capability_exact_behavior
+role_key=exact
+window_id=WIN-9A83204C2DCD-0009
+doc_id=DOC-9A83204C2DCD
+document_path=Plans/Wiring_Matrix.md
+core_range=[2885,3249]
+context_ranges=[[2873,2884],[3250,3261]]
+source_sha256=19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2
+core_sha256=fc62cf0efb8d0b11530a6cfce36bbe0c39221901d75c221ddb40400db6a73733
+capsule_ref=Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000711-EXACT-WIN-9A83204C2DCD-0009.json
+capsule_sha256=174188a779352699f4dc03ad012602bc5847e96f1b1ce623b2fdd95d38ce7662
+capsule_bytes=1644
+source_excerpt_ref=Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-9A83204C2DCD-0009.txt
+source_excerpt_sha256=fa24f5ad7bcaa33cd68b814ca9b6815dcb6ae861a141f5cde642468c6955f074
+source_excerpt_bytes=19467
+prior_substantive_assignment_count=0
+terminal_after_result=true
+no_followup_reuse=true
+result_status=complete
+
+Item shapes:
+observation={"observation_id":"OBS-...","statement":"...","evidence_ref_ids":["ER-..."]}
+finding={"finding_id":"FIND-...","severity":"critical|high|medium|low","title":"...","statement":"...","impact":"...","evidence_ref_ids":["ER-..."]}
+non-gap={"non_gap_id":"NON-GAP-...","statement":"...","evidence_ref_ids":["ER-..."]}
+unknown={"unknown_id":"UNKNOWN-...","statement":"...","evidence_ref_ids":["ER-..."]}
+evidence={"evidence_ref_id":"ER-...","document_path":"Plans/Wiring_Matrix.md","line_start":2885,"line_end":2885,"range_class":"core|context","exact_quote":"..."}
+
+scope_attestation exactly:
+{"read_only_named_capsule_and_excerpt":true,"no_prior_audits":true,"no_other_results":true,"no_unrelated_windows":true,"no_external_research":true,"context_not_promoted_to_core_finding":true}
+
+Before return, verify JSON parses, top-level keys are exact, semantic references resolve, canonical quotes match assigned lines, and no evidence spills outside assigned ranges.
+

@@ -1,0 +1,51 @@
+{
+  "agent_instance_id": "4a709b50-2fd2-43f3-8cc0-3ae48b8c5007",
+  "agent_instance_id_source": "runner_allocated_global_uuid",
+  "agent_path": "/root/a004_r12_adversarial_000056_r2_4a709b50",
+  "agent_thread_id": null,
+  "agent_thread_id_source": "unavailable_before_native_spawn",
+  "assignment_id": "A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003",
+  "attempt_id": "A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003-attempt-2",
+  "attempt_state": "running",
+  "capsule_bytes": 1658,
+  "capsule_hash": "b110eff433627496f8db0e3b1097d44e7866fd9e7a77d5f14ac2be11860c9259",
+  "capsule_package_bytes": 38677,
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003.json",
+  "completed_at": null,
+  "core_hash": "e53a70ee0dabe22d529d7b1fd6898cb7a8b352b2258b122c8c1d92be37c62b75",
+  "core_range": [
+    603,
+    984
+  ],
+  "coverage_credit": 0,
+  "created_at": "2026-07-10T03:48:49.464Z",
+  "doc_id": "DOC-64C278AB14EF",
+  "document_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+  "fork_turns": "none",
+  "launch_state": "authorized_prelaunch",
+  "model": "gpt-5.6-sol",
+  "no_followup_reuse": true,
+  "overlap_ranges": [
+    [
+      591,
+      602
+    ],
+    [
+      985,
+      996
+    ]
+  ],
+  "prior_substantive_assignment_count": 0,
+  "reasoning_effort": "ultra",
+  "receipt_type": "immutable_prelaunch_dispatch",
+  "result_hash": null,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-12/raw_results/A004-000056-ADVERSARIAL-WIN-64C278AB14EF-0003.attempt-2.json",
+  "role": "adversarial_negative_space",
+  "runner_id": "runner-12",
+  "source_excerpt_bytes": 37019,
+  "source_excerpt_hash": "e3d384bc2bef74c303d58b07bc1a1abdf9150ebc4e662dbce1b27cb278e7c428",
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-64C278AB14EF-0003.txt",
+  "source_hash": "c2e3721e4910120edde397fa014b807831c57621b234f0e81472ee4c5ad4e4fb",
+  "terminal_after_result": true,
+  "window_id": "WIN-64C278AB14EF-0003"
+}

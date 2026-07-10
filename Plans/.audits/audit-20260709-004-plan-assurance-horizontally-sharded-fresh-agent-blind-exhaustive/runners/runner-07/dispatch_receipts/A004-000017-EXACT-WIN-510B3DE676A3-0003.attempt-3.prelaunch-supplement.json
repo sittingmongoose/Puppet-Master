@@ -1,0 +1,26 @@
+{
+  "record_type": "dispatch_prelaunch_supplement",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "assignment_id": "A004-000017-EXACT-WIN-510B3DE676A3-0003",
+  "assignment_attempt_number": 3,
+  "attempt_id": "A004-R07-000017-ATTEMPT-3",
+  "agent_instance_id": "42b8d24f-6d73-4ab3-b245-1ffbfea094ac",
+  "agent_name": "a004_r07_exact_0017_42b8d24f",
+  "agent_path": "/root/a004_r07_exact_0017_42b8d24f",
+  "context_ranges": [
+    [
+      478,
+      489
+    ],
+    [
+      875,
+      886
+    ]
+  ],
+  "supplements_prelaunch_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-07/dispatch_receipts/A004-000017-EXACT-WIN-510B3DE676A3-0003.attempt-3.prelaunch.json",
+  "supplements_prelaunch_receipt_sha256": "3ad824f5da75a88df6a880ca3959784ebc103004f212e292c0fa2b1128184e9c",
+  "correction_reason": "context_ranges sourced mechanically from immutable capsule metadata before native launch",
+  "immutable": true,
+  "created_at": "2026-07-10T04:00:38Z"
+}

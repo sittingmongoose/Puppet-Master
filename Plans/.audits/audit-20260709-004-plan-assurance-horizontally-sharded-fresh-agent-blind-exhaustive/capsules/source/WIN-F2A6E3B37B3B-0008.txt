@@ -1,0 +1,361 @@
+<<< CONTEXT_BEFORE 2428-2439 >>>
+        },
+        "artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "inspection_status": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 2440-2771 >>>
+    "source_control_preflight_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "worktree_ref",
+        "branch_ref",
+        "dirty_state",
+        "safe_point_required",
+        "status",
+        "baseline_commit_oid",
+        "safe_point_id",
+        "dirty_state_policy",
+        "conflict_policy",
+        "merge_policy",
+        "github_policy",
+        "rollback_available",
+        "restore_command_or_action",
+        "evidence_refs",
+        "handoff",
+        "source_control_context",
+        "branch_head_state",
+        "owner_lane",
+        "lease_state",
+        "head_commit_oid",
+        "changed_files",
+        "conflict_refs",
+        "rollback_ref"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "branch_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dirty_state": {
+          "$ref": "#/$defs/source_control_dirty_state"
+        },
+        "safe_point_required": {
+          "type": "boolean"
+        },
+        "status": {
+          "$ref": "#/$defs/source_control_status"
+        },
+        "baseline_commit_oid": {
+          "type": "string"
+        },
+        "safe_point_id": {
+          "type": "string"
+        },
+        "dirty_state_policy": {
+          "$ref": "#/$defs/dirty_state_policy"
+        },
+        "conflict_policy": {
+          "$ref": "#/$defs/conflict_policy"
+        },
+        "merge_policy": {
+          "$ref": "#/$defs/merge_policy"
+        },
+        "github_policy": {
+          "$ref": "#/$defs/github_policy"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "branch_head_state": {
+          "$ref": "#/$defs/branch_head_state"
+        },
+        "owner_lane": {
+          "$ref": "#/$defs/owner_lane"
+        },
+        "lease_state": {
+          "$ref": "#/$defs/lease_state"
+        },
+        "head_commit_oid": {
+          "type": "string"
+        },
+        "changed_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "conflict_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_ref": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "safe_point_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "safe_point_ref",
+        "repo_ref",
+        "worktree_ref",
+        "created_at_utc",
+        "status",
+        "evidence_refs",
+        "handoff",
+        "source_control_context",
+        "rollback_available",
+        "restore_command_or_action"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "safe_point_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "repo_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "worktree_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "created_at_utc": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/source_control_status"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        },
+        "rollback_available": {
+          "type": "boolean"
+        },
+        "restore_command_or_action": {
+          "type": "string"
+        }
+      }
+    },
+    "worknode_dispatch_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_request_ref",
+        "executor_ref",
+        "dispatch_status",
+        "source_control_preflight_ref",
+        "model_resolution_ref",
+        "test_binding_ref",
+        "authority_ref",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_request_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "executor_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "dispatch_status": {
+          "enum": [
+            "queued",
+            "dispatched",
+            "blocked",
+            "cancelled"
+          ]
+        },
+        "source_control_preflight_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "model_resolution_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "test_binding_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "authority_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "worknode_change_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_ref",
+        "changed_paths",
+        "diff_refs",
+        "test_run_refs",
+        "source_control_receipt_ref",
+        "status",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "changed_paths": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "diff_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "source_control_receipt_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "status": {
+          "$ref": "#/$defs/change_status"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+    "worknode_completion_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "worknode_ref",
+        "terminal_status",
+        "change_receipt_refs",
+        "test_run_refs",
+        "auditor_verification_ref",
+        "source_control_receipt_refs",
+        "unresolved_findings",
+        "evidence_refs",
+        "handoff",
+        "source_control_context"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "worknode_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "terminal_status": {
+          "enum": [
+            "complete",
+            "blocked",
+            "failed",
+            "cancelled"
+          ]
+        },
+        "change_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_run_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "auditor_verification_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "source_control_receipt_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "unresolved_findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/auditor_finding"
+          }
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        },
+        "source_control_context": {
+          "$ref": "#/$defs/source_control_context"
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 2772-2783 >>>
+    "auditor_cycle_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cycle_id",
+        "cycle_number",
+        "auditor_model_profile",
+        "input_artifact_refs",
+        "findings",
+        "repairs_applied",
+        "unresolved_findings",
+        "terminal_state",

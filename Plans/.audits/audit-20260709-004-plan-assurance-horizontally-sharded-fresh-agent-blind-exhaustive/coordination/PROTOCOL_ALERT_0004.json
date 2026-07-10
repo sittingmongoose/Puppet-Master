@@ -1,0 +1,35 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "alert_id": "A004-PROTOCOL-ALERT-0004",
+  "raised_at": "2026-07-10T07:11:00Z",
+  "raised_by_master_thread_id": "019f4a04-5fe1-71f3-b992-e599aad3da5b",
+  "status": "open",
+  "scope": "runner-07 append-only receipt integrity and frozen-v2 cross-check availability",
+  "evidence": {
+    "runner_receipt": "runners/runner-07/fresh_agent_assignment_registry.jsonl:22",
+    "malformed_line_sha256": "f28b331ae34eaa255d93ff43bdc9b87551cb9118f34a520ce5cc5939ff3dac47",
+    "frozen_v2_snapshot_ref": "validators/evidence/postrun_validator_v2.live.20260710T0710Z.json",
+    "frozen_v2_snapshot_sha256": "3d5b540fd53a8e7e707e97d657ae67c12b88ce156a9eacf9f7e0c92ce4a05714",
+    "frozen_v2_crosscheck_error_ref": "validators/evidence/postrun_validator_v2.crosscheck.live.20260710T0710Z.error.json"
+  },
+  "finding": "A literal plus sign precedes the JSON object on runner-07 registry line 22. The frozen primary fail-closes on the malformed line, while the frozen independent cross-check raises JSONDecodeError and produces no validating receipt.",
+  "credit_effect": {
+    "assignment_id": "A004-000017-EXACT-WIN-510B3DE676A3-0003",
+    "attempt": 3,
+    "credit": 0,
+    "new_root_credit_from_20260710T0710Z_snapshot": 0,
+    "reason": "Independent cross-check did not complete, and v2 is already under alert 0003 for attempt-lineage under-credit and over-credit defects."
+  },
+  "required_recovery": [
+    "Preserve the malformed line and all referenced payloads as immutable zero-credit evidence.",
+    "Do not delete, rewrite, or normalize runner-07 line 22 in place.",
+    "Any semantic retry must use a new attempt number and fully fresh agent instance, path, and thread identity.",
+    "The v3 primary and cross-check must fail closed on malformed JSONL without crashing and must never credit this malformed receipt."
+  ],
+  "master_actions": {
+    "runner_namespace_edited": false,
+    "coordination_quarantine_appended": true,
+    "source_thread_notification_attempted": true,
+    "root_credit_advanced": false
+  }
+}

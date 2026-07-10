@@ -1,0 +1,670 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000111-EXACT-WIN-74C788D8A63C-0001",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000111-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0111_244a80d8",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-74C788D8A63C-0001",
+  "doc_id": "DOC-74C788D8A63C",
+  "document_path": "Plans/Tools.md",
+  "core_range": [
+    1,
+    397
+  ],
+  "context_ranges": [
+    [
+      398,
+      409
+    ]
+  ],
+  "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+  "core_sha256": "be2bc7c1ce4e4bc8d43c9ab70162f122ddb396a793fa71b6e7f3390fa5d2acad",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000111-EXACT-WIN-74C788D8A63C-0001.json",
+  "capsule_sha256": "d4f99aded0e58a9ac6908b680508b3d5f0ec7fc4a8198c8496fabf9df8f247ac",
+  "capsule_bytes": 1594,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-74C788D8A63C-0001.txt",
+  "source_excerpt_sha256": "3b948481a8216bf6ecbef5af92db2f37b0cb187cc56112e79ee3e1843f2f8989",
+  "source_excerpt_bytes": 35181,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "summary": "Every agent-usable tool attempt is routed through one policy engine with an explicit permission, approval, FileSafe, binding, execution, and normalization order; this document also claims ownership of the normalized outcome taxonomy.",
+      "evidence_ref_ids": [
+        "EV-003",
+        "EV-004",
+        "EV-005",
+        "EV-006"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "summary": "Historical-result navigation may persist focused project state, while hover, comparison, and transient-pivot interactions are expressly non-persistent.",
+      "evidence_ref_ids": [
+        "EV-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "summary": "Debug capability is registry metadata shared across surfaces; recoverably stale runtime identity forces attention_required/session_reconnect_required and does not bypass ordinary permission or evidence-ingress rules.",
+      "evidence_ref_ids": [
+        "EV-014",
+        "EV-015"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "summary": "The LSP inventory is explicitly reconciled to nine read operations plus one approval-gated rename operation, with legacy and short-name aliases mapped to canonical operations.",
+      "evidence_ref_ids": [
+        "EV-019",
+        "EV-020",
+        "EV-023"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "summary": "Context-only lines specify the read timeout result and begin the grep input table; they were used only to delimit what cannot be assessed from this window and were not promoted into a core finding.",
+      "evidence_ref_ids": [
+        "EV-044",
+        "EV-045"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "severity": "medium",
+      "summary": "Custom tools are canonical registry participants, but the required Settings > Permissions row list names only built-in and MCP-discovered tools. The reviewed core therefore does not require custom-tool permission rows or explain how users inspect and edit custom-tool policy.",
+      "evidence_ref_ids": [
+        "EV-001",
+        "EV-002"
+      ]
+    },
+    {
+      "finding_id": "FIND-002",
+      "severity": "high",
+      "summary": "The canonical tool plan expressly carries a missing owner anchor, a non-existent search-policy target, and additional broken anchors as unresolved blockers. These references cannot provide executable contract traceability until their owners resolve them.",
+      "evidence_ref_ids": [
+        "EV-008",
+        "EV-009"
+      ]
+    },
+    {
+      "finding_id": "FIND-003",
+      "severity": "high",
+      "summary": "Projection-trust enforcement is qualitative rather than deterministic: mildly stale and tighten quickly have no freshness interval, trust threshold, or exact action-state transition, leaving completion and promotion gating to builder discretion.",
+      "evidence_ref_ids": [
+        "EV-010"
+      ]
+    },
+    {
+      "finding_id": "FIND-004",
+      "severity": "high",
+      "summary": "Multi-lane approval scope has only a negative constraint: it must not silently remain same-session. No positive scope, inheritance, cache key, lifetime, or cross-agent propagation rule is defined for parallel per-spawn sessions.",
+      "evidence_ref_ids": [
+        "EV-011"
+      ]
+    },
+    {
+      "finding_id": "FIND-005",
+      "severity": "medium",
+      "summary": "Grep expressly permits querying stale index snapshots but does not define result freshness metadata, snapshot identity, age disclosure, or an explicit caller path to demand fresh raw search. An agent can therefore receive stale search results without a locally specified trust signal.",
+      "evidence_ref_ids": [
+        "EV-012"
+      ]
+    },
+    {
+      "finding_id": "FIND-006",
+      "severity": "low",
+      "summary": "Glob output is said to be sorted by modification time without defining ascending versus descending order or a tie-breaker, so identical inputs need not produce deterministic ordering.",
+      "evidence_ref_ids": [
+        "EV-013"
+      ]
+    },
+    {
+      "finding_id": "FIND-007",
+      "severity": "high",
+      "summary": "The LSP section requires an exact result envelope but lists only operation/request fields and status, with no result payload for locations, hover content, symbols, call hierarchy, or rename edits. It also permits either no results or a clear unavailable response when no server exists. Cross-provider normalization is therefore underspecified.",
+      "evidence_ref_ids": [
+        "EV-018",
+        "EV-021",
+        "EV-022",
+        "EV-023"
+      ]
+    },
+    {
+      "finding_id": "FIND-008",
+      "severity": "high",
+      "summary": "The reviewed core defines three distinct state vocabularies—normalized tool outcomes, per-tool error codes, and ToolTurnSettlement states—but gives no mapping among them. For example, validation_blocked versus validation_error and timed_out versus timeout cannot be deterministically persisted as a settlement state.",
+      "evidence_ref_ids": [
+        "EV-005",
+        "EV-006",
+        "EV-024",
+        "EV-026",
+        "EV-030"
+      ]
+    },
+    {
+      "finding_id": "FIND-009",
+      "severity": "high",
+      "summary": "Blocked calls are required to return a structured recovery action, yet the minimum bash, edit, and read error sections enumerate codes without defining a recovery-action field, schema, allowed action IDs, or per-error construction rule.",
+      "evidence_ref_ids": [
+        "EV-025",
+        "EV-030",
+        "EV-033",
+        "EV-039"
+      ]
+    },
+    {
+      "finding_id": "FIND-010",
+      "severity": "medium",
+      "summary": "The bash output ceiling is not exact: the registry merely says to consider output size, while output_limit_exceeded may mean either truncation or process abortion according to an unnamed runtime policy. No numeric cap, deterministic branch, or truncation metadata is specified.",
+      "evidence_ref_ids": [
+        "EV-025",
+        "EV-027",
+        "EV-030"
+      ]
+    },
+    {
+      "finding_id": "FIND-011",
+      "severity": "medium",
+      "summary": "Async detach is optional but has no default even though detach is returned in the async success envelope. The contract also does not say whether a fully detached process remains subject to the recommended hard ceiling or how its surviving handle is owned and recovered after client shutdown.",
+      "evidence_ref_ids": [
+        "EV-028",
+        "EV-029",
+        "EV-031"
+      ]
+    },
+    {
+      "finding_id": "FIND-012",
+      "severity": "medium",
+      "summary": "Edit error classification overlaps: multiple matches mean old_str was not found exactly once, satisfying replace_miss, while the next row separately assigns multiple ambiguous matches to replace_conflict. No precedence or exact definition of ambiguous selects one code.",
+      "evidence_ref_ids": [
+        "EV-034"
+      ]
+    },
+    {
+      "finding_id": "FIND-013",
+      "severity": "medium",
+      "summary": "Deletion semantics are ambiguous because new_str is a required string, while validation_error includes an empty replacement contract without identifying whether an empty old_str, empty new_str, or both are invalid. Builders cannot tell whether replacing text with an empty string is supported.",
+      "evidence_ref_ids": [
+        "EV-032",
+        "EV-033"
+      ]
+    },
+    {
+      "finding_id": "FIND-014",
+      "severity": "high",
+      "summary": "The read contract has no numeric read cap and no deterministic choice between a successful response carrying truncated? and a too_large error. It also omits truncation extent or continuation metadata and does not define malformed-range edge cases such as start greater than end or out-of-bounds positions.",
+      "evidence_ref_ids": [
+        "EV-037",
+        "EV-038",
+        "EV-039"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-001",
+      "summary": "Permission evaluation before FileSafe is explicit in both the prose and the canonical policy-engine order.",
+      "evidence_ref_ids": [
+        "EV-004",
+        "EV-042"
+      ]
+    },
+    {
+      "non_gap_id": "NG-002",
+      "summary": "Embedded document review is explicitly barred from becoming a hidden patch or suggested-change mutation channel without a separately defined tool, permission, FileSafe, and audit contract.",
+      "evidence_ref_ids": [
+        "EV-043"
+      ]
+    },
+    {
+      "non_gap_id": "NG-003",
+      "summary": "Edit, write, patch, and multiedit are explicitly grouped under one edit permission.",
+      "evidence_ref_ids": [
+        "EV-016"
+      ]
+    },
+    {
+      "non_gap_id": "NG-004",
+      "summary": "The LSP operation-count discrepancy, canonical long names, compatibility aliases, and rename approval requirement are explicitly resolved.",
+      "evidence_ref_ids": [
+        "EV-019",
+        "EV-020",
+        "EV-023"
+      ]
+    },
+    {
+      "non_gap_id": "NG-005",
+      "summary": "Edit timeout behavior explicitly requires atomic failure with no partial rewrite and gives the timeout response shape.",
+      "evidence_ref_ids": [
+        "EV-035"
+      ]
+    },
+    {
+      "non_gap_id": "NG-006",
+      "summary": "Read ranges are explicitly inclusive, 1-based, and use -1 as the to-end sentinel.",
+      "evidence_ref_ids": [
+        "EV-037"
+      ]
+    },
+    {
+      "non_gap_id": "NG-007",
+      "summary": "Provider-native view is explicitly normalized to the canonical read registry identity.",
+      "evidence_ref_ids": [
+        "EV-036"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "summary": "The reviewed window cannot establish whether for session and for-session are distinct approval choices or display and wire aliases, because normative ask-flow semantics are delegated to an unread SSOT.",
+      "evidence_ref_ids": [
+        "EV-040",
+        "EV-041"
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "summary": "The exact owner and schema for provider-native tool-name mappings cannot be determined here because the mapping is assigned disjunctively to platform_specs or runner code.",
+      "evidence_ref_ids": [
+        "EV-017"
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "summary": "Only grep's heading and first two input rows occur in context; its remaining inputs, outputs, errors, limits, and settlement behavior are outside the permitted window and were not assessed.",
+      "evidence_ref_ids": [
+        "EV-045"
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "summary": "Whether unread referenced owner documents close any locally identified contract gaps is unknown under this assignment's named-file and named-window restriction.",
+      "evidence_ref_ids": [
+        "EV-018",
+        "EV-040"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "EV-001",
+      "document_path": "Plans/Tools.md",
+      "line_start": 24,
+      "line_end": 24,
+      "range_class": "core",
+      "exact_quote": "- **Custom tools** -- User- or project-defined tools (config-defined functions the LLM can call), including schema and how they plug into the registry."
+    },
+    {
+      "evidence_ref_id": "EV-002",
+      "document_path": "Plans/Tools.md",
+      "line_start": 37,
+      "line_end": 37,
+      "range_class": "core",
+      "exact_quote": "- **Settings > Permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors."
+    },
+    {
+      "evidence_ref_id": "EV-003",
+      "document_path": "Plans/Tools.md",
+      "line_start": 102,
+      "line_end": 102,
+      "range_class": "core",
+      "exact_quote": "Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization."
+    },
+    {
+      "evidence_ref_id": "EV-004",
+      "document_path": "Plans/Tools.md",
+      "line_start": 105,
+      "line_end": 112,
+      "range_class": "core",
+      "exact_quote": "Canonical order:\n1. resolve tool identity and permission\n2. evaluate `allow` / `ask` / `deny`\n3. if `ask`, resolve approval or headless fallback\n4. apply FileSafe and other invocation validation\n5. resolve terminal or shell binding for shell-capable actions\n6. execute or reject\n7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior"
+    },
+    {
+      "evidence_ref_id": "EV-005",
+      "document_path": "Plans/Tools.md",
+      "line_start": 127,
+      "line_end": 136,
+      "range_class": "core",
+      "exact_quote": "- `allowed_succeeded`\n- `allowed_runtime_error`\n- `permission_denied`\n- `user_declined`\n- `headless_ask_denied`\n- `filesafe_blocked`\n- `validation_blocked`\n- `cancelled`\n- `timed_out`\n- `post_scan_failure`"
+    },
+    {
+      "evidence_ref_id": "EV-006",
+      "document_path": "Plans/Tools.md",
+      "line_start": 140,
+      "line_end": 140,
+      "range_class": "core",
+      "exact_quote": "This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results."
+    },
+    {
+      "evidence_ref_id": "EV-007",
+      "document_path": "Plans/Tools.md",
+      "line_start": 146,
+      "line_end": 146,
+      "range_class": "core",
+      "exact_quote": "Tool route activations are persistence-aware. A navigation to a historical-run result may update stored project-state such as `focused_run_id`, while hover previews, temporary comparisons, and transient pivots must not rewrite persistent view state."
+    },
+    {
+      "evidence_ref_id": "EV-008",
+      "document_path": "Plans/Tools.md",
+      "line_start": 148,
+      "line_end": 148,
+      "range_class": "core",
+      "exact_quote": "Tool and route audit records carry unresolved `exact_items` as explicit gap lineage until the owner docs close them. `gap-001` remains tied to the missing owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract`; `execution_unit_context` consumers must preserve `requested_account_binding`, `requested_account_policy`, and `operational_identity`. `gap-002` keeps `Plans/UI_Command_Catalog.md` references to the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy` visible until the target exists, and `cmd.search.open_result`, `cmd.search.replace_selected`, and `result_id` remain live search command arguments rather than stale residue. `gap-006` keeps Glossary carry-through honest: help-entry rows use `common_related_states` and must not collapse back into a two-column table."
+    },
+    {
+      "evidence_ref_id": "EV-009",
+      "document_path": "Plans/Tools.md",
+      "line_start": 150,
+      "line_end": 150,
+      "range_class": "core",
+      "exact_quote": "Blocked-packet consumers in Tools preserve `gap-005`, `/receipt/blocked/usage`, `blocked-attempt`, `blocked_notice`, `blocked-episode`, `/notification`, `report_ref`, `startup_recovered`, `escalation_level`, and `action_available` when a tool or route result exposes blocked runtime state. Runtime recovery surfaces use current projections and valid `allowed_action_ids` / `allowed_action_ids[]`; History and Ledger remain closer to canonical records than widget rollups, while UI consumers expose `Last updated`, `/freshness`, and `/recovery` before actions depend on stale projections. Existing broken anchors such as `Plans/Orchestrator_Page.md#11. Source Control boundary`, `route-target`, `restore points`, `already-recorded` carry-through, and incomplete consumer `carry-through` are tracked as blockers until their owner docs resolve them."
+    },
+    {
+      "evidence_ref_id": "EV-010",
+      "document_path": "Plans/Tools.md",
+      "line_start": 156,
+      "line_end": 156,
+      "range_class": "core",
+      "exact_quote": "Runtime-governance tool policy keeps `DAE`, `/restart`, run-level strategy, attempt-level account `re-resolution`, `blocked_owner`, blocked-governance, `/governance`, account-aware ordering, and `pre-dispatch` interception visible before remote side-effect approval is enforced. Seams rollups may remain browsable while mildly stale, but Seams completion and `/promote/governance` actions must tighten quickly when projection trust drops. Attention/status payloads use the shared ladder `info`, `warning`, `attention_required`, `blocked`, and `system_notification`."
+    },
+    {
+      "evidence_ref_id": "EV-011",
+      "document_path": "Plans/Tools.md",
+      "line_start": 158,
+      "line_end": 158,
+      "range_class": "core",
+      "exact_quote": "Tool-facing widgets and command routing do not hide scope or identity mismatches. Progress and widget consumers distinguish page-global, app-global, project-scoped, and `/run-centric` layout/state before treating a view as authoritative. Catalog normalization treats missing `IDs` as structural, not merely local; surfaces must normalize `cmd.*.open_*` variants through one shared target model, prefer deliberate `object_kind` extension over new top-level route fields, and preserve `Executor_Protocol` / `Executor_Protocol.md` `/attempt/blocked-sequence` identity. Approval scope in a multi-lane run must not silently remain same-session when sessions are per-agent-spawn and lanes are parallel."
+    },
+    {
+      "evidence_ref_id": "EV-012",
+      "document_path": "Plans/Tools.md",
+      "line_start": 187,
+      "line_end": 187,
+      "range_class": "core",
+      "exact_quote": "| **grep** | Search file contents with regex; file pattern filtering. Transparently accelerated by the per-project sparse-n-gram index when available; the same backend also serves Search-panel regex mode | `grep` | Same limits and permission posture as existing grep. Respect .gitignore unless .ignore overrides. Stale snapshots remain queryable; fallback to raw ripgrep only when the index is missing, building without a valid snapshot, corrupted, disabled, or the query cannot be narrowed |"
+    },
+    {
+      "evidence_ref_id": "EV-013",
+      "document_path": "Plans/Tools.md",
+      "line_start": 188,
+      "line_end": 188,
+      "range_class": "core",
+      "exact_quote": "| **glob** | Find files by glob pattern (e.g. `**/*.ts`) | `glob` | Returns paths sorted by modification time. Same ignore rules as grep. |"
+    },
+    {
+      "evidence_ref_id": "EV-014",
+      "document_path": "Plans/Tools.md",
+      "line_start": 209,
+      "line_end": 209,
+      "range_class": "core",
+      "exact_quote": "- `debug_capable` is metadata on a tool or capability, not a new tool ID"
+    },
+    {
+      "evidence_ref_id": "EV-015",
+      "document_path": "Plans/Tools.md",
+      "line_start": 217,
+      "line_end": 222,
+      "range_class": "core",
+      "exact_quote": "Cross-surface rules:\n- Assistant Debug Mode is the chat entrypoint that most aggressively prefers this family\n- Assistant, Interview, Orchestrator, Crew/subagents, and delegated runs may use the same debug-capable tools under the same permission, artifact, and visibility contracts\n- tool availability, denials, and degraded capability state continue to flow through the same requested/effective policy system and persisted event stream\n- when a debug-capable tool's linked runtime identity is stale but recoverable, tool execution must enter `attention_required` with `attention_required_reason_code = session_reconnect_required` instead of silently resuming against stale sessions\n- classifying a tool as debug-capable does not authorize hidden evidence ingress or bypass the normal permission model"
+    },
+    {
+      "evidence_ref_id": "EV-016",
+      "document_path": "Plans/Tools.md",
+      "line_start": 228,
+      "line_end": 228,
+      "range_class": "core",
+      "exact_quote": "- **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that \"allow file changes\" is a single knob ([OpenCode](https://opencode.ai/docs/tools/): \"The edit permission covers all file modifications (edit, write, patch, multiedit)\")."
+    },
+    {
+      "evidence_ref_id": "EV-017",
+      "document_path": "Plans/Tools.md",
+      "line_start": 233,
+      "line_end": 233,
+      "range_class": "core",
+      "exact_quote": "Providers map canonical tool names to platform-native equivalents (e.g. `edit` → Claude \"Edit\", Cursor edit tool, etc.). The registry and permission engine use **canonical names only**; platform_specs or runner code holds the mapping so that adding a new provider does not require changing permission config."
+    },
+    {
+      "evidence_ref_id": "EV-018",
+      "document_path": "Plans/Tools.md",
+      "line_start": 241,
+      "line_end": 241,
+      "range_class": "core",
+      "exact_quote": "| **lsp** | **Promoted to MVP** (no longer experimental/feature-flagged). Agents can invoke the canonical read/navigation operation set: `goToDefinition`, `findReferences`, `hover`, `documentSymbol`, `workspaceSymbol`, `goToImplementation`, `prepareCallHierarchy`, `incomingCalls`, and `outgoingCalls`. `rename` remains the single write/approval-gated operation; `lsp_rename` is a legacy queue alias for that same operation, not a second tool. Requires a running LSP server for the project language. When no server is available, the lsp tool returns no results or a clear \"LSP unavailable\" response. See Plans/LSPSupport.md §9.1. |"
+    },
+    {
+      "evidence_ref_id": "EV-019",
+      "document_path": "Plans/Tools.md",
+      "line_start": 249,
+      "line_end": 249,
+      "range_class": "core",
+      "exact_quote": "Canonical operation inventory: the packetization summary phrase `10 read-only + 1 write-gated (lsp_rename)` reconciles to the live Part M operation set as nine read-only operations plus one approval-gated `rename` operation. `lsp_rename` is a legacy/source alias for canonical `rename` / `lsp.rename`, not a second tool key."
+    },
+    {
+      "evidence_ref_id": "EV-020",
+      "document_path": "Plans/Tools.md",
+      "line_start": 251,
+      "line_end": 251,
+      "range_class": "core",
+      "exact_quote": "Short LSP lookup names `definition`, `references`, and `implementation` are compatibility aliases for `goToDefinition`, `findReferences`, and `goToImplementation`; the canonical operation names remain the long-form LSP actions above."
+    },
+    {
+      "evidence_ref_id": "EV-021",
+      "document_path": "Plans/Tools.md",
+      "line_start": 257,
+      "line_end": 257,
+      "range_class": "core",
+      "exact_quote": "- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope. The packetization summary phrase `10 read-only + 1 write-gated (lsp_rename)` reconciles to the canonical Part M inventory: nine read-only operations plus one approval-gated `rename` operation. `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` / `lsp_rename` requires `path` + `position` + `newName` with approval gating."
+    },
+    {
+      "evidence_ref_id": "EV-022",
+      "document_path": "Plans/Tools.md",
+      "line_start": 259,
+      "line_end": 265,
+      "range_class": "core",
+      "exact_quote": "Fields:\n- operation\n- query\n- path\n- position\n- newName\n- status"
+    },
+    {
+      "evidence_ref_id": "EV-023",
+      "document_path": "Plans/Tools.md",
+      "line_start": 279,
+      "line_end": 284,
+      "range_class": "core",
+      "exact_quote": "Rules:\n- ok | partial | unavailable | error\n- `workspaceSymbol` requires `query`\n- Position-based operations use `path` + `position`.\n- `rename` requires `path` + `position` + `newName`.\n- `rename` is approval-gated because it applies edits."
+    },
+    {
+      "evidence_ref_id": "EV-024",
+      "document_path": "Plans/Tools.md",
+      "line_start": 287,
+      "line_end": 287,
+      "range_class": "core",
+      "exact_quote": "The following contracts define the minimum runtime envelopes for the core built-in tools. Provider-native names may differ, but the registry must normalize them to these contracts before persistence, analytics, or agent-visible result handling."
+    },
+    {
+      "evidence_ref_id": "EV-025",
+      "document_path": "Plans/Tools.md",
+      "line_start": 289,
+      "line_end": 289,
+      "range_class": "core",
+      "exact_quote": "All core tool-contract (`/tool-contract`) adapters default to sync execution semantics unless/until a tool contract explicitly exposes async handles. When a call is blocked by permissions, FileSafe, or an unavailable MCP/service (`/service`), the result must include a structured recovery action rather than a passive error only. Non-terminal operation previews use the same mini-card family as terminal output: web/search results show source/result mini-cards, and code-edit previews expose `/diffs` cards that open the editor diff without treating the preview as the final mutation. Built-in tool contracts must keep concrete `I/O/limit/error` guidance, unknown-tool default handling, GUI permission/preset visibility (`/presets`), and usage `/token` / `/tokens` event linkage discoverable from this registry."
+    },
+    {
+      "evidence_ref_id": "EV-026",
+      "document_path": "Plans/Tools.md",
+      "line_start": 291,
+      "line_end": 291,
+      "range_class": "core",
+      "exact_quote": "`ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract."
+    },
+    {
+      "evidence_ref_id": "EV-027",
+      "document_path": "Plans/Tools.md",
+      "line_start": 183,
+      "line_end": 183,
+      "range_class": "core",
+      "exact_quote": "| **bash** | Execute shell commands in project environment | `bash` | FileSafe applies (blocklist, path guards). CWD = project/workspace. Consider timeout and output size limits. |"
+    },
+    {
+      "evidence_ref_id": "EV-028",
+      "document_path": "Plans/Tools.md",
+      "line_start": 301,
+      "line_end": 303,
+      "range_class": "core",
+      "exact_quote": "| `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; minimum `1`; maximum `300`; values outside this closed range are `validation_error`. |\n| `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |\n| `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |"
+    },
+    {
+      "evidence_ref_id": "EV-029",
+      "document_path": "Plans/Tools.md",
+      "line_start": 307,
+      "line_end": 309,
+      "range_class": "core",
+      "exact_quote": "- Completed sync result: `{ shellId, status: \"completed\", stdout, stderr, exit_code }`\n- Sync still running after `initial_wait`: `{ shellId, status: \"running\", stdout, stderr, exit_code: null }`\n- Async launch: `{ shellId, status: \"running\", detach, pid? }`"
+    },
+    {
+      "evidence_ref_id": "EV-030",
+      "document_path": "Plans/Tools.md",
+      "line_start": 317,
+      "line_end": 323,
+      "range_class": "core",
+      "exact_quote": "| `validation_error` | Invalid parameter combination, such as `detach` without `mode: \"async\"` or malformed `initial_wait`. |\n| `permission_denied` | Tool blocked by tool policy before execution. |\n| `filesafe_blocked` | Shell command rejected by FileSafe, command blocklist, or path guard. |\n| `shell_not_found` | Referenced `shellId` does not exist or is no longer active. |\n| `spawn_failed` | Runtime could not start the shell or child process. |\n| `output_limit_exceeded` | Output exceeded cap and was truncated or the command was aborted per runtime policy. |\n| `timeout` | Hard execution ceiling expired before process completion. |"
+    },
+    {
+      "evidence_ref_id": "EV-031",
+      "document_path": "Plans/Tools.md",
+      "line_start": 329,
+      "line_end": 331,
+      "range_class": "core",
+      "exact_quote": "- Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.\n- If `initial_wait` expires first, the command remains live and returns `status: \"running\"` with partial `stdout` / `stderr`.\n- If the hard execution ceiling expires, the runtime terminates the process and returns `{ shellId, status: \"timed_out\", stdout, stderr, exit_code: null, error: { code: \"timeout\" } }`."
+    },
+    {
+      "evidence_ref_id": "EV-032",
+      "document_path": "Plans/Tools.md",
+      "line_start": 340,
+      "line_end": 341,
+      "range_class": "core",
+      "exact_quote": "| `old_str` | string | yes | Exact text to locate before replacement. |\n| `new_str` | string | yes | Replacement text to write atomically in place of `old_str`. |"
+    },
+    {
+      "evidence_ref_id": "EV-033",
+      "document_path": "Plans/Tools.md",
+      "line_start": 353,
+      "line_end": 353,
+      "range_class": "core",
+      "exact_quote": "| `validation_error` | Missing parameter, invalid path, or empty replacement contract. |"
+    },
+    {
+      "evidence_ref_id": "EV-034",
+      "document_path": "Plans/Tools.md",
+      "line_start": 357,
+      "line_end": 358,
+      "range_class": "core",
+      "exact_quote": "| `replace_miss` | `old_str` was not found exactly once as required by the tool contract. |\n| `replace_conflict` | Multiple ambiguous matches or file changed during validation. |"
+    },
+    {
+      "evidence_ref_id": "EV-035",
+      "document_path": "Plans/Tools.md",
+      "line_start": 364,
+      "line_end": 365,
+      "range_class": "core",
+      "exact_quote": "- Recommended default timeout: `10s` per edit request.\n- On timeout, the operation must fail atomically: no partial file rewrite, and the response is `{ status: \"timed_out\", path, error: { code: \"timeout\" } }`."
+    },
+    {
+      "evidence_ref_id": "EV-036",
+      "document_path": "Plans/Tools.md",
+      "line_start": 369,
+      "line_end": 369,
+      "range_class": "core",
+      "exact_quote": "Provider-native `view` maps to the canonical registry tool `read`."
+    },
+    {
+      "evidence_ref_id": "EV-037",
+      "document_path": "Plans/Tools.md",
+      "line_start": 376,
+      "line_end": 376,
+      "range_class": "core",
+      "exact_quote": "| `view_range` | array `[start_line, end_line]` | no | Inclusive 1-based line range. `-1` as `end_line` means \"to end of file\". |"
+    },
+    {
+      "evidence_ref_id": "EV-038",
+      "document_path": "Plans/Tools.md",
+      "line_start": 380,
+      "line_end": 381,
+      "range_class": "core",
+      "exact_quote": "- File read: `{ path, kind: \"file\", content, lines: [{ line_number, text }], truncated? }`\n- Directory read: `{ path, kind: \"directory\", entries: string[] }`"
+    },
+    {
+      "evidence_ref_id": "EV-039",
+      "document_path": "Plans/Tools.md",
+      "line_start": 389,
+      "line_end": 395,
+      "range_class": "core",
+      "exact_quote": "| `validation_error` | Invalid path or malformed `view_range`. |\n| `permission_denied` | `read` / `view` denied by tool policy. |\n| `filesafe_blocked` | Sensitive-path or read guard rejected the request. |\n| `path_not_found` | Target path does not exist. |\n| `binary_unsupported` | File is binary and cannot be rendered as numbered text. |\n| `too_large` | File exceeds the read cap without an allowed ranged request. |\n| `timeout` | Read did not complete before the runner ceiling. |"
+    },
+    {
+      "evidence_ref_id": "EV-040",
+      "document_path": "Plans/Tools.md",
+      "line_start": 47,
+      "line_end": 47,
+      "range_class": "core",
+      "exact_quote": "> **SSOT:** The canonical specification for permission actions (`allow`/`ask`/`deny`), precedence layers, granular rules, wildcard syntax, special guards, ask-flow semantics, deterministic defaults, and resolution algorithm is **`Plans/Permissions_System.md`**. This section provides a summary for tool-registry context; do not duplicate normative detail here."
+    },
+    {
+      "evidence_ref_id": "EV-041",
+      "document_path": "Plans/Tools.md",
+      "line_start": 55,
+      "line_end": 55,
+      "range_class": "core",
+      "exact_quote": "- **ask** — User must approve (`deny` / `once` / `for session` / `for-session` / `always`). In headless runs, maps to `deny` unless HITL is enabled."
+    },
+    {
+      "evidence_ref_id": "EV-042",
+      "document_path": "Plans/Tools.md",
+      "line_start": 97,
+      "line_end": 97,
+      "range_class": "core",
+      "exact_quote": "FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = \"may the agent call this tool?\"; FileSafe = \"may this specific invocation proceed?\". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6."
+    },
+    {
+      "evidence_ref_id": "EV-043",
+      "document_path": "Plans/Tools.md",
+      "line_start": 99,
+      "line_end": 99,
+      "range_class": "core",
+      "exact_quote": "Embedded document review is not a hidden tool mutation channel. The `embedded-document-pane` consumes the annotation and targeted revision contracts in `Plans/Crosswalk.md`, `Plans/FinalGUISpec.md`, and `Plans/assistant-chat-design.md`; Tools must not introduce direct `patch-apply` or `/suggested-change` mode for that pane unless a later separate capability defines a new tool, permission, FileSafe, and audit contract."
+    },
+    {
+      "evidence_ref_id": "EV-044",
+      "document_path": "Plans/Tools.md",
+      "line_start": 399,
+      "line_end": 400,
+      "range_class": "context",
+      "exact_quote": "- Recommended default timeout: `10s` per read request.\n- On timeout, return `{ path, status: \"timed_out\", error: { code: \"timeout\" } }`; do not fabricate missing lines."
+    },
+    {
+      "evidence_ref_id": "EV-045",
+      "document_path": "Plans/Tools.md",
+      "line_start": 402,
+      "line_end": 409,
+      "range_class": "context",
+      "exact_quote": "#### 3.5.4 `grep` contract\n\n**Input parameters**\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `pattern` | string | yes | Regex or literal search expression. |\n| `path` | string | no | Root directory or file to search within. Default = current workspace root. |"
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE 10485-10496 >>>
+- last scanned up to seq X
+- last scanned timestamp
+- Idempotent
+negative_constraints:
+- tool.denied events and FileSafe blocks do not contribute to tool_usage.{window}.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 10497-10854 >>>
+### SP-142 - Assistant Worktree Event Naming And Projection Keys
+
+```yaml
+plan_unit_id: SP-142
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Assistant worktree events use underscore canonical names, normalize dot-form aliases before projection, bind to thread/worktree redb projection keys and worktree records, and keep background enqueue fields optional without inventing worktree context.
+gui_related: false
+gui_classification_reason: This unit preserves backend assistant worktree event naming and projection key ownership.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: assistant_worktree_event_naming_and_projection_keys
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0088
+preserved_exact_tokens:
+- chat.thread_created
+- chat.thread_archived
+- chat.thread_deleted
+- chat.thread.worktree_bound
+- chat.thread_worktree_bound
+- worktree_
+- ADDITIVE
+- thread_state:{thread_id}:worktree_binding
+- worktree_binding_reverse:{worktree_id}
+- worktree_record.v1:{project_id}:{worktree_id}
+- thread_state:{thread_id}:persona_override
+- worktree_projection.v1:{project_id}:{worktree_id}
+- run.background_enqueued
+- worktree_path
+- branch_name
+negative_constraints:
+- Absent worktree fields on run.background_enqueued are treated as main-project context rather than inventing worktree context.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-143 - Assistant Worktree Lifecycle Merge PR And Pre-Merge Payloads
+
+```yaml
+plan_unit_id: SP-143
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Assistant worktree lifecycle, merge, PR, and pre-merge test events preserve exact chat.thread_worktree_* event names, minimum payload fields, PR failure phase enum push | api, and shorthand expansion only to the three pre-merge test event types.
+gui_related: false
+gui_classification_reason: This unit preserves backend assistant worktree event payload schemas.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: assistant_worktree_lifecycle_merge_pr_and_pre_merge_payloads
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0088
+preserved_exact_tokens:
+- chat.thread_worktree_bound
+- chat.thread_worktree_unbound
+- chat.thread_worktree_renamed
+- chat.thread_worktree_create_failed
+- chat.thread_worktree_merged
+- chat.thread_worktree_merge_failed
+- chat.thread_worktree_pr_created
+- chat.thread_worktree_pr_failed
+- chat.thread_worktree_pre_merge_test_started
+- chat.thread_worktree_pre_merge_test_passed
+- chat.thread_worktree_pre_merge_test_failed
+- thread_id
+- worktree_id
+- branch_name
+- worktree_path
+- binding_origin
+- target_branch
+- strategy
+- result_commit_sha
+- pr_url
+- pr_number
+- phase
+- push | api
+- user_override
+- chat.thread_worktree_pre_merge_test_started/passed/failed
+negative_constraints:
+- The ADDITIVE family shorthand expands only to chat.thread_worktree_pre_merge_test_started, chat.thread_worktree_pre_merge_test_passed, and chat.thread_worktree_pre_merge_test_failed.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-144 - Worktree Safe-Point Snapshot Carry-Through
+
+```yaml
+plan_unit_id: SP-144
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Projectors store assistant worktree events with the canonical envelope, and safe-point creation records for worktree-bound execution include worktree_id, worktree_path, branch_name, and HEAD_sha before mutation-capable merge or test operations continue.
+gui_related: false
+gui_classification_reason: This unit preserves backend safe-point snapshot carry-through before mutation-capable worktree operations.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: worktree_safe_point_snapshot_carry_through
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0088
+preserved_exact_tokens:
+- canonical envelope
+- safe-point creation records
+- worktree-bound execution
+- worktree_id
+- worktree_path
+- branch_name
+- HEAD_sha
+- mutation-capable merge
+- test operations continue
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-145 - Core Store Event Schema And Redb Checklist Preservation
+
+```yaml
+plan_unit_id: SP-145
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The implementation checklist is preserved as PlanUnit readiness metadata for core storage roots, seglog writer, event schemas, redb schema, migration runner, and version bump, not as executable work nodes.
+gui_related: false
+gui_classification_reason: This unit preserves backend storage checklist readiness without creating executable tasks.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: core_store_event_schema_and_redb_checklist_preservation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0089
+preserved_exact_tokens:
+- Implementation checklist
+- storage/seglog
+- storage/redb
+- storage/jsonl
+- storage/tantivy
+- seglog writer
+- envelope format
+- ts
+- seq
+- type
+- payload
+- chat.message
+- chat.thread_created
+- run.started
+- run.completed
+- usage.event
+- tool.invoked
+- tool.denied
+- runtime checkpoint-marker events
+- review_rules
+- migration runner
+- version bump
+negative_constraints:
+- Checklist prose is PlanUnit readiness metadata, not WorkNodes or executable build tasks.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-146 - Projector Checkpoint Marker And Analytics Checklist Preservation
+
+```yaml
+plan_unit_id: SP-146
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The checklist preserves projector requirements for JSONL mirror, Tantivy, redb checkpoints, runtime checkpoint-marker events before mutation or restore, and analytics rollups including tool_usage.{window}.
+gui_related: false
+gui_classification_reason: This unit preserves backend projector, checkpoint-marker, and analytics checklist readiness.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: projector_checkpoint_marker_and_analytics_checklist_preservation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0089
+preserved_exact_tokens:
+- seglog -> JSONL mirror
+- seglog -> Tantivy
+- Persist projector checkpoints
+- checkpoints
+- runtime checkpoint-marker events
+- mutation-capable execution resumes
+- safe-point restore continues
+- stored runtime checkpoint
+- analytics scan
+- 5h/7d
+- tool latency
+- tool_usage
+- tool_usage.{window}
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-147 - Chat Editor And Usage Wiring Checklist Preservation
+
+```yaml
+plan_unit_id: SP-147
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: The checklist preserves chat persistence, editor state, and Usage/dashboard wiring as storage integration readiness, including assistant-chat-design, FileManager section 2.9, usage-feature, and Usage view triggers.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible chat, editor, and Usage/dashboard storage wiring expectations.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: chat_editor_and_usage_wiring_checklist_preservation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0089
+preserved_exact_tokens:
+- Wire chat persistence
+- thread list
+- thread content
+- assistant-chat-design.md
+- Wire editor state
+- open tabs
+- active tab
+- scroll/cursor
+- FileManager.md §2.9
+- Wire Usage/dashboard
+- Usage/dashboard
+- Usage view opens
+- usage-feature.md
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 10855-10866 >>>
+### SP-148 - Usage Attribution And Run Completed Snapshot Checklist
+
+```yaml
+plan_unit_id: SP-148
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Usage checklist coverage requires Assistant/Interview usage events with thread and parent lineage, hidden/background model work usage.event records, and optional run.completed usage snapshots with canonical attribution fields while per-request canon remains usage.event.
+gui_related: false
+gui_classification_reason: This unit preserves backend usage attribution and run completion snapshot checklist semantics.
+split_recommended: false
+depends_on:

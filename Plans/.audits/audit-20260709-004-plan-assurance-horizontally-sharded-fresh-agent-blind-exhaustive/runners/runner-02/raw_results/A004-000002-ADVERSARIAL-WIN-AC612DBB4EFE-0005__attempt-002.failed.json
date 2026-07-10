@@ -1,0 +1,746 @@
+{
+  "assignment_id": "A004-000002-ADVERSARIAL-WIN-AC612DBB4EFE-0005",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-02",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-AC612DBB4EFE-0005",
+  "doc_id": "DOC-AC612DBB4EFE",
+  "document_path": "Plans/FinalGUISpec.md",
+  "core_range": [
+    1219,
+    1494
+  ],
+  "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000002-ADVERSARIAL-WIN-AC612DBB4EFE-0005.json",
+  "capsule_sha256": "a97be1edcf29693f01459ada6043703d68af40d4093d18e2b15519fb5f741e55",
+  "capsule_bytes": 1640,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-AC612DBB4EFE-0005.txt",
+  "source_excerpt_sha256": "868a4697003a113590d45b4f56facc459cec62799834586bb56fde17b9d908ee",
+  "source_excerpt_bytes": 39224,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "statement": "The explanation affordance is intended to derive from canonical reason, validation, allowed-action, requested/effective-state, chain, and receipt evidence, and it explicitly reports unavailable fields.",
+      "evidence_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "statement": "Destructive and remote mutation surfaces display effective target and context provenance, and the window distinguishes five empty-state meanings.",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "statement": "Blocked-state rendering is owner-routed across surfaces and preserves original receipt or filter context when returning to the owner route.",
+      "evidence_ids": [
+        "EV-004"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "statement": "Policy denials are distinct blocked outcomes, partial operations expose accepted and denied objects, and resumed governance waits revalidate before mutation.",
+      "evidence_ids": [
+        "EV-005"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "statement": "The Progress catalog defines shared state, event, and condition-aging vocabularies for operational projections.",
+      "evidence_ids": [
+        "EV-006",
+        "EV-007",
+        "EV-008"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "statement": "Cross-surface producers share one serialized route model, command wrappers traverse owner gates, and primary route identity is constrained to subject or object identity.",
+      "evidence_ids": [
+        "EV-010",
+        "EV-011",
+        "EV-013"
+      ]
+    },
+    {
+      "observation_id": "OBS-007",
+      "statement": "Indexing is exposed as an administrative settings surface, and policy-bearing settings may have scopes finer than project scope.",
+      "evidence_ids": [
+        "EV-015",
+        "EV-017"
+      ]
+    },
+    {
+      "observation_id": "OBS-008",
+      "statement": "Operational identity has a bounded payload shape, while account resolution emits source, request, execution, switch-reason, and resolution-status information.",
+      "evidence_ids": [
+        "EV-018",
+        "EV-023"
+      ]
+    },
+    {
+      "observation_id": "OBS-009",
+      "statement": "Project summaries disclose projection trust and project attention rows carry routing, severity, ownership, provenance, timestamps, dismissibility, and active state.",
+      "evidence_ids": [
+        "EV-025",
+        "EV-029"
+      ]
+    },
+    {
+      "observation_id": "OBS-010",
+      "statement": "Concern is a distinct durable record, its actions preserve semantic distinctions, and canonical blocked notifications are not suppressed by quiet windows.",
+      "evidence_ids": [
+        "EV-033",
+        "EV-034",
+        "EV-036"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "title": "Displayed mutation target is not bound to execution",
+      "severity": "high",
+      "negative_space_dimension": "state transitions and mutation safety",
+      "claim": "The bounded specification requires a target and fallback-context banner before mutation CTAs and explicitly revalidates resumed governance waits, but it does not require every destructive or remote mutation to pin, version, or revalidate that displayed target snapshot at commit time.",
+      "why_it_matters": "A selected worktree, branch, Docker context, namespace, environment, or runtime context can change between rendering and activation, allowing the GUI to show one target while the mutation reaches another.",
+      "evidence_ids": [
+        "EV-002",
+        "EV-005"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-002",
+      "title": "Explain-state evidence lacks disclosure controls",
+      "severity": "medium",
+      "negative_space_dimension": "security and privacy",
+      "claim": "The auto-openable ELI5 and expert explanation consumes validation, allowed-action, requested/effective-state, chain, and receipt evidence, but this window states no viewer-authorization, field-redaction, audit, or safe-copy rule for that disclosure.",
+      "why_it_matters": "A source-backed explanation can still expose operational evidence beyond the current viewer's authority or reveal details in screenshots, screen sharing, notifications, or copied diagnostics.",
+      "evidence_ids": [
+        "EV-001"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-003",
+      "title": "Partial policy denial has no compensation contract",
+      "severity": "high",
+      "negative_space_dimension": "failure and recovery",
+      "claim": "The window requires receipts for accepted resources and later denied resources but specifies no atomicity choice, rollback, compensating action, quarantine, retry boundary, or operator decision for resources accepted before denial.",
+      "why_it_matters": "A multi-object apply, compose-to-cluster flow, or publish chain can leave a partially changed environment without a deterministic path to restore, continue, or accept that state.",
+      "evidence_ids": [
+        "EV-005"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-004",
+      "title": "Progress lifecycle omits failure terminality",
+      "severity": "high",
+      "negative_space_dimension": "states, transitions, and test oracles",
+      "claim": "The Progress state vocabulary has no explicit failed, cancelled, timed-out, skipped, or unknown terminal state, and its event taxonomy has no run-completed, run-failed, run-cancelled, node-failed, or node-cancelled event.",
+      "why_it_matters": "Progress projections cannot deterministically represent common terminal outcomes or prove how a run or node leaves `running`, which can produce stuck, misleading, or surface-specific states.",
+      "evidence_ids": [
+        "EV-006",
+        "EV-007"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-005",
+      "title": "Escalation cadence is not executable",
+      "severity": "medium",
+      "negative_space_dimension": "operations, scale, and test oracles",
+      "claim": "The window uses `one stable refresh window`, `meaningful change or persistence`, and `one cadence model` without defining a clock source, durations, persistence thresholds, recurrence identity, deduplication, rate limits, or restart behavior.",
+      "why_it_matters": "Independent surfaces can quiet or resurface the same condition at different times, notification storms can occur at scale, and deterministic tests cannot establish correct aging behavior.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-032",
+        "EV-035",
+        "EV-036"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-006",
+      "title": "Dashboard layout migration lacks conflict recovery",
+      "severity": "medium",
+      "negative_space_dimension": "compatibility and data integrity",
+      "claim": "The live dashboard layout family and read-only migration or backup key are named, but this window does not define migration trigger, precedence when both keys exist, malformed or newer-version handling, preservation of unknown widgets, rollback, or fallback layout behavior.",
+      "why_it_matters": "Upgrades or interrupted migrations can silently discard user layout state, repeatedly remigrate stale data, or render an unusable dashboard.",
+      "evidence_ids": [
+        "EV-009"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-007",
+      "title": "Shared route envelope lacks failure and trust semantics",
+      "severity": "high",
+      "negative_space_dimension": "security, compatibility, and failure recovery",
+      "claim": "The window defines a serialized shared payload, minimum openable fields, and a small route-target identity union, but it states no schema version, project or workspace namespace invariant, serialized-payload validation rule, or visible outcome for malformed, unknown, stale, deleted, unsupported, or unauthorized targets. The explicit owner-gate guarantee is stated for `cmd.nav` wrappers, not every producer named by the shared route rule.",
+      "why_it_matters": "Search, recovery, widget, palette, and cross-surface links can fail differently, open an ambiguous object in the wrong scope, or bypass expected failure presentation when persisted payloads outlive their targets.",
+      "evidence_ids": [
+        "EV-010",
+        "EV-011",
+        "EV-012",
+        "EV-013",
+        "EV-014"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-008",
+      "title": "Symlink indexing has no containment contract",
+      "severity": "high",
+      "negative_space_dimension": "security, privacy, and operations",
+      "claim": "The follow-symlinks toggle defaults off, but this window does not specify whether enabled traversal may escape the project root, how cycles are detected, whether exclusions are reapplied after resolution, or how permission and partial-index failures are surfaced.",
+      "why_it_matters": "Enabling the toggle can ingest unintended files, traverse private locations, loop indefinitely, or leave an apparently healthy but incomplete index.",
+      "evidence_ids": [
+        "EV-015"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-009",
+      "title": "Scoped settings lack write authority and transaction rules",
+      "severity": "high",
+      "negative_space_dimension": "authority, propagation, and concurrency",
+      "claim": "Settings promises to explain precedence and show effective package, seam, lane, run, account, or actor scope, but the bounded window defines no generic mutator-authority matrix, actual precedence chain, inherit or reset semantics, concurrent-edit handling, failed-save rollback, or propagation acknowledgement.",
+      "why_it_matters": "A policy-bearing edit can be accepted at the wrong scope, overwrite another actor's update, or appear effective before downstream consumers have applied it.",
+      "evidence_ids": [
+        "EV-016",
+        "EV-017"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-010",
+      "title": "Extensible operational identity has no compatibility invariant",
+      "severity": "medium",
+      "negative_space_dimension": "compatibility and misleading GUI truth",
+      "claim": "Both requested and effective references are optional and surface-specific kinds may extend the vocabulary, but this window defines no per-kind required fields, kind registry, schema version, unknown-kind rendering, or invariant for payloads with neither identity reference.",
+      "why_it_matters": "Older consumers can misrender new identity kinds, and structurally valid but identity-less payloads can make the GUI display an effective target it cannot actually resolve.",
+      "evidence_ids": [
+        "EV-018"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-011",
+      "title": "Persona mutations lack lifecycle and authority controls",
+      "severity": "high",
+      "negative_space_dimension": "authority, failure recovery, and propagation",
+      "claim": "The visible persona editor offers create, edit, delete, disable, restore, reorder, runtime-default, and skill-reference changes, but this window gives no actor authorization, confirmation or rationale policy, audit or undo contract, concurrent-edit handling, or behavior when an active or referenced persona is changed or deleted.",
+      "why_it_matters": "Persona changes can alter model, tool posture, output defaults, skill activation, and child-agent eligibility while dependent sessions or configurations still reference the previous record.",
+      "evidence_ids": [
+        "EV-019"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-012",
+      "title": "Trust revalidation has no failure lifecycle",
+      "severity": "high",
+      "negative_space_dimension": "security, states, and recovery",
+      "claim": "A material trust change forces `Validating...` or `Revalidate`, but this window does not define materiality, whether ongoing execution is invalidated, revalidation timeout or cancellation, offline and repeated-change behavior, failure recovery, or use of last-known-good evidence.",
+      "why_it_matters": "A profile can remain falsely usable during a trust change, become stuck outside `Ready`, or return to `Ready` under inconsistent evidence.",
+      "evidence_ids": [
+        "EV-020"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-013",
+      "title": "Docker needs-review and failure semantics remain operationally ambiguous",
+      "severity": "high",
+      "negative_space_dimension": "misleading GUI truth and mutation safety",
+      "claim": "The window acknowledges a disagreement between `needs_review` and `/failure` payload semantics and prescribes showing a mismatch, but it defines no authoritative precedence, action availability, safe default, recovery transition, or automation behavior while the disagreement remains.",
+      "why_it_matters": "The GUI can classify an actual failure as reviewable or a reviewable state as failed, enabling an unsafe action or blocking a valid one.",
+      "evidence_ids": [
+        "EV-022"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-014",
+      "title": "Deterministic account resolver is under-specified",
+      "severity": "high",
+      "negative_space_dimension": "authority, state transitions, scale, and test oracles",
+      "claim": "The claimed deterministic matrix defines only `required`, `preferred`, and `none` outcomes and a display order. It does not define eligibility computation, priority or pressure ties, projection-trust effects, `resolution_status` values, mid-run loss of eligibility, preferred-account reversion, or anti-flapping behavior.",
+      "why_it_matters": "Equivalent inputs can select different accounts across implementations or oscillate as pressure and readiness projections change, undermining requested-versus-effective explanations and reproducibility.",
+      "evidence_ids": [
+        "EV-021",
+        "EV-023"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-015",
+      "title": "Terminal retention and logging lack privacy safeguards",
+      "severity": "high",
+      "negative_space_dimension": "security, privacy, and operations",
+      "claim": "Terminal settings own durable transcript retention and diagnostic logging, but this window specifies no retention bounds, redaction, encryption, access control, purge behavior, export policy, secure defaults, or disclosure of what diagnostics capture.",
+      "why_it_matters": "Terminal transcripts and logs can retain sensitive commands and output beyond user expectations or expose them across project and workspace scopes.",
+      "evidence_ids": [
+        "EV-024"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-016",
+      "title": "Project status rollup claims an absent precedence algorithm",
+      "severity": "high",
+      "negative_space_dimension": "misleading GUI truth and test oracles",
+      "claim": "The window says project surfaces share explicit precedence and rollup rules and gives one canonical-blocker precedence statement, but it does not enumerate how activity, attention, health, projection trust, historical state, counts, and unsaved shell state combine or resolve conflicts.",
+      "why_it_matters": "Title badges, project cards, palette summaries, and attention rows can show different dominant states for the same record, and tests have no complete expected-result matrix.",
+      "evidence_ids": [
+        "EV-025",
+        "EV-026",
+        "EV-027",
+        "EV-028"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-017",
+      "title": "Attention and concern lifecycle is not defined",
+      "severity": "high",
+      "negative_space_dimension": "states, authority, concurrency, and auditability",
+      "claim": "Project attention uses an `active` flag plus resolution metadata, Concern exposes an unspecified `status`, and concern actions carry generic authority and audit fields, but this window gives no state-transition table, preconditions, actor-role matrix, idempotency, concurrent-update rule, reopen or resurfacing transition, or archival retention rule.",
+      "why_it_matters": "Acknowledgement, dismissal, resolution, structural edits, archival, and recurrence can race or collapse into inconsistent records even though the GUI promises those actions remain distinct.",
+      "evidence_ids": [
+        "EV-029",
+        "EV-030",
+        "EV-033",
+        "EV-034"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-018",
+      "title": "Dynamic accessibility behavior is unspecified",
+      "severity": "medium",
+      "negative_space_dimension": "accessibility and state transitions",
+      "claim": "The accessibility contract covers labels, traversal, non-color indicators, and text equivalents, but it does not specify live announcements for changing progress or blocked states, focus placement and restoration after auto-open or deep-link actions, interruption behavior, or reduced-motion handling.",
+      "why_it_matters": "Screen-reader and keyboard users may not learn that a state changed, may lose context when an explanation opens, or may be unable to return predictably after cross-surface recovery.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-003",
+        "EV-007"
+      ],
+      "scope_confined": true
+    },
+    {
+      "finding_id": "FIND-019",
+      "title": "Projection attention revalidation can stall indefinitely",
+      "severity": "medium",
+      "negative_space_dimension": "propagation, operations, and recovery",
+      "claim": "Projection-derived attention deliberately avoids imperative copy until revalidation, but this window defines no revalidation trigger, freshness threshold, owner, retry or backoff policy, user recovery action, or terminal behavior when canonical records remain unavailable.",
+      "why_it_matters": "A genuinely actionable issue can remain muted indefinitely, or different surfaces can promote the same projection at different times.",
+      "evidence_ids": [
+        "EV-031"
+      ],
+      "scope_confined": true
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "statement": "The explanation contract explicitly forbids filling missing evidence with generic copy.",
+      "evidence_ids": [
+        "EV-001"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "statement": "Destructive and remote mutation CTAs are preceded by visible effective-target and context-source disclosure.",
+      "evidence_ids": [
+        "EV-002"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "statement": "Dense custom surfaces explicitly require screen-reader labels, keyboard traversal, non-color indicators, and text equivalents.",
+      "evidence_ids": [
+        "EV-003"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "statement": "A destination unable to host recovery must return to the canonical owner route with original context instead of creating a competing remediation path.",
+      "evidence_ids": [
+        "EV-004"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "statement": "Runs resumed after approval, ruleset, or governance waits explicitly revalidate before mutation and retain original and current outcomes.",
+      "evidence_ids": [
+        "EV-005"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-006",
+      "statement": "Catalog navigation wrappers explicitly traverse the shared wiring and owner-gate stack.",
+      "evidence_ids": [
+        "EV-011"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-007",
+      "statement": "Primary route identity is explicitly limited to subject identity or object-kind and object-id identity.",
+      "evidence_ids": [
+        "EV-013"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-008",
+      "statement": "Local projects hide remote-only index cache controls while preserving relevant local controls.",
+      "evidence_ids": [
+        "EV-015"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-009",
+      "statement": "Protected core personas are explicitly read-only, non-deletable, non-disableable, and non-shadowable.",
+      "evidence_ids": [
+        "EV-019"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-010",
+      "statement": "Stale or degraded project projections reduce confidence without manufacturing a blocked state.",
+      "evidence_ids": [
+        "EV-026"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-011",
+      "statement": "Projection-derived attention explicitly discloses reduced trust and avoids overconfident imperative copy before revalidation.",
+      "evidence_ids": [
+        "EV-031"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-012",
+      "statement": "Canonical blocked episodes are explicitly exempt from notification quiet-window suppression.",
+      "evidence_ids": [
+        "EV-036"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNKNOWN-001",
+      "statement": "Whether the shared route owner contract supplies schema versioning, payload validation, authorization, namespacing, and stale-target outcomes cannot be established.",
+      "reason_unresolved": "Referenced owner contracts and the full document were forbidden evidence outside this capsule."
+    },
+    {
+      "unknown_id": "UNKNOWN-002",
+      "statement": "Whether container, storage, or orchestrator owners define rollback and compensation for partial policy-denied operations cannot be established.",
+      "reason_unresolved": "Those owner documents were referenced but were not part of the bounded evidence universe."
+    },
+    {
+      "unknown_id": "UNKNOWN-003",
+      "statement": "Whether owner contracts define generic scoped-setting and persona mutator authority, transactions, and conflict handling cannot be established.",
+      "reason_unresolved": "The capsule provides GUI placement and display requirements but not the referenced owner-contract contents."
+    },
+    {
+      "unknown_id": "UNKNOWN-004",
+      "statement": "Whether Linux is the only supported platform for provider-profile diagnostics, or whether other platform path rules exist, cannot be established.",
+      "reason_unresolved": "The excerpt names Linux paths but contains no platform-support declaration."
+    },
+    {
+      "unknown_id": "UNKNOWN-005",
+      "statement": "Whether stable-refresh, persistence, recurrence, and escalation-cadence durations are defined canonically elsewhere cannot be established.",
+      "reason_unresolved": "No quantitative timing contract appears in the assigned window, and unrelated sections were forbidden."
+    },
+    {
+      "unknown_id": "UNKNOWN-006",
+      "statement": "Whether terminal transcript and diagnostic privacy controls are owned by a storage or security contract cannot be established.",
+      "reason_unresolved": "Only the Terminal settings ownership excerpt was available."
+    },
+    {
+      "unknown_id": "UNKNOWN-007",
+      "statement": "Whether automated conformance tests exist for route behavior, progress transitions, resolver determinism, rollup precedence, accessibility, and concern lifecycle cannot be established.",
+      "reason_unresolved": "Test files, receipts, and validation artifacts were outside the three immutable inputs."
+    },
+    {
+      "unknown_id": "UNKNOWN-008",
+      "statement": "Whether Concern `status`, actor-authority values, lifecycle transitions, and archival semantics are defined by the Glossary or another owner cannot be established.",
+      "reason_unresolved": "The excerpt references broader glossary coverage but does not include that material."
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-001",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1221,
+      "line_end": 1221,
+      "excerpt": "`Explain this state` is a GUI-level affordance on status pills, disabled buttons, blocked banners, and receipt rows across SCM, GitHub Actions, Docker/Kubernetes, and Orchestrator. It can auto-open on the first block when the user enables that behavior, and it offers ELI5 plus expert detail without inventing panel-local explanations. The explanation derives from canonical reason codes, validation fields, `allowed_action_ids[]`, requested/effective state, `/blocked/diverged/degraded` chains, and the `/event/storage` or `/events/storage` receipt projection; if a field is missing, the GUI says what data is unavailable instead of filling the gap with generic copy. `/tradeoffs`: one-click reasoning is valuable only when it stays tied to the same evidence that disables or permits the action."
+    },
+    {
+      "evidence_id": "EV-002",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1223,
+      "line_end": 1223,
+      "excerpt": "Destructive, `/targeted`, and remote-mutating surfaces show a compact target/context banner before rendering mutation CTAs. The banner includes the effective target identity, fallback source, and whether the context came from selected worktree, receipt context, workspace branch, Docker context, Kubernetes namespace/environment, or `/runtime/context`. Empty-state taxonomy is canonical: `Not relevant`, `Not configured`, `Unavailable`, `No data yet`, and `No results for current filter` are distinct states, not interchangeable copy. Hide-when-unused surfaces remain rediscoverable through Settings, commands, and receipt or CTA deep links."
+    },
+    {
+      "evidence_id": "EV-003",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1225,
+      "line_end": 1225,
+      "excerpt": "Accessibility for dense custom surfaces is non-color dependent. Source Control, GitHub Actions, Docker Manager, Kubernetes, Orchestrator, receipt views, and any `/table` fallback must preserve `/screen-reader` labels, keyboard traversal, non-color state indicators, and text equivalents for graph badges, status badges, blocked reasons, and filter results."
+    },
+    {
+      "evidence_id": "EV-004",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1227,
+      "line_end": 1227,
+      "excerpt": "Blocked-state integration uses one shared contract rather than surface-specific recovery wording. Orchestrator remains the hub for blocked episodes, while destination panels render the same reason code, owner route, recovery CTA, and allowed actions in local context. If a destination panel cannot host the requested recovery action, it links back to the owner route with the original receipt/filter context preserved; it must not create a competing remediation path."
+    },
+    {
+      "evidence_id": "EV-005",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1233,
+      "line_end": 1233,
+      "excerpt": "Governance and policy outcomes are blocked outcomes, not generic failures. The GUI distinguishes namespace disallowed by product policy, admission or policy denied by OPA, `/Gatekeeper/Kyverno/Pod` Security or `/image` policy, quota or `/limit` policy denial, and `remote_mismatch`, with separate remediation pivots and CTAs. Multi-object Kubernetes apply, `compose-to-cluster`, and multi-step publish chains show partial `/receipts`: accepted resources, the later denied resource, any downstream deployment blocked by that denial, and the exact policy-blocked object and `/stage`. While a run is waiting on approval, `/review/ruleset`, or external governance change, resume revalidates before mutation; receipts retain original and current `/policy` or `/remote` outcomes, including active, deleted, archived, `renamed_redirected`, and transferred targets."
+    },
+    {
+      "evidence_id": "EV-006",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1258,
+      "line_end": 1258,
+      "excerpt": "- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`"
+    },
+    {
+      "evidence_id": "EV-007",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1261,
+      "line_end": 1261,
+      "excerpt": "- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`"
+    },
+    {
+      "evidence_id": "EV-008",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1262,
+      "line_end": 1262,
+      "excerpt": "- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet"
+    },
+    {
+      "evidence_id": "EV-009",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1268,
+      "line_end": 1268,
+      "excerpt": "Dashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, GitHub Actions, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands."
+    },
+    {
+      "evidence_id": "EV-010",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1272,
+      "line_end": 1272,
+      "excerpt": "All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the `/serialization` transport form of that payload, not a hidden canonical route contract or second routing model."
+    },
+    {
+      "evidence_id": "EV-011",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1278,
+      "line_end": 1278,
+      "excerpt": "`cmd.nav` and `cmd.nav.*` wrappers route through the same route payload and `/wiring/gate` stack, so catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics."
+    },
+    {
+      "evidence_id": "EV-012",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1302,
+      "line_end": 1302,
+      "excerpt": "Route envelopes, not ad hoc UI glue, hold the minimum openable routing fields for cross-surface pivots before the destination opens file, subject, inspector, or runtime views."
+    },
+    {
+      "evidence_id": "EV-013",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1317,
+      "line_end": 1317,
+      "excerpt": "- `route_target` stays small: it is either `subject_id`-based identity or `object_kind` / `object_id` identity."
+    },
+    {
+      "evidence_id": "EV-014",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1320,
+      "line_end": 1320,
+      "excerpt": "- Destination/context overrides are allowed only when needed to restore the target surface."
+    },
+    {
+      "evidence_id": "EV-015",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1326,
+      "line_end": 1326,
+      "excerpt": "The Indexing settings subsection exposes the project search index as an admin surface: enable/disable index, large file threshold, generated-file and custom exclusion patterns, follow-symlinks toggle default OFF, shallow/partial (`/partial`) remote cache toggles, local and remote disk usage, manual cache eviction with confirmation, and `Rebuild Index`. Local projects hide remote-only cache controls while keeping toggle, threshold, exclusion, symlink, disk-usage, and rebuild controls visible."
+    },
+    {
+      "evidence_id": "EV-016",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1360,
+      "line_end": 1360,
+      "excerpt": "Settings is the tooltip-heavy `/help` surface for explaining what a setting does and what wins when multiple settings apply; it links to owner docs rather than duplicating runtime policy."
+    },
+    {
+      "evidence_id": "EV-017",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1362,
+      "line_end": 1362,
+      "excerpt": "Settings scopes are not limited to global and `/project` toggles; policy-bearing controls may be package, `/seam/lane/run/account-aware`, or account/actor scoped when the owner contract exposes that scope, and the UI must show the effective scope before applying or inheriting a setting."
+    },
+    {
+      "evidence_id": "EV-018",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1382,
+      "line_end": 1382,
+      "excerpt": "Operational-identity payloads use the bounded `operational-identity` shape `{ kind, requested_ref?, effective_ref?, selection_reason?, partial_capability? }`; provider-, registry-, Kubernetes-, and future surface-specific identities may extend the `kind` vocabulary without adding hidden credential ownership."
+    },
+    {
+      "evidence_id": "EV-019",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1388,
+      "line_end": 1388,
+      "excerpt": "The Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries."
+    },
+    {
+      "evidence_id": "EV-020",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1394,
+      "line_end": 1394,
+      "excerpt": "Agent-Config setup copy separates setup success from operational evidence. Cursor/headless `/workspace` trust rows may expose `--trust` and `/bootstrap` prompt state, and any material trust change sends the account/profile back through `Validating...` or a visible `Revalidate` action before it returns to `Ready`. `provider-home` paths, scheduler mechanics, and overlay configuration internals stay hidden unless a concrete `/debug` or audit use case requires persisted evidence. `provider-specific` remains or `/quota` probes belong in Usage and expanded account/runtime inspectors, not in setup success copy."
+    },
+    {
+      "evidence_id": "EV-021",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1396,
+      "line_end": 1396,
+      "excerpt": "Selection and failover explanations use a stable reason-code family: `manual_pin`, `provider_default`, `preferred_account_retained`, `highest_priority_eligible`, `lowest_pressure_eligible`, `auth_surface_match`, and `server_profile_default`."
+    },
+    {
+      "evidence_id": "EV-022",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1406,
+      "line_end": 1406,
+      "excerpt": "`Plans/Containers_Registry_and_Unraid.md` / `/Containers_Registry_and_Unraid.md` disagreement between `needs_review` and `/failure` payload semantics must be shown as an automation-first operator-flow mismatch until the container owner resolves it; FinalGUISpec mirrors only disabled-state and routing copy."
+    },
+    {
+      "evidence_id": "EV-023",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1420,
+      "line_end": 1420,
+      "excerpt": "Resolver display grammar is deterministic: show worker-policy display first, then source snapshot, then request snapshot, then execution outcome. Resolver inputs are the three axes above plus current projection trust. The deterministic resolver matrix is: `required` must bind or block; `preferred` binds when available and otherwise falls back with an explicit `switch_reason`; `none` keeps the request visible but lets policy choose execution. The emit shape is `settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }`."
+    },
+    {
+      "evidence_id": "EV-024",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1430,
+      "line_end": 1430,
+      "excerpt": "Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
+    },
+    {
+      "evidence_id": "EV-025",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1446,
+      "line_end": 1446,
+      "excerpt": "`project_summary` is the reusable summary object for Orchestrator-facing project surfaces. It contains `activity_state`, `attention_state`, `health_state`, `owner`, and projection-trust disclosure so the operator can see whether a summary is record-backed, current, or degraded. Canonical blocked episodes take precedence over weaker derived warnings when summary rollups disagree."
+    },
+    {
+      "evidence_id": "EV-026",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1454,
+      "line_end": 1454,
+      "excerpt": "Project-summary cards derived from stale or `/degraded` projections downgrade confidence without manufacturing a blocked state, and historical-only projects still keep a current `project_summary` row with neutral `historical_only` or `idle` activity rather than a warning color/state."
+    },
+    {
+      "evidence_id": "EV-027",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1456,
+      "line_end": 1456,
+      "excerpt": "`project_summary` rows carry `project_id`, `activity_state` (`idle | active | background_active | historical_only`), `attention_state` (`none | advisory | attention_required | blocked`), `health_state` (`healthy | degraded | blocked`), optional `primary_owner_kind`, optional `primary_reason_code`, optional `primary_object_ref`, `active_run_count`, `blocked_run_count`, `attention_object_count`, `projection_trust_state`, `last_activity_at_utc`, and `historical_run_count`."
+    },
+    {
+      "evidence_id": "EV-028",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1458,
+      "line_end": 1458,
+      "excerpt": "Project cards, `/title-bar` badges, and `/attention` surfaces share one status vocabulary with explicit precedence and rollup rules so background activity, blocked items, and unsaved shell state do not compete as unrelated badges."
+    },
+    {
+      "evidence_id": "EV-029",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1464,
+      "line_end": 1464,
+      "excerpt": "`project_attention_item` rows carry `attention_item_id`, `project_id`, `severity` (`advisory | attention_required | blocked`), `owner_kind`, `reason_code`, `source_kind`, `source_object_ref`, `primary_route_payload`, optional `secondary_route_payload`, `projection_trust_state`, `created_at_utc`, `updated_at_utc`, `dismissibility_kind` (`none | quiet_only | dismissible`), and `active`; `quiet_only` never hides a canonical blocked condition."
+    },
+    {
+      "evidence_id": "EV-030",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1466,
+      "line_end": 1466,
+      "excerpt": "GUI-facing redb projections use the `project_summary` and `project_attention_item` record families as the key pattern for per-project operational summary and per-project active attention items; `attention-item` archival/resolution behavior changes `active`, `dismissibility_kind`, and `/resolution` metadata instead of becoming ad hoc card state."
+    },
+    {
+      "evidence_id": "EV-031",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1472,
+      "line_end": 1472,
+      "excerpt": "Projection-derived attention items that are not canonical-runtime-backed show reduced trust explicitly and avoid overconfident imperative copy until the row revalidates against canonical runtime records."
+    },
+    {
+      "evidence_id": "EV-032",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1480,
+      "line_end": 1480,
+      "excerpt": "Cross-surface escalation uses one cadence model for banners, `/cards/toasts/badges`, and notification copy so severity, quieting, recurrence, and owner-route timing do not diverge by surface."
+    },
+    {
+      "evidence_id": "EV-033",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1483,
+      "line_end": 1483,
+      "excerpt": "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata."
+    },
+    {
+      "evidence_id": "EV-034",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1485,
+      "line_end": 1485,
+      "excerpt": "Concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation."
+    },
+    {
+      "evidence_id": "EV-035",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1487,
+      "line_end": 1487,
+      "excerpt": "These surfaces share one escalation ladder across Orchestrator, Dashboard, thread badges, and notifications. `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence even when advisory warnings are quieted."
+    },
+    {
+      "evidence_id": "EV-036",
+      "document_path": "Plans/FinalGUISpec.md",
+      "line_start": 1493,
+      "line_end": 1493,
+      "excerpt": "Notifications route by severity, execution impact, blocked owner, persistence, and projection trust. Quiet windows are allowed for advisory warnings only; canonical blocked episodes are never suppressed by quiet windows."
+    }
+  ],
+  "scope_attestation": {
+    "only_capsule_and_source_excerpt_read": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "hashes_verified": true,
+    "bytes_verified": true,
+    "evidence_within_capsule": true,
+    "no_writes": true
+  },
+  "terminal_after_result": true
+}

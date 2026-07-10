@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 702-713 >>>
+2. Evaluate `policy.may_execute_tool()` on the original invocation.
+3. Run arg-touching hooks, if any.
+4. Re-run permission checks on the modified invocation.
+5. Dispatch only if the re-check passes.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+### 8.3 Shell environment isolation routing
+
+Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Tools.md
+
+<<< AUTHORITATIVE_CORE 714-1108 >>>
+
+Cleanup-sensitive approval and retention checks are permission-visible. If active-run ownership, unresolved blocked recovery, required safe-point restore, unresolved conflict inspection, or newer lineage dependency still exists, the target remains `retained`, `suspect`, or `restoring`, not cleanup_eligible; approval cards must not offer destructive cleanup as if age alone made it safe.
+
+## 9. Persistence and storage
+
+<a id="PERSISTENCE"></a>
+
+Permission configuration is stored at three durable layers plus one ephemeral layer.
+
+ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#STORAGE-LAYOUT
+
+| Layer | Location | Format | Lifetime |
+|-------|----------|--------|----------|
+| **Global** | `~/.config/puppet-master/permissions.toml` | TOML | Until user edits/deletes |
+| **Project** | `<project_root>/.puppet-master/permissions.toml` | TOML | Until user edits/deletes |
+| **Persona** | Named profiles referenced by `default_permissions_profile` in `PERSONA.md` frontmatter; stored alongside global permissions config at `~/.config/puppet-master/permission-profiles/<profile_id>.toml` | TOML | Until user edits/deletes |
+| **Session** | In-memory session cache | Runtime | Current session only; cleared on restart |
+
+Durable approvals created through `create_project_rule` or `create_global_rule` are persisted in their owning config layer as metadata-bearing records with the logical fields `{ rule_id, tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. `rule_id` is a stable UUID generated at rule creation and is the canonical revocation/update key; `tool_pattern` is not unique and MUST NOT be used as the durable identity. File-level TOML projections MAY additionally expose these rules in the simpler per-tool tables shown below, but the stored rule identity and audit metadata remain part of the canonical durable record.
+
+### 9.1 TOML format
+
+Permission config files use the following TOML structure:
+
+```toml
+# Simple per-tool permissions
+[tools]
+read = "allow"
+edit = "ask"
+bash = "ask"
+webfetch = "allow"
+
+# Granular rules (object syntax)
+
+
+[tools.bash]
+"*" = "ask"
+"git *" = "allow"
+"npm *" = "allow"
+"rm *" = "deny"
+
+[tools.read]
+"*" = "allow"
+"*.env" = "deny"
+"*.env.*" = "deny"
+"*.env.example" = "allow"
+
+# Special guards
+[guards]
+doom_loop = "ask"
+external_directory = "ask"
+external_publish_side_effect = "ask"
+
+# External directory allowlist
+[guards.external_directory]
+allowlist = [
+  "~/.cargo/**",
+  "/usr/local/include/**",
+]
+
+# Doom loop threshold override
+[guards.doom_loop]
+threshold = 3
+```
+
+### 9.2 Config key in redb
+
+The resolved permission set for the active session (merged from all layers) is also persisted to redb as part of `config:v1` under the key `tool_permissions` for compatibility with the existing config schema defined in `Plans/Tools.md` §10.1. The TOML files are the durable source of truth; the redb key is a projection.
+
+ContractRef: ContractName:Plans/Tools.md
+
+---
+
+## 10. GUI requirements
+### 10.10 Effective-state disclosure requirements
+
+Permission disclosure must align with the shared requested/effective state model and the shared projection-state vocabulary.
+
+Disclosures must separate:
+- inherited / overridden
+- requested
+- effective
+- honored / skipped / clamped
+- `projection_freshness`
+- `projection_health`
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- stale or degraded projections do not become authoritative just because they are visible in the UI
+- mutating actions must revalidate or gate when permission-relevant projections are stale, degraded, or unavailable
+- blocked/recovery action visibility must use `allowed_action_ids[]` and blocked-episode identity rather than legacy request-era fields
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/FinalGUISpec.md
+
+### 10.10A Debug Automation Profile disclosure
+
+When a Debug Automation Profile is requested or active, the UI must disclose both requested and effective state.
+
+Required disclosure fields are:
+- `investigation_id`
+- grant origin (`front_door_approval`, `revalidated_after_resume`, or `not_granted`)
+- scope summary (project/worktree, target kind, bound runtime identities)
+- requested capability groups
+- effective capability groups
+- degraded or blocked capability groups with explicit reason codes
+- expiry / revocation state
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Surface rules:
+- the active Debug thread header shows whether the profile is active, degraded, or blocked
+- detailed inspectors and the Permissions surface show requested/effective capability groups and the layer that clamped or denied them
+- recovery banners must disclose when a resumed investigation lost prior grants and now requires revalidation
+- high-risk actions that remain outside the profile must continue to surface explicit confirmation UI instead of being described as silently covered by the profile
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md
+
+### 10.10B Debug profile target binding and reason codes
+
+The Debug Automation Profile is run-scoped. It is not a new global `/static` permission profile family and must not be appended to the existing global, project, Persona, or default profile layers as durable static policy. Permission disclosure records whether the active run received the profile through front-door approval, resume revalidation, or no grant, and the profile expires with the investigation/run scope unless a separate durable permission rule is explicitly approved.
+
+Debug Investigation Context headers include `stop_reason_code`, `attention_required_reason_code`, `blocked_reason_code`, and `budget_kind` whenever the relevant state exists. Target binding is deterministic: PM auto-selects exactly one highest-precedence target when a single winner exists, reuses the thread-linked target when that is the deterministic tie-breaker, or enters `attention_required` with `attention_required_reason_code = target_selection_required` when multiple same-tier candidates remain. PM must not guess a target under the Debug Automation Profile. Automated debug resolution requires `verification_strength=strong`; weaker or missing verification remains `attention_required`, `failed`, or `failed_cleanup` according to the investigation state.
+
+Implementation-era numeric defaults may be tuned during `/prototyping`, but optional future enhancements remain non-blocking follow-ons unless promoted through the normal planning process. For remote MVP coverage, any Debug profile section that touches dev sessions, terminal `/output` surfaces, tool permissions, or remote execution must show requested/effective capability differences rather than implying broad remote authority.
+
+### 10.1 Dedicated Permissions tab
+
+A **Permissions** tab in Settings MUST provide the following sections as collapsible cards.
+
+### 10.2 Global defaults + per-tool overrides
+
+A two-section layout:
+
+1. **Global wildcard default:** A single dropdown (`Allow` | `Ask` | `Deny`) that sets the fallback action for any tool without an explicit rule. Default: `Ask`.
+2. **Per-tool overrides:** A table listing all known tools (built-in canonical names from §5 + MCP-discovered tools). Each row: tool name, category badge, permission dropdown (`Allow` | `Ask` | `Deny`), and an expand chevron for granular rules.
+
+Override display is inline, not modal-only. Each effective permission row shows `Inherited`, `Overridden`, and `Effective` state with `/inheritance/fallback` provenance so users can understand resolution without opening a separate explanation dialog.
+
+### 10.3 Granular rule editor
+
+When a tool row is expanded (§10.2), the granular rule editor appears:
+
+- An ordered list of `{pattern, action}` entries.
+- "Add rule" button appends a new row with empty pattern and `Ask` default.
+- Drag handles for reordering (last-match-wins, so order matters).
+- Delete button per row.
+- Pattern input supports wildcard syntax (§3.1); inline help tooltip shows `*` and `?` semantics.
+
+### 10.4 Presets
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools independently visible and ask-gated in plan presets, allow strict read_only/no-network presets to deny them, and carry the blocked/unavailable payload fields through to permission-card consumers.
+
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
+
+Rules:
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+- Read-only preset reconciliation: allow `read` plus `/grep/glob/list/codesearch/chatsearch/logsearch/skill/lsp(ro)`, where `lsp(ro)` means read-only LSP operations only, plus `/question/todoread/todowrite/capabilities.get`; ask `webfetch` plus `/websearch/logread/task`; deny `edit` plus `/bash/repo.import/media.generate`.
+- Full preset reconciliation: allow the read/search/skill/lsp/question/todo family; ask `edit`, `bash`, `repo.import`, `media.generate`, `webfetch`, `websearch`, `logread`, and `task`. Preset tables and mode-override text must agree so plan-mode wording does not imply blanket denial of tools expected during planning/research.
+### 10.5 External directory allowlist manager
+
+A dedicated card for managing the external directory allowlist (§3.3):
+
+- Scrollable list of allowlisted paths with wildcard support.
+- "Add path" button with a text input + optional native directory picker.
+- Per-row delete button.
+- Home expansion display: show the resolved path next to `~` patterns.
+
+### 10.6 `doom_loop` policy display/config
+
+A card showing:
+
+- Current action (`allow` | `ask` | `deny`) with dropdown to change.
+- Repeat threshold (spinner, default 3, range 2–10).
+- Explanation text: "Triggers when the same tool is called with identical input N consecutive times."
+
+### 10.7 Per-Persona override editor
+
+A card for managing Persona-specific permission profiles:
+
+- List of named permission profiles (from `~/.config/puppet-master/permission-profiles/`).
+- "Create profile" button opens a permission editor (same layout as §10.2 + §10.3) scoped to the new profile.
+- Each profile row shows: profile name, tool count with overrides, edit/delete buttons.
+- When editing a Persona in the Personas management card (`Plans/Personas.md` §4), the `default_permissions_profile` dropdown is populated from this profile list.
+
+### 10.8 Scope selector
+
+A toggle or tab strip at the top of the Permissions tab:
+
+- **Global** — edits `~/.config/puppet-master/permissions.toml`.
+- **Project** (visible when a project is active) — edits `<project_root>/.puppet-master/permissions.toml`.
+- **Package** (visible when a package context is active) — edits package-scoped rules nested under the active project's permission configuration; inherits from Project until overridden.
+- **Seam** (visible when a seam context is active) — edits seam-boundary rules nested under the active project's permission configuration.
+- **Lane** (visible when a lane context is active) — edits lane-scoped rules nested under the active project's permission configuration.
+
+When no active-project context exists, durable `always` approval scope selection MUST offer only **Global**. The **Project** option is hidden/disabled and carries `/disabled` when a reason-code token is needed, preventing orphaned project-scoped rules with no project binding.
+
+Changes are saved to the selected scope's file. The effective (merged) permissions are displayed with layer-of-origin badges when in "Global" scope and a project is active.
+
+The Settings GUI, command-palette, API/CLI, and automation surfaces all mutate permission rules through the same canonical permission commands and storage records. GUI-only affordances must not become the sole management path for durable approval creation, revocation, or inspection.
+
+### 10.9 ELI5/Expert copy
+
+Permissions UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0.
+
+- **ELI5:** Simplified view showing only per-tool dropdowns and presets. Granular rules, profile editor, and allowlist manager are hidden.
+- **Expert:** Full view with all sections visible.
+
+Tooltip keys: `tooltip.permissions.*` prefix.
+
+## 10A. Security model
+
+### 10A.1 Trust boundaries and threat model
+
+The permissions system spans four explicit trust boundaries:
+
+1. user intent and explicit approval surfaces
+2. Puppet Master runtime policy, projection, and audit machinery
+3. tool execution backends
+4. external services reached by tools
+
+Threat model summary:
+- **Prompt injection:** model output or external content attempts to smuggle tool names, arguments, or approval intents that the runtime did not independently authorize.
+- **Privilege escalation:** the model or a child run requests broader permissions than its current ceiling, scope, or durable grants allow.
+- **Data exfiltration:** tools attempt to send project/user data to unauthorized files, hosts, domains, or remote services.
+
+### 10A.2 Capability gates and sandbox boundaries
+
+Permissions are necessary but not sufficient. A tool is executable only when it is both capability-registered and permission-allowed; unregistered tools remain non-runnable even if a rule says `allow`.
+
+Sandbox/capability boundary rules:
+- `bash` executes in the user's environment and is not sandboxed beyond normal OS-level user permissions.
+- file-oriented tools are scoped to the active project root and configured working roots unless explicit policy broadens that access.
+- web-oriented tools must respect configured domain allowlists and web-operation scope keys in addition to normal permission decisions.
+
+### 10A.3 Audit trail
+
+Every permission outcome that matters operationally — grant, deny, or prompt — MUST be written to seglog. The audit record MUST include at least `tool_pattern`, `decision`, `scope`, and `requesting_context`, enabling later review of durable-rule creation, inherited narrowing, and denied/externalized execution attempts.
+
+---
+
+## 11. OpenCode baseline and Puppet Master deltas
+
+External OpenCode behavior is reference-only. Puppet Master permission canon is defined here.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
+### 11.1 Baseline status
+
+External examples may inform terminology, but design-evidence from outside PM does not override PM-native terminology, PM's approval ladder, preset matrix, or batch permission behavior.
+
+### 11.2 Puppet Master deltas
+
+- PM uses `deny | once | for session | always`
+- PM keeps read-only and plan web operations at `ask`
+- batch web approvals list all unique domains in scope and treat `For Session` as a grant for those domains for the session
+
+### 11.3 Acceptance alignment
+
+<a id="AC-PM07"></a>
+**AC-PM07:** The `deny` response rejects the current blocked episode and may reject other pending asks only when their `approval_scope_key` exactly matches.
+
+---
+
+## 12. Acceptance criteria
+
+<a id="ACCEPTANCE"></a>
+
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-PM01"></a>
+**AC-PM01:** The resolution algorithm (§8) MUST be deterministic: given identical inputs (tool name, invocation context, config, mode, session state), the result MUST always be the same.
+
+<a id="AC-PM02"></a>
+**AC-PM02:** Precedence layer ordering (§2.4) MUST be respected. A Persona override MUST take priority over project-level rules, which MUST take priority over global-level rules.
+
+<a id="AC-PM03"></a>
+**AC-PM03:** Within a single ruleset, last-match-wins ordering (§3.1) MUST be applied. A rule appearing later in the list MUST override an earlier matching rule.
+
+<a id="AC-PM04"></a>
+**AC-PM04:** The `doom_loop` guard (§4.1) MUST trigger when the same tool is called with identical input 3 consecutive times (configurable threshold). The default action MUST be `ask`.
+
+<a id="AC-PM05"></a>
+**AC-PM05:** The `external_directory` guard (§4.2) MUST trigger for paths outside the project's working roots. Paths on the allowlist (§3.3) MUST bypass the guard.
+
+<a id="AC-PM06"></a>
+**AC-PM06:** The `always` response (§6.2) MUST bind approval to the canonical blocked episode and MAY reuse it only through an exact `approval_scope_key` match or explicit durable project/global rule creation. It MUST NOT create a blind session-wide allow.
+
+<a id="AC-PM08"></a>
+**AC-PM08:** Default `.env` deny rules (§7.1) MUST deny reading `.env` and `.env.*` files while allowing `.env.example`.
+
+<a id="AC-PM09"></a>
+**AC-PM09:** The GUI Permissions tab (§10) MUST display all tool permission keys from §5, support granular rule editing (§10.3), and persist changes to the selected scope's config file (§10.8).
+
+<a id="AC-PM10"></a>
+**AC-PM10:** In `yolo` mode, all tools MUST resolve to `allow` (§8 step 1). In `ask`/`plan` modes, all mutating tools MUST resolve to `deny` (§8 step 1).
+
+<a id="AC-PM11"></a>
+**AC-PM11:** `create_project_rule` and `create_global_rule` (§6.4A) MUST persist durable approval records with `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`, survive restart, and be revocable from Settings → Permissions or `cmd.permissions.revoke`.
+
+<a id="AC-PM12"></a>
+**AC-PM12:** Web-operation permission keys (§3.4A) MUST derive `webextract:{domain}`, `webresearch:{query_category}`, `webcrawl:{domain}`, and `webmap:{domain}` from canonical normalized inputs, using registrable-domain normalization for URL-derived keys.
+
+<a id="AC-PM13"></a>
+**AC-PM13:** Scope specificity (§2.4B) MUST resolve `lane` over `seam`, `seam` over `package`, `package` over `project`, and `project` over `global`; package scope MUST inherit from project unless explicitly overridden.
+
+<a id="AC-PM14"></a>
+**AC-PM14:** Context creation MUST run the seven-step narrowing flow in §8.0, and per-invocation dispatch MUST still execute the real-time precedence evaluation in §2.4 for each tool call within that context.
+
+<a id="AC-PM15"></a>
+**AC-PM15:** Permission execution MUST be capability-gated as well as permission-gated, and seglog audit entries (§10A.3) MUST record each grant, deny, and prompt decision with `tool_pattern`, `decision`, `scope`, and `requesting_context`.
+
+---
+
+*Document created for planning only; no code changes.*
+## 12A. DockerHub / Unraid remote-side-effect guard addendum
+
+This addendum extends §§4, 5, and 7 for DockerHub publication and managed Unraid template-repo flows.
+
+### 12A.1 `external_publish_side_effect`
+
+`external_publish_side_effect` is a special guard for remote side effects that change publication visibility, remote repository state, or remote distribution state.
+
+Covered operations include:
+
+- DockerHub repository creation
+- DockerHub image push when initiated by an agent/autonomous flow rather than a direct user click
+- creation of a managed remote template repo
+- remote push of the managed Unraid template repo
+
+### 12A.2 Behavior
+
+- `push_policy = after_build` does not satisfy the “exact remote side effect requested” rule by itself. A Build click remains approval for local build only; the later auto-dispatched image push still requires `external_publish_side_effect` evaluation at the time it is about to run.
+- The same rule applies to follow-on managed template-repo creation and push steps: they are never implicitly approved by earlier local-only actions or by the existence of enabled defaults.
+
+- Default action: `ask`
+- This guard is **non-bypassable**
+- `yolo` mode MUST NOT auto-allow this guard
+- Session-scoped `always` approvals MUST NOT suppress this guard globally
+- A direct user click on the exact publish/create/push button counts as approval for **that one requested side effect only**
+- Follow-on side effects still require their own approval when they were not part of the same direct user action
+
+Example:
+- Clicking **Push image** may approve the image push itself
+- It does **not** auto-approve creating a missing DockerHub repo if the repo does not already exist
+- It does **not** auto-approve pushing the managed Unraid template repo unless that was the exact user action requested
+
+### 12A.3 Failure behavior
+
+When the guard is rejected:
+
+- local build results remain intact
+- local template generation/editing remains intact
+- remote side effects do not execute
+- the agent/runtime MUST surface a corrected error describing which remote step was blocked
+
+### 12A.4 Canonical key/default additions
+
+Add the following entry to the §5 tool/special-guard key list:
+
+| Key | Category | Scope | Notes |
+|---|---|---|---|
+| `external_publish_side_effect` | Guard | Remote publication and remote repo mutation | Non-bypassable ask for DockerHub/Unraid remote side effects |
+
+Add the following entry to the §7 defaults table:
+
+| Key | Default | Rationale |
+|---|---|---|
+| `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |
+
+## Runtime blocked-Outcome Integration Addendum (2026-03-08)
+
+### 1. Policy-denied outcomes are blocked outcomes
+
+When the permission layer prevents execution, the runtime must treat the result as blocked/denied rather than generic failure.
+
+<<< CONTEXT_AFTER 1109-1120 >>>
+
+This includes:
+- deny rules
+- user rejection of `ask`
+- headless `ask -> deny`
+- `external_publish_side_effect` blocks
+
+### 2. Recovery-option payloads
+
+Permission outcomes that surface to runtime/UI must include canonical blocked-state actions and family identity.
+
+Minimum fields:

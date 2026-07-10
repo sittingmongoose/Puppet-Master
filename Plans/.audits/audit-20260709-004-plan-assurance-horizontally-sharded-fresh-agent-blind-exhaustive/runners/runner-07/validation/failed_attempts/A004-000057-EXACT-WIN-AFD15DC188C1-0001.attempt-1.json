@@ -1,0 +1,28 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-07",
+  "assignment_id": "A004-000057-EXACT-WIN-AFD15DC188C1-0001",
+  "attempt_id": "A004-R07-ATTEMPT-000005",
+  "assignment_attempt_number": 1,
+  "agent_instance_id": "91e11d93-c313-4627-b103-5c768aa337ba",
+  "agent_path": "/root/a004_r07_exact_0057_91e11d93",
+  "agent_thread_id": "019f4a0c-b193-7332-9732-6099c3d9b097",
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-07/raw_results/A004-000057-EXACT-WIN-AFD15DC188C1-0001.json",
+  "result_sha256": "fe2756c8b3894b47ebd01decad52d8b73ad4b74e16e7c0299a0b42d6a0cdf788",
+  "result_bytes": 41201,
+  "validation_passed": false,
+  "coverage_credit": 0,
+  "status": "failed_attempt_zero_coverage",
+  "failure_reason_code": "exact_evidence_quote_field_missing",
+  "failure_reasons": [
+    "raw exact_evidence_refs use exact_text, which postrun_validator_v2 does not recognize as an exact quote field",
+    "attempt is immutable and permanently receives zero coverage"
+  ],
+  "canonical_evidence_validation_passed": false,
+  "immutable_failure": true,
+  "redispatch_requires_new_attempt_and_identity": true,
+  "validator_authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+  "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+  "quarantine_source_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+  "recorded_at": "2026-07-10T03:43:48Z"
+}

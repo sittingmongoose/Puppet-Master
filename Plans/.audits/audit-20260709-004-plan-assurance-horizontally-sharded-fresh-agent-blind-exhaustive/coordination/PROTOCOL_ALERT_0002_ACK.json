@@ -1,0 +1,54 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "alert_id": "A004-PROTOCOL-ALERT-0002",
+  "acknowledgement_id": "A004-PROTOCOL-ALERT-0002-ACK",
+  "acknowledged_by_source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753",
+  "acknowledged_at": "2026-07-10T03:40:00Z",
+  "decision": {
+    "alert_upheld": true,
+    "postrun_validator_v1_authority": "revoked",
+    "all_v1_credit": 0,
+    "v1_artifacts_preserved_as_lineage": true,
+    "launch_packet_invalidation_required": false,
+    "launch_packets_mutated": false,
+    "runner_outputs_repaired_by_acknowledging_thread": false
+  },
+  "replacement_authority": {
+    "authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+    "authority_sha256": "88304df2f47c703531399b86a309ddce7fe71466f02f4d444f23f0e9b75f1ea0",
+    "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+    "validator_sha256": "6df3b229ca48e028b5a88010574131c18208a1f0cad89dd2c1b92223abedb7e2",
+    "crosscheck_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2_crosscheck.py",
+    "crosscheck_sha256": "7483557c3ca2213643d464208c1f6e7cbee3ef55b490cfeca20eea217406af30"
+  },
+  "initial_authoritative_observation": {
+    "snapshot_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+    "snapshot_sha256": "1d97812656a93be521944576cd14303f11024fb84baefc16f5813b3989f9e984",
+    "validator_status": "fail",
+    "crosscheck_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.crosscheck.initial.json",
+    "crosscheck_sha256": "324ce6725d0e06c60da4bc9c8e80372066affc757b0b7dc346e735914660ba51",
+    "crosscheck_status": "pass",
+    "credited_assignments": 17,
+    "credited_assignment_ids_sha256": "5b34cf7ebf7b1eb8991900e90a4f4e2f422001dd630cb67cc0a6134bad216550",
+    "pending_assignments": 2521,
+    "runner_complete_receipts": 0,
+    "document_window_phase_complete": false,
+    "accounting": "Per-assignment valid credit is preserved even when unrelated attempts are quarantined. Invalid attempts receive zero credit."
+  },
+  "failed_attempt_immutability": {
+    "runner_01_assignment": "A004-000023-EXACT-WIN-F25915291C7A-0002",
+    "attempt": 1,
+    "decision": "quarantined_zero_credit",
+    "capture_only_exception_granted": false,
+    "required_recovery": "Fresh attempt 2 with a new agent instance, canonical path, and native thread identity; preserve every attempt-1 receipt and payload.",
+    "v2_detected_overwrite": true
+  },
+  "protocol_effect": {
+    "overall_validator_status_and_assignment_credit_are_separate": true,
+    "attempt_grouping_required": true,
+    "failed_attempt_veto_scope": "matching_attempt_only",
+    "later_fresh_retry_allowed": true,
+    "old_ready_prelaunch_authority_changed": false,
+    "supplemental_prelaunch_authority_changed": false
+  }
+}

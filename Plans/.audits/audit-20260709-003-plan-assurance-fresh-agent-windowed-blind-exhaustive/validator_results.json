@@ -1,0 +1,95 @@
+{
+  "active_goal_left_unmodified": true,
+  "all_required_validators_passed": false,
+  "assurance_coverage_valid": false,
+  "audit_id": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "complete": false,
+  "coverage_carry_forward": "none",
+  "forbidden_reuse": [
+    "review assignments",
+    "review results",
+    "claims",
+    "observations",
+    "candidate findings",
+    "role completion",
+    "coverage counts",
+    "integrations",
+    "seam conclusions",
+    "research",
+    "scenarios",
+    "shadow builders",
+    "mutations"
+  ],
+  "fresh_agent_isolation_method_retained_by_successor": true,
+  "fresh_agent_isolation_work_not_criticized": true,
+  "hard_architectural_supersession": true,
+  "interrupted_active_agent_ids": [
+    "/root/fa003_w0002_exact_000003",
+    "/root/fa003_w0002_adversarial_000004",
+    "/root/fa003_w0003_exact_000005"
+  ],
+  "interrupted_unregistered_spawn": "/root/fa003_w0003_exact_000005",
+  "invalid_for_assurance_coverage": true,
+  "invalid_reason": "The three-subagent concurrency ceiling is insufficient for the required exhaustive 1,248-window assurance run; the successor will horizontally shard work across isolated top-level runner tasks.",
+  "invalidated_agent_ids": [
+    "/root/fa003_w0001_exact_000001",
+    "/root/fa003_w0001_adversarial_000002",
+    "/root/fa003_w0002_exact_000003",
+    "/root/fa003_w0002_adversarial_000004",
+    "/root/fa003_w0003_exact_000005"
+  ],
+  "invalidated_persisted_result_count": 1,
+  "invalidated_registered_assignment_count": 4,
+  "invalidated_returned_or_active_agent_count": 5,
+  "mechanical_lineage_reuse": "only independently reproducible corpus census, source/core hashes, semantic window ranges, seam routing, and capsule construction after independent successor-master revalidation",
+  "old_audit_id": "audit-20260709-003-plan-assurance-fresh-agent-windowed-blind-exhaustive",
+  "pre_assignment_validators_passed": true,
+  "results": [
+    {
+      "authoritative_documents": 128,
+      "authoritative_lines": 434932,
+      "authoritative_windows": 1248,
+      "check": "fresh_manifest_generation_internal_coverage",
+      "duplicate_core_count": 0,
+      "gap_count": 0,
+      "passed": true,
+      "review_assignments_at_validation": 0
+    },
+    {
+      "check": "independent_source_hash_core_hash_and_range_revalidation",
+      "duplicate_core_count": 0,
+      "gap_count": 0,
+      "max_window_estimated_tokens": 11988,
+      "max_window_lines": 400,
+      "oversized_subdivision_windows": 205,
+      "passed": true,
+      "review_assignments_at_validation": 0
+    },
+    {
+      "capsule_byte_limit": 64000,
+      "capsule_count": 1248,
+      "check": "immutable_context_capsules",
+      "max_capsule_bytes": 15605,
+      "passed": true
+    },
+    {
+      "check": "fresh_agent_isolation_pre_assignment",
+      "duplicate_agent_identity_count": 0,
+      "multi_scope_agent_count": 0,
+      "passed": true,
+      "recycled_agent_count": 0
+    }
+  ],
+  "status": "SUPERSEDED_INVALID_INSUFFICIENT_HORIZONTAL_PARALLELISM_FOR_THIS_ASSURANCE_RUN",
+  "substantive_coverage_credit": 0,
+  "successor_created_here": false,
+  "successor_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "superseded_at": "2026-07-10T02:35:40Z",
+  "superseded_by": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "valid_integrated_document_count": 0,
+  "valid_reviewed_window_count": 0,
+  "valid_seam_review_count": 0,
+  "valid_substantive_assignment_count": 0,
+  "valid_substantive_coverage": 0,
+  "valid_substantive_result_count": 0
+}

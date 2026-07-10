@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 17402-17413 >>>
+- "Steer submission mid-stream injection"
+- "next token boundary"
+- "partial generation + steer"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 17414-17770 >>>
+### F3-258 - Webview Embedding Conflict Risk
+
+```yaml
+plan_unit_id: F3-258
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Webview embedding (`wry`) conflicts` risk is mitigated as follows: Browser and HTML
+  preview webviews use native child windows positioned within Slint layout areas, keep browser
+  ownership editor/workspace-tab-first, and never make bottom-panel browser-adjacent panes the
+  canonical browser host.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: webview_embedding_conflict_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "Webview embedding (`wry`) conflicts"
+- "native child windows"
+- "editor/workspace-tab-first"
+- "bottom-panel browser-adjacent panes"
+- "canonical browser host"
+negative_constraints:
+- "Bottom-panel browser-adjacent panes must never become the canonical browser host."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-259 - DAP Debugger Reliability Risk
+
+```yaml
+plan_unit_id: F3-259
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `DAP debugger reliability` risk is mitigated as follows: DAP requests use timeouts,
+  crashed adapters auto-restart once, debugger surfaces clear unresponsive errors, and
+  concurrent debug sessions cap at one per project.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: dap_debugger_reliability_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "DAP debugger reliability"
+- "10s for evaluate"
+- "30s for launch"
+- "Auto-restart crashed adapters once"
+- "Cap concurrent debug sessions to 1 per project"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-260 - SSH Connection Stability Risk
+
+```yaml
+plan_unit_id: F3-260
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `SSH connection stability` risk is mitigated as follows: SSH uses keep-alives, retains
+  local buffer/stale snapshot on disconnect, auto-retries once, exposes Reconnect, and never
+  silently falls back to local execution for remote-mode projects.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: ssh_connection_stability_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "SSH connection stability"
+- "Keep-alive packets every 30s"
+- "Reconnect"
+- "remote-mode projects"
+negative_constraints:
+- "Never silently fall back to local execution for remote-mode projects."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-261 - Catalog Availability Risk
+
+```yaml
+plan_unit_id: F3-261
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Catalog service availability` risk is mitigated as follows: Catalog operations work
+  offline with a bundled fallback index and cached last-fetched index, with outdated-cache
+  banner when needed.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: catalog_availability_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "Catalog service availability"
+- "fallback index"
+- "last-fetched index"
+- "Catalog may be outdated"
+- "offline"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-262 - Sound Effects Audio Risk
+
+```yaml
+plan_unit_id: F3-262
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Sound effects cross-platform audio` risk is mitigated as follows: If rodio/audio device
+  availability fails, sound effects disable silently and Settings hides or labels the toggle
+  without error toasts.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: sound_effects_audio_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "Sound effects cross-platform audio"
+- "rodio"
+- "PulseAudio/ALSA"
+- "audio unavailable"
+- "No error toasts"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-263 - Custom Theme Validation Risk
+
+```yaml
+plan_unit_id: F3-263
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Custom theme validation` risk is mitigated as follows: Custom theme TOML loading
+  validates colors, tokens, and syntax, skips invalid themes with warning toast on Settings
+  open, never crashes, and falls back to base values.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: custom_theme_validation_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "Custom theme validation"
+- "TOML"
+- "warning toast"
+- "Never crash"
+- "base theme values"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-264 - Settings Tab Count Risk
+
+```yaml
+plan_unit_id: F3-264
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Settings page tab count (24 tabs)` risk preserves the stale `24 tabs across 5 groups`
+  label only as risk-lineage; the live Settings registry is 19 tabs, mitigated by mandatory
+  two-level sidebar navigation, collapsible groups, top search/filter, and command-palette deep
+  links.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: settings_tab_count_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:11"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:9"
+- "Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:18"
+preserved_exact_tokens:
+- "Settings page tab count (24 tabs)"
+- "Two-level sidebar navigation is mandatory"
+- "Group headers are collapsible"
+- "Search/filter"
+- "Open setting: {name}"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "`Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels, not the live Settings count."
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 17771-17782 >>>
+### F3-265 - Project Switch Reload Performance Risk
+
+```yaml
+plan_unit_id: F3-265
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Project switch state reload performance` risk is mitigated as follows: Project
+  switching loads config, file tree, editor tabs, LSP/Search/Source Control projections, then
+  chat threads in priority order with skeleton placeholders and a sub-500ms interactive
+  target.

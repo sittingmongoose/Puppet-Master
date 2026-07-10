@@ -1,0 +1,19 @@
+{
+  "assignment_id": "A004-000038-ADVERSARIAL-WIN-19B62D73B9EF-0006",
+  "attempt_no": 1,
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "errors": [
+    "scope_files_read_invalid",
+    "scope_flag_invalid:other_files_read",
+    "scope_flag_invalid:prior_audits_seen",
+    "scope_flag_invalid:other_results_seen",
+    "scope_flag_invalid:unrelated_windows_seen"
+  ],
+  "passed": false,
+  "result_bytes": 49549,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-08/raw_results/A004-000038-ADVERSARIAL-WIN-19B62D73B9EF-0006--attempt-01.json",
+  "result_sha256": "19a3f4ff49b6d50e8a009cb3afc375b080bcc635bf9df7840a31e81d45b3bc08",
+  "runner_id": "runner-08",
+  "schema_version": "a004.runner_attempt_validation.v1",
+  "validated_at": "2026-07-10T03:31:31.000Z"
+}

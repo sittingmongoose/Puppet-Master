@@ -1,35 +1,13 @@
     /* ── Agent-Config 7-section layout ── */
-    .ac-layout { display: flex; height: 100%; }
-    .ac-sidebar { width: 200px; border-right: 1px solid var(--border-light); background: var(--surface-elevated); padding: var(--lg) 0; overflow-y: auto; }
+    /* (W3 reaper: dead ac-layout/ac-sidebar/ac-content/ac-inspector
+       and provider-row family rules removed — zero markup/JS references.
+       ac-nav-item + ac-section kept: part 25 JS still wires them.) */
     .ac-sidebar .ac-nav-item { display: block; padding: 8px 16px; font-size: 12px; color: var(--text-secondary); cursor: pointer; text-decoration: none; transition: all 0.2s ease; border-left: 3px solid transparent; }
     .ac-sidebar .ac-nav-item:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
     .ac-sidebar .ac-nav-item.active { color: var(--accent-blue); border-left-color: var(--accent-blue); background: rgba(var(--accent-blue-rgb, 100,149,237), 0.08); font-weight: 600; }
-    .ac-content { flex: 1; padding: var(--xl); overflow-y: auto; }
     .ac-section { display: none; animation: acFadeIn 0.25s ease; }
     .ac-section.active { display: block; }
     @keyframes acFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Effective Runtime Inspector – persistent right panel */
-    .ac-inspector { width: 280px; border-left: 1px solid var(--border-light); background: var(--surface-elevated); padding: var(--md); overflow-y: auto; transform: translateX(0); transition: transform 0.3s ease; }
-    .ac-inspector-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: var(--md); display: flex; align-items: center; gap: var(--sm); }
-    .ac-inspector-title::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-lime); animation: inspectorPulse 2s ease-in-out infinite; }
-    @keyframes inspectorPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-    .ac-insp-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
-    .ac-insp-label { color: var(--text-muted); }
-    .ac-insp-value { color: var(--text-primary); font-weight: 600; text-align: right; max-width: 160px; }
-
-    /* Provider Account Row */
-    .provider-row { border: 1px solid var(--border-light); border-radius: 8px; padding: var(--md); margin-bottom: var(--sm); background: var(--surface); transition: all 0.2s ease; position: relative; overflow: hidden; }
-    .provider-row:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); border-color: var(--border); }
-    .provider-row::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-lime)); opacity: 0; transition: opacity 0.3s; }
-    .provider-row:hover::before { opacity: 1; }
-    .provider-row-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--xs); }
-    .provider-row-label { font-weight: 600; font-size: 13px; color: var(--text-primary); }
-    .provider-row-auth { font-size: 10px; color: var(--text-muted); padding: 2px 6px; background: var(--surface-elevated); border-radius: 4px; }
-    .provider-row-meta { display: flex; gap: var(--md); font-size: 11px; color: var(--text-secondary); flex-wrap: wrap; align-items: center; }
-    .provider-row-actions { display: flex; gap: var(--xs); margin-top: var(--sm); padding-top: var(--sm); border-top: 1px solid var(--border-light); }
-    .provider-row-actions button { font-size: 10px; padding: 3px 10px; border-radius: 4px; border: 1px solid var(--border-light); background: var(--surface-elevated); color: var(--text-secondary); cursor: pointer; transition: all 0.15s ease; }
-    .provider-row-actions button:hover { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); transform: scale(1.03); }
 
     /* State badges with animations */
     .state-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; transition: all 0.2s ease; }
@@ -54,19 +32,9 @@
     .pressure-bar-fill.warning { background: var(--accent-orange); }
     .pressure-bar-fill.critical { background: var(--accent-red, #ff5252); }
 
-    /* Section helper text */
-    .ac-section-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: var(--lg); line-height: 1.5; }
-
     /* Theme overrides for retro */
-    [data-theme^="retro"] .provider-row { border-radius: 0; }
     [data-theme^="retro"] .state-badge { border-radius: 0; }
     [data-theme^="retro"] .ac-nav-item { font-family: var(--mono-font); }
-    [data-theme^="retro"] .provider-row:hover { transform: none; box-shadow: 2px 2px 0 var(--border); }
-
-    /* Theme overrides for glass */
-    [data-theme^="glass"] .provider-row { backdrop-filter: blur(10px); background: rgba(255,255,255,0.03); }
-    [data-theme^="glass"] .ac-inspector { backdrop-filter: blur(12px); background: rgba(255,255,255,0.04); }
-    [data-theme^="glass"] .ac-sidebar { backdrop-filter: blur(10px); background: rgba(255,255,255,0.03); }
     /* ── End Agent-Config layout ── */
 
     .chat-new-thread-btn {
@@ -297,6 +265,8 @@
       color: var(--text-primary);
       font-size: 12px;
     }
+    /* retro readability: inputs get 2px radius (not hard-square) */
+    [data-theme^="retro"] .files-search input { border-radius: 2px; }
     .file-tree {
       flex: 1;
       overflow-y: auto;
@@ -564,7 +534,6 @@
       border-radius: 8px;
       border: 1px solid var(--border-light);
       background: color-mix(in srgb, var(--surface-elevated) 85%, transparent);
-      backdrop-filter: blur(8px);
       font-size: 10px;
       cursor: pointer;
       color: var(--text-secondary);
@@ -665,9 +634,8 @@
     .pm-term-ctx-ic:hover { border-color: var(--accent-lime); color: var(--accent-lime); }
     [data-theme^="glass"] .pm-term-wg-tab {
       font-family: var(--display-font, 'Inter', sans-serif);
-      background: color-mix(in srgb, var(--surface-elevated) 48%, transparent);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      box-shadow: inset 0 0 0 1px var(--glass-hairline);
       border-color: color-mix(in srgb, var(--wg-accent, var(--text-muted)) 30%, rgba(255,255,255,0.18));
     }
     [data-theme^="glass"] .pm-term-wg-tab.pm-term-tab-active {
@@ -687,15 +655,11 @@
       border-radius: 10px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-left-width: 1px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
     }
     [data-theme="glass-light"] .pm-term-subtab {
       color: #2a4a5a;
-      background: rgba(8, 145, 178, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
       border-color: rgba(8, 145, 178, 0.10);
       border-left-width: 1px;
       border-radius: 10px;
@@ -1055,32 +1019,8 @@
       --terminal-chrome: rgba(170, 205, 225, 0.50);
     }
 
-    .pm-tab-model-strip {
-      display: none !important;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--sm);
-      padding: var(--xs) var(--md);
-      font-size: 10px;
-      color: var(--text-secondary);
-      border-bottom: 1px solid var(--border-light);
-      background: var(--surface-elevated);
-    }
-    .pm-route-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-light);
-      font-family: var(--body-font);
-      letter-spacing: 0.02em;
-    }
-    .pm-route-chip.editor { border-left: 3px solid var(--accent-blue); }
-    .pm-route-chip.browser { border-left: 3px solid var(--accent-orange); }
-    .pm-route-chip.terminal { border-left: 3px solid var(--accent-lime); }
-    [data-theme="basic-light"] .pm-route-chip.terminal,
-    [data-theme="basic-dark"] .pm-route-chip.terminal { border-left-color: var(--accent-lime); }
+    /* (W3 reaper: dead .pm-tab-model-strip / .pm-route-chip rules removed —
+       zero markup/JS references in the current assembly.) */
 
     .terminal-workspace {
       display: flex;
@@ -1110,6 +1050,8 @@
       border-bottom: 1px solid var(--border-light);
     }
     .terminal-section-title { font-family: var(--display-font); font-weight: 600; color: var(--text-primary); }
+    /* retro readability: 10px terminal chrome repoints off Orbitron */
+    [data-theme^="retro"] .terminal-section-title { font-family: var(--display-font-sm, 'Rajdhani', sans-serif); letter-spacing: .08em; }
     .pm-dock-pill {
       padding: 1px 6px;
       border-radius: 10px;
@@ -1241,8 +1183,8 @@
       border-bottom: 1px solid var(--border-light);
     }
     [data-theme^="glass"] .terminal-pane-toolbar {
-      background: rgba(0,0,0,0.15);
-      backdrop-filter: blur(4px);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      box-shadow: inset 0 0 0 1px var(--glass-hairline);
     }
     .pm-identity-chip {
       font-family: monospace;
@@ -1289,11 +1231,7 @@
     .pm-inspector-kv span:first-child { color: var(--text-muted); }
     .pm-degrade-warn { color: var(--accent-orange); }
 
-    [data-theme^="glass"] .terminal-pane,
-    [data-theme^="glass"] .terminal-workspace .terminal-section {
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
+    /* (glass .terminal-pane blur demoted: terminal already gets a solid --terminal-bg fill from glass-a) */
     [data-theme^="glass"] .terminal-pane {
       border: 1px solid color-mix(in srgb, var(--accent-blue) 25%, rgba(255,255,255,0.1));
       box-shadow: inset 0 0 10px color-mix(in srgb, var(--accent-blue) 10%, transparent);
@@ -1546,7 +1484,7 @@
       position: fixed;
       top: 100px;
       right: 40px;
-      width: 520px;
+      width: min(var(--floating-chat-w, 520px), 40vw);
       height: 560px;
       background: var(--surface);
       border: var(--border-width) solid var(--border);
@@ -1653,22 +1591,11 @@
       content:''; position:absolute; bottom:0; left:6px; right:6px;
       height:2px; background: var(--accent-blue); border-radius:1px;
     }
-    /* Glow only on the last-clicked/focused tab — uses inset glow + background to avoid overflow clipping */
+    /* Last-clicked/focused tab: single subtle inset ring, no glow bloom
+       (W3 reduction; per-theme accent comes from --accent-primary) */
     .editor-tabs .tab.tab-focused {
-      background: rgba(59, 130, 246, 0.10);
-      box-shadow: inset 0 0 8px rgba(59, 130, 246, 0.25), inset 0 -2px 0 rgba(59, 130, 246, 0.5);
-    }
-    [data-theme="glass-dark"] .editor-tabs .tab.tab-focused {
-      background: rgba(45, 212, 191, 0.10);
-      box-shadow: inset 0 0 10px rgba(45, 212, 191, 0.20), inset 0 -2px 0 rgba(45, 212, 191, 0.4);
-    }
-    [data-theme="glass-light"] .editor-tabs .tab.tab-focused {
-      background: rgba(8, 145, 178, 0.10);
-      box-shadow: inset 0 0 8px rgba(8, 145, 178, 0.20), inset 0 -2px 0 rgba(8, 145, 178, 0.4);
-    }
-    [data-theme^="retro"] .editor-tabs .tab.tab-focused {
-      background: rgba(0, 255, 65, 0.08);
-      box-shadow: inset 0 0 6px rgba(0, 255, 0, 0.20), inset 0 -2px 0 rgba(0, 255, 0, 0.4);
+      background: var(--accent-soft);
+      box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--accent-primary) 55%, transparent);
     }
     .editor-tabs .tab .dot { color: var(--accent-orange); }
 

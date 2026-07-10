@@ -1,0 +1,628 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000093-EXACT-WIN-30EBABB890C6-0001",
+  "assignment_attempt_number": 2,
+  "attempt_id": "A004-R07-000093-ATTEMPT-2",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0093_e4b6a96d",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-30EBABB890C6-0001",
+  "doc_id": "DOC-30EBABB890C6",
+  "document_path": "Plans/WorktreeGitImprovement.md",
+  "core_range": [
+    1,
+    390
+  ],
+  "context_ranges": [
+    [
+      391,
+      402
+    ]
+  ],
+  "source_sha256": "28600deb3d08b7819b5a00c3a525fb5ff837eda1ef914ca98518d4687e039309",
+  "core_sha256": "e2c03f6b27e9a2cc3ecf801ee2dc0308c545ba0a450cfe173cb3d57b83df853a",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000093-EXACT-WIN-30EBABB890C6-0001.json",
+  "capsule_sha256": "463244541ed5b0477a0ffa2bea7ccde7e98a1d1fbd97abea96d3685a756617d3",
+  "capsule_bytes": 1611,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-30EBABB890C6-0001.txt",
+  "source_excerpt_sha256": "23b62b7effd7bd2525110cd303269bd0d34d24fd42bf934c20e23d145074170a",
+  "source_excerpt_bytes": 40851,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-000093-001",
+      "statement": "The document declares itself implementation-ready and says there are no open questions.",
+      "evidence_ref_ids": [
+        "EV-000093-001",
+        "EV-000093-002"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-002",
+      "statement": "Worktree-relative path handling is specified as fail-closed: canonicalize before scope checks, deny failed realpath resolution, and pass the real worktree root to FileSafe.",
+      "evidence_ref_ids": [
+        "EV-000093-005"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-003",
+      "statement": "Assistant worktree creation and removal are manager-owned infrastructure operations; raw agent worktree commands are prohibited, existing branches are verified before creation, and detached state constrains merge and PR actions.",
+      "evidence_ref_ids": [
+        "EV-000093-006"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-004",
+      "statement": "The lane handshake requires Source Control to confirm allocation and publish the path and storage metadata, while Orchestrator records the handshake for restart and recovery.",
+      "evidence_ref_ids": [
+        "EV-000093-012"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-005",
+      "statement": "Canonical worktree rows carry package, lane, run, worktree, lifecycle, and recovery identity, and Source Control must report operations through the same lane/worktree records consumed by Orchestrator.",
+      "evidence_ref_ids": [
+        "EV-000093-013"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-006",
+      "statement": "Allocation reuse is disqualified by contamination, dirty state, conflicts, blocked recovery, or lineage mismatch; deletion is gated by grace-period and lock/reference checks and has prescribed lifecycle event content.",
+      "evidence_ref_ids": [
+        "EV-000093-014"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-007",
+      "statement": "Restore and retry use exact repo, worktree, and baseline targeting, with a closed baseline candidate enum and fail-closed rejection instead of worktree substitution.",
+      "evidence_ref_ids": [
+        "EV-000093-015"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-008",
+      "statement": "The document defines durable worktree identity separately from display paths and gives remote and historical contexts explicit degraded or synthetic behavior.",
+      "evidence_ref_ids": [
+        "EV-000093-016",
+        "EV-000093-017"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-009",
+      "statement": "Historical/live scope and compare-target defaults are enumerated by attempt, blocked reason, retry, fresh-attempt, and historical-review case, and the compare-target source must be labeled.",
+      "evidence_ref_ids": [
+        "EV-000093-018"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-010",
+      "statement": "The first-class SCM status payload enumerates repository, worktree, branch, commit, divergence, dirtiness, conflict, owner, safe-point, and active-operation fields.",
+      "evidence_ref_ids": [
+        "EV-000093-020"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-011",
+      "statement": "GitHub PR creation is required to use the HTTPS API and OS-stored OAuth credentials, with no GitHub CLI subprocess.",
+      "evidence_ref_ids": [
+        "EV-000093-026"
+      ]
+    },
+    {
+      "observation_id": "OBS-000093-012",
+      "statement": "Source Control is named as the Git/worktree owner surface, with a worktree-first topology view and lineage-aware safety actions.",
+      "evidence_ref_ids": [
+        "EV-000093-030",
+        "EV-000093-031",
+        "EV-000093-032"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FND-000093-001",
+      "severity": "high",
+      "title": "Implementation-ready claim conflicts with unresolved behavioral alternatives",
+      "statement": "The core says there are no open questions and that the plan is implementation-ready, but it repeatedly leaves consequential behavior as unselected alternatives: checkout versus warning or explicit-base creation, Option A versus Option B rehydration, skip versus commit-hash detached merge, wiring versus hiding naming_pattern, and moving the log versus changing requirements. These choices yield observably different safety, persistence, and compatibility behavior.",
+      "evidence_ref_ids": [
+        "EV-000093-001",
+        "EV-000093-002",
+        "EV-000093-007",
+        "EV-000093-008",
+        "EV-000093-011",
+        "EV-000093-027",
+        "EV-000093-028"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-002",
+      "severity": "high",
+      "title": "Startup worktree rehydration has no single authoritative algorithm",
+      "statement": "Restart recovery is left as Option A, Option B, or a combination, and re-registration is optional. Although the handshake is recorded and live views read durable-storage IDs, the core does not select the authoritative startup source or define reconciliation when the in-memory map, ledger, durable projection, discovered worktrees, and expected path disagree.",
+      "evidence_ref_ids": [
+        "EV-000093-008",
+        "EV-000093-012",
+        "EV-000093-016"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-003",
+      "severity": "high",
+      "title": "Conflict preservation remains behaviorally optional",
+      "statement": "The proposed conflict fix permits either preserving the conflicting worktree until explicit resolution or merely documenting that rerun destroys it. The latter does not close the stated data-loss condition, so an implementer can satisfy the prose while retaining destructive rerun behavior.",
+      "evidence_ref_ids": [
+        "EV-000093-009"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-004",
+      "severity": "high",
+      "title": "Existing and missing branch handling leaves destructive discretion",
+      "statement": "Existing-branch recovery may reuse the branch or delete it when deemed safe, but safety is not defined. A missing merge target may be created from current HEAD, created from a configured default, or rejected. The selected source commit, branch-protection checks, lineage checks, and error behavior therefore remain discretionary.",
+      "evidence_ref_ids": [
+        "EV-000093-010",
+        "EV-000093-021"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-005",
+      "severity": "high",
+      "title": "Cleanup grace and destructive override authority are not exact",
+      "statement": "Cleanup depends on an owning grace period and manual prune/remove depends on an explicit override policy, but the core does not identify the grace-period policy source or default, who may authorize an override, or the minimum override receipt fields. Those omissions affect whether and when a lineage-bearing worktree can be deleted.",
+      "evidence_ref_ids": [
+        "EV-000093-014",
+        "EV-000093-015"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-006",
+      "severity": "medium",
+      "title": "Lifecycle vocabulary and transition behavior are not closed",
+      "statement": "The reserved lifecycle list allows both `Orphaned` and `orphaned`, and the listed attachment/detachment triggers are not mapped to exact source and destination states. This leaves persisted enum casing and transition outcomes inconsistent across producers and consumers.",
+      "evidence_ref_ids": [
+        "EV-000093-021A"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-007",
+      "severity": "medium",
+      "title": "Primary active-context fallback is not fully deterministic",
+      "statement": "The selection order ends in an undefined `stable fallback`, and no tie-break is stated for attempts sharing the most recent state-change value. Different consumers can therefore select different primary worktrees from the same state.",
+      "evidence_ref_ids": [
+        "EV-000093-019"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-008",
+      "severity": "high",
+      "title": "Git nonzero-exit contract contradicts its recovery table",
+      "statement": "The table recognizes informational and retryable nonzero outcomes, while the later invariant unconditionally requires every mutating or validating Git subprocess to treat any nonzero status as a hard error. The text also says there are three recovery categories while the table uses success, informational, fatal, and retryable classifications.",
+      "evidence_ref_ids": [
+        "EV-000093-022",
+        "EV-000093-023"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-009",
+      "severity": "medium",
+      "title": "Network retry ceiling has two possible totals",
+      "statement": "The table says network operations have a maximum of three attempts, while the rules allow a maximum of three retry attempts. Those formulations mean three total executions versus one initial execution plus three retries.",
+      "evidence_ref_ids": [
+        "EV-000093-022",
+        "EV-000093-023"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-010",
+      "severity": "high",
+      "title": "Nothing-to-commit handling is simultaneously required and optional",
+      "statement": "The integrity contract makes `nothing to commit` the sole informational exit-1 case and requires it to be distinguished from generic failure, but Section 3.11 calls detection optional. The detection channel also shifts from stdout in the table to stderr or exit code in the optional fix, leaving exact classification behavior unsettled.",
+      "evidence_ref_ids": [
+        "EV-000093-022",
+        "EV-000093-024",
+        "EV-000093-029"
+      ]
+    },
+    {
+      "finding_id": "FND-000093-011",
+      "severity": "high",
+      "title": "Recover-worktree placement conflicts with owner-surface rules",
+      "statement": "The executive GUI requirement places `Recover orphaned worktrees` in Health, while the identity contract makes Health read-only except for a deep link and later declares Source Control the owner with recover commands in its topology. The core does not state whether Health owns an executable recovery action, only exposes a deep link, or must omit the action.",
+      "evidence_ref_ids": [
+        "EV-000093-003",
+        "EV-000093-016",
+        "EV-000093-030",
+        "EV-000093-031"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-000093-001",
+      "statement": "Symlink and worktree-relative path checks have explicit fail-closed behavior, including denial when realpath resolution fails.",
+      "evidence_ref_ids": [
+        "EV-000093-005"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-002",
+      "statement": "Worktree creation/removal ownership is explicit: commands delegate to WorktreeManager and agents do not invoke raw worktree add/remove shell commands.",
+      "evidence_ref_ids": [
+        "EV-000093-006"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-003",
+      "statement": "Allocation reuse has explicit contamination and lineage disqualifiers, and worktree.deleted is forbidden until grace-period and file-lock checks pass.",
+      "evidence_ref_ids": [
+        "EV-000093-014"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-004",
+      "statement": "Restore/retry baseline targeting is a closed three-value candidate enum, and runtime must reject invalid targets instead of substituting another worktree.",
+      "evidence_ref_ids": [
+        "EV-000093-015"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-005",
+      "statement": "Legacy git_panel migration precedence and the prohibition on new dual writes are explicitly stated.",
+      "evidence_ref_ids": [
+        "EV-000093-015"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-006",
+      "statement": "Compare-target defaults are enumerated for active, blocked, retry, fresh-attempt, and historical-review cases, and target provenance must be labeled.",
+      "evidence_ref_ids": [
+        "EV-000093-018"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-007",
+      "statement": "PR creation authority is unambiguous: GitHub HTTPS API only, with no GitHub CLI subprocess.",
+      "evidence_ref_ids": [
+        "EV-000093-026"
+      ]
+    },
+    {
+      "non_gap_id": "NG-000093-008",
+      "statement": "Unsafe GUI actions remain visible but disabled with explanation, and blocked recovery rows must display exact worktree, affected-files, safe-point, recovery-target, and partial-lineage information.",
+      "evidence_ref_ids": [
+        "EV-000093-032",
+        "EV-000093-033"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-000093-001",
+      "statement": "Sections 5 through 7 may further adjudicate some config, ordering, save-timing, and resolved-decision details, but their substantive content is outside this core window.",
+      "evidence_ref_ids": [
+        "EV-000093-004",
+        "EV-000093-CTX-001"
+      ]
+    },
+    {
+      "unknown_id": "UNK-000093-002",
+      "statement": "The referenced external contracts may define additional path, policy, event, and command details; they were not part of the permitted source set.",
+      "evidence_ref_ids": [
+        "EV-000093-005",
+        "EV-000093-034"
+      ]
+    },
+    {
+      "unknown_id": "UNK-000093-003",
+      "statement": "The concrete schema and reconciliation rules for the ledger, `worktree_projection.v1`, and durable worktree state are not established within this core window.",
+      "evidence_ref_ids": [
+        "EV-000093-006",
+        "EV-000093-012",
+        "EV-000093-016"
+      ]
+    },
+    {
+      "unknown_id": "UNK-000093-004",
+      "statement": "Current implementation conformance was not evaluated; the canonical text describes itself as a plan document with no code changes made.",
+      "evidence_ref_ids": [
+        "EV-000093-002"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "EV-000093-001",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 21,
+      "line_end": 21,
+      "range_class": "core",
+      "exact_quote": "> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`."
+    },
+    {
+      "evidence_ref_id": "EV-000093-002",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 26,
+      "line_end": 26,
+      "range_class": "core",
+      "exact_quote": "**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. The document is **implementation-ready**: gaps closed (Section 7.14), dependency order and acceptance criteria in Section 6, GUI aligned with FinalGUISpec and MiscPlan. This document consolidates:"
+    },
+    {
+      "evidence_ref_id": "EV-000093-003",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 85,
+      "line_end": 85,
+      "range_class": "core",
+      "exact_quote": "**Yes.** All Git/worktree-relevant settings must be visible and wired. Required: Branching tab (Enable Git, Auto PR, Branch strategy, optional Use worktrees/Parallel note); optional worktree list and \"Recover orphaned worktrees\" (placement: **Health** tab per FinalGUISpec); Git info for **active project**; tooltip cleanup. See [Section 4](#4-gui-for-git--worktrees) and Phase 4 checklist. Align with FinalGUISpec §7.4 (Branching and Health) and MiscPlan §7.5 (project path, Option B, cleanup ownership)."
+    },
+    {
+      "evidence_ref_id": "EV-000093-004",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 89,
+      "line_end": 93,
+      "range_class": "core",
+      "exact_quote": "The plan is **ready to implement** with the following in mind:\n\n- **Section 7** (Gaps, Risks, and Implementation Notes) adds the missing detail: config schema mismatch (including granularity enum vs string), how Doctor gets project path, backend run not using current project, conflict-worktree persistence, exact binary-resolution functions, repopulation behavior, granularity vs BranchStrategy, integration test setup, worktree Doctor check scope, and risks (config migration, save timing).\n- **Phase 1 (config wiring)** must be implemented first (Option B: build run config from GUI at run start); the rest of the checklist can proceed in order. Section 7.1 and 7.10 describe mapping and save timing for Option B.\n- **Optional items** (e.g. worktree list/recover UI, \"nothing to commit\" handling, re-validate worktree path) can be skipped for an initial release and done later."
+    },
+    {
+      "evidence_ref_id": "EV-000093-005",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 104,
+      "line_end": 113,
+      "range_class": "core",
+      "exact_quote": "Worktree path resolution MUST apply the fail-closed symlink policy from `Plans/Permissions_System.md` §1.1 and `Plans/Architecture_Invariants.md` INV-017.\n\nSearch/index paths that interact with worktrees or remote caches are canonicalized before use and validated with `starts_with(project_root)` or `starts_with(cache_root)`. This includes paths derived from `.gitmodules`/gitmodules, dirty staging notifications, remote file-change notifications, and file watcher events; submodule paths containing `..` are rejected with a logged warning before affecting a project tree or remote `cache_root`. Index-build walks and ripgrep verification default to `--no-follow` / `no-follow`; a \"Follow symlinks\" indexing setting is OFF by default, and when enabled PM still canonicalizes the resolved target and reapplies `starts_with(project_root)` before indexing or verifying it.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md\n\nRequired:\n- All file paths computed relative to a worktree root MUST be normalized via `realpath()` before any scope check or file guard comparison.\n- If `realpath()` fails on a worktree-relative path, the operation MUST be denied.\n- The `working_directory` passed to FileSafe `check_file_write` MUST be the real path of the worktree root, not a symlinked alias."
+    },
+    {
+      "evidence_ref_id": "EV-000093-006",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 119,
+      "line_end": 125,
+      "range_class": "core",
+      "exact_quote": "- Compare buttons for assistant/worktree rows open committed branch-to-branch review only: worktree branch HEAD against base branch HEAD through `cmd.git.open_diff`, with `compare_origin` set to the base branch ref (e.g. `main`).\n- `cmd.chat.worktree.create` and `cmd.chat.worktree.remove` delegate to `WorktreeManager`; worktree creation/removal is user/system-initiated infrastructure, not agent-tool-gated, and agents do not run raw `bash` `git worktree add` or removal commands.\n- Git-aware tools such as `git status` auto-scope to the worktree through process `cwd`.\n- Branch rename follows `chat.thread_title_generated`; merge and PR command when-clause checks require the worktree not be on detached HEAD.\n- Branch existence checks use `git rev-parse --verify refs/heads/{branch}` before create; existing branch reuse uses `git worktree add <path> <branch>`.\n- Detached transitions refresh `worktree_projection.v1`; Source Control rows for orch-owned worktrees show `Open Lane` instead of `Open Thread`.\n- `Permissions_System.md` remains unaffected by this worktree creation/removal contract because worktree creation and removal are routed through Source Control and `WorktreeManager`."
+    },
+    {
+      "evidence_ref_id": "EV-000093-007",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 130,
+      "line_end": 134,
+      "range_class": "core",
+      "exact_quote": "- **Gap:** Worktrees are created with `git worktree add -b <branch> <path>` from **current HEAD** of the main repo. There is no checkout of `config.branching.base_branch` first.\n- **Impact:** If the main repo is on a feature branch, new worktrees are created from that branch instead of `main` (or configured base).\n- **Fix:**\n  - Before creating worktrees for a parallel group, ensure the main repo is on `config.branching.base_branch` (e.g. `git checkout base_branch` or at least validate and warn).\n  - Optionally: create worktrees from a specific ref, e.g. `git worktree add -b <branch> <path> <base_branch>` (supported in recent Git)."
+    },
+    {
+      "evidence_ref_id": "EV-000093-008",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 138,
+      "line_end": 141,
+      "range_class": "core",
+      "exact_quote": "- **Gap:** `active_worktrees` is in-memory only. After restart it is empty; real worktrees may still exist under `.puppet-master/worktrees/`, but `get_node_worktree(node_id)` returns `None`, so iterations use the main repo path.\n- **Fix (choose one or combine):**\n  - **Option A:** On orchestrator init (or when loading a run), repopulate `active_worktrees` from `worktree_manager.list_worktrees()` for paths under `worktree_base`.\n  - **Option B:** When resolving working directory for a node, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(node_id)` and verify the path exists and is a valid worktree (e.g. in `list_worktrees()`); if so, use it and optionally re-register."
+    },
+    {
+      "evidence_ref_id": "EV-000093-009",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 146,
+      "line_end": 149,
+      "range_class": "core",
+      "exact_quote": "- **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → \"if path exists remove_worktree\", so the conflicting worktree is removed and the conflict state is lost.\n- **Fix:**\n  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that node_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.\n  - Optionally: add a \"Resolve worktree conflicts\" action that lists worktrees with merge conflicts and offers to open in editor or remove after confirmation."
+    },
+    {
+      "evidence_ref_id": "EV-000093-010",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 161,
+      "line_end": 163,
+      "range_class": "core",
+      "exact_quote": "- **Gap:** If the branch (e.g. `subtask/ST-001-001-001`) already exists (e.g. after incomplete cleanup), `git worktree add -b <branch> <path>` fails with \"fatal: A branch named '...' already exists.\"\n- **Fix:**\n  - Before `worktree add -b`, check if the branch exists (e.g. `git rev-parse --verify refs/heads/<branch>`). If it exists, use `git worktree add <path> <branch>` (no `-b`) to create the worktree from the existing branch, or explicitly delete the branch if it is safe (e.g. no other worktree uses it)."
+    },
+    {
+      "evidence_ref_id": "EV-000093-011",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 167,
+      "line_end": 168,
+      "range_class": "core",
+      "exact_quote": "- **Gap:** `list_worktrees` only sets `branch` when it sees a `branch refs/heads/...` line. Detached HEAD worktrees yield empty `branch`; `merge_worktree` would then call `git merge \"\"`.\n- **Fix:** When parsing porcelain output, treat missing branch as \"detached\". In `merge_worktree`, if source_branch is empty, skip merge or merge by commit hash and document behavior."
+    },
+    {
+      "evidence_ref_id": "EV-000093-012",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 174,
+      "line_end": 180,
+      "range_class": "core",
+      "exact_quote": "- Lanes own worktrees through explicit allocation and handshake.\n- Worktrees are allocated at lane start and reclaimed at lane end (implicit or explicit).\n- Storage families define data layout and cleanup rules; worktrees may span multiple storage families.\n\n#### Source Control to Orchestrator handshake\n- When a lane requests a worktree, Source Control MUST confirm allocation, provide the worktree path, and publish any applicable storage metadata.\n- Orchestrator records the handshake in the ledger so restart and recovery can reuse the same worktree."
+    },
+    {
+      "evidence_ref_id": "EV-000093-013",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 187,
+      "line_end": 201,
+      "range_class": "core",
+      "exact_quote": "### Source Control to Orchestrator handshake\nSource Control is the concrete repo/worktree operator, while Orchestrator remains the lane-pool operational truth.\n\nRequired row fields:\n- owning package reference\n- `lane_id`\n- `run_id`\n- `worktree_id`\n- lifecycle state\n- blocked/recovery state\n\nRules:\n- worktree rows MUST show owning package, lane, and run references together with lifecycle and blocked/recovery state\n- Source Control actions operate on concrete repositories and worktrees but MUST report results back through canonical lane/worktree records\n- Orchestrator decisions about reuse, cleanup, retry, and recovery consume the same lane/worktree records rather than side files"
+    },
+    {
+      "evidence_ref_id": "EV-000093-014",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 203,
+      "line_end": 220,
+      "range_class": "core",
+      "exact_quote": "### Provider/model precedence and worktree allocation strategy\nProvider/model selection and worktree allocation are one ownership surface because allocation follows the effective execution scope.\n\nPrecedence order:\n- delegated subagent\n- overseer\n- node\n- work package\n- seam\n- run\n\nAllocation rules:\n- parallel nodes receive distinct worktree allocations unless they explicitly reuse an existing clean allocation owned by the same effective scope\n- contamination, dirty-state, conflict-state, blocked recovery, or lineage mismatch disqualify reuse and force a new allocation or explicit repair\n- cleanup only occurs after lineage-safe completion or archival and MUST preserve the historical record of the lane/worktree pair\n- run-completion cleanup waits for the owning cleanup grace period before deletion; the cleanup worker records `grace_period_ms`, performs a file-lock check, and refuses deletion while active locks, safe-point refs, terminal/editor sessions, or blocked recovery lineage still reference the worktree\n- `worktree.deleted` may be emitted only after the grace-period and file-lock checks pass; `worktree.created` records the allocation path, branch, lane/run/package lineage, and source-control owner before a node begins work in that tree\n- ownership transitions between scopes MUST update the effective provider/model choice together with the lane/worktree assignment record"
+    },
+    {
+      "evidence_ref_id": "EV-000093-015",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 223,
+      "line_end": 228,
+      "range_class": "core",
+      "exact_quote": "- Worktree ownership transfer requires an explicit runtime lineage event; replan must either rebind explicitly to new attempt lineage or allocate new worktree lineage, never silently inherit prior ownership.\n- Manual prune/remove stays forbidden while the worktree is `active` or `blocked_preserved` unless the explicit override policy permits it and records the override.\n- Restore and retry payloads, including `cmd.runtime.restore_safe_point_then_retry`, carry exact SCM targeting: `repo_id`, `worktree_id`, and `baseline_target`.\n- `baseline_target` is a closed candidate enum for restore/retry targeting: `safe_point`, `historical_commit`, and `worktree_head`.\n- Retry and `/fresh-attempt` commands must support the same SCM targeting and reuse policy; runtime rejects restore/retry when the targeted worktree or baseline cannot be validated instead of substituting another worktree.\n- Legacy `git_panel/*` and `git_panel` state is one-time migration input into `source_control.project_state.{project_id}` only. Settings-owned policy such as `branching.base_branch` remains canonical settings policy, followed by canonical Source Control project state, with legacy `git_panel/*` consulted only when the canonical key is absent; no new build writes both legacy and canonical keys."
+    },
+    {
+      "evidence_ref_id": "EV-000093-016",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 232,
+      "line_end": 232,
+      "range_class": "core",
+      "exact_quote": "Source Control owns the live SCM truth for current repo/worktree state, while Health is a read-only diagnostic and `/validation` mirror unless a repair utility deep-links back into Source Control. Worktree projection keys use `project_id/repo_id/worktree_id`; the compact `/repo_id/worktree_id` display is allowed only as a label over canonical IDs. `repo_id` is stable per project repo root, `worktree_id` is stable per concrete worktree instance, `worktree_path` is display/navigation state, and a `/recovered` or recreated path gets a new durable instance marker rather than inheriting stale identity. Every `multi-worktree` and multi-active-worktree view reads these IDs from durable-storage state before rendering live SCM affordances."
+    },
+    {
+      "evidence_ref_id": "EV-000093-017",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 234,
+      "line_end": 234,
+      "range_class": "core",
+      "exact_quote": "Remote-mode and `/SSH` projects still use the same canonical IDs. Remote `worktree_path` is a remote path string, not a local-path-oriented mirror path. `Open in Source Control` opens a remote-aware Source Control context; if connectivity is lost, Source Control stays visible in degraded read-only mode with exact disabled reason. Historical remote worktrees that no longer exist open a synthetic `/lineage` review context from receipts and commit range instead of pretending current live state is historical."
+    },
+    {
+      "evidence_ref_id": "EV-000093-018",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 236,
+      "line_end": 236,
+      "range_class": "core",
+      "exact_quote": "Historical and active links must declare state scope: `historical_snapshot`, `live_state`, or `compare_historical_to_live`. Active attempts default to live state; completed-run review defaults to compare_historical_to_live; `worktree-to-worktree` review has no implicit second target and the user must choose one. Compare target defaults are deterministic: active attempt uses attempt baseline commit; blocked `dirty_worktree` uses the last safe reusable baseline; blocked `worktree_conflict` uses merge target branch tip plus conflict file set; retry from safe point uses `safe_point_id`; fresh attempt uses `Base branch`; historical run review compares run commit range against recorded base commit. The `compare_target` source must always be labeled."
+    },
+    {
+      "evidence_ref_id": "EV-000093-019",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 238,
+      "line_end": 238,
+      "range_class": "core",
+      "exact_quote": "Orchestrator multi-active-worktree presentation uses `primary_active_context` and `additional_active_context_count`. The primary context is selected by explicit user-selected run/node/attempt, then most recently state-changed running attempt, then stable fallback. `Current Task` shows the primary context plus `+N parallel contexts`; the drilldown lists every active-worktree with `run_id + node_id + attempt_id`, `/tier`, worktree, branch, status, and blocked or `/conflict` indicator. Blocked CTA cards are episode-specific and remain tied to the blocked episode; `blocked_preserved` and safe-point-preserved worktrees stay reserved until explicit `/release`."
+    },
+    {
+      "evidence_ref_id": "EV-000093-020",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 240,
+      "line_end": 240,
+      "range_class": "core",
+      "exact_quote": "`Progress > Current Task` and `Progress > Orchestrator Status` consume the same first-class SCM status strip instead of assistant-chat-local worktree summaries. The status payload includes `repo_id`, `repo_root`, `worktree_id`, `worktree_path`, compatibility `worktree_id/path`, `worktree_status`, `branch_name`, `base_branch`, `upstream_remote`, `upstream_branch`, `head_commit_oid`, `baseline_commit_oid`, optional `compare_target`, `ahead_count`, `behind_count`, `dirty_file_count`, `conflict_file_count`, `owner_run_id`, `owner_node_id`, compatibility `owner_tier_id`, `owner_attempt_id`, optional `safe_point_id`, `requires_safe_point_restore`, and optional `active_git_operation`; `dirty_worktree`, `/worktree`, and `/conflict` deep-link end-to-end through Source Control and Orchestrator owner routes."
+    },
+    {
+      "evidence_ref_id": "EV-000093-021A",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 242,
+      "line_end": 242,
+      "range_class": "core",
+      "exact_quote": "Lifecycle state names are reserved: `reserved`, `active`, `blocked_preserved`, `released`, and `Orphaned` or `orphaned`. Attachment and `/detachment` happen at run start, attempt start/end, blocked episode start/end, safe-point restore, replan, abort, restart recovery, and manual recover/prune/reuse (`/prune/reuse`). Manual `/prune/reuse` remains blocked while ownership is active or blocked_preserved unless override policy records the ownership change."
+    },
+    {
+      "evidence_ref_id": "EV-000093-021",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 254,
+      "line_end": 257,
+      "range_class": "core",
+      "exact_quote": "### 2.10 merge_worktree assumes target_branch exists\n\n- **Gap:** `merge_worktree` does `git checkout target_branch`. If the branch doesn't exist, checkout fails.\n- **Fix:** Check for existence of `target_branch` (e.g. `git rev-parse --verify refs/heads/<branch>`). If missing, create it from current HEAD or a configured default, or return a clear error that base branch is missing."
+    },
+    {
+      "evidence_ref_id": "EV-000093-022",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 274,
+      "line_end": 290,
+      "range_class": "core",
+      "exact_quote": "#### 3.0.1 Exit-code classification and recovery\n\nGit subprocess exit codes are classified into three recovery categories:\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md\n\n| Exit Scenario | Classification | Recovery Action |\n|---|---|---|\n| Exit 0 | success | proceed normally |\n| Exit 1 with `nothing to commit` on stdout | informational | proceed (not an error for commit operations) |\n| Exit 1 (generic failure) | fatal | fail the operation with structured error; do not retry |\n| Exit 128 + signal (e.g., SIGKILL, SIGTERM) | fatal | fail immediately (`/fail-immediately`); report the signal in the error |\n| Exit 128 (ambiguous) | fatal | fail the operation; log full stderr for diagnosis |\n| Lock contention (`index.lock` exists) | retryable | retry once after 500ms backoff; fail on second attempt |\n| Network timeout (fetch/push/clone) | retryable | retry with exponential backoff (max 3 attempts, base 1s) |\n| Authentication failure (exit 128 with auth error on stderr) | fatal | fail immediately; surface credential refresh guidance |\n| Disk full / permission denied | fatal | fail immediately; surface the OS-level error |"
+    },
+    {
+      "evidence_ref_id": "EV-000093-023",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 294,
+      "line_end": 301,
+      "range_class": "core",
+      "exact_quote": "Rules:\n- Retryable scenarios MUST use bounded retry with backoff. Maximum 3 retry attempts for network operations; maximum 1 retry for lock contention.\n- Fatal scenarios MUST NOT be retried or skipped (`skip-silently-never`). The operation fails with a structured error that includes the git command, exit code, and stderr content.\n- The `nothing to commit` case is the only exit-1 scenario that is not treated as a hard error. All other non-zero exits follow the hard-error rule from §3.0.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md\n\nEvery git subprocess that mutates or validates PM-managed state MUST treat a non-zero exit status as a hard error."
+    },
+    {
+      "evidence_ref_id": "EV-000093-024",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 305,
+      "line_end": 310,
+      "range_class": "core",
+      "exact_quote": "The pre-write and post-stage git checks are session-scoped to the active PM-managed worktree. FileSafe snapshots and recoverable backups must align with `FileSafe.md#11.1.2a` and this hard-error rule rather than masking a failed `git status --porcelain` or git mutation subprocess.\n\nRequired behavior:\n- after `git add`, run a post-add `git status --porcelain` verification before accepting any `/commit-sensitive` staged-state transition\n- do not silently swallow non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent `/commit/stash/checkout` mutation-sensitive commands\n- distinguish `nothing to commit` from generic failure, but do not treat genuine git command failure as informational noise"
+    },
+    {
+      "evidence_ref_id": "EV-000093-026",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 319,
+      "line_end": 322,
+      "range_class": "core",
+      "exact_quote": "### 3.2 GitHub PR creation (API-only; no GitHub CLI)\n\n- **Gap:** PR creation currently relies on a GitHub CLI subprocess in some legacy integration paths. This violates the locked decision: GitHub operations are **API-only**.\n- **Fix:** Implement PR creation via GitHub HTTPS API per `Plans/GitHub_API_Auth_and_Flows.md` (OAuth device-code token in OS credential store). Doctor must validate GitHub API auth state and required scopes; runtime PR creation must not shell out to a GitHub CLI."
+    },
+    {
+      "evidence_ref_id": "EV-000093-027",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 334,
+      "line_end": 347,
+      "range_class": "core",
+      "exact_quote": "### 3.5 Branch strategy from config\n\n- **Gap:** Orchestrator hardcodes `BranchStrategy::Feature`. `GitConfig` in types has `branch_strategy`, but the orchestrator never reads it.\n- **Fix:** Add branch strategy to the config the orchestrator loads (e.g. under `branching` or a dedicated `git` section). Map config value to `BranchStrategy` and use it in `create_node_branch` instead of hardcoding.\n\n### 3.6 Single source of truth for branch naming\n\n- **Gap:** Orchestrator inlines branch name generation in `create_node_branch`; `BranchStrategyManager::generate_branch_name` implements similar but not identical logic (e.g. iteration: \"it-\" vs \"tk-\").\n- **Fix:** Use one implementation for all branch naming (e.g. `BranchStrategyManager` or a shared function used by both orchestrator and any other callers). Remove duplicate logic from the orchestrator.\n\n### 3.7 naming_pattern usage\n\n- **Gap:** `BranchingConfig` has `naming_pattern` (and it's in the GUI); orchestrator and branch logic never use it.\n- **Fix:** Either: (1) Wire `naming_pattern` into branch name generation (document format and placeholders, e.g. `{node}`, `{id}`), or (2) keep the field hidden/inert until branch-generation support lands and document that branch names follow the strategy (ph-/tk-/st-/release/...) only."
+    },
+    {
+      "evidence_ref_id": "EV-000093-028",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 354,
+      "line_end": 357,
+      "range_class": "core",
+      "exact_quote": "### 3.9 git-actions.log path and .gitignore\n\n- **Gap:** `GitManager` writes to `repo_path.join(\".puppet-master\").join(\"git-actions.log\")`. REQUIREMENTS.md says \"All git operations recorded in: `.puppet-master/logs/git-actions.log`\". Paths differ; .gitignore does not mention this log.\n- **Fix:** Either move the log to `.puppet-master/logs/git-actions.log` to match REQUIREMENTS, or update REQUIREMENTS to the current path. Then decide whether to add this log (or `.puppet-master/logs/`) to .gitignore if it is runtime-only."
+    },
+    {
+      "evidence_ref_id": "EV-000093-029",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 364,
+      "line_end": 367,
+      "range_class": "core",
+      "exact_quote": "### 3.11 Empty commit handling\n\n- **Gap:** When there are no changes, `git commit` fails with \"nothing to commit\". The code logs a warning; no distinction from real errors.\n- **Fix:** Optional: detect \"nothing to commit\" (e.g. from stderr or exit code) and log at debug/info to reduce noise."
+    },
+    {
+      "evidence_ref_id": "EV-000093-030",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 371,
+      "line_end": 378,
+      "range_class": "core",
+      "exact_quote": "## 4. GUI for Git & Worktrees\n`Source Control` remains the Git/worktree owner surface.\n\n### 4.2 GUI improvements\n\nRules:\n- The GUI model stays `worktree-first` when it hands off to Source Control.\n- Cross-references now point at `Plans/Orchestrator_Page.md#Source Control boundary` rather than the stale numbered anchor."
+    },
+    {
+      "evidence_ref_id": "EV-000093-031",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 382,
+      "line_end": 382,
+      "range_class": "core",
+      "exact_quote": "This feature-by-feature wiring contract for `Worktree topology view` makes worktrees first-class instead of hidden plumbing. Its primary placement is `Source Control > Worktrees`; it may also expose an optional graph overlay badge in `Source Control > Graph`. The panel state includes selected worktree, sort mode, `hide-stale` toggle, ownership display mode, and persisted worktree panel filters. Topology `/events/storage` behavior is backed by the worktree ownership projection and by `cmd.git.worktree.list/select/open/compare/prune/recover`; every active run, lane, or package with a worktree binding must resolve to a worktree row and deep link. If the repo is not git or worktrees are unsupported, the panel still shows repo state with an explicit disabled reason. To avoid noise on projects with many short-lived worktrees, defaults collapse stale groups and apply ownership filters."
+    },
+    {
+      "evidence_ref_id": "EV-000093-032",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 384,
+      "line_end": 384,
+      "range_class": "core",
+      "exact_quote": "`Safe worktree actions` and `Worktree safety / ownership` prevent prune/remove/reuse mistakes when runs or safe points still depend on a worktree. The entrypoints live in the worktree row action menu and Orchestrator blocked cards. State includes optional confirmation strictness, `locked`, `prunable`, `dirty`, and `repairable` flags, plus `show-unsafe-actions` expert mode, but unsafe actions remain disabled with explanation rather than hidden when lineage says they are not allowed. Safe-action `/events/storage` uses `cmd.git.worktree.recover/prune/remove/reuse`, carries blocked reason payloads using `dirty_worktree` and `worktree_conflict`, and makes blocked rows/recovery cards target the exact worktree/safe-point lineage. Worktree `/remove/repair`, `/move/delete`, and git worktree repair flows must preserve per-worktree `HEAD` and `index` context; the UI must distinguish `blocked by policy` from `blocked by unresolved lineage`; over-aggressive safety and over-automation are UX risks, but run/safe point dependencies take precedence."
+    },
+    {
+      "evidence_ref_id": "EV-000093-033",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 386,
+      "line_end": 386,
+      "range_class": "core",
+      "exact_quote": "Source Control mirrors Orchestrator's SCM lineage acceptance details for worktree recovery. A blocked worktree row must show the exact worktree, affected files summary, safe-point relation, and recovery target from the canonical blocked payload, and any partial lineage badge must mean the repo/worktree/branch/head or receipt chain is incomplete rather than hidden or synthesized."
+    },
+    {
+      "evidence_ref_id": "EV-000093-034",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 399,
+      "line_end": 399,
+      "range_class": "context",
+      "exact_quote": "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Orchestrator_Page.md#Source Control boundary, ContractName:Plans/storage-plan.md"
+    },
+    {
+      "evidence_ref_id": "EV-000093-CTX-001",
+      "document_path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 401,
+      "line_end": 401,
+      "range_class": "context",
+      "exact_quote": "## 5. Config Wiring (Prerequisite)"
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

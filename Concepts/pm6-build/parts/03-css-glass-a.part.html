@@ -122,7 +122,6 @@
     }
 
     /* 7. Modal / popover layer — 20px */
-    [data-theme^="glass"] .project-settings-content,
     [data-theme^="glass"] .chat-dropdown-popover,
     [data-theme^="glass"] .settings-inspector-panel {
       background: linear-gradient(180deg,
@@ -136,10 +135,6 @@
         inset 0 -12px 24px -18px var(--pm6-glass-floor),
         var(--pm6-glass-drop);
     }
-    [data-theme^="glass"] .project-settings-content {
-      position: relative;
-      border-radius: 16px;
-    }
     [data-theme^="glass"] .chat-dropdown-popover {
       border-radius: 12px;
     }
@@ -149,8 +144,7 @@
     }
 
     /* Hero surfaces: gradient-hairline edge (mask-composite ring) */
-    [data-theme^="glass"] .floating-chat::after,
-    [data-theme^="glass"] .project-settings-content::after {
+    [data-theme^="glass"] .floating-chat::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -172,7 +166,6 @@
        PRE-BAKED SURFACES — cards (no backdrop-filter)
        ====================================================== */
     [data-theme^="glass"] .bento-card,
-    [data-theme^="glass"] .widget-card,
     [data-theme^="glass"] .project-card-bento {
       position: relative;
       border: none;
@@ -189,10 +182,6 @@
     [data-theme^="glass"] .bento-card {
       overflow: hidden auto;
       border-radius: 16px;
-    }
-    [data-theme^="glass"] .widget-card {
-      overflow: hidden;
-      border-radius: 12px;
     }
     [data-theme^="glass"] .project-card-bento {
       overflow: hidden;
@@ -222,20 +211,12 @@
     [data-theme^="glass"] .bento-widget,
     [data-theme^="glass"] .activity-card,
     [data-theme^="glass"] .questionnaire-ui,
-    [data-theme^="glass"] .wizard-form-container,
-    [data-theme^="glass"] .wizard-interview-container,
-    [data-theme^="glass"] .wizard-activity-floating,
     [data-theme^="glass"] .runtime-snapshot {
       border: none;
       border-radius: 12px;
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
       box-shadow: inset 0 1px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline);
-    }
-    [data-theme^="glass"] .wizard-activity-floating {
-      box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-hairline),
-        var(--pm6-glass-drop);
     }
     [data-theme^="glass"] .chat-thread-sidebar {
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02));
@@ -324,19 +305,6 @@
         rgba(var(--pm6-glass-a-rgb), .28));
       box-shadow: 0 0 20px rgba(var(--pm6-glass-a-rgb), .30),
         inset 0 1px 0 var(--glass-edge);
-    }
-    [data-theme^="glass"] .orchestrator-buttons button {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
-      border: 1px solid var(--glass-hairline);
-      border-radius: 8px;
-    }
-    [data-theme^="glass"] .orchestrator-buttons button.primary {
-      background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .26),
-        rgba(var(--pm6-glass-a-rgb), .14));
-      color: var(--text-primary);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .14);
     }
     [data-theme^="glass"] .page-projects .projects-actions button:hover {
       background: rgba(var(--pm6-glass-a-rgb), .14);
@@ -452,9 +420,6 @@
     [data-theme^="glass"] .message-block {
       border-left-color: var(--accent-blue);
     }
-    [data-theme^="glass"] .message-files-touched a {
-      color: var(--accent-blue);
-    }
     [data-theme^="glass"] .chat-modes {
       border-bottom: none;
     }
@@ -473,17 +438,6 @@
       position: relative;
       z-index: 10;
     }
-    [data-theme^="glass"] .chat-header-workflow {
-      background: transparent;
-      border-bottom: none;
-    }
-    [data-theme^="glass"] .chat-queue-area {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
-      border: none;
-    }
-    [data-theme^="glass"] .chat-queue-area .queue-item .actions a {
-      color: var(--accent-blue);
-    }
     [data-theme^="glass"] .chat-footer {
       border-top: none;
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
@@ -492,27 +446,12 @@
       border: none;
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
     }
-    [data-theme^="glass"] .chat-footer .context-progress {
-      border: none;
-    }
-    [data-theme^="glass"] .chat-footer .context-progress.filled {
-      background: var(--accent-blue);
-    }
     [data-theme^="glass"] .composer-chip {
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
       border-color: var(--accent-blue);
     }
     [data-theme^="glass"] .chat-thread-sidebar .sidebar-title {
       border-bottom: none;
-    }
-    [data-theme^="glass"] .chat-new-thread-btn {
-      background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-b-rgb), .18),
-        rgba(var(--pm6-glass-b-rgb), .08));
-      color: var(--text-primary);
-      border: 1px solid rgba(var(--pm6-glass-b-rgb), .28);
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(var(--pm6-glass-b-rgb), .12);
     }
     [data-theme^="glass"] .chat-input-area textarea {
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
@@ -525,9 +464,6 @@
     }
     [data-theme^="glass"] .chat-dropdown-item.active {
       background: rgba(var(--pm6-glass-a-rgb), .12);
-      color: var(--accent-blue);
-    }
-    [data-theme^="glass"] .steer-queue-toggle span.active {
       color: var(--accent-blue);
     }
     [data-theme^="glass"] .jump-to-latest {
@@ -578,25 +514,6 @@
       background: rgba(var(--pm6-glass-a-rgb), .14);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
-    [data-theme^="glass"] .terminal-tabstrip {
-      background: transparent;
-      border-bottom: 1px solid var(--glass-hairline);
-    }
-    [data-theme^="glass"] .terminal-tab {
-      border-radius: 4px;
-      border: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
-      transition: all var(--motion-fast) var(--ease-out);
-    }
-    [data-theme^="glass"] .terminal-tab:hover {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
-      color: var(--text-primary);
-    }
-    [data-theme^="glass"] .terminal-tab.active {
-      background: rgba(var(--pm6-glass-a-rgb), .12);
-      color: var(--text-primary);
-      box-shadow: inset 0 1px 0 var(--glass-edge);
-    }
     [data-theme^="glass"] .pm-tiny-btn {
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
       border-color: var(--glass-hairline);
@@ -606,7 +523,6 @@
       background: rgba(var(--pm6-glass-a-rgb), .12);
       border-color: rgba(var(--pm6-glass-a-rgb), .22);
     }
-    [data-theme^="glass"] .terminal-output,
     [data-theme^="glass"] .terminal-pane {
       background: var(--terminal-bg);
       color: var(--terminal-fg);
@@ -620,47 +536,8 @@
       border-bottom-color: var(--accent-blue);
       color: var(--text-primary);
     }
-    [data-theme^="glass"] .orch-rungraph-node {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
-      border-radius: 8px;
-      box-shadow: inset 0 1px 0 var(--glass-edge),
-        0 2px 10px rgba(0, 0, 0, .22);
-    }
-    [data-theme^="glass"] .orch-rungraph-node.graph-pending {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18));
-      border-color: var(--glass-hairline);
-      color: var(--text-secondary);
-    }
-    [data-theme^="glass"] .orch-rungraph-node.graph-running {
-      background: rgba(251, 191, 36, .22);
-      border-color: rgba(251, 191, 36, .55);
-      box-shadow: 0 0 14px rgba(251, 191, 36, .20);
-      color: var(--text-primary);
-    }
-    [data-theme^="glass"] .orch-rungraph-node.graph-passed {
-      background: rgba(52, 211, 153, .22);
-      border-color: rgba(52, 211, 153, .55);
-      color: var(--text-primary);
-    }
-    [data-theme^="glass"] .orch-rungraph-node.graph-failed {
-      background: rgba(248, 113, 113, .22);
-      border-color: rgba(248, 113, 113, .55);
-      box-shadow: 0 0 12px rgba(248, 113, 113, .18);
-      color: var(--text-primary);
-    }
-    [data-theme^="glass"] .orch-rungraph-node.selected {
-      border-color: var(--accent-blue);
-      box-shadow: 0 0 14px rgba(var(--pm6-glass-a-rgb), .35);
-    }
-    [data-theme^="glass"] .orch-lane-node.selected {
-      background: rgba(var(--pm6-glass-a-rgb), .16);
-      color: var(--accent-blue);
-      border: 1px solid rgba(var(--pm6-glass-a-rgb), .40);
-    }
-    [data-theme^="glass"] .orch-lane-link,
-    [data-theme^="glass"] .orch-ledger-usage-link {
-      color: var(--accent-blue);
-    }
+    /* (W3 prune: dead .orch-rungraph-node / .orch-lane-* glass overrides removed —
+       orchestrator rebuilt on pm6-orch-*; zero markup/JS references.) */
 
     /* ======================================================
        SETTINGS / PSM
@@ -679,23 +556,6 @@
     [data-theme^="glass"] .psm-pane {
       background: transparent;
     }
-    [data-theme^="glass"] .psm-field input[type="text"],
-    [data-theme^="glass"] .psm-field select {
-      border: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
-      box-shadow: inset 0 0 0 1px var(--glass-hairline);
-    }
-    [data-theme^="glass"] .psm-toggle-row {
-      border: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
-    }
-    [data-theme^="glass"] .psm-section-title {
-      border-bottom: none;
-    }
-    [data-theme^="glass"] .psm-footer {
-      background: transparent;
-      border-top: none;
-    }
     [data-theme^="glass"] .psm-btn {
       border: none;
       background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
@@ -708,18 +568,6 @@
       color: var(--text-primary);
       border-color: rgba(var(--pm6-glass-a-rgb), .40);
     }
-    [data-theme^="glass"] .settings-group-header .badge {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
-    }
-    [data-theme^="glass"] .settings-search-input {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
-      border: 1px solid var(--glass-hairline);
-      border-radius: 8px;
-    }
-    [data-theme^="glass"] .settings-search-input:focus {
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      box-shadow: 0 0 0 3px rgba(var(--pm6-glass-a-rgb), .14);
-    }
     [data-theme^="glass"] .bento-action {
       border-color: rgba(var(--pm6-glass-a-rgb), .40);
       color: var(--accent-blue);
@@ -728,12 +576,6 @@
       background: rgba(var(--pm6-glass-a-rgb), .14);
       color: var(--text-primary);
       box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
-    }
-    [data-theme^="glass"] .add-widget-btn:hover,
-    [data-theme^="glass"] .customize-widgets-btn:hover {
-      background: rgba(var(--pm6-glass-a-rgb), .14);
-      color: var(--accent-blue);
-      border-color: rgba(var(--pm6-glass-a-rgb), .30);
     }
 
     /* ======================================================
@@ -748,20 +590,6 @@
     }
     [data-theme^="glass"] .wizard-nav-connector.complete {
       background: var(--accent-blue);
-    }
-    [data-theme^="glass"] .wizard-intent-card {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
-      border: 1px solid transparent;
-      border-radius: 8px;
-    }
-    [data-theme^="glass"] .wizard-intent-card:hover {
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .14);
-    }
-    [data-theme^="glass"] .wizard-intent-card.active {
-      border-color: rgba(var(--pm6-glass-a-rgb), .55);
-      background: rgba(var(--pm6-glass-a-rgb), .10);
-      box-shadow: 0 0 16px rgba(var(--pm6-glass-a-rgb), .18);
     }
     [data-theme^="glass"] .wizard-input,
     [data-theme^="glass"] .wizard-select {
@@ -782,25 +610,6 @@
       border-color: rgba(var(--pm6-glass-a-rgb), .40);
       color: var(--accent-blue);
     }
-    [data-theme^="glass"] .interview-node-step.active {
-      color: var(--accent-blue);
-    }
-    [data-theme^="glass"] .interview-node-step.active .dot {
-      background: var(--accent-blue);
-      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .45);
-    }
-    [data-theme^="glass"] .msg-bubble {
-      border-radius: 12px;
-    }
-    [data-theme^="glass"] .msg-ai {
-      border-left-color: var(--accent-blue);
-    }
-    [data-theme^="glass"] .msg-user {
-      background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .18),
-        rgba(var(--pm6-glass-a-rgb), .08));
-      color: var(--text-primary);
-    }
     [data-theme^="glass"] .interview-chip {
       border-radius: 20px;
       border: 1px solid var(--glass-hairline);
@@ -810,9 +619,6 @@
       background: rgba(var(--pm6-glass-a-rgb), .14);
       color: var(--accent-blue);
       border-color: rgba(var(--pm6-glass-a-rgb), .40);
-    }
-    [data-theme^="glass"] .interview-text-input input {
-      border-radius: 8px;
     }
     [data-theme^="glass"] .wizard-activity-pulse {
       background: var(--accent-blue);
@@ -824,9 +630,6 @@
        ====================================================== */
     [data-theme^="glass"] .pixel-grid {
       display: none;
-    }
-    [data-theme^="glass"] .preview-build-strip a {
-      color: var(--accent-blue);
     }
     [data-theme^="glass"] .browser-session-badge,
     [data-theme^="glass"] .browser-address-bar,
@@ -851,28 +654,7 @@
       background: rgba(var(--pm6-glass-a-rgb), .30);
       border-color: rgba(var(--pm6-glass-a-rgb), .55);
     }
-    [data-theme^="glass"] .search-toggle.on {
-      background: rgba(var(--pm6-glass-a-rgb), .16);
-      color: var(--accent-blue);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-    }
-    [data-theme^="glass"] .ai-btn {
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      color: var(--accent-blue);
-    }
-    [data-theme^="glass"] .ai-btn:hover {
-      background: rgba(var(--pm6-glass-a-rgb), .14);
-      color: var(--text-primary);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
-    }
     [data-theme^="glass"] .action-btn:hover {
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      color: var(--accent-blue);
-    }
-    [data-theme^="glass"] .artifact-item:hover {
-      border-color: rgba(var(--pm6-glass-a-rgb), .30);
-    }
-    [data-theme^="glass"] .artifact-btn:hover {
       border-color: rgba(var(--pm6-glass-a-rgb), .40);
       color: var(--accent-blue);
     }

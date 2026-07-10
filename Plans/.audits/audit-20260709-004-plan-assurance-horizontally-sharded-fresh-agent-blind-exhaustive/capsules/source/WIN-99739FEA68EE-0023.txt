@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 8420-8431 >>>
+- "Destructive commands in context files are caught"
+- "File paths in context attachments are validated"
+- "final prompt sent to the platform is safe"
+negative_constraints:
+- "FileSafe must not check only the original prompt."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 8432-8782 >>>
+### F2-101 - Prompt Command Extraction And Deduplication
+
+```yaml
+plan_unit_id: F2-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  BashGuard.check_prompt extracts advisory candidate commands from bash, sh, shell, and SQL code
+  blocks, shell prompt lines, SQL statements, and common destructive mentions in prose, then sorts
+  and deduplicates commands before checking each against destructive patterns; this prompt/free-text
+  extraction is defense-in-depth and never replaces final structured command/path enforcement.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend prompt command extraction logic.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Free-text extraction misses or ambiguity never authorize command execution or file mutation."
+- "The DELETE without WHERE prose/example mismatch is resolved by treating free-text SQL extraction as advisory and structured dispatch checks as authoritative."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: prompt_command_extraction_and_deduplication
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0050"
+preserved_exact_tokens:
+- "DRY:FN:check_prompt"
+- "DRY:HELPER:extract_commands_from_prompt"
+- "bash|sh|shell|sql"
+- "$ "
+- "> "
+- "DROP"
+- "TRUNCATE"
+- "DELETE without WHERE"
+- "migrate[:.]fresh"
+- "db[:.]drop"
+- "reset\\s+--hard"
+- "commands.sort()"
+- "commands.dedup()"
+- "Extract potential shell commands from prompt content"
+negative_constraints: []
+compatibility_only_notes:
+- "Historical prompt extraction mismatch is preserved only as source-lineage; active canon treats prompt extraction as advisory."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-102 - Effective Request Guard Ordering Example
+
+```yaml
+plan_unit_id: F2-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The platform runner example clones the request into effective_request, compiles context files
+  into prompt, checks the compiled prompt before building CLI args, checks context files
+  separately through the security filter, respects verification gate and interview operation
+  modes, and only then builds args and continues execution.
+gui_related: false
+gui_classification_reason: >-
+  This unit preserves backend guard-ordering example lineage.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: effective_request_guard_ordering_example
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0050"
+preserved_exact_tokens:
+- "effective_request"
+- "CHECK COMPILED PROMPT HERE"
+- "is_verification_gate_operation"
+- "Sensitive context file blocked"
+- "PUPPET_MASTER_OPERATION_TYPE"
+- "before building CLI args"
+- "append_prompt_attachments"
+- "security_filter.check_file_access"
+- "allow_during_interview"
+- "Key Points"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "This is example/lineage coverage for F2-042 through F2-044 and does not replace their authority."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-103 - Structured Attachment Pre Send FileSafe Gate
+
+```yaml
+plan_unit_id: F2-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe applies to structured chat attachments as well as freeform prompt text and context-
+  file paths, inspecting compiled prompt plus structured attachments together before platform
+  send and requiring document_selection_context attachments to pass mandatory secret scrub
+  before persistence; blocked forwarding emits an explicit block result and visible reason code
+  instead of pretending success.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend pre-send attachment safety gates.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: structured_attachment_pre_send_filesafe_gate
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0051"
+preserved_exact_tokens:
+- "structured chat attachments"
+- "freeform prompt text"
+- "context-file paths"
+- "compiled prompt plus structured attachments"
+- "document_selection_context"
+- ".env"
+- "key/cert"
+- "credential files"
+- "explicit block result"
+- "visible reason code"
+- "must not pretend the context was sent successfully"
+- "no_secrets_in_storage"
+negative_constraints:
+- "Blocked attachment forwarding must not pretend the context was sent successfully."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-104 - Structured Attachment Storage And Redaction Defaults
+
+```yaml
+plan_unit_id: F2-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Heuristic secret-ish redaction stays off by default, mandatory secret scrubbing remains on for
+  all structured attachments before persistence, search and indexing store bounded summaries and
+  provenance only, and sensitive-storage boundaries apply before send-to-chat chips or
+  structured-revision prompts are persisted.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend attachment persistence and redaction defaults.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: structured_attachment_storage_and_redaction_defaults
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0051"
+preserved_exact_tokens:
+- "Heuristic secret-ish redaction remains off by default"
+- "Mandatory secret scrubbing remains on"
+- "bounded summaries and provenance only"
+- "/sensitive-storage"
+- "send-to-chat"
+- "structured-revision"
+- "secret-ish"
+- "OFF by default"
+- "blocked forwarding uses explicit FileSafe signals"
+- "visible block reasons"
+negative_constraints:
+- "Search/indexing must not store unbounded raw selected text."
+- "Blocked forwarding must use explicit FileSafe signals and visible block reasons instead of guessed redaction success."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-105 - Verification Gate Operation Type Guard Exception
+
+```yaml
+plan_unit_id: F2-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe guards run before verification gates; destructive commands may be allowed only for
+  verification gate operations such as QA database resets, detected via
+  PUPPET_MASTER_OPERATION_TYPE == "verification_gate", and normal operations remain blocked.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend verification-gate guard exception behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: verification_gate_operation_type_guard_exception
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0052"
+preserved_exact_tokens:
+- "Check guards BEFORE verification gates"
+- "test database resets during QA"
+- "PUPPET_MASTER_OPERATION_TYPE == \"verification_gate\""
+- "Destructive command blocked"
+- "verification_gate"
+- "normal"
+- "Verification gate detection"
+negative_constraints:
+- "Guards may loosen only for verification_gate operations, not normal operations."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-106 - Attachment Gate Persistence And Visible Recovery
+
+```yaml
+plan_unit_id: F2-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Attachment gating remains active even during verification gates: sensitive-storage boundaries
+  apply before send-to-chat or structured-revision persistence, blocked or unrestorable pending
+  selection chips restore as explicit blocked or expired chips, searchable records are bounded
+  summaries plus provenance, and the UI records visible reason codes and audit events instead of
+  silently redacting intended text into misleading success.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI-visible blocked/expired chip recovery and visible reason-code behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: attachment_gate_persistence_and_visible_recovery
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0052"
+preserved_exact_tokens:
+- "/sensitive-storage"
+- "/expired"
+- "/searchable"
+- "/provenance"
+- ".env"
+- "/cert"
+- "/redb/index/blob"
+- "/audit"
+- "heuristic secret-ish redaction stays OFF"
+- "Pending selection chips"
+- "visible reason code"
+- "must not silently redact"
+- "misleading successful send"
+negative_constraints:
+- "The UI must not silently redact intended text into a misleading successful send."
+- "Unbounded raw selected text is never stored for search."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FileSafe owns block signals; chat/GUI own chip rendering and visible reasons; storage owns persisted records."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 8783-8794 >>>
+### F2-107 - Blocked Command Event Logging Helper
+
+```yaml
+plan_unit_id: F2-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The BashGuard event logging helper logs blocked commands through EventLogger by building a
+  FileSafeEvent with bash_guard_block event type, a 40-character command preview, matched
+  pattern, optional agent, timestamp, and asynchronous log_filesafe_event call.
+gui_related: false

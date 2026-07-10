@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE 1138-1149 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0006
+preserved_exact_tokens:
+  - "promotion evidence"
+  - "route/open packet verification"
+  - "compatibility checks"
+  - "run sealing"
+  - "archival"
+negative_constraints: []
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+
+<<< AUTHORITATIVE_CORE 1150-1510 >>>
+### PG-012 - Promotion Classes And Evidence Fields
+
+```yaml
+plan_unit_id: PG-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Promotions use READY, STAGED, HELD, and REJECTED classes with required machine-readable evidence fields per class.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-011"
+unblocks: []
+acceptance_criteria:
+  - "Promotion Classes And Evidence Fields remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0007
+preserved_exact_tokens:
+  - "READY"
+  - "STAGED"
+  - "HELD"
+  - "REJECTED"
+  - "concern_summary"
+  - "blockers"
+  - "gate_waiver_rule"
+negative_constraints: []
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-013 - Route-Aware Wiring Evidence
+
+```yaml
+plan_unit_id: PG-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Route awareness requires target reachability, valid OpenSubject resolution, run-command reflection, and linked route side effects.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-011"
+unblocks: []
+acceptance_criteria:
+  - "Route-Aware Wiring Evidence remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0008
+preserved_exact_tokens:
+  - "route_target"
+  - "OpenSubject"
+  - "route_completion_refs[]"
+negative_constraints: []
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-014 - Packet Route/Open Checks
+
+```yaml
+plan_unit_id: PG-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Packet gates verify route targets, OpenSubject confirmations or waivers, and sealed cross-run artifact dependencies.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-011"
+unblocks: []
+acceptance_criteria:
+  - "Packet Route/Open Checks remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0009
+preserved_exact_tokens:
+  - "route_target"
+  - "OpenSubject"
+  - "cross-packet route/open references"
+  - "sealed"
+negative_constraints: []
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-015 - Compatibility Fallback And Contradiction Rules
+
+```yaml
+plan_unit_id: PG-015
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Unreachable route targets enter HELD state, contradictory subject state emits REJECTION, and waivers require durable project config.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-011"
+unblocks: []
+acceptance_criteria:
+  - "Compatibility Fallback And Contradiction Rules remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0010
+preserved_exact_tokens:
+  - "HELD"
+  - "REJECTION"
+  - "subject_state_contradiction"
+  - "gate_waiver_rule"
+negative_constraints:
+  - "Route target loss or OpenSubject contradiction must not fail silently."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-016 - Verifier Role And Run-Gates Coverage
+
+```yaml
+plan_unit_id: PG-016
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  The AI Verifier runs gates exactly as written, blocks on any failure, relies only on machine-checkable artifacts, and exposes current run-gates coverage.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-004"
+unblocks: []
+acceptance_criteria:
+  - "Verifier Role And Run-Gates Coverage remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0011
+preserved_exact_tokens:
+  - "AI-only"
+  - "MUST"
+  - "MUST NOT"
+  - "python3 scripts/pm-plans-verify.py run-gates"
+  - "GATE-001"
+  - "GATE-014"
+negative_constraints:
+  - "The Verifier MUST NOT require a human to read logs or approve decisions."
+preserved_contractrefs:
+  - "ContractRef: Primitive:Gate"
+  - "ContractRef: PolicyRule:Decision_Policy.md§4"
+  - "ContractRef: SchemaID:plan_graph.schema.json"
+  - "ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-017 - Verifier Scope Boundary
+
+```yaml
+plan_unit_id: PG-017
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Repo-local run-gates governs build-governing Puppet Master repository artifacts; generated user-project artifacts must satisfy relevant contracts but need explicit validator coverage.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+unblocks: []
+acceptance_criteria:
+  - "Verifier Scope Boundary remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0012
+preserved_exact_tokens:
+  - ".puppet-master/project/**"
+  - "build-governing Puppet Master repository artifacts"
+  - "run-gates"
+negative_constraints:
+  - "Generated user-project artifacts are not implied to be fully covered by the current repo-local run-gates script unless a validator explicitly targets them."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-018 - Top-Level Result Normalization
+
+```yaml
+plan_unit_id: PG-018
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Top-level progression treats any non-PASS as blocking while preserving gate-specific states, raw model IDs, recovery pointers, and review outcomes.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+unblocks: []
+acceptance_criteria:
+  - "Top-Level Result Normalization remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0013
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0014
+preserved_exact_tokens:
+  - "PASS"
+  - "FAIL"
+  - "blocking non-pass outcome"
+  - "raw IDs exact"
+  - "r-20260312-203855-07"
+  - "packetized"
+  - "quorum result"
+negative_constraints:
+  - "Any gate state other than PASS is a blocking non-pass top-level outcome."
+preserved_contractrefs:
+  - "ContractRef: Primitive:Gate, Gate:GATE-012, PolicyRule:Decision_Policy.md§2"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-019 - Route Result And FileManager UI Boundary
+
+```yaml
+plan_unit_id: PG-019
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Route evidence owns normalized route identity; FileManager UI may consume open/copy behavior but must not re-own route identity.
+gui_related: true
+gui_classification_reason: >-
+  This unit explicitly separates route identity from FileManager UI open/copy presentation behavior.
+split_recommended: false
+depends_on:
+  - "PG-018"
+unblocks: []
+acceptance_criteria:
+  - "Route Result And FileManager UI Boundary remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0014
+preserved_exact_tokens:
+  - "routing/deep-link normalization"
+  - "FileManager UI conveniences"
+  - "open/copy"
+  - "normalized route identity"
+negative_constraints:
+  - "FileManager UI conveniences are not the owner of normalized route identity."
+preserved_contractrefs:
+  - "ContractRef: Primitive:Gate, Gate:GATE-012, PolicyRule:Decision_Policy.md§2"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+
+<<< CONTEXT_AFTER 1511-1522 >>>
+### PG-020 - Node-Model Gate Replacement
+
+```yaml
+plan_unit_id: PG-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Package, seam, and lane gates replace legacy tier-level gates while inheriting existing blocking, approval, timeout, and remediation behavior.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.

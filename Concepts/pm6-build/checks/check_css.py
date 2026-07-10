@@ -9,12 +9,13 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 BUILD = HERE.parent
 
-# Pre-existing PMConcept4 defects: referenced but never defined (all carry a
-# var() fallback or degrade to inherit). Verified at carve baseline 2026-07-08.
-# NEW code must not reference these — define real tokens instead. Do not extend
-# this list without updating contracts/TOKENS.md.
-BASELINE_UNDEFINED = {"accent-blue-rgb", "accent-red", "bg", "font-mono",
-                      "glass-glow-color", "mono-font"}
+# Pre-existing PMConcept4 defects: vars referenced but never defined. The six
+# carve-baseline entries (--accent-blue-rgb, --accent-red, --bg, --font-mono,
+# --glass-glow-color, --mono-font) all gained real :root definitions in part 02
+# (css-tokens lines ~60-65) during Wave 1, so the allowlist was pruned to empty
+# at W2 (2026-07-09) — every var() reference must now resolve to a definition.
+# Do not extend this list without updating contracts/TOKENS.md.
+BASELINE_UNDEFINED = set()
 
 
 def main():

@@ -1,0 +1,513 @@
+{
+  "schema_version": "a004_window_review_result_v1",
+  "assignment_id": "A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002",
+  "runner_id": "runner-10",
+  "role": "adversarial_negative_space",
+  "window_id": "WIN-9A83204C2DCD-0002",
+  "doc_id": "DOC-9A83204C2DCD",
+  "document_path": "Plans/Wiring_Matrix.md",
+  "core_range": [
+    379,
+    632
+  ],
+  "context_ranges": [
+    [
+      367,
+      378
+    ],
+    [
+      633,
+      644
+    ]
+  ],
+  "source_sha256": "19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2",
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-9A83204C2DCD-0002.txt",
+  "source_excerpt_sha256": "dd95d12dc5f0a51ac8a3f868c0ae90d14556850f687f351f9081a002a19d0c30",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002.json",
+  "capsule_sha256": "3219b1dca800c7e39c5ec0f856a8c1a5cd812f7062bd92cdb39e0a66db25d843",
+  "capsule_bytes": 1635,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "hash_validation": {
+    "capsule": true,
+    "source_excerpt": true,
+    "sizes": true
+  },
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "summary": "The bounded context requires every row to identify six wiring dimensions, but the principal runtime-recovery table exposes only UI surface, command, producer, one consumer/handler field, and effect.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002"
+      ]
+    },
+    {
+      "observation_id": "OBS-002",
+      "summary": "The same browser-promotion command has materially different authority wiring in its general and Debug Automation rows: only the latter names the permission controller and explicit confirmation.",
+      "evidence_ids": [
+        "EV-003",
+        "EV-004"
+      ]
+    },
+    {
+      "observation_id": "OBS-003",
+      "summary": "Worktree removal explicitly resets File Manager state, while the visible LSP and Executor tables contain creation, selection, and execution-start edges but no corresponding removal or invalidation edge.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-009",
+        "EV-010",
+        "EV-011"
+      ]
+    },
+    {
+      "observation_id": "OBS-004",
+      "summary": "The index rules require synchronous generation-stamped dirty insertion, but the query table shows no edge that consumes DirtyLayer entries when forming the files verified by ripgrep.",
+      "evidence_ids": [
+        "EV-013",
+        "EV-014"
+      ]
+    },
+    {
+      "observation_id": "OBS-005",
+      "summary": "The route-aware section is expressed as carry-through and expansion instructions rather than populated route-aware wiring rows or structured gate evidence.",
+      "evidence_ids": [
+        "EV-016",
+        "EV-017",
+        "EV-018",
+        "EV-019"
+      ]
+    },
+    {
+      "observation_id": "OBS-006",
+      "summary": "The following context explicitly identifies unresolved canonical-record demotion as a hazard for generated wiring.",
+      "evidence_ids": [
+        "EV-024"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "gap_type": "contract_schema_omission",
+      "severity": "high",
+      "summary": "The normative row schema cannot satisfy its own minimum wiring requirements.",
+      "why_gap": "The required persisted record, distinct UI and policy consumers, replay/recovery expectations, and acting command surfaces have no dedicated representation in the table schema. Consequently, most rows cannot be deterministically checked for persistence, policy enforcement, recovery, or downstream command coverage.",
+      "evidence_ids": [
+        "EV-001",
+        "EV-002"
+      ]
+    },
+    {
+      "finding_id": "FIND-002",
+      "gap_type": "authority_security_inconsistency",
+      "severity": "high",
+      "summary": "Browser promotion can appear to bypass the permission and confirmation path outside the Debug surface.",
+      "why_gap": "The general command row routes promotion only through browser-session and storage controllers and merely says eligible state is promoted. The Debug row for the identical command adds a permission controller, explicit confirmation, and an automation/auth prohibition. The bounded matrix does not state that these guards apply uniformly to every producer of the command.",
+      "evidence_ids": [
+        "EV-003",
+        "EV-004"
+      ]
+    },
+    {
+      "finding_id": "FIND-003",
+      "gap_type": "missing_command_surface",
+      "severity": "medium",
+      "summary": "The required Add Element + Screenshot browser capture action lacks a command row and command identity.",
+      "why_gap": "The invariant names Add Element + Screenshot as part of the capture command set, but the complete adjacent capture-row cluster includes element picking, selection capture, selection screenshots, and standalone screenshots without an Add Element + Screenshot row. Its producer, handler, payload, and effect are therefore unwired in this capsule.",
+      "evidence_ids": [
+        "EV-005",
+        "EV-006"
+      ]
+    },
+    {
+      "finding_id": "FIND-004",
+      "gap_type": "state_transition_race",
+      "severity": "high",
+      "summary": "Debug resume, retry, and cancellation have no mutually exclusive transition or idempotency contract.",
+      "why_gap": "The rows can resume a paused pointer, retry the current step, or cancel the run, but do not define allowed-from states, stale-pointer rejection, correlation or idempotency keys, duplicate-click behavior, or precedence when cancel races resume/retry. That omission permits duplicate execution or resumption of a cancelled investigation.",
+      "evidence_ids": [
+        "EV-007"
+      ]
+    },
+    {
+      "finding_id": "FIND-005",
+      "gap_type": "cross_surface_lifecycle_gap",
+      "severity": "high",
+      "summary": "Worktree removal does not reconcile active LSP and Executor consumers.",
+      "why_gap": "Removal returns only success/error. File Manager reset is wired, but no row stops or rekeys an LSP session, cancels or rehomes active execution, invalidates a captured working directory, or defines ordering relative to filesystem deletion. An active consumer can therefore retain a removed worktree path.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-009",
+        "EV-010",
+        "EV-011"
+      ]
+    },
+    {
+      "finding_id": "FIND-006",
+      "gap_type": "missing_gate_feedback_edge",
+      "severity": "high",
+      "summary": "The pre-merge test has no result edge back to merge or PR authorization.",
+      "why_gap": "Merge and PR calls are wired directly from user actions, while the pre-merge test row sends only command and worktree_path to terminal execution. No success, failure, timeout, cancellation, or stale-result verdict flows back to the dialog or WorktreeManager, so the stated pre-merge gate and merge lock are not executable wiring in this capsule.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-011",
+        "EV-012"
+      ]
+    },
+    {
+      "finding_id": "FIND-007",
+      "gap_type": "data_freshness_wiring_gap",
+      "severity": "high",
+      "summary": "DirtyLayer insertion is not connected to query candidate formation.",
+      "why_gap": "The query path is IndexEngine candidates followed by ripgrep verification. Writes and watcher events insert paths into DirtyLayer, but no edge merges those paths into candidates or forces fallback verification. The claimed write-then-grep fix can still produce a false negative when the immutable snapshot lacks a newly written or newly matching file.",
+      "evidence_ids": [
+        "EV-013",
+        "EV-014"
+      ]
+    },
+    {
+      "finding_id": "FIND-008",
+      "gap_type": "crash_recovery_false_negative",
+      "severity": "high",
+      "summary": "Crash recovery does not establish freshness for local changes when Git HEAD is unchanged.",
+      "why_gap": "DirtyLayer is in-memory, and automatic recovery is conditioned on anchor SHA/HEAD movement. Loading the highest checksum-valid index generation verifies cache integrity, not agreement with current working-tree content. After a local write and crash with unchanged HEAD, the capsule provides no content-generation check that forces rebuild or ripgrep fallback.",
+      "evidence_ids": [
+        "EV-014",
+        "EV-015"
+      ]
+    },
+    {
+      "finding_id": "FIND-009",
+      "gap_type": "timeout_observability_gap",
+      "severity": "medium",
+      "summary": "A hung remote fetch/build can suppress future refreshes indefinitely without a defined stale or failed GUI state.",
+      "why_gap": "The five-minute cadence starts only after the prior cycle completes, but no timeout, cancellation, watchdog, retry ceiling, or recovery transition is defined. The status row exposes only active Indexing or Refreshing index after two seconds, not terminal failure, hung, stale-anchor, or fallback state.",
+      "evidence_ids": [
+        "EV-014",
+        "EV-015"
+      ]
+    },
+    {
+      "finding_id": "FIND-010",
+      "gap_type": "non_executable_acceptance_contract",
+      "severity": "high",
+      "summary": "Route-aware wiring and verification remain transfer instructions rather than deterministic contracts.",
+      "why_gap": "The section says Carry, Expand, Add, and Mark, but supplies no route command rows, wrapper inventory, normalization metadata field schema, reject/error outcomes, correlation field contract, compatibility fallback mapping, or structured evidence oracle. GATE-010 completeness is asserted without the data needed to execute and judge it from this matrix.",
+      "evidence_ids": [
+        "EV-016",
+        "EV-017",
+        "EV-018",
+        "EV-019"
+      ]
+    },
+    {
+      "finding_id": "FIND-011",
+      "gap_type": "destructive_lifecycle_underspecification",
+      "severity": "medium",
+      "summary": "Terminal close, terminate, and kill rows do not define executable escalation and recovery outcomes.",
+      "why_gap": "The rows use phrases such as explicit termination policy and graceful shutdown, while the prose requires escalation and cleanup, but no per-command confirmation condition, grace timeout, kill escalation, partial pane-tree failure, retry/idempotency behavior, persisted receipt, or final GUI state is wired.",
+      "evidence_ids": [
+        "EV-020",
+        "EV-021"
+      ]
+    },
+    {
+      "finding_id": "FIND-012",
+      "gap_type": "privacy_revocation_propagation_gap",
+      "severity": "medium",
+      "summary": "Revoking browser sharing does not define what happens to captured or in-flight context.",
+      "why_gap": "The revoke row only clears shared-with-agent state. Capture rows can already stage element, selection, and screenshot context, and the invariant allows multiple removable pending chips. The capsule does not say whether revocation invalidates pending chips, blocks in-flight prompt injection, detaches previously staged screenshots, or propagates across a thread switch.",
+      "evidence_ids": [
+        "EV-022",
+        "EV-005",
+        "EV-006",
+        "EV-023"
+      ]
+    },
+    {
+      "finding_id": "FIND-013",
+      "gap_type": "authority_migration_blocker",
+      "severity": "medium",
+      "summary": "Generated wiring lacks a settled canonical record authority.",
+      "why_gap": "The following context says tier_runtime_record and tier-keyed usage/evidence records require demotion or replacement before generated rows treat them as canonical, but this capsule contains no resolved replacement, migration state, or gate preventing premature generation.",
+      "evidence_ids": [
+        "EV-024"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "summary": "Terminal identity preservation and the distinction between content reset, runtime replacement, and workspace-structure removal are explicitly stated.",
+      "evidence_ids": [
+        "EV-021"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "summary": "Browser session-class isolation, auth non-restoration, takeover ownership intent, explicit capture behavior, and attention-required recovery choices are substantially described.",
+      "evidence_ids": [
+        "EV-023"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "summary": "Initial Executor context population for bound and unbound threads is deterministic.",
+      "evidence_ids": [
+        "EV-011"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "summary": "The index design explicitly requires synchronous dirty insertion, generation stamps, checksum validation, and atomic snapshot publication.",
+      "evidence_ids": [
+        "EV-014",
+        "EV-015"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "summary": "User cancellation of a Debug investigation has an explicit persisted terminal state and stop reason.",
+      "evidence_ids": [
+        "EV-007"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-001",
+      "summary": "Whether referenced owner documents define the persisted records, policy consumers, recovery transitions, and terminal outcomes omitted from matrix rows is unknown.",
+      "why_unresolved_within_capsule": "The capsule names owner documents and ownership splits but does not include their contract bodies.",
+      "evidence_ids": [
+        "EV-021",
+        "EV-025"
+      ]
+    },
+    {
+      "unknown_id": "UNK-002",
+      "summary": "Whether WorktreeManager defines transactional removal, merge-lock semantics, and a typed pre-merge verdict elsewhere is unknown.",
+      "why_unresolved_within_capsule": "Only calls, coarse result labels, ContractRefs, and a statement that terminology stays in other documents are present.",
+      "evidence_ids": [
+        "EV-008",
+        "EV-012",
+        "EV-026"
+      ]
+    },
+    {
+      "unknown_id": "UNK-003",
+      "summary": "Whether catalog-owned wrapper metadata and a runnable GATE-010 implementation already exist is unknown.",
+      "why_unresolved_within_capsule": "The bounded route section delegates identity and alias metadata and asserts gate coverage without showing the catalog entries, gate inputs, or executable evidence schema.",
+      "evidence_ids": [
+        "EV-019"
+      ]
+    },
+    {
+      "unknown_id": "UNK-004",
+      "summary": "The current disposition of tier-keyed runtime, usage, and evidence records is unknown.",
+      "why_unresolved_within_capsule": "The context identifies required demotion or replacement but provides neither completion status nor the replacement authority.",
+      "evidence_ids": [
+        "EV-024"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-001",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 369,
+      "line_end": 375,
+      "quote": "Each row MUST identify:\n- producer\n- persisted record\n- UI consumers\n- policy consumers\n- replay/recovery expectations\n- command surfaces that act on the resulting state"
+    },
+    {
+      "evidence_id": "EV-002",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 380,
+      "line_end": 381,
+      "quote": "| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |\n|---|---|---|---|---|"
+    },
+    {
+      "evidence_id": "EV-003",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 407,
+      "line_end": 407,
+      "quote": "| Browser action `Promote to Normal Browsing` | `cmd.browser.promote_to_normal_browsing` | browser chrome / automation banner | browser-session controller / storage controller | Promote eligible state into a normal browsing session and update restore behavior |"
+    },
+    {
+      "evidence_id": "EV-004",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 481,
+      "line_end": 481,
+      "quote": "| Debug Automation banner `Promote to normal browsing` | `cmd.browser.promote_to_normal_browsing` | investigation banner / automation banner | browser-session controller / storage controller / permission controller | promote eligible session state into normal browsing only after `explicit-confirmation`; do not silently promote the automation/auth session |"
+    },
+    {
+      "evidence_id": "EV-005",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 397,
+      "line_end": 402,
+      "quote": "| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |\n| Browser toolbar `Add Selection to Chat` | `cmd.browser.add_selection_to_chat` | browser chrome | browser context controller | Capture explicit `browser_selection_context` into composer-prep state |\n| Browser toolbar `Add Selection + Screenshot` | `cmd.browser.add_selection_screenshot_to_chat` | browser chrome | browser context controller / runtime-artifact controller | Capture browser context and screenshot evidence for chat |\n| Browser toolbar `Add Selection + Full Screenshot` | `cmd.browser.add_selection_full_screenshot_to_chat` | browser chrome | browser context controller / runtime-artifact controller | Capture browser context and full screenshot evidence for chat |\n| Browser toolbar `Add Screenshot to Chat` | `cmd.browser.add_screenshot_to_chat` | browser chrome | runtime-artifact controller / chat prep controller | Capture screenshot artifact and stage it for chat |\n| Browser toolbar `Add Full Screenshot to Chat` | `cmd.browser.add_full_screenshot_to_chat` | browser chrome | runtime-artifact controller / chat prep controller | Capture full screenshot artifact and stage it for chat |"
+    },
+    {
+      "evidence_id": "EV-006",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 458,
+      "line_end": 459,
+      "quote": "- Browser capture is explicit, chip-based, share-to-chat, and non-auto-send: ordinary clicks do not inject `/context`; `/highlight/share-to-chat`, `/highlight/share`, `/highlighting`, `/highlight`, `/elements`, `/selection`, `/DOM`/DOM, URL, and source anchors create removable pending composer chips, allow multi-capture, and attach to an active `/thread` or open a new thread when needed.\n- Browser capture commands include `Add Selection to Chat`, `Pick Element for Chat`, `Add Selection + Screenshot`, `Add Element + Screenshot`, standalone screenshots, and screenshot-with-selection variants; screenshot-with-selection defaults to clipped context while full viewport remains explicit; `/trace/video`, `/video/screenshot`, and `/download` artifacts route through Runtime Artifacts."
+    },
+    {
+      "evidence_id": "EV-007",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 477,
+      "line_end": 482,
+      "quote": "| Debug Automation banner `Approve` | `cmd.runtime.approve` | investigation banner / attention surface | runtime controller / permission controller | activate the requested run-scoped Debug Automation Profile |\n| Debug Automation banner `Resume automation` | `cmd.runtime.resume_after_prerequisite` | investigation banner / attention surface | runtime controller / debug investigation controller | resume the current investigation automation from its paused step pointer after the prerequisite or handoff completes |\n| Debug Automation banner `Retry this step` | `cmd.runtime.retry_now` | investigation banner / attention surface | runtime controller / debug investigation controller | retry the current paused investigation step or repro step without changing target, browser session, or investigation lineage |\n| Debug Automation banner `Stop agent and keep browser` | `cmd.browser.stop_agent_keep_browser` | investigation banner / automation banner | runtime controller / browser-session controller | stop the agent automation while preserving the visible browser session for the current investigation |\n| Debug Automation banner `Promote to normal browsing` | `cmd.browser.promote_to_normal_browsing` | investigation banner / automation banner | browser-session controller / storage controller / permission controller | promote eligible session state into normal browsing only after `explicit-confirmation`; do not silently promote the automation/auth session |\n| Debug Automation banner `Cancel investigation` | `cmd.runtime.abort_run` | investigation banner / attention surface | runtime controller / debug investigation controller | cancel the current investigation run and record the investigation as `cancelled` with `stop_reason_code = investigation.cancelled_by_user` |"
+    },
+    {
+      "evidence_id": "EV-008",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 498,
+      "line_end": 503,
+      "quote": "| Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |\n| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |\n| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |\n| Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |\n| Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |\n| Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |"
+    },
+    {
+      "evidence_id": "EV-009",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 518,
+      "line_end": 521,
+      "quote": "| Thread switch (with worktree) | File manager root | Thread selected, `worktree_follow_thread` true | worktree_path → set FM root |\n| Breadcrumb worktree toggle | File manager root | User clicks worktree crumb | toggle between worktree_path and project_root |\n| Worktree unbound/removed | File manager root reset | Binding removed | → reset FM root to project_root |\n| Chat `Open Worktree Files` | File manager panel | User clicks from header dropdown | worktree_path → open FM panel at path |"
+    },
+    {
+      "evidence_id": "EV-010",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 527,
+      "line_end": 528,
+      "quote": "| Thread switch (with worktree) | LSP root_identity | Thread selected | worktree_path → LSP session key (host_id, server_id, root_identity) |\n| Worktree created | LSP warm-start | New worktree available | worktree_path → background indexing |"
+    },
+    {
+      "evidence_id": "EV-011",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 534,
+      "line_end": 537,
+      "quote": "| Thread with worktree enters Agent/Plan/Debug mode | Executor working_directory | Execution unit created | worktree_path → execution context |\n| Pre-merge test | Executor | Merge dialog test phase | command, worktree_path → terminal execution |\n\nExecution context population is deterministic: when a thread has a binding, `execution_unit_context.worktree_id = binding.worktree_id` and `execution_unit_context.working_directory = binding.worktree_path`; when unbound, `worktree_id = null` and `working_directory = project_root`."
+    },
+    {
+      "evidence_id": "EV-012",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 539,
+      "line_end": 541,
+      "quote": "Terminology for thread worktree binding, accordion layout, `working_directory`, merge lock, and pre-merge test gate stays in `Plans/Glossary.md` (`/Glossary.md` compatibility references); Wiring Matrix records producer/consumer edges only.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Run_Modes.md"
+    },
+    {
+      "evidence_id": "EV-013",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 573,
+      "line_end": 580,
+      "quote": "| Source | Target | Trigger | Data flow |\n|---|---|---|---|\n| Agent/subagent `grep` call | IndexEngine `query` | Tool invocation | pattern, path/glob filters -> candidate file IDs |\n| Search-panel regex query | IndexEngine `query` | User executes find-in-files with regex ON | pattern, scope -> candidate file IDs |\n| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs -> paths -> verification on authoritative content -> final matches |\n| PM-mediated file write | DirtyLayer `insert` | Tool write returns | path -> generation-aware dirty entry before write success is surfaced |\n| File watcher event | DirtyLayer `insert` | External file change detected | path -> dirty entry (backup/dedup for PM writes) |\n| Remote Git re-anchor | IndexBuilder `build_incremental` | staged dirty content + fetched diff ready | staged paths + `old_anchor..new_HEAD` diff -> changed-file set |"
+    },
+    {
+      "evidence_id": "EV-014",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 582,
+      "line_end": 587,
+      "quote": "Freshness and dirty-layer wiring rules:\n- PM-mediated writes insert into the dirty layer SYNCHRONOUSLY before returning success. This is the agent-write-then-grep CRITICAL FIX: agent tool writes, editor saves, and remote write relays add the written path before the caller can immediately grep, while file watchers remain backup/dedup for external changes.\n- DirtyLayer storage is a `HashMap` with generation stamps, not a plain `HashSet`, so re-anchor clearing can distinguish entries created before and during a rebuild.\n- On project open, background index build waits for the project-ready signal after file watcher, LSP, and Tantivy startup, then anchors to current Git `HEAD` / `SHA` or to a filesystem snapshot timestamp for non-Git projects.\n- Crash recovery treats the dirty layer as in-memory cache state: if PM restarts and the anchor `SHA` / `HEAD` mismatch indicates movement, PM triggers automatic incremental rebuild. First grep after restart may use ripgrep fallback until rebuild completes, and there is no data loss because the index is only a cache.\n- In MVP, remote cache refresh starts on project open, on a timer every 5 minutes after the previous fetch+build cycle completes, and on explicit pull or `/sync/refresh`; webhook or push notification remains aspirational. When fetch advances `HEAD`, PM immediately runs `git diff --name-only old_anchor..new_HEAD` (`name-only`) and inserts changed paths into the dirty layer BEFORE incremental rebuild. This closes the false-negative window between fetch and rebuild completion; generation-stamped entries are cleared only when the rebuild re-anchors safely."
+    },
+    {
+      "evidence_id": "EV-015",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 595,
+      "line_end": 600,
+      "quote": "| Project open | IndexBuilder `build_full` or `validate` | Project-ready signal | project_id + current anchor -> validation or full build |\n| Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | `old_anchor..new_HEAD` diff -> dirty paths -> incremental rebuild |\n| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |\n| Startup recovery | IndexSnapshot `load` | project open / app restart | highest valid generation -> checksum validation -> mmap / rebuild |\n| IndexBuilder completion | ArcSwap publish | New generation ready | new `IndexSnapshot` -> atomic pointer swap through the `arc-swap` crate's production-proven, wait-free read-mostly `ArcSwap<T>` pattern used by tokio, hyper, and other production Rust projects |\n| Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |"
+    },
+    {
+      "evidence_id": "EV-016",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 607,
+      "line_end": 612,
+      "quote": "### Route-aware navigation and open-contract rows\n\n<a id=\"wm-route-open-acceptance\"></a>\n#### Acceptance carry-through\n- Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs\n- Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+    },
+    {
+      "evidence_id": "EV-017",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 614,
+      "line_end": 619,
+      "quote": "### Verification evidence hooks\n\n<a id=\"wm-verification-evidence-acceptance\"></a>\n#### Acceptance carry-through\n- Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough\n- Add structured gate-specific evidence details for route-aware verification"
+    },
+    {
+      "evidence_id": "EV-018",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 621,
+      "line_end": 626,
+      "quote": "### Compatibility-only fallback marking\n\n<a id=\"wm-compat-fallback-acceptance\"></a>\n#### Acceptance carry-through\n- Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts\n- Keep ref-family split explicit when route/open normalization is transferred"
+    },
+    {
+      "evidence_id": "EV-019",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 628,
+      "line_end": 632,
+      "quote": "### Catalog-owned normalization metadata\n\n`Plans/UI_Command_Catalog.md` and `/UI_Command_Catalog.md` own command identity and alias metadata; Wiring Matrix rows consume that catalog ownership rather than duplicating route semantics. The matrix command-binding contract still exposes `ui_element_id`, `ui_command_id`, `handler_location`, and `expected_event_types`, but route-aware completeness requires each wrapper command to declare when it normalizes over canonical route/open semantics. This keeps `/open` meaning in the route contract while letting wiring/gates verify that the command row points at the catalog-owned normalization metadata.\n\n`GATE-010` completeness includes `GATE` coverage for route/subject-aware navigation, stale-projection revalidation, wrapper-to-canonical normalization, admissibility, and correlation passthrough. The clean rule for `/gates` is catalog-owned normalization metadata consumed by wiring/gates, not a second routing schema inside the matrix."
+    },
+    {
+      "evidence_id": "EV-020",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 429,
+      "line_end": 434,
+      "quote": "| Terminal pane close affordance | `cmd.terminal.close_pane` | terminal pane chrome | terminal workspace controller | Close the pane and apply explicit termination policy if a live session is attached |\n| Terminal tab close affordance | `cmd.terminal.close_tab` | terminal tab chrome | terminal workspace controller | Close the tab and its pane tree with explicit termination behavior when needed |\n| Terminal toolbar `Clear` | `cmd.terminal.clear_scrollback` | terminal toolbar / command palette | terminal session controller | Clear retained scrollback without minting a new runtime identity |\n| Terminal toolbar `Restart` | `cmd.terminal.restart_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Replace the runtime with a new terminal session bound to the chosen pane or tab |\n| Terminal toolbar `Terminate` | `cmd.terminal.terminate_session` | terminal toolbar | terminal session controller / process-host controller | Request graceful shutdown for the selected live session |\n| Terminal recovery action `Kill` | `cmd.terminal.kill_session` | terminal toolbar / recovery banner | terminal session controller / process-host controller | Force termination for the selected live session |"
+    },
+    {
+      "evidence_id": "EV-021",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 446,
+      "line_end": 448,
+      "quote": "Terminal wiring owner split: `Plans/Section15_MVP_Promoted_Features_Spec.md §3.14` owns terminal section/tab/pane/session identity, `/reveal` and focus behavior, interaction modes, shell-integration disclosure, lifecycle states, capability `/degradation`, and non-ship terminal-core rules; `storage-plan.md` owns `/runtime-queryable` persistence for `terminal_workspace_state`, `terminal_session_record`, `terminal_command_block`, `dev_session_record`, renderer state, shell-integration tier, capability degradations, restore outcome, and transcript-retention tier. `UI_Command_Catalog.md` and this Wiring Matrix expose the controller split between terminal workspace controller, terminal session controller, process-host controller, dev-session controller, and runtime-surfaces controller; restart or `/replacement` mints a new runtime identity only when the command says so.\n\nTerminal workspace-structure commands must distinguish content-only actions from destructive workspace mutations: `replace-with-new-terminal` keeps the pane slot and attaches a new live-session `terminal_session_id`, `/close` removes pane/tab/section workspace structure only after user-visible `/escalation` and `/cleanup` rules, `/disconnected/review-only` and other non-live panes can be replaced without pretending the old session remains live, and clear or `/reset` affects terminal content without implying restart."
+    },
+    {
+      "evidence_id": "EV-022",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 395,
+      "line_end": 396,
+      "quote": "| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |\n| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |"
+    },
+    {
+      "evidence_id": "EV-023",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 455,
+      "line_end": 461,
+      "quote": "- Browser runtime wiring assumes the CEF-class, tab-first, in-app `/browser` model: `workspace_preview` is the user-facing editor/browser session, `detached_preview` is the same subject in a detached-window when supported, `automation_session` is a visible `/watchable`, agent-driven, evidence-producing web-app/testing session, and `auth_session` is a separate visible `/device/browser` flow for site-specific auth with an isolated `/cookie` and storage boundary.\n- `auth_session` is not general-purpose browsing state, is not auto-restored, must not auto-close or auto-complete on presumed success, and normal selection, `/copy/paste`, `/share`, and capture interactions remain available unless the normal permission-layer blocks them.\n- Live `automation_session` direct user input routes through user-takeover wiring: prompt actions are `Take over and pause agent`, `Let agent continue`, and `Stop agent and keep browser`; default highlighted action is `Take over and pause agent`; user-takeover leaves no half-owned session, and `/stop/take-over` or `/stop/take` handling must pause, stop, or take over rather than silently auto-resume work.\n- Browser capture is explicit, chip-based, share-to-chat, and non-auto-send: ordinary clicks do not inject `/context`; `/highlight/share-to-chat`, `/highlight/share`, `/highlighting`, `/highlight`, `/elements`, `/selection`, `/DOM`/DOM, URL, and source anchors create removable pending composer chips, allow multi-capture, and attach to an active `/thread` or open a new thread when needed.\n- Browser capture commands include `Add Selection to Chat`, `Pick Element for Chat`, `Add Selection + Screenshot`, `Add Element + Screenshot`, standalone screenshots, and screenshot-with-selection variants; screenshot-with-selection defaults to clipped context while full viewport remains explicit; `/trace/video`, `/video/screenshot`, and `/download` artifacts route through Runtime Artifacts.\n- DevTools is a concrete browser UX/tool contract: `Open DevTools` and `Toggle DevTools Dock` are user-visible wiring rows; `/tool` and advanced testing permissions allow when user explicitly opens DevTools or policy permits attach/open, and named actions remain first-class `/capability` paths instead of forcing arbitrary browser-code.\n- Recovery wiring preserves URL, tabs, session class, `/originating` session identity, and completed trace/video/screenshot artifacts; `workspace_preview` can restore, eligible `detached_preview` follows its originating restored session, automation/auth never auto-resume active work, auth never auto-complete, attention-required recovery offers `Reopen`, `Retry`, or `Keep Closed`, and cross-platform CEF runtime `/install/update` failures surface `runtime_unavailable`/`/capability-degradation` rather than hidden fallback."
+    },
+    {
+      "evidence_id": "EV-024",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 634,
+      "line_end": 634,
+      "quote": "Owner-level runtime records remain a demotion hazard for wiring. `tier_runtime_record`, tier-keyed `usage_record`, and tier-keyed `evidence_record` need owner-level demotion or replacement before generated wiring rows treat them as canonical producers or consumers."
+    },
+    {
+      "evidence_id": "EV-025",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 463,
+      "line_end": 463,
+      "quote": "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/UI_Command_Catalog.md"
+    },
+    {
+      "evidence_id": "EV-026",
+      "path": "Plans/Wiring_Matrix.md",
+      "line_start": 492,
+      "line_end": 492,
+      "quote": "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md"
+    }
+  ],
+  "scope_compliance": {
+    "allowed_files_read": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/validation/reviewer_protocol_v1.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000036-ADVERSARIAL-WIN-9A83204C2DCD-0002.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-9A83204C2DCD-0002.txt"
+    ],
+    "other_files_read": [],
+    "prior_audits_read": false,
+    "other_results_read": false,
+    "unrelated_windows_read": false,
+    "role_leakage": false
+  }
+}

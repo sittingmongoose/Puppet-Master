@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE 19089-19100 >>>
+          "requirement": "cmd.orchestrator.switch_tab has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.orchestrator_switch_tab.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.orchestrator.switch_tab records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 19101-19465 >>>
+    "catalog.panel_redock": {
+      "ui_element_id": "catalog.panel_redock",
+      "ui_location": "Shell layout > Panel controls > Redock",
+      "ui_command_id": "cmd.panel.redock",
+      "handler_location": "handlers::panel::redock",
+      "expected_event_types": [
+        "panel.redocked"
+      ],
+      "acceptance_checks": [
+        "cmd.panel.redock is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.panel.redock exposes state selector and disabled reason before dispatch.",
+        "cmd.panel.redock dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.panel.redock uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.panel.redock. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.panel_redock.availability",
+      "disabled_reason_projection": "state.commands.panel_redock.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.panel.redock emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "panel.redocked"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.panel_redock exposes a stable role/name/description matching cmd.panel.redock.",
+        "keyboard_access": "catalog.panel_redock is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.panel_redock preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.panel_redock surfaces state.commands.panel_redock.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.panel_redock.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.panel.redock reaches handlers::panel::redock with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.panel_redock.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.panel_redock.availability and disabled copy reads state.commands.panel_redock.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.panel_redock.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.panel.redock emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.panel_redock.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.panel_redock.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.panel.redock emits panel.redocked with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel.redock emits panel.redocked with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.panel_switch": {
+      "ui_element_id": "catalog.panel_switch",
+      "ui_location": "Shell layout > Panel controls > Switch",
+      "ui_command_id": "cmd.panel.switch",
+      "handler_location": "handlers::panel::switch",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.panel.switch must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.panel.switch must expose projected state selector and disabled reason before dispatch",
+        "cmd.panel.switch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.panel.switch must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.panel.switch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.panel.switch; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.panel_switch.availability",
+      "disabled_reason_projection": "state.commands.panel_switch.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.panel.switch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.panel.switch.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.panel_switch exposes a stable role/name/description matching cmd.panel.switch.",
+        "keyboard_access": "catalog.panel_switch is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.panel_switch preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.panel_switch surfaces state.commands.panel_switch.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.panel_switch.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.panel.switch reaches handlers::panel::switch with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.panel_switch.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.panel_switch.availability and disabled copy reads state.commands.panel_switch.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.panel_switch.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.panel.switch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.panel_switch.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel.switch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.panel_undock": {
+      "ui_element_id": "catalog.panel_undock",
+      "ui_location": "Shell layout > Panel controls > Undock",
+      "ui_command_id": "cmd.panel.undock",
+      "handler_location": "handlers::panel::undock",
+      "expected_event_types": [
+        "panel.undocked"
+      ],
+      "acceptance_checks": [
+        "cmd.panel.undock is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.panel.undock exposes state selector and disabled reason before dispatch.",
+        "cmd.panel.undock dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.panel.undock uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.panel.undock. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.panel_undock.availability",
+      "disabled_reason_projection": "state.commands.panel_undock.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.panel.undock emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "panel.undocked"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.panel_undock exposes a stable role/name/description matching cmd.panel.undock.",
+        "keyboard_access": "catalog.panel_undock is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.panel_undock preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.panel_undock surfaces state.commands.panel_undock.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.panel_undock.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.panel.undock reaches handlers::panel::undock with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.panel_undock.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.panel_undock.availability and disabled copy reads state.commands.panel_undock.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.panel_undock.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.panel.undock emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.panel_undock.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.panel_undock.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.panel.undock emits panel.undocked with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.panel.undock emits panel.undocked with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.persona_create": {
+      "ui_element_id": "catalog.persona_create",
+      "ui_location": "Agent Config > Personas > Create",
+      "ui_command_id": "cmd.persona.create",
+      "handler_location": "handlers::persona::create",
+      "expected_event_types": [
+        "persona.created"
+      ],
+      "acceptance_checks": [
+        "cmd.persona.create is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.persona.create exposes state selector and disabled reason before dispatch.",
+        "cmd.persona.create dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.persona.create uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.persona.create. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.persona_create.availability",
+      "disabled_reason_projection": "state.commands.persona_create.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.persona.create emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "persona.created"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.persona_create exposes a stable role/name/description matching cmd.persona.create.",
+        "keyboard_access": "catalog.persona_create is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.persona_create preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.persona_create surfaces state.commands.persona_create.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.persona_create.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.persona.create reaches handlers::persona::create with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.persona_create.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.persona_create.availability and disabled copy reads state.commands.persona_create.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.persona_create.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.persona.create emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.persona_create.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.persona_create.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.persona.create emits persona.created with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.persona.create emits persona.created with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.persona_delete": {
+      "ui_element_id": "catalog.persona_delete",
+      "ui_location": "Agent Config > Personas > Delete",
+      "ui_command_id": "cmd.persona.delete",
+      "handler_location": "handlers::persona::delete",
+      "expected_event_types": [
+        "persona.deleted"
+      ],
+      "acceptance_checks": [
+        "cmd.persona.delete is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.persona.delete exposes state selector and disabled reason before dispatch.",
+        "cmd.persona.delete dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.persona.delete uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.persona.delete. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.persona_delete.availability",
+      "disabled_reason_projection": "state.commands.persona_delete.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.persona.delete emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "persona.deleted"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.persona_delete exposes a stable role/name/description matching cmd.persona.delete.",
+        "keyboard_access": "catalog.persona_delete is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.persona_delete preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.persona_delete surfaces state.commands.persona_delete.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.persona_delete.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.persona.delete reaches handlers::persona::delete with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.persona_delete.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.persona_delete.availability and disabled copy reads state.commands.persona_delete.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.persona_delete.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.persona.delete emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.persona_delete.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.persona_delete.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.persona.delete emits persona.deleted with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.persona.delete emits persona.deleted with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.persona_duplicate": {
+      "ui_element_id": "catalog.persona_duplicate",
+      "ui_location": "Agent Config > Personas > Duplicate",
+      "ui_command_id": "cmd.persona.duplicate",
+      "handler_location": "handlers::persona::duplicate",
+      "expected_event_types": [
+        "persona.created"
+      ],
+      "acceptance_checks": [
+        "cmd.persona.duplicate is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.persona.duplicate exposes state selector and disabled reason before dispatch.",
+        "cmd.persona.duplicate dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+        "cmd.persona.duplicate uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+      ],
+      "evidence_required": "Production wiring contract for cmd.persona.duplicate. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.persona_duplicate.availability",
+      "disabled_reason_projection": "state.commands.persona_duplicate.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.persona.duplicate emits the declared domain event(s) and records dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "persona.created"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.persona_duplicate exposes a stable role/name/description matching cmd.persona.duplicate.",
+        "keyboard_access": "catalog.persona_duplicate is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.persona_duplicate preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.persona_duplicate surfaces state.commands.persona_duplicate.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.persona_duplicate.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.persona.duplicate reaches handlers::persona::duplicate with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.persona_duplicate.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.persona_duplicate.availability and disabled copy reads state.commands.persona_duplicate.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.persona_duplicate.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.persona.duplicate emits the declared domain event(s) and records dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.persona_duplicate.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.persona_duplicate.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.persona.duplicate emits persona.created with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.persona.duplicate emits persona.created with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+
+<<< CONTEXT_AFTER 19466-19477 >>>
+    "catalog.persona_export": {
+      "ui_element_id": "catalog.persona_export",
+      "ui_location": "Agent Config > Personas > Export",
+      "ui_command_id": "cmd.persona.export",
+      "handler_location": "handlers::persona::export",
+      "expected_event_types": [
+        "persona.exported"
+      ],
+      "acceptance_checks": [
+        "cmd.persona.export is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+        "cmd.persona.export exposes state selector and disabled reason before dispatch.",
+        "cmd.persona.export dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",

@@ -1,0 +1,161 @@
+<<< CONTEXT_BEFORE 1439-1450 >>>
+- AI in Git
+- multi-repo source control
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- This unit isolates user-visible recovery and artifacts surface summaries from scheduler invariants.
+owner_hints:
+- Plans/feature-list.md
+split_recommendation_reason: Split from FL-023 so GUI/user-visible recovery and panel behavior are separate from runtime scheduler invariants.
+```
+
+
+<<< AUTHORITATIVE_CORE 1451-1596 >>>
+### FL-025 - Web Tools Skills Planning Approval Owner Alignment Summary
+
+```yaml
+plan_unit_id: FL-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  Feature-list summaries align web tools, skills, planning, permissions, approval, provider/server profiles, tool/TODO/question/operation-card/visualizer behavior, and Feature Seam help language to current owner docs instead of restating lower-level contracts.
+gui_related: false
+gui_classification_reason: This unit summarizes owner alignment for web tools, skills, planning, permissions, and approval behavior, not GUI layout.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: web_tools_skills_planning_approval_owner_alignment_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0018
+preserved_exact_tokens:
+- six-tool web family
+- batch_webfetch
+- batch_webextract
+- /web
+- /web search
+- /web fetch
+- /web extract
+- /web research
+- /web crawl
+- /web map
+- /skill
+- deprecated `/cancel` alias
+- Agent Config
+- Settings
+- connection_profile_id
+- Feature Seam
+- ELI5
+- /help
+- ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Skills_System.md
+negative_constraints:
+- Feature-list summaries must stay accurate to owner sections instead of restating lower-level contracts.
+- Help and teaching surfaces may expose Feature Seam through ELI5 language in /help, but that aliasing cannot rename the canonical graph object or hide the owning feature-seam contract.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Deprecated /cancel alias handling remains a compatibility/retirement detail.
+owner_boundary_notes:
+- Tools, Permissions_System, Skills_System, Provider_OpenCode, Multi-Account, and runtime identity owner docs own detailed behavior.
+owner_hints:
+- Plans/feature-list.md
+```
+
+### FL-001 - Feature List Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: FL-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  The former feature-list source-preserving bridge is retired after Phase 2B atomized feature-list-S0001 through feature-list-S0018 into FL-002 through FL-025 and structurally dispositioned the owner map, PlanUnits heading, and Migration Coverage. FL-001 remains only as migration lineage for the retired bridge span and must not re-own atomized source coverage.
+gui_related: false
+gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior; coverage_map still preserves S0021 gui_related_inferred=true from the historical broad bridge span.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- FL-001 no longer uses the source-preserving PlanUnit compile hint.
+- FL-002 through FL-025 own product summary coverage for feature-list-S0001 through feature-list-S0018.
+- feature-list-S0019, S0020, and S0022 are structural owner-map, heading, and migration-coverage dispositions.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: plan_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0021
+preserved_exact_tokens:
+- FL-001
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- FL-002
+- FL-025
+- feature-list-S0001
+- feature-list-S0022
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- Do not remap atomized feature-list spans back to FL-001.
+- Do not treat the retired bridge as implementation-ready product summary coverage.
+- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit.
+compatibility_only_notes:
+- The old source-preserving bridge is retained only so migration lineage and historical references to FL-001 remain auditable.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- FL-002 through FL-025 own product summary coverage for S0001-S0018.
+- S0019, S0020, and S0022 are structural owner-map, PlanUnits-heading, and Migration Coverage dispositions.
+owner_hints:
+- Plans/feature-list.md
+```
+## Migration Coverage
+
+Original hash: `0390ce7b79dff02042ca161249fd663705f94cc6c735cb0e4122604267595863`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+Phase 2B batch 053 atomized `feature-list-S0001` through `feature-list-S0018` into `FL-002` through `FL-025`, structurally dispositioned `feature-list-S0019`, `feature-list-S0020`, and `feature-list-S0022`, and retired `FL-001` as migration lineage for `feature-list-S0021`. No residual source-preserving feature-list PlanUnit remains. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime feature-list rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Reclassifies `sfk-e04efb06a95454f9dd8c233d` as `source_lineage_only`: this file is a reference inventory. Capability bullets without mechanism are routing/source-lineage until an owner doc supplies fields, commands, algorithms, or schemas.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 336` (explicitly_deferred; source line 1139; `sfk-e04efb06a95454f9dd8c233d`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] whole doc: declared a "reference inventory" (FL-002) ~40% of capability bullets describe behavior with zero mechanism, deferring entirely to owner docs; readiness rests on those docs, not this one.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

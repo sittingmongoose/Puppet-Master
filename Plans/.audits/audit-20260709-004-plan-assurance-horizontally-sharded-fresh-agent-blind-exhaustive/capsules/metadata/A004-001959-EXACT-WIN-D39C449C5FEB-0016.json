@@ -1,0 +1,43 @@
+{
+  "assignment_id": "A004-001959-EXACT-WIN-D39C449C5FEB-0016",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "blindness": {
+    "other_reviewer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_windows": "forbidden"
+  },
+  "context_ranges": [
+    [
+      5205,
+      5216
+    ],
+    [
+      5556,
+      5567
+    ]
+  ],
+  "core_range": [
+    5217,
+    5555
+  ],
+  "core_sha256": "ee2ae2177c4056cd4a785b0d64fb5fc9abbb508a682451dd236ee3e8f285213c",
+  "doc_id": "DOC-D39C449C5FEB",
+  "document_path": "Plans/Models_System.md",
+  "output_required": [
+    "observations",
+    "candidate_findings",
+    "explicit_non_gaps",
+    "unknowns",
+    "exact_evidence_refs"
+  ],
+  "role": "contract_capability_exact_behavior",
+  "role_instructions": "Extract exact behavior, contracts, capabilities, states, authorities, consumers, GUI truth, failures, acceptance evidence, and consequential builder discretion from only this capsule. Identify underspecified obligations with exact source lines. Do not use external or prior-audit knowledge.",
+  "role_key": "exact",
+  "runner_id": "runner-03",
+  "runner_thread_id": "019f49e2-0d34-7a20-b443-b3c1e7e3f427",
+  "source_excerpt_bytes": 15322,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-D39C449C5FEB-0016.txt",
+  "source_excerpt_sha256": "56d1af16d81ca4a2e245a8ff0169e2dcf5b448be900433afe4ad5a4fe11d28b8",
+  "source_sha256": "d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b",
+  "window_id": "WIN-D39C449C5FEB-0016"
+}

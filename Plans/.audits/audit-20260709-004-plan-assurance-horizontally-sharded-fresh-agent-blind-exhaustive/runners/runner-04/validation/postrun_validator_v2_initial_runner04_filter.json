@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "runner_id": "runner-04",
+  "source_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+  "source_sha256": "1d97812656a93be521944576cd14303f11024fb84baefc16f5813b3989f9e984",
+  "source_observed_at": "2026-07-10T03:39:56Z",
+  "validator_version": "2.0.0",
+  "global_credited_assignment_count": 17,
+  "global_credited_assignment_ids_sha256": "5b34cf7ebf7b1eb8991900e90a4f4e2f422001dd630cb67cc0a6134bad216550",
+  "preservation_action": "read_only_preserve_exactly_no_mutation",
+  "runner04_initial_credited_assignment_ids": [
+    "A004-000004-ADVERSARIAL-WIN-510B3DE676A3-0001",
+    "A004-000022-ADVERSARIAL-WIN-3EEBF9277C57-0004",
+    "A004-000030-ADVERSARIAL-WIN-E0E9CAF5963F-0002"
+  ],
+  "runner04_initial_quarantine_candidates": [],
+  "runner04_initial_localized_receipt_errors": [],
+  "runner04_positive_rows_rejected_by_initial_v2": [],
+  "recovery_redispatch_required_from_initial_v2": [],
+  "recorded_at": "2026-07-10T04:07:30.979Z"
+}

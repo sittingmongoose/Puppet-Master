@@ -1,0 +1,695 @@
+{
+  "assignment_id": "A004-000013-EXACT-WIN-74C788D8A63C-0005",
+  "role": "contract_capability_exact_behavior",
+  "validation": {
+    "status": "pass",
+    "files": [
+      {
+        "path": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000013-EXACT-WIN-74C788D8A63C-0005.json",
+        "expected_bytes": 1636,
+        "actual_bytes": 1636,
+        "expected_sha256": "0188dc191f289c1911c8669956ad5ab3ff1bb55c6516baaaca03618c0e623157",
+        "actual_sha256": "0188dc191f289c1911c8669956ad5ab3ff1bb55c6516baaaca03618c0e623157"
+      },
+      {
+        "path": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-74C788D8A63C-0005.txt",
+        "expected_bytes": 38475,
+        "actual_bytes": 38475,
+        "expected_sha256": "f20916eab07ea96211d7ef24b6b45e2e7d6a6047ce00cf9095ab5cfdc3514291",
+        "actual_sha256": "f20916eab07ea96211d7ef24b6b45e2e7d6a6047ce00cf9095ab5cfdc3514291"
+      }
+    ]
+  },
+  "review_basis": {
+    "document_path": "Plans/Tools.md",
+    "core_range": [
+      1120,
+      1482
+    ],
+    "context_ranges": [
+      [
+        1108,
+        1119
+      ],
+      [
+        1483,
+        1494
+      ]
+    ]
+  },
+  "observations": [
+    {
+      "id": "O-01",
+      "category": "pre_dispatch_behavior",
+      "claim": "An incomplete provider tool call terminated by length is a no-dispatch outcome before permission or execution; the specified closure is tool_result(ok=false, error=truncated_by_length), and missing arguments must not be synthesized.",
+      "evidence_ids": [
+        "EV-01",
+        "EV-04"
+      ]
+    },
+    {
+      "id": "O-02",
+      "category": "dispatch_contract",
+      "claim": "The stated dispatch pipeline normalizes context and paths, evaluates permission, applies FileSafe to normalized paths, performs allowed provider normalization, validates schema, runs argument-touching hooks, conditionally revalidates, and dispatches only after all checks pass.",
+      "evidence_ids": [
+        "EV-02"
+      ]
+    },
+    {
+      "id": "O-03",
+      "category": "failure_contract",
+      "claim": "Invalid and non-permission tool failures are error-shaped results and cannot be repaired after execution or represented as zero-value success.",
+      "evidence_ids": [
+        "EV-03"
+      ]
+    },
+    {
+      "id": "O-04",
+      "category": "retry_and_deadline",
+      "claim": "Only transient transport, server-warming, and recoverable bootstrap classes may retry automatically; listed terminal classes cannot retry, recreated helpers count toward the cap, and all nested attempts inherit and clamp to the parent deadline.",
+      "evidence_ids": [
+        "EV-05",
+        "EV-06"
+      ]
+    },
+    {
+      "id": "O-05",
+      "category": "shell_runtime",
+      "claim": "Shell execution requires full-rendered-command checking, one interpretation layer, platform-aware escaping and shell selection, per-agent-tree environment isolation, non-blocking mutex-guarded queues, and an alive check before writes.",
+      "evidence_ids": [
+        "EV-07"
+      ]
+    },
+    {
+      "id": "O-06",
+      "category": "authority_and_consumers",
+      "claim": "Permissions_System is identified as the permissions SSOT, while this Tools section supplies registry integration; resolved registry plus policy drives platform CLI derivation without hardcoded tool names.",
+      "evidence_ids": [
+        "EV-08",
+        "EV-15",
+        "EV-20"
+      ]
+    },
+    {
+      "id": "O-07",
+      "category": "usage_storage",
+      "claim": "Analytics produces per-window tool rollups for the Usage page, with counts, latency percentiles, error counts, optional index-use counts, node-native identity alignment, and exclusion of denied and FileSafe-blocked calls from executed-call error statistics.",
+      "evidence_ids": [
+        "EV-09"
+      ]
+    },
+    {
+      "id": "O-08",
+      "category": "mcp_contract",
+      "claim": "MCP tool names are underscore-only and server rules precede wildcard expansion; unavailable servers retain an inspectable degraded or unavailable state, immediate structured call failures, diagnostics, bounded reconnect behavior, and last-known client identity when safe.",
+      "evidence_ids": [
+        "EV-11",
+        "EV-12"
+      ]
+    },
+    {
+      "id": "O-09",
+      "category": "gui_truth",
+      "claim": "The excerpt requires registry-populated per-tool permissions UI, pending-approval notices, operation-specific web approval summaries, visible MCP degraded states, an explicit empty Usage message, and Codex and Copilot in MCP configuration.",
+      "evidence_ids": [
+        "EV-12",
+        "EV-13C",
+        "EV-17",
+        "EV-18",
+        "EV-19"
+      ]
+    },
+    {
+      "id": "O-10",
+      "category": "configuration",
+      "claim": "Durable permission configuration is global and project TOML, with a backward-compatible merged projection in redb; active runs use an immutable permission snapshot.",
+      "evidence_ids": [
+        "EV-13C",
+        "EV-15"
+      ]
+    },
+    {
+      "id": "O-11",
+      "category": "runtime_taxonomy",
+      "claim": "Non-executed policy outcomes map to blocked rather than failed states, with named mappings for permission, user decline, headless denial, FileSafe, and validation; runtime-facing denials carry action and guard data and cannot use success-shaped fallbacks.",
+      "evidence_ids": [
+        "EV-22",
+        "EV-23",
+        "EV-24"
+      ]
+    },
+    {
+      "id": "O-12",
+      "category": "oauth_state",
+      "claim": "MCP OAuth state requires a durable client identifier, owner-provided callback listener, and serialized token writes to prevent concurrent refresh or callback races.",
+      "evidence_ids": [
+        "EV-01"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "CF-01",
+      "severity": "high",
+      "category": "filesafe_revalidation",
+      "title": "Argument mutation occurs after the explicit FileSafe check without an explicit FileSafe re-run step",
+      "underspecified_obligation": "The ordered pipeline applies FileSafe before provider-specific normalization and hooks, but step 7 names only permission and schema revalidation. The later API summary says hook-mutated arguments trigger required re-checks without explicitly identifying FileSafe, and it does not state whether provider-normalizer changes trigger FileSafe again.",
+      "consequence": "Implementations can disagree on whether a changed path or shell argument is checked against write scope and command guards after normalization or hooks.",
+      "evidence_ids": [
+        "EV-02",
+        "EV-18"
+      ]
+    },
+    {
+      "id": "CF-02",
+      "severity": "medium",
+      "category": "retry_exactness",
+      "title": "Retry attempt counting and deterministic jitter are not fully reproducible",
+      "underspecified_obligation": "The cap is stated as three total automatic attempts while three backoff bases are listed, but the text does not say whether the initial dispatch is one of those attempts. It also does not define the seed-to-jitter sampling algorithm or attempt-number origin.",
+      "consequence": "Conforming implementations can produce either three total executions or one initial execution plus three retries, and can produce different supposedly deterministic delays.",
+      "evidence_ids": [
+        "EV-05"
+      ]
+    },
+    {
+      "id": "CF-03",
+      "severity": "medium",
+      "category": "loop_suppression",
+      "title": "Similarity-based retry suppression leaves consequential equivalence decisions undefined",
+      "underspecified_obligation": "The contract names normalized fingerprints, canonical targets, near-match signatures, substantially equivalent failures, and progress, but supplies no normalization rules, similarity threshold, or progress test.",
+      "consequence": "Builders can suppress recoverable attempts too early or allow effectively identical failures to loop.",
+      "evidence_ids": [
+        "EV-01",
+        "EV-06"
+      ]
+    },
+    {
+      "id": "CF-04",
+      "severity": "high",
+      "category": "yolo_permission_semantics",
+      "title": "YOLO does not state whether explicit deny rules are overridden",
+      "underspecified_obligation": "YOLO says to treat all tools as allow for prompting and equates itself with no approval questions, while the checklist places YOLO at the front of resolution. The text clearly preserves FileSafe but does not distinguish conversion of ask from conversion of explicit deny, unavailable, or other special-guard outcomes.",
+      "consequence": "Implementations can materially diverge between ask-bypass-only behavior and a broader permission override.",
+      "evidence_ids": [
+        "EV-10",
+        "EV-16",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "CF-05",
+      "severity": "high",
+      "category": "permission_resolution",
+      "title": "Two different permission-resolution sequences are presented",
+      "underspecified_obligation": "The canonical summary orders mode override, session cache, persona, project, global, defaults, and special guards. The implementation checklist instead orders YOLO, session cache, unknown, exact, wildcard, granular, default, and special guards, omitting the scope layers. The gap table separately says unknown falls through to a later step.",
+      "consequence": "A builder following the checklist can produce different results from a builder following the canonical summary, especially for persona, project, global, unknown, exact, and wildcard rules.",
+      "evidence_ids": [
+        "EV-13A",
+        "EV-16",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "CF-06",
+      "severity": "high",
+      "category": "dae_approval_enforcement",
+      "title": "Ask permissions have no exact DAE pre-spawn representation",
+      "underspecified_obligation": "Claude and Copilot derivation includes ask tools in provider allow lists because runtime approval remains required. Later text limits before-forwarding filtering to HTE and says DAE enforcement uses pre-spawn restriction plus reconciliation, but it does not define whether ask is denied, pre-approved, withheld from the jail, or represented by another mechanism in DAE.",
+      "consequence": "A DAE provider could execute an ask-class tool without the required approval, or providers could incompatibly disable all ask-class tools.",
+      "evidence_ids": [
+        "EV-08",
+        "EV-20"
+      ]
+    },
+    {
+      "id": "CF-07",
+      "severity": "high",
+      "category": "rollup_wire_format",
+      "title": "Tool rollup keys do not have a single exact encoding or window set",
+      "underspecified_obligation": "The value may be JSON or bincode without an encoding discriminator, version field, or negotiation rule. The key's canonical windows list simultaneously labels 1h optional and delegates the definitive set elsewhere.",
+      "consequence": "Producers and Usage consumers can choose incompatible decoders or disagree on which keys must exist.",
+      "evidence_ids": [
+        "EV-09"
+      ]
+    },
+    {
+      "id": "CF-08",
+      "severity": "high",
+      "category": "mcp_failure_classification",
+      "title": "MCP fatality and reconnect eligibility are not mapped by cause",
+      "underspecified_obligation": "Auth-required and schema-mismatch are terminal for invocation retries, while MCP unavailability includes auth loss and schema mismatch but defaults call failures to provider_transient unless a stricter known-fatal class is selected. The one reconnect attempt is optional and is not scoped by cause.",
+      "consequence": "The same auth or schema condition can be classified as transient by one implementation and terminal by another, changing reconnect and user-recovery behavior.",
+      "evidence_ids": [
+        "EV-05",
+        "EV-12"
+      ]
+    },
+    {
+      "id": "CF-09",
+      "severity": "medium",
+      "category": "mcp_gui_visibility",
+      "title": "The scope of MCP hiding is ambiguous",
+      "underspecified_obligation": "The required behavior says tools are marked unavailable and the server must remain visible as degraded or unavailable, while later guidance says to hide that server's tools or simply hide if the server fails.",
+      "consequence": "A builder may hide only callable tools, hide the entire server row, or preserve both, producing incompatible GUI truth after transient failure.",
+      "evidence_ids": [
+        "EV-12",
+        "EV-13C",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "CF-10",
+      "severity": "medium",
+      "category": "mvp_scope",
+      "title": "Permission presets are simultaneously optional and implementation-required",
+      "underspecified_obligation": "Permission presets appear under enhancements declared optional and not MVP, but a later canonical mapping defines them and the ordered GUI checklist requires presets.",
+      "consequence": "MVP implementations can reasonably omit or include presets and still claim compliance with different parts of the excerpt.",
+      "evidence_ids": [
+        "EV-14",
+        "EV-17",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "CF-11",
+      "severity": "high",
+      "category": "filesafe_event_contract",
+      "title": "No event route is named for FileSafe-blocked calls",
+      "underspecified_obligation": "FileSafe blocks are excluded from usage rollups and must not emit tool.denied. The implementation checklist names only tool.invoked and tool.denied, while the taxonomy requires a filesafe_blocked blocked outcome.",
+      "consequence": "Within this capsule, builders lack a concrete event type and payload for preserving FileSafe evidence without mislabeling the call as invoked or denied.",
+      "evidence_ids": [
+        "EV-09",
+        "EV-21",
+        "EV-22"
+      ]
+    },
+    {
+      "id": "CF-12",
+      "severity": "high",
+      "category": "approval_action_contract",
+      "title": "Approval action names and option sets do not align",
+      "underspecified_obligation": "The ask-flow notice uses action_available and includes deny, once, for session, and always. The implementation checklist omits always. Runtime denial payloads instead require allowed_action_ids[], but no deterministic mapping from the notice field and persistence choices to action identifiers is supplied.",
+      "consequence": "UI, runner, and runtime recovery surfaces can expose different actions or serialize the same approval differently.",
+      "evidence_ids": [
+        "EV-18",
+        "EV-21",
+        "EV-23",
+        "EV-24"
+      ]
+    },
+    {
+      "id": "CF-13",
+      "severity": "high",
+      "category": "tool_denied_schema",
+      "title": "The emitted tool.denied schema is narrower than the runtime-required denial payload",
+      "underspecified_obligation": "The checklist lists tool_name, run_id, thread_id, and reason. The addenda require or map blocked_reason_code, conditional failure_class, permission snapshot identity, allowed_action_ids, headless status, remote side-effect metadata, guard metadata, and executed_at_all. The destination and transformation for the permitted map-to path are not defined.",
+      "consequence": "A minimal event cannot independently satisfy runtime recovery, UI command binding, or machine-verification requirements, and different projections may invent incompatible mappings.",
+      "evidence_ids": [
+        "EV-21",
+        "EV-23",
+        "EV-24"
+      ]
+    },
+    {
+      "id": "CF-14",
+      "severity": "medium",
+      "category": "lsp_failure_shape",
+      "title": "Missing LSP server behavior permits both empty success and structured error",
+      "underspecified_obligation": "The gap table says an unavailable LSP may return no results or LSP unavailable, then directs the adapter to return a structured error. The exact adapter checklist does not resolve the empty-result alternative.",
+      "consequence": "Consumers cannot reliably distinguish a valid zero-result query from unavailable infrastructure.",
+      "evidence_ids": [
+        "EV-13B",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "CF-15",
+      "severity": "medium",
+      "category": "config_write_authority",
+      "title": "GUI serialization does not select a durable configuration scope",
+      "underspecified_obligation": "The excerpt names global and project TOML as durable stores and redb as a backward-compatible projection, but GUI load/save guidance does not say whether edits target global TOML, project TOML, both, or the projection, nor how scope is selected.",
+      "consequence": "GUI edits can acquire different precedence and persistence behavior across implementations.",
+      "evidence_ids": [
+        "EV-13C",
+        "EV-15",
+        "EV-17",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "CF-16",
+      "severity": "medium",
+      "category": "custom_tool_sandbox",
+      "title": "Custom-tool sandbox limits remain examples rather than acceptance values",
+      "underspecified_obligation": "The MVP mitigation uses example values of 60 seconds and 1 MiB and defers documentation to an implementation plan.",
+      "consequence": "Custom tools can ship with materially different timeout and output limits while following the stated example-oriented wording.",
+      "evidence_ids": [
+        "EV-13B"
+      ]
+    },
+    {
+      "id": "CF-17",
+      "severity": "medium",
+      "category": "retention_contract",
+      "title": "Raw tool-event retention is not selected",
+      "underspecified_obligation": "Ninety-day pruning is only recommended and compaction or sampling are retained as alternatives.",
+      "consequence": "Storage growth, audit history, and replay availability differ depending on unconstrained builder choice.",
+      "evidence_ids": [
+        "EV-13B"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "NG-01",
+      "claim": "Truncated incomplete tool calls cannot dispatch or synthesize arguments and have an exact error token.",
+      "evidence_ids": [
+        "EV-04"
+      ]
+    },
+    {
+      "id": "NG-02",
+      "claim": "Invalid and non-permission errors cannot use success-shaped fallbacks.",
+      "evidence_ids": [
+        "EV-03"
+      ]
+    },
+    {
+      "id": "NG-03",
+      "claim": "Nested retries and helper restarts cannot mint or extend a parent deadline.",
+      "evidence_ids": [
+        "EV-06"
+      ]
+    },
+    {
+      "id": "NG-04",
+      "claim": "Shell validation covers the full rendered command and second-pass interpretation is prohibited.",
+      "evidence_ids": [
+        "EV-07"
+      ]
+    },
+    {
+      "id": "NG-05",
+      "claim": "YOLO does not disable FileSafe.",
+      "evidence_ids": [
+        "EV-10"
+      ]
+    },
+    {
+      "id": "NG-06",
+      "claim": "Usage error_count counts only executed tool.invoked events with success=false and excludes denied and FileSafe-blocked work.",
+      "evidence_ids": [
+        "EV-09"
+      ]
+    },
+    {
+      "id": "NG-07",
+      "claim": "A single transient MCP failure cannot silently remove the server from user surfaces.",
+      "evidence_ids": [
+        "EV-12"
+      ]
+    },
+    {
+      "id": "NG-08",
+      "claim": "Permission changes during a run take effect only on a later run because the run snapshot is immutable.",
+      "evidence_ids": [
+        "EV-13C"
+      ]
+    },
+    {
+      "id": "NG-09",
+      "claim": "A policy-blocked call is blocked or denied rather than execution-failed, and denial cannot be converted to a success fallback.",
+      "evidence_ids": [
+        "EV-22",
+        "EV-23"
+      ]
+    },
+    {
+      "id": "NG-10",
+      "claim": "Webcrawl session approval is host-scoped across crawl, map, extract, and fetch, while webresearch approval cannot broadly allow unrelated tools.",
+      "evidence_ids": [
+        "EV-19"
+      ]
+    },
+    {
+      "id": "NG-11",
+      "claim": "Child-agent question is denied even when the parent preset is broader.",
+      "evidence_ids": [
+        "EV-16",
+        "EV-17"
+      ]
+    },
+    {
+      "id": "NG-12",
+      "claim": "Runtime-facing denial payloads use allowed_action_ids and must not publish a parallel recovery_options array.",
+      "evidence_ids": [
+        "EV-24"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U-01",
+      "unknown": "The complete permissions schema, precedence details, granular rules, and approval response semantics cannot be established from this capsule because they are delegated to Permissions_System.",
+      "evidence_ids": [
+        "EV-15",
+        "EV-16",
+        "EV-18"
+      ]
+    },
+    {
+      "id": "U-02",
+      "unknown": "The definitive Usage window set cannot be determined because storage-plan is named as its owner while 1h remains optional in this consumer text.",
+      "evidence_ids": [
+        "EV-09"
+      ]
+    },
+    {
+      "id": "U-03",
+      "unknown": "The complete per-tool adapter input, output, error, and limit schemas and the full section 8.0 event payloads are outside the supplied window.",
+      "evidence_ids": [
+        "EV-09",
+        "EV-21"
+      ]
+    },
+    {
+      "id": "U-04",
+      "unknown": "The concrete DAE jail restriction mechanism and post-run reconciliation evidence are not defined in the excerpt.",
+      "evidence_ids": [
+        "EV-20"
+      ]
+    },
+    {
+      "id": "U-05",
+      "unknown": "No threshold for repeated MCP health-check failure, degraded-to-unavailable transition, or safe use of a stale tool list is supplied.",
+      "evidence_ids": [
+        "EV-12"
+      ]
+    },
+    {
+      "id": "U-06",
+      "unknown": "Percentile calculation method, rounding, empty-window representation, and freshness behavior when tool_usage_meta is absent are not specified.",
+      "evidence_ids": [
+        "EV-09"
+      ]
+    },
+    {
+      "id": "U-07",
+      "unknown": "The allowed character grammar and unambiguous split rule for server_slug and tool_name are not supplied for the underscore-only MCP name.",
+      "evidence_ids": [
+        "EV-11"
+      ]
+    },
+    {
+      "id": "U-08",
+      "unknown": "Per-platform built-in tool semantics and their acceptance tests remain deferred to platform_specs or provider documentation.",
+      "evidence_ids": [
+        "EV-13A"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "EV-01",
+      "file": "Plans/Tools.md",
+      "line_start": 1120,
+      "line_end": 1120,
+      "exact_excerpt": "finishReason=length ... on an incomplete tool call is a no-dispatch gate before permission, schema, or any tool execution ... client registration uses a durable client-id ... token persistence serializes each token-write"
+    },
+    {
+      "evidence_id": "EV-02",
+      "file": "Plans/Tools.md",
+      "line_start": 1122,
+      "line_end": 1130,
+      "exact_excerpt": "For file-affecting tools, run FileSafe/write-scope checks ... Apply provider-specific argument normalizers ... Run arg-touching hooks ... Re-run permission and schema validation if hook output changed arguments."
+    },
+    {
+      "evidence_id": "EV-03",
+      "file": "Plans/Tools.md",
+      "line_start": 1134,
+      "line_end": 1138,
+      "exact_excerpt": "invalid arguments MUST produce a structured tool result with is_error=true ... non-permission tool errors ... MUST NOT return a zero-value success-shaped result"
+    },
+    {
+      "evidence_id": "EV-04",
+      "file": "Plans/Tools.md",
+      "line_start": 1142,
+      "line_end": 1145,
+      "exact_excerpt": "tool_result(ok=false, error=truncated_by_length) and MUST NOT synthesize missing arguments"
+    },
+    {
+      "evidence_id": "EV-05",
+      "file": "Plans/Tools.md",
+      "line_start": 1151,
+      "line_end": 1155,
+      "exact_excerpt": "total automatic attempts are capped at 3 per invocation ... default backoff bases are 1000ms, 2000ms, then 4000ms ... auth-required ... schema-mismatch ... are terminal"
+    },
+    {
+      "evidence_id": "EV-06",
+      "file": "Plans/Tools.md",
+      "line_start": 1161,
+      "line_end": 1165,
+      "exact_excerpt": "MUST clamp to the remaining budget and MUST NOT extend the parent deadline ... near-match ... same or substantially equivalent failures without progress MUST stop further retries"
+    },
+    {
+      "evidence_id": "EV-07",
+      "file": "Plans/Tools.md",
+      "line_start": 1171,
+      "line_end": 1180,
+      "exact_excerpt": "banned-command checks scan the full rendered command string ... exactly one shell interpretation layer; never eval ... work queues MUST be /non-blocking ... alive-check before queue writes"
+    },
+    {
+      "evidence_id": "EV-08",
+      "file": "Plans/Tools.md",
+      "line_start": 1188,
+      "line_end": 1194,
+      "exact_excerpt": "Claude ... build list from registry allow + ask ... Single source of truth: Registry + policy ... no hardcoding in runner"
+    },
+    {
+      "evidence_id": "EV-09",
+      "file": "Plans/Tools.md",
+      "line_start": 1199,
+      "line_end": 1206,
+      "exact_excerpt": "window ... 5h, 7d, 24h (and optionally 1h) ... Value shape: JSON or bincode ... tool.denied events and FileSafe blocks are excluded"
+    },
+    {
+      "evidence_id": "EV-10",
+      "file": "Plans/Tools.md",
+      "line_start": 1210,
+      "line_end": 1210,
+      "exact_excerpt": "treat all tools as allow for that session for the purpose of prompting ... YOLO = don't ask for tool approval; it does not disable FileSafe"
+    },
+    {
+      "evidence_id": "EV-11",
+      "file": "Plans/Tools.md",
+      "line_start": 1214,
+      "line_end": 1222,
+      "exact_excerpt": "underscore-only format {server_slug}_{tool_name} ... server-level permission rules still apply before per-tool wildcard expansion"
+    },
+    {
+      "evidence_id": "EV-12",
+      "file": "Plans/Tools.md",
+      "line_start": 1225,
+      "line_end": 1236,
+      "exact_excerpt": "failure_class=provider_transient (or a stricter class when the error is known-fatal) ... One automatic reconnect attempt MAY occur ... User surfaces show the server as degraded or unavailable"
+    },
+    {
+      "evidence_id": "EV-13A",
+      "file": "Plans/Tools.md",
+      "line_start": 1244,
+      "line_end": 1246,
+      "exact_excerpt": "Platform tool semantics differ ... acceptance tests per platform ... Any unknown tool -> ask"
+    },
+    {
+      "evidence_id": "EV-13B",
+      "file": "Plans/Tools.md",
+      "line_start": 1247,
+      "line_end": 1252,
+      "exact_excerpt": "subprocess with timeout (e.g. 60s) and output size cap (e.g. 1 MiB) ... retention -- keep last 90 days ... Alternatives: compaction ... or sampling ... lsp returns no results or LSP unavailable"
+    },
+    {
+      "evidence_id": "EV-13C",
+      "file": "Plans/Tools.md",
+      "line_start": 1254,
+      "line_end": 1260,
+      "exact_excerpt": "tool_permissions ... config:v1 ... Run uses immutable snapshot at start ... Hide that server's tools for the run or mark unavailable ... Ensure Codex and Copilot are included"
+    },
+    {
+      "evidence_id": "EV-14",
+      "file": "Plans/Tools.md",
+      "line_start": 1262,
+      "line_end": 1270,
+      "exact_excerpt": "Enhancements (all optional; not MVP) ... Permission presets"
+    },
+    {
+      "evidence_id": "EV-15",
+      "file": "Plans/Tools.md",
+      "line_start": 1281,
+      "line_end": 1291,
+      "exact_excerpt": "canonical permission specification ... Plans/Permissions_System.md ... durable permission config uses TOML files ... merged permission set is also projected to redb"
+    },
+    {
+      "evidence_id": "EV-16",
+      "file": "Plans/Tools.md",
+      "line_start": 1293,
+      "line_end": 1309,
+      "exact_excerpt": "question allow only when HITL is available; otherwise ask ... child-agent question deny ... Mode override -> Session cache -> Persona overrides -> Project rules -> Global rules -> Defaults -> Special guards"
+    },
+    {
+      "evidence_id": "EV-17",
+      "file": "Plans/Tools.md",
+      "line_start": 1311,
+      "line_end": 1326,
+      "exact_excerpt": "Preset semantics are owned by Plans/Permissions_System.md ... Child-agent denial of question is architectural ... registry supplies the list of known tool names"
+    },
+    {
+      "evidence_id": "EV-18",
+      "file": "Plans/Tools.md",
+      "line_start": 1328,
+      "line_end": 1340,
+      "exact_excerpt": "hook-mutated arguments trigger the required re-checks before dispatch ... action_available ... deny / once / for session / always ... headless Map ask -> deny, or to pending-HITL"
+    },
+    {
+      "evidence_id": "EV-19",
+      "file": "Plans/Tools.md",
+      "line_start": 1344,
+      "line_end": 1352,
+      "exact_excerpt": "Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern ... Approving webresearch For Session does NOT create broad allow for unrelated tools"
+    },
+    {
+      "evidence_id": "EV-20",
+      "file": "Plans/Tools.md",
+      "line_start": 1358,
+      "line_end": 1369,
+      "exact_excerpt": "allow or ask ... In DAE, the provider executes tools inside a jail, so enforcement relies on deterministic pre-spawn restriction + post-run reconciliation"
+    },
+    {
+      "evidence_id": "EV-21",
+      "file": "Plans/Tools.md",
+      "line_start": 1397,
+      "line_end": 1413,
+      "exact_excerpt": "YOLO -> session cache -> unknown -> exact -> wildcard ... do not emit tool.denied for FileSafe blocks ... tool.denied (tool_name, run_id, thread_id, reason) ... presets per section 10.4 ... Assistant: Once / For session / Deny"
+    },
+    {
+      "evidence_id": "EV-22",
+      "file": "Plans/Tools.md",
+      "line_start": 1438,
+      "line_end": 1465,
+      "exact_excerpt": "filesafe_blocked -> blocked / filesafe_blocked ... If the tool call never executed because policy blocked it, the outcome is blocked/denied, not execution failure ... whether the action executed at all"
+    },
+    {
+      "evidence_id": "EV-23",
+      "file": "Plans/Tools.md",
+      "line_start": 1468,
+      "line_end": 1480,
+      "exact_excerpt": "tool event MUST include or map to ... blocked_reason_code ... effective permission snapshot identifier ... allowed_action_ids[] ... Tools MUST NOT return success-shaped fallbacks"
+    },
+    {
+      "evidence_id": "EV-24",
+      "file": "Plans/Tools.md",
+      "line_start": 1483,
+      "line_end": 1492,
+      "exact_excerpt": "Runtime-facing blocked payloads ... blocked_reason_code ... allowed_action_ids[] ... guard/rule metadata ... executed_at_all boolean ... MUST NOT publish a parallel recovery_options[] schema"
+    }
+  ]
+}

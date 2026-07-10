@@ -1,0 +1,398 @@
+<<< CONTEXT_BEFORE 19995-20006 >>>
+- "export diagram"
+- "malformed Mermaid"
+- "silent raw-block disappearance"
+negative_constraints:
+- "Malformed Mermaid must not silently disappear."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 20007-20375 >>>
+### F3-305 - Chat HTML Execution Prohibition
+
+```yaml
+plan_unit_id: F3-305
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Chat must not execute arbitrary HTML from message content.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines a security/content execution prohibition rather than visible rendering
+  behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: chat_html_execution_prohibition
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0182"
+preserved_exact_tokens:
+- "Chat must not execute arbitrary HTML from message content."
+negative_constraints:
+- "Chat must not execute arbitrary HTML from message content."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-306 - Context Lens Chat Placement And Modes
+
+```yaml
+plan_unit_id: F3-306
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Context Lens placement is fixed in the top-right of Chat immediately to the right of search,
+  renders as icon plus dropdown arrow, supports multi-select in all modes, and exposes Mute,
+  Focus, Subcompact, and Turn Off.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible Context Lens placement and modes.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: context_lens_chat_placement_and_modes
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0182"
+preserved_exact_tokens:
+- "Context Lens"
+- "top-right of the chat window"
+- "search bar"
+- "icon plus dropdown arrow"
+- "multi-select"
+- "Mute"
+- "Focus"
+- "Subcompact"
+- "Turn Off"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-307 - File Editor Render Mode Controls
+
+```yaml
+plan_unit_id: F3-307
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  File Editor exposes Source, Preview, Split, Detached preview, and Browser/rendered mode for
+  HTML, with Split preserving shared-buffer editing semantics.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines File Editor render-capable mode controls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: file_editor_render_mode_controls
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0183"
+preserved_exact_tokens:
+- "Source"
+- "Preview"
+- "Split"
+- "Detached preview"
+- "Browser/rendered mode for HTML"
+- "shared-buffer editing semantics"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-308 - File Editor Buffer Authority
+
+```yaml
+plan_unit_id: F3-308
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Preview, browser, and rendered experiences are derivative of source and `/buffer` state, may
+  cache view mode/scroll/export preferences, and never become separate canonical content
+  authorities or peers.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines canonical buffer authority rather than a visual control.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: file_editor_buffer_authority
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0183"
+preserved_exact_tokens:
+- "canonical buffer model"
+- "/rendered"
+- "source"
+- "/buffer"
+- "view mode"
+- "scroll"
+- "export preferences"
+- "separate canonical content authority"
+negative_constraints:
+- "The mode switch must not change the canonical buffer model."
+- "Rendered experiences must not become peers with separate canonical content authority."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The existing document/editor contract owns shared-buffer authority."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-309 - Local HTML Open Command Routing
+
+```yaml
+plan_unit_id: F3-309
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  For local HTML, default Open remains source editor; explicit Open in Browser targets the
+  editor/workspace tabs browser surface, Open in Detached Browser opens a secondary detached
+  browser window, and toolbar/action plus agent file-target flows invoke the same canonical
+  open command.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible local HTML open routing.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: local_html_open_command_routing
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0183"
+preserved_exact_tokens:
+- "default `Open` = source editor"
+- "Open in Browser"
+- "editor/workspace tabs browser surface"
+- "Open in Detached Browser"
+- "secondary detached browser window"
+- "agent file-target flow"
+- "canonical open command"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-310 - Embedded Document Pane Rendering And Actions
+
+```yaml
+plan_unit_id: F3-310
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Embedded Document Pane reuses the same rendering pipeline and PreviewSession abstraction as
+  File Editor and Chat, acts as review/inspection rather than a separate rendering system, and
+  offers open source, detached preview, re-render/reload, and allowed structured edit actions.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines Embedded Document Pane rendering behavior despite the source inference
+  being false.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: embedded_document_pane_rendering_and_actions
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0184"
+preserved_exact_tokens:
+- "Embedded Document Pane"
+- "rendering pipeline"
+- "PreviewSession abstraction"
+- "review/inspection surface"
+- "separate rendering system"
+- "open source"
+- "open detached preview"
+- "request re-render/reload"
+- "structured edits"
+negative_constraints:
+- "Embedded Document Pane must not become a separate rendering system."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-311 - Bottom Panel Browser Adjacent Roles
+
+```yaml
+plan_unit_id: F3-311
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Bottom panel is not canonical host for normal browsing, HTML preview, or click-to-context,
+  but may show console/network summaries, downloads, trace/video progress, evidence activity,
+  automation activity/status/capture, and DevTools-adjacent panes tied to the focused browser
+  session.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines allowed bottom-panel browser-adjacent roles.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: bottom_panel_browser_adjacent_roles
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0185"
+preserved_exact_tokens:
+- "bottom panel"
+- "canonical host"
+- "normal browsing"
+- "HTML preview"
+- "click-to-context workflows"
+- "console/network summaries"
+- "downloads"
+- "trace/video progress"
+- "evidence activity"
+- "automation activity"
+- "DevTools-adjacent panes"
+- "focused browser session"
+- "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+- "ContractName:Plans/Runtime_Artifacts_Panel.md"
+- "ContractName:Plans/Wiring_Matrix.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 20376-20387 >>>
+### F3-312 - Bottom Panel Browser Action Ownership
+
+```yaml
+plan_unit_id: F3-312
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Bottom-panel browser-adjacent actions focus or act on the owning browser session, browser
+  open/detached-open/takeover/promotion/recovery actions target the canonical browser session
+  model, and DevTools/evidence bridge actions act on owning `browser_session_id` without
+  making the bottom panel primary browsing session.

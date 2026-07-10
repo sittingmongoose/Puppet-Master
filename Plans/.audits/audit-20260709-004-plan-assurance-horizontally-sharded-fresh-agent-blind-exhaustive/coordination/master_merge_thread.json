@@ -1,0 +1,21 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "master_merge_thread_id": "019f4a04-5fe1-71f3-b992-e599aad3da5b",
+  "source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753",
+  "role": "active_master_merger_and_monitor",
+  "identity_immutable": true,
+  "recorded_at": "2026-07-10T03:14:47Z",
+  "ownership": {
+    "allowed_write_namespaces": [
+      "coordination",
+      "merged",
+      "validators",
+      "reports",
+      "root_checkpoint_and_coverage",
+      "later_phase_manifests_and_assignments"
+    ],
+    "runner_namespaces_read_only": true,
+    "canonical_plans_read_only": true,
+    "prior_audits_read_only": true
+  }
+}

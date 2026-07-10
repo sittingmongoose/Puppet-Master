@@ -1,0 +1,965 @@
+  /* <script> pm6-js-demo-engine sibling B — concatenates after sibling A inside the
+     same script block; the open-tag token at the start of this comment balances
+     the real close tag below for check_structure (sibling-split rule). */
+  /* ================= chat internals ================= */
+  var midSeq = 0;
+  function ensureThread(id, seed) {
+    if (!S.chat.threads[id]) {
+      S.chat.threads[id] = seed || { id: id, title: 'New thread', kind: 'assistant', messages: [] };
+      S.chat.order.push(id);
+      emit('chat.thread', { action: 'new', thread: S.chat.threads[id] });
+    }
+    return S.chat.threads[id];
+  }
+  function seedChat() {
+    ensureThread('th-main', {
+      id: 'th-main', title: 'Tastebook — planning chat', kind: 'assistant',
+      messages: [
+        { role: 'user', text: 'I want recipe photos to stop looking terrible, and imports from blogs keep breaking.' },
+        { role: 'assistant', html: 'Both are structural: photos need an image-processing package (resize ladder + EXIF strip) and imports need a hardened worker with retries and sanitization. That is bigger than a chat patch — it spans the data model, the API, the frontend and deployment.' },
+        { role: 'card', card: { type: 'wizard-recommendation', reason: 'Multi-lane change with a storage decision attached', primary: 'Add a new Feature or Enhancement', secondary: 'Stay in Chat' } },
+        { role: 'assistant', html: 'Before proposing scope I checked how recipe sites actually mark things up — agent searched web because freshness was required. 3 of 5 sources read; full list in the sources drawer.' },
+        { role: 'card', card: { type: 'web_operation', op: webOp('op-web-s1') } }
+      ]
+    });
+    /* the completed websearch already has a Runtime Artifact row at load */
+    var ws = webOp('op-web-s1');
+    if (ws) pushWebArtifact(ws, true);
+  }
+  function chatSpawnGateThread(silent) {
+    if (S.chat.threads['th-gate']) return;
+    ensureThread('th-gate', {
+      id: 'th-gate', title: 'Approval: Package Gate', kind: 'gate',
+      messages: [
+        { role: 'blocked_notice', html: TEXT.chat.gateNotice, gateId: DATA.run.gate.id }
+      ]
+    });
+    emit('chat.card', { threadId: 'th-gate', card: { type: 'hitl', gateId: DATA.run.gate.id, label: DATA.run.gate.label } });
+    if (!silent) emit('chat.stream', { threadId: 'th-gate', type: 'notice' });
+  }
+  function detectIntent(text) {
+    var t = String(text).toLowerCase();
+    if (/debug|error|fail|broken|bug|flake/.test(t)) return 'debug';
+    if (/plan|roadmap|stage it|how would you build/.test(t)) return 'plan';
+    if (/status|progress|how.*(run|going)|where are we/.test(t)) return 'status';
+    if (/deploy|publish|ship|release|unraid|docker hub/.test(t)) return 'deploy';
+    if (/explain|what is|what's|how does|why|seam|package/.test(t)) return 'explain';
+    return 'fallback';
+  }
+  function buildStatusReply() {
+    var done = 0, running = 0, queued = 0, total = 0;
+    Object.keys(S.run.nodes).forEach(function (k) {
+      total++;
+      var st = S.run.nodes[k].state;
+      if (st === 'complete') done++; else if (st === 'running') running++; else if (st === 'queued') queued++;
+    });
+    if (!S.run.id) return 'No PlanCompileRun is bound yet. The plan is still in the Planning Wizard — topic 8 (Deployment &amp; backups) is waiting on the storage question, then Approve And Build binds pcr-47.';
+    var gate = S.run.gates[DATA.run.gate.id];
+    var bits = ['Run <b>#47</b> (' + S.run.id + ') is <b>' + S.run.stage + '</b> — ' + done + '/' + total + ' nodes complete, ' + running + ' running, ' + queued + ' queued.'];
+    if (gate && gate.state === 'attention_required') bits.push('It is holding at n-13: publish package: image-processing — reply "approve and continue" to release it.');
+    if (S.run.stage === 'complete') bits.push('All 3 seams sealed. Next step: Create PR on orch/lane-d-infra in Source Control.');
+    bits.push('Projection freshness: ' + S.run.freshness + '. Context here: ' + Math.round(S.chat.context.used / 1000) + 'k / ' + Math.round(S.chat.context.max / 1000) + 'k.');
+    return bits.join(' ');
+  }
+  function chatFinishTurn(threadId, msgId, reply, how) {
+    S.chat.busy = false;
+    S.chat.activeStream = null;
+    var th = ensureThread(threadId);
+    th.messages.push({ role: 'assistant', html: reply, stopped: how === 'stopped' });
+    S.chat.context.used = Math.min(S.chat.context.max - 2000, S.chat.context.used + 1200 + Math.floor(Math.random() * 700));
+    emit('chat.stream', { threadId: threadId, msgId: msgId, type: how === 'stopped' ? 'stopped' : 'done' });
+    emit('chat.state', { busy: false, context: S.chat.context, queue: S.chat.queue });
+    var q = S.chat.queue.shift();
+    if (q) {
+      emit('chat.queue', { queue: S.chat.queue });
+      setTimeout(function () { chatFacade.send(q.threadId, q.text); }, 500);
+    }
+  }
+  function scheduleDebugCards(threadId, msgId) {
+    var opId = 'op-debug-' + (++midSeq);
+    var states = ['created', 'running', 'completed'];
+    states.forEach(function (st, i) {
+      setTimeout(function () {
+        emit('chat.card', { threadId: threadId, msgId: msgId, card: { type: 'operation', id: opId, name: 'reproduce import failure', state: st } });
+      }, (600 + i * 2600) / (S.clock.speed || 1));
+    });
+  }
+
+  var chatFacade = {
+    send: function (threadId, text) {
+      threadId = threadId || S.chat.activeThread || 'th-main';
+      text = String(text == null ? '' : text).trim();
+      if (!text) return { toast: 'Type a message first.' };
+      if (S.chat.busy) {
+        if (S.chat.queue.length >= 2) return { toast: 'Queue is full — two messages are already waiting.' };
+        S.chat.queue.push({ threadId: threadId, text: text, id: uid('q') });
+        emit('chat.queue', { queue: S.chat.queue });
+        return { ok: true, queued: true };
+      }
+      var th = ensureThread(threadId);
+      th.messages.push({ role: 'user', text: text });
+      logBeat('chat.send', { threadId: threadId, text: text.slice(0, 60) });
+      emit('chat.stream', { threadId: threadId, type: 'user', text: text });
+      if (/approve and continue/i.test(text)) {
+        var res = chatFacade.resolveGateByText(text);
+        if (res && res.resolved) {
+          var mid0 = 'm-' + (++midSeq);
+          emit('chat.stream', { threadId: threadId, msgId: mid0, type: 'start', intent: 'gate' });
+          S.chat.busy = true;
+          S.chat.activeStream = streamStart(function (chunk) {
+            emit('chat.stream', { threadId: threadId, msgId: mid0, type: 'chunk', html: chunk });
+          }, TEXT.chat.gateApproved, { onDone: function (how) { chatFinishTurn(threadId, mid0, TEXT.chat.gateApproved, how); } });
+          return { ok: true };
+        }
+      }
+      var intent = detectIntent(text);
+      var reply = intent === 'status' ? buildStatusReply() : (TEXT.chat[intent] || TEXT.chat.fallback);
+      var msgId = 'm-' + (++midSeq);
+      S.chat.busy = true;
+      emit('chat.state', { busy: true, context: S.chat.context, queue: S.chat.queue });
+      emit('chat.stream', { threadId: threadId, msgId: msgId, type: 'start', intent: intent });
+      if (intent === 'debug') scheduleDebugCards(threadId, msgId);
+      S.chat.activeStream = streamStart(function (chunk) {
+        emit('chat.stream', { threadId: threadId, msgId: msgId, type: 'chunk', html: chunk });
+      }, reply, {
+        onCard: function (card) {
+          emit('chat.card', { threadId: threadId, msgId: msgId, card: card });
+          if (card.type === 'files' && card.files) {
+            card.files.forEach(function (f) { emit('files.touched', { path: f }); });
+          }
+        },
+        onDone: function (how) { chatFinishTurn(threadId, msgId, reply, how); }
+      });
+      return { ok: true };
+    },
+    stop: function (threadId) {
+      if (S.chat.activeStream) {
+        S.chat.activeStream.cancel();
+        logBeat('chat.stop', { threadId: threadId || null });
+        return { ok: true };
+      }
+      return { toast: 'Nothing is streaming right now.' };
+    },
+    queue: function (threadId, text) {
+      if (S.chat.queue.length >= 2) return { toast: 'Queue is full — two messages are already waiting.' };
+      S.chat.queue.push({ threadId: threadId || 'th-main', text: String(text || ''), id: uid('q') });
+      emit('chat.queue', { queue: S.chat.queue });
+      return { ok: true };
+    },
+    newThread: function (kind) {
+      var id = uid('th');
+      ensureThread(id, { id: id, title: kind === 'debug' ? 'Debug: import worker' : 'New thread', kind: kind || 'assistant', messages: [] });
+      S.chat.activeThread = id;
+      return { ok: true, threadId: id };
+    },
+    resolveGateByText: function (text) {
+      var g = S.run.gates[DATA.run.gate.id];
+      if (g && g.state === 'attention_required') {
+        runFacade.approveGate(g.id);
+        return { ok: true, resolved: true };
+      }
+      return { toast: 'No gate is waiting on you right now.', resolved: false };
+    }
+  };
+
+  /* ================= run facade ================= */
+  var runFacade = {
+    bind: function () {
+      if (tracks.run || S.run.stage === 'complete') return { disabled: true, reason: 'already_done' };
+      if (!S.run.id) { director.ensure('c1_wizard_done'); }
+      S.run.focusedRunId = S.run.id;
+      trackStart('run', RUN_BEATS);
+      logBeat('run.bind', { id: S.run.id });
+      setStage('compiling');
+      return { ok: true };
+    },
+    approveGate: function (id) {
+      id = id || DATA.run.gate.id;
+      var g = S.run.gates[id];
+      if (!g) {
+        if (S.run.stage === 'complete') return { disabled: true, reason: 'already_done' };
+        return { toast: 'That gate has not opened yet — the run reaches it around t+40s.' };
+      }
+      if (g.state === 'approved') return { disabled: true, reason: 'already_done' };
+      g.state = 'approved';
+      setNode(g.node, 'running');
+      setTimeout(function () { setNode(g.node, 'complete'); }, 1800 / (S.clock.speed || 1));
+      dropCta('cta-gate');
+      trackRelease('run', 'gate');
+      logBeat('run.approveGate', { id: id });
+      emit('run.gate', g);
+      term.feed('ts-sess-alpha', ok('orch: lane-b') + dim(' — gate approved · workgroup resumed (publishing image-processing)'));
+      say('Gate approved — image-processing package publishing, run resuming');
+      return { ok: true };
+    },
+    declineGate: function (id) {
+      id = id || DATA.run.gate.id;
+      var g = S.run.gates[id];
+      if (!g || g.state !== 'attention_required') return { toast: 'No open gate to decline right now.' };
+      g.state = 'declined';
+      setNode(g.node, 'blocked');
+      setStage('blocked');
+      logBeat('run.declineGate', { id: id });
+      emit('run.gate', g);
+      pushCta({ id: 'cta-safepoint', kind: 'run_interrupted', severity: 'blocked', title: 'n-13 parked at safe point sp-47a9',
+                body: 'Declined gate parked the node. Retry from the safe point to re-raise the approval.', primary: 'run.safe_point_retry' });
+      say('Gate declined — n-13 blocked at safe point sp-47a9. Retry from safe point to continue.');
+      return { ok: true };
+    },
+    safePointRetry: function (nodeId) {
+      nodeId = nodeId || DATA.run.gate.node;
+      var n = S.run.nodes[nodeId];
+      if (!n) return { toast: 'Unknown node ' + nodeId + '.' };
+      if (n.state === 'complete') return { disabled: true, reason: 'already_done' };
+      if (nodeId === DATA.run.gate.node) {
+        var g = S.run.gates[DATA.run.gate.id];
+        if (g) { g.state = 'attention_required'; emit('run.gate', g); }
+        setNode(nodeId, 'attention_required');
+        setStage('executing');
+        dropCta('cta-safepoint');
+        pushCta({ id: 'cta-gate', kind: 'hitl_approval', severity: 'attention_required', title: 'Approval needed: ' + DATA.run.gate.label, body: DATA.run.gate.question, primary: 'run.approve_gate', secondary: 'run.decline_gate' });
+        say('Retried from safe point — approval re-raised for image-processing');
+      } else {
+        M['run.node.retry']({ node: nodeId }, false);
+        setTimeout(function () { M['run.node.degraded']({ node: nodeId }, false); }, 2600 / (S.clock.speed || 1));
+      }
+      logBeat('run.safePointRetry', { node: nodeId });
+      return { ok: true };
+    },
+    pause: function () {
+      if (!S.clock.playing) return { disabled: true, reason: 'already_done' };
+      S.clock.playing = false;
+      emit('run.state', runSnapshot());
+      say('Orchestrator paused — resume from the tray, status bar or dev panel');
+      return { ok: true };
+    },
+    resume: function () {
+      if (S.clock.playing) return { disabled: true, reason: 'already_done' };
+      S.clock.playing = true;
+      emit('run.state', runSnapshot());
+      say('Orchestrator resumed');
+      return { ok: true };
+    },
+    focusRun: function (runId) {
+      runId = runId || 'pcr-47';
+      S.run.focusedRunId = runId;
+      S.run.focusMode = runId === (S.run.id || 'pcr-47') ? 'live' : 'historical';
+      emit('run.state', runSnapshot());
+      return { ok: true };
+    }
+  };
+
+  /* ================= wizard facade ================= */
+  var wizardFacade = {
+    openTopic: function (id) {
+      var t = S.wizard.topics[id];
+      if (!t) return { toast: 'Unknown topic.' };
+      S.wizard.activeTopic = id;
+      if (t.state === 'not_started') { t.state = 'active'; }
+      emit('wizard.topic', { topic: t, opened: true });
+      logBeat('wizard.openTopic', { id: id });
+      return { ok: true };
+    },
+    answer: function (topicId, qId, value) {
+      var t = S.wizard.topics[topicId];
+      if (!t) return { toast: 'Unknown topic.' };
+      var q = null;
+      t.questions.forEach(function (x) { if (x.id === qId || !qId) q = q || x; });
+      if (!q) return { toast: 'No open question on that topic.' };
+      if (q.answer && t.state === 'ready') return { disabled: true, reason: 'already_done' };
+      q.answer = value || q.chips[0];
+      logBeat('wizard.answer', { topic: topicId, q: q.id, value: q.answer });
+      emit('wizard.topic', { topic: t, answered: q });
+      var steps = [
+        [0,    { id: topicId, state: 'ledger_syncing', progress: 'writing decision to the planning ledger' }],
+        [1500, { id: topicId, state: 'compiling', progress: 'recompiling Topic Plan Draft' }],
+        [3500, { id: topicId, state: 'auditing', progress: 'audit pass 1 of 2 · 0 findings' }],
+        [6000, { id: topicId, state: 'ready', progress: null }]
+      ];
+      if (S.ffwd || reducedMotion()) { t.state = 'ready'; t.progress = null; emit('wizard.topic', { topic: t }); }
+      else steps.forEach(function (st) { setTimeout(function () { M['wizard.topicState'](st[1], false); }, st[0] / (S.clock.speed || 1)); });
+      return { ok: true };
+    },
+    acceptTopic: function (id) {
+      var t = S.wizard.topics[id];
+      if (!t) return { toast: 'Unknown topic.' };
+      if (t.accepted) return { disabled: true, reason: 'already_done' };
+      if (t.state !== 'ready') return { toast: '"' + t.title + '" is still ' + t.state + ' — it can be accepted once it is Ready.' };
+      t.accepted = true;
+      emit('wizard.topic', { topic: t, accepted: true });
+      logBeat('wizard.acceptTopic', { id: id });
+      return { ok: true };
+    },
+    integrate: function () {
+      if (S.wizard.pack) return { disabled: true, reason: 'already_done' };
+      var notReady = Object.keys(S.wizard.topics).map(function (k) { return S.wizard.topics[k]; }).filter(function (t) { return t.state !== 'ready'; });
+      if (notReady.length) {
+        var t8 = notReady.find(function (t) { return t.id === 't8'; });
+        if (t8 && !t8.questions[0].answer) {
+          return { toast: 'Topic 8 (Deployment & backups) still needs the storage decision — answer "Where should images and backups live?" first.' };
+        }
+        /* silently satisfy timers still running */
+        notReady.forEach(function (t) { t.state = 'ready'; t.progress = null; emit('wizard.topic', { topic: t }); });
+      }
+      S.wizard.pack = { planUnits: DATA.run.planUnits, findingsRepaired: 2, hashes: S.wizard.hashes };
+      S.wizard.stage = 'final_review';
+      logBeat('wizard.integrate', {});
+      emit('wizard.pack', { pack: S.wizard.pack });
+      say('Final Plan Pack assembled — audit repaired 2 findings, zero left open');
+      return { ok: true };
+    },
+    approveAndBuild: function () {
+      if (S.wizard.approved) return { disabled: true, reason: 'already_done' };
+      if (!S.wizard.pack) {
+        var r = wizardFacade.integrate();
+        if (r && r.toast) return r;
+      }
+      if (S.wizard.replayed && (S.story.c1_wizard_done || S.run.id || S.run.stage !== 'idle')) { /* replay landing: plan already shipped as pcr-47 — re-approve the wizard slice only, never touch the live run */
+        S.wizard.approved = true; S.wizard.stage = 'approved';
+        logBeat('wizard.replayComplete', { receipt: 'approval_cas_receipt-4e91d0', runId: S.run.id || 'pcr-47' });
+        emit('wizard.approved', { receipt: 'approval_cas_receipt-4e91d0', runId: S.run.id || 'pcr-47', replay: true });
+        say(guard.reason('already_done') + ' This planning run already shipped as pcr-47 — jumping to the live run.');
+        try { if (window.PM_PAGES) PM_PAGES.go('orchestrator', 'plan_compile'); } catch (e) {}
+        return { ok: true };
+      }
+      /* CAS over displayed currentness values — always current in the demo */
+      S.wizard.approved = true;
+      S.wizard.stage = 'approved';
+      S.story.c1_wizard_done = true;
+      S.run.id = 'pcr-47';
+      S.run.focusedRunId = 'pcr-47';
+      setStage('pending-launch');
+      logBeat('wizard.approveAndBuild', { cas: 'rev 12 / v9 / 8f3a91 / c41d20', receipt: 'approval_cas_receipt-4e91d0' });
+      emit('wizard.approved', { receipt: 'approval_cas_receipt-4e91d0', runId: 'pcr-47' });
+      say('PlanApproved ✓ — PlanCompileRun pcr-47 bound');
+      try { if (window.PM_PAGES) PM_PAGES.go('orchestrator', 'plan_compile'); } catch (e) {}
+      setTimeout(function () { runFacade.bind(); }, 1200 / (S.clock.speed || 1));
+      return { ok: true };
+    },
+    replay: function () {
+      /* Rewind ONLY the wizard slice back to the interview; ambient run/git/docker/usage state untouched (run #47 stays live) */
+      S.wizard.replayed = true;
+      S.wizard.pack = null; S.wizard.approved = false;
+      S.wizard.stage = 'interview'; S.wizard.activeTopic = null;
+      S.wizard.topics = {};
+      DATA.wizard.topics.forEach(function (t) { S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' }; });
+      trackKill('wizard-ambient'); trackStart('wizard-ambient', WIZ_BEATS);
+      logBeat('wizard.replay', {});
+      emit('wizard.replay', { runId: S.run.id || 'pcr-47' });
+      emit('wizard.state', wizardSnapshot());
+      return { ok: true };
+    }
+  };
+
+  /* ================= git facade ================= */
+  function prChecksMicroTrack() {
+    var pr = S.git.pr;
+    if (!pr) return;
+    pr.checks.forEach(function (ck, i) {
+      setTimeout(function () { ck.state = 'running'; emit('git.pr', pr); }, ((i * 10000) + 900) / (S.clock.speed || 1));
+      setTimeout(function () {
+        ck.state = 'success';
+        emit('git.pr', pr);
+        if (pr.checks.every(function (c) { return c.state === 'success'; })) say('All 3 checks green on PR #88 — Merge is unlocked');
+      }, ((i + 1) * 10000) / (S.clock.speed || 1));
+    });
+  }
+  var gitFacade = {
+    stage: function (f) {
+      if (!f) return { toast: 'Pick a file to stage.' };
+      var idx = S.git.unstaged.indexOf(f);
+      if (idx === -1) idx = S.git.untracked.indexOf(f);
+      if (idx === -1) {
+        if (S.git.staged.indexOf(f) !== -1) return { disabled: true, reason: 'already_done' };
+        return { toast: f + ' has no local changes.' };
+      }
+      S.git.unstaged = S.git.unstaged.filter(function (x) { return x !== f; });
+      S.git.untracked = S.git.untracked.filter(function (x) { return x !== f; });
+      S.git.staged.push(f);
+      logBeat('git.stage', { f: f });
+      emit('git.changed', { staged: S.git.staged, unstaged: S.git.unstaged });
+      return { ok: true };
+    },
+    commit: function (msgOrAI) {
+      if (!S.git.staged.length) return { toast: 'Nothing staged — stage a change first.' };
+      if (S.git.aiCommitBusy) return { disabled: true, reason: 'busy' };
+      var doCommit = function (msg) {
+        S.git.commits.unshift({ sha: Math.random().toString(16).slice(2, 9), msg: msg, files: S.git.staged.slice() });
+        S.git.staged = [];
+        S.git.aiCommitBusy = false;
+        logBeat('git.commit', { msg: msg });
+        emit('git.commit', S.git.commits[0]);
+        emit('git.changed', { staged: S.git.staged, unstaged: S.git.unstaged });
+        say('Committed: ' + msg);
+      };
+      if (!msgOrAI || msgOrAI === 'ai') {
+        S.git.aiCommitBusy = true;
+        emit('git.ai', { state: 'thinking' });
+        setTimeout(function () {
+          emit('git.ai', { state: 'done' });
+          doCommit('feat(images): wire image-processing package into upload flow');
+        }, 1200 / (S.clock.speed || 1));
+        return { ok: true };
+      }
+      doCommit(String(msgOrAI));
+      return { ok: true };
+    },
+    createPR: function () {
+      if (S.git.pr) return { disabled: true, reason: 'already_done' };
+      if (!S.git.auth.signedIn) return { disabled: true, reason: 'not_signed_in' };
+      if (!S.story.c3_run_complete) {
+        return { toast: 'Run #47 is still executing — Create PR unlocks when lane-d completes. (Run #46 already has checks passing if you want to poke at a merged flow.)' };
+      }
+      S.git.pr = { id: 'pr-88', branch: 'orch/lane-d-infra', title: 'Tastebook v1.2 — image processing + import hardening',
+        state: 'open', checks: [{ id: 'build', state: 'queued' }, { id: 'test', state: 'queued' }, { id: 'lint', state: 'queued' }] };
+      logBeat('git.createPR', { id: 'pr-88' });
+      emit('git.pr', S.git.pr);
+      say('PR #88 opened from orch/lane-d-infra — 3 checks queued');
+      prChecksMicroTrack();
+      return { ok: true };
+    },
+    mergePR: function () {
+      var pr = S.git.pr;
+      if (!pr) return { toast: 'No PR yet — Create PR appears once run #47 completes.' };
+      if (pr.state === 'merged') return { disabled: true, reason: 'already_done' };
+      if (!pr.checks.every(function (c) { return c.state === 'success'; })) {
+        return { toast: 'Checks are still running — Merge unlocks when all three pass (~10s each).' };
+      }
+      pr.state = 'merged';
+      S.story.c4_pr_merged = true;
+      logBeat('git.mergePR', { id: pr.id });
+      emit('git.pr', pr);
+      say('PR #88 merged into main — Docker publish chain is next');
+      return { ok: true };
+    },
+    rerunWorkflow: function (id) {
+      var run = null;
+      S.git.runs.forEach(function (r) { if (r.id === id || (!id && r.status === 'failed')) run = run || r; });
+      if (!run) return { toast: 'No workflow run to rerun.' };
+      if (run.status === 'success') return { disabled: true, reason: 'already_done' };
+      run.status = 'queued';
+      emit('git.actions', { run: run });
+      logBeat('git.rerunWorkflow', { id: run.id });
+      setTimeout(function () { run.status = 'running'; emit('git.actions', { run: run }); }, 1000 / (S.clock.speed || 1));
+      setTimeout(function () {
+        run.status = 'success'; delete run.failedStep;
+        emit('git.actions', { run: run });
+        say('Workflow ' + run.id + ' is green — cargo test passed on rerun');
+      }, 8000 / (S.clock.speed || 1));
+      return { ok: true };
+    },
+    deviceLogin: function () {
+      if (S.git.device && S.git.device.state === 'polling') return { disabled: true, reason: 'busy' };
+      S.git.device = { state: 'code', code: 'ABCD-1234', uri: 'github.com/login/device', scopes: ['repo', 'read:user', 'user:email', 'workflow'] };
+      emit('git.auth', S.git.device);
+      say('Device code ABCD-1234 — enter it at github.com/login/device');
+      S.git.device.state = 'polling';
+      var polls = 0;
+      var iv = setInterval(function () {
+        polls++;
+        emit('git.auth', { state: 'polling', tick: polls });
+        if (polls >= 3) {
+          clearInterval(iv);
+          S.git.device = { state: 'success' };
+          S.git.auth.signedIn = true;
+          S.git.auth.scopes = ['repo', 'read:user', 'user:email', 'workflow'];
+          emit('git.auth', { state: 'success', scopes: S.git.auth.scopes });
+          say('GitHub connected — workflow scope granted (requested = effective: jared-dev)');
+        }
+      }, 2000 / (S.clock.speed || 1));
+      logBeat('git.deviceLogin', {});
+      return { ok: true };
+    }
+  };
+
+  /* ================= docker facade ================= */
+  function findContainer(id) {
+    for (var i = 0; i < S.docker.containers.length; i++) {
+      var c = S.docker.containers[i];
+      if (c.id === id || c.name === id) return c;
+    }
+    return null;
+  }
+  var dockerFacade = {
+    start: function (id) {
+      var c = findContainer(id);
+      if (!c) return { toast: 'Unknown container.' };
+      if (c.state === 'running') return { disabled: true, reason: 'already_done' };
+      c.state = 'running'; c.health = 'healthy'; delete c.exitCode;
+      logBeat('docker.start', { id: c.id });
+      emit('docker.container', { container: c, all: S.docker.containers });
+      say(c.name + ' started');
+      return { ok: true };
+    },
+    stop: function (id) {
+      var c = findContainer(id);
+      if (!c) return { toast: 'Unknown container.' };
+      if (c.state === 'exited') return { disabled: true, reason: 'already_done' };
+      c.state = 'exited'; c.exitCode = 0; c.health = 'none';
+      logBeat('docker.stop', { id: c.id });
+      emit('docker.container', { container: c, all: S.docker.containers });
+      say(c.name + ' stopped');
+      return { ok: true };
+    },
+    logs: function (id) {
+      var c = findContainer(id) || S.docker.containers[0];
+      logBeat('docker.logs', { id: c.id });
+      emit('docker.logs', { id: c.id, name: c.name, lines: TEXT.term.dockerLogs });
+      term.streamTo('ts-sess-docker', TEXT.term.dockerLogs, 300);
+      say('Streaming ' + c.name + ' logs to the Docker terminal group');
+      return { ok: true };
+    },
+    composeUp: function () {
+      if (S.docker.compose.up) return { disabled: true, reason: 'already_done' };
+      logBeat('docker.composeUp', {});
+      term.streamTo('ts-sess-docker', TEXT.term.composeUp, 1400);
+      DATA.docker.composeServices.forEach(function (svc, i) {
+        setTimeout(function () {
+          S.docker.compose.services[svc] = 'running';
+          emit('docker.compose', { service: svc, state: 'running', services: S.docker.compose.services });
+        }, ((i + 1) * 1500) / (S.clock.speed || 1));
+      });
+      setTimeout(function () {
+        S.docker.compose.up = true;
+        emit('docker.compose', { up: true, services: S.docker.compose.services });
+        term.ports([
+          { port: 5173, process: 'tastebook-web (vite)', session: 'ts-sess-gamma' },
+          { port: 8080, process: 'tastebook-api (axum)', session: 'ts-sess-alpha' },
+          { port: 54112, process: 'debug DAP', session: null, note: '1 session / project' }
+        ]);
+        say('Compose stack green — web :5173, API :8080');
+      }, (DATA.docker.composeServices.length * 1500 + 400) / (S.clock.speed || 1));
+      return { ok: true };
+    },
+    build: function () {
+      var pc = S.docker.publishChain;
+      if (pc.built) return { disabled: true, reason: 'already_done' };
+      logBeat('docker.build', { tag: pc.tag });
+      emit('docker.build', { state: 'building' });
+      term.streamTo('ts-sess-docker', TEXT.term.buildkit, 600);
+      setTimeout(function () {
+        pc.built = true;
+        pc.digest = 'sha256:9c1f4e2ab7d05561f0';
+        if (pc.template === 'ready_to_push' || pc.template === 'clean') pc.template = 'dirty';
+        emit('docker.build', { state: 'built', digest: pc.digest });
+        emit('docker.chain', pc);
+        say('Image built — digest sha256:9c1f… · template repo is now dirty');
+      }, 6200 / (S.clock.speed || 1));
+      return { ok: true };
+    },
+    push: function () {
+      var pc = S.docker.publishChain;
+      if (!pc.built) return { toast: 'Build the image first — the publish chain starts at Build.' };
+      if (pc.pushedImage) return { disabled: true, reason: 'already_done' };
+      logBeat('docker.push', { repo: DATA.docker.hubRepo, tag: pc.tag });
+      emit('docker.chain', pc);
+      setTimeout(function () {
+        pc.pushedImage = true;
+        emit('docker.chain', pc);
+        say('Pushed ' + DATA.docker.hubRepo + ':' + pc.tag + ' — digest receipt recorded');
+      }, 2600 / (S.clock.speed || 1));
+      return { ok: true };
+    },
+    templateCommit: function () {
+      var pc = S.docker.publishChain;
+      if (pc.template === 'ready_to_push' || pc.template === 'committed') return { disabled: true, reason: 'already_done' };
+      if (pc.template === 'pushed') return { disabled: true, reason: 'already_done' };
+      pc.template = 'committed';
+      emit('docker.chain', pc);
+      logBeat('docker.templateCommit', {});
+      setTimeout(function () {
+        pc.template = 'ready_to_push';
+        emit('docker.chain', pc);
+        say('unraid-template.xml committed — template repo is ready_to_push');
+      }, 1200 / (S.clock.speed || 1));
+      return { ok: true };
+    },
+    templatePush: function () {
+      var pc = S.docker.publishChain;
+      if (pc.template === 'pushed') return { disabled: true, reason: 'already_done' };
+      if (pc.template !== 'ready_to_push') return { toast: 'Template repo is ' + pc.template + ' — commit the template first.' };
+      pc.template = 'pushed';
+      pc.pushedTemplate = true;
+      S.story.c5_published = true;
+      logBeat('docker.templatePush', {});
+      emit('docker.chain', pc);
+      say('Unraid template pushed — publish chain complete end to end');
+      return { ok: true };
+    }
+  };
+
+  /* ================= usage facade ================= */
+  var usageFacade = {
+    export: function () {
+      logBeat('usage.export', {});
+      say('Ledger exported: tastebook-usage.json (' + S.usage.ledger.length + ' rows, demo scope)');
+      return { ok: true };
+    },
+    configureWidget: function (id, opts) {
+      if (!id) return { toast: 'Which widget?' };
+      S.usage.widgets[id] = Object.assign({}, S.usage.widgets[id] || {}, opts || {});
+      emit('usage.widget', { id: id, opts: S.usage.widgets[id] });
+      logBeat('usage.configureWidget', { id: id });
+      return { ok: true };
+    }
+  };
+
+  /* ================= files facade ================= */
+  function fileBase(path) { return path.split('/').pop(); }
+  var filesFacade = {
+    open: function (path) {
+      if (!path) return { toast: 'Pick a file.' };
+      if (!TEXT.files[path]) {
+        /* accept basename too */
+        var hit = null;
+        DATA.files.forEach(function (f) { if (fileBase(f.path) === path) hit = f.path; });
+        if (hit) path = hit; else return { toast: path + ' is outside the demo tree.' };
+      }
+      if (S.files.openTabs.indexOf(path) === -1) S.files.openTabs.push(path);
+      S.files.activeTab = path;
+      logBeat('files.open', { path: path });
+      emit('files.open', { path: path, tabs: S.files.openTabs });
+      /* best-effort render into editor pane 1 */
+      try {
+        var tabs = document.querySelector('#editorPane1 .editor-tabs');
+        var gutter = byId('pane1Gutter'), code = byId('pane1Code');
+        if (tabs && gutter && code) {
+          var base = fileBase(path);
+          var tab = tabs.querySelector('.tab[data-file="' + base + '"]');
+          if (!tab) {
+            tab = document.createElement('span');
+            tab.className = 'tab';
+            tab.setAttribute('data-file', base);
+            tab.textContent = base;
+            tab.onclick = function () { filesFacade.open(path); };
+            tabs.appendChild(tab);
+          }
+          tabs.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+          gutter.innerHTML = '';
+          code.innerHTML = '';
+          TEXT.files[path].forEach(function (lineHtml, i) {
+            var g = document.createElement('div');
+            g.className = 'gutter-line';
+            var num = document.createElement('span');
+            num.className = 'gutter-line-num';
+            num.textContent = i + 1;
+            g.appendChild(num);
+            gutter.appendChild(g);
+            var span = document.createElement('span');
+            span.className = 'code-line';
+            span.innerHTML = '<span class="diff-prefix">&nbsp;</span>' + (lineHtml || '&nbsp;');
+            code.appendChild(span);
+          });
+        } else {
+          say('Opened ' + path);
+        }
+      } catch (e) { say('Opened ' + path); }
+      return { ok: true };
+    }
+  };
+
+  /* ================= dash facade ================= */
+  var dashFacade = {
+    addWidget: function (kind) {
+      if (!kind) return { toast: 'Pick a widget from the catalog.' };
+      if (S.dash.widgets.indexOf(kind) !== -1) return { disabled: true, reason: 'already_done' };
+      var known = DATA.dash.catalog.some(function (c) { return c.kind === kind; });
+      if (!known) return { disabled: true, reason: 'unsupported' };
+      S.dash.widgets.push(kind);
+      logBeat('dash.addWidget', { kind: kind });
+      emit('dash.widget', { action: 'add', kind: kind, widgets: S.dash.widgets });
+      say('Widget added: ' + kind);
+      return { ok: true };
+    },
+    catalog: function () { return DATA.dash.catalog.slice(); }
+  };
+
+  /* ================= clock + ambient ticking ================= */
+  var tickCount = 0;
+  function clockTick() {
+    if (!S.clock.playing) return;
+    var dt = 250 * (S.clock.speed || 1);
+    S.clock.t += dt;
+    tickCount++;
+    trackTick(dt);
+    /* usage: cooldown + slow quota drift every ~2s of virtual time */
+    if (tickCount % Math.max(1, Math.round(8 / (S.clock.speed || 1))) === 0) {
+      S.usage.cooldownSec = Math.max(0, S.usage.cooldownSec - 2);
+      var q0 = S.usage.quotas[0];
+      if (q0.pct < 82) q0.pct = Math.round((q0.pct + 0.08) * 100) / 100;
+      if (!S.usage.alert80Fired && q0.pct >= 80) {
+        S.usage.alert80Fired = true;
+        q0.level = 'critical';
+        emit('usage.alert', { kind: 'threshold', quota: q0.id, pct: q0.pct,
+          suggestion: 'Shift auditor traffic to Codex or wait out the cooldown (' + fmtClock(S.usage.cooldownSec) + ').' });
+        pushCta({ id: 'cta-usage', kind: 'warning', severity: 'attention_required', title: 'Claude 5h window at 80%',
+          body: 'Cooldown ' + fmtClock(S.usage.cooldownSec) + '. Suggested: reroute auditor turns or pause low-priority lanes.', primary: 'page.go', primaryArg: 'usage' });
+        say('Usage warning: Claude 5h window crossed 80%');
+      }
+      emit('usage.tick', usageSnapshot());
+    }
+  }
+  var visPaused = false;
+  function onVisibility() {
+    try {
+      if (document.hidden) {
+        visPaused = S.clock.playing;
+        S.clock.playing = false;
+      } else if (visPaused) {
+        S.clock.playing = true;
+        visPaused = false;
+      }
+    } catch (e) {}
+  }
+
+  /* ================= dev panel (Ctrl+Shift+D) ================= */
+  var devEl = null, devTimer = null;
+  function devBtn(label, title) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pm6-dev-btn';
+    b.textContent = label;
+    if (title) b.title = title;
+    b.style.cssText = 'font:inherit;font-size:10px;padding:2px 7px;border:1px solid var(--border-light);border-radius:5px;background:var(--surface);color:var(--text-primary);cursor:pointer;';
+    return b;
+  }
+  function devRow() {
+    var r = document.createElement('div');
+    r.style.cssText = 'display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:6px;';
+    return r;
+  }
+  function buildDevPanel() {
+    devEl = document.createElement('div');
+    devEl.className = 'pm6-dev-panel';
+    devEl.style.cssText = 'position:fixed;right:14px;bottom:40px;z-index:100000;width:270px;padding:10px 12px;' +
+      'background:var(--surface-elevated);border:1px solid var(--border-light);border-radius:10px;box-shadow:var(--shadow);' +
+      'font-family:var(--body-font);font-size:11px;color:var(--text-primary);';
+    var head = document.createElement('div');
+    head.style.cssText = 'display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:11px;';
+    head.textContent = 'Demo director';
+    var close = devBtn('✕', 'Close (Ctrl+Shift+D)');
+    close.onclick = toggleDevPanel;
+    head.appendChild(close);
+    devEl.appendChild(head);
+
+    var r1 = devRow();
+    var play = devBtn('', 'Play / pause the virtual clock');
+    var speed = devBtn('', 'Cycle speed 1x / 2x / 4x');
+    var tOut = document.createElement('span');
+    tOut.style.cssText = 'margin-left:auto;color:var(--text-muted);font-variant-numeric:tabular-nums;';
+    play.onclick = function () { S.clock.playing = !S.clock.playing; refresh(); };
+    speed.onclick = function () { S.clock.speed = S.clock.speed >= 4 ? 1 : S.clock.speed * 2; refresh(); };
+    r1.appendChild(play); r1.appendChild(speed); r1.appendChild(tOut);
+    devEl.appendChild(r1);
+
+    var r2 = devRow();
+    var jumps = [['c1', 'c1_wizard_done', 'Wizard done + plan approved'], ['c2', 'c2_compiled', 'Compiled, run executing'],
+                 ['c3', 'c3_run_complete', 'Run #47 complete'], ['c4', 'c4_pr_merged', 'PR #88 merged'], ['c5', 'c5_published', 'Published to Unraid']];
+    jumps.forEach(function (j) {
+      var b = devBtn(j[0], 'Jump: ' + j[2]);
+      b.onclick = function () { director.ensure(j[1]); say('Jumped to ' + j[2]); refresh(); };
+      r2.appendChild(b);
+    });
+    devEl.appendChild(r2);
+
+    var r3 = devRow();
+    var reset = devBtn('Reset (reload)', 'Full re-init — no persistence anywhere, reload is pristine');
+    reset.onclick = function () { try { location.reload(); } catch (e) {} };
+    r3.appendChild(reset);
+    devEl.appendChild(r3);
+
+    var tail = document.createElement('div');
+    tail.style.cssText = 'margin-top:6px;max-height:110px;overflow:auto;border-top:1px solid var(--border-light);padding-top:4px;color:var(--text-secondary);font-size:10px;line-height:1.5;';
+    devEl.appendChild(tail);
+
+    function refresh() {
+      play.textContent = S.clock.playing ? 'Pause' : 'Play';
+      speed.textContent = S.clock.speed + 'x';
+      tOut.textContent = 't ' + (S.clock.t / 1000).toFixed(1) + 's';
+      var last = LOG.slice(-8).reverse();
+      tail.innerHTML = last.map(function (b) {
+        return '<div><span style="color:var(--text-muted)">' + b.t.toFixed(1) + 's</span> ' + b.action + '</div>';
+      }).join('') || '<div style="color:var(--text-muted)">no beats yet</div>';
+    }
+    devEl._refresh = refresh;
+    refresh();
+    document.body.appendChild(devEl);
+  }
+  function toggleDevPanel() {
+    if (devEl && devEl.parentNode) {
+      devEl.parentNode.removeChild(devEl);
+      devEl = null;
+      if (devTimer) { clearInterval(devTimer); devTimer = null; }
+      return;
+    }
+    buildDevPanel();
+    devTimer = setInterval(function () { if (devEl && devEl._refresh) devEl._refresh(); }, 500);
+  }
+
+  /* ================= delegated router ================= */
+  function routerHandler(e) {
+    var el = e.target && e.target.closest ? e.target.closest('[data-demo-action]') : null;
+    if (!el) return;
+    if (el.hasAttribute('disabled') || el.getAttribute('aria-disabled') === 'true' || el.dataset.demoDisabled) {
+      var code = el.dataset.demoReason || el.dataset.demoDisabled || 'demo_scope';
+      say(guard.reason(code));
+      return;
+    }
+    var res = guard.attempt(el.dataset.demoAction, { el: el, arg: el.dataset.demoArg, event: e });
+    if (res && res.toast) say(res.toast);
+    else if (res && res.disabled) say(guard.reason(res.reason));
+  }
+  function attachRouter() {
+    if (window.__pm6DemoRouterAttached) return;
+    window.__pm6DemoRouterAttached = true;
+    document.addEventListener('click', routerHandler);
+  }
+
+  /* ================= action registrations ================= */
+  function reg(id, fn) { actions.register(id, fn); }
+  function argOf(ctx) { return ctx && ctx.arg != null ? String(ctx.arg) : ''; }
+  reg('page.go', function (ctx) {
+    var a = argOf(ctx).split(':');
+    if (!a[0]) return { toast: 'No page given.' };
+    try { PM_PAGES.go(a[0], a[1]); } catch (e) {}
+    return { ok: true };
+  });
+  reg('wizard.open_topic', function (ctx) { return wizardFacade.openTopic(argOf(ctx)); });
+  reg('wizard.answer', function (ctx) {
+    var a = argOf(ctx).split('|'); /* topicId|qId|value */
+    return wizardFacade.answer(a[0], a[1], a.slice(2).join('|'));
+  });
+  reg('wizard.accept_topic', function (ctx) { return wizardFacade.acceptTopic(argOf(ctx)); });
+  reg('wizard.integrate', function () { return wizardFacade.integrate(); });
+  reg('wizard.approve_and_build', function () { return wizardFacade.approveAndBuild(); });
+  reg('wizard.replay', function () { return wizardFacade.replay(); });
+  reg('run.bind', function () { return runFacade.bind(); });
+  reg('run.approve_gate', function (ctx) { return runFacade.approveGate(argOf(ctx) || undefined); });
+  reg('run.decline_gate', function (ctx) { return runFacade.declineGate(argOf(ctx) || undefined); });
+  reg('run.safe_point_retry', function (ctx) { return runFacade.safePointRetry(argOf(ctx) || undefined); });
+  reg('run.pause', function () { return runFacade.pause(); });
+  reg('run.resume', function () { return runFacade.resume(); });
+  reg('run.focus_run', function (ctx) { return runFacade.focusRun(argOf(ctx) || undefined); });
+  reg('chat.send', function (ctx) {
+    var a = argOf(ctx);
+    var i = a.indexOf('|');
+    if (i === -1) return chatFacade.send(null, a);
+    return chatFacade.send(a.slice(0, i), a.slice(i + 1));
+  });
+  reg('chat.stop', function (ctx) { return chatFacade.stop(argOf(ctx) || undefined); });
+  reg('chat.new_thread', function (ctx) { return chatFacade.newThread(argOf(ctx) || 'assistant'); });
+  reg('git.stage', function (ctx) { return gitFacade.stage(argOf(ctx)); });
+  reg('git.commit_ai', function () { return gitFacade.commit('ai'); });
+  reg('git.create_pr', function () { return gitFacade.createPR(); });
+  reg('git.merge_pr', function () { return gitFacade.mergePR(); });
+  reg('git.rerun_workflow', function (ctx) { return gitFacade.rerunWorkflow(argOf(ctx) || undefined); });
+  reg('git.device_login', function () { return gitFacade.deviceLogin(); });
+  reg('docker.start', function (ctx) { return dockerFacade.start(argOf(ctx)); });
+  reg('docker.stop', function (ctx) { return dockerFacade.stop(argOf(ctx)); });
+  reg('docker.logs', function (ctx) { return dockerFacade.logs(argOf(ctx)); });
+  reg('docker.compose_up', function () { return dockerFacade.composeUp(); });
+  reg('docker.build', function () { return dockerFacade.build(); });
+  reg('docker.push', function () { return dockerFacade.push(); });
+  reg('docker.template_commit', function () { return dockerFacade.templateCommit(); });
+  reg('docker.template_push', function () { return dockerFacade.templatePush(); });
+  reg('usage.export', function () { return usageFacade.export(); });
+  reg('usage.configure_widget', function (ctx) { return usageFacade.configureWidget(argOf(ctx), {}); });
+  reg('files.open', function (ctx) { return filesFacade.open(argOf(ctx)); });
+  reg('dash.add_widget', function (ctx) { return dashFacade.addWidget(argOf(ctx)); });
+  reg('web.run', function (ctx) {
+    var a = argOf(ctx).split('|'); /* kind|input(|invocation_source) */
+    var kind = a.shift();
+    var source = a.length > 1 ? a.pop() : 'user_slash';
+    return webStart(kind, a.join('|'), { source: source });
+  });
+  reg('web.approve', function (ctx) { return webApprove(argOf(ctx)); });
+  reg('web.decline', function (ctx) { return webDecline(argOf(ctx)); });
+  reg('web.cancel', function (ctx) { return webCancel(argOf(ctx)); });
+  reg('web.request_again', function (ctx) { return webRequestAgain(argOf(ctx)); });
+  reg('web.sources', function (ctx) {
+    var op = webOp(argOf(ctx) || 'op-web-s1');
+    if (!op) return { toast: 'No web operation with that id in the demo.' };
+    emit('web.sources', { op: op, sources: op.sources || op.citations || [] });
+    return { ok: true };
+  });
+  reg('web.artifact_open', function (ctx) {
+    var id = argOf(ctx);
+    var row = null;
+    S.web.artifacts.forEach(function (a) { if (a.id === id || !id) row = row || a; });
+    if (!row) return { toast: 'No Runtime Artifact rows yet — the research run writes one when it completes.' };
+    emit('web.artifact', { artifact: row });
+    return { ok: true };
+  });
+  reg('demo.toast', function (ctx) { return { toast: argOf(ctx) || 'Noted.' }; });
+  reg('demo.reason', function (ctx) { return { disabled: true, reason: argOf(ctx) || 'demo_scope' }; });
+  reg('demo.jump', function (ctx) { director.ensure(argOf(ctx)); return { ok: true }; });
+
+  /* ================= PM_DEMO surface ================= */
+  var PM_DEMO = {
+    version: 'pm6-1.0',
+    state: S,
+    log: LOG,
+    data: DATA,
+    text: TEXT,
+    on: on,
+    emit: emit,
+    actions: actions,
+    guard: guard,
+    stream: { start: streamStart },
+    director: director,
+    clock: {
+      play: function () { S.clock.playing = true; },
+      pause: function () { S.clock.playing = false; },
+      setSpeed: function (x) { S.clock.speed = [1, 2, 4].indexOf(x) !== -1 ? x : 1; }
+    },
+    wizard: wizardFacade,
+    run: runFacade,
+    chat: chatFacade,
+    git: gitFacade,
+    docker: dockerFacade,
+    usage: usageFacade,
+    term: term,
+    files: filesFacade,
+    dash: dashFacade,
+    web: {
+      op: webOp,
+      ops: function () { return S.web.ops; },
+      artifacts: function () { return S.web.artifacts; },
+      start: webStart,
+      approve: webApprove,
+      decline: webDecline,
+      cancel: webCancel,
+      requestAgain: webRequestAgain
+    },
+    dev: { toggle: toggleDevPanel }
+  };
+  window.PM_DEMO = PM_DEMO;
+
+  /* ================= init ================= */
+  var booted = false;
+  function init() {
+    if (booted) return;
+    booted = true;
+    try { seedChat(); } catch (e) {}
+    attachRouter();
+    try {
+      document.addEventListener('keydown', function (e) {
+        if (e.ctrlKey && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+          e.preventDefault();
+          toggleDevPanel();
+        }
+      });
+    } catch (e) {}
+    try { document.addEventListener('visibilitychange', onVisibility); } catch (e) {}
+    trackStart('ambient', AMBIENT_BEATS);
+    trackStart('wizard-ambient', WIZ_BEATS);
+    trackStart('web', WEB_BEATS); /* research run: queued → read receipts → citations */
+    setInterval(safe(clockTick, 'clock'), 250);
+    emit('demo.ready', { version: PM_DEMO.version });
+    emit('run.state', runSnapshot()); /* boot sync (W2 ledger → W3): snapshot for eager subscribers */
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

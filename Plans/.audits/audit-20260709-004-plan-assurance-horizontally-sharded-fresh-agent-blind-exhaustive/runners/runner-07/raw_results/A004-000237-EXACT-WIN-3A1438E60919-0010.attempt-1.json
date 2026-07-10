@@ -1,0 +1,376 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000237-EXACT-WIN-3A1438E60919-0010",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000237-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0237_5288c5a4",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-3A1438E60919-0010",
+  "doc_id": "DOC-3A1438E60919",
+  "document_path": "Plans/Commands_System.md",
+  "core_range": [
+    3240,
+    3591
+  ],
+  "context_ranges": [
+    [
+      3228,
+      3239
+    ],
+    [
+      3592,
+      3603
+    ]
+  ],
+  "source_sha256": "f7aaca1cd05a7cdfbf63169869b4c53407c80cebe0b27e7437e4f8111a1c8255",
+  "core_sha256": "87c62aa4952deb7790af730f0f8d699384624be913b767c9e0dd54a830fa604e",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000237-EXACT-WIN-3A1438E60919-0010.json",
+  "capsule_sha256": "9bd5f88cbef47d9f54a3105201ecf3b05ba3e206d9a798b2568d73cad482db9e",
+  "capsule_bytes": 1646,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-3A1438E60919-0010.txt",
+  "source_excerpt_sha256": "851a8c24eedd347b7592d7fe7b5848330e07077fd6f8330f356498ecb8d6385d",
+  "source_excerpt_bytes": 30254,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-A004-000237-001",
+      "summary": "CS-049 is an accepted GUI-facing acceptance contract: save-time validation blocks reserved, malformed, or description-less commands; dry-run renders without launching an agent run; resolved User Commands appear in palette and slash autocomplete.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-001",
+        "ER-A004-000237-002"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000237-002",
+      "summary": "CS-001 is explicitly retired to migration lineage and is prohibited from re-owning atomized product behavior or creating executable build artifacts.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-003",
+        "ER-A004-000237-005"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000237-003",
+      "summary": "CS-050 treats duplicate Section 7 headings as a structural anchor defect, requires one canonical anchor, preserves command identifiers and owner references, and forbids semantic changes during repair.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-006",
+        "ER-A004-000237-007"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000237-004",
+      "summary": "CS-051 reserves `/goal` and `/goal again`, maps them to distinct command IDs, denies User Command override, and keeps Goal Runtime lifecycle semantics outside Commands_System ownership.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-008",
+        "ER-A004-000237-009",
+        "ER-A004-000237-010"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000237-005",
+      "summary": "CS-052 makes Commands_System an invocation/display consumer while UI_Command_Catalog owns payloads, results, guards, reason codes, receipt effects, idempotency, stale-projection behavior, and recovery routes.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-012",
+        "ER-A004-000237-013",
+        "ER-A004-000237-014"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-000237-006",
+      "summary": "Both visible ledger compile addenda expressly stop at canonical PlanUnits and exclude executable queues, implementation files, generated governance artifacts, and production build tasks.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-011",
+        "ER-A004-000237-015"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-A004-000237-001",
+      "severity": "high",
+      "summary": "CS-049 conditions palette and autocomplete exposure on a command being unresolved and requires a fully resolved dry-run, but it defines neither the unresolved predicate nor failure, feedback, and recovery transitions. Implementations can disagree about when a command disappears, whether save remains allowed, and what preview does when resolution cannot complete.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-001",
+        "ER-A004-000237-002"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000237-002",
+      "severity": "high",
+      "summary": "CS-049 names only plan migration and plan index validators. No acceptance surface exercises blocked save behavior, proves that preview submits no agent run, or asserts palette and autocomplete exposure, so AC-CMD07 through AC-CMD09 can be structurally present without behavioral evidence.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-002"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000237-003",
+      "severity": "medium",
+      "summary": "The retired CS-001 bridge contains prescriptive negative-constraint fragments clipped at `redefine it a` and `lock direc`. Even as lineage, these strings do not preserve exact contract meaning, and their active-looking placement leaves consumers uncertain whether to enforce or ignore incomplete obligations.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-003",
+        "ER-A004-000237-004"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000237-004",
+      "severity": "medium",
+      "summary": "CS-050 requires one canonical Section 7 anchor and demotion of duplicate heading text but does not select the surviving anchor, specify compatibility aliases or backlink treatment, or define objective manual-review pass conditions. Multiple incompatible repairs could satisfy the stated criteria while changing reference resolution.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-006",
+        "ER-A004-000237-007"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000237-005",
+      "severity": "medium",
+      "summary": "The exact `/goal` mappings and nonoverride behavior have no current behavioral validator in CS-051. `future command registry validation` is deferred rather than acceptance evidence, while the only current named surface is plan-index validation.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-008",
+        "ER-A004-000237-009"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000237-006",
+      "severity": "high",
+      "summary": "CS-052 delegates a broad action family to UI_Command_Catalog but declares `depends_on: []` and provides no exact command IDs or contract anchors for those actions. The consumer cannot deterministically bind its invocation and display entries to the semantic owner from this PlanUnit.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-012",
+        "ER-A004-000237-013"
+      ]
+    },
+    {
+      "finding_id": "FIND-A004-000237-007",
+      "severity": "medium",
+      "summary": "CS-052 forbids presets from bypassing owner-defined enablement and stale-projection guards, but its validators cover only plan indexing and ledger validity. No named evidence invokes guarded commands, verifies disabled reasons, or checks receipt and recovery effects.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-013",
+        "ER-A004-000237-014"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-A004-000237-001",
+      "summary": "The dry-run side-effect boundary is explicit: preview must render without submission to any agent run.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-002"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-A004-000237-002",
+      "summary": "CS-001's intended authority disposition is explicit: it is migration lineage only and must not re-own the atomized source coverage.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-003",
+        "ER-A004-000237-005"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-A004-000237-003",
+      "summary": "Heading repair is explicitly constrained not to rename command identifiers or command-owner references and not to alter command semantics.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-006",
+        "ER-A004-000237-007"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-A004-000237-004",
+      "summary": "The Goal slash-command mapping itself is exact, and both User Commands and `override_builtin` are explicitly denied override authority.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-008",
+        "ER-A004-000237-009",
+        "ER-A004-000237-010"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-A004-000237-005",
+      "summary": "CS-052 clearly assigns UICommand semantics to UI_Command_Catalog and explicitly prohibits Commands_System from redefining schemas or bypassing enablement and stale-projection guards.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-012",
+        "ER-A004-000237-014"
+      ]
+    },
+    {
+      "non_gap_id": "NON-GAP-A004-000237-006",
+      "summary": "The addendum boundaries explicitly exclude implementation and governance generation, so absence of WorkNodes or production build tasks is intentional in this window.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-011",
+        "ER-A004-000237-015"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNKNOWN-A004-000237-001",
+      "summary": "The named CS-049 dependencies may define unresolved-state, name-format, and template-resolution semantics, but those PlanUnits are outside this window and were not inspected.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-002"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-A004-000237-002",
+      "summary": "Whether UI_Command_Catalog contains exact IDs, anchors, payloads, result schemas, guards, receipts, and recovery contracts for every CS-052 action cannot be determined from this window.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-012",
+        "ER-A004-000237-014"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-A004-000237-003",
+      "summary": "The window cannot establish whether the deferred command-registry validator has since been implemented elsewhere; CS-051 itself labels it future.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-009"
+      ]
+    },
+    {
+      "unknown_id": "UNKNOWN-A004-000237-004",
+      "summary": "CS-053 begins only in trailing context, so its Teach invocation behavior and acceptance completeness cannot be assessed or promoted to a core finding.",
+      "evidence_ref_ids": [
+        "ER-A004-000237-016"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "ER-A004-000237-001",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3247,
+      "line_end": 3251,
+      "range_class": "core",
+      "exact_quote": "canonical_text: >-\n  Command GUI acceptance requires save-time name validation with blocked saves,\n  dry-run rendering of the fully resolved template without submitting to an\n  agent run, and User Command exposure in command palette and chat slash\n  autocomplete unless unresolved."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-002",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3252,
+      "line_end": 3265,
+      "range_class": "core",
+      "exact_quote": "gui_related: true\ngui_classification_reason: These acceptance criteria govern visible validation, preview, palette, and autocomplete behavior.\nsplit_recommended: true\nsplit_recommendation_reason: Source span S0053 mixes GUI acceptance with backend acceptance criteria.\ndepends_on: [CS-011, CS-027, CS-033, CS-034, CS-041]\nunblocks: []\nacceptance_criteria:\n  - AC-CMD07 remains covered: the GUI Commands management section MUST validate command names on save.\n  - AC-CMD07 blocks saves with validation errors for reserved names, invalid format, and missing description.\n  - AC-CMD08 remains covered: dry-run preview MUST render the fully resolved template without submitting it to any agent run.\n  - AC-CMD09 remains covered: every User Command MUST appear in command palette and chat slash-command autocomplete unless unresolved.\nvalidation_surfaces:\n  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\n  - python3 scripts/pm-plan-index.py validate"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-003",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3296,
+      "line_end": 3302,
+      "range_class": "core",
+      "exact_quote": "canonical_text: >-\n  The former doc-level source-preserving bridge is retired in place after Phase\n  2B atomized Commands_System-S0001 through Commands_System-S0053 into CS-002\n  through CS-049. CS-001 remains only as migration lineage for the retired bridge\n  span and must not re-own atomized source coverage.\ngui_related: false\ngui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-004",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3349,
+      "line_end": 3353,
+      "range_class": "core",
+      "exact_quote": "negative_constraints:\n- User Commands may surface `/resume` only by reference to the Assistant Chat and storage SSOTs; they MUST NOT define a separate restore/resume storage schema.\n- Legacy `phase_subagents` and provider-native `command-name` assumptions are `/replace`-only migration labels. They MUST NOT remain active beside the Persona-stage command contract.\n- 'For Assistant Chat message actions, Commands consume the owner-defined `Resend` semantics from `Plans/assistant-chat-design.md` and `Plans/UI_Command_Catalog.md`: `Resend` replays the latest user-authored message and discards later generated history/work, while command presets must not redefine it a'\n- For process coordination, Commands consume the resolved project `lock-file` path from the storage/runtime owner contract. The lock location derives from the storage logical-root with any safe-local-fallback defined by `Plans/storage-plan.md`; command templates must not invent an alternate lock direc"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-005",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3433,
+      "line_end": 3433,
+      "range_class": "core",
+      "exact_quote": "Phase 2B atomized `Commands_System-S0001` through `Commands_System-S0053` into fine-grained PlanUnits `CS-002` through `CS-049`. `CS-001` is retained only as a retired migration-lineage bridge and must not re-own atomized source coverage. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-006",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3444,
+      "line_end": 3456,
+      "range_class": "core",
+      "exact_quote": "canonical_text: >-\n  Commands_System duplicate Section 7 headings are structural anchor defects. Recovery should preserve command semantics and existing command\n  PlanUnits while assigning one canonical Section 7 anchor and demoting duplicate heading text to compatibility/source-lineage where needed.\ngui_related: false\ngui_classification_reason: Command document section numbering is structural documentation cleanup, not GUI presentation.\ndepends_on: [CS-001]\nunblocks: []\nacceptance_criteria:\n  - There is one canonical Section 7 command-system anchor after cleanup.\n  - Existing command identifiers and command-owner refs are not renamed by heading repair.\nvalidation_surfaces:\n  - python3 scripts/pm-plan-index.py validate\n  - manual heading/anchor review"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-007",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3468,
+      "line_end": 3470,
+      "range_class": "core",
+      "exact_quote": "negative_constraints:\n  - Do not change command semantics during heading repair.\nowner_hints: [Plans/Commands_System.md]"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-008",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3480,
+      "line_end": 3483,
+      "range_class": "core",
+      "exact_quote": "canonical_text: >-\n  Commands_System reserves `/goal` and `/goal again` as Assistant Chat built-in slash commands. `/goal` resolves to `cmd.chat.goal.start`; `/goal again` resolves to `cmd.chat.goal.update`. User Commands and `override_builtin` cannot override these Goal Mode slash commands.\ngui_related: false\ngui_classification_reason: Slash-command reservation and override policy are command registry behavior, not visual presentation."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-009",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3489,
+      "line_end": 3496,
+      "range_class": "core",
+      "exact_quote": "acceptance_criteria:\n  - \"`/goal` and `/goal again` are present in the reserved Assistant Chat slash-command set.\"\n  - \"`/goal` maps to `cmd.chat.goal.start`.\"\n  - \"`/goal again` maps to `cmd.chat.goal.update`.\"\n  - User Commands cannot override these reserved Goal Mode slash commands.\nvalidation_surfaces:\n  - python3 scripts/pm-plan-index.py validate\n  - future command registry validation"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-010",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3519,
+      "line_end": 3524,
+      "range_class": "core",
+      "exact_quote": "negative_constraints:\n  - Do not allow User Commands to override `/goal` or `/goal again`.\n  - Do not make Commands_System the semantic owner for Goal Runtime lifecycle behavior.\nowner_hints:\n  - Plans/Commands_System.md\n  - Plans/UI_Command_Catalog.md"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-011",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3528,
+      "line_end": 3530,
+      "range_class": "core",
+      "exact_quote": "## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard\n\nThis addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-012",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3539,
+      "line_end": 3539,
+      "range_class": "core",
+      "exact_quote": "canonical_text: 'Commands_System may expose user-authored command presets, slash-command shortcuts, or palette entries that invoke Planning Wizard and Plan Compile UICommands, but UI_Command_Catalog owns the typed command payloads, results, permission and enablement guards, disabled reason codes, receipt effects, idempotency, stale-projection behavior, and recovery routes. For topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting build, Commands_System records only invocation/display boundaries and must reference the UI command contract rather than restating or weakening it.'"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-013",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3540,
+      "line_end": 3550,
+      "range_class": "core",
+      "exact_quote": "gui_related: true\ngui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.\ndepends_on: []\nunblocks: []\nacceptance_criteria:\n- The live owner doc preserves the command invocation/display surface without treating Commands_System as the UICommand semantic owner.\n- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.\n- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.\nvalidation_surfaces:\n- python3 scripts/pm-plan-index.py validate\n- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard"
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-014",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3577,
+      "line_end": 3579,
+      "range_class": "core",
+      "exact_quote": "negative_constraints:\n- Do not define UICommand payload/result schemas in Commands_System.\n- Do not allow user-authored command presets to bypass UI_Command_Catalog enablement or stale-projection guards."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-015",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3588,
+      "line_end": 3590,
+      "range_class": "core",
+      "exact_quote": "## Ledger Compile Addendum - pldg-20260626-001-feature-name\n\nThis addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks."
+    },
+    {
+      "evidence_ref_id": "ER-A004-000237-016",
+      "document_path": "Plans/Commands_System.md",
+      "line_start": 3592,
+      "line_end": 3603,
+      "range_class": "context",
+      "exact_quote": "### CS-053 - Teach Invocation Command Routes\n\n```yaml\nplan_unit_id: CS-053\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Commands_System.md\ncanonical_text: Teach/Teacher can be summoned through /teach, help icon launches, and varied natural-language phrases\n  such as asking PM to teach, explain, show how, walk me through, or help me do something. Summon phrase resolution\n  disambiguates Teach guidance from implementation/build requests, carries current-surface context into a new or\n  selected Teacher thread, and exposes Help icon/summon phrase guidance in Help/Glossary entries.\ngui_related: true"
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

@@ -1,0 +1,5 @@
+# polish-pages (W3) — requests / coordination notes (append-only; written by polish-pages only)
+
+- [10x-pm6-css-orchestrator] Node Graph W3 presence pass: geometry constants moved to NW=150/NH=52/XSTEP=162/X0=140 (viewBox 1764 wide) and the SVG `<text>` elements now carry **inline font-size styles** (label 18px, id 12px, lane 14px, wt 10.5px, pkg 10px, seam 15px) because the stylesheet sizes were tuned for the old 100x34 cards and CSS beats presentation attributes. If you retune `.pm6-orch-gnode-label` etc., remove the inline styles in `29x-pm6-js-orchestrator` `buildGraphSvg()` first so there is exactly one owner.
+- [10x-pm6-css-wizard] New ghost button `#pm6WizReplayBtn` (`.pm6-wiz-ghostbtn.pm6-wiz-replay`) sits at the end of `#pm6WizRunHead`. It inherits `.pm6-wiz-ghostbtn` styling and renders fine; optional: a small `margin-left` / `align-self:center` nicety under `.pm6-wiz-replay` if the header ever wraps.
+- [pm6-css-global or 02] Density boot: the settings engine (part 29) now stamps `data-density` from the sidecar default ("auto") on boot and remains the only writer — the CSS `[data-density=…] { --density: … }` mapping can key off it from first paint.

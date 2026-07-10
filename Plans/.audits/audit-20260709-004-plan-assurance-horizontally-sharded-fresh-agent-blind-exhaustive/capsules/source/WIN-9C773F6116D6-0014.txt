@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE 4811-4822 >>>
+- Crew findings must not be persisted through .puppet-master/memory/* files.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Crew findings are persisted through canonical event/storage structures.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md'
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 4823-5186 >>>
+### N2-078 - Tool Discovery Lifecycle Canon
+
+```yaml
+plan_unit_id: N2-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Tool-discovery lifecycle and quality features use canonical blocked payload fields, runtime taxonomy, child-run or crew events, handoff bundles, canonical state, and lineage-preserving reroute, replacement, or cancellation instead of active-agent or child-memory side files.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_discovery_lifecycle_canon
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: tool_discovery_lifecycle_canon
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0043
+preserved_exact_tokens:
+- blocked payload fields
+- runtime taxonomy
+- handoff bundles
+- canonical lineage
+negative_constraints:
+- Tool discovery continuity must not depend on active-agent side files or child-memory files.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Canonical state and events own tool-discovery continuity.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md'
+```
+
+### N2-079 - GUI Automation Evidence Run Layout
+
+```yaml
+plan_unit_id: N2-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Each GUI automation run stores manifest.json, timeline.jsonl, summary.md, checks.json, screenshots, recordings, traces, and optional state dumps under .puppet-master/evidence/gui-automation/<run_id>/.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_automation_evidence_run_layout
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: gui_automation_evidence_run_layout
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0045
+preserved_exact_tokens:
+- manifest.json
+- timeline.jsonl
+- summary.md
+- checks.json
+- run.webm
+- run.mp4
+- trace.zip
+- .puppet-master/evidence/gui-automation/<run_id>/
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-080 - Manifest Metadata And Chat Cards
+
+```yaml
+plan_unit_id: N2-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: manifest.json records run identity, timing, status, tool name/version, artifact paths, stable artifact metadata including hashes and render hints, optional step/test/timeline linkage, and pre-ranked chat_cards[] for fast chat rendering.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: manifest_metadata_chat_cards
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: manifest_metadata_chat_cards
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0045
+preserved_exact_tokens:
+- schema_id
+- artifact_id
+- mime_type
+- sha256
+- chat_cards[]
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-081 - Timeline Linkage And Manifest Schema Boundary
+
+```yaml
+plan_unit_id: N2-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: timeline.jsonl events should reference artifact_ids[]; manifest.json validates against Plans/gui_automation_manifest.schema.json with SchemaID:pm.gui_automation_manifest.schema.v1, and Plans/evidence.schema.json remains unextended by this plan.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: timeline_manifest_schema_boundary
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: timeline_manifest_schema_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0045
+preserved_exact_tokens:
+- artifact_ids[]
+- Plans/gui_automation_manifest.schema.json
+- SchemaID:pm.gui_automation_manifest.schema.v1
+- Plans/evidence.schema.json
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/evidence.schema.json remains the evidence bundle schema and is not extended by this plan.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:pm.gui_automation_manifest.schema.v1, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2'
+```
+
+### N2-082 - Chat Evidence Media Render Order
+
+```yaml
+plan_unit_id: N2-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: 'Chat renders evidence media in order: inline image card for image artifacts, inline video player for supported WebM/MP4 with poster and controls, playable link fallback for video failure, and download link fallback for traces, zips, and state dumps.'
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: chat_evidence_media_render_order
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: chat_evidence_media_render_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0046
+preserved_exact_tokens:
+- Inline image card
+- Inline video player
+- Playable link fallback
+- Download link fallback
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-083 - Chat Rendering Rules And MCP Typed Content
+
+```yaml
+plan_unit_id: N2-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: 'Chat evidence shows a compact structured header, prioritizes first failure screenshot plus nearest recording segment, avoids base64 in normal chat, uses deterministic preview fallback text, and may render MCP type: image or type: resource content with MIME-aware handling.'
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: chat_rendering_mcp_typed_content
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: chat_rendering_mcp_typed_content
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0046
+preserved_exact_tokens:
+- Media preview unavailable
+- 'type: image'
+- 'type: resource'
+negative_constraints:
+- Normal chat should prefer path/resource references over base64.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-084 - GUI Scenario Evidence Capture Lifecycle
+
+```yaml
+plan_unit_id: N2-084
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: gui_run_scenario creates the run folder, initializes manifest/timeline, records step start/pass/fail events with artifact linkage, captures screenshots and optional recordings/traces, writes summary/checks, finalizes chat_cards, and lets chat load artifacts lazily from the manifest.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_scenario_evidence_capture_lifecycle
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: gui_scenario_evidence_capture_lifecycle
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0047
+preserved_exact_tokens:
+- gui_run_scenario
+- step.started
+- step.passed|step.failed
+- artifact_ids[]
+- chat_cards
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+### N2-085 - Playwright Evidence Attachment Interop
+
+```yaml
+plan_unit_id: N2-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Playwright-based capture keeps attachment metadata such as contentType and file path aligned with report attachment semantics so evidence remains portable across reporters.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: playwright_evidence_attachment_interop
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: playwright_evidence_attachment_interop
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0047
+preserved_exact_tokens:
+- Playwright
+- contentType
+- report attachments
+negative_constraints: []
+compatibility_only_notes:
+- Playwright attachment metadata is compatibility/interoperability guidance.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 5187-5198 >>>
+### N2-086 - Evidence Media Doctor Checks
+
+```yaml
+plan_unit_id: N2-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Doctor Evidence Media checks validate required layout files, artifact path/hash/MIME integrity, timeline artifact references, renderability for failed runs, fallback link generation, chat-card quality, and emit doctor.evidence_media.checked with PASS/FAIL and remediation.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []

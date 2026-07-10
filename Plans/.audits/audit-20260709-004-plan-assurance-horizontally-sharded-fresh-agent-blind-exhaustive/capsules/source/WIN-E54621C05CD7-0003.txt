@@ -1,0 +1,341 @@
+<<< CONTEXT_BEFORE 769-780 >>>
+- Global
+- overrides global per-formatter
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Formatters_System.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plugins_System.md#PLUGIN-CONFIG'
+```
+
+
+<<< AUTHORITATIVE_CORE 781-1106 >>>
+### FS-011 - Formatters Settings Tab Controls
+
+```yaml
+plan_unit_id: FS-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: The unified Settings page exposes a dedicated Formatters tab with a global enable toggle, built-in and custom formatter table, detected/not found/disabled/custom status, expandable command/environment/extensions editors, reset-to-default controls, custom formatter add/remove workflows, validation, and Global/Project scope selection.
+gui_related: true
+gui_classification_reason: This unit defines a user-visible Settings tab, controls, form fields, table columns, and validation behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: formatter_drift
+reasoning_tier: standard
+context_scope: formatters_standardization
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: formatters_settings_tab_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0018
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0019
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0024
+preserved_exact_tokens:
+- GUI-FORMATTERS
+- AC-FMT07
+- Settings page
+- Formatters tab
+- Enable formatters
+- Name, Extensions, Status
+- detected/not found/disabled/custom
+- Command
+- Environment
+- Reset to defaults
+- Add formatter
+- Remove
+- Global and Project config
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Formatters_System.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md'
+- 'ContractRef: ContractName:Plans/Formatters_System.md, ContractName:Plans/Progression_Gates.md'
+```
+
+### FS-012 - Formatter Interaction Mode Copy
+
+```yaml
+plan_unit_id: FS-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: 'Formatter UI follows the app-level Expert/ELI5 interaction mode: ELI5 shows the formatter list with enable/disable toggles only, while Expert exposes command, environment, and extension editing and uses tooltip.formatters.* copy keys.'
+gui_related: true
+gui_classification_reason: This unit defines visible UI copy and mode-dependent control exposure.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: formatter_drift
+reasoning_tier: standard
+context_scope: formatters_standardization
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: formatter_interaction_mode_copy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0020
+preserved_exact_tokens:
+- ELI5
+- Expert
+- Interaction Mode
+- tooltip.formatters.*
+- enable/disable toggles only
+- Command, environment, and extension editing are hidden
+- Full view with all sections visible
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Formatters_System.md
+```
+
+### FS-013 - OpenCode Formatter Baseline
+
+```yaml
+plan_unit_id: FS-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: 'The OpenCode formatter baseline records automatic File.Event.Edited handling, binary/config-file detection, formatter: false global disable, per-formatter { disabled, command, environment, extensions } config, $FILE placeholder behavior, and custom formatter config.'
+gui_related: false
+gui_classification_reason: This unit records external baseline behavior for comparison, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: formatter_drift
+reasoning_tier: standard
+context_scope: formatters_standardization
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: opencode_formatter_baseline
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0021
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0022
+preserved_exact_tokens:
+- BASELINE-DELTAS
+- OpenCode
+- File.Event.Edited
+- binary checks
+- config file presence
+- 'formatter: false'
+- '{ disabled, command, environment, extensions }'
+- $FILE
+- Custom formatters
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Formatters_System.md
+```
+
+### FS-014 - Puppet Master Runtime And Evidence Deltas
+
+```yaml
+plan_unit_id: FS-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: Puppet Master differs from OpenCode by implementing formatter triggers through Rust internal event dispatch after hosted tool writes/edits, resolving binaries with the which crate or path_utils::resolve_executable, recording formatter diff evidence, and enforcing HTE-only formatter execution.
+gui_related: false
+gui_classification_reason: This unit defines runtime, detection, evidence, and execution-strategy deltas, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: formatter_drift
+reasoning_tier: standard
+context_scope: formatters_standardization
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: puppet_master_formatter_runtime_evidence_deltas
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0023
+preserved_exact_tokens:
+- Event-driven trigger in Rust
+- Formatter auto-detection in Rust
+- which crate
+- path_utils::resolve_executable
+- Evidence tracking
+- format.applied
+- HTE-only enforcement
+- provider CLI
+negative_constraints:
+- DAE delegates formatting to the provider CLI.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Runtime formatter event dispatch and evidence deltas remain owned by Plans/Formatters_System.md; provider execution-strategy behavior remains cross-referenced to Run_Modes.
+owner_hints:
+- Plans/Formatters_System.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+```
+
+### FS-015 - Puppet Master Formatter GUI Delta
+
+```yaml
+plan_unit_id: FS-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: Puppet Master adds a GUI delta absent from OpenCode by providing a dedicated Formatters settings tab with per-formatter config editing.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible GUI delta for formatter configuration.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: formatter_drift
+reasoning_tier: standard
+context_scope: formatters_standardization
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: puppet_master_formatter_gui_delta
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0023
+preserved_exact_tokens:
+- GUI settings
+- OpenCode has no GUI
+- dedicated Formatters settings tab
+- per-formatter config editing
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Formatters_System.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+```
+
+### FS-001 - Formatters System Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: FS-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Formatters_System.md
+canonical_text: The former Formatters_System doc-level source-preserving bridge is retired after Phase 2B atomized Formatters_System-S0001 through Formatters_System-S0024 into FS-002 through FS-015 and structurally dispositioned Formatters_System-S0025, S0026, and S0028. FS-001 remains only as migration lineage for Formatters_System-S0027 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.
+gui_related: false
+gui_classification_reason: This retired bridge records migration lineage only; product GUI coverage is owned by fine-grained FS-011, FS-012, and FS-015.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- FS-001 no longer uses source_preserving_planunit compile mode.
+- FS-002 through FS-015 own product coverage for Formatters_System-S0001 through Formatters_System-S0024.
+- Formatters_System-S0025, S0026, and S0028 are structural owner-map, PlanUnits-heading, and Migration Coverage dispositions.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- Plans/Formatters_System.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0027
+preserved_exact_tokens:
+- FS-001
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- Formatters_System-S0001
+- Formatters_System-S0028
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- FS-001 must not re-own Formatters_System-S0001 through Formatters_System-S0024 product coverage.
+- FS-001 must not use node_compile_hint.mode=source_preserving_planunit.
+- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.
+compatibility_only_notes:
+- FS-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+stale_retired_dispositions:
+- The broad Formatters_System source-preserving bridge was retired in Phase 2B batch 075.
+owner_boundary_notes:
+- FS-002 through FS-015 own Formatters_System product coverage for Formatters_System-S0001 through Formatters_System-S0024.
+- Formatters_System-S0025, S0026, and S0028 are structural/coverage dispositions, not product coverage owned by FS-001.
+owner_hints:
+- Plans/Formatters_System.md
+```
+
+## Migration Coverage
+
+Original hash: `841153deb0b40a91ed918a8627949361b605326365dffbe4a2a5b2eb5e09c592`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 075 atomized `Formatters_System-S0001` through `Formatters_System-S0024` into `FS-002` through `FS-015`, with mixed GUI/runtime spans split where safe. `Formatters_System-S0025`, `Formatters_System-S0026`, and `Formatters_System-S0028` are structural owner-map, PlanUnits-heading, and Migration Coverage dispositions. `Formatters_System-S0027` maps to retired bridge lineage `FS-001`; `FS-001` no longer uses source-preserving compile mode, and `Plans/Formatters_System.md` has no remaining source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime formatter rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-52b912e858e3f723a8838777`: formatter registration order is deterministic: built-in formatters in documented order, then project formatters sorted by `formatter_id`, then user/global formatters sorted by `formatter_id`. Ties are invalid and must fail validation with `duplicate_formatter_id`.

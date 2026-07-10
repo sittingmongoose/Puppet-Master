@@ -1,0 +1,196 @@
+<script id="pm6-js-usage">
+/* ============================================================
+   PMConcept6 — Usage page demo wiring (owner: usage agent)
+   Part 18 owns the renderers and exposes window.PM6_USAGE.
+   This block registers every usage.* demo action with PM_DEMO
+   and subscribes to the engine bus (usage.tick / usage.alert /
+   page.changed). Defensive throughout: works standalone if the
+   engine or the page surface is missing.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  function U() { return window.PM6_USAGE || null; }
+  function PD() { return window.PM_DEMO || null; }
+
+  function init() {
+    var pd = PD(), u = U();
+    if (!pd || !pd.actions || !pd.actions.register || !u) return false;
+
+    /* ---------------- action handlers (delegated [data-demo-action] router) ---------------- */
+    var reg = pd.actions.register;
+
+    reg('usage.refresh', function () {
+      u.spinRefresh();
+      return { toast: 'Re-reading usage from every provider route. Normalized UsageRecords also refresh on their own every 5 minutes.' };
+    });
+
+    reg('usage.export_json', function () {
+      return u.exportJson('snapshot')
+        ? { toast: 'Usage snapshot downloaded — tastebook-usage.json (demo data, normalized UsageRecords).' }
+        : { toast: 'Export hiccuped — try it again.' };
+    });
+
+    reg('usage.ledger_json', function () {
+      return u.exportJson('ledger')
+        ? { toast: 'Filtered ledger downloaded — tastebook-usage-ledger.json. usage_event_refs are included per row.' }
+        : { toast: 'Export hiccuped — try it again.' };
+    });
+
+    reg('usage.switch_account', function (ctx) {
+      var mail = ctx && ctx.arg;
+      var d = u.data;
+      var target = null;
+      (d.accounts || []).forEach(function (a) { if (a.mail === mail) target = target || a; });
+      if (!target) return { toast: 'That account is not in the demo roster.' };
+      if (target.disabledReason) return { disabled: true, reason: target.disabledReason };
+      if (target.effective) return { disabled: true, reason: 'already_done' };
+      d.accounts.forEach(function (a) {
+        if (a === target) {
+          a.effective = true; a.dot = 'working';
+          a.status = 'Working &mdash; picked up the active node just now';
+        } else if (a.effective) {
+          a.effective = false; a.dot = 'standby';
+          a.status = 'Standing by &mdash; released the effective slot at your request';
+        }
+      });
+      u.rerender('multi_account');
+      u.injectIcons();
+      u.appendLedger({
+        ev: 'switch', run: 'pcr-47', lane: '&mdash;', prov: target.prov, model: '&mdash;',
+        acct: mail, tin: 0, tout: 0, cin: 0, cw: 0, cr: 0, rep: 'measured', cost: 0, lat: '&mdash;',
+        detail: { Event: 'manual account switch &rarr; ' + mail, Reason: 'user_request', Effect: 'requested account unchanged; effective account updated' }
+      });
+      return { toast: 'Effective account is now ' + mail + ' — your requested account is unchanged, and cost lands on the effective one.' };
+    });
+
+    var acked = {};
+    reg('usage.alert_ack', function (ctx) {
+      var id = (ctx && ctx.arg) || 'alert';
+      if (acked[id]) return { disabled: true, reason: 'already_done' };
+      acked[id] = true;
+      return { toast: 'Acknowledged — the warning stays visible here but stops raising a card on the Dashboard.' };
+    });
+
+    reg('usage.alert_snooze', function (ctx) {
+      var id = (ctx && ctx.arg) || 'alert';
+      if (acked['snooze:' + id]) return { disabled: true, reason: 'already_done' };
+      acked['snooze:' + id] = true;
+      return { toast: 'Snoozed for 1 hour — it returns if Copilot is still over the line at 15:42.' };
+    });
+
+    reg('usage.alert_route', function () {
+      if (acked['route']) return { disabled: true, reason: 'already_done' };
+      acked['route'] = true;
+      return { toast: 'New frontend work now prefers Codex (Plus plan) until the Copilot window resets at 17:05.' };
+    });
+
+    reg('usage.anomaly_keep', function () {
+      return { toast: 'Guard confirmed — token_spike on node n-19 stays blocked; the run continues from its safe point.' };
+    });
+
+    var allowedOnce = false;
+    reg('usage.anomaly_allow', function () {
+      if (allowedOnce) return { disabled: true, reason: 'already_done' };
+      allowedOnce = true;
+      u.appendLedger({
+        ev: 'guard', run: 'pcr-47', lane: 'lane-b-api', prov: 'Claude', model: 'claude-sonnet-4',
+        acct: 'dev@tastebook.app', tin: 0, tout: 0, cin: 0, cw: 0, cr: 0, rep: 'measured', cost: 0, lat: '&mdash;',
+        detail: { Guard: 'token_spike allowed once (user override)', Scope: 'this spike only &mdash; the 3.0&times;/1h rule stays armed' }
+      });
+      return { toast: 'Allowed once — this spike may spend; the next identical one gets blocked again.' };
+    });
+
+    reg('usage.drill', function (ctx) {
+      var ref = (ctx && ctx.arg) || '';
+      try { if (window.PM_PAGES && window.PM_PAGES.go) window.PM_PAGES.go('orchestrator'); } catch (e) {}
+      return { toast: 'Opened in Orchestrator — the drill-through kept usage_event_ref ' + (ref || '(unknown)') + '.' };
+    });
+
+    /* ---------------- bus subscriptions ---------------- */
+    if (typeof pd.on === 'function') {
+      /* engine ledger rows use normalized UsageRecord field names; map to the page row shape */
+      var EV_MAP = { worker_turn: 'completion', auditor_review: 'completion', plan_compile: 'completion', chat_turn: 'completion', subagent_turn: 'completion', account_switch: 'switch' };
+      function mapEngineRow(er) {
+        var rep = er.cacheState || 'measured';
+        var unsup = rep === 'unsupported';
+        return {
+          ref: er.id || undefined, /* engine id doubles as the usage_event_ref — preserved on drill-through */
+          ev: EV_MAP[er.event] || 'completion',
+          run: 'pcr-47', lane: er.lane || '&mdash;',
+          prov: er.platform || '&mdash;', model: er.model || '&mdash;',
+          acct: 'dev@tastebook.app',
+          tin: er.tokensIn || 0, tout: er.tokensOut || 0,
+          cin: unsup ? null : (er.cachedInput || 0),
+          cw: unsup ? null : (er.cacheWrite || 0),
+          cr: unsup ? null : (er.cacheRead || 0),
+          rep: rep, cost: parseFloat(er.cost) || 0, lat: '&mdash;',
+          detail: { 'UsageRecord event': er.event || '&mdash;', Source: 'demo engine &middot; normalized UsageRecord' }
+        };
+      }
+
+      var seen = {};
+      /* mark the engine's seed backlog as seen so we only append genuinely new rows */
+      try {
+        var s0 = pd.state && pd.state.usage && pd.state.usage.ledger;
+        if (Array.isArray(s0)) s0.forEach(function (er) { if (er && er.id) seen[er.id] = true; });
+      } catch (e0) {}
+
+      var lastQuotaSig = '';
+      pd.on('usage.tick', function (p) {
+        try {
+          if (!p || !U()) return;
+          if (typeof p.cooldownSec === 'number') U().setCooldown(p.cooldownSec);
+          if (Array.isArray(p.ledger)) {
+            p.ledger.slice(-4).forEach(function (er) {
+              if (!er || !er.id || seen[er.id]) return;
+              seen[er.id] = true;
+              U().appendLedger(mapEngineRow(er));
+            });
+          }
+          /* re-render quotas only when a percentage actually moved (avoids bar flicker) */
+          if (Array.isArray(p.quotas)) {
+            var sig = p.quotas.map(function (q) { return q.id + ':' + Math.round(q.pct || 0); }).join('|');
+            if (sig !== lastQuotaSig) {
+              lastQuotaSig = sig;
+              U().rerender('quota_summary');
+              U().injectIcons();
+            }
+          }
+        } catch (e) { try { console.error('[pm6-js-usage] tick', e); } catch (e2) {} }
+      });
+
+      pd.on('usage.alert', function (p) {
+        try {
+          if (!U()) return;
+          if (p && p.kind === 'account_switch') {
+            U().rerender('multi_account');
+            U().injectIcons();
+          } else {
+            U().rerender('alert_thresholds');
+            U().injectIcons();
+          }
+        } catch (e) { try { console.error('[pm6-js-usage] alert', e); } catch (e2) {} }
+      });
+
+      pd.on('page.changed', function (p) {
+        try {
+          if (p && p.page === 'usage' && U()) U().injectIcons();
+        } catch (e) {}
+      });
+    }
+
+    /* icons may have loaded after part 18's inline script ran */
+    try { u.injectIcons(); } catch (e1) {}
+    return true;
+  }
+
+  /* the engine block is assembled before this one, but stay defensive about order */
+  if (!init()) {
+    var tries = 0;
+    var t = setInterval(function () {
+      if (init() || ++tries > 20) clearInterval(t);
+    }, 250);
+  }
+})();
+</script>

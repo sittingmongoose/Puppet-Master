@@ -1,0 +1,1550 @@
+<script id="pm6-js-orchestrator">
+/* PMConcept6 — Orchestrator page renderer (owner: orchestrator agent).
+   Consumes PM_DEMO (bus/state/facades) only; never mutates engine state
+   directly. Seven tabs: Progress | Plan Compile | Seams | Node Graph |
+   Evidence | History | Ledger. */
+(function () {
+  'use strict';
+
+  var root = document.getElementById('panel-orchestrator');
+  if (!root) return;
+
+  /* ---------- helpers ---------- */
+  function $(id) { return document.getElementById(id); }
+  function $q(sel, scope) { return (scope || root).querySelector(sel); }
+  function $qa(sel, scope) { return Array.prototype.slice.call((scope || root).querySelectorAll(sel)); }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function say(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+  function D() { return window.PM_DEMO || null; }
+  function ST() { var d = D(); return d && d.state ? d.state : null; }
+  function DATA() { var d = D(); return d && d.data ? d.data : null; }
+  function safe(fn, tag) {
+    return function () {
+      try { return fn.apply(null, arguments); }
+      catch (e) { try { console.error('[pm6-orch]', tag || 'render', e); } catch (e0) {} }
+    };
+  }
+  function ico(key) {
+    var m = window.PM_ICONS || {};
+    return '<span class="pm6-ico" aria-hidden="true">' + (m[key] || m.gear || '') + '</span>';
+  }
+  function hydrateIcons(scope) {
+    var m = window.PM_ICONS;
+    if (!m) return;
+    $qa('.pm6-ico[data-ico]', scope || root).forEach(function (el) {
+      var k = el.getAttribute('data-ico');
+      if (m[k]) { el.innerHTML = m[k]; el.removeAttribute('data-ico'); }
+    });
+  }
+  function hashStr(s) {
+    var h = 0;
+    for (var i = 0; i < s.length; i++) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; }
+    return Math.abs(h);
+  }
+  function fmtClock(sec) {
+    sec = Math.max(0, Math.round(sec));
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+  }
+  function chip(text, tone) {
+    return '<span class="pm6-orch-chip"' + (tone ? ' data-tone="' + tone + '"' : '') + '>' + esc(text) + '</span>';
+  }
+  function dot(state) { return '<span class="pm6-orch-dot" data-state="' + esc(state) + '"></span>'; }
+
+  /* closed-vocab disabled-reason copy + recovery hints (display only) */
+  var REASON_HINT = {
+    unsupported: 'Not supported in this build.',
+    not_configured: 'Not configured — connect it in Settings first.',
+    busy: 'Another operation is still running — let it finish first.',
+    blocked_by_gate: 'Blocked by an open approval gate — resolve it below or in Chat.',
+    already_done: 'Already done — nothing new to apply.',
+    stale: 'Projection is stale — wait for it to refresh before mutating.',
+    demo_scope: 'Outside the Tastebook demo script.'
+  };
+
+  /* ---------- run meta (deterministic display-only derivations) ---------- */
+  var LANE_META = {
+    'lane-a': { provider: 'Claude', model: 'Sonnet 4.6', persona: 'worker-data', effort: 'medium' },
+    'lane-b': { provider: 'Claude', model: 'Opus 4.6', persona: 'worker-backend', effort: 'high' },
+    'lane-c': { provider: 'Cursor', model: 'composer-2', persona: 'worker-frontend', effort: 'medium' },
+    'lane-d': { provider: 'Codex', model: 'GPT-5.2', persona: 'worker-infra', effort: 'medium' }
+  };
+  var SAFE_POINTS = { 'n-13': 'sp-47a9', 'n-19': 'sp-47c2' };
+  function safePointOf(nodeId) {
+    return SAFE_POINTS[nodeId] || ('sp-47' + nodeId.replace('n-', ''));
+  }
+  function nodeMeta(n) {
+    var lm = LANE_META[n.lane] || LANE_META['lane-a'];
+    var h = hashStr(n.id + n.label);
+    var switched = false;
+    var st = ST();
+    if (st && st.run.accountSwitches.length && lm.provider === 'Claude') switched = true;
+    return {
+      provider: lm.provider, model: lm.model, persona: lm.persona,
+      effort: (n.id === 'n-13' || n.id === 'n-19') ? 'high' : lm.effort,
+      accountReq: 'jared-dev',
+      accountEff: switched ? 'jared-burst' : 'jared-dev',
+      tokensIn: 2400 + h % 9200,
+      tokensOut: 700 + h % 3400,
+      cost: (0.01 + (h % 90) / 1000).toFixed(3),
+      safePoint: safePointOf(n.id)
+    };
+  }
+  function laneLabel(laneId) {
+    var d = DATA();
+    if (!d) return laneId;
+    for (var i = 0; i < d.run.lanes.length; i++) if (d.run.lanes[i].id === laneId) return d.run.lanes[i].label;
+    return laneId;
+  }
+  function laneSpec(laneId) {
+    var d = DATA();
+    if (!d) return null;
+    for (var i = 0; i < d.run.lanes.length; i++) if (d.run.lanes[i].id === laneId) return d.run.lanes[i];
+    return null;
+  }
+  function seamOfLane(laneId) {
+    var d = DATA();
+    if (!d) return null;
+    for (var i = 0; i < d.run.seams.length; i++) {
+      if (d.run.seams[i].lanes.indexOf(laneId) !== -1) return d.run.seams[i];
+    }
+    return null;
+  }
+  var PKG_NAMES = ['core', 'services', 'ops'];
+  function pkgOfCol(laneId, col) {
+    var slot = col <= 3 ? 0 : (col <= 6 ? 1 : 2);
+    return laneLabel(laneId) + '-' + PKG_NAMES[slot];
+  }
+  function isProblem(stateName) {
+    return stateName === 'attention_required' || stateName === 'blocked' || stateName === 'recovering';
+  }
+  function hist() {
+    var st = ST();
+    return !!(st && st.run.focusMode === 'historical');
+  }
+  function focusedId() {
+    var st = ST();
+    return (st && (st.run.focusedRunId || st.run.id)) || 'pcr-47';
+  }
+  function lockedHtml(msg) {
+    return '<div class="pm6-orch-locked">' + ico('telescope') +
+      '<span>' + esc(msg || 'Historical snapshot — live telemetry is paused for this widget.') + '</span>' +
+      '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusLive">Back to live ' + esc((ST() && ST().run.id) || 'pcr-47') + ' &#8594;</button></div>';
+  }
+
+  /* ---------- dirty-flag render scheduler ---------- */
+  var dirty = {}, rafPending = false;
+  var RENDERERS = {};
+  function mark() {
+    for (var i = 0; i < arguments.length; i++) dirty[arguments[i]] = true;
+    if (rafPending) return;
+    rafPending = true;
+    var raf = window.requestAnimationFrame || function (f) { setTimeout(f, 32); };
+    raf(function () {
+      rafPending = false;
+      var keys = Object.keys(dirty);
+      dirty = {};
+      keys.forEach(function (k) { if (RENDERERS[k]) RENDERERS[k](); });
+    });
+  }
+  function markAll() {
+    mark('header', 'progress', 'plancompile', 'seams', 'graph', 'evidence', 'history', 'ledger');
+  }
+
+  /* ---------- header + banners + tab badges ---------- */
+  var elapsedStart = null, elapsedEnd = null;
+  RENDERERS.header = safe(function () {
+    var st = ST();
+    if (!st) return;
+    var run = st.run;
+    var chipId = $('pm6OrchRunChipId'), modeEl = $('pm6OrchRunMode');
+    if (chipId) chipId.textContent = focusedId();
+    if (modeEl) {
+      modeEl.textContent = run.focusMode === 'historical' ? 'historical' : 'live';
+      modeEl.setAttribute('data-mode', run.focusMode === 'historical' ? 'historical' : 'live');
+    }
+    var badge = $('pm6OrchStatusBadge');
+    if (badge) {
+      var stage = run.stage || 'idle';
+      var label = !st.clock.playing && stage !== 'complete' ? 'Paused'
+        : stage === 'idle' ? 'Ready'
+        : stage === 'pending-launch' ? 'Pending launch'
+        : stage === 'compiling' ? 'Compiling'
+        : stage === 'executing' ? 'Running'
+        : stage === 'blocked' ? 'Blocked'
+        : stage === 'complete' ? 'Complete' : stage;
+      badge.textContent = label;
+      badge.setAttribute('data-state',
+        !st.clock.playing && stage !== 'complete' ? 'paused'
+        : stage === 'executing' ? 'running' : stage);
+    }
+    /* freshness */
+    var fr = run.freshness || 'current';
+    var fchip = $('pm6OrchFreshChip'), flabel = $('pm6OrchFreshLabel'), fban = $('pm6OrchFreshBanner');
+    if (fchip) fchip.setAttribute('data-fresh', fr);
+    if (flabel) flabel.textContent = 'Projection: ' + fr;
+    if (fban) fban.hidden = fr === 'current';
+    /* historical banner */
+    var hban = $('pm6OrchHistBanner'), htext = $('pm6OrchHistBannerText');
+    if (hban) hban.hidden = !hist();
+    if (htext && hist()) {
+      htext.textContent = 'Viewing ' + focusedId() + ' — read-only historical snapshot. Controls that mutate the run are parked.';
+    }
+    /* pause / resume */
+    var pb = $('pm6OrchPauseBtn'), rb = $('pm6OrchResumeBtn');
+    if (pb && rb) {
+      var playing = !!st.clock.playing;
+      if (hist()) {
+        pb.disabled = true; rb.disabled = true;
+        pb.setAttribute('data-reason', 'stale'); rb.setAttribute('data-reason', 'stale');
+        pb.title = 'stale — historical snapshot; focus the live run to control it';
+        rb.title = pb.title;
+      } else {
+        pb.disabled = !playing;
+        rb.disabled = playing;
+        pb.setAttribute('data-reason', playing ? '' : 'already_done');
+        rb.setAttribute('data-reason', playing ? 'already_done' : '');
+        pb.title = playing ? 'Pause the focused run at the next safe point' : 'already_done — ' + REASON_HINT.already_done;
+        rb.title = playing ? 'already_done — run is already live' : 'Resume the paused run';
+      }
+    }
+    /* elapsed */
+    var stage2 = run.stage;
+    if (stage2 && stage2 !== 'idle' && stage2 !== 'pending-launch' && elapsedStart === null) {
+      var guess = stage2 === 'complete' ? 110000 : (stage2 === 'compiling' ? 2000 : 45000);
+      elapsedStart = st.clock.t - guess;
+    }
+    if (stage2 === 'complete' && elapsedEnd === null && elapsedStart !== null) elapsedEnd = st.clock.t;
+    var eEl = $('pm6OrchElapsed');
+    if (eEl) {
+      eEl.textContent = elapsedStart === null ? '--:--'
+        : fmtClock(((elapsedEnd === null ? st.clock.t : elapsedEnd) - elapsedStart) / 1000);
+    }
+    /* tab badges */
+    var gates = run.gates || {};
+    var pending = Object.keys(gates).filter(function (k) { return gates[k].state === 'attention_required'; }).length;
+    var bp = $('orchTabBadgeProgress');
+    if (bp) bp.textContent = pending ? String(pending) : '';
+    var attn = false;
+    Object.keys(run.nodes || {}).forEach(function (k) { if (isProblem(run.nodes[k].state)) attn = true; });
+    var bg = $('orchTabBadgeNodeGraph');
+    if (bg) bg.style.display = attn ? 'inline-block' : 'none';
+    var be = $('orchTabBadgeEvidence');
+    if (be) be.textContent = String(evidenceRows().length);
+    var bl = $('orchTabBadgeLedger');
+    var d = D();
+    if (bl) bl.textContent = d && d.log ? String(d.log.length) : '';
+  }, 'header');
+
+  /* ---------- Progress widgets ---------- */
+  function laneRowsHtml() {
+    var st = ST(), out = '';
+    if (!st) return out;
+    st.run.lanes.forEach(function (l) {
+      var pct = l.total ? Math.round(l.done / l.total * 100) : 0;
+      var tone = l.state === 'complete' ? 'ok' : (l.state === 'running' ? 'run' : 'mut');
+      out += '<div class="pm6-orch-row">' + dot(l.state === 'running' ? 'running' : (l.state === 'complete' ? 'complete' : 'queued')) +
+        '<div class="pm6-orch-row-main"><div class="pm6-orch-row-title">' + esc(l.label) + '</div>' +
+        '<div class="pm6-orch-row-sub">worktree ' + esc(l.worktree) + '</div></div>' +
+        '<div class="pm6-orch-bar" style="max-width:130px"><i style="width:' + pct + '%"' + (l.state === 'complete' ? ' data-state="complete"' : '') + '></i></div>' +
+        chip(l.done + '/' + l.total, tone) + '</div>';
+    });
+    return out;
+  }
+  RENDERERS.progress = safe(function () {
+    var st = ST(), d = DATA();
+    if (!st || !d) return;
+    var run = st.run;
+
+    /* CTA slot */
+    var slot = $('pm6OrchCtaSlot');
+    if (slot) {
+      var html = '';
+      if (hist()) {
+        html += '<div class="pm6-orch-cta" data-severity="info">' + ico('telescope') +
+          '<div class="pm6-orch-cta-text"><div class="pm6-orch-cta-title">Historical focus: ' + esc(focusedId()) + '</div>' +
+          '<div class="pm6-orch-cta-body">This is a durable snapshot. Nothing here mutates — switch back to the live run to act.</div></div>' +
+          '<div class="pm6-orch-cta-actions"><button type="button" class="pm6-orch-ctl pm6-orch-ctl-primary" data-demo-action="orch.focusLive">Back to live</button></div></div>';
+      } else {
+        (st.dash.ctas || []).forEach(function (c) {
+          if (c.id !== 'cta-gate' && c.id !== 'cta-safepoint') return;
+          var sev = c.severity === 'blocked' ? 'blocked' : 'attn';
+          var actions = '';
+          if (c.id === 'cta-gate') {
+            actions = '<button type="button" class="pm6-orch-ctl pm6-orch-ctl-primary" data-demo-action="run.approve_gate" data-command="cmd.runtime.approve">Approve</button>' +
+              '<button type="button" class="pm6-orch-ctl" data-demo-action="run.decline_gate">Decline</button>';
+          } else {
+            actions = '<button type="button" class="pm6-orch-ctl pm6-orch-ctl-primary" data-demo-action="orch.safePointOpen" data-demo-arg="n-13" data-command="cmd.orchestrator.safe_point_retry">Retry from safe point</button>';
+          }
+          html += '<div class="pm6-orch-cta" data-severity="' + sev + '">' + ico(c.id === 'cta-gate' ? 'warning' : 'restart') +
+            '<div class="pm6-orch-cta-text"><div class="pm6-orch-cta-title">' + esc(c.title) + '</div>' +
+            '<div class="pm6-orch-cta-body">' + esc(c.body || '') + '</div></div>' +
+            '<div class="pm6-orch-cta-actions">' + actions + '</div></div>';
+        });
+      }
+      slot.innerHTML = html;
+    }
+
+    /* run-overview */
+    var ov = $('pm6OrchWRunOverview'), ovK = $('pm6OrchWOverviewKicker');
+    if (ov) {
+      if (run.stage === 'idle') {
+        ov.innerHTML = '<div class="pm6-orch-empty">No PlanCompileRun bound yet. Approve And Build in the Planning Wizard launches one here.</div>';
+      } else if (hist()) {
+        var h = null;
+        (run.history || []).forEach(function (x) { if (x.id === focusedId()) h = x; });
+        ov.innerHTML = h
+          ? '<div class="pm6-orch-row">' + dot(h.state === 'degraded' ? 'degraded' : 'complete') +
+            '<div class="pm6-orch-row-main"><div class="pm6-orch-row-title">' + esc(h.label) + '</div>' +
+            '<div class="pm6-orch-row-sub">' + esc(h.when) + ' &middot; ' + h.nodes + ' nodes &middot; durable record</div></div>' +
+            chip(h.state, h.state === 'degraded' ? 'warn' : 'ok') + '</div>' + lockedHtml('Summary only — the full execution tree lives in the durable ledger.')
+          : lockedHtml();
+      } else {
+        var html2 = '';
+        d.run.seams.forEach(function (sm) {
+          var tot = 0, done = 0, laneHtml = '';
+          sm.lanes.forEach(function (laneId) {
+            var lane = null;
+            run.lanes.forEach(function (l) { if (l.id === laneId) lane = l; });
+            if (!lane) return;
+            tot += lane.total; done += lane.done;
+            var pct = lane.total ? Math.round(lane.done / lane.total * 100) : 0;
+            laneHtml += '<div class="pm6-orch-tree-lane"><b>' + esc(lane.label) + '</b>' +
+              '<div class="pm6-orch-bar"><i style="width:' + pct + '%"' + (lane.done === lane.total ? ' data-state="complete"' : '') + '></i></div>' +
+              '<span class="pm6-orch-row-sub">' + lane.done + '/' + lane.total + '</span></div>';
+          });
+          var sealed = done === tot && tot > 0;
+          html2 += '<div class="pm6-orch-tree-seam"><div class="pm6-orch-tree-seam-head">' + ico('layers') + esc(sm.label) +
+            chip(sealed ? 'seam_complete' : done + '/' + tot + ' nodes', sealed ? 'ok' : 'run') + '</div>' + laneHtml + '</div>';
+        });
+        ov.innerHTML = html2;
+        hydrateIcons(ov);
+      }
+    }
+    if (ovK) ovK.textContent = run.stage === 'idle' ? 'execution tree' : run.planUnits + ' PlanUnits · 40 nodes';
+
+    /* current node */
+    var cur = $('pm6OrchWCurrentNode');
+    if (cur) {
+      if (hist()) { cur.innerHTML = lockedHtml(); }
+      else {
+        var active = null;
+        Object.keys(run.nodes).forEach(function (k) {
+          var n = run.nodes[k];
+          if (!active && (n.state === 'attention_required' || n.state === 'recovering' || n.state === 'blocked')) active = n;
+        });
+        if (!active) {
+          Object.keys(run.nodes).forEach(function (k) {
+            if (!active && run.nodes[k].state === 'running') active = run.nodes[k];
+          });
+        }
+        if (!active) {
+          cur.innerHTML = '<div class="pm6-orch-empty">' + (run.stage === 'complete'
+            ? 'Run complete — every node sealed. Nothing is executing.'
+            : 'No node running yet.') + '</div>';
+        } else {
+          var m = nodeMeta(active);
+          var logLine = active.state === 'recovering'
+            ? 'restoring ' + m.safePoint + ' &middot; attempt ' + (active.attempts + 1)
+            : active.state === 'attention_required'
+              ? 'holding for approval &middot; gate g-image-processing'
+              : 'cargo test ' + laneLabel(active.lane) + '::' + active.id.replace('-', '_') + ' &middot; streaming';
+          cur.innerHTML =
+            '<div class="pm6-orch-cur-label">' + esc(active.label) + '</div>' +
+            '<div class="pm6-orch-cur-meta">' + esc(active.id) + ' &middot; lane ' + esc(laneLabel(active.lane)) + ' &middot; ' + esc(active.state) + '</div>' +
+            '<div class="pm6-orch-kv"><span>requested &#8594; effective</span><b>' + esc(m.provider + ' ' + m.model) + '</b></div>' +
+            '<div class="pm6-orch-kv"><span>persona / effort</span><b>' + esc(m.persona + ' / ' + m.effort) + '</b></div>' +
+            '<div class="pm6-orch-kv"><span>account</span><b>' + esc(m.accountReq === m.accountEff ? m.accountEff : m.accountReq + ' &#8594; ' + m.accountEff) + '</b></div>' +
+            '<div class="pm6-orch-cur-log">' + logLine + '</div>' +
+            '<div class="pm6-orch-insp-actions"><button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.inspect" data-demo-arg="' + active.id + '">Inspect in graph</button>' +
+            '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.nodeEvidence" data-demo-arg="' + active.id + '">Open evidence</button></div>';
+        }
+      }
+    }
+
+    /* approval queue */
+    var ap = $('pm6OrchWApprovals'), apK = $('pm6OrchWApprovalsKicker');
+    if (ap) {
+      if (hist()) { ap.innerHTML = lockedHtml(); if (apK) apK.textContent = 'snapshot'; }
+      else {
+        var gates = run.gates || {}, keys = Object.keys(gates);
+        var waiting = keys.filter(function (k) { return gates[k].state === 'attention_required'; });
+        if (apK) apK.textContent = waiting.length + ' waiting';
+        if (!keys.length) {
+          ap.innerHTML = '<div class="pm6-orch-empty">No approvals pending. Gates will surface here the moment a node needs you.</div>';
+        } else {
+          var gh = '';
+          keys.forEach(function (k) {
+            var g = gates[k];
+            if (g.state === 'attention_required') {
+              gh += '<div class="pm6-orch-gate"><div class="pm6-orch-row-title">' + ico('warning') + ' ' + esc(g.label) + ' <span class="pm6-orch-mono">(' + esc(g.node) + ')</span></div>' +
+                '<div class="pm6-orch-gate-q">' + esc(g.question) + '</div>' +
+                '<div class="pm6-orch-gate-actions">' +
+                '<button type="button" class="pm6-orch-ctl pm6-orch-ctl-primary" data-demo-action="run.approve_gate" data-demo-arg="' + esc(g.id) + '">Approve</button>' +
+                '<button type="button" class="pm6-orch-ctl" data-demo-action="run.decline_gate" data-demo-arg="' + esc(g.id) + '">Decline</button>' +
+                '</div></div>';
+            } else {
+              gh += '<div class="pm6-orch-row">' + dot(g.state === 'approved' ? 'complete' : 'blocked') +
+                '<div class="pm6-orch-row-main"><div class="pm6-orch-row-title">' + esc(g.label) + '</div>' +
+                '<div class="pm6-orch-row-sub">receipt: gate ' + esc(g.state) + ' &middot; ' + esc(g.node) + '</div></div>' +
+                chip(g.state, g.state === 'approved' ? 'ok' : 'err') + '</div>';
+            }
+          });
+          ap.innerHTML = gh;
+          hydrateIcons(ap);
+        }
+      }
+    }
+
+    /* lane health */
+    var lh = $('pm6OrchWLanes');
+    if (lh) lh.innerHTML = hist() ? lockedHtml() : (run.stage === 'idle'
+      ? '<div class="pm6-orch-empty">Lanes appear when the run binds.</div>' : laneRowsHtml());
+
+    /* blocked + concerns */
+    var cw = $('pm6OrchWConcerns'), cwK = $('pm6OrchWConcernsKicker');
+    if (cw) {
+      if (hist()) { cw.innerHTML = lockedHtml(); }
+      else {
+        var concerns = [];
+        Object.keys(run.gates || {}).forEach(function (k) {
+          var g = run.gates[k];
+          if (g.state === 'declined') {
+            concerns.push({ sev: 'blocked', owner: 'User', title: g.label + ' declined', sub: 'blocked-owner: User · node ' + g.node + ' parked at ' + safePointOf(g.node), lifecycle: 'active' });
+          }
+        });
+        Object.keys(run.nodes).forEach(function (k) {
+          var n = run.nodes[k];
+          if (n.state === 'recovering') {
+            concerns.push({ sev: 'attention_required', owner: 'Recovery', title: n.label + ' recovering', sub: 'blocked-owner: Recovery · attempt ' + (n.attempts + 1) + ' from ' + safePointOf(n.id), lifecycle: 'active' });
+          } else if (n.degraded && n.state === 'complete') {
+            concerns.push({ sev: 'watch', owner: 'Package Overseer', title: n.label + ' finished degraded', sub: 'resolution_kind: accepted_risk · regression fixture added', lifecycle: 'resolved' });
+          }
+        });
+        if (run.freshness && run.freshness !== 'current') {
+          concerns.push({ sev: 'watch', owner: 'Runtime', title: 'Projection ' + run.freshness, sub: 'degraded_projection advisory — figures may lag the run', lifecycle: 'active' });
+        }
+        if (cwK) cwK.textContent = concerns.filter(function (c) { return c.lifecycle === 'active'; }).length + ' active';
+        cw.innerHTML = concerns.length ? concerns.map(function (c) {
+          var tone = c.sev === 'blocked' ? 'err' : (c.sev === 'attention_required' ? 'warn' : 'mut');
+          return '<div class="pm6-orch-row">' + dot(c.sev === 'blocked' ? 'blocked' : (c.sev === 'attention_required' ? 'attention_required' : 'degraded')) +
+            '<div class="pm6-orch-row-main"><div class="pm6-orch-row-title">' + esc(c.title) + '</div>' +
+            '<div class="pm6-orch-row-sub">' + esc(c.sub) + '</div></div>' + chip(c.lifecycle, tone) + '</div>';
+        }).join('') : '<div class="pm6-orch-empty">Nothing blocked. All concerns resolved or dismissed.</div>';
+      }
+    }
+
+    /* recovery status */
+    var rw = $('pm6OrchWRecovery'), rwK = $('pm6OrchWRecoveryKicker');
+    if (rw) {
+      if (hist()) { rw.innerHTML = lockedHtml(); }
+      else {
+        var recs = [];
+        Object.keys(run.nodes).forEach(function (k) {
+          var n = run.nodes[k];
+          if (n.state === 'recovering' || n.attempts > 0 || (n.state === 'blocked')) {
+            var done = n.state === 'complete';
+            recs.push('<div class="pm6-orch-row">' + dot(n.state) +
+              '<div class="pm6-orch-row-main"><div class="pm6-orch-row-title">' + esc(n.label) + '</div>' +
+              '<div class="pm6-orch-row-sub">safe point ' + safePointOf(n.id) + ' &middot; attempts ' + n.attempts + (n.degraded ? ' &middot; completed degraded' : '') + '</div></div>' +
+              (done
+                ? '<button type="button" class="pm6-orch-mini-btn" disabled data-reason="already_done" title="already_done — ' + REASON_HINT.already_done + '">Retry</button>'
+                : '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.safePointOpen" data-demo-arg="' + n.id + '">Retry from safe point</button>') +
+              '</div>');
+          }
+        });
+        if (rwK) rwK.textContent = recs.length ? recs.length + ' tracked' : 'stable';
+        rw.innerHTML = recs.length ? recs.join('') :
+          '<div class="pm6-orch-empty">No recoveries in flight. Safe points are being written at every node boundary.</div>';
+      }
+    }
+
+    /* account switches */
+    var aw = $('pm6OrchWAccounts');
+    if (aw) {
+      if (hist()) { aw.innerHTML = lockedHtml(); }
+      else {
+        var sw = run.accountSwitches || [];
+        var head = '<div class="pm6-orch-kv"><span>requested account</span><b>jared-dev</b></div>' +
+          '<div class="pm6-orch-kv"><span>effective account</span><b>' + (sw.length ? 'jared-burst' : 'jared-dev') + '</b></div>';
+        var rows = sw.map(function (ev) {
+          return '<div class="pm6-orch-row">' + dot('degraded') +
+            '<div class="pm6-orch-row-main"><div class="pm6-orch-row-title">' + esc(ev.from) + ' &#8594; ' + esc(ev.to) + '</div>' +
+            '<div class="pm6-orch-row-sub">t+' + ev.t + 's &middot; switch reason: ' + esc(ev.reason) + '</div></div>' +
+            chip('rate_limited', 'warn') + '</div>';
+        }).join('');
+        aw.innerHTML = head + (rows || '<div class="pm6-orch-empty">No switches this run — requested and effective accounts match.</div>');
+      }
+    }
+
+    /* attention summary */
+    var at = $('pm6OrchWAttention');
+    if (at) {
+      if (hist()) { at.innerHTML = lockedHtml(); }
+      else {
+        var counts = { attention_required: 0, blocked: 0, recovering: 0, degraded: 0, complete: 0, running: 0, queued: 0 };
+        Object.keys(run.nodes).forEach(function (k) {
+          var n = run.nodes[k];
+          counts[n.state] = (counts[n.state] || 0) + 1;
+          if (n.degraded) counts.degraded++;
+        });
+        var gatesW = Object.keys(run.gates || {}).filter(function (k) { return run.gates[k].state === 'attention_required'; }).length;
+        var level = counts.blocked ? 'blocked' : (counts.attention_required || gatesW ? 'attention_required' : (counts.recovering ? 'watch' : 'info'));
+        at.innerHTML =
+          '<div class="pm6-orch-kv"><span>escalation ladder</span><b>' + level + '</b></div>' +
+          '<div class="pm6-orch-ladder">' +
+          chip('attention ' + counts.attention_required, counts.attention_required ? 'warn' : 'mut') +
+          chip('blocked ' + counts.blocked, counts.blocked ? 'err' : 'mut') +
+          chip('recovering ' + counts.recovering, counts.recovering ? 'warn' : 'mut') +
+          chip('degraded ' + counts.degraded, counts.degraded ? 'warn' : 'mut') +
+          chip('gates waiting ' + gatesW, gatesW ? 'warn' : 'mut') +
+          chip('complete ' + counts.complete, 'ok') +
+          '</div>' +
+          (run.promotions && run.promotions.length
+            ? '<div class="pm6-orch-insp-sec" style="margin-top:var(--sm)"><h5>promotions</h5>' +
+              run.promotions.slice(-3).map(function (p) {
+                return '<div class="pm6-orch-row-sub">' + esc(p.cls) + (p.ref ? ' &middot; ' + esc(p.ref) : '') + '</div>';
+              }).join('') + '</div>'
+            : '');
+      }
+    }
+  }, 'progress');
+
+  /* ---------- Plan Compile ---------- */
+  var PU_SPLIT = [3, 3, 3, 2, 3, 3, 3, 3]; /* per topic, sums 23 */
+  function compileFeedLines() {
+    var d = DATA();
+    var lines = [{ h: 'reading <b>ApprovedPlanPack rev 12</b> &middot; topic map v9' }];
+    if (d) {
+      var pu = 0;
+      d.wizard.topics.forEach(function (t, i) {
+        var take = PU_SPLIT[i] || 3;
+        var ids = 'pu-' + (pu + 1 < 10 ? '0' + (pu + 1) : pu + 1) + '&#8230;pu-' + (pu + take < 10 ? '0' + (pu + take) : pu + take);
+        pu += take;
+        lines.push({ h: 'topic ' + t.num + ' <b>' + esc(t.title) + '</b> &#8594; <em>' + take + ' PlanUnits</em> (' + ids + ')' });
+      });
+    }
+    lines.push({ h: 'acceptance index <em>8f3a91</em> verified against PlanUnit hashes' });
+    lines.push({ h: 'seam graph sealed: <b>3 seams</b> &middot; 4 lanes &middot; 40 nodes' });
+    lines.push({ h: 'durable <b>PlanCompileRun pcr-47</b> bound &#10003;' });
+    return lines;
+  }
+  function feedTarget() {
+    var st = ST();
+    if (!st) return 0;
+    var stage = st.run.stage, units = st.run.planUnits || 0;
+    if (stage === 'idle' || stage === 'pending-launch') return 0;
+    if (stage === 'compiling') return 1 + Math.min(8, Math.floor(units / 23 * 8));
+    return 12; /* all lines */
+  }
+  var feedShown = 0, feedTimer = null;
+  function reducedMotion() {
+    try {
+      if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    } catch (e) { return false; }
+  }
+  function feedAppendUpTo(target, animate) {
+    var feed = $('pm6OrchPcFeed');
+    if (!feed) return;
+    var lines = compileFeedLines();
+    target = Math.min(target, lines.length);
+    if (feedTimer) { clearTimeout(feedTimer); feedTimer = null; }
+    if (!animate || reducedMotion()) {
+      while (feedShown < target) {
+        feed.insertAdjacentHTML('beforeend', '<div class="pm6-orch-pc-line">' + ico('check') + '<span>' + lines[feedShown].h + '</span></div>');
+        feedShown++;
+      }
+      feed.scrollTop = feed.scrollHeight;
+      return;
+    }
+    (function step() {
+      if (feedShown >= target) return;
+      feed.insertAdjacentHTML('beforeend', '<div class="pm6-orch-pc-line">' + ico('check') + '<span>' + lines[feedShown].h + '</span></div>');
+      feedShown++;
+      feed.scrollTop = feed.scrollHeight;
+      feedTimer = setTimeout(step, 240);
+    })();
+  }
+  var reconTimers = [];
+  RENDERERS.plancompile = safe(function () {
+    var st = ST();
+    if (!st) return;
+    var stage = st.run.stage;
+    var pend = $('pm6OrchPcPending'), main = $('pm6OrchPcMain');
+    var isPending = stage === 'pending-launch';
+    if (pend && main) {
+      if (isPending) {
+        pend.hidden = false; main.hidden = true;
+        if (!pend.getAttribute('data-armed')) {
+          pend.setAttribute('data-armed', '1');
+          var rows = $qa('.pm6-orch-pc-recon-row', pend);
+          rows.forEach(function (r) { r.classList.remove('is-done', 'is-active'); });
+          reconTimers.forEach(clearTimeout); reconTimers = [];
+          [300, 700, 1050].forEach(function (ms, i) {
+            reconTimers.push(setTimeout(function () {
+              if (rows[i]) { rows[i].classList.add(i === 2 ? 'is-active' : 'is-done'); }
+              if (i > 0 && rows[i - 1]) { rows[i - 1].classList.remove('is-active'); rows[i - 1].classList.add('is-done'); }
+            }, ms));
+          });
+        }
+      } else {
+        pend.hidden = true; main.hidden = false;
+        pend.removeAttribute('data-armed');
+      }
+    }
+    if (isPending) return;
+    var units = st.run.planUnits || 0;
+    var topicsDone = stage === 'compiling' ? Math.min(8, Math.floor(units / 23 * 8)) : (stage === 'idle' ? 0 : 8);
+    var seams = (units >= 23 && stage !== 'compiling') || stage === 'executing' || stage === 'complete' || stage === 'blocked' ? 3 : 0;
+    var tEl = $('pm6OrchPcTopics'), uEl = $('pm6OrchPcUnits'), sEl = $('pm6OrchPcSeams');
+    if (tEl) tEl.innerHTML = topicsDone + '<span class="pm6-orch-pc-stat-den">/8</span>';
+    if (uEl) uEl.innerHTML = units + '<span class="pm6-orch-pc-stat-den">/23</span>';
+    if (sEl) sEl.innerHTML = seams + '<span class="pm6-orch-pc-stat-den">/3</span>';
+    var bind = $('pm6OrchPcBindCard');
+    if (bind) bind.hidden = !(st.run.id && stage !== 'idle');
+    var kick = $('pm6OrchPcFeedKicker');
+    if (kick) {
+      kick.textContent = stage === 'idle' ? 'waiting for Approve And Build'
+        : stage === 'compiling' ? 'compiling · ' + units + '/23 PlanUnits'
+        : '8 topics → 23 PlanUnits → seam graph';
+    }
+    feedAppendUpTo(feedTarget(), true);
+    /* seam mini svg once */
+    var mini = $('pm6OrchPcSeamMini');
+    if (mini && !mini.firstChild && seams === 3) {
+      mini.innerHTML =
+        '<svg viewBox="0 0 230 130" xmlns="http://www.w3.org/2000/svg" class="pm6-orch-gsvg" aria-hidden="true">' +
+        '<rect x="4" y="6" width="130" height="118" rx="10" class="pm6-orch-gseam"></rect>' +
+        '<text x="14" y="24" class="pm6-orch-gseam-label">Content core</text>' +
+        '<rect x="14" y="34" width="110" height="34" rx="6" fill="none" stroke="var(--graph-planning)"></rect>' +
+        '<text x="22" y="55" class="pm6-orch-gnode-label" fill="var(--text-primary)" font-size="11">lane-a data-model</text>' +
+        '<rect x="14" y="78" width="110" height="34" rx="6" fill="none" stroke="var(--graph-planning)"></rect>' +
+        '<text x="22" y="99" class="pm6-orch-gnode-label" fill="var(--text-primary)" font-size="11">lane-b API</text>' +
+        '<rect x="148" y="6" width="78" height="55" rx="10" class="pm6-orch-gseam"></rect>' +
+        '<text x="156" y="24" class="pm6-orch-gseam-label" font-size="10">Experience</text>' +
+        '<text x="156" y="44" font-size="10" fill="var(--text-secondary)">lane-c</text>' +
+        '<rect x="148" y="69" width="78" height="55" rx="10" class="pm6-orch-gseam"></rect>' +
+        '<text x="156" y="87" class="pm6-orch-gseam-label" font-size="10">Platform</text>' +
+        '<text x="156" y="107" font-size="10" fill="var(--text-secondary)">lane-d</text>' +
+        '<path d="M134 51 L148 33" class="pm6-orch-gedge is-cross"></path>' +
+        '<path d="M134 95 L148 96" class="pm6-orch-gedge is-cross"></path>' +
+        '</svg>';
+    }
+  }, 'plancompile');
+
+  /* ---------- Seams tab ---------- */
+  var seamOpen = {};
+  RENDERERS.seams = safe(function () {
+    var st = ST(), d = DATA();
+    var wrap = $('pm6OrchSeamsList');
+    if (!wrap || !st || !d) return;
+    if (st.run.stage === 'idle') {
+      wrap.innerHTML = '<div class="pm6-orch-empty">Seam rollups appear once a PlanCompileRun binds.</div>';
+      return;
+    }
+    var html = d.run.seams.map(function (sm, si) {
+      var tot = 0, done = 0, problems = [];
+      var laneHtml = '', pkgHtml = '';
+      sm.lanes.forEach(function (laneId) {
+        var lane = null;
+        st.run.lanes.forEach(function (l) { if (l.id === laneId) lane = l; });
+        var spec = laneSpec(laneId);
+        if (!lane || !spec) return;
+        tot += lane.total; done += lane.done;
+        var pct = lane.total ? Math.round(lane.done / lane.total * 100) : 0;
+        laneHtml += '<div class="pm6-orch-tree-lane"><b>' + esc(lane.label) + '</b>' +
+          '<div class="pm6-orch-bar"><i style="width:' + pct + '%"' + (lane.done === lane.total ? ' data-state="complete"' : '') + '></i></div>' +
+          '<span class="pm6-orch-row-sub">' + lane.done + '/' + lane.total + ' &middot; ' + esc(lane.worktree) + '</span></div>';
+        /* package groups (lazy body content, built on render when open) */
+        if (seamOpen[sm.id]) {
+          for (var p = 0; p < 3; p++) {
+            var ids = (spec.nodeIds || []).slice(p === 0 ? 0 : (p === 1 ? 4 : 7), p === 0 ? 4 : (p === 1 ? 7 : 10));
+            var nodeRows = ids.map(function (nid) {
+              var n = st.run.nodes[nid];
+              if (!n) return '';
+              return '<div class="pm6-orch-pkg-node" data-demo-action="orch.inspect" data-demo-arg="' + nid + '" title="Open in Node Graph">' +
+                dot(n.state) + esc(n.label) + '<span class="pm6-orch-mono">' + nid + '</span></div>';
+            }).join('');
+            pkgHtml += '<div class="pm6-orch-pkg"><div class="pm6-orch-pkg-head">' + ico('puzzle') +
+              'package ' + esc(pkgOfCol(laneId, p === 0 ? 0 : (p === 1 ? 5 : 8))) + chip(ids.length + ' nodes', 'mut') + '</div>' +
+              '<div class="pm6-orch-pkg-nodes">' + nodeRows + '</div></div>';
+          }
+        }
+        (spec.nodeIds || []).forEach(function (nid) {
+          var n = st.run.nodes[nid];
+          if (n && (isProblem(n.state) || (n.degraded && n.state === 'complete'))) problems.push(n);
+        });
+      });
+      var sealed = tot > 0 && done === tot;
+      var probHtml = problems.length
+        ? '<div class="pm6-orch-seam-problems">' + problems.map(function (n) {
+            return chip('⚠ ' + n.id + ' ' + (n.degraded && n.state === 'complete' ? 'degraded' : n.state), n.state === 'blocked' ? 'err' : 'warn');
+          }).join('') + '</div>'
+        : '';
+      return '<div class="pm6-orch-seam-card' + (seamOpen[sm.id] ? ' is-open' : '') + '" data-seam="' + esc(sm.id) + '" style="--i:' + si + '">' +
+        '<div class="pm6-orch-seam-head" data-demo-action="orch.seamToggle" data-demo-arg="' + esc(sm.id) + '">' +
+        '<span class="pm6-orch-seam-caret">&#9654;</span>' +
+        '<div style="flex:1;min-width:0"><div class="pm6-orch-seam-title">' + esc(sm.label) + '</div>' +
+        '<div class="pm6-orch-seam-meta">' + sm.lanes.length + ' lane' + (sm.lanes.length > 1 ? 's' : '') + ' &middot; ' + done + '/' + tot + ' nodes &middot; promotion: ' +
+        (sealed ? 'seam_complete' : (done > 2 ? 'package_to_seam_available' : 'lane_to_package pending')) + '</div></div>' +
+        chip(sealed ? 'sealed' : done + '/' + tot, sealed ? 'ok' : 'run') +
+        '</div>' + probHtml +
+        '<div class="pm6-orch-seam-body">' + laneHtml + pkgHtml + '</div></div>';
+    }).join('');
+    wrap.innerHTML = html;
+    hydrateIcons(wrap);
+  }, 'seams');
+
+  /* ---------- Node Graph ---------- */
+  /* Geometry constants (W3 presence pass): node cards ~1.5x the W1 size,
+     taller lane rhythm, labels sized to stay >=11px on screen at the
+     fit-to-width default zoom. Inline font-sizes below intentionally win
+     over the pm6-css-orchestrator baseline sizes (tuned for the old 100x34
+     cards) — coordinate there before retuning. */
+  var NW = 150, NH = 52, XSTEP = 162, X0 = 140, LANE_H = 116, LANE_STEP = 128, NODE_DY = 34;
+  var VB = { w: X0 + 9 * XSTEP + NW + 16, h: 500 };
+  var geo = null;        /* { nodes: {id:{x,y,laneIdx,col}}, laneOrder:[] } */
+  var view = { k: 1, tx: 0, ty: 0 };
+  var selNode = null;
+  var onlyProblems = false;
+  var searchTerm = '';
+  function buildGeometry() {
+    var d = DATA();
+    if (!d) return null;
+    var g = { nodes: {}, laneOrder: [], laneY: {}, seams: [] };
+    var y = 34;
+    d.run.seams.forEach(function (sm) {
+      var y0 = y;
+      y += 8;
+      sm.lanes.forEach(function (laneId) {
+        g.laneOrder.push(laneId);
+        g.laneY[laneId] = y;
+        var spec = laneSpec(laneId);
+        (spec && spec.nodeIds || []).forEach(function (nid, col) {
+          g.nodes[nid] = { x: X0 + col * XSTEP, y: y + NODE_DY, laneIdx: g.laneOrder.length - 1, col: col };
+        });
+        y += LANE_STEP;
+      });
+      y += 8;
+      g.seams.push({ id: sm.id, label: sm.label, y0: y0, y1: y });
+      y += 18;
+    });
+    VB.h = y + 8;
+    return g;
+  }
+  function trimLabel(s, n) {
+    s = String(s || '');
+    return s.length > n ? esc(s.slice(0, n - 1)) + '&#8230;' : esc(s);
+  }
+  function buildGraphSvg() {
+    var d = DATA(), st = ST();
+    if (!d || !st || !geo) return '';
+    var out = '<svg class="pm6-orch-gsvg" viewBox="0 0 ' + VB.w + ' ' + VB.h + '" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">';
+    out += '<g id="pm6OrchGraphInner">';
+    /* seam boundaries */
+    geo.seams.forEach(function (sm) {
+      out += '<rect class="pm6-orch-gseam" x="8" y="' + sm.y0 + '" width="' + (VB.w - 16) + '" height="' + (sm.y1 - sm.y0) + '" rx="12"></rect>';
+      out += '<text class="pm6-orch-gseam-label" style="font-size:15px" x="20" y="' + (sm.y0 + 19) + '">' + esc(sm.label) + '</text>';
+    });
+    /* lane bands + labels */
+    geo.laneOrder.forEach(function (laneId) {
+      var ly = geo.laneY[laneId];
+      var spec = laneSpec(laneId);
+      out += '<rect class="pm6-orch-glane-band" x="18" y="' + ly + '" width="' + (VB.w - 36) + '" height="' + LANE_H + '" rx="8"></rect>';
+      out += '<text class="pm6-orch-glane-label" style="font-size:14px" x="28" y="' + (ly + 54) + '">' + esc(spec ? spec.label : laneId) + '</text>';
+      out += '<text class="pm6-orch-glane-wt" style="font-size:10.5px" x="28" y="' + (ly + 72) + '">' + esc(spec ? spec.worktree : '') + '</text>';
+      /* package group outlines: cols 0-3 / 4-6 / 7-9 */
+      [[0, 3], [4, 6], [7, 9]].forEach(function (rg) {
+        var x0 = X0 + rg[0] * XSTEP - 8, x1 = X0 + rg[1] * XSTEP + NW + 8;
+        out += '<rect class="pm6-orch-gpkg" x="' + x0 + '" y="' + (ly + 20) + '" width="' + (x1 - x0) + '" height="' + (NH + 26) + '" rx="8"></rect>';
+        out += '<text class="pm6-orch-gpkg-label" style="font-size:10px" x="' + (x0 + 4) + '" y="' + (ly + 16) + '">package ' + esc(pkgOfCol(laneId, rg[0])) + '</text>';
+      });
+    });
+    /* edges: sequential within lane */
+    geo.laneOrder.forEach(function (laneId) {
+      var spec = laneSpec(laneId);
+      var ids = spec && spec.nodeIds || [];
+      for (var i = 0; i < ids.length - 1; i++) {
+        var a = geo.nodes[ids[i]], b = geo.nodes[ids[i + 1]];
+        if (!a || !b) continue;
+        out += '<path class="pm6-orch-gedge" d="M' + (a.x + NW) + ' ' + (a.y + NH / 2) + ' L' + b.x + ' ' + (b.y + NH / 2) + '"></path>';
+      }
+    });
+    /* cross-lane seam edges */
+    [['n-05', 'n-13'], ['n-04', 'n-15'], ['n-13', 'n-24'], ['n-13', 'n-36'], ['n-19', 'n-28']].forEach(function (pr) {
+      var a = geo.nodes[pr[0]], b = geo.nodes[pr[1]];
+      if (!a || !b) return;
+      var ax = a.x + NW / 2, ay = a.y + (b.y > a.y ? NH : 0);
+      var bx = b.x + NW / 2, by = b.y + (b.y > a.y ? 0 : NH);
+      out += '<path class="pm6-orch-gedge is-cross" d="M' + ax + ' ' + ay + ' C ' + ax + ' ' + ((ay + by) / 2) + ', ' + bx + ' ' + ((ay + by) / 2) + ', ' + bx + ' ' + by + '"></path>';
+    });
+    /* nodes */
+    Object.keys(geo.nodes).forEach(function (nid) {
+      var p = geo.nodes[nid];
+      var n = st.run.nodes[nid];
+      if (!n) return;
+      out += '<g class="pm6-orch-gnode st-' + esc(n.state) + (n.degraded ? ' is-degraded' : '') + '" data-node-id="' + esc(nid) + '" tabindex="-1">' +
+        '<rect x="' + p.x + '" y="' + p.y + '" width="' + NW + '" height="' + NH + '" rx="10"></rect>' +
+        '<circle class="pm6-orch-gnode-st" cx="' + (p.x + 13) + '" cy="' + (p.y + 16) + '" r="4.5"></circle>' +
+        '<text class="pm6-orch-gnode-label" style="font-size:18px" x="' + (p.x + 22) + '" y="' + (p.y + 22) + '">' + trimLabel(n.label, 14) + '</text>' +
+        '<text class="pm6-orch-gnode-id" style="font-size:12px" x="' + (p.x + 22) + '" y="' + (p.y + 42) + '">' + esc(nid) + '</text>' +
+        '</g>';
+    });
+    out += '</g></svg>';
+    return out;
+  }
+  function buildMinimapSvg() {
+    var st = ST();
+    if (!st || !geo) return '';
+    var out = '<svg viewBox="0 0 ' + VB.w + ' ' + VB.h + '" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">';
+    Object.keys(geo.nodes).forEach(function (nid) {
+      var p = geo.nodes[nid], n = st.run.nodes[nid];
+      if (!n) return;
+      out += '<rect class="pm6-orch-mm-node st-' + esc(n.state) + '" data-mm="' + esc(nid) + '" x="' + p.x + '" y="' + p.y + '" width="' + NW + '" height="' + NH + '" rx="10"></rect>';
+    });
+    out += '</svg>';
+    return out;
+  }
+  function applyView() {
+    var inner = $('pm6OrchGraphInner');
+    if (inner) inner.setAttribute('transform', 'translate(' + view.tx + ' ' + view.ty + ') scale(' + view.k + ')');
+    var pct = $('pm6OrchGraphZoomPct');
+    if (pct) pct.textContent = Math.round(view.k * 100) + '%';
+    var vp = $('pm6OrchMinimapVp');
+    if (vp) {
+      var wFrac = Math.min(1, 1 / view.k), hFrac = Math.min(1, 1 / view.k);
+      var lFrac = Math.max(0, Math.min(1 - wFrac, (-view.tx / view.k) / VB.w));
+      var tFrac = Math.max(0, Math.min(1 - hFrac, (-view.ty / view.k) / VB.h));
+      vp.style.width = (wFrac * 100) + '%';
+      vp.style.height = (hFrac * 100) + '%';
+      vp.style.left = (lFrac * 100) + '%';
+      vp.style.top = (tFrac * 100) + '%';
+    }
+  }
+  function setZoom(k, cx, cy) {
+    k = Math.max(0.4, Math.min(2.6, k));
+    if (cx == null) { cx = VB.w / 2; cy = VB.h / 2; }
+    /* keep content point (cx,cy) fixed on screen */
+    var sx = cx * view.k + view.tx, sy = cy * view.k + view.ty;
+    view.k = k;
+    view.tx = sx - cx * k;
+    view.ty = sy - cy * k;
+    applyView();
+  }
+  function applyFilters() {
+    var st = ST();
+    var mount = $('pm6OrchGraphMount');
+    if (!st || !mount) return;
+    var term = searchTerm.toLowerCase();
+    $qa('.pm6-orch-gnode', mount).forEach(function (g) {
+      var nid = g.getAttribute('data-node-id');
+      var n = st.run.nodes[nid];
+      if (!n) return;
+      var dim = false, hitCls = false;
+      if (hist()) dim = true;
+      if (onlyProblems && !isProblem(n.state) && !(n.degraded && n.state === 'complete')) dim = true;
+      if (term) {
+        var hit = (n.label + ' ' + nid).toLowerCase().indexOf(term) !== -1;
+        if (hit) hitCls = true; else dim = true;
+      }
+      g.classList.toggle('is-dim', dim);
+      g.classList.toggle('is-hit', hitCls);
+      g.classList.toggle('is-sel', nid === selNode);
+    });
+  }
+  function syncGraphStates() {
+    var st = ST();
+    var mount = $('pm6OrchGraphMount');
+    if (!st || !mount) return;
+    $qa('.pm6-orch-gnode', mount).forEach(function (g) {
+      var n = st.run.nodes[g.getAttribute('data-node-id')];
+      if (!n) return;
+      g.setAttribute('class', 'pm6-orch-gnode st-' + n.state + (n.degraded ? ' is-degraded' : ''));
+    });
+    var mm = $('pm6OrchMinimapSvg');
+    if (mm) {
+      $qa('[data-mm]', mm).forEach(function (r) {
+        var n = st.run.nodes[r.getAttribute('data-mm')];
+        if (n) r.setAttribute('class', 'pm6-orch-mm-node st-' + n.state);
+      });
+    }
+    applyFilters();
+    var counts = $('pm6OrchGraphCounts');
+    if (counts) {
+      var c = { complete: 0, running: 0, problems: 0, total: 0 };
+      Object.keys(st.run.nodes).forEach(function (k) {
+        var n = st.run.nodes[k];
+        c.total++;
+        if (n.state === 'complete') c.complete++;
+        else if (n.state === 'running') c.running++;
+        if (isProblem(n.state)) c.problems++;
+      });
+      counts.textContent = hist()
+        ? 'historical focus — live graph belongs to ' + ((st.run.id) || 'pcr-47')
+        : c.total + ' nodes · ' + c.complete + ' complete · ' + c.running + ' running' + (c.problems ? ' · ' + c.problems + ' need attention' : '');
+    }
+    var rid = $('pm6OrchGraphRunId');
+    if (rid) rid.textContent = (st.run.id) || 'pcr-47';
+  }
+  function inspectorHtml(nid) {
+    var st = ST();
+    if (!st) return '';
+    if (hist()) return '<div class="pm6-orch-empty">Historical snapshot — node inspection uses the durable ledger. Switch back to the live run for the interactive inspector.</div>';
+    var n = st.run.nodes[nid];
+    if (!n) return '<div class="pm6-orch-empty">Select a node in the graph — click it or use the arrow keys.</div>';
+    var m = nodeMeta(n);
+    var sm = seamOfLane(n.lane);
+    var promoted = false;
+    (st.run.promotions || []).forEach(function (p) { if (p.ref && String(p.ref).indexOf(laneLabel(n.lane)) !== -1) promoted = true; });
+    var retryDisabled = n.state === 'complete' && !n.degraded;
+    var effDiff = m.accountReq !== m.accountEff;
+    return '' +
+      '<div class="pm6-orch-insp-sec"><div class="pm6-orch-insp-node-title">' + esc(n.label) + '</div>' +
+      '<div class="pm6-orch-row-sub" style="margin:4px 0">' + esc(nid) + ' &middot; ' + esc(n.state) + (n.degraded ? ' (degraded)' : '') + '</div>' +
+      '<div class="pm6-orch-ladder">' + chip(n.state, n.state === 'complete' ? 'ok' : (isProblem(n.state) ? 'warn' : 'run')) +
+      (n.degraded ? chip('accepted_risk', 'warn') : '') + '</div></div>' +
+      '<div class="pm6-orch-insp-sec"><h5>placement</h5>' +
+      '<div class="pm6-orch-kv"><span>seam</span><b>' + esc(sm ? sm.label : '&#8212;') + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>lane</span><b>' + esc(laneLabel(n.lane)) + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>package</span><b>' + esc(pkgOfCol(n.lane, geo && geo.nodes[nid] ? geo.nodes[nid].col : 0)) + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>worktree</span><b class="pm6-orch-mono">' + esc((laneSpec(n.lane) || {}).worktree || '') + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>snapshot</span><b class="pm6-orch-mono">' + esc(m.safePoint) + '</b></div></div>' +
+      '<div class="pm6-orch-insp-sec"><h5>requested vs effective</h5>' +
+      '<table class="pm6-orch-reqeff"><tr><th></th><th>requested</th><th>effective</th></tr>' +
+      '<tr><th>provider</th><td>' + esc(m.provider) + '</td><td>' + esc(m.provider) + '</td></tr>' +
+      '<tr><th>model</th><td>' + esc(m.model) + '</td><td>' + esc(m.model) + '</td></tr>' +
+      '<tr><th>effort</th><td>' + esc(m.effort) + '</td><td>' + esc(m.effort) + '</td></tr>' +
+      '<tr><th>persona</th><td>' + esc(m.persona) + '</td><td>' + esc(m.persona) + '</td></tr>' +
+      '<tr><th>account</th><td>' + esc(m.accountReq) + '</td><td' + (effDiff ? ' class="is-diff" title="switch reason: rate_limit_pressure"' : '') + '>' + esc(m.accountEff) + '</td></tr>' +
+      '</table></div>' +
+      '<div class="pm6-orch-insp-sec"><h5>usage</h5>' +
+      '<div class="pm6-orch-kv"><span>tokens in / out</span><b>' + m.tokensIn.toLocaleString() + ' / ' + m.tokensOut.toLocaleString() + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>est. cost</span><b>$' + m.cost + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>attempts</span><b>' + (n.attempts || 0) + (n.attempts ? ' &middot; safe-point retry' : '') + '</b></div>' +
+      '<div class="pm6-orch-kv"><span>lane promotion</span><b>' + (promoted ? 'lane_to_package &#10003;' : 'pending') + '</b></div></div>' +
+      '<div class="pm6-orch-insp-sec"><h5>evidence</h5>' +
+      '<div class="pm6-orch-row-sub">' + (n.state === 'complete' ? 'diff + validation receipts attached' : (n.state === 'queued' ? 'no artifacts yet' : 'streaming — receipts land at node seal')) + '</div>' +
+      '<div class="pm6-orch-insp-actions">' +
+      '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.nodeEvidence" data-demo-arg="' + esc(nid) + '">Open evidence</button>' +
+      (retryDisabled
+        ? '<button type="button" class="pm6-orch-mini-btn" disabled data-reason="already_done" title="already_done — ' + REASON_HINT.already_done + '">Retry from safe point</button>'
+        : '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.safePointOpen" data-demo-arg="' + esc(nid) + '" data-command="cmd.orchestrator.safe_point_retry">Retry from safe point</button>') +
+      '</div></div>';
+  }
+  function selectNode(nid, scrollIntoView) {
+    selNode = nid || null;
+    var idEl = $('pm6OrchInspNodeId');
+    if (idEl) idEl.textContent = selNode || '';
+    var body = $('orchGraphDetailBody');
+    if (body) body.innerHTML = inspectorHtml(selNode);
+    applyFilters();
+    if (scrollIntoView && selNode && geo && geo.nodes[selNode]) {
+      var p = geo.nodes[selNode];
+      view.tx = VB.w / 2 - (p.x + NW / 2) * view.k;
+      view.ty = VB.h / 2 - (p.y + NH / 2) * view.k;
+      applyView();
+    }
+  }
+  /* fit-to-width: default zoom fills the canvas horizontally (the SVG's
+     "meet" scaling is often height-limited on wide panes, leaving dead
+     margins). Retries until the canvas is actually laid out. */
+  var graphFitDone = false;
+  function fitGraphToWidth(force) {
+    if (graphFitDone && !force) return;
+    var canvas = $('pm6OrchGraphCanvas');
+    if (!canvas) return;
+    var rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return; /* hidden — retry on next show */
+    var s = Math.min(rect.width / VB.w, rect.height / VB.h);
+    if (s <= 0) return;
+    var k = Math.max(1, Math.min(1.8, (rect.width / VB.w) / s));
+    view.k = k;
+    view.tx = 0;
+    view.ty = 0;
+    applyView();
+    graphFitDone = true;
+  }
+  RENDERERS.graph = safe(function () {
+    var mount = $('pm6OrchGraphMount');
+    if (!mount) return;
+    if (!mount.firstChild) {
+      geo = buildGeometry();
+      if (!geo) return;
+      mount.innerHTML = buildGraphSvg();
+      var mm = $('pm6OrchMinimapSvg');
+      if (mm) mm.innerHTML = buildMinimapSvg();
+      applyView();
+    }
+    fitGraphToWidth(false);
+    syncGraphStates();
+    if (selNode) {
+      var body = $('orchGraphDetailBody');
+      if (body) body.innerHTML = inspectorHtml(selNode);
+    }
+  }, 'graph');
+
+  /* graph interactions */
+  function wireGraph() {
+    var canvas = $('pm6OrchGraphCanvas');
+    var mount = $('pm6OrchGraphMount');
+    if (!canvas || !mount) return;
+    /* click-select (suppressed after a drag) */
+    var downPt = null, moved = false;
+    mount.addEventListener('click', function (e) {
+      if (moved) return;
+      var g = e.target.closest ? e.target.closest('.pm6-orch-gnode') : null;
+      if (g) selectNode(g.getAttribute('data-node-id'), false);
+    });
+    /* pan */
+    canvas.addEventListener('pointerdown', function (e) {
+      if (e.target.closest && e.target.closest('.pm6-orch-minimap')) return;
+      downPt = { x: e.clientX, y: e.clientY, tx: view.tx, ty: view.ty, id: e.pointerId };
+      moved = false;
+      canvas.classList.add('is-panning');
+    });
+    canvas.addEventListener('pointermove', function (e) {
+      if (!downPt) return;
+      var dx = e.clientX - downPt.x, dy = e.clientY - downPt.y;
+      if (!moved && Math.abs(dx) + Math.abs(dy) > 4) {
+        moved = true;
+        /* capture only once an actual drag starts, so plain clicks still
+           reach the node elements (capture retargets click in Chromium) */
+        try { canvas.setPointerCapture(downPt.id); } catch (e0) {}
+      }
+      if (!moved) return;
+      var rect = canvas.getBoundingClientRect();
+      var scale = VB.w / Math.max(1, rect.width);
+      view.tx = downPt.tx + dx * scale;
+      view.ty = downPt.ty + dy * scale;
+      applyView();
+    });
+    function endPan() { downPt = null; canvas.classList.remove('is-panning'); setTimeout(function () { moved = false; }, 0); }
+    canvas.addEventListener('pointerup', endPan);
+    canvas.addEventListener('pointercancel', endPan);
+    /* wheel zoom */
+    canvas.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      var rect = canvas.getBoundingClientRect();
+      var scale = VB.w / Math.max(1, rect.width);
+      var cx = ((e.clientX - rect.left) * scale - view.tx) / view.k;
+      var cy = ((e.clientY - rect.top) * scale - view.ty) / view.k;
+      setZoom(view.k * (e.deltaY > 0 ? 0.9 : 1.1), cx, cy);
+    }, { passive: false });
+    /* keyboard nav */
+    canvas.addEventListener('keydown', function (e) {
+      var st = ST();
+      if (!st || !geo) return;
+      var handled = true;
+      if (e.key === 'Escape') { selectNode(null, false); }
+      else if (e.key === 'Enter' && selNode) { openEvidenceForNode(selNode); }
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'Home' || e.key === 'End') {
+        var cur = selNode && geo.nodes[selNode] ? geo.nodes[selNode] : { laneIdx: 0, col: -1 };
+        var laneIdx = cur.laneIdx, col = cur.col;
+        if (e.key === 'ArrowRight') col = Math.min(9, col + 1);
+        else if (e.key === 'ArrowLeft') col = Math.max(0, col - 1);
+        else if (e.key === 'ArrowUp') laneIdx = Math.max(0, laneIdx - 1);
+        else if (e.key === 'ArrowDown') laneIdx = Math.min(geo.laneOrder.length - 1, laneIdx + 1);
+        else if (e.key === 'Home') col = 0;
+        else if (e.key === 'End') col = 9;
+        if (col < 0) col = 0;
+        var laneId = geo.laneOrder[laneIdx];
+        var spec = laneSpec(laneId);
+        var nid = spec && spec.nodeIds ? spec.nodeIds[col] : null;
+        if (nid) selectNode(nid, true);
+      } else handled = false;
+      if (handled) e.preventDefault();
+    });
+    /* minimap click-to-pan */
+    var mmap = $('pm6OrchMinimap');
+    if (mmap) {
+      mmap.addEventListener('click', function (e) {
+        var rect = mmap.getBoundingClientRect();
+        var fx = (e.clientX - rect.left) / Math.max(1, rect.width);
+        var fy = (e.clientY - rect.top) / Math.max(1, rect.height);
+        view.tx = VB.w / 2 - view.k * fx * VB.w;
+        view.ty = VB.h / 2 - view.k * fy * VB.h;
+        applyView();
+        e.stopPropagation();
+      });
+    }
+    /* search */
+    var search = $('pm6OrchGraphSearch');
+    if (search) {
+      search.addEventListener('input', function () { searchTerm = search.value.trim(); applyFilters(); });
+      search.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter') return;
+        var st = ST();
+        if (!st) return;
+        var term = searchTerm.toLowerCase();
+        var first = null;
+        Object.keys(st.run.nodes).forEach(function (k) {
+          var n = st.run.nodes[k];
+          if (!first && term && (n.label + ' ' + k).toLowerCase().indexOf(term) !== -1) first = k;
+        });
+        if (first) selectNode(first, true);
+      });
+    }
+  }
+
+  /* ---------- Evidence ---------- */
+  var evNodeFilter = null;
+  function webOpCard() {
+    return {
+      family: 'api_web_call', web: true, node: null, t: 2,
+      label: 'Reading Site: https://schema.org/Recipe'
+    };
+  }
+  function evidenceRows() {
+    var st = ST(), d = DATA();
+    var rows = [];
+    if (!st || !d) return rows;
+    if (st.run.stage === 'idle') return rows;
+    rows.push(webOpCard());
+    var gate = st.run.gates && st.run.gates['g-image-processing'];
+    if (gate && gate.state !== 'attention_required') {
+      rows.push({
+        family: 'hitl_approval', node: gate.node, t: 41, v: gate.state === 'approved' ? 'pass' : 'fail',
+        label: 'HITL gate: ' + gate.label,
+        sub: 'decision: ' + gate.state + ' · receipt hitl-47-01 · resolvable from Orchestrator, Dashboard or Chat'
+      });
+      if (gate.state === 'declined') {
+        rows.push({ family: 'restore_point', node: gate.node, t: 41, v: 'info', label: 'Safe point sp-47a9 parked', sub: 'restore target for n-13 · retry re-raises the approval' });
+      }
+    }
+    Object.keys(st.run.nodes).forEach(function (k) {
+      var n = st.run.nodes[k];
+      var h = hashStr(k);
+      if (n.attempts > 0) {
+        rows.push({ family: 'restore_point', node: k, t: 85, v: 'info', label: 'Safe point ' + safePointOf(k) + ' restored', sub: 'recovery attempt ' + n.attempts + ' · work after the safe point discarded' });
+        rows.push({
+          family: 'validation_test', node: k, t: 89, v: n.state === 'complete' ? 'pass' : 'fail',
+          label: 'cargo test — import worker (' + (n.state === 'complete' ? 'retry green' : 'failing') + ')',
+          sub: n.state === 'complete' ? '14 passed · 0 failed · regression fixture normalize_units added' : '13 passed · 1 failed: normalize_units_mixed_fraction'
+        });
+      }
+      if (n.state === 'complete') {
+        rows.push({
+          family: 'code_diff', node: k, t: 15 + (h % 90), v: 'pass',
+          label: 'diff: ' + n.label,
+          sub: (laneSpec(n.lane) || {}).worktree + ' · +' + (18 + h % 140) + ' / -' + (2 + h % 38) + ' lines' + (n.degraded ? ' · sealed degraded (accepted_risk)' : '')
+        });
+        if (h % 4 === 0) {
+          rows.push({ family: 'validation_test', node: k, t: 16 + (h % 90), v: 'pass', label: 'tests: ' + n.label, sub: (3 + h % 9) + ' passed · 0 failed · ' + (120 + h % 900) + 'ms' });
+        }
+        if (n.lane === 'lane-c' && h % 3 === 0) {
+          rows.push({ family: 'screenshot', node: k, t: 17 + (h % 90), v: 'info', label: 'screenshot: ' + n.label, sub: '1440x900 · captured after component seal' });
+        }
+      }
+    });
+    (st.run.accountSwitches || []).forEach(function (ev) {
+      rows.push({ family: 'cost_usage', node: null, t: ev.t, v: 'info', label: 'Account switch receipt', sub: ev.from + ' → ' + ev.to + ' · switch reason: ' + ev.reason + ' · attributed to effective account' });
+    });
+    rows.sort(function (a, b) { return (b.t || 0) - (a.t || 0); });
+    return rows.slice(0, 48);
+  }
+  function webOpHtml(open) {
+    return '<div class="pm6-orch-webop' + (open ? ' is-open' : '') + '" id="pm6OrchWebOp">' +
+      '<div class="pm6-orch-webop-head">' + ico('globe') +
+      '<span class="pm6-orch-webop-label">Reading Site: https://schema.org/Recipe</span>' +
+      '<span class="pm6-orch-webop-state">&#10003; completed &middot; evidence attached</span>' +
+      '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.webopSources">/sources &#9662;</button></div>' +
+      '<div class="pm6-orch-webop-reason">Agent read the site because the import-from-url worker needed the canonical schema.org Recipe field list for run pcr-47. Read-only; receipts only — evidence cannot create WorkNodes or queues.</div>' +
+      '<div class="pm6-orch-webop-meta">' +
+      chip('invocation_source: orchestrator (self-initiated)', 'mut') +
+      chip('command: cmd.chat.web.fetch', 'mut') +
+      chip('provider: Site Reader (primary)', 'mut') +
+      chip('fallback: none used', 'mut') +
+      chip('scope: https://schema.org/* · approved', 'ok') +
+      chip('cache: fresh · TTL 24h', 'mut') +
+      chip('operation_input: https://schema.org/Recipe', 'mut') +
+      chip('sources: 1', 'mut') +
+      chip('artifact: ra-web-0117', 'mut') +
+      '</div>' +
+      '<div class="pm6-orch-webop-src">' +
+      '<div class="pm6-orch-webop-srcrow"><b>schema.org/Recipe</b><span>read receipt 09:41:12</span><span>source_confidence: high</span></div>' +
+      '<div class="pm6-orch-webop-srcrow"><span>cited by</span><b>PlanUnit pu-14</b><span>import-from-url worker tests (n-19)</span></div>' +
+      '<div class="pm6-orch-insp-actions"><button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.webopArtifact">Open Runtime Artifact</button></div>' +
+      '</div></div>';
+  }
+  RENDERERS.evidence = safe(function () {
+    var list = $('pm6OrchEvList');
+    if (!list) return;
+    var st = ST();
+    var famSel = $('pm6OrchEvFamily');
+    var fam = famSel ? famSel.value : '';
+    var searchEl = $('pm6OrchEvSearch');
+    var term = searchEl ? searchEl.value.trim().toLowerCase() : '';
+    var chipEl = $('pm6OrchEvNodeChip'), chipLabel = $('pm6OrchEvNodeChipLabel');
+    if (chipEl) chipEl.hidden = !evNodeFilter;
+    if (chipLabel && evNodeFilter) chipLabel.textContent = 'node ' + evNodeFilter;
+    var rows = evidenceRows().filter(function (r) {
+      if (fam && r.family !== fam) return false;
+      if (evNodeFilter && r.node !== evNodeFilter) return false;
+      if (term && ((r.label || '') + ' ' + (r.sub || '') + ' ' + (r.node || '')).toLowerCase().indexOf(term) === -1) return false;
+      return true;
+    });
+    var count = $('pm6OrchEvCount');
+    if (count) count.textContent = rows.length + ' artifact row' + (rows.length === 1 ? '' : 's');
+    if (!st || st.run.stage === 'idle') {
+      list.innerHTML = '<div class="pm6-orch-empty">No data yet — evidence rows land here as run nodes seal.</div>';
+      return;
+    }
+    var openWeb = !!$q('.pm6-orch-webop.is-open');
+    list.innerHTML = rows.length ? rows.map(function (r) {
+      if (r.web) return webOpHtml(openWeb);
+      return '<div class="pm6-orch-ev-row"><span class="pm6-orch-ev-fam">' + esc(r.family) + '</span>' +
+        '<div class="pm6-orch-ev-main"><div class="pm6-orch-ev-label">' + esc(r.label) + '</div>' +
+        '<div class="pm6-orch-ev-sub">' + esc(r.sub || '') + '</div></div>' +
+        (r.node ? '<span class="pm6-orch-ev-node" data-demo-action="orch.evidenceNode" data-demo-arg="' + esc(r.node) + '" title="Filter to this node">' + esc(r.node) + '</span>' : '') +
+        '<span class="pm6-orch-ev-verdict" data-v="' + esc(r.v || 'info') + '">' + (r.v === 'pass' ? '&#10003;' : (r.v === 'fail' ? '&#10005;' : '&#9679;')) + '</span>' +
+        '<span class="pm6-orch-row-sub">t+' + (r.t || 0) + 's</span></div>';
+    }).join('') : '<div class="pm6-orch-empty">No results for the current filter — clear the family, node or search filter.</div>';
+    hydrateIcons(list);
+  }, 'evidence');
+  function openEvidenceForNode(nid) {
+    evNodeFilter = nid || null;
+    switchTab('evidence');
+    mark('evidence');
+  }
+
+  /* ---------- History ---------- */
+  RENDERERS.history = safe(function () {
+    var wrap = $('pm6OrchHistoryList');
+    var st = ST();
+    if (!wrap || !st) return;
+    var run = st.run;
+    var rows = [];
+    var liveInHistory = (run.history || []).some(function (h) { return h.id === run.id; });
+    if (run.id && !liveInHistory) {
+      rows.push({
+        id: run.id, live: true,
+        state: run.stage === 'complete' ? 'complete' : (run.stage === 'blocked' ? 'blocked' : 'running'),
+        name: 'Tastebook · media pipeline + import hardening (ApprovedPlanPack rev 12)',
+        meta: 'live · 40 nodes · 4 lanes',
+        stateLabel: run.stage === 'complete' ? 'Complete' : (run.stage === 'blocked' ? 'Blocked' : 'Running')
+      });
+    }
+    (run.history || []).forEach(function (h) {
+      rows.push({
+        id: h.id, live: h.id === run.id,
+        state: h.state === 'degraded' ? 'degraded' : (h.id === run.id && run.stage !== 'complete' ? 'running' : 'complete'),
+        name: h.label,
+        meta: h.when + ' · ' + h.nodes + ' nodes',
+        stateLabel: h.state === 'degraded' ? 'Complete · degraded' : 'Complete'
+      });
+    });
+    wrap.innerHTML = rows.map(function (r, i) {
+      var focused = focusedId() === r.id;
+      return '<div class="pm6-orch-hist-row' + (r.live ? ' pm6-orch-hist-live' : '') + (focused ? ' is-focused' : '') + '" data-run="' + esc(r.id) + '" style="--i:' + i + '">' +
+        '<span class="pm6-orch-hist-dot" data-state="' + esc(r.state) + '"></span>' +
+        '<span class="pm6-orch-hist-id">' + esc(r.id) + '</span>' +
+        '<span class="pm6-orch-hist-name">' + esc(r.name) + '</span>' +
+        '<span class="pm6-orch-hist-meta">' + esc(r.meta) + '</span>' +
+        '<span class="pm6-orch-hist-state">' + esc(r.stateLabel) + '</span>' +
+        (focused
+          ? '<button type="button" class="pm6-orch-mini-btn" disabled data-reason="already_done" title="already_done — this run already has focus">Focused</button>'
+          : (r.live
+            ? '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusLive">Focus</button>'
+            : '<button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusRun" data-demo-arg="' + esc(r.id) + '">Focus</button>')) +
+        '</div>';
+    }).join('');
+  }, 'history');
+
+  /* ---------- Ledger ---------- */
+  function ledgerFamily(action) {
+    if (/gate|approveGate|declineGate/i.test(action)) return 'gate';
+    if (/promote/i.test(action)) return 'promotion';
+    if (/account/i.test(action)) return 'account';
+    if (/fail|retry|degraded|safePoint/i.test(action)) return 'recovery';
+    if (/^run\./.test(action)) return 'run';
+    return 'other';
+  }
+  function ledgerSubject(args) {
+    if (!args) return '—';
+    return args.id || args.node || args.topic || args.ref || args.cls || args.marker || '—';
+  }
+  var ledgerRendered = 0;
+  RENDERERS.ledger = safe(function () {
+    var body = $('pm6OrchLedgerBody');
+    var d = D();
+    if (!body || !d || !d.log) return;
+    var filterSel = $('pm6OrchLedgerFilter');
+    var fam = filterSel ? filterSel.value : '';
+    /* full rebuild when filtered or log truncated; append otherwise */
+    if (fam || ledgerRendered > d.log.length) {
+      body.innerHTML = '';
+      ledgerRendered = 0;
+    }
+    var frag = '';
+    for (var i = fam ? 0 : ledgerRendered; i < d.log.length; i++) {
+      var b = d.log[i];
+      if (fam && ledgerFamily(b.action) !== fam) continue;
+      var detail = '';
+      try { detail = b.args ? JSON.stringify(b.args) : ''; } catch (e) { detail = ''; }
+      if (detail.length > 90) detail = detail.slice(0, 89) + '…';
+      frag += '<tr' + (i >= d.log.length - 1 && !fam ? ' class="is-new"' : '') + '>' +
+        '<td>t+' + (b.t || 0) + 's</td>' +
+        '<td class="pm6-orch-led-ev">' + esc(b.action) + '</td>' +
+        '<td>' + esc(ledgerSubject(b.args)) + '</td>' +
+        '<td class="pm6-orch-led-detail">' + esc(detail) + '</td></tr>';
+    }
+    if (fam) body.innerHTML = frag;
+    else { body.insertAdjacentHTML('beforeend', frag); ledgerRendered = d.log.length; }
+    var empty = $('pm6OrchLedgerEmpty');
+    if (empty) empty.style.display = body.children.length ? 'none' : '';
+  }, 'ledger');
+
+  /* ---------- tab switching ---------- */
+  var TAB_RENDER = {
+    progress: ['header', 'progress'],
+    plan_compile: ['plancompile'],
+    seams: ['seams'],
+    node_graph: ['graph'],
+    evidence: ['evidence'],
+    history: ['history'],
+    ledger: ['ledger']
+  };
+  function switchTab(tabId) {
+    var tab = $q('.orch-tab[data-tab="' + tabId + '"]');
+    if (tab && !tab.classList.contains('active')) tab.click(); /* part-25 handler toggles classes */
+    (TAB_RENDER[tabId] || []).forEach(function (k) { mark(k); });
+  }
+  var tabsWrap = $q('.orch-tabs');
+  if (tabsWrap) {
+    tabsWrap.addEventListener('click', function (e) {
+      var tab = e.target.closest ? e.target.closest('.orch-tab') : null;
+      if (!tab) return;
+      var id = tab.getAttribute('data-tab');
+      (TAB_RENDER[id] || []).forEach(function (k) { mark(k); });
+      if (id === 'node_graph') { var c = $('pm6OrchGraphCanvas'); if (c) setTimeout(function () { fitGraphToWidth(false); try { c.focus({ preventScroll: true }); } catch (e0) {} }, 0); }
+    });
+  }
+  if (window.PM_PAGES && PM_PAGES.registerSubtab) {
+    PM_PAGES.registerSubtab('orchestrator', function (subTab) {
+      var id = String(subTab || 'progress').replace(/-/g, '_');
+      if (!TAB_RENDER[id]) id = 'progress';
+      switchTab(id);
+    });
+  }
+
+  /* ---------- action registrations ---------- */
+  function reg(id, fn) {
+    var d = D();
+    if (d && d.actions && d.actions.register) d.actions.register(id, fn);
+  }
+  function argOf(ctx) { return ctx && ctx.arg != null ? String(ctx.arg) : ''; }
+  function histGuard() {
+    if (!hist()) return null;
+    return { toast: 'Viewing ' + focusedId() + ' — a read-only historical snapshot. Focus the live run ' + ((ST() && ST().run.id) || 'pcr-47') + ' to control it.' };
+  }
+  reg('orch.copyRunId', function () {
+    var id = focusedId();
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(id); } catch (e) {}
+    return { toast: 'Copied focused_run_id ' + id };
+  });
+  reg('orch.pause', function () { return histGuard() || D().run.pause(); });
+  reg('orch.resume', function () { return histGuard() || D().run.resume(); });
+  reg('orch.focusLive', function () {
+    var st = ST();
+    var r = D().run.focusRun((st && st.run.id) || 'pcr-47');
+    markAll();
+    return r;
+  });
+  reg('orch.focusRun', function (ctx) {
+    var id = argOf(ctx);
+    if (!id) return { toast: 'No run id given.' };
+    var r = D().run.focusRun(id);
+    markAll();
+    switchTab('progress');
+    return { ok: true, toast: 'Focused ' + id + (id !== ((ST() && ST().run.id) || '') ? ' — read-only historical snapshot' : '') };
+  });
+  reg('orch.replayCompile', function () {
+    var feed = $('pm6OrchPcFeed');
+    if (!feed) return { ok: true };
+    var st = ST();
+    if (st && st.run.stage === 'idle') return { toast: 'No PlanCompileRun bound yet — Approve And Build in the Planning Wizard starts one.' };
+    feed.innerHTML = '';
+    feedShown = 0;
+    feedAppendUpTo(feedTarget(), true);
+    return { toast: 'Replaying the compile projection (display only — the durable record is untouched)' };
+  });
+  reg('orch.seamToggle', function (ctx) {
+    var id = argOf(ctx);
+    seamOpen[id] = !seamOpen[id];
+    mark('seams');
+    return { ok: true };
+  });
+  reg('orch.seamsExpandAll', function () {
+    var d = DATA();
+    if (d) d.run.seams.forEach(function (sm) { seamOpen[sm.id] = true; });
+    mark('seams');
+    return { ok: true };
+  });
+  reg('orch.seamsCollapseAll', function () {
+    seamOpen = {};
+    mark('seams');
+    return { ok: true };
+  });
+  reg('orch.graphZoomIn', function () { setZoom(view.k * 1.2); return { ok: true }; });
+  reg('orch.graphZoomOut', function () { setZoom(view.k / 1.2); return { ok: true }; });
+  reg('orch.graphFit', function () { fitGraphToWidth(true); return { ok: true }; });
+  reg('orch.graphOnlyProblems', function (ctx) {
+    onlyProblems = !onlyProblems;
+    var btn = (ctx && ctx.el) || $('pm6OrchGraphOnlyProblems');
+    if (btn) btn.setAttribute('aria-pressed', onlyProblems ? 'true' : 'false');
+    applyFilters();
+    return { ok: true };
+  });
+  reg('orch.inspect', function (ctx) {
+    var nid = argOf(ctx);
+    switchTab('node_graph');
+    setTimeout(function () { selectNode(nid, true); }, 50);
+    return { ok: true };
+  });
+  reg('orch.nodeEvidence', function (ctx) {
+    openEvidenceForNode(argOf(ctx) || null);
+    return { ok: true };
+  });
+  reg('orch.evidenceNode', function (ctx) {
+    evNodeFilter = argOf(ctx) || null;
+    mark('evidence');
+    return { ok: true };
+  });
+  reg('orch.evidenceClearNode', function () {
+    evNodeFilter = null;
+    mark('evidence');
+    return { ok: true };
+  });
+  reg('orch.webopSources', function () {
+    var card = $('pm6OrchWebOp');
+    if (card) card.classList.toggle('is-open');
+    return { ok: true };
+  });
+  reg('orch.webopArtifact', function () {
+    return { toast: 'Runtime Artifact ra-web-0117 (api_web_call) — open the Runtime Artifacts panel from the activity bar to inspect the full payload.' };
+  });
+  var spTarget = null;
+  reg('orch.safePointOpen', function (ctx) {
+    var g = histGuard();
+    if (g) return g;
+    var st = ST();
+    if (st && st.run.freshness && st.run.freshness !== 'current') {
+      return { disabled: true, reason: 'stale' };
+    }
+    var nid = argOf(ctx) || 'n-13';
+    spTarget = nid;
+    var spEl = $('pm6OrchSpModalSp'), ndEl = $('pm6OrchSpModalNode'), modal = $('pm6OrchSpModal');
+    if (spEl) spEl.textContent = safePointOf(nid);
+    if (ndEl) ndEl.textContent = nid + (st && st.run.nodes[nid] ? ' (' + st.run.nodes[nid].label + ')' : '');
+    if (modal) modal.hidden = false;
+    return { ok: true };
+  });
+  reg('orch.safePointCancel', function () {
+    var modal = $('pm6OrchSpModal');
+    if (modal) modal.hidden = true;
+    spTarget = null;
+    return { ok: true };
+  });
+  reg('orch.safePointConfirm', function () {
+    var modal = $('pm6OrchSpModal');
+    if (modal) modal.hidden = true;
+    var nid = spTarget || 'n-13';
+    spTarget = null;
+    return D().run.safePointRetry(nid);
+  });
+  reg('orch.ledgerExport', function () {
+    var d = D();
+    if (!d || !d.log || !d.log.length) return { toast: 'Ledger is empty — nothing to export yet.' };
+    try {
+      var blob = new Blob([JSON.stringify(d.log, null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'pm-ledger-' + focusedId() + '.json';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { try { URL.revokeObjectURL(a.href); a.remove(); } catch (e) {} }, 400);
+      return { toast: 'Exported ' + d.log.length + ' ledger events as JSON' };
+    } catch (e) {
+      return { toast: 'Export is blocked in this context — the ledger stays inspectable in the table.' };
+    }
+  });
+
+  /* ---------- ambient baseline (failure-proofing rule 2a) ---------- */
+  var baselineTried = false;
+  function ensureBaseline() {
+    var d = D(), st = ST();
+    if (!d || d._shim || !st || baselineTried) return;
+    if (st.run.stage === 'idle' && !st.wizard.approved) {
+      baselineTried = true;
+      try { d.run.bind(); } catch (e) {}
+      markAll();
+    }
+  }
+  function pageIsActive() { return root.classList.contains('active'); }
+
+  /* ---------- event subscriptions ---------- */
+  function subscribe() {
+    var d = D();
+    if (!d || !d.on) return;
+    d.on('run.state', function () { mark('header', 'progress', 'plancompile', 'seams', 'history'); });
+    d.on('run.node', function () { mark('header', 'progress', 'graph', 'seams', 'evidence'); });
+    d.on('run.gate', function () { mark('header', 'progress', 'graph', 'evidence'); });
+    d.on('dash.cta', function () { mark('progress'); });
+    d.on('usage.alert', function () { mark('progress', 'evidence'); });
+    d.on('demo.log', function () { mark('ledger', 'header'); });
+    d.on('demo.jump', function () { feedShown = 0; var f = $('pm6OrchPcFeed'); if (f) f.innerHTML = ''; markAll(); });
+    d.on('page.changed', function (p) {
+      if (p && p.page === 'orchestrator') { ensureBaseline(); markAll(); }
+    });
+  }
+
+  /* ---------- filter inputs ---------- */
+  function wireFilters() {
+    var fam = $('pm6OrchEvFamily');
+    if (fam) fam.addEventListener('change', function () { mark('evidence'); });
+    var evs = $('pm6OrchEvSearch');
+    if (evs) evs.addEventListener('input', function () { mark('evidence'); });
+    var led = $('pm6OrchLedgerFilter');
+    if (led) led.addEventListener('change', function () { ledgerRendered = 0; mark('ledger'); });
+    var scrim = $('pm6OrchSpModal');
+    if (scrim) {
+      scrim.addEventListener('click', function (e) {
+        if (e.target === scrim) { scrim.hidden = true; spTarget = null; }
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var modal = $('pm6OrchSpModal');
+      if (modal && !modal.hidden) { modal.hidden = true; spTarget = null; }
+    });
+    /* legacy page-tab path (in case navigation bypasses PM_PAGES.go) */
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest ? e.target.closest('.page-tab[data-page="orchestrator"], .activity-bar .icon[title="Orchestrator"]') : null;
+      if (t) setTimeout(function () { if (pageIsActive()) { ensureBaseline(); markAll(); } }, 0);
+    });
+  }
+
+  /* ---------- boot ---------- */
+  var elapsedInterval = null;
+  function boot() {
+    hydrateIcons(root);
+    wireGraph();
+    wireFilters();
+    subscribe();
+    RENDERERS.graph();
+    markAll();
+    if (pageIsActive()) ensureBaseline();
+    elapsedInterval = setInterval(function () {
+      if (document.hidden || !pageIsActive()) return;
+      mark('header');
+    }, 1000);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>

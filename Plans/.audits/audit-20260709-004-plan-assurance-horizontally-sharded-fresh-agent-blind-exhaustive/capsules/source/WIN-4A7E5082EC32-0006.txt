@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 1862-1873 >>>
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: Gate:GATE-001'
+- 'ContractRef: Invariant:INV-008'
+- 'ContractRef: Invariant:INV-010'
+- 'ContractRef: Gate:GATE-003'
+```
+
+
+<<< AUTHORITATIVE_CORE 1874-2268 >>>
+### AI-026 - GATE 003 UI Invariant Checks
+
+```yaml
+plan_unit_id: AI-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: GATE-003 enforces INV-011 by verifying no UI code directly calls backend, storage, or provider modules, and
+  enforces INV-012 plus GATE-010 wiring coverage for UICommandID handlers and interactive element wiring entries.
+gui_related: true
+gui_classification_reason: This unit governs UI static analysis/import-graph checks and wiring coverage gates.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gate_003_ui_invariant_checks
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: gate_003_ui_invariant_checks
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0026
+preserved_exact_tokens:
+- INV-011
+- no UI code directly calls backend/storage/provider modules
+- static analysis
+- import-graph check
+- INV-012
+- wiring matrix coverage
+- every UICommandID
+- handler entry
+- every interactive element
+- GATE-010
+negative_constraints:
+- UI code must not directly call backend/storage/provider modules when enforcing INV-011.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: Invariant:INV-011'
+- 'ContractRef: Invariant:INV-012, Gate:GATE-010'
+- 'ContractRef: Gate:GATE-003'
+```
+
+### AI-027 - Debug Overlay Is Not Runtime Mode
+
+```yaml
+plan_unit_id: AI-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: The Debug addendum preserves that debug exists only in overlay identity and UI label state; the canonical
+  runtime-mode enum remains ask, plan, regular, and yolo.
+gui_related: true
+gui_classification_reason: This unit covers UI label state and debug overlay presentation semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_overlay_is_not_runtime_mode
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: debug_overlay_not_runtime_mode
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0028
+preserved_exact_tokens:
+- Debug investigation invariants addendum (2026-03-23)
+- Invariant A -- Debug overlay is not a runtime mode
+- debug
+- overlay identity
+- UI label state
+- ask | plan | regular | yolo
+negative_constraints:
+- debug MUST exist only in overlay identity and UI label state; it must not become a runtime-mode enum value.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md'
+```
+
+### AI-028 - Visible Evidence Ingress Only
+
+```yaml
+plan_unit_id: AI-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Automatically collected Debug evidence becomes visible Investigation Context or Runtime Artifacts state, and
+  PM MUST NOT rely on hidden prompt-only evidence injection for browser or debug payloads.
+gui_related: false
+gui_classification_reason: This unit covers evidence ingress and prompt/storage boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: visible_evidence_ingress_only
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: visible_evidence_ingress_only
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0029
+preserved_exact_tokens:
+- Invariant B -- Visible evidence ingress only
+- Automatically collected Debug evidence
+- Investigation Context
+- Runtime Artifacts state
+- hidden prompt-only evidence injection
+- browser/debug payloads
+negative_constraints:
+- PM MUST NOT rely on hidden prompt-only evidence injection for browser/debug payloads.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md'
+```
+
+### AI-029 - Cross Surface Investigation Identity
+
+```yaml
+plan_unit_id: AI-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Any surface that participates in debugging preserves investigation_id and optional instrumentation_id instead
+  of minting uncorrelatable surface-local debug identities.
+gui_related: false
+gui_classification_reason: This unit covers investigation identity correlation, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cross_surface_investigation_identity
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: cross_surface_investigation_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0030
+preserved_exact_tokens:
+- Invariant C -- Cross-surface investigation identity
+- investigation_id
+- instrumentation_id
+- surface-local debug identities
+- correlated later
+negative_constraints:
+- Participating debug surfaces must not mint surface-local debug identities that cannot be correlated later.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/orchestrator-subagent-integration.md'
+```
+
+### AI-030 - Runtime Identity Packet Continuity
+
+```yaml
+plan_unit_id: AI-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Canonical runtime identity and blocked-state policy survive dispatch, restart recovery, approval, and usage
+  attribution; execution_role, requested_account_id, requested/effective operational identity, account-switch lineage, blocked_sequence,
+  DAE jail posture, approval posture, usage switch-history, and execution-role follow-through remain continuous across retries,
+  resumes, restores, and recovered attempts.
+gui_related: false
+gui_classification_reason: This unit covers runtime identity packet continuity, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_packet_continuity
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: runtime_identity_packet_continuity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0031
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+preserved_exact_tokens:
+- INV-019 -- Runtime identity and blocked-policy continuity
+- execution_role
+- requested_account_id
+- requested/effective operational identity
+- account-switch lineage
+- blocked_sequence
+- DAE jail posture
+- approval posture
+- usage switch-history
+- execution-role follow-through
+negative_constraints:
+- Canonical runtime identity and blocked-state policy MUST survive dispatch, restart recovery, approval, and usage attribution
+  without being reminted or collapsed into provider-native aliases.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### AI-031 - Frozen Runtime State Summary Consumers
+
+```yaml
+plan_unit_id: AI-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Cross-surface consumers reuse frozen runtime state-summary fields effective_health_state, effective_pressure_state,
+  and effective_resolution_outcome with scheduler vocabulary instead of inventing local phrasing.
+gui_related: true
+gui_classification_reason: This unit governs user-visible cross-surface state phrasing and status display fields.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: frozen_runtime_state_summary_consumers
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: frozen_runtime_state_summary_consumers
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+preserved_exact_tokens:
+- state-summary
+- effective_health_state
+- effective_pressure_state
+- effective_resolution_outcome
+- scheduler vocabulary
+- Agent-Config
+- Health
+- Usage
+- live current values
+negative_constraints:
+- Cross-surface consumers must not invent local phrasing for frozen runtime state-summary fields.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### AI-032 - Recovery Safe Points And Owner Constraints
+
+```yaml
+plan_unit_id: AI-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Runtime recovery preserves safe-point versus restore-point boundaries, graph-lock non-degradation, classification-before-policy,
+  checkpoint-derived projection freshness, attempt-boundary identity freeze, FileSafe DAE ownership, MiscPlan cleanup constraints,
+  attempt immutability, failure-vs-blocked separation, restore identity, projection authority, and provider-pool concurrency.
+gui_related: false
+gui_classification_reason: This unit covers recovery and owner-contract invariants, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: recovery_safe_points_and_owner_constraints
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: recovery_safe_points_owner_constraints
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+preserved_exact_tokens:
+- safe-point vs restore-point
+- graph-lock
+- classification-before-policy
+- checkpoint-derived
+- attempt-boundary
+- Plans/FileSafe.md
+- context_files
+- fail-open
+- recovery_options[]
+- allowed_action_ids[]
+- mtime-based
+- attempt-lineage
+- provider-pool
+negative_constraints:
+- Owner docs must not keep same-doc contradictions around attempt reuse, DAE/FileSafe authority, cleanup-vs-safe-point validity,
+  or blocked-recovery payload fields.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- FileSafe remains the DAE enforcement owner for post-approval arg mutation, context_files write-scope widening, fail-open
+  initialization paths, and recovery_options[] vs allowed_action_ids[] schema drift.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+
+<<< CONTEXT_AFTER 2269-2280 >>>
+### AI-033 - Runtime Governance Layer And Gate Visibility
+
+```yaml
+plan_unit_id: AI-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Runtime governance is a governance-layer invariant with Decision_Policy, Permissions_System, Contracts_V0,
+  scheduler lane ordering, and mutation-safe-point ownership, and runtime /governance verification must be visible to numbered
+  gates and script-enforcement tables.
+gui_related: false
+gui_classification_reason: This unit covers governance and validation surfaces, not GUI behavior.

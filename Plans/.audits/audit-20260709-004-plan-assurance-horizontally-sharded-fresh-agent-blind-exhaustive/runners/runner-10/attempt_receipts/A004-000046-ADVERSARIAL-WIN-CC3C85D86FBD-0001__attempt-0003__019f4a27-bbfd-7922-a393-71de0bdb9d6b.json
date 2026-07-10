@@ -1,0 +1,62 @@
+{
+  "agent_instance_id": "019f4a27-bbfd-7922-a393-71de0bdb9d6b",
+  "agent_name": "a004_r10_adv_000046_v2a3_b8d24e90",
+  "agent_nickname": "Halley",
+  "agent_path": "/root/a004_r10_adv_000046_v2a3_b8d24e90",
+  "agent_thread_id": "019f4a27-bbfd-7922-a393-71de0bdb9d6b",
+  "assignment_id": "A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001",
+  "assignment_seq": 46,
+  "attempt": 3,
+  "attempt_id": "attempt-3",
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "capsule_bytes": 1604,
+  "capsule_package_bytes": 38493,
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001.json",
+  "capsule_sha256": "e82333ef3492807481f57870f7006a90f579a9257364aa2870236d022a6fc613",
+  "completed_at": "2026-07-10T04:00:05.568Z",
+  "context_ranges": [
+    [
+      345,
+      356
+    ]
+  ],
+  "core_range": [
+    1,
+    344
+  ],
+  "coverage_credit": 0,
+  "created_at": "2026-07-10T03:52:25.885Z",
+  "dispatch_receipt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/dispatch_receipts/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001__attempt-0003__a004_r10_adv_000046_v2a3_b8d24e90.json",
+  "dispatch_receipt_sha256": "995034028b088ad1737f1f3b4b1a349e933e0072d82a9407fb5eddfff6196cc5",
+  "dispatched_at": "2026-07-10T03:52:01.684870Z",
+  "doc_id": "DOC-CC3C85D86FBD",
+  "document_path": "Plans/UI_Command_Catalog.md",
+  "fork_turns": "none",
+  "model": "gpt-5.6-sol",
+  "no_followup_reuse": true,
+  "prior_substantive_assignment_count": 0,
+  "reasoning_effort": "ultra",
+  "receipt_schema": "a004.completed_attempt_receipt.v2",
+  "receipt_status": "quarantined",
+  "recorded_at": "2026-07-10T04:00:29.942260Z",
+  "result_bytes": 38082,
+  "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/raw_results/failed_attempts/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001__attempt-0003__019f4a27-bbfd-7922-a393-71de0bdb9d6b.json",
+  "result_sha256": "0781d64591f458de0a8b26e269148b698254d4efbd3e2fe6f354044e6f28942d",
+  "role": "adversarial_negative_space",
+  "runner_id": "runner-10",
+  "runner_thread_id": "019f49e2-18cb-7101-b7cb-0027862d9fcb",
+  "session_ref": "/Users/jaredsmacbookair/.codex/sessions/2026/07/09/rollout-2026-07-09T23-52-25-019f4a27-bbfd-7922-a393-71de0bdb9d6b.jsonl",
+  "source_excerpt_bytes": 36889,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-CC3C85D86FBD-0001.txt",
+  "source_excerpt_sha256": "bc054ae9b6097fd2f1558d9c6958ff8077d778938d697860d7c27cadac7f3bea",
+  "source_sha256": "23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7",
+  "terminal_after_result": true,
+  "token_estimate": 11873,
+  "validation_errors": [
+    "evidence E027 quote mismatch"
+  ],
+  "validation_passed": false,
+  "validation_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/runners/runner-10/validation/failed_attempts/A004-000046-ADVERSARIAL-WIN-CC3C85D86FBD-0001__attempt-0003__019f4a27-bbfd-7922-a393-71de0bdb9d6b.json",
+  "validation_sha256": "5bf2dee166424c1786ac1b2f2b58faec94b973e79464fb08e1acef49a4677ab0",
+  "window_id": "WIN-CC3C85D86FBD-0001"
+}

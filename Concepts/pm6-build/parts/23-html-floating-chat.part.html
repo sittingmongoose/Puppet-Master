@@ -1,6 +1,10 @@
           <div class="floating-chat" id="floatingChat" style="resize:both; overflow:hidden; min-width:320px; min-height:400px; display:none; flex-direction:column; z-index:1000;">
             <div class="float-title" id="floatDrag" style="display:flex; align-items:center; justify-content:space-between; padding:0 var(--md); background:var(--surface-elevated); border-bottom:var(--border-width) solid var(--border); cursor:move; font-weight:600; font-size:13px; height:28px;">
-              Assistant - Puppet Master <button class="closeChatBtn" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:16px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+              Assistant — Tastebook <span class="pm6-chat-layout-state">detached</span>
+              <span style="display:flex; align-items:center; gap:var(--xs);">
+                <button class="pm6-chat-layout-cycle pm6-chat-iconbtn" title="Cycle layout: docked → overlay → detached (also driven by chat.layout from Settings)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="14" y1="3" x2="14" y2="21"></line></svg></button>
+                <button class="closeChatBtn" style="background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:16px;"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+              </span>
             </div>
             <div class="float-content" style="flex:1; display:flex; flex-direction:column; overflow:hidden; height: calc(100% - 28px);">
               
@@ -41,8 +45,8 @@
                       <div class="chm-row"><span class="chm-label">Input</span><span class="chm-value">38.2k tokens</span></div>
                       <div class="chm-row"><span class="chm-label">Output</span><span class="chm-value">3.9k tokens</span></div>
                       <div class="chm-actions">
-                        <button class="chm-compact-btn" onclick="this.textContent='Compacting...'; this.style.opacity='0.6';">Compact Now</button>
-                        <button class="chm-details-link" onclick="openContextDetailPane()">More Details</button>
+                        <button class="chm-compact-btn" onclick="this.textContent='Compacting...'; this.style.opacity='0.6';">Compact now</button>
+                        <button class="chm-details-link" onclick="openContextDetailPane()">More details</button>
                       </div>
                     </div>
                   </span>
@@ -81,7 +85,7 @@
                     <div class="cl-mode-info"><span class="cl-mode-name">Subcompact</span><span class="cl-mode-desc">Replace with local summary</span></div>
                   </div>
                   <div class="cl-popover-footer">
-                    <button class="cl-off-btn" onclick="clearContextLensMode(this)">Turn Off</button>
+                    <button class="cl-off-btn" onclick="clearContextLensMode(this)">Turn off</button>
                   </div>
                 </div>
               </div>
@@ -111,18 +115,44 @@
                       <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
                     </div>
                   </div>
-                  <div class="chat-thread-item active role-assistant" data-thread="thread0" onclick="switchToChatThread('thread0')">
+                  <div class="chat-thread-item active role-assistant pm6-chat-thread" data-thread="th-main">
                     <div class="thread-top-row">
-                      <span class="thread-timestamp">1m</span>
-                      <div class="thread-title">Dashboard Revamp</div>
+                      <span class="thread-timestamp">now</span>
+                      <div class="thread-title">Tastebook — planning chat</div>
                     </div>
                     <div class="thread-bottom-row">
                       <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
-                      <div class="thread-summary">Updating dashboard components...</div>
+                      <div class="thread-summary">Main agent thread · research run live<br>Photos pipeline + import hardening</div>
                     </div>
                     <div class="thread-hover-actions">
-                      <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
-                      <button class="thread-action-btn" title="More..."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                      <button class="thread-action-btn" title="Archive" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                      <button class="thread-action-btn" title="More..." data-demo-action="demo.toast" data-demo-arg="Rename, duplicate and export live here in the full build."><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-prd pm6-chat-thread pm6-chat-thread-gate pm6-hidden" data-thread="th-gate">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">now</span>
+                      <div class="thread-title"><span class="pm6-chat-gate-dot"></span> Approval: Package Gate</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-unread"></div></div>
+                      <div class="thread-summary">Run #47 holding at n-13<br>publish package: image-processing</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Open in Orchestrator" data-demo-action="page.go" data-demo-arg="orchestrator:progress"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+                    </div>
+                  </div>
+                  <div class="chat-thread-item role-doc pm6-chat-thread" data-thread="th-deepplan">
+                    <div class="thread-top-row">
+                      <span class="thread-timestamp">14m</span>
+                      <div class="thread-title">Deep Plan: Image pipeline</div>
+                    </div>
+                    <div class="thread-bottom-row">
+                      <div class="thread-status-col"><div class="thread-status-draft"></div></div>
+                      <div class="thread-summary">Plan doc draft &middot; TODO 2/5 done<br>states: approved &middot; executing step 3</div>
+                    </div>
+                    <div class="thread-hover-actions">
+                      <button class="thread-action-btn" title="Open plan doc in editor" data-demo-action="files.open" data-demo-arg="PRD.md"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></button>
                     </div>
                   </div>
                   <div class="chat-thread-item role-assistant" data-thread="thread-debug1" onclick="switchToChatThread('thread-debug1')">
@@ -132,7 +162,7 @@
                     </div>
                     <div class="thread-bottom-row">
                       <div class="thread-status-col"><div class="thread-working-pulse"></div></div>
-                      <div class="thread-summary">Investigating auth token refresh failure.<br>Phase: Root Cause &middot; DAP attached</div>
+                      <div class="thread-summary">Debug investigation · evidence-first<br>Step: Root Cause &middot; DAP attached</div>
                     </div>
                     <div class="thread-hover-actions">
                       <button class="thread-action-btn" title="Archive"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
@@ -337,12 +367,12 @@
 
 <div class="sticky-plan-tracker">
   <div style="font-weight:bold; font-size:12px; margin-bottom:4px; display:flex; justify-content:space-between;">
-    <span>Active Plan: Dashboard Revamp</span>
-    <span style="font-size:10px; color:var(--text-muted); cursor:pointer;">[Edit]</span>
+    <span>Active Plan: Dashboard Revamp <span class="pm6-chat-badge" title="Plan states: draft · approved · executing · completed · blocked · superseded">executing</span></span>
+    <span style="font-size:10px; color:var(--text-muted); cursor:pointer;" data-demo-action="demo.toast" data-demo-arg="Plan editing reopens the draft — the executing copy is superseded, never lost.">[Edit]</span>
   </div>
-  <div class="plan-todo-item"><span class="todo-status done"></span> <span style="text-decoration:line-through; color:var(--text-muted)">1. Setup routing</span></div>
-  <div class="plan-todo-item"><span class="todo-status working"></span> <span style="color:var(--text-primary); font-weight:600;">2. Implement Chat UI changes</span></div>
-  <div class="plan-todo-item"><span class="todo-status"></span> <span style="color:var(--text-secondary)">3. Add settings IA</span></div>
+  <div class="plan-todo-item" title="completed"><span class="todo-status done"></span> <span style="text-decoration:line-through; color:var(--text-muted)">1. Setup routing</span></div>
+  <div class="plan-todo-item" title="in_progress"><span class="todo-status working"></span> <span style="color:var(--text-primary); font-weight:600;">2. Implement Chat UI changes</span></div>
+  <div class="plan-todo-item" title="pending"><span class="todo-status"></span> <span style="color:var(--text-secondary)">3. Add settings IA</span></div>
 </div>
 
 <div class="message user">
@@ -372,10 +402,10 @@
 
   <div class="activity-card web">
     <div class="activity-card-header">
-      <span style="color:var(--accent-orange);">[Web] web_search</span>
-      <span style="font-size:9px; color:var(--text-muted);">1.2s</span>
+      <span style="color:var(--accent-orange);">[Web] cmd.chat.web.search</span>
+      <span style="font-size:9px; color:var(--text-muted);">1.2s · completed</span>
     </div>
-    <div class="activity-card-body">Query: "Best practices for CSS multi-questionnaire UI"</div>
+    <div class="activity-card-body">operation_input.query: "Best practices for CSS multi-questionnaire UI"</div>
   </div>
   
   <div class="msg-controls">
@@ -444,7 +474,7 @@
                     <span class="ft-more" style="color:var(--accent-blue); cursor:pointer; font-size:10px; font-weight:600;" onclick="this.style.display='none'; this.parentElement.querySelectorAll('.ft-overflow').forEach(function(e){e.style.display=''})">+ 2 more</span>
                   </div>
                   <div style="display:flex; gap:var(--sm); padding:var(--xs) var(--md); align-items:center;">
-                    <button class="wizard-btn" style="font-size:10px; padding:2px 8px;" title="cmd.chat.revert — Restores file mutations from last assistant turn" onclick="toast('cmd.chat.revert → restoring files from last assistant turn...')">Revert Last Edit</button>
+                    <button class="wizard-btn" style="font-size:10px; padding:2px 8px;" title="cmd.chat.revert — Restores file mutations from last assistant turn" onclick="toast('cmd.chat.revert → restoring files from last assistant turn...')">Revert last edit</button>
                     <button class="wizard-btn" style="font-size:10px; padding:2px 8px; opacity:0.7;" title="cmd.chat.rewind — Conversation history only. Does NOT restore files." onclick="toast('cmd.chat.rewind → rewinding conversation (files unchanged)')">Rewind Chat</button>
                     <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">revert ≠ rewind</span>
                   </div>
@@ -455,22 +485,35 @@
 
                   <div style="position:relative; background:var(--surface-elevated); border: 1px solid var(--border); border-radius:6px; padding:var(--xs); display:flex; flex-direction:column;">
 
-<div class="slash-command-menu" style="bottom: 100%; margin-bottom: 8px;">
-  <div class="slash-cmd-item active">
+<div class="slash-command-menu pm6-chat-slash" style="bottom: 100%; margin-bottom: 8px;">
+  <div class="pm6-chat-slash-title">/web — general web abilities (also reachable by plain language, palette, or the agent itself)</div>
+  <div class="slash-cmd-item active pm6-chat-slash-item" data-pm6-insert="/web " data-pm6-help="1">
     <span class="slash-cmd-name">/web</span>
-    <span class="slash-cmd-desc">Search & extract</span>
+    <span class="slash-cmd-desc">Show web abilities — help only, runs nothing</span>
   </div>
-  <div class="slash-cmd-item">
-    <span class="slash-cmd-name">/skill</span>
-    <span class="slash-cmd-desc">Invoke skill</span>
+  <div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web search ">
+    <span class="slash-cmd-name">/web search</span>
+    <span class="slash-cmd-desc">cmd.chat.web.search → "Searching Web:"</span>
   </div>
-  <div class="slash-cmd-item">
-    <span class="slash-cmd-name">/model</span>
-    <span class="slash-cmd-desc">Change model</span>
+  <div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web fetch ">
+    <span class="slash-cmd-name">/web fetch</span>
+    <span class="slash-cmd-desc">cmd.chat.web.fetch → "Reading Site:" (host-scoped)</span>
   </div>
-  <div class="slash-cmd-item">
-    <span class="slash-cmd-name">@</span>
-    <span class="slash-cmd-desc">Symbol search</span>
+  <div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web extract ">
+    <span class="slash-cmd-name">/web extract</span>
+    <span class="slash-cmd-desc">cmd.chat.web.extract → "Extracting Site:" (host-scoped)</span>
+  </div>
+  <div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web research ">
+    <span class="slash-cmd-name">/web research</span>
+    <span class="slash-cmd-desc">cmd.chat.web.research → "Researching Web:" (visible run)</span>
+  </div>
+  <div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web crawl ">
+    <span class="slash-cmd-name">/web crawl</span>
+    <span class="slash-cmd-desc">cmd.chat.web.crawl → "Crawling Site:" (origin + caps)</span>
+  </div>
+  <div class="slash-cmd-item pm6-chat-slash-item" data-pm6-insert="/web map ">
+    <span class="slash-cmd-name">/web map</span>
+    <span class="slash-cmd-desc">cmd.chat.web.map → "Mapping Site:" (root URL)</span>
   </div>
 </div>
 
@@ -478,7 +521,8 @@
                       <div class="composer-chip file-ref"><span>src/app.rs</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
                       <div class="composer-chip file-ref"><span>src/config.rs:14-28</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
                     </div>
-                    <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <textarea class="pm6-chat-input" placeholder="Message the agent — @ mentions files, / shows commands (try /web)…" style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
+                    <div class="pm6-chat-queuefull pm6-hidden">Queue full — two messages are already waiting. Recovery: stop the current turn or let it finish.</div>
                     
                     <div style="display:flex; justify-content:space-between; align-items:center; padding:var(--xs) var(--sm); border-top: 1px solid var(--border-light);">
                       <div style="display:flex; gap:var(--sm); align-items:center;">
@@ -501,12 +545,16 @@
 
                         <div style="display:flex; gap:var(--md); align-items:center; margin-left:var(--sm); font-size:10px;">
                           <span class="chat-toggle-btn toggle-eli5" title="Explain Like I'm 5" onclick="this.classList.toggle('active')">ELI5</span>
-                          <span class="chat-toggle-btn toggle-yolo active" title="Auto-approve tools" onclick="this.classList.toggle('active')">YOLO</span>
-                          <span class="chat-toggle-btn toggle-crew" title="Multi-agent Crew" onclick="this.classList.toggle('active')">CREW</span>
+                          <span class="chat-toggle-btn toggle-yolo" title="Auto-approve eligible tools. Never bypasses FileSafe, permissions, policy, secrets or protected-branch guards." onclick="this.classList.toggle('active')">YOLO</span>
+                          <span class="chat-toggle-btn toggle-crew" title="Multi-model Crew overlay with an inspectable crew board" onclick="this.classList.toggle('active')">CREW</span>
                         </div>
                       </div>
 
-                      <button title="Stop (Idle)" style="background:transparent; color:var(--accent-magenta); border:1px solid var(--accent-magenta); border-radius:4px; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; width:28px; height:28px;"><div style="width:10px; height:10px; background:currentColor; border-radius:2px; animation: pulse 1s infinite;"></div></button>
+                      <button class="pm6-chat-send" data-pm6-state="idle" title="Send (Enter) — becomes Stop while the agent works">
+                        <span class="pm6-chat-send-ico-send"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
+                        <span class="pm6-chat-send-ico-stop"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg></span>
+                        <span class="pm6-chat-send-label">Send</span>
+                      </button>
                     </div>
                   </div>
 
@@ -600,7 +648,7 @@
       <div class="msg-body">
         <div class="pm-command-card pm-terminal-enter" id="pmCardRich">
           <div class="pm-command-card-header">
-            <span><strong>run_shell_command</strong> · shell tier <code>rich</code></span>
+            <span><strong>run_shell_command</strong> · shell integration <code>rich</code></span>
             <span class="pm-session-badge exited">exited</span>
           </div>
           <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">cwd ~/projects/puppet-master · 1.24s · exit 101</div>
@@ -636,7 +684,7 @@ error[E0433]: unresolved import `slint`</pre>
             <span><strong>Opaque integration</strong></span>
             <span class="pm-session-badge exited">degraded</span>
           </div>
-          <div style="font-size:10px;color:var(--text-muted);">Exact command boundaries are not asserted at this tier.</div>
+          <div style="font-size:10px;color:var(--text-muted);">Exact command boundaries are not asserted at this integration level.</div>
           <pre>••••••••••••••• (transcript redacted)
 status: completed with warnings</pre>
           <div class="pm-command-card-actions">

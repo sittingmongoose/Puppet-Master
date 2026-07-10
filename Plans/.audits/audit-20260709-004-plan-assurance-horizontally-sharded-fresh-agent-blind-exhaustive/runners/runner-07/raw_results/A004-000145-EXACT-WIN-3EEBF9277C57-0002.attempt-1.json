@@ -1,0 +1,699 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000145-EXACT-WIN-3EEBF9277C57-0002",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000145-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0145_939cb0f9",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-3EEBF9277C57-0002",
+  "doc_id": "DOC-3EEBF9277C57",
+  "document_path": "Plans/00-plans-index.md",
+  "core_range": [
+    70,
+    261
+  ],
+  "context_ranges": [
+    [
+      58,
+      69
+    ],
+    [
+      262,
+      273
+    ]
+  ],
+  "source_sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e",
+  "core_sha256": "a364b127efe898ef567b1031963558fbea8fecc907c7f2a2fbb54d8889f9404d",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000145-EXACT-WIN-3EEBF9277C57-0002.json",
+  "capsule_sha256": "6a79bac041a5f20344d0e4a11b61de7120858428acc22196772134be668219ea",
+  "capsule_bytes": 1636,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-3EEBF9277C57-0002.txt",
+  "source_excerpt_sha256": "d6dd839d74d243dc73899ff2ebd59633e4bb9cb7310a673eb9628171d36246b3",
+  "source_excerpt_bytes": 37772,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-A004-145-001",
+      "statement": "The index explicitly acts as a routing map rather than a behavior owner: named primary documents carry canon, while implicated and stale-consumer documents consume or reconcile that canon.",
+      "evidence_ref_ids": [
+        "EV-A004-145-069",
+        "EV-A004-145-071"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-002",
+      "statement": "Several routing contracts normalize source-order variation by requiring equivalent or unordered mentions to resolve to the same owner set.",
+      "evidence_ref_ids": [
+        "EV-A004-145-088",
+        "EV-A004-145-095"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-003",
+      "statement": "The core records prohibited and defective document states, including mixed-era layering, stale consumers, and an inconsistent classification that must survive reconciliation.",
+      "evidence_ref_ids": [
+        "EV-A004-145-085",
+        "EV-A004-145-107",
+        "EV-A004-145-123"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-004",
+      "statement": "The most exact seam-level behavior in the routing map covers authoritative usage-event linkage, forced page-tab destinations, single cost-usage consumption, blocked-episode ownership, and resolution ordering for subagent coordination contradictions.",
+      "evidence_ref_ids": [
+        "EV-A004-145-189",
+        "EV-A004-145-190",
+        "EV-A004-145-191",
+        "EV-A004-145-193",
+        "EV-A004-145-194"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-005",
+      "statement": "The rewrite direction specifies event-sourced storage, a centralized tool-policy and rollback pipeline, an explicit native/web UI stack with ordered fallbacks, and route/account/model-dependent authentication and provider behavior.",
+      "evidence_ref_ids": [
+        "EV-A004-145-199",
+        "EV-A004-145-200",
+        "EV-A004-145-201",
+        "EV-A004-145-202"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-006",
+      "statement": "Provider/account, promoted-shell, visible GUI, and runtime-record authority are split among distinct owner surfaces, while stale pre-promotion shell wording is expressly non-authoritative.",
+      "evidence_ref_ids": [
+        "EV-A004-145-214"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-007",
+      "statement": "The bootstrap map assigns ledger, Plan-document, node-readiness, and migration contracts to four owners; it expressly prevents the node-readiness boundary from creating executable work and limits generated governance artifacts to the seal phase.",
+      "evidence_ref_ids": [
+        "EV-A004-145-223",
+        "EV-A004-145-224",
+        "EV-A004-145-225",
+        "EV-A004-145-226",
+        "EV-A004-145-228"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-008",
+      "statement": "Semantic-audit closure authority is divided between durable closure-state ownership and deterministic finding/validation ownership; workflow prompts are consumers, and audit scripts and matrices are governance support rather than product or executable build artifacts.",
+      "evidence_ref_ids": [
+        "EV-A004-145-235",
+        "EV-A004-145-236",
+        "EV-A004-145-237",
+        "EV-A004-145-238"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-009",
+      "statement": "The Plans-to-code map assigns the design-only compile state machine, testing evidence and blockers, Executor preflights and failure/receipt handling, and completion certification to separate authorities.",
+      "evidence_ref_ids": [
+        "EV-A004-145-245",
+        "EV-A004-145-246",
+        "EV-A004-145-247",
+        "EV-A004-145-248"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-010",
+      "statement": "GUI truth in this window includes exactly six user-facing model settings, no Executor Model setting, a seven-tab Orchestrator shell with a visible Plan Compile tab and animated node-factory UX, and user-visible evidence projections that are not runtime truth.",
+      "evidence_ref_ids": [
+        "EV-A004-145-249",
+        "EV-A004-145-250",
+        "EV-A004-145-252"
+      ]
+    },
+    {
+      "observation_id": "OBS-A004-145-011",
+      "statement": "The compile remains non-runtime: governance registration may refresh only after live Plans stabilize, while PlanCompile launch, WorkNodes, NodeSeeds, executable queues, GoalRuns, production build tasks, and runtime dispatch remain disabled.",
+      "evidence_ref_ids": [
+        "EV-A004-145-256"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "F-A004-145-001",
+      "severity": "medium",
+      "title": "Bare seam sets do not identify owner versus consumer roles",
+      "description": "Some routing entries name documents without labeling either one as primary owner, consumer, or reconciliation companion. Because the index disclaims behavioral ownership, the bare pair leaves consequential discretion over whether both documents co-own the seam or one merely consumes the other.",
+      "evidence_ref_ids": [
+        "EV-A004-145-069",
+        "EV-A004-145-102"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-002",
+      "severity": "high",
+      "title": "Known stale and owner-gap states lack an actionable closure contract",
+      "description": "The map labels live documents as stale, owner-gap, or inconsistent but does not give a target contract revision, blocking effect, lifecycle status, or acceptance evidence. The assigned window therefore does not establish whether builders must reject, conditionally consume, or treat those documents as repaired.",
+      "evidence_ref_ids": [
+        "EV-A004-145-107",
+        "EV-A004-145-110",
+        "EV-A004-145-123"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-003",
+      "severity": "medium",
+      "title": "Authoritative runtime-recovery terminology has no named single owner",
+      "description": "The index requires one authoritative mapping and event taxonomy for four consequential terms but routes to four documents without identifying which document owns the mapping, its exact definitions, or its conformance evidence.",
+      "evidence_ref_ids": [
+        "EV-A004-145-128"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-004",
+      "severity": "high",
+      "title": "Required routing checks exceed the named progression gate",
+      "description": "The window explicitly states that GATE-010 cannot express required routing and command-normalization checks, but it supplies no replacement gate, fail-closed rule, responsible owner, or acceptance test. This leaves the required checks without an enforceable progression boundary.",
+      "evidence_ref_ids": [
+        "EV-A004-145-162"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-005",
+      "severity": "medium",
+      "title": "Source-control routing uses an unbounded document category",
+      "description": "The phrase 'Source Control-related docs' is not an enumerated owner or consumer set, so deterministic routing and reconciliation coverage cannot be derived from this window.",
+      "evidence_ref_ids": [
+        "EV-A004-145-176"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-006",
+      "severity": "high",
+      "title": "Precedence authority remains structurally unreliable during ownership disputes",
+      "description": "The Crosswalk is expressly unreliable exactly when rewrite-era ownership disputes peak, yet the entry only says to preserve '/precedence' and does not designate a fallback authority, conflict algorithm, or fail-closed behavior.",
+      "evidence_ref_ids": [
+        "EV-A004-145-177"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-007",
+      "severity": "medium",
+      "title": "Release revalidation is required without an acceptance protocol",
+      "description": "The UI stack requires official stable releases to be reverified before runtime implementation, but this window does not identify the verifier, verification instant, acceptable evidence, compatibility criteria, or behavior when the pinned versions are no longer official stable releases.",
+      "evidence_ref_ids": [
+        "EV-A004-145-201"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-008",
+      "severity": "medium",
+      "title": "Provider-specific behavioral owners are not enumerated",
+      "description": "Provider-specific documents jointly own requested/effective account, authentication, quota, and provider-health semantics, but the owner set is left open-ended. That prevents exhaustive owner reconciliation from this routing map.",
+      "evidence_ref_ids": [
+        "EV-A004-145-214"
+      ]
+    },
+    {
+      "finding_id": "F-A004-145-009",
+      "severity": "medium",
+      "title": "Governance refresh depends on an undefined stability predicate",
+      "description": "Governance artifacts may refresh after live Plans are stable, but the window defines neither 'stable' nor required proof, decision authority, mandatory versus optional refresh behavior, or failure handling. This leaves timing of consequential governance registration discretionary.",
+      "evidence_ref_ids": [
+        "EV-A004-145-256"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NG-A004-145-001",
+      "statement": "The index's authority boundary is explicit: it routes ownership and does not re-own the listed behavior domains.",
+      "evidence_ref_ids": [
+        "EV-A004-145-069"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-002",
+      "statement": "Legacy chain-wizard material is unambiguously compatibility or historical input and is excluded from active contract, boundary, executor, and runtime ownership.",
+      "evidence_ref_ids": [
+        "EV-A004-145-130",
+        "EV-A004-145-131"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-003",
+      "statement": "The page_tab trigger and blocked_sequence ownership/non-reownership boundary are stated as exact positive and negative constraints.",
+      "evidence_ref_ids": [
+        "EV-A004-145-190",
+        "EV-A004-145-193"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-004",
+      "statement": "Ledger source-lineage status and the seal-phase-only governance mutation boundary are explicit.",
+      "evidence_ref_ids": [
+        "EV-A004-145-228"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-005",
+      "statement": "Semantic-closure schema ownership, consumer non-ownership, and the non-product status of audit support artifacts are explicitly separated.",
+      "evidence_ref_ids": [
+        "EV-A004-145-235",
+        "EV-A004-145-236",
+        "EV-A004-145-237",
+        "EV-A004-145-238"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-006",
+      "statement": "The user-facing model-setting count and the absence of an Executor Model setting are explicit.",
+      "evidence_ref_ids": [
+        "EV-A004-145-249"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-007",
+      "statement": "User-visible receipt and evidence projection is explicitly prevented from becoming runtime truth.",
+      "evidence_ref_ids": [
+        "EV-A004-145-252"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-008",
+      "statement": "The compile's disabled runtime capabilities and prohibited executable outputs are exhaustively enumerated in this window.",
+      "evidence_ref_ids": [
+        "EV-A004-145-256"
+      ]
+    },
+    {
+      "non_gap_id": "NG-A004-145-009",
+      "statement": "The selected UI versions, native renderer default, native fallback order, emergency software fallback, and web GUI architecture are explicit even though the release-revalidation procedure is not.",
+      "evidence_ref_ids": [
+        "EV-A004-145-201"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNK-A004-145-001",
+      "statement": "Exact behavior and schema details inside the routed owner documents cannot be determined from this routing-only window.",
+      "evidence_ref_ids": [
+        "EV-A004-145-069",
+        "EV-A004-145-071"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-145-002",
+      "statement": "The exact definitions, event fields, and transition rules for safe-point, restore-point, rollback, and contamination are not present in the assigned window.",
+      "evidence_ref_ids": [
+        "EV-A004-145-128"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-145-003",
+      "statement": "The gate or validator that will replace or extend GATE-010 is not identified.",
+      "evidence_ref_ids": [
+        "EV-A004-145-162"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-145-004",
+      "statement": "The exact documents included by 'Source Control-related docs' cannot be derived from this window.",
+      "evidence_ref_ids": [
+        "EV-A004-145-176"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-145-005",
+      "statement": "The complete seven-tab names, detailed node-factory states, and model-resolution algorithm are not stated here despite their designated owners.",
+      "evidence_ref_ids": [
+        "EV-A004-145-249",
+        "EV-A004-145-250"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-145-006",
+      "statement": "The evidence required to prove release revalidation and live-Plan stability before implementation or governance registration is not defined.",
+      "evidence_ref_ids": [
+        "EV-A004-145-201",
+        "EV-A004-145-256"
+      ]
+    },
+    {
+      "unknown_id": "UNK-A004-145-007",
+      "statement": "The complete set of provider-specific owner documents is not named.",
+      "evidence_ref_ids": [
+        "EV-A004-145-214"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "EV-A004-145-069",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 69,
+      "line_end": 69,
+      "range_class": "context",
+      "exact_quote": "This index records these routing relationships only; it does not re-own contract, storage, UI, chat, run-graph, HITL, executor, or usage behavior. For each seam below, Primary owners and Primary doc entries carry the owning canon; Cross-owner docs implicated by this seam, Strongly implicated adjacent docs, Adjacent owners implicated, stale-consumer, and already-identified owner entries are reconciliation companions that consume or align to that owner canon."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-071",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 71,
+      "line_end": 71,
+      "range_class": "core",
+      "exact_quote": "- Contracts/Crosswalk to UI/run seam: Primary owners: `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`; Cross-owner docs implicated by this seam: `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/assistant-chat-design.md`, `Plans/Orchestrator_Page.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/FinalGUISpec.md`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-085",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 85,
+      "line_end": 85,
+      "range_class": "core",
+      "exact_quote": "- Mixed-era layering seam: `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md` must not preserve `mixed-era` layering where additive patches landed without fully retiring older framing."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-088",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 88,
+      "line_end": 88,
+      "range_class": "core",
+      "exact_quote": "- Orchestrator/storage/contracts triad: `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md`; equivalent source orderings that begin with `Plans/storage-plan.md` or pair `Plans/storage-plan.md` with `Plans/Contracts_V0.md` still route to the same three owner docs."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-095",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 95,
+      "line_end": 95,
+      "range_class": "core",
+      "exact_quote": "- Crosswalk/contract file-manager storage seam: Primary owners: `Plans/Crosswalk.md`, `Plans/Contracts_V0.md`, `Plans/FileManager.md`, and `Plans/storage-plan.md`; unordered source mentions of the same four paths route to the same owner set."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-102",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 102,
+      "line_end": 102,
+      "range_class": "core",
+      "exact_quote": "- UI-command/storage pair seam: `Plans/UI_Command_Catalog.md` and `Plans/storage-plan.md`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-107",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 107,
+      "line_end": 107,
+      "range_class": "core",
+      "exact_quote": "- Run/GUI/UI primary stale-consumer seam: Primary stale consumers: `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-110",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 110,
+      "line_end": 110,
+      "range_class": "core",
+      "exact_quote": "- Crosswalk/contract owner-gap seam: Primary owner-gap docs: `Plans/Crosswalk.md` and `Plans/Contracts_V0.md`; Strong aligned consumer: `Plans/storage-plan.md`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-123",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 123,
+      "line_end": 123,
+      "range_class": "core",
+      "exact_quote": "- UI/run stale-inconsistent consumer seam: Primary stale/inconsistent consumers: `Plans/UI_Command_Catalog.md` and `Plans/Run_Graph_View.md`; retain `/inconsistent` classification when reconciling those consumers."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-128",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 128,
+      "line_end": 128,
+      "range_class": "core",
+      "exact_quote": "- Runtime/storage/policy/UI terminology seam: normalize `safe-point`, `restore-point`, `rollback`, and `contamination` terminology through one authoritative mapping and event taxonomy across runtime, storage, policy, and UI docs; index routing points to `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, and `Plans/FinalGUISpec.md`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-130",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 130,
+      "line_end": 130,
+      "range_class": "core",
+      "exact_quote": "- Contracts/Crosswalk/legacy chain-wizard source-lineage seam: `Plans/chain-wizard-flexibility.md` is preserved only as compatibility/source-lineage input; active contract and boundary ownership remains with `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-131",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 131,
+      "line_end": 131,
+      "range_class": "core",
+      "exact_quote": "- Legacy chain-wizard/contracts/executor source-lineage seam: `Plans/chain-wizard-flexibility.md` (section 1) is preserved only as historical input; active executor/runtime ownership remains with `Plans/Contracts_V0.md`, `Plans/Executor_Protocol.md`, and the current PRD/Planning owner docs."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-162",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 162,
+      "line_end": 162,
+      "range_class": "core",
+      "exact_quote": "- Progression gate command-normalization seam: `GATE-010` cannot express the routing and `command-normalization` checks now needed; the `GATE` layer remains behind the owner contract layer."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-176",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 176,
+      "line_end": 176,
+      "range_class": "core",
+      "exact_quote": "- Orchestrator/Source Control-related seam: `Plans/Orchestrator_Page.md` plus Source Control-related docs."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-177",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 177,
+      "line_end": 177,
+      "range_class": "core",
+      "exact_quote": "- Crosswalk precedence rewrite-era seam: `Plans/Crosswalk.md` remains structurally unreliable as a boundary/precedence map when rewrite-era ownership disputes peak; preserve `/precedence`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-189",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 189,
+      "line_end": 189,
+      "range_class": "core",
+      "exact_quote": "- Usage event reference shape seam: `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md` remain the owner/consumer set for `usage_event_ref`; `usage-feature.md` consumers must not rely on timestamp heuristics or a shape that lacks authoritative storage/runtime linkage."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-190",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 190,
+      "line_end": 190,
+      "range_class": "core",
+      "exact_quote": "- Orchestrator page-tab routing seam: `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Contracts_V0.md` own `page_tab` route semantics; use `page_tab` only when a routed destination must land inside a known page and force a specific tab."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-191",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 191,
+      "line_end": 191,
+      "range_class": "core",
+      "exact_quote": "- Usage cost consumer seam: `Plans/usage-feature.md` owns `cost_usage` routing and duplicate-consumer cleanup, with `Plans/Runtime_Artifacts_Panel.md` and `Plans/storage-plan.md` carrying artifact and persistence alignment so there is one authoritative consumer section."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-193",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 193,
+      "line_end": 193,
+      "range_class": "core",
+      "exact_quote": "- Runtime scheduler/executor blocked-sequence seam: `blocked_sequence` is owned by the runtime scheduler/executor layer through `Plans/Executor_Protocol.md` and `Plans/Contracts_V0.md`; UI/HITL/chat/storage docs, including the legacy `/HITL/chat/storage` bucket shorthand, are consumers and must not re-own the blocked episode."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-194",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 194,
+      "line_end": 194,
+      "range_class": "core",
+      "exact_quote": "- Orchestrator subagent coordination-canon seam: `Plans/orchestrator-subagent-integration.md` owns live `coordination-canon` contradictions in its runtime scheduler consumer model; same-file contradictions must be resolved there before `Plans/FileManager.md` or index consumers mirror them."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-199",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 199,
+      "line_end": 199,
+      "range_class": "core",
+      "exact_quote": "- **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)"
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-200",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 200,
+      "line_end": 200,
+      "range_class": "core",
+      "exact_quote": "- **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline"
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-201",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 201,
+      "line_end": 201,
+      "range_class": "core",
+      "exact_quote": "- **UI rewrite**: Rust stable 1.96.1 + Slint 1.17.1 by owner decision on 2026-07-07 (Winit + Skia compiled/default on Windows/Linux/macOS; Winit + FemtoVG-wgpu fallback; Winit software emergency fallback; Slint/WASM canvas web GUI via trusted local daemon for OS capabilities; reverify official stable releases before runtime implementation)"
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-202",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 202,
+      "line_end": 202,
+      "range_class": "core",
+      "exact_quote": "- **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-214",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 214,
+      "line_end": 214,
+      "range_class": "core",
+      "exact_quote": "Provider / account / promoted-shell routing stays split by owner surface. `Plans/Multi-Account.md` and provider-specific docs own requested/effective account, auth, quota, and provider-health semantics; `Plans/Section15_MVP_Promoted_Features_Spec.md` owns the promoted shell and promoted-feature behavior envelope; `Plans/FinalGUISpec.md` consumes that shell-surface canon for visible placement, settings, title-bar, attention, and recovery UI; `Plans/Orchestrator_Page.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, and `Plans/storage-plan.md` own the run/package/lane/runtime records that the shell presents. Stale `pre-promotion` page, `/title-bar/recovery`, or feature-list/newfeatures shell wording is lineage or mirror cleanup input, not a live owner alternative."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-223",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 223,
+      "line_end": 223,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Planning_Ledger_System.md` owns the Bootstrap Ledger and finished-product Native Ledger Service contracts, compact operating state, source-lineage preservation, per-turn ledger protocol, and ledger-to-Plan compilation boundary."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-224",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 224,
+      "line_end": 224,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Plan_Document_System.md` owns standardized Plan doc layout, stable PlanUnits, `gui_related: true|false`, lossless Plan conversion proof, owner adjudication metadata, and generated PlanUnit index boundaries."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-225",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 225,
+      "line_end": 225,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Plan_To_Node_Compilation.md` owns the safe PlanUnit-to-node-readiness boundary and future compiler interface; it does not create WorkNodes or executable build tasks."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-226",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 226,
+      "line_end": 226,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Bootstrap_Planning_Migration.md` owns current bootstrap workflow usage, AGENTS trigger migration, Codex phase model, controlled Plan conversion batches, governance seal timing, and retired-experiment exclusions."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-228",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 228,
+      "line_end": 228,
+      "range_class": "core",
+      "exact_quote": "The ledger `Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/` is source-lineage/planning memory for these docs, not canonical product prose. Generated governance artifacts remain seal-phase only: ordinary ledger writing, plan drafting, plan conversion, PlanUnit indexing, and node-readiness reporting do not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-235",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 235,
+      "line_end": 235,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, `audit_scope_manifest.jsonl`, `repair_impact_matrix.jsonl`, durable closure row shape, `previously_closed` reuse, reopen policy, `subject_ref`/`observation_ref`, and ledger `latest_audit_*` terminal-state rules."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-236",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 236,
+      "line_end": 236,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` and `check_id` construction, `repair_required`/`finding_level`, `repair_closure_matrix.jsonl`, audit source artifact validation, cross-artifact ref checks, scope/impact coverage, and validator-facing actionable-row coverage."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-237",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 237,
+      "line_end": 237,
+      "range_class": "core",
+      "exact_quote": "- `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and `Plans/bootstrap/Codex_Prompts.md` are workflow and reusable-prompt consumers; they must point back to `PLS-012` and `PDS-014` instead of re-owning schema or enum semantics."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-238",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 238,
+      "line_end": 238,
+      "range_class": "core",
+      "exact_quote": "- `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, `Plans/.audits/audit-*/audit_scope_manifest.jsonl`, `Plans/.audits/audit-*/repair_impact_matrix.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-245",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 245,
+      "line_end": 245,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Plan_To_Node_Compilation.md` owns the design-only PlanCompileRun state machine, low-context stage cards, non-executable NodeSeed candidate and review contracts, WorkGraph draft and WorkNode request contracts, handoff matrix, schema boundary, shared compiler core, Codex bootstrap adapter, and native Puppet Master adapter."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-246",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 246,
+      "line_end": 246,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Automated_Testing_System.md` owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, automated visual/browser/device evidence policy, and test-gap blockers."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-247",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 247,
+      "line_end": 247,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-248",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 248,
+      "line_end": 248,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Goal_Runtime_System.md` owns future Planning Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-249",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 249,
+      "line_end": 249,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-250",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 250,
+      "line_end": 250,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the seven-tab Orchestrator shell, visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-252",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 252,
+      "line_end": 252,
+      "range_class": "core",
+      "exact_quote": "- `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` own packaged receipt artifacts and user-visible evidence projection without becoming runtime truth."
+    },
+    {
+      "evidence_ref_id": "EV-A004-145-256",
+      "document_path": "Plans/00-plans-index.md",
+      "line_start": 256,
+      "line_end": 256,
+      "range_class": "core",
+      "exact_quote": "The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Planning Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch."
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 10843-10854 >>>
+- Wire Usage/dashboard
+- Usage/dashboard
+- Usage view opens
+- usage-feature.md
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 10855-11240 >>>
+### SP-148 - Usage Attribution And Run Completed Snapshot Checklist
+
+```yaml
+plan_unit_id: SP-148
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Usage checklist coverage requires Assistant/Interview usage events with thread and parent lineage, hidden/background model work usage.event records, and optional run.completed usage snapshots with canonical attribution fields while per-request canon remains usage.event.
+gui_related: false
+gui_classification_reason: This unit preserves backend usage attribution and run completion snapshot checklist semantics.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: usage_attribution_and_run_completed_snapshot_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0089
+preserved_exact_tokens:
+- usage.event with thread_id and parent lineage
+- Assistant
+- Interview
+- thread_id
+- parent_run_id
+- hidden/background model work
+- title generation
+- summaries
+- compaction helpers
+- tool-triggered model calls
+- run.completed
+- input_tokens
+- output_tokens
+- cache_read_input_tokens
+- cache_creation_input_tokens
+- reasoning_tokens
+- total_tokens
+- input_total
+- input_non_cached
+- cache_read
+- cache_write
+- cache_write_1h
+- cache_write_ttl
+- output_total
+- output_visible
+- reasoning/thoughts
+- provider_total
+- context_estimate
+- counting_semantics
+- cost_microdollars
+- provider_id
+- model_id
+- account_id?
+- billing_entity_id?
+- entitlement_class?
+- cache_hit?
+- cache_strategy?
+- 'cost_microdollars: u64'
+- canonical per-request data remains usage.event
+negative_constraints:
+- run.completed optional usage snapshot does not replace canonical per-request usage.event data.
+- Legacy token names are compatibility import/export aliases and must not replace UF-085 usage fields in persisted storage, aggregation, or GUI projection.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-149 - Chat Interview Runtime Identity Consumer Boundary
+
+```yaml
+plan_unit_id: SP-149
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they consume shared runtime identity projection and do not become canonical owners of runtime identity field names.
+gui_related: false
+gui_classification_reason: This unit preserves backend owner/consumer boundaries for chat and Interview runtime identity.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: chat_interview_runtime_identity_consumer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0090
+preserved_exact_tokens:
+- Assistant
+- Interview
+- thread-local state
+- activity traces
+- reviewable history
+- canonical owner of runtime identity
+- Shared runtime identity projection
+- chat
+- widgets
+- audit
+- delegated execution
+negative_constraints:
+- Assistant and Interview surfaces do not become canonical owner of runtime identity.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Personas.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-150 - Shared Runtime Identity Field Vocabulary
+
+```yaml
+plan_unit_id: SP-150
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Shared runtime identity storage preserves requested/effective persona, account binding, operational identity, effective account/provider/project fields, and required account/auth vocabulary for requested account, execution role, credential, login, and auth realm.
+gui_related: false
+gui_classification_reason: This unit preserves backend shared runtime identity field vocabulary.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: shared_runtime_identity_field_vocabulary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0091
+preserved_exact_tokens:
+- requested_persona
+- effective_persona
+- requested_account_binding
+- operational_identity
+- effective_account_label
+- effective_provider_identity
+- effective_project_id
+- requested_account_id
+- requested_account_policy
+- effective_account_id
+- execution_role
+- account_id
+- credential_ref
+- login
+- auth_realm
+- requested account
+- operational identity
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: Plans/Multi-Account.md#4. Data model, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-151 - Runtime Snapshot Alias Rejection And Surface Consumption Boundary
+
+```yaml
+plan_unit_id: SP-151
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Runtime identity fields are additive, _id aliases such as requested_persona_id and effective_persona_id are not canonical runtime snapshot fields, and chat/GUI surfaces consume the same stored names while permission snapshots and usage preserve effective_account_id and execution_role.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible chat/GUI consumption boundaries and permission carry-through fields.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: runtime_snapshot_alias_rejection_and_surface_consumption_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0091
+preserved_exact_tokens:
+- additive
+- _id
+- requested_persona_id
+- effective_persona_id
+- canonical runtime snapshot fields
+- chat and GUI surfaces
+- stored field names
+- local variants
+- permission snapshots
+- usage surfaces
+- effective_account_id
+- execution_role
+negative_constraints:
+- requested_persona_id and effective_persona_id are not canonical runtime snapshot fields.
+preserved_contractrefs:
+- 'ContractRef: Plans/Multi-Account.md#4. Data model, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-152 - Web Runtime Identity And No-Silent-Cross-Fallback Disclosure
+
+```yaml
+plan_unit_id: SP-152
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Web-facing runtime records use shared runtime snapshot vocabulary for web/search/extract/research/crawl/map operations; history/detail inspectors read frozen requested/effective snapshots, adapter-layer provider recommendations stay provisional, and provider/runtime selection preserves no-silent-cross-fallback disclosure.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible web runtime identity disclosure and fallback explanation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: web_runtime_identity_and_no_silent_cross_fallback_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0091
+preserved_exact_tokens:
+- /web
+- search
+- extract
+- research
+- crawl
+- map
+- /history/detail
+- frozen requested/effective identity snapshots
+- provider settings row structure
+- provider ordering
+- /algorithm
+- account-vs-API-key grouping
+- adapter-layer provisional
+- no-silent-cross-fallback
+- account-pool
+- provider-local retries
+- fallback loops
+- /account/role
+- projection freshness/health
+- honored, skipped, clamped, or changed
+negative_constraints:
+- Auth surfaces must not hide provider-local retries or fallback loops behind generic success events.
+preserved_contractrefs:
+- 'ContractRef: Plans/Multi-Account.md#4. Data model, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-153 - Questionnaire State Draft And Status Persistence
+
+```yaml
+plan_unit_id: SP-153
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Question and questionnaire persistence stores thread-scoped draft, answer, and final submission state as bounded structured data with canonical status values, QuestionItem field names, draft_value, response_kind, validation_state, and answer source metadata.
+gui_related: false
+gui_classification_reason: This unit preserves backend questionnaire state and schema persistence.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_178_chat_runtime_state
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: questionnaire_state_draft_and_status_persistence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0092
+preserved_exact_tokens:
+- Question and questionnaire persistence
+- thread-scoped draft state
+- answer state
+- final submission state
+- bounded structured data only
+- answered | submitted | dismissed | timed_out | unavailable
+- draft_value
+- response_kind
+- validation_state
+- /questionnaire
+- QuestionItem
+- question_id
+- question
+- allow_freeform
+- multi_select
+- 'default_values?: string[]'
+- single_question
+- unavailable
+- dismissed
+negative_constraints:
+- Questionnaire persistence must not invent chat-local aliases.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 11241-11252 >>>
+### SP-154 - Question Card Composer Control Persistence Boundary
+
+```yaml
+plan_unit_id: SP-154
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Shared question-card persistence covers single and multi-question flows with draft, incomplete, ready_to_submit, submitted, and paused states; composer send/resend controls remain UI controls while storage records state transition and active-run linkage.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible question-card and composer control persistence boundaries.
+split_recommended: false
+depends_on:

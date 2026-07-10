@@ -1,0 +1,865 @@
+<script id="pm6-js-chat">
+/* pm6-js-chat — chat surfaces wiring (owner: chat).
+   Renders PM_DEMO chat story into #chatPanel / #floatingChat: typed message
+   stream, web operation cards (addendum_pm173), queue chips, send/stop morph,
+   /web slash family, plan panel, gate thread, layout cycle. Defensive: every
+   external call is guarded; a missing engine degrades to static markup. */
+(function () {
+  'use strict';
+
+  var CURRENT = 'th-main';           /* active pm6-owned thread */
+  var SAVED = {};                    /* threadId -> cached innerHTML per stream index */
+  var STREAM_SINKS = {};             /* msgId -> [sink elements] */
+  var LAYOUT = 'detached';           /* floating chat layout mode */
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function demo() { return window.PM_DEMO || null; }
+  function say(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : '&quot;';
+    });
+  }
+  function ico(name) {
+    try { return (window.PM_ICONS && window.PM_ICONS[name]) || ''; } catch (e) { return ''; }
+  }
+  function streams() { return $all('#chatPanel .messageStream, #floatingChat .messageStream'); }
+
+  /* ---------- icon hydration ---------- */
+  function hydrateIcons(root) {
+    $all('.pm6-ico[data-pm6-ico]', root || document).forEach(function (el) {
+      if (!el.firstChild) { el.innerHTML = ico(el.getAttribute('data-pm6-ico')); }
+    });
+  }
+
+  /* ---------- message builders ---------- */
+  function msgControlsHtml() {
+    return '<div class="msg-controls"><button class="msg-control-btn" title="Copy" data-demo-action="demo.toast" data-demo-arg="Message copied to clipboard."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>';
+  }
+  function userMsgHtml(text) {
+    return '<div class="message user pm6-chat-msg" data-pm6-role="user"><div class="msg-body">' +
+      '<div class="runtime-snapshot">v1.2.4 (Frozen) • default-persona</div>' + esc(text) + msgControlsHtml() + '</div></div>';
+  }
+  function assistantShellHtml(msgId) {
+    return '<div class="message assistant pm6-chat-msg" data-pm6-role="assistant" data-pm6-mid="' + esc(msgId) + '"><div class="msg-body">' +
+      '<div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>' +
+      '<span class="pm6-chat-sink"></span></div></div>';
+  }
+  function opStateChip(state) {
+    var cls = { completed: 'completed', running: 'running', created: 'running', queued: 'waiting',
+      'awaiting-approval': 'waiting', awaiting_approval: 'waiting', paused: 'waiting', blocked: 'waiting', failed: 'failed',
+      denied: 'failed', cancelled: 'canceled', canceled: 'canceled', degraded: 'degraded' }[state] || 'running';
+    var label = state === 'completed' ? 'completed ✓' : String(state).replace(/_/g, ' ');
+    return '<span class="pm6-opcard-chip pm6-opcard-chip-' + cls + '">' + esc(label) + '</span>';
+  }
+  function opCardHtml(card) {
+    /* generic operation card for chat.card {type:'operation'} events */
+    return '<div class="pm6-opcard" data-pm6-opid="' + esc(card.id) + '" data-op-state="' + esc(card.state || 'created') + '">' +
+      '<div class="pm6-opcard-head"><span class="pm6-ico">' + ico('bolt') + '</span>' +
+      '<span class="pm6-opcard-label">' + esc(card.name || 'operation') + '</span>' +
+      '<span class="pm6-op-chipslot">' + opStateChip(card.state || 'created') + '</span></div>' +
+      '<div class="pm6-opcard-meta"><span class="pm6-opcard-krow"><b>Lifecycle</b> created → running → completed</span>' +
+      '<span class="pm6-opcard-krow"><b>operation_input</b> <code>{ target: "' + esc(card.name || '') + '" }</code></span></div></div>';
+  }
+  function subagentCardHtml(name) {
+    return '<div class="pm6-subagent-card">' +
+      '<div class="pm6-subagent-row" onclick="this.parentElement.classList.toggle(\'expanded\')">' +
+      '<span class="pm6-subagent-status pm6-subagent-status-running"></span>' +
+      '<span class="pm6-subagent-name">' + esc(name) + '</span>' +
+      '<span class="pm6-subagent-task">spawned from this turn</span>' +
+      '<span class="pm6-subagent-state">running</span><span class="pm6-subagent-caret">▾</span></div>' +
+      '<div class="pm6-subagent-detail"><div class="pm6-subagent-sec"><b>Work stream</b>' +
+      '<div class="pm6-subagent-line">↳ binding target · collecting evidence</div>' +
+      '<div class="pm6-subagent-line">↳ running scoped checks (log caps at 50 lines)</div></div>' +
+      '<div class="pm6-subagent-sec"><b>Context</b> child scope · escalates to parent · parent asks you here</div></div></div>';
+  }
+  function filesStripHtml(files) {
+    var chips = (files || []).map(function (f) {
+      return '<span class="ft-file" data-demo-action="files.open" data-demo-arg="' + esc(f) + '" title="Open in editor">' + esc(f) + '</span>';
+    }).join('');
+    return '<div class="files-touched-strip pm6-chat-files">' + chips + '</div>';
+  }
+  function webOpCardHtml(op) {
+    if (!op) return '';
+    var rows = '<span class="pm6-opcard-krow"><b>Command</b> ' + esc(op.command || 'cmd.chat.web.search') + '</span>' +
+      '<span class="pm6-opcard-krow"><b>Provider</b> ' + esc(op.provider || '') + ' · effective adapter ' + esc(op.effective_adapter || '') +
+      (op.fallback_path ? ' · fallback ' + esc(op.fallback_path) : '') + '</span>' +
+      '<span class="pm6-opcard-krow"><b>Cache</b> ' + esc(op.cache || 'cold') + '</span>' +
+      '<span class="pm6-opcard-krow"><b>Permission</b> ' + esc(op.kind || 'web') + ' scope ' + esc(op.scope || '*') + ' · ' + esc(op.approval || 'granted') + '</span>';
+    var prog = '';
+    if (op.state === 'running' && op.progress) {
+      var frac = op.source_total ? Math.round(((op.sources_read || 0) / op.source_total) * 100) : 40;
+      prog = '<div class="pm6-opcard-progress"><div class="pm6-opcard-progressbar"><div class="pm6-opcard-progressfill" style="width:' + frac + '%;"></div></div>' +
+        '<span class="pm6-opcard-progresstext">' + esc(op.progress) + '</span></div>';
+    }
+    return '<div class="pm6-opcard" data-pm6-opid="' + esc(op.id) + '" data-op-state="' + esc(op.state) + '">' +
+      '<div class="pm6-opcard-head"><span class="pm6-ico">' + ico(op.kind === 'webresearch' ? 'telescope' : op.kind === 'webfetch' ? 'globe' : 'search') + '</span>' +
+      '<span class="pm6-opcard-label">' + esc(op.label) + '</span>' +
+      '<span class="pm6-op-chipslot">' + opStateChip(op.state) + '</span></div>' +
+      (op.agent_reason ? '<div class="pm6-opcard-prov"><span class="pm6-ico">' + ico('robot') + '</span> ' + esc(op.agent_reason) + '</div>' : '') +
+      prog + '<div class="pm6-opcard-meta">' + rows + '</div></div>';
+  }
+
+  /* ---------- live web-op runner cards (PM_DEMO.web.start — all six ops) ---------- */
+  var RUN_ICONS = { websearch: 'search', webfetch: 'globe', webextract: 'layers',
+    webresearch: 'telescope', webcrawl: 'layers', webmap: 'branch' };
+  function runInputRow(op) {
+    var keys = Object.keys(op.operation_input || {});
+    return keys.map(function (k) { return k + ': "' + esc(String(op.operation_input[k])) + '"'; }).join(', ');
+  }
+  function runProviderRow(op) {
+    return esc(op.provider || '') + ' · effective adapter ' + esc(op.effective_adapter || '') +
+      (op.fallback_path ? ' · ' + esc(op.fallback_path) : ' · no fallback used') +
+      (op.degraded ? ' <span class="pm6-opcard-chip pm6-opcard-chip-degraded">degraded</span>' : '');
+  }
+  function runSourcesDrawer(op) {
+    if (!op.sources || !op.sources.length) return '';
+    var rows = op.sources.map(function (s) {
+      return '<div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-' + esc(s.source_confidence || 'unknown') + '">' +
+        esc(s.source_confidence || 'unknown') + '</span><span class="pm6-src-title">' + esc(s.title) + '</span>' +
+        (s.read ? '<span class="pm6-src-read">✓ read</span>' : '<span class="pm6-src-skip">not read</span>') + '</div>';
+    }).join('');
+    if ((op.source_count || 0) > op.sources.length) {
+      rows += '<div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-unknown">+' + (op.source_count - op.sources.length) +
+        '</span><span class="pm6-src-title">more pages listed in the Runtime Artifact (lazy-loaded, never dumped here)</span></div>';
+    }
+    return '<div class="pm6-opcard-sources">' + rows + '</div>';
+  }
+  function runResultHtml(op) {
+    var out = '';
+    if (op.result_note) out += '<div class="pm6-opcard-resultnote">' + esc(op.result_note) + '</div>';
+    if (op.routes) {
+      out += '<div class="pm6-route-tree">' + op.routes.map(function (r) {
+        return '<div class="pm6-route-line" style="padding-left:' + (r[0] * 14) + 'px;">' + (r[0] ? '↳ ' : '') + esc(r[1]) + '</div>';
+      }).join('') + '</div>';
+    }
+    if (op.preview) {
+      out += '<table class="pm6-extract-table"><tbody>' + op.preview.map(function (row) {
+        return '<tr><td class="pm6-extract-k">' + esc(row[0]) + '</td><td>' + esc(row[1]) + '</td></tr>';
+      }).join('') + '</tbody></table>';
+    }
+    if (op.citations) {
+      out += '<div class="pm6-opcard-cites open"><div class="pm6-opcard-citehead">Citations — from actually-read sources only</div>' +
+        '<div class="pm6-opcard-citebody">' + op.citations.map(function (c) {
+          return '<div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-' + esc(c.source_confidence || 'unknown') + '">' +
+            esc(c.source_confidence || 'unknown') + '</span><span class="pm6-src-title">[' + c.n + '] ' + esc(c.title) +
+            ' — ' + esc(c.url) + '</span><span class="pm6-src-read">✓ read</span></div>';
+        }).join('') + '</div></div>';
+    }
+    return out ? '<div class="pm6-opcard-result">' + out + '</div>' : '';
+  }
+  function runCardHtml(op) {
+    var st = op.state;
+    var host = String(op.operation_input_preview || '').replace(/^https?:\/\//, '').split('/')[0];
+    var headLabel = st === 'awaiting_approval'
+      ? (op.kind === 'webcrawl' ? 'Crawl ' + host + '?' : 'Approve ' + op.kind + ' on ' + host + '?')
+      : op.label;
+    var head = '<div class="pm6-opcard-head"><span class="pm6-ico">' + ico(RUN_ICONS[op.kind] || 'globe') + '</span>' +
+      '<span class="pm6-opcard-label">' + esc(headLabel) + '</span>' +
+      '<span class="pm6-opcard-ts">' + esc(op.ts || '') + '</span>' +
+      '<span class="pm6-op-chipslot">' + opStateChip(st) + '</span>' +
+      '<button class="pm6-opcard-toggle" title="Collapse / expand this card">▾</button></div>';
+    var prov = '<div class="pm6-opcard-prov"><span class="pm6-ico">' + ico(op.invocation_source === 'agent' ? 'robot' : 'info') + '</span> ' +
+      (op.invocation_source === 'agent' && op.agent_reason ? esc(op.agent_reason) + ' · ' : '') +
+      'invocation_source: ' + esc(op.invocation_source || 'user_slash') +
+      (op.invocation_source === 'user_slash' ? ' (/web ' + esc(String(op.kind).replace('web', '')) + ')' : '') + '</div>';
+    var provRow = runProviderRow(op);
+    var body = '';
+    if (st === 'awaiting_approval') {
+      body = '<div class="pm6-opcard-meta">' +
+        '<span class="pm6-opcard-krow"><b>Scope</b> ' + esc(op.scope) + '</span>' +
+        (op.caps ? '<span class="pm6-opcard-krow"><b>Caps</b> ' + esc(op.caps) + '</span>' : '') +
+        '<span class="pm6-opcard-krow"><b>Provider</b> ' + provRow + '</span>' +
+        '<span class="pm6-opcard-krow"><b>Est. credits</b> ' + esc(op.cost_note || '') + '</span>' +
+        '<span class="pm6-opcard-krow"><b>Cache policy</b> ' + esc(op.cache || '') + '</span>' +
+        '<span class="pm6-opcard-krow"><b>operation_input</b> <code>{ ' + runInputRow(op) + ' }</code></span></div>' +
+        '<div class="pm6-opcard-actions">' +
+        '<button class="pm6-chat-btn pm6-chat-btn-primary" data-demo-action="web.approve" data-demo-arg="' + esc(op.id) + '">Approve — scope stays on the visible origin</button>' +
+        '<button class="pm6-chat-btn" data-demo-action="web.decline" data-demo-arg="' + esc(op.id) + '">Decline</button></div>';
+    } else {
+      var prog = '';
+      if (st === 'running') {
+        var pct = Math.max(6, Math.min(100, op.progress_pct || 10));
+        prog = '<div class="pm6-opcard-progress"><div class="pm6-opcard-progressbar"><div class="pm6-opcard-progressfill" style="width:' + pct + '%;"></div></div>' +
+          '<span class="pm6-opcard-progresstext">' + esc(op.progress || 'running…') + '</span></div>';
+      }
+      var result = st === 'completed' ? runResultHtml(op) + runSourcesDrawer(op) : '';
+      if (st === 'canceled') {
+        result = '<div class="pm6-opcard-partial">' + esc(op.result_note || 'Canceled — partial results available') + '</div>';
+      }
+      if (st === 'failed') {
+        result = '<div class="pm6-opcard-partial">failed(' + esc(op.fail_reason || 'provider_error') + ') — nothing was written; retry is safe.</div>';
+      }
+      if (st === 'denied') {
+        result = '<div class="pm6-opcard-denied" style="display:flex;flex-wrap:wrap;">' +
+          '<span class="pm6-opcard-chip pm6-opcard-chip-failed">denied</span> blocked_reason_code: <code>' +
+          esc(op.blocked_reason_code || 'permission_denied') + '</code> · allowed actions: <b>request_again</b>, <b>open_permissions</b></div>';
+      }
+      var meta = '<div class="pm6-opcard-meta">' +
+        '<span class="pm6-opcard-krow"><b>Command</b> ' + esc(op.command || '') + '</span>' +
+        '<span class="pm6-opcard-krow"><b>Provider</b> ' + provRow + '</span>' +
+        '<span class="pm6-opcard-krow"><b>Permission</b> ' + esc(op.kind) + ' scope ' + esc(op.scope) + ' · ' + esc(op.approval || '') + '</span>' +
+        (op.caps ? '<span class="pm6-opcard-krow"><b>Caps</b> ' + esc(op.caps) + '</span>' : '') +
+        '<span class="pm6-opcard-krow"><b>Cache</b> ' + esc(op.cache || '') + '</span>' +
+        '<span class="pm6-opcard-krow"><b>Cost</b> ' + esc(op.cost_note || '') + '</span>' +
+        '<span class="pm6-opcard-krow"><b>operation_input</b> <code>{ ' + runInputRow(op) + ' }</code></span></div>';
+      var acts = '';
+      if (st === 'running' || st === 'queued') {
+        acts = '<div class="pm6-opcard-actions"><button class="pm6-chat-btn" data-demo-action="web.cancel" data-demo-arg="' + esc(op.id) + '">Cancel — keep partial results</button></div>';
+      } else if (st === 'completed') {
+        acts = '<div class="pm6-opcard-actions">' +
+          (op.sources && op.sources.length
+            ? '<button class="pm6-chat-btn pm6-opcard-srcbtn" data-demo-action="web.sources" data-demo-arg="' + esc(op.id) + '" ' +
+              'onclick="var d=this.closest(\'.pm6-opcard\').querySelector(\'.pm6-opcard-sources\'); if(d) d.classList.toggle(\'open\');">/sources · ' + (op.source_count || op.sources.length) + '</button>'
+            : '') +
+          '<button class="pm6-chat-btn" data-demo-action="web.artifact_open" data-demo-arg="art-' + esc(op.id) + '" title="api_web_call Runtime Artifact — payload lazy-loads from the ref">Open artifact ↳ art-' + esc(op.id) + '</button></div>';
+      } else if (st === 'canceled') {
+        acts = '<div class="pm6-opcard-actions"><button class="pm6-chat-btn" data-demo-action="web.artifact_open" data-demo-arg="art-' + esc(op.id) + '">Open partial results ↳ art-' + esc(op.id) + '</button></div>';
+      } else if (st === 'denied') {
+        acts = '<div class="pm6-opcard-actions">' +
+          '<button class="pm6-chat-btn" data-demo-action="web.request_again" data-demo-arg="' + esc(op.id) + '">Request again</button>' +
+          '<button class="pm6-chat-btn" data-demo-action="page.go" data-demo-arg="settings" title="The permissions area shows the exact rule this approval would create">Open permissions</button></div>';
+      }
+      body = prov + prog + result + meta + acts;
+      prov = '';
+    }
+    return '<div class="pm6-opcard pm6-runcard' +
+      (op.kind === 'webresearch' ? ' pm6-opcard-research' : '') +
+      (st === 'awaiting_approval' ? ' pm6-opcard-approval' : '') +
+      '" data-pm6-opid="' + esc(op.id) + '" data-op-state="' + esc(st) + '">' + head + prov + body + '</div>';
+  }
+  function upsertRunCard(op) {
+    var html = runCardHtml(op);
+    var existing = $all('[data-pm6-opid="' + op.id + '"]');
+    if (!existing.length) { appendToStreams(html); return; }
+    existing.forEach(function (card) {
+      try {
+        var wrap = document.createElement('div');
+        wrap.innerHTML = html;
+        var fresh = wrap.firstChild;
+        if (card.classList.contains('pm6-collapsed')) fresh.classList.add('pm6-collapsed');
+        card.parentNode.replaceChild(fresh, card);
+      } catch (e) {}
+    });
+    hydrateIcons();
+  }
+
+  /* ---------- append helpers ---------- */
+  function appendToStreams(html) {
+    streams().forEach(function (st) {
+      try {
+        var wrap = document.createElement('div');
+        wrap.innerHTML = html;
+        while (wrap.firstChild) st.appendChild(wrap.firstChild);
+        st.scrollTop = st.scrollHeight;
+      } catch (e) {}
+    });
+    hydrateIcons();
+  }
+  function appendIntoMessage(msgId, html) {
+    var hit = false;
+    $all('[data-pm6-mid="' + msgId + '"] .msg-body').forEach(function (body) {
+      try {
+        var wrap = document.createElement('div');
+        wrap.innerHTML = html;
+        while (wrap.firstChild) body.appendChild(wrap.firstChild);
+        hit = true;
+        var st = body.closest('.messageStream');
+        if (st) st.scrollTop = st.scrollHeight;
+      } catch (e) {}
+    });
+    if (!hit) appendToStreams(html);
+    hydrateIcons();
+  }
+
+  /* ---------- thread switching (pm6-owned threads) ---------- */
+  function gateThreadHtml() {
+    var d = demo();
+    var notice = (d && d.text && d.text.chat && d.text.chat.gateNotice) ||
+      'Run #47 is holding at node n-13: <b>publish package: image-processing</b>. Reply <b>approve and continue</b> to release it.';
+    return '<div class="message system pm6-chat-sys"><span class="pm6-ico">' + ico('shield') + '</span> Spawned by the HITL gate on run pcr-47 · resolves here, on the Dashboard, or in Orchestrator</div>' +
+      '<div class="pm6-chat-notice pm6-chat-notice-warn pm6-chat-gatenotice"><span class="pm6-ico">' + ico('warning') + '</span><span>' + notice + '</span></div>' +
+      '<div class="pm6-chat-card pm6-chat-gatecard"><div class="pm6-chat-card-head"><span class="pm6-ico">' + ico('scales') + '</span>' +
+      '<span class="pm6-chat-card-title">Package gate: image-processing</span></div>' +
+      '<div class="pm6-chat-card-body">Publishing makes this package a dependency for lane-c media work. Declining parks node n-13 at its safe point — nothing is lost either way.</div>' +
+      '<div class="pm6-chat-card-actions">' +
+      '<button class="pm6-chat-btn pm6-chat-btn-primary" data-demo-action="run.approve_gate">Approve and continue</button>' +
+      '<button class="pm6-chat-btn" data-demo-action="run.decline_gate">Decline — park at safe point</button>' +
+      '<button class="pm6-chat-btn" data-demo-action="page.go" data-demo-arg="orchestrator:progress">Open in Orchestrator</button>' +
+      '</div><div class="pm6-chat-card-body" style="font-style:italic;">Typing "approve and continue" in any thread works too.</div></div>';
+  }
+  function deepPlanThreadHtml() {
+    return '<div class="message system pm6-chat-sys"><span class="pm6-ico">' + ico('clipboard') + '</span> Deep Plan mode — the full plan document lives in the preview editor; this thread tracks it</div>' +
+      userMsgHtml('Plan the image pipeline work before we touch code.') +
+      '<div class="message assistant pm6-chat-msg"><div class="msg-body">' +
+      '<div class="runtime-snapshot">v1.2.5 (Current) • product-manager · Claude · Sonnet 4.6</div>' +
+      'Draft is up. Plan state moved <b>draft → approved → executing</b>; the TODO tracker below the stream stays live while work runs. Step 4 is blocked on the storage decision — answer it in the wizard and the tracker unblocks itself.' +
+      '<div class="pm6-chat-card-actions" style="margin-top:var(--sm);">' +
+      '<button class="pm6-chat-btn" data-demo-action="files.open" data-demo-arg="PRD.md">Open plan doc</button>' +
+      '<button class="pm6-chat-btn" data-demo-action="page.go" data-demo-arg="wizard">Jump to wizard question</button></div>' +
+      msgControlsHtml() + '</div></div>';
+  }
+  function setActiveThreadItem(threadId) {
+    $all('.chat-thread-item').forEach(function (it) {
+      it.classList.toggle('active', it.getAttribute('data-thread') === threadId);
+    });
+  }
+  function switchPm6Thread(threadId) {
+    var sts = streams();
+    if (!sts.length) return;
+    sts.forEach(function (st, i) {
+      (SAVED[CURRENT] = SAVED[CURRENT] || {})[i] = st.innerHTML;
+    });
+    CURRENT = threadId;
+    var cached = SAVED[threadId];
+    sts.forEach(function (st, i) {
+      if (cached && cached[i] != null) { st.innerHTML = cached[i]; return; }
+      if (threadId === 'th-gate') st.innerHTML = gateThreadHtml();
+      else if (threadId === 'th-deepplan') st.innerHTML = deepPlanThreadHtml();
+      else if (cached && cached[0] != null) st.innerHTML = cached[0];
+      else st.innerHTML = '<div class="message system pm6-chat-sys">New thread — say something to get going.</div>';
+      st.scrollTop = st.scrollHeight;
+    });
+    setActiveThreadItem(threadId);
+    $all('.pm6-chat-planpanel').forEach(function (p) {
+      p.classList.toggle('pm6-hidden', threadId !== 'th-deepplan' && !isPlanMode());
+    });
+    var item = $('.chat-thread-item[data-thread="' + threadId + '"] .thread-title');
+    if (item) {
+      $all('.chatHeaderTitle').forEach(function (el) { el.textContent = item.textContent.trim(); el.style.color = 'var(--text-primary)'; });
+    }
+    hydrateIcons();
+    var d = demo();
+    if (d && d.state && d.state.chat) d.state.chat.activeThread = threadId;
+  }
+
+  /* ---------- composer ---------- */
+  function isPlanMode() {
+    var m = $('.pm6-chat-modes .mode.active');
+    var v = m ? m.getAttribute('data-mode') : 'agent';
+    return v === 'plan' || v === 'deep-plan';
+  }
+  function composerOf(el) { return el.closest('.chat-input-area') || el.closest('.chat-main') || document; }
+  function webHelpCardHtml() {
+    return '<div class="pm6-chat-card pm6-chat-webhelp"><div class="pm6-chat-card-head"><span class="pm6-ico">' + ico('globe') + '</span>' +
+      '<span class="pm6-chat-card-title">/web — web abilities (nothing was executed)</span></div>' +
+      '<div class="pm6-chat-card-body">These run as visible operation cards with provenance, permissions and receipts. The agent can also reach them on its own judgment — /web is a shortcut, not the only door.<br>' +
+      '<code>/web search &lt;query&gt;</code> → Searching Web · <code>/web fetch &lt;url&gt;</code> → Reading Site · ' +
+      '<code>/web extract &lt;url&gt;</code> → Extracting Site · <code>/web research &lt;task&gt;</code> → Researching Web · ' +
+      '<code>/web crawl &lt;url&gt;</code> → Crawling Site · <code>/web map &lt;root_url&gt;</code> → Mapping Site</div></div>';
+  }
+  /* /web subcommand -> PM_DEMO.web.start operation kind (generic runner) */
+  var WEB_SLASH_TO_KIND = { search: 'websearch', fetch: 'webfetch', extract: 'webextract',
+    research: 'webresearch', crawl: 'webcrawl', map: 'webmap' };
+  function dispatchWebOp(kind, input, source) {
+    var d = demo();
+    if (!d || !d.web || !d.web.start) {
+      say('Demo engine not loaded — web operations need it.');
+      return;
+    }
+    var r = d.web.start(kind, input, { source: source || 'user_slash' });
+    if (r && r.toast) say(r.toast);
+    else if (r && r.disabled) say(d.guard && d.guard.reason ? d.guard.reason(r.reason) : 'Busy — that run is already live.');
+  }
+  function handleSendText(text, inputEl) {
+    var t = String(text || '').trim();
+    if (!t) { say('Type a message first.'); return; }
+    var slash = t.match(/^\/web(?:\s+(search|fetch|extract|research|crawl|map)\s*(.*))?$/i);
+    if (slash) {
+      if (!slash[1]) { appendToStreams(webHelpCardHtml()); if (inputEl) inputEl.value = ''; hideSlash(inputEl); return; }
+      if (!slash[2]) { say('Give /web ' + slash[1] + ' something to work on — e.g. a URL or query.'); return; }
+      dispatchWebOp(WEB_SLASH_TO_KIND[slash[1].toLowerCase()], slash[2].trim(), 'user_slash');
+      if (inputEl) inputEl.value = '';
+      hideSlash(inputEl);
+      return;
+    }
+    var d = demo();
+    if (!d || !d.chat || !d.chat.send) {
+      appendToStreams(userMsgHtml(t));
+      say('Demo engine not loaded — message shown locally only.');
+      if (inputEl) inputEl.value = '';
+      return;
+    }
+    var res = d.chat.send(CURRENT, t);
+    if (res && res.toast) { say(res.toast); return; }
+    if (res && res.queued) say('Queued — it runs as soon as the current turn finishes.');
+    if (inputEl) inputEl.value = '';
+    hideSlash(inputEl);
+  }
+  function hideSlash(inputEl) {
+    var box = inputEl ? composerOf(inputEl) : document;
+    $all('.slash-command-menu', box).forEach(function (m) { m.classList.remove('visible'); });
+  }
+  function wireComposers() {
+    $all('.pm6-chat-input').forEach(function (ta) {
+      ta.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          var d = demo();
+          var busy = d && d.state && d.state.chat && d.state.chat.busy;
+          if (busy && d.state.chat.queue.length >= 2) { updateQueueFull(true); say('Queue is full — two messages are already waiting. Stop the turn or let it finish.'); return; }
+          handleSendText(ta.value, ta);
+        }
+        if (e.key === 'Escape') hideSlash(ta);
+      });
+      ta.addEventListener('input', function () {
+        var box = ta.closest('.pm6-chat-composer') || composerOf(ta);
+        var menu = $('.slash-command-menu', box);
+        if (!menu) return;
+        var v = ta.value;
+        var show = v.charAt(0) === '/' && v.length <= 24 && v.indexOf('\n') === -1;
+        menu.classList.toggle('visible', show);
+        if (show) {
+          $all('.pm6-chat-slash-item', menu).forEach(function (it) {
+            var ins = (it.getAttribute('data-pm6-insert') || '').replace(/\s+$/, '');
+            var vv = v.replace(/\s+$/, '');
+            it.style.display = (ins.indexOf(vv) === 0 || v === '/') ? '' : 'none';
+          });
+        }
+      });
+    });
+    document.addEventListener('click', function (e) {
+      var item = e.target && e.target.closest ? e.target.closest('.pm6-chat-slash-item') : null;
+      if (item) {
+        var menu = item.closest('.slash-command-menu');
+        var box = item.closest('.pm6-chat-composer') || composerOf(item);
+        var ta = $('.pm6-chat-input', box) || $('textarea', box);
+        if (item.getAttribute('data-pm6-help')) {
+          appendToStreams(webHelpCardHtml());
+          if (ta) ta.value = '';
+        } else if (ta) {
+          ta.value = item.getAttribute('data-pm6-insert') || '';
+          ta.focus();
+        }
+        if (menu) menu.classList.remove('visible');
+        return;
+      }
+      var send = e.target && e.target.closest ? e.target.closest('.pm6-chat-send') : null;
+      if (send) {
+        var d = demo();
+        if (send.getAttribute('data-pm6-state') === 'busy') {
+          var r = d && d.chat && d.chat.stop ? d.chat.stop(CURRENT) : null;
+          say(r && r.toast ? r.toast : 'Stopping — 3s cancel grace, queue untouched.');
+        } else {
+          var ta2 = $('.pm6-chat-input', composerOf(send)) || $('textarea', composerOf(send));
+          handleSendText(ta2 ? ta2.value : '', ta2);
+        }
+      }
+    });
+  }
+
+  /* ---------- mode strip / PT / dropdowns ---------- */
+  function wireModes() {
+    document.addEventListener('click', function (e) {
+      var mode = e.target && e.target.closest ? e.target.closest('.pm6-chat-modes .mode') : null;
+      if (mode) {
+        var bar = mode.closest('.pm6-chat-modes');
+        $all('.mode', bar).forEach(function (m) { m.classList.remove('active'); });
+        mode.classList.add('active');
+        var v = mode.getAttribute('data-mode') || 'agent';
+        var label = mode.textContent.trim();
+        $all('.pm6-chat-badge-mode').forEach(function (b) { b.textContent = label; });
+        $all('.pm6-chat-planpanel').forEach(function (p) {
+          p.classList.toggle('pm6-hidden', !(v === 'plan' || v === 'deep-plan' || CURRENT === 'th-deepplan'));
+        });
+        $all('.pm6-chat-input').forEach(function (ta) {
+          ta.placeholder = v === 'ask' ? 'Ask anything — read-only, nothing gets mutated…' :
+            v === 'debug' ? 'Describe the bug — Debug mode collects evidence before touching code…' :
+            (v === 'plan' || v === 'deep-plan') ? 'Describe the goal — a plan with a live TODO tracker comes back…' :
+            'Message the agent — @ mentions files, / shows commands (try /web)…';
+        });
+        if (v === 'debug') say('Debug mode: evidence-first, 8-step loop from target binding to cleanup.');
+        return;
+      }
+      var pt = e.target && e.target.closest ? e.target.closest('.pm6-chat-ptbtn') : null;
+      if (pt) {
+        $all('.pm6-chat-ptbtn', pt.closest('.pm6-chat-pt')).forEach(function (b) { b.classList.remove('active'); });
+        pt.classList.add('active');
+        var budget = { Light: 2, Balanced: 4, Comprehensive: 6 }[pt.getAttribute('data-pt')] || 4;
+        say(pt.getAttribute('data-pt') + ' thoroughness — at most ' + budget + ' user-facing questions.');
+        return;
+      }
+      var dd = e.target && e.target.closest ? e.target.closest('.chat-dropdown-popover .chat-dropdown-item') : null;
+      if (dd && dd.closest('#chatPanel, #floatingChat')) {
+        var pop = dd.closest('.chat-dropdown-popover');
+        $all('.chat-dropdown-item', pop).forEach(function (i) { i.classList.remove('active'); });
+        dd.classList.add('active');
+        var btn = pop.previousElementSibling;
+        var lab = btn ? $('span', btn) : null;
+        if (lab) lab.textContent = dd.textContent.trim();
+        pop.classList.remove('active');
+        if (lab && lab.classList.contains('model-label')) {
+          $all('.pm6-chat-badge-model').forEach(function (b) { b.textContent = dd.textContent.trim(); });
+        }
+        if (lab && lab.classList.contains('persona-label')) {
+          $all('.pm6-chat-badge-persona').forEach(function (b) { b.textContent = dd.textContent.trim(); });
+        }
+        say('Applied from the next turn — requested vs effective is recorded on each message.');
+      }
+    });
+  }
+
+  /* ---------- queue ---------- */
+  function updateQueueFull(force) {
+    var d = demo();
+    var full = force != null ? force : !!(d && d.state && d.state.chat && d.state.chat.queue.length >= 2);
+    $all('.pm6-chat-queuefull').forEach(function (el) { el.classList.toggle('pm6-hidden', !full); });
+  }
+  function renderQueue(queue) {
+    var q = queue || [];
+    $all('.pm6-chat-queue').forEach(function (host) {
+      host.innerHTML = q.map(function (item, i) {
+        return '<div class="pm6-chat-queuechip" data-pm6-qid="' + esc(item.id || i) + '">' +
+          '<span class="pm6-chat-queuechip-pos">#' + (i + 1) + '</span>' +
+          '<span class="pm6-chat-queuechip-text">' + esc(item.text) + '</span>' +
+          '<span style="flex:none;color:var(--text-muted);">queued</span>' +
+          '<button class="pm6-chat-queuechip-x" title="Remove from queue">✕</button></div>';
+      }).join('');
+    });
+    updateQueueFull(q.length >= 2);
+  }
+  function wireQueue() {
+    document.addEventListener('click', function (e) {
+      var x = e.target && e.target.closest ? e.target.closest('.pm6-chat-queuechip-x') : null;
+      if (!x) return;
+      var chip = x.closest('.pm6-chat-queuechip');
+      var qid = chip ? chip.getAttribute('data-pm6-qid') : null;
+      var d = demo();
+      try {
+        if (d && d.state && d.state.chat) {
+          d.state.chat.queue = d.state.chat.queue.filter(function (it) { return String(it.id) !== String(qid); });
+          renderQueue(d.state.chat.queue);
+        } else if (chip) chip.remove();
+        say('Queued message removed.');
+      } catch (err) { if (chip) chip.remove(); }
+    });
+  }
+
+  /* ---------- engine event wiring ---------- */
+  function setBusy(busy) {
+    $all('.pm6-chat-send').forEach(function (b) {
+      b.setAttribute('data-pm6-state', busy ? 'busy' : 'idle');
+      var lab = $('.pm6-chat-send-label', b);
+      if (lab) lab.textContent = busy ? 'Stop' : 'Send';
+      b.title = busy ? 'Stop — cancels active work after a 3s grace; the queue survives' : 'Send (Enter) — becomes Stop while the agent works';
+    });
+  }
+  function setContext(ctx) {
+    if (!ctx || !ctx.max) return;
+    var frac = Math.max(0, Math.min(1, ctx.used / ctx.max));
+    var label = Math.round(ctx.used / 1000) + 'k/' + Math.round(ctx.max / 1000) + 'k';
+    $all('.pm6-chat-ctx-label').forEach(function (el) { el.textContent = label; });
+    $all('.pm6-chat-ctx-arc').forEach(function (el) { el.setAttribute('stroke-dashoffset', String((62.8 * (1 - frac)).toFixed(1))); });
+    $all('.pm6-chat-ctx-usage').forEach(function (el) { el.textContent = ctx.used.toLocaleString() + ' / ' + ctx.max.toLocaleString(); });
+    $all('#chatPanel .chm-bar-fill, #floatingChat .chm-bar-fill').forEach(function (el) { el.style.width = Math.round(frac * 100) + '%'; });
+  }
+  function markUnread(threadId) {
+    $all('.chat-thread-item[data-thread="' + threadId + '"] .thread-status-col').forEach(function (col) {
+      col.innerHTML = '<div class="thread-status-unread"></div>';
+    });
+  }
+  function revealGateThread() {
+    $all('.pm6-chat-thread-gate').forEach(function (it) { it.classList.remove('pm6-hidden'); });
+  }
+  function updateResearchCard(op) {
+    $all('[data-pm6-opid="op-web-r1"]').forEach(function (card) {
+      card.setAttribute('data-op-state', op.state);
+      var chip = $('.pm6-chat-r1-chip', card);
+      if (chip) {
+        chip.className = 'pm6-opcard-chip pm6-chat-r1-chip ' +
+          (op.state === 'completed' ? 'pm6-opcard-chip-completed' : op.state === 'running' ? 'pm6-opcard-chip-running' : 'pm6-opcard-chip-waiting');
+        chip.textContent = op.state === 'completed' ? 'completed ✓' : op.state;
+      }
+      var txt = $('.pm6-chat-r1-text', card);
+      if (txt) txt.textContent = op.state === 'completed' ? ('read ' + (op.source_total || 6) + '/' + (op.source_total || 6) + ' · synthesized') : (op.progress || 'queued');
+      var fill = $('.pm6-chat-r1-fill', card);
+      if (fill) {
+        var pct = op.state === 'completed' ? 100 : op.source_total ? Math.round(((op.sources_read || 0) / op.source_total) * 100) : 15;
+        fill.style.width = Math.max(8, pct) + '%';
+      }
+      if (op.state === 'completed') {
+        var cites = $('.pm6-chat-r1-cites', card);
+        if (cites && op.citations) {
+          var body = $('.pm6-opcard-citebody', cites);
+          if (body && !body.firstChild) {
+            body.innerHTML = op.citations.map(function (c) {
+              return '<div class="pm6-opcard-srcrow"><span class="pm6-conf pm6-conf-' + esc(c.source_confidence || 'unknown') + '">' +
+                esc(c.source_confidence || 'unknown') + '</span><span class="pm6-src-title">[' + c.n + '] ' + esc(c.title) +
+                ' — ' + esc(c.url) + '</span><span class="pm6-src-read">✓ read</span></div>';
+            }).join('');
+          }
+          cites.classList.add('open');
+        }
+        var cancel = $('.pm6-chat-r1-cancel', card);
+        if (cancel) { cancel.setAttribute('disabled', 'disabled'); cancel.textContent = 'Completed — evidence attached'; }
+        $all('.pm6-chat-btn[data-demo-action="web.artifact_open"]', card).forEach(function (b) {
+          b.setAttribute('data-demo-arg', 'art-op-web-r1');
+          b.textContent = 'Runtime Artifact ↳ art-op-web-r1';
+        });
+      }
+    });
+  }
+  function wireCardControls() {
+    document.addEventListener('click', function (e) {
+      var tog = e.target && e.target.closest ? e.target.closest('.pm6-opcard-toggle') : null;
+      if (tog) {
+        var tcard = tog.closest('.pm6-opcard');
+        if (tcard) tcard.classList.toggle('pm6-collapsed');
+        return;
+      }
+      var ok = e.target && e.target.closest ? e.target.closest('.pm6-chat-x1-approve') : null;
+      if (ok) {
+        var card = ok.closest('.pm6-opcard');
+        if (!card) return;
+        card.setAttribute('data-op-state', 'running');
+        var slot = $('.pm6-chat-x1-chip', card);
+        if (slot) { slot.className = 'pm6-opcard-chip pm6-opcard-chip-running pm6-chat-x1-chip'; slot.textContent = 'running'; }
+        say('Approved for https://bonappetit.com/* only — the grant stays host-scoped.');
+        setTimeout(function () {
+          card.setAttribute('data-op-state', 'completed');
+          if (slot) { slot.className = 'pm6-opcard-chip pm6-opcard-chip-completed pm6-chat-x1-chip'; slot.textContent = 'completed ✓'; }
+        }, 1800);
+        return;
+      }
+      var no = e.target && e.target.closest ? e.target.closest('.pm6-chat-x1-deny') : null;
+      if (no) {
+        var card2 = no.closest('.pm6-opcard');
+        if (!card2) return;
+        card2.setAttribute('data-op-state', 'denied');
+        var slot2 = $('.pm6-chat-x1-chip', card2);
+        if (slot2) { slot2.className = 'pm6-opcard-chip pm6-opcard-chip-failed pm6-chat-x1-chip'; slot2.textContent = 'denied'; }
+        say('Denied — recorded with blocked_reason_code permission_denied. Nothing was fetched.');
+        return;
+      }
+      var cancel = e.target && e.target.closest ? e.target.closest('.pm6-chat-r1-cancel') : null;
+      if (cancel && !cancel.hasAttribute('disabled')) {
+        var card3 = cancel.closest('.pm6-opcard');
+        if (card3 && card3.getAttribute('data-op-state') === 'completed') { say('Already done — nothing new to apply.'); return; }
+        if (card3) {
+          card3.setAttribute('data-op-state', 'canceled');
+          var chip3 = $('.pm6-chat-r1-chip', card3);
+          if (chip3) { chip3.className = 'pm6-opcard-chip pm6-opcard-chip-canceled pm6-chat-r1-chip'; chip3.textContent = 'canceled · partial evidence kept'; }
+          cancel.setAttribute('disabled', 'disabled');
+        }
+        say('Research canceled — sources already read stay attached as partial evidence.');
+        return;
+      }
+      var focusBtn = e.target && e.target.closest ? e.target.closest('.pm6-chat-planfocus') : null;
+      if (focusBtn) {
+        var active = $('.pm6-chat-todo-active', focusBtn.closest('.pm6-chat-planpanel'));
+        if (active) { active.scrollIntoView({ block: 'nearest' }); active.classList.add('pm-pop'); setTimeout(function () { active.classList.remove('pm-pop'); }, 400); }
+        return;
+      }
+      var jump = e.target && e.target.closest ? e.target.closest('.pm6-chat-jump') : null;
+      if (jump) {
+        var st = jump.closest('.messageStream');
+        if (st) st.scrollTop = st.scrollHeight;
+      }
+    });
+  }
+
+  /* ---------- thread clicks (pm6-owned ids only; part-25 handles its mocks) ---------- */
+  function wireThreads() {
+    document.addEventListener('click', function (e) {
+      var it = e.target && e.target.closest ? e.target.closest('.chat-thread-item[data-thread]') : null;
+      if (!it) return;
+      if (e.target.closest && e.target.closest('.thread-action-btn')) return;
+      var id = it.getAttribute('data-thread');
+      if (id && id.indexOf('th-') === 0) switchPm6Thread(id);
+    });
+  }
+
+  /* ---------- floating chat layout cycle ---------- */
+  function applyLayout(mode) {
+    LAYOUT = mode;
+    var float0 = document.getElementById('floatingChat');
+    var panel = document.getElementById('chatPanel');
+    var resizer = document.getElementById('chatResizer');
+    var icon = document.querySelector('.activity-bar .icon[title="Chat"]');
+    $all('.pm6-chat-layout-state').forEach(function (el) { el.textContent = mode; });
+    if (!float0) return;
+    /* one shared surface per mode: docked = the #chatPanel aside (legacy
+       .hidden contract), overlay/detached = the floating chat. Keeping the
+       aside, its resizer and the activity-bar icon in sync avoids the
+       both-visible drift after Settings > Chat Layout round-trips. */
+    if (mode === 'docked') {
+      float0.style.display = 'none';
+      float0.classList.remove('pm6-chat-overlay');
+      if (panel) panel.classList.remove('hidden');
+      if (resizer) resizer.classList.remove('hidden');
+      if (icon) icon.classList.add('active');
+    } else {
+      if (panel) panel.classList.add('hidden');
+      if (resizer) resizer.classList.add('hidden');
+      if (icon) icon.classList.remove('active');
+      float0.style.display = 'flex';
+      float0.classList.toggle('pm6-chat-overlay', mode === 'overlay');
+    }
+  }
+  function wireLayoutCycle() {
+    document.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest('.pm6-chat-layout-cycle') : null;
+      if (!btn) return;
+      var next = LAYOUT === 'detached' ? 'overlay' : LAYOUT === 'overlay' ? 'docked' : 'detached';
+      applyLayout(next);
+      say('Chat layout: ' + next + (next === 'docked' ? ' — back in the side panel.' : '.'));
+      var d = demo();
+      if (d && d.emit) { try { d.emit('chat.layout', { mode: next, source: 'chat' }); } catch (err) {} }
+    });
+    /* Esc closes the chat overlay (keyboard parity with the layout cycle) */
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var f = document.getElementById('floatingChat');
+      if (f && f.classList.contains('pm6-chat-overlay') && f.style.display !== 'none') {
+        f.style.display = 'none';
+        say('Chat overlay closed — reopen it from the layout control or Settings > Appearance > Chat Layout.');
+      }
+    });
+  }
+
+  /* ---------- engine subscription ---------- */
+  function subscribe() {
+    var d = demo();
+    if (!d || !d.on) return;
+    d.on('chat.stream', function (p) {
+      if (!p) return;
+      try {
+        if (p.threadId === 'th-gate' && p.type === 'notice') {
+          revealGateThread();
+          markUnread('th-gate');
+          delete SAVED['th-gate'];
+          if (CURRENT === 'th-gate') switchPm6Thread('th-gate');
+          return;
+        }
+        if (p.threadId && p.threadId !== CURRENT) {
+          if (p.type === 'user' || p.type === 'start') markUnread(p.threadId);
+          return;
+        }
+        if (p.type === 'user') appendToStreams(userMsgHtml(p.text));
+        else if (p.type === 'start') {
+          appendToStreams(assistantShellHtml(p.msgId));
+          STREAM_SINKS[p.msgId] = $all('[data-pm6-mid="' + p.msgId + '"] .pm6-chat-sink');
+        } else if (p.type === 'chunk') {
+          (STREAM_SINKS[p.msgId] || []).forEach(function (sink) {
+            sink.innerHTML += p.html;
+            var st = sink.closest('.messageStream');
+            if (st) st.scrollTop = st.scrollHeight;
+          });
+        } else if (p.type === 'stopped') {
+          (STREAM_SINKS[p.msgId] || []).forEach(function (sink) {
+            sink.innerHTML += ' <span style="color:var(--text-muted);font-style:italic;">— stopped</span>';
+          });
+          delete STREAM_SINKS[p.msgId];
+        } else if (p.type === 'done') {
+          $all('[data-pm6-mid="' + p.msgId + '"] .msg-body').forEach(function (body) {
+            if (!$('.msg-controls', body)) body.insertAdjacentHTML('beforeend', msgControlsHtml());
+          });
+          delete STREAM_SINKS[p.msgId];
+        }
+      } catch (e) {}
+    });
+    d.on('chat.card', function (p) {
+      if (!p || !p.card) return;
+      try {
+        var c = p.card;
+        if (p.threadId && p.threadId !== CURRENT) {
+          if (p.threadId === 'th-gate' && c.type === 'hitl') { revealGateThread(); markUnread('th-gate'); }
+          return;
+        }
+        if (c.type === 'operation') {
+          var existing = $all('[data-pm6-opid="' + c.id + '"]');
+          if (existing.length) {
+            existing.forEach(function (card) {
+              card.setAttribute('data-op-state', c.state);
+              var slot = $('.pm6-op-chipslot', card);
+              if (slot) slot.innerHTML = opStateChip(c.state);
+            });
+          } else if (p.msgId) appendIntoMessage(p.msgId, opCardHtml(c));
+          else appendToStreams(opCardHtml(c));
+        } else if (c.type === 'subagent') {
+          if (p.msgId) appendIntoMessage(p.msgId, subagentCardHtml(c.name));
+          else appendToStreams(subagentCardHtml(c.name));
+        } else if (c.type === 'files') {
+          if (p.msgId) appendIntoMessage(p.msgId, filesStripHtml(c.files));
+          else appendToStreams(filesStripHtml(c.files));
+        } else if (c.type === 'web_operation') {
+          if (c.op && c.op.runner) return; /* live runner ops render through the web.run subscription */
+          if (c.op && c.op.id === 'op-web-r1') updateResearchCard(c.op);
+          else if (c.op && !$all('[data-pm6-opid="' + c.op.id + '"]').length) appendToStreams(webOpCardHtml(c.op));
+        } else if (c.type === 'hitl') {
+          revealGateThread();
+        }
+      } catch (e) {}
+    });
+    d.on('chat.state', function (p) {
+      if (!p) return;
+      setBusy(!!p.busy);
+      setContext(p.context);
+      if (p.queue) renderQueue(p.queue);
+    });
+    d.on('chat.queue', function (p) { if (p) renderQueue(p.queue || []); });
+    d.on('chat.thread', function (p) {
+      if (p && p.thread && p.thread.id === 'th-gate') revealGateThread();
+    });
+    d.on('run.gate', function (g) {
+      if (!g) return;
+      if (g.state === 'attention_required') { revealGateThread(); markUnread('th-gate'); }
+      if (g.state === 'approved') {
+        $all('.pm6-chat-gatecard .pm6-chat-btn-primary').forEach(function (b) {
+          b.setAttribute('disabled', 'disabled');
+          b.textContent = 'Approved ✓';
+        });
+        $all('.pm6-chat-thread-gate .pm6-chat-gate-dot').forEach(function (dot) { dot.style.background = 'var(--accent-lime)'; dot.style.animation = 'none'; });
+        delete SAVED['th-gate'];
+      }
+    });
+    d.on('web.op', function (p) { if (p && p.op && p.op.id === 'op-web-r1') updateResearchCard(p.op); });
+    d.on('web.run', function (p) {
+      if (!p || !p.op || !p.op.runner) return;
+      try { upsertRunCard(p.op); } catch (e) {}
+    });
+    d.on('web.artifact', function (p) {
+      if (p && p.artifact) say('Runtime Artifact ' + p.artifact.id + ' (' + p.artifact.type + ') — opens in the Runtime Artifacts panel.');
+    });
+    d.on('files.touched', function (p) {
+      if (!p || !p.path) return;
+      $all('.chatFooterFiles').forEach(function (strip) {
+        if ($('[data-demo-arg="' + p.path + '"]', strip)) return;
+        strip.insertAdjacentHTML('beforeend',
+          '<span class="ft-file" data-demo-action="files.open" data-demo-arg="' + esc(p.path) + '">' + esc(p.path) + ' <span class="ft-add">+</span></span>');
+      });
+    });
+    d.on('chat.layout', function (p) {
+      if (!p || p.source === 'chat') return;
+      applyLayout(p.mode === 'overlay' || p.mode === 'docked' ? p.mode : 'detached');
+    });
+    /* register chat-owned demo actions */
+    try {
+      if (d.actions && d.actions.register) {
+        d.actions.register('chat.web.help', function () { appendToStreams(webHelpCardHtml()); return { ok: true }; });
+      }
+    } catch (e) {}
+  }
+
+  /* ---------- boot ---------- */
+  function boot() {
+    try { hydrateIcons(); } catch (e) {}
+    try {
+      /* capture the authored th-main baseline per stream */
+      streams().forEach(function (st, i) { (SAVED['th-main'] = SAVED['th-main'] || {})[i] = st.innerHTML; });
+    } catch (e) {}
+    wireComposers();
+    wireModes();
+    wireQueue();
+    wireThreads();
+    wireCardControls();
+    wireLayoutCycle();
+    subscribe();
+    var d = demo();
+    if (d && d.state && d.state.chat) setContext(d.state.chat.context);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>

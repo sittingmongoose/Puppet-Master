@@ -1,0 +1,641 @@
+{
+  "schema_version": "1.0",
+  "assignment_id": "A004-000089-EXACT-WIN-30EBABB890C6-0002",
+  "runner_id": "runner-09",
+  "agent_attestation": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "ultra",
+    "prior_substantive_assignment_count": 0,
+    "terminal_after_result": true,
+    "no_followup_reuse": true
+  },
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-30EBABB890C6-0002",
+  "doc_id": "DOC-30EBABB890C6",
+  "document_path": "Plans/WorktreeGitImprovement.md",
+  "core_range": [
+    391,
+    685
+  ],
+  "context_ranges": [
+    [
+      379,
+      390
+    ],
+    [
+      686,
+      697
+    ]
+  ],
+  "source_sha256": "28600deb3d08b7819b5a00c3a525fb5ff837eda1ef914ca98518d4687e039309",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000089-EXACT-WIN-30EBABB890C6-0002.json",
+  "capsule_sha256": "20eedd1ed845d3a864d4f45927d0bcd07f9dc6d02c8f28856dfe43fb6d8faa39",
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-30EBABB890C6-0002.txt",
+  "source_excerpt_sha256": "f87c6d0aef7b3ab617b4ebec81eb26a30d815f4ec8c547cc573cc478607cfffa",
+  "observations": [
+    {
+      "id": "O-001",
+      "statement": "Source Control is assigned required graph ownership, persisted graph state, command compatibility, Orchestrator deep links, and a branch-list/history fallback when graph parsing fails.",
+      "evidence_ids": [
+        "E-001"
+      ]
+    },
+    {
+      "id": "O-002",
+      "statement": "AI commit batching is advisory and reviewable; manual staging and commit remain canonical, and no automatic grouping, staging, or commit is allowed before acceptance.",
+      "evidence_ids": [
+        "E-002"
+      ]
+    },
+    {
+      "id": "O-003",
+      "statement": "Review mode is a roomy Source Control task mode with multiple compare targets, project-scoped persisted choices, direct remediation entrypoints, and stale-target downgrade behavior.",
+      "evidence_ids": [
+        "E-003"
+      ]
+    },
+    {
+      "id": "O-004",
+      "statement": "Conflict assistant owns guided merge/rebase/worktree repair, separate preference and resolution persistence, textual fallback, and an explicit prohibition on silent semantic resolution or side selection.",
+      "evidence_ids": [
+        "E-004"
+      ]
+    },
+    {
+      "id": "O-005",
+      "statement": "Source Control is declared the owner of a reusable canonical compare/diff identity spanning chat, file surfaces, and Source Control, with explicit hunk actions and history-domain explanations for undo and redo.",
+      "evidence_ids": [
+        "E-005"
+      ]
+    },
+    {
+      "id": "O-006",
+      "statement": "The selected run-start path is Option B: derive the run configuration from current in-memory GuiConfig, use a hinted discovered configuration only as a failure fallback, and fail closed if both paths fail.",
+      "evidence_ids": [
+        "E-007"
+      ]
+    },
+    {
+      "id": "O-007",
+      "statement": "The projection policy applies by behavioral class to every execution-affecting GUI setting, explicitly including interview settings, HITL toggles, Git and branching fields, and global plus Orchestrator provider caps.",
+      "evidence_ids": [
+        "E-008",
+        "E-009"
+      ]
+    },
+    {
+      "id": "O-008",
+      "statement": "Phase 1 is a prerequisite for worktree and Git work, shared Git resolution precedes the Doctor worktree check, and integration tests follow completion of Phases 2 and 3.",
+      "evidence_ids": [
+        "E-010"
+      ]
+    },
+    {
+      "id": "O-009",
+      "statement": "The resolved worktree decisions choose checkout-then-add, session re-registration, in-memory conflict tracking, detached-HEAD merge by commit, delayed recovery when no project exists, empty-state recovery on list failure, and Windows-safe paths.",
+      "evidence_ids": [
+        "E-028"
+      ]
+    },
+    {
+      "id": "O-010",
+      "statement": "The resolved Git behavior requires a shared executable resolver with explicit failure, GitHub HTTPS API PR creation, hidden naming_pattern, the canonical log path, and a Doctor API that threads an optional project hint into three checks.",
+      "evidence_ids": [
+        "E-029",
+        "E-031"
+      ]
+    },
+    {
+      "id": "O-011",
+      "statement": "Crew and lifecycle rules make crews optional overlays of child runs, reject memory and active-agents files as canon, require canonical blocked payload fields, and preserve lineage and ownership across cleanup, reroute, retry, and handoff.",
+      "evidence_ids": [
+        "E-034",
+        "E-035"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "F-001",
+      "statement": "The Phase 4 checklist and acceptance row contain no implementation or verification item for the mandatory graph parity, AI commit batching, Review mode, Conflict assistant, or canonical compare/diff identity contracts. A build can therefore satisfy the stated Phase 4 acceptance criteria while omitting all five capabilities and their required fallback and approval behavior.",
+      "evidence_ids": [
+        "E-001",
+        "E-002",
+        "E-003",
+        "E-004",
+        "E-005",
+        "E-013",
+        "E-014"
+      ]
+    },
+    {
+      "id": "F-002",
+      "statement": "The configuration architecture is internally inconsistent: Option B v1 is YAML-only, performs no file merge, and excludes redb/seglog, while a later section is labeled resolved migration to a single canonical format, requires redb storage and a seglog migration event, and still describes Option A migration conditionally. No release boundary or precedence selects the authoritative schema and persistence path.",
+      "evidence_ids": [
+        "E-007",
+        "E-016",
+        "E-018",
+        "E-026"
+      ]
+    },
+    {
+      "id": "F-003",
+      "statement": "The Option B failure path does not preserve the promise that Run always uses current unsaved GUI state. If GUI-derived construction fails, the specified wholesale fallback to discover_with_hint may use saved disk values, but the plan does not say whether valid current GUI fields are overlaid, rejected, or discarded.",
+      "evidence_ids": [
+        "E-007"
+      ]
+    },
+    {
+      "id": "F-004",
+      "statement": "Projection completeness is not acceptance-complete. The policy includes every runtime-changing GUI setting, interview settings, HITL toggles, concurrency caps, and newly exposed push and merge policies, but the resolved minimum and phase acceptance omit several of those classes and provide no exhaustive setting inventory or test oracle.",
+      "evidence_ids": [
+        "E-008",
+        "E-009",
+        "E-011",
+        "E-014",
+        "E-018",
+        "E-030"
+      ]
+    },
+    {
+      "id": "F-005",
+      "statement": "The Phase 1 verification instruction saves before starting the run, while the Phase 1 acceptance criterion explicitly requires the no-Save path. Following the checklist literally cannot prove the defining unsaved-state behavior.",
+      "evidence_ids": [
+        "E-011",
+        "E-014"
+      ]
+    },
+    {
+      "id": "F-006",
+      "statement": "Destructive branch collision behavior remains unresolved despite the claim that all gaps are closed. Existing branches may be reused or safely deleted, and a missing merge target may be created or rejected, with no decision, authority rule, confirmation requirement, or failure code selecting between those materially different outcomes.",
+      "evidence_ids": [
+        "E-012",
+        "E-027",
+        "E-028"
+      ]
+    },
+    {
+      "id": "F-007",
+      "statement": "Sanitization is mandatory but behaviorally undefined. The plan supplies only a Windows-safe path constraint and no allowed-character mapping, reserved-name handling, length policy, deterministic collision resolution, or rule preventing two node IDs from producing the same path or ref.",
+      "evidence_ids": [
+        "E-012",
+        "E-028"
+      ]
+    },
+    {
+      "id": "F-008",
+      "statement": "Branch granularity has no final disposition. The text says the plan must choose active node-level gating or a hidden future-facing field, the required-items table makes naming/granularity Phase 4 work required, and the resolved config decision calls granularity optional/hidden without choosing one exact state.",
+      "evidence_ids": [
+        "E-015",
+        "E-023",
+        "E-030"
+      ]
+    },
+    {
+      "id": "F-009",
+      "statement": "The legacy granularity migration is incomplete: the target enum has five variants, but mappings are specified only for single, per_phase, and per_task. There is no mapping for legacy Subtask or Iteration values and no failure, preservation, or default behavior for unknown strings.",
+      "evidence_ids": [
+        "E-017",
+        "E-018"
+      ]
+    },
+    {
+      "id": "F-010",
+      "statement": "Conflict-state authority is contradictory. Initial release chooses only an in-memory HashSet, while the later required crew contract says canonical lineage, ownership, and conflict state is stored in seglog/redb projections. The plan does not state which representation gates reuse before the storage architecture lands or how they reconcile afterward.",
+      "evidence_ids": [
+        "E-028",
+        "E-034"
+      ]
+    },
+    {
+      "id": "F-011",
+      "statement": "The chosen in-memory conflict HashSet lacks an exact lifecycle. Earlier text proposes clearing on recovery or manual resolution, but the resolved decision selects only the storage medium and does not define insertion, verified-resolution removal, project scoping, or the command that makes a node ID reusable.",
+      "evidence_ids": [
+        "E-021",
+        "E-028"
+      ]
+    },
+    {
+      "id": "F-012",
+      "statement": "The single-source Git resolver has conflicting identities: resolved behavior and conventions use resolve_git_executable with DRY:FN:resolve_git_executable, while the critical DRY requirement names DRY:FN:resolve_git_binary. This permits two tags or helpers despite the explicit no-duplication rule.",
+      "evidence_ids": [
+        "E-029",
+        "E-032",
+        "E-033"
+      ]
+    },
+    {
+      "id": "F-013",
+      "statement": "Review mode's stale-target recovery delegates a consequential choice to the builder: nearest valid baseline has no ordering, authority, repository boundary, or deterministic tie-breaker, and alternate pivots are not enumerated even though misleading diffs are identified as the risk.",
+      "evidence_ids": [
+        "E-003"
+      ]
+    },
+    {
+      "id": "F-014",
+      "statement": "AI commit batching defines pre-acceptance safety but not the acceptance transition. No command, atomicity rule, stale-diff revalidation, or answer is given for whether acceptance only records a grouping, stages files, creates receipts, or commits.",
+      "evidence_ids": [
+        "E-002"
+      ]
+    },
+    {
+      "id": "F-015",
+      "statement": "Mandatory crew, blocked-payload, lineage-preservation, and cross-session continuity rules have no phase checklist or acceptance evidence. Phase 5 can pass using only the two Git integration tests and documentation bookkeeping without exercising these required lifecycle contracts.",
+      "evidence_ids": [
+        "E-014",
+        "E-034",
+        "E-035"
+      ]
+    },
+    {
+      "id": "F-016",
+      "statement": "GitHub HTTPS API-only PR creation and Doctor authentication/scope verification are required checklist behavior but absent from Phase 3 acceptance, which tests only executable reuse, commit formatting, and log placement.",
+      "evidence_ids": [
+        "E-014",
+        "E-022"
+      ]
+    },
+    {
+      "id": "F-017",
+      "statement": "The declared canonical compare/diff identity is not defined within the capsule: there are no identity fields, equality rules, version or staleness semantics, target ordering, serialization authority, or failure behavior for reuse across three consumers.",
+      "evidence_ids": [
+        "E-005",
+        "E-006"
+      ]
+    },
+    {
+      "id": "F-018",
+      "statement": "The graph compatibility contract is not an exact one-to-one mapping. It presents a slash-compressed focus/filter/layout name plus only graph_focus and graph_filter aliases as resolving to three canonical commands, leaving the layout alias and exact accepted identifiers ambiguous.",
+      "evidence_ids": [
+        "E-001"
+      ]
+    },
+    {
+      "id": "F-019",
+      "statement": "Review mode requires multiple persisted choices, but its command mapping exposes only open review, set compare target, and toggle generated filter. Behavior for preferred diff mode, ignore whitespace, file filtering, collapse unchanged, and review-note acceptance is not assigned to commands or storage events.",
+      "evidence_ids": [
+        "E-003"
+      ]
+    },
+    {
+      "id": "F-020",
+      "statement": "Conflict assistant says resolution events and blocked-state handoff outcomes are recorded separately but does not name their event types, payloads, authority, or validation required before mark_conflict_resolved. That omission weakens enforcement of the otherwise explicit no-silent-resolution rule.",
+      "evidence_ids": [
+        "E-004"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "N-001",
+      "statement": "Commit batching's safety authority is explicit before acceptance: suggestions are advisory, never automatic, and manual staging and commit remain canonical.",
+      "evidence_ids": [
+        "E-002"
+      ]
+    },
+    {
+      "id": "N-002",
+      "statement": "Conflict assistant fallback and approval boundaries are explicit: structured-view failure must remain visible through file and textual conflict output, and semantic conflicts or side selections cannot be silently written.",
+      "evidence_ids": [
+        "E-004"
+      ]
+    },
+    {
+      "id": "N-003",
+      "statement": "The main Option B happy path and terminal failure are explicit: use current in-memory values without Save, then fail the run clearly rather than silently starting from defaults if both construction paths fail.",
+      "evidence_ids": [
+        "E-007"
+      ]
+    },
+    {
+      "id": "N-004",
+      "statement": "Detached-HEAD merge behavior, recovery timing, list failure behavior, and Windows path handling are explicitly selected for the initial worktree release.",
+      "evidence_ids": [
+        "E-028"
+      ]
+    },
+    {
+      "id": "N-005",
+      "statement": "Git executable absence, HTTPS-only PR transport, naming_pattern disposition, and git-actions.log location are explicitly resolved.",
+      "evidence_ids": [
+        "E-029"
+      ]
+    },
+    {
+      "id": "N-006",
+      "statement": "The Doctor API authority and its project-hint consumers are explicit: the app passes an optional hint, and GitRepoCheck, GitConfiguredCheck, and the worktrees check consume it when present.",
+      "evidence_ids": [
+        "E-031"
+      ]
+    },
+    {
+      "id": "N-007",
+      "statement": "Crew actor authority is explicit: crews are optional overlays, members remain child runs, and memory files plus active-agents.json are noncanonical.",
+      "evidence_ids": [
+        "E-034"
+      ]
+    },
+    {
+      "id": "N-008",
+      "statement": "Blocked payload minimum fields and lifecycle preservation duties are explicit: blocked_reason_code, ordered allowed_action_ids, child lineage, worktree ownership, and canonical handoff state are required.",
+      "evidence_ids": [
+        "E-035"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U-001",
+      "statement": "It is unknown whether the referenced command, chat, Orchestrator, and storage contracts define the omitted compare identity and command payload schemas because those referenced documents were outside the capsule boundary.",
+      "evidence_ids": [
+        "E-006"
+      ]
+    },
+    {
+      "id": "U-002",
+      "statement": "The exact GitHub device-code token scopes, scope failure codes, and remediation UX cannot be extracted from this capsule; it delegates them to another plan.",
+      "evidence_ids": [
+        "E-022"
+      ]
+    },
+    {
+      "id": "U-003",
+      "statement": "The concrete GuiConfig path for enable_git and the types, unset semantics, zero semantics, validation bounds, and provider-domain behavior of per-provider caps are not specified in this capsule.",
+      "evidence_ids": [
+        "E-009"
+      ]
+    },
+    {
+      "id": "U-004",
+      "statement": "The exact external AGENTS.md pre-completion checks and the semantics owned by other ContractRefs cannot be assessed without violating the read boundary.",
+      "evidence_ids": [
+        "E-033"
+      ]
+    },
+    {
+      "id": "U-005",
+      "statement": "The canonical document's source hash could not be independently recomputed because the canonical document was outside the permitted read boundary; source_sha256 is reported from the verified capsule metadata.",
+      "evidence_ids": []
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E-001",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 391,
+      "line_end": 391,
+      "quote": "- `History / graph / worktree parity` and `Branch/worktree lineage graph` go beyond a plain commit graph by showing which worktree, run, or branch owns each branch tip in `Source Control > Graph`. Required GUI state includes branch filter, worktree overlay toggle, ahead`/behind/diverged` badges, compact vs expanded graph density, and persisted graph viewport/filter state. Required `/events/storage` behavior: `cmd.source_control.graph.focus/filter/layout`, `cmd.source_control.graph_focus`, and `cmd.source_control.graph_filter` compatibility aliases resolve to `cmd.source_control.graph.focus`, `cmd.source_control.graph.filter`, and `cmd.source_control.graph.layout`; the `/filter/layout` state is project scoped. Orchestrator linkage lets graph nodes deep-link to run history and lets run history focus a graph node when a `/commit` belongs to a known run. `/disabled` fallback degrades to branch list/history when repo graph parsing fails. `/tradeoffs`: dense graphs must balance rendering density and performance on large repos."
+    },
+    {
+      "evidence_id": "E-002",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 392,
+      "line_end": 392,
+      "quote": "- `AI commit batching` suggests logical commit groupings and draft messages from diff clusters in `Source Control > Changes` near staged and `/unstaged` groups. Required `/settings` include auto-suggest on/off, batching aggressiveness, message tone/style, and cross-directory grouping. `cmd.source_control.suggest_commit_batches` produces advisory candidate batches only; no grouping, staging, or `/commit` is canonical until the user accepts it. Accepted batches preserve run/tier attribution in receipts where available, while manual staging/commit remains the canonical fallback. `/tradeoffs`: incorrect grouping can damage history, so batching is advisory, reviewable, and never automatic."
+    },
+    {
+      "evidence_id": "E-003",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 394,
+      "line_end": 394,
+      "quote": "- `Review mode` compares a worktree against a base branch, another worktree, a PR target, or a selected commit range in a roomy diff-centric Source Control GUI lens. `Source Control > History` and `Worktrees` both expose `Open Review Mode`; dense compares may take over the editor-area while staying a Source Control task mode rather than ordinary file editing. Required `/settings` include left/right compare targets, preferred diff mode, ignore-whitespace, file filter, collapse-unchanged, generated-file visibility, and review-comments/notes local state. Required `/events/storage` behavior: `cmd.source_control.review.open/swap/filter` compatibility aliases resolve to `cmd.source_control.open_review`, `cmd.source_control.set_compare_target`, and `cmd.source_control.toggle_generated_filter`; these commands persist the last compare target and filter choices per-project without turning review notes into canonical history before user acceptance. Run receipts and blocked cards open directly into a compare target when review is the remediation step. `/disabled` fallback: when the compare target is gone, pruned, or otherwise a `stale-target`, open the nearest valid baseline when one exists, explain the stale-target downgrade, and offer alternate pivots. `/tradeoffs`: direct comparison between worktrees requires robust baseline selection so the GUI does not present confusing or misleading diffs."
+    },
+    {
+      "evidence_id": "E-004",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 395,
+      "line_end": 395,
+      "quote": "- `Conflict assistant` turns merge, `/rebase/worktree`, and worktree conflict-caused blocked episodes into a guided repair flow instead of leaving users only with raw file markers. The primary placement is the `Source Control > Changes` conflict group plus a dedicated conflict flyout; blocked worktree cards should include affected file list, safe-point context, and an `Open Conflict Assistant` action into the same surface. Required `/settings` include conflict presentation mode, show base/origin annotations, open external merge tool preference, AI assist enabled/disabled, and an `auto-open` first conflicted file toggle. Required `/event/storage` behavior: `cmd.source_control.open_conflict`, `cmd.source_control.open_merge_editor`, `cmd.source_control.resolve_conflict_side`, and `cmd.source_control.mark_conflict_resolved` persist per-project presentation preference, not conflict content; resolution events and blocked-state handoff outcomes are recorded separately. `/disabled` fallback: if the structured merge view cannot load, show the file list, textual diff/conflict markers, and an explicit warning rather than hiding the conflict. `/tradeoffs`: assistant guidance must explain choices and propose repairs, but it must not silently resolve semantic conflicts or auto-write a side selection without explicit approval."
+    },
+    {
+      "evidence_id": "E-005",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 396,
+      "line_end": 396,
+      "quote": "- Source Control owns the canonical compare/diff identity contract for reuse across chat, file surfaces, and Source Control. Hunk-level actions are explicit review commands: `stage`, `unstage`, `discard`, `apply`, `expand/collapse`, and conflict-resolution actions. Grouped undo/redo for diff-driven mutations must explain whether a change is buffer-local, restore-history, or git/source-control history. Search-within-diff is scoped to the active compare identity, and diff heat-map/change-marker behavior is a review projection over that same identity."
+    },
+    {
+      "evidence_id": "E-006",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 398,
+      "line_end": 398,
+      "quote": "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Orchestrator_Page.md#Source Control boundary, ContractName:Plans/storage-plan.md"
+    },
+    {
+      "evidence_id": "E-007",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 410,
+      "line_end": 412,
+      "quote": "- **Option B (selected):** When starting a run, build `PuppetMasterConfig` (or the part the orchestrator needs) from the current **in-memory** `gui_config`. **Option B v1:** Run config is built from `gui_config` only for the fields in 5.3; no file merge in initial release. The run sees the latest GUI values without requiring \"Save\" first (e.g. `enable_parallel_execution` from `gui_config.advanced.execution.enable_parallel`). If building run config from `gui_config` fails (e.g. missing required field), fall back to `ConfigManager::discover_with_hint(hint)`; if that also fails, fail the run with a clear error (do not start with default-only config silently).\n- **Implications:** Save on the Config page continues to persist GuiConfig to disk for next app launch. The orchestrator backend receives a config derived from `gui_config` at run start, so \"Run\" always uses the current UI state. Document this behavior in the UI (e.g. tooltip: \"Run uses current settings; Save stores them for next time.\").\n- **Settings projection (rewrite):** Option B and Phase 1 are required for initial release and must work with **YAML-only** config. Redb/seglog is out of scope for this plan; when storage-plan lands, run config can be read from redb instead of gui_config. In the seglog/redb architecture (storage-plan.md), config/settings may be **projected in redb**; branching/worktree/Git settings would then live in the same redb projection."
+    },
+    {
+      "evidence_id": "E-008",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 421,
+      "line_end": 426,
+      "quote": "Completeness rule:\n- any GUI setting that changes runtime behavior belongs in the run config snapshot built at start\n- interview execution-affecting settings and HITL node toggles are part of this rule even when their owning feature plans define the detailed semantics\n- summaries in this document must reference the owning SSOTs rather than implying that GUI-only execution settings are acceptable\n\nThis section extends the minimum-field list with the policy that execution-affecting settings are projected by class, not by ad hoc exception."
+    },
+    {
+      "evidence_id": "E-009",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 430,
+      "line_end": 435,
+      "quote": "- `enable_parallel_execution` ← `gui_config.advanced.execution.enable_parallel`\n- `enable_git` (if exposed in GUI) ← corresponding GUI field\n- `branching.base_branch`, `branching.auto_pr` (and optionally strategy, granularity, naming_pattern) from GUI branching tab into the config the orchestrator uses.\n- `concurrency.global.per_provider` from GUI settings (global per-provider caps).\n- `concurrency.overrides.orchestrator.per_provider` from GUI settings (Orchestrator-context per-provider overrides).\n- Resolve effective Orchestrator per-provider caps at run start (`override` if set, else `global`) and pass those effective caps into the orchestrator scheduler/run config."
+    },
+    {
+      "evidence_id": "E-010",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 443,
+      "line_end": 448,
+      "quote": "- **Phase 1** must complete before Phase 2 and Phase 3 (config and project path are prerequisites).\n- **Phase 2:** 2.4 (sanitize) → 2.1, 2.5, 2.9; 2.7 (worktree_exists validity) before create/cleanup that rely on it; 2.8 (recovery uses project path) → 2.2, 2.11; 2.6 (detached HEAD) → 2.10.\n- **Phase 3:** 3.1 (git binary) → 3.3, 3.4, 3.10; 3.2 (GitHub API PR integration) independent; 3.5 → 3.6 → 3.7.\n- **Cross-phase:** Phase 3.1 before Phase 2.11 (Doctor worktrees check uses shared git resolution).\n- **Phase 2 and Phase 3** can proceed in parallel after Phase 1; **Phase 5** integration tests assume both Phase 2 and Phase 3 are done."
+    },
+    {
+      "evidence_id": "E-011",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 451,
+      "line_end": 453,
+      "quote": "- [ ] Implement Option B config wiring (Section 5): when starting a run, build orchestrator config from current `gui_config` (and optional file merge). Ensure \"Enable parallel execution\", branching/base_branch/auto_pr, and concurrency caps (`concurrency.global.per_provider` + `concurrency.overrides.orchestrator.per_provider` with effective cap resolution at run start) are taken from `gui_config` so the run sees latest UI state without requiring Save first.\n- [ ] When starting a run from the Dashboard, pass `current_project.path` as config hint so the backend uses `ConfigManager::discover_with_hint(hint)` and worktree recovery uses the selected project (Section 7.3).\n- [ ] Verify with a run: toggle \"Enable parallel execution\", save, start run → worktrees are created when applicable."
+    },
+    {
+      "evidence_id": "E-012",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 457,
+      "line_end": 468,
+      "quote": "- [ ] Base branch: ensure worktrees are created from `config.branching.base_branch` (checkout or use as ref).\n- [ ] active_worktrees: repopulate on init from `list_worktrees()` and/or fallback to worktree path when resolving working directory.\n- [ ] Merge conflict: document or surface conflict worktrees; avoid silent overwrite on re-run.\n- [ ] Sanitize node_id (path) and branch name (ref).\n- [ ] Branch already exists: handle existing branch when creating worktree (use existing branch or safe delete).\n- [ ] Detached HEAD: handle empty branch in list_worktrees and merge_worktree.\n- [ ] worktree_exists: require path + worktree validity (e.g. .git file or list_worktrees).\n- [ ] Recovery: use project path when known; run when project is selected if not at startup.\n- [ ] PR head branch: use worktree branch from list_worktrees when active_worktrees has no entry.\n- [ ] merge_worktree: ensure target_branch exists or create/error clearly.\n- [ ] STATE_FILES.md: document worktrees.\n- [ ] Doctor: add worktrees check."
+    },
+    {
+      "evidence_id": "E-013",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 485,
+      "line_end": 490,
+      "quote": "- [ ] Branching tab: add Enable Git, Auto PR, Branch strategy (add `strategy` / `branch_strategy` to config schema and map GUI to `BranchStrategy` enum; see Section 7.1). Use existing widgets from `docs/gui-widget-catalog.md`; tag any new reusable UI with DRY:WIDGET (Section 7.11). Optionally add auto merge / delete on merge.\n- [ ] Branching tab: fix or hide naming_pattern; clarify granularity vs behavior (Section 7.7: decide granularity-driven branch creation vs only exposing BranchStrategy).\n- [ ] Worktree: optional list/recover UI and Git info for active project (reuse widgets per 7.11).\n- [ ] Tooltip cleanup for orphan tooltips.\n- [ ] **GUI coordination with MiscPlan:** When **MiscPlan** (Plans/MiscPlan.md) adds cleanup and evidence UI (§7.5), it will add a \"Workspace / Cleanup\" subsection under **Config → Advanced** and a \"Clean workspace now\" button on **Doctor** (or Advanced). Both plans use the **same** Option B run config: ensure the run config built from GuiConfig at run start includes both Worktree/Git fields and (when implemented) MiscPlan cleanup/evidence fields so one Save persists all. Doctor must receive **project path context** (e.g. current project or config path) for \"Clean workspace now\" and for worktree list; see Worktree §7.2 and MiscPlan §7.5.\n- [ ] After GUI changes: run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` (Section 7.11)."
+    },
+    {
+      "evidence_id": "E-014",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 503,
+      "line_end": 507,
+      "quote": "| **Phase 1** | (1) With \"Enable parallel execution\" on and no Save, start run → worktrees are created when applicable. (2) Run started from Dashboard uses `current_project.path` as config hint (e.g. `discover_with_hint` called with it). (3) Branching/base_branch and auto_pr from GUI are present in the config passed to the orchestrator at run start. |\n| **Phase 2** | (1) After restart, `get_node_worktree(node_id)` returns the path for nodes that still have worktrees under worktree_base (repopulation or fallback). (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor \"worktrees\" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |\n| **Phase 3** | (1) GitManager and Doctor git checks use the same resolved `git` binary (e.g. shared `path_utils::resolve_git_executable()`). (2) Iteration commits use CommitFormatter and produce \"pm:\"-style messages. (3) git-actions.log path matches REQUIREMENTS (`.puppet-master/logs/git-actions.log`) and is documented in .gitignore if runtime-only. |\n| **Phase 4** | (1) Branching tab has Enable Git, Auto PR, Branch strategy wired to run config (run uses current GUI values). (2) Naming pattern is either wired to branch names or hidden and documented. (3) After GUI changes, `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` run and pass. |\n| **Phase 5** | (1) Integration test: parallel run in temp git repo creates worktree dirs and uses them as cwd for subtasks. (2) Integration test: run with Git disabled does not create branches/commits/PRs. (3) AGENTS.md Pre-Completion Verification Checklist completed and Task Status Log updated for any closed tasks. |"
+    },
+    {
+      "evidence_id": "E-015",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 519,
+      "line_end": 526,
+      "quote": "| Phase 1 | Option B config wiring, pass config hint on run start, verify parallel → worktrees | Required |\n| Phase 2 | All items in checklist except re-validate worktree path (Section 2.12) | Required |\n| Phase 2 | Re-validate worktree path before use (Section 2.12) | Optional (Phase 6) |\n| Phase 3 | All items except Doctor \"git usable in project\" and \"nothing to commit\" | Required |\n| Phase 3 | Doctor \"git usable in project\" check; \"nothing to commit\" handling | Optional |\n| Phase 4 | Branching tab controls, naming/granularity, tooltip cleanup, MiscPlan coordination, widget scripts | Required |\n| Phase 4 | Worktree list/recover UI and Git info for active project | Optional |\n| Phase 5 | All items | Required |"
+    },
+    {
+      "evidence_id": "E-016",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 536,
+      "line_end": 536,
+      "quote": "**Config Format Mismatch Resolution (Resolved — Migrate to Single Canonical Format):**"
+    },
+    {
+      "evidence_id": "E-017",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 538,
+      "line_end": 548,
+      "quote": "GuiConfig and PuppetMasterConfig MUST use the same enum for `branching.granularity`:\n\n```rust\n#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]\npub enum BranchGranularity {\n    None,      // Single branch (GUI label: \"Single branch\")\n    Phase,     // Per-phase branches (GUI label: \"Per phase\")\n    Task,      // Per-task branches (GUI label: \"Per task\")\n    Subtask,   // Per-subtask branches (GUI label: \"Per subtask\")\n    Iteration, // Per-iteration branches (GUI label: \"Per iteration\")\n}"
+    },
+    {
+      "evidence_id": "E-018",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 551,
+      "line_end": 554,
+      "quote": "- GUI displays human-readable labels; stores the enum variant in redb.\n- No string-based `branching.granularity` in GuiConfig. Eliminate the string type.\n- Migration: on first load, map legacy strings to enum variants (\"single\" → None, \"per_phase\" → Phase, \"per_task\" → Task). Log `config.migrated` seglog event.\n- Unmapped fields (`push_policy`, `merge_policy`): expose in GUI Settings → Git section. Default: `push_policy: \"after_phase\"`, `merge_policy: \"squash\"`."
+    },
+    {
+      "evidence_id": "E-019",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 558,
+      "line_end": 560,
+      "quote": "- Doctor checks implement `async fn run(&self) -> CheckResult` with **no parameters**. They have no built-in \"project path\" or \"working directory.\"\n- **GitRepoCheck** and **GitConfiguredCheck** \"use project path when available\" can be implemented by **resolving project root inside `run()`**: e.g. call `config_discovery::discover_config_path(None)` (or with a hint if the app can pass it), then take the parent directory as project root; run `git rev-parse --git-dir` or `git config user.name` with `current_dir(project_root)`. If no config is found, fall back to current behavior (CWD or HOME). This matches the pattern used in the orchestrator-subagent plan for the Gemini plan-mode Doctor check.\n- **App → Doctor:** When the app runs Doctor (e.g. from the Doctor view), it could pass a \"config hint\" (e.g. `current_project.path`) so `discover_config_path(Some(hint))` finds the project's config. That would require extending the Doctor run API to accept an optional hint (e.g. `run_all(hint: Option<&Path>)`) and threading it into checks that need it. Alternatively, keep discovery inside each check with `discover_config_path(None)` so the \"project\" is whatever directory would be used when no project is selected (cwd, default workspace, etc.)."
+    },
+    {
+      "evidence_id": "E-020",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 564,
+      "line_end": 565,
+      "quote": "- **Current behavior:** `spawn_orchestrator_backend` calls `ConfigManager::discover()` with **no hint**. The wizard and start-chain use `ConfigManager::discover_with_hint(config_hint)` with `current_project.path`. So the **orchestrator run** (Dashboard \"Run\") never receives the current project path; it uses whatever `discover_config_path(None)` finds.\n- **Implication:** For \"recovery when project is known\" and \"Doctor use project path,\" if the user selects a project in the UI but the run is started from the same app, the run still uses discover-with-no-hint. To make \"current project\" meaningful for the run, the run command must pass a hint (e.g. extend start message with `config_hint: Option<PathBuf>`). **Call site to change:** In `app.rs::spawn_orchestrator_backend`, replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard when starting a run. The plan should explicitly call out: \"When starting a run from the Dashboard, pass `current_project.path` as config hint so the run and recovery use the selected project.\""
+    },
+    {
+      "evidence_id": "E-021",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 569,
+      "line_end": 569,
+      "quote": "- To \"avoid reusing that node_id for a new worktree until the user resolves,\" the app must remember which node_ids have unresolved merge conflicts. Options: (1) a small state file under `.puppet-master/` (e.g. `worktree-conflicts.json` listing node_ids), updated when a merge fails and cleared when the user runs \"Recover worktrees\" or resolves manually; (2) in-memory only (lost on restart, so re-run would still overwrite after restart). The plan should specify which approach or mark as \"optional: in-memory set for the session only\" to avoid scope creep."
+    },
+    {
+      "evidence_id": "E-022",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 573,
+      "line_end": 574,
+      "quote": "- **Git:** Doctor uses `find_tool_executable(\"git\")` in `git_checks.rs` (PATH + fallback dirs from `path_utils::get_fallback_directories()` and `path_utils::find_in_shell_path`). GitManager uses `Command::new(\"git\")`. **Implementation:** Create a small helper (e.g. `path_utils::resolve_git_executable() -> Option<PathBuf>`) that uses the same logic as `find_tool_executable(\"git\")`, and have both GitManager and GitInstalledCheck use it. GitManager can take `Option<PathBuf>` and use it in `run_git_cmd` when set.\n- **GitHub PR creation:** Doctor must validate GitHub API auth (device-code token present + scopes) and PR creation must use GitHub HTTPS API (no GitHub CLI). See `Plans/GitHub_API_Auth_and_Flows.md`."
+    },
+    {
+      "evidence_id": "E-023",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 582,
+      "line_end": 583,
+      "quote": "- **Orchestrator today:** Creates a branch in `create_node_branch` per node (phase/task/subtask/iteration) based only on **BranchStrategy** (MainOnly / Feature / Release). It does **not** read `config.branching.granularity`.\n- **Granularity** in config (Phase / Task / Subtask / Iteration / None) is a reserved design for \"at which node level do we create a new branch\" (e.g. None = one branch for all; Phase = one branch per phase; Task = one per task). It is not an active runtime contract until the plan chooses one of two dispositions: (1) implement granularity so that branch creation is gated by node level (e.g. only create branch when node_type matches granularity), or (2) leave granularity as future-facing and only wire BranchStrategy in the GUI (Main only / Feature / Release). The plan should state: \"For Phase 4 GUI, decide whether to implement granularity-driven branch creation or only expose BranchStrategy; if only strategy, align granularity UI label with 'informational' or keep it hidden until the contract is active.\""
+    },
+    {
+      "evidence_id": "E-024",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 587,
+      "line_end": 587,
+      "quote": "- Integration tests that \"run with parallel execution on\" and \"verify worktrees created\" require a real git repo (e.g. temp dir with `git init`, initial commit). The plan should add: \"Use a temporary directory with `git init` and at least one commit; set `enable_parallel_execution: true` and run a minimal PRD with two parallel subtasks; assert worktree dirs exist and are used as cwd.\" Optionally guard with `#[cfg(feature = \"integration-git\")]` or skip if `git` is not in PATH."
+    },
+    {
+      "evidence_id": "E-025",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 591,
+      "line_end": 591,
+      "quote": "- The \"worktrees\" Doctor check should run only when the project path is a git repo. Steps: (1) Resolve project root (e.g. via config discovery or hint). (2) Run `git worktree list --porcelain` from that root. (3) If that fails, report \"not a git repo\" or \"git worktree not supported.\" (4) Otherwise, optionally call `detect_orphaned_worktrees()` (requires a `WorktreeManager` instance) and report count of orphaned dirs and suggest \"Recover orphaned worktrees\" if non-zero. Creating `WorktreeManager` in a Doctor check requires a repo path; use the same project root."
+    },
+    {
+      "evidence_id": "E-026",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 595,
+      "line_end": 596,
+      "quote": "- **Config migration:** If we move to a single canonical format (Option A), existing users may have only GuiConfig-shaped YAML. Loading it as PuppetMasterConfig can fail (missing `paths`, etc.). Plan: on load, try PuppetMasterConfig first; if it fails, try GuiConfig and convert to PuppetMasterConfig (with defaults for missing fields), then save in canonical format on next save.\n- **Save timing:** Option B is chosen: on Run, build the config used for the run from in-memory `gui_config`, so Save is not required for the next run. Document this in the UI (e.g. tooltip or short note: \"Run uses current settings; Save stores them for next time.\")."
+    },
+    {
+      "evidence_id": "E-027",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 600,
+      "line_end": 600,
+      "quote": "All gaps from audit are closed with the following decisions. Implementers should follow these so the plan has no ambiguity."
+    },
+    {
+      "evidence_id": "E-028",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 602,
+      "line_end": 602,
+      "quote": "**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** In-memory only for initial release -- `HashSet<node_id>` of conflict worktrees; optional Phase 6: `.puppet-master/worktree-conflicts.json`. (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional."
+    },
+    {
+      "evidence_id": "E-029",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 604,
+      "line_end": 604,
+      "quote": "**Git (Section 3):** (1) **Git binary:** Add `path_utils::resolve_git_executable() -> Option<PathBuf>` (same logic as `find_tool_executable(\"git\")`); GitManager and GitInstalledCheck both use it; tag `// DRY:FN:resolve_git_executable`. If resolver returns None, GitManager fails the operation; Doctor fails the check. (2) **GitHub PRs:** PR creation uses GitHub HTTPS API only (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`. (3) **naming_pattern:** Hide in GUI and document Reserved for future use in initial release; do not wire to branch naming. (4) **git-actions.log:** Move to `.puppet-master/logs/git-actions.log`; add to .gitignore as runtime-only per STATE_FILES."
+    },
+    {
+      "evidence_id": "E-030",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 606,
+      "line_end": 606,
+      "quote": "**Config (Section 5):** (1) **Backend call site:** In `app.rs::spawn_orchestrator_backend`, replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard/start-run flow (e.g. extend start message with optional hint). (2) **Minimum wired fields:** enable_parallel_execution, enable_git, base_branch, auto_pr; strategy required for Phase 4 GUI; granularity/naming_pattern optional/hidden per 7.7 and 3.7."
+    },
+    {
+      "evidence_id": "E-031",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 608,
+      "line_end": 608,
+      "quote": "**Doctor API:** Extend Doctor so the app can pass an optional project hint (e.g. `run_all(hint: Option<&Path>)`); GitRepoCheck, GitConfiguredCheck, and worktrees check use hint when present."
+    },
+    {
+      "evidence_id": "E-032",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 625,
+      "line_end": 627,
+      "quote": "3. **Git Binary Resolution -- Single Source of Truth:**\n   - ✅ **ALWAYS** use shared git binary resolution functions (DRY:FN:resolve_git_binary)\n   - ❌ **NEVER** duplicate git binary detection logic"
+    },
+    {
+      "evidence_id": "E-033",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 644,
+      "line_end": 647,
+      "quote": "- **Widgets and UI:** Before adding any new Git/worktree UI (Branching tab controls, worktree list/recover, toggles), check `docs/gui-widget-catalog.md` and `src/widgets/`. Use existing widgets (e.g. `styled_button`, `page_header`, `selectable_label`, toggles, dropdowns) and tag any new reusable widget with `// DRY:WIDGET:<name>`. After GUI changes, run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh`.\n- **Platform/tool resolution:** Do not hardcode paths. Use shared helpers: `path_utils::find_tool_executable`, `path_utils::resolve_app_local_executable` (or a new `resolve_git_executable()` that both GitManager and Doctor use). Tag new shared helpers with `// DRY:FN:<name>`.\n- **Single source of truth:** Git/branch behavior should use existing modules: `platform_specs` only for platform-related data (this plan is mostly git/worktree); branch naming from one place (e.g. `BranchStrategyManager` or shared function); config shape from the chosen Option B build-from-GUI flow.\n- **Pre-completion:** Before marking any task done, run the AGENTS.md \"Pre-Completion Verification Checklist\" (cargo check/test, DRY checks, no hardcoded platform data, scope, gitignore rules)."
+    },
+    {
+      "evidence_id": "E-034",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 653,
+      "line_end": 666,
+      "quote": "Git and worktree coordination must use the reconciled PM crew model rather than ad hoc crew-memory or side-file canon.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md\n\nRequired rules:\n- git/worktree coordination crews are optional overlays, not separate persistent actor systems.\n- crew members remain child runs.\n- crew coordination uses explicit shared crew state and crew-board messages when enabled.\n- `.puppet-master/memory/*` is not canonical crew coordination state.\n- `active-agents.json` is not canonical git/worktree coordination state.\n\nIf git/worktree coordination is needed:\n- store canonical lineage, ownership, and conflict state in seglog/redb projections.\n- treat longer-lived crew identity as explicit shared state, not hidden child memory."
+    },
+    {
+      "evidence_id": "E-035",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "line_start": 671,
+      "line_end": 681,
+      "quote": "Git/worktree lifecycle and quality features must align with the current child-run, crew, and blocked-state canon.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md\n\nRequired rules:\n- reuse canonical child-run and crew events rather than inventing separate active-agent lifecycle files.\n- blocked payloads use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.\n- cleanup, reroute, and retry behavior must preserve child lineage and worktree ownership fields.\n- quality and handoff metadata belong in canonical event/storage structures rather than memory-manager files.\n\nCross-session continuity for git/worktree behavior comes from canonical state and handoff reconstruction, not from child-memory files."
+    }
+  ],
+  "scope_attestation": {
+    "files": [
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000089-EXACT-WIN-30EBABB890C6-0002.json",
+      "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-30EBABB890C6-0002.txt"
+    ],
+    "read_only": true,
+    "prior_audits": false,
+    "other_results": false,
+    "unrelated_windows": false,
+    "external_research": false,
+    "within_capsule_only": true
+  }
+}

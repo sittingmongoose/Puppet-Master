@@ -48,7 +48,7 @@
               /* Quota rows */
               .pm6-usage-qrow{display:grid;grid-template-columns:minmax(120px,1.15fr) auto 2fr 34px;gap:var(--sm);align-items:center;padding:5px 0;border-bottom:1px solid var(--border-light)}
               .pm6-usage-qrow:last-child{border-bottom:none}
-              .pm6-usage-qname{font-size:var(--fs-sm);color:var(--text-primary);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+              .pm6-usage-qname{font-size:var(--fs-sm);color:var(--text-primary);font-weight:600;display:flex;align-items:center;flex-wrap:wrap;gap:2px 5px;min-width:0}
               .pm6-usage-qbars{display:flex;flex-direction:column;gap:3px}
               .pm6-usage-qbar{display:flex;align-items:center;gap:6px}
               .pm6-usage-qbar b{font-size:9px;font-weight:700;color:var(--text-muted);width:16px;letter-spacing:.02em}
@@ -318,10 +318,10 @@
                   </section>
 
                   <!-- widget.ledger_table -->
-                  <section class="pm6-usage-w span-4" data-uw="ledger_table" style="--i:7">
+                  <section class="pm6-usage-w span-4" data-uw="ledger_table" style="--i:8">
                     <div class="pm6-usage-wh">
                       <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="clipboard"></span>Event ledger</span>
-                      <span class="pm6-usage-wmeta" data-uw-meta>cost lands on the effective account</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>normalized UsageRecords &middot; cost lands on the effective account</span>
                       <button class="pm6-usage-gear" data-uw-gear="ledger_table" title="Widget options" aria-label="Configure ledger widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
                     </div>
                     <div class="pm6-usage-lctrl">
@@ -386,15 +386,26 @@
               var D = {
                 spend: { '5h': 14.27, '24h': 28.41, '7d': 142.83 },
                 quotas: [
-                  { id: 'claude',      name: 'Claude',           plan: 'Pro',         five: 78, seven: 61, rep: 'measured' },
-                  { id: 'claude-code', name: 'Claude Code',      plan: 'Max',         five: 64, seven: 52, rep: 'measured' },
-                  { id: 'codex-plan',  name: 'Codex &middot; Plus plan', plan: 'Plan-backed', five: 34, seven: 33, rep: 'measured' },
-                  { id: 'codex-api',   name: 'Codex &middot; API key',   plan: 'API-billed',  five: 17, seven: 12, rep: 'measured' },
-                  { id: 'copilot',     name: 'Copilot',          plan: 'Business',    five: 91, seven: 66, rep: 'measured' },
-                  { id: 'gemini',      name: 'Gemini Direct',    plan: 'AI Studio',   five: 41, seven: 30, rep: 'estimated' },
-                  { id: 'antigravity', name: 'Antigravity CLI',  plan: 'Preview',     five: 28, seven: 21, rep: 'measured' },
-                  { id: 'cursor',      name: 'Cursor',           plan: 'Business',    five: 56, seven: 44, rep: 'estimated', note: 'inferred locally &mdash; Cursor does not report usage itself' },
-                  { id: 'opencode',    name: 'OpenCode',         plan: 'Passthrough', five: 12, seven: 9,  rep: 'estimated' }
+                  /* vs = value-state chip: measured | estimated | stale | unknown | disabled | not-exposed | hidden-byok | hidden-subscription.
+                     A missing bar NEVER means zero — the chip says why the number is absent. */
+                  { id: 'claude',          name: 'Claude',           plan: 'Pro',         five: 78, seven: 61, vs: 'measured' },
+                  { id: 'claude-code',     name: 'Claude Code',      plan: 'Max',         five: 64, seven: 52, vs: 'measured' },
+                  { id: 'codex-plan',      name: 'Codex &middot; Plus plan', plan: 'Plan-backed', five: 34, seven: 33, vs: 'measured' },
+                  { id: 'codex-api',       name: 'Codex &middot; API key',   plan: 'API-billed',  vs: 'hidden-byok',
+                    note: 'billed straight to your own key &mdash; the provider shows spend only in its own console. Hidden, not zero.' },
+                  { id: 'copilot',         name: 'Copilot',          plan: 'Business',    five: 91, seven: 66, vs: 'measured' },
+                  { id: 'gemini',          name: 'Gemini Direct',    plan: 'AI Studio',   five: 41, seven: 30, vs: 'estimated' },
+                  { id: 'antigravity_cli', name: 'Antigravity CLI',  plan: 'agy route',   five: 28, seven: 21, vs: 'stale',
+                    note: 'agy did not answer /stats this cycle &mdash; showing the last good sample (14:32), never zero. Retries with the next 5-minute refresh.' },
+                  { id: 'cursor',          name: 'Cursor',           plan: 'Business',    five: 56, seven: 44, vs: 'estimated', note: 'inferred locally &mdash; Cursor does not report usage itself' },
+                  { id: 'opencode',        name: 'OpenCode',         plan: 'Passthrough', vs: 'unknown',
+                    note: 'the passthrough server has not reported this window yet &mdash; unknown is never assumed to be zero.' },
+                  { id: 'gemini-workspace',name: 'Gemini &middot; Workspace', plan: 'Seat',  vs: 'hidden-subscription',
+                    note: 'usage is pooled into the Workspace subscription &mdash; per-user totals are hidden by the plan.' },
+                  { id: 'windsurf',        name: 'Windsurf',         plan: '&mdash;',     vs: 'disabled',
+                    note: 'turned off in Settings &rarr; no usage is collected while disabled.' },
+                  { id: 'ollama',          name: 'Ollama &middot; local',    plan: 'Local',  vs: 'not-exposed',
+                    note: 'local models expose no usage API &mdash; there is nothing to read, which is different from reading zero.' }
                 ],
                 donuts: [
                   { name: 'Claude',      pct: 78, tone: 'warn' },
@@ -483,6 +494,13 @@
                 ]
               };
 
+              /* every ledger row carries a stable usage_event_ref; drill-through preserves it */
+              (function assignRefs() {
+                var n = 1342;
+                D.ledger.forEach(function (r) { if (!r.ref) r.ref = 'ue-47-' + (n--); });
+              })();
+              var liveRefSeq = 2000;
+
               /* widget config (gear popover state) */
               var CFG = {
                 quota_summary:    { win: '5h' },
@@ -496,15 +514,21 @@
                 ledger_table:     { win: '5h' }
               };
 
-              /* merge PM_DEMO usage state over the baseline when the engine provides it */
+              /* Adapt PM_DEMO usage state onto the baseline. The engine's normalized
+                 UsageRecord shapes differ from this page's row shapes, so we map known
+                 signals field-by-field instead of replacing arrays wholesale. */
+              var ENGINE_QUOTA_MAP = { 'q-claude-5h': ['claude', 'five'], 'q-claude-7d': ['claude', 'seven'], 'q-codex-5h': ['codex-plan', 'five'], 'q-cursor-mo': ['cursor', 'five'] };
               function sourceData() {
                 try {
                   var u = window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.usage;
-                  if (u && typeof u === 'object') {
-                    ['quotas', 'ledger', 'anomalies', 'accounts', 'cache', 'tools', 'donuts'].forEach(function (k) {
-                      if (Array.isArray(u[k]) && u[k].length) D[k] = u[k];
+                  if (u && typeof u === 'object' && Array.isArray(u.quotas)) {
+                    u.quotas.forEach(function (eq) {
+                      var m = ENGINE_QUOTA_MAP[eq.id];
+                      if (!m || typeof eq.pct !== 'number') return;
+                      for (var i = 0; i < D.quotas.length; i++) {
+                        if (D.quotas[i].id === m[0] && D.quotas[i][m[1]] != null) D.quotas[i][m[1]] = Math.round(eq.pct);
+                      }
                     });
-                    if (u.spend) D.spend = u.spend;
                   }
                 } catch (e) { /* renderers must never die on bad state */ }
                 return D;
@@ -520,22 +544,39 @@
               function fillTone(p) { return p >= 90 ? 'hot' : p >= 70 ? 'warn' : 'ok'; }
 
               /* ================= renderers ================= */
+              /* value-state chips — closed vocab from the addendum; never conflated with zero */
+              var VS_LABEL = {
+                'measured': 'measured', 'estimated': 'estimated', 'stale': 'stale',
+                'unknown': 'unknown', 'disabled': 'disabled', 'not-exposed': 'not exposed',
+                'hidden-byok': 'hidden &middot; BYOK', 'hidden-subscription': 'hidden &middot; subscription'
+              };
+              function vsChip(vs) {
+                if (!vs) return '';
+                return '<span class="pm6-usage-chip pm6-usage-vs vs-' + vs + '">' + (VS_LABEL[vs] || vs) + '</span>';
+              }
               function renderQuota() {
                 var el = body('quota_summary'); if (!el) return;
                 var rows = sourceData().quotas.map(function (q) {
                   var note = q.note ? '<div class="pm6-usage-qnote">' + q.note + '</div>' : '';
-                  return '<div class="pm6-usage-qrow">' +
-                    '<span class="pm6-usage-qname">' + q.name + '</span>' +
+                  var hasBars = q.five != null;
+                  var bars = hasBars
+                    ? '<span class="pm6-usage-qbars">' +
+                        '<span class="pm6-usage-qbar"><b>5h</b><span class="pm6-usage-track"><span class="pm6-usage-fill ' + fillTone(q.five) + '" data-fill="' + q.five + '"></span></span></span>' +
+                        '<span class="pm6-usage-qbar"><b>7d</b><span class="pm6-usage-track"><span class="pm6-usage-fill ' + fillTone(q.seven) + '" data-fill="' + q.seven + '"></span></span></span>' +
+                      '</span>'
+                    : '<span class="pm6-usage-qbars pm6-usage-qbars-none" title="No number is shown because the state chip explains why &mdash; this is not zero usage">no reading &mdash; see chip</span>';
+                  var pct = hasBars
+                    ? '<span class="pm6-usage-qpct">' + q.five + '%<br><span style="color:var(--text-muted);font-weight:600">' + q.seven + '%</span></span>'
+                    : '<span class="pm6-usage-qpct" style="color:var(--text-muted)">&mdash;</span>';
+                  return '<div class="pm6-usage-qrow' + (hasBars ? '' : ' pm6-usage-qrow-nv') + '">' +
+                    '<span class="pm6-usage-qname">' + q.name + ' ' + vsChip(q.vs) + '</span>' +
                     '<span class="pm6-usage-chip plan">' + q.plan + '</span>' +
-                    '<span class="pm6-usage-qbars">' +
-                      '<span class="pm6-usage-qbar"><b>5h</b><span class="pm6-usage-track"><span class="pm6-usage-fill ' + fillTone(q.five) + '" data-fill="' + q.five + '"></span></span></span>' +
-                      '<span class="pm6-usage-qbar"><b>7d</b><span class="pm6-usage-track"><span class="pm6-usage-fill ' + fillTone(q.seven) + '" data-fill="' + q.seven + '"></span></span></span>' +
-                    '</span>' +
-                    '<span class="pm6-usage-qpct">' + q.five + '%<br><span style="color:var(--text-muted);font-weight:600">' + q.seven + '%</span></span>' +
-                    note +
+                    bars + pct + note +
                   '</div>';
                 }).join('');
-                el.innerHTML = rows;
+                el.innerHTML = rows +
+                  '<div class="pm6-usage-mlegend">Chips separate <strong>estimated / stale / unknown / disabled / not exposed / hidden</strong> from a real zero &mdash; a missing bar never means &ldquo;no usage&rdquo;. All figures are normalized UsageRecords.</div>';
+                requestAnimationFrame(function () { animateFills(el); });
               }
 
               function renderAlerts() {
@@ -617,7 +658,7 @@
                 var toneVar = { ok: 'var(--accent-lime)', warn: 'var(--accent-orange)', hot: 'var(--accent-error)' };
                 el.innerHTML =
                   '<div class="pm6-usage-spendrow"><span class="pm6-usage-big" data-counter="' + spend + '" data-prefix="$">$0.00</span>' +
-                  '<span class="pm6-usage-big-label">estimated spend · attributed to each effective account</span></div>' +
+                  '<span class="pm6-usage-big-label">spend from normalized UsageRecords · attributed to each effective account</span></div>' +
                   '<div class="pm6-usage-donuts">' + d.donuts.map(function (x) {
                     return '<span class="pm6-usage-donut"><svg viewBox="0 0 64 64" role="img" aria-label="' + x.name + ' budget ' + x.pct + '%">' +
                       '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
@@ -764,8 +805,10 @@
                 var kv = r.detail || {};
                 var cells = Object.keys(kv).map(function (k) {
                   return '<div class="pm6-usage-di"><b>' + k + '</b><span>' + kv[k] + '</span></div>';
-                }).join('') + '<div class="pm6-usage-di"><b>Latency</b><span>' + r.lat + '</span></div>';
-                var det = '<tr class="pm6-usage-detailrow" data-ldetail="' + idx + '" hidden><td></td><td colspan="13"><div class="pm6-usage-dgrid">' + cells + '</div></td></tr>';
+                }).join('') + '<div class="pm6-usage-di"><b>Latency</b><span>' + r.lat + '</span></div>' +
+                  '<div class="pm6-usage-di"><b>usage_event_ref</b><span class="mono" style="font-family:var(--mono-font);font-size:var(--fs-2xs)">' + (r.ref || '&mdash;') + '</span></div>';
+                var drill = '<div style="margin-top:var(--sm)"><button class="pm6-usage-btn" data-demo-action="usage.drill" data-demo-arg="' + (r.ref || '') + '" title="Opens the owning surface; the usage_event_ref travels with the drill-through">Open in Orchestrator &#8627;</button></div>';
+                var det = '<tr class="pm6-usage-detailrow" data-ldetail="' + idx + '" hidden><td></td><td colspan="13"><div class="pm6-usage-dgrid">' + cells + '</div>' + drill + '</td></tr>';
                 return main + det;
               }
               function ledgerMatches(r) {
@@ -822,6 +865,7 @@
                 var now = new Date();
                 var r = {};
                 Object.keys(src).forEach(function (k) { r[k] = src[k]; });
+                if (!r.ref) r.ref = 'ue-47-' + (liveRefSeq++);
                 r.t = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
                 d.ledger.unshift(r);
                 if (d.ledger.length > 40) d.ledger.pop();
@@ -926,6 +970,7 @@
                   b.addEventListener('click', function () {
                     CFG[popFor].win = b.dataset.popWin;
                     var mm = meta(popFor); if (mm) mm.textContent = 'last ' + b.dataset.popWin;
+                    facadeConfigure(popFor, { win: b.dataset.popWin });
                     rerender(popFor);
                     closePop();
                     if (window.toast) window.toast('Widget window set to ' + b.dataset.popWin);
@@ -934,12 +979,16 @@
                 POP.querySelectorAll('[data-pop-ctype]').forEach(function (b) {
                   b.addEventListener('click', function () {
                     CFG.analytics_chart.ctype = b.dataset.popCtype;
+                    facadeConfigure('analytics_chart', { ctype: b.dataset.popCtype });
                     rerender('analytics_chart');
                     closePop();
                   });
                 });
               }
               function closePop() { if (POP) { POP.hidden = true; popFor = null; } }
+              function facadeConfigure(id, opts) {
+                try { if (window.PM_DEMO && PM_DEMO.usage && PM_DEMO.usage.configureWidget) PM_DEMO.usage.configureWidget(id, opts); } catch (e) {}
+              }
               UP.querySelectorAll('[data-uw-gear]').forEach(function (g) {
                 g.addEventListener('click', function (e) {
                   e.stopPropagation();
@@ -1043,6 +1092,15 @@
                 injectIcons: injectIcons,
                 cooldown: cooldown,
                 tickCooldown: tickCooldown,
+                /* engine sync: once the demo clock owns the cooldown, the local 1s ticker stands down */
+                setCooldown: function (sec) {
+                  if (typeof sec !== 'number' || sec < 0) return;
+                  cooldown.external = true;
+                  cooldown.seconds = sec;
+                  var el = UP.querySelector('#pm6UsageCd');
+                  if (el) el.textContent = fmtCd(sec);
+                },
+                ledgerFilter: LFILTER,
                 spinRefresh: function () {
                   var b = UP.querySelector('#pm6UsageRefresh');
                   if (!b) return;

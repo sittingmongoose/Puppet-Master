@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 2884-2895 >>>
+- **File Editor**: source mode, split preview mode, detached preview mode, and browser mode for HTML/workspace browsing
+- **Embedded Document Pane**: preview-capable document review surface using the same rendering and preview identity contract
+- **Editor-tab Browser surface**: the canonical in-shell host for `workspace_preview`
+- **Detached preview/browser windows**: first-class `detached_preview` surfaces linked to the originating browser subject
+- **Automation/Auth browser windows**: visible `automation_session` and `auth_session` surfaces that are not counted as normal in-shell browser tabs
+- **Bottom-panel browser-adjacent surfaces**: optional logs, evidence, downloads, console/network summaries, or DevTools-adjacent panes that do not own the canonical browsing session
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Browser-derived capture chips in the Chat Panel appear in the composer chip strip with a bounded preview, page/source label, capture kind, remove/revoke affordance, and blocked/expired state when applicable. They serialize only when the user sends the message and only through the corresponding structured attachment path.
+
+### GUI behavior rules
+
+<<< AUTHORITATIVE_CORE 2896-3290 >>>
+
+- Browser and agent-debugging UX follows the Section15 built-in browser contract rather than `web_search`, `web_fetch`, Site Reader, or raw CDP. The GUI presents the PM-managed CEF runtime, DevTools, visible `automation_session` / `auth_session` surfaces, `/video` evidence, `browser_selection_context`, and `browser_element_context`; capture chips must not auto-send, advanced storage or `/cookie` changes require explicit confirmation, and takeover controls expose pause, `/continue/stop`, and resume as named actions.
+- Debug browser-automation defaults favor redacted summary packs, bounded evidence windows, isolated session handoff, `/audit` trails, and least-privilege browser takeover. They do not present broad shared-session control as the default user-facing model.
+- Debug attention banners display `attention_required_reason_code` values such as `auth_handoff_required`, `manual_repro_required`, `manual_verification_required`, and `target_selection_required`. Debugger attach loss or manual debugger steering that PM does not own in MVP degrades to `attention_required`.
+- An arbitrary URL remains a diagnose/verify-only browser investigation until PM binds it to a workspace-backed target; only then may the GUI offer durable-fix actions.
+- detached preview/browser windows are part of the intended UX and are not described as degraded workarounds
+- the editor/workspace tab surface is the canonical in-shell host for normal browsing and HTML preview
+- the bottom panel must not be described as the primary browser host
+- HTML/browser mode must visually read as a real browser-capable surface rather than as a static Markdown preview
+- users must be able to watch agent-driven browser/testing sessions live when automation is running visibly
+- docked DevTools is the default and lives inside the currently focused browser session surface; detached DevTools is an alternate layout
+- Browser/rendered mode carries the required/desired browser capability set: it must open browser-handled content, support highlight/select browser content and screenshot capture into chat through visible chips, allow agent control to fully navigate/use user-locked web-app and website flows through named actions, preserve web-app compatibility including DevTools plus screenshot / console / network inspection, and expose DevTools on Linux, macOS, and Windows.
+- Session-class UX distinguishes the same visible browser session the user watches, a separate visible automation window/tab, and hidden/ephemeral automation sessions; hidden/ephemeral sessions are allowed only as separate `automation_session` surfaces with an open/watch affordance, user-facing browser tabs remain the default visible host, and `Open in Detached Browser` is the explicit command when a separate window is needed.
+- image viewing remains native and must not inherit unnecessary browser chrome
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+### Chat panel behavior
+
+Chat messages that contain renderable Markdown/Mermaid content must support:
+
+- readable Markdown formatting
+- native Mermaid diagram cards where Mermaid syntax is detected
+- actions for copy source, open in editor, open detached preview, and export diagram where relevant
+- visible error states for malformed Mermaid instead of silent raw-block disappearance
+
+Chat must not execute arbitrary HTML from message content.
+
+Context Lens placement is fixed in the Chat panel: the control lives in the top-right of the chat window immediately to the right of the search bar, renders as an icon plus dropdown arrow, supports multi-select in all modes, and exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+
+### File editor behavior
+
+The File Editor view must expose clear mode controls for render-capable files:
+
+- Source
+- Preview
+- Split
+- Detached preview
+- Browser/rendered mode for HTML
+
+The mode switch must not change the canonical buffer model. Split mode should preserve shared-buffer editing semantics with the existing document/editor contract.
+
+Preview, browser, and other `/rendered` experiences are derivative of source and `/buffer` state. They may cache view mode, scroll, or export preferences, but they do not become peers with separate canonical content authority.
+
+For local HTML, default `Open` = source editor; explicit `Open in Browser` opens the editor/workspace tabs browser surface, `Open in Detached Browser` opens a secondary detached browser window, and the editor toolbar/action plus agent file-target flow invoke the same canonical open command.
+
+### Embedded document pane behavior
+
+The Embedded Document Pane must reuse the same rendering pipeline and PreviewSession abstraction as the file editor and chat. It is a review/inspection surface, not a separate rendering system.
+
+Required actions:
+
+- open source
+- open detached preview
+- request re-render/reload
+- perform allowed structured edits when the underlying document kind supports them
+
+### Bottom panel browser behavior
+
+The bottom panel is not the canonical host for normal browsing, HTML preview, or click-to-context workflows.
+
+Allowed bottom-panel browser-adjacent roles are:
+- console/network summaries for the focused browser session
+- downloads, trace/video progress, and evidence activity tied to the focused browser session
+- automation activity, step status, or capture status linked to a visible browser session
+- DevTools-adjacent panes that complement the focused browser session without becoming a separate browser host
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
+
+Rules:
+- actions surfaced from the bottom panel must focus or act on the owning browser session rather than invent a separate browser identity
+- browser open, detached-open, takeover, promotion, and recovery actions always target the canonical browser session model
+- PM browser chrome and any bottom-panel browser-adjacent actions may expose DevTools entry/bridge actions (`Open DevTools`, `Toggle DevTools Dock`, `Focus Browser`) or evidence actions; deeper inspection tools live inside the DevTools UI itself, and these actions must act on the owning `browser_session_id` without making the bottom panel the primary browsing session.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md
+
+### Windowing and platform behavior
+
+- the browser runtime expectation is a PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux
+- native child-window embedding is the baseline host strategy; offscreen rendering is secondary
+- if the implementation uses a CEF wrapper such as `wef`, user-visible chrome must still present the feature as PM-managed browser capability rather than wrapper branding
+- setup, Doctor, update, and installer surfaces must disclose a selected CEF path's roughly ~1 GB app-size impact and provide remediation when runtime install/update verification fails
+- offscreen rendering may support capture, evidence, and degraded rendering workflows, but it must not replace the native child-window baseline for the canonical visible browser host
+- detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session
+- GUI copy must not imply that the browser is only available through detached fallback windows or platform-specific system-webview assumptions
+- when the bundled browser runtime is damaged or unavailable, the UI must surface `runtime_unavailable` with remediation and keep source/native surfaces usable
+- the UI must not rely on hidden pre-created browser panes to feel responsive on platforms where hidden-window behavior is constrained
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md
+
+### Performance and accessibility
+
+- Use lazy rendering and virtualization for long message streams and large documents.
+- Preserve scroll positions where feasible when re-rendering preview content.
+- Preview controls must be keyboard reachable.
+- Diagram export/open/source actions must have explicit labels and accessible tooltips/text.
+
+### Acceptance criteria addendum
+
+- the same logical subject can move between chat card, editor preview, embedded doc pane, editor-tab browser, detached preview, and detached browser without inventing separate rendering contracts
+- Mermaid diagrams render consistently across chat, editor, and planning/doc surfaces
+- HTML rendered mode behaves like a real browser/workspace preview, not a static screenshot
+- the bottom panel is not required as the primary browser host for the feature to work
+- platform limitations may change embedding details, but they must not remove the feature or hide requested/effective browser capability differences
+- users can watch a live `automation_session`, safely take over, and promote it to normal browsing without losing the visible browser
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+## Assistant Planning UX Addendum (2026-03-08)
+
+### 1. Assistant Chat planning controls
+
+Assistant Chat planning controls must expose both **Plan** and **Deep Plan** as chat workflow choices.
+
+Required controls:
+- planning-mode selector entry for `Plan`
+- planning-mode selector entry for `Deep Plan`
+- `Plan Thoroughness (PT)` control visible when either planning overlay is active
+
+PT control contract:
+- control type: segmented control, dropdown, or equivalent compact selector
+- canonical labels: `Light`, `Balanced`, `Comprehensive`
+- default selection: `Balanced`
+- Deep Plan and Plan share the same PT labels
+- tooltip/help copy must explain that Deep Plan is more intensive than Plan at the same PT
+
+### 2. Plan vs Deep Plan visible behavior
+
+**Plan** UI expectations:
+- lightweight plan artifact in thread
+- sticky plan panel remains visible in chat
+- normalized TODO list is visible before approval
+- users may revise TODO structure before approval
+- execution begins only after explicit approval
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+**Deep Plan** UI expectations:
+- richer planning artifact opens in a preview-capable document/editor surface
+- the same normalized TODO contract remains visible in the thread plan panel
+- document review, annotations, and targeted revision remain available
+- Deep Plan remains more intensive than Plan at the same PT
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md
+
+**Shared TODO tracker rules:**
+- the sticky plan panel is the authoritative TODO tracker
+- inline chat updates are milestone-style, not a competing tracker
+- TODO statuses support at least `pending`, `in_progress`, `completed`, `blocked`, and `skipped`
+- the same TODO identity must survive single-agent, subagent, and crew execution
+- plan state transitions (`draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`) must remain visible and restorable
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### 3. Deep Plan review in editor / Embedded Document Pane
+
+Deep Plan documents reuse the Embedded Document Pane annotation/revision contract.
+
+Required behavior:
+- highlight text -> annotation action palette
+- annotation markers in margin + annotation list/drawer
+- `Resubmit with Annotations` launches targeted revision for the plan document
+- deterministic annotation re-anchoring after edits
+- no silent annotation loss
+- no automatic Multi-Pass Review requirement before plan approval/execution
+
+The plan document may contain:
+- headings
+- lists / tables
+- fenced code blocks
+- Mermaid diagrams
+- file paths / references
+- validation and rollout notes
+
+### 4. Assistant recommendation card for Planning Wizard
+
+When Assistant Chat or Deep Plan recommends the Planning Wizard, show a visible recommendation card rather than silently switching surfaces.
+
+Required card content:
+- reason summary (for example: `This looks like a substantial feature/enhancement that would benefit from the interview + orchestrator flow.`)
+- primary CTA: `Add a new Feature or Enhancement`
+- secondary action: `Stay in Chat` / `Not now`
+
+Optional supporting copy may mention:
+- that Planning Wizard can prune irrelevant topics automatically
+- that imported plan/chat context will be carried into the wizard
+
+### 5. Post-acceptance wizard handoff surface
+
+If the user accepts the recommendation:
+- switch to the Planning Wizard intake/interview flow
+- show a visible imported-context banner (`Imported from Assistant Chat` or `Imported from Deep Plan`)
+- show whether a plan artifact was included
+- show the imported goal/scope summary
+
+Recommended imported-context panel contents:
+- user goal
+- scope summary
+- included plan yes/no
+- open questions count
+- `has_gui` hint when known
+
+If a project is already active, the wizard should open on the preloaded feature/enhancement path rather than on a blank intent picker.
+
+### 6. Non-goals
+
+- Do not copy external GUI layout from OpenCode, Cursor, VSCode, or other tools.
+- Do not auto-create repo files for planning artifacts without explicit user action.
+- Do not silently redirect the user from chat into the wizard.
+
+### 7. Acceptance criteria
+
+- Assistant Chat visibly exposes both Plan and Deep Plan.
+- PT is shown for both planning overlays using the canonical labels `Light`, `Balanced`, and `Comprehensive`.
+- Deep Plan documents open in a preview-capable editor/document surface and support durable annotations plus targeted revision.
+- When the wizard is recommended, the user sees an explicit CTA and can decline without leaving chat.
+- Accepting the CTA opens the Planning Wizard intake/interview flow with visible imported context.
+- Planning documents continue to use the shared markdown/mermaid rendering and source-canonical rules already defined elsewhere in the spec.
+
+## Compatibility/source-lineage - Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
+
+
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact GUI tokens and older examples; the canonical GUI summary and referenced owner docs govern overlapping blocked/recovery behavior.
+
+### 1. Dashboard cards
+
+
+The Dashboard must distinguish:
+- `wizard_attention_required`
+- `wizard_blocked`
+- HITL blocked actions
+- remote-side-effect blocked actions
+
+`wizard_blocked` card requirements:
+- more severe copy than `wizard_attention_required`
+- primary CTA: `Resume Wizard`
+- secondary CTA: `View report`
+- auto-dismiss only when the wizard leaves `blocked`
+
+### 2. Assistant thread selector / badges
+
+#### 2.1 Worktree icon in thread selector
+
+Each thread row in the thread selector displays a worktree icon when the thread has an active worktree binding.
+
+- **Position:** Left gutter of thread row, vertically below the status badge (running/blocked/attention)
+- **Icon:** Theme-consistent branch/tree glyph from icon set
+- **Size:** Same size as status badge icons so visual weight stays consistent.
+- **Visibility:** Present only when thread has a worktree binding; absent (no placeholder) when unbound
+- **Hover tooltip content:** Line 1 is the branch name, e.g. `assistant/fix-auth-bug`; line 2 is status pill text such as `clean`, `dirty`, or `conflict`; line 3 is the worktree path, e.g. `.puppet-master/worktrees/wt-abc123`.
+- **Icon color:** Clean: `icon-secondary`. Dirty: `accent-warning`. Conflict: `accent-error`. Colors resolve through theme tokens across all three built-in themes.
+- **Stale projection:** Icon shows last-known state with subtle desaturation; tooltip appends "(status may be outdated)"
+- **Accessible label:** Thread selector worktree icon uses `aria-label="Has worktree: {branch_name}, {status}"`.
+- **Announcements:** Worktree state changes are announced through an `aria-live="polite"` region for create, unbind, remove, dirty status, conflict status, and creation-failed transitions.
+- **Completed/failed dirty worktrees:** If a completed or failed thread still has a dirty bound worktree, the selector may show status pill text such as `dirty · completed` or `dirty · failed`, and the completion toast suggests merge/cleanup; there is no auto-cleanup.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Thread and session navigation uses persistent shell surfaces.
+
+Rules:
+- the active thread list is visible in a persistent sidebar or equivalent persistent region, not only in a floating overlay
+- the selector must expose running, queued, blocked, and attention-required badges per thread
+- branch lineage is visible in the selector/history model using stable branch labels and source-origin metadata
+- badge aggregation must preserve highest-severity state while still showing blocked counts when present
+- the project/session browser may complement thread navigation but does not replace the active-thread list inside chat
+
+The floating thread-list overlay pattern is not canonical after this section.
+### 3. Run Graph and Orchestrator views
+
+Required visible scheduler/remediation data:
+- wake reason
+- ready/blocked/backoff/remediation counts
+- selected-node score breakdown
+- ready-but-unselected reasons
+- safe-point ID
+- remediation lineage identifiers
+
+### 4. blocked outcome copy
+
+When a remote side effect or guard prevents execution, the GUI MUST present the outcome as `blocked`, not `failed`, and must preserve any completed local work.
+
+### 5. Event-driven correctness
+
+All scheduler/remediation/blocked UI updates must follow the existing `invoke_from_event_loop` event-driven rule. No timer polling for correctness.
+
+### 6. Acceptance criteria
+
+- Dashboard has a first-class `wizard_blocked` card.
+- Thread badges distinguish `blocked` from `attention_required`.
+- Scheduler/remediation state is inspectable in run surfaces.
+- blocked outcomes are not mislabeled as failures.
+- new runtime widgets obey the event-driven rewrite rule.
+## Compatibility/source-lineage - Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves older parity wording; it is not a peer normative blocked/recovery section.
+
+The GUI must expose the packet's runtime state without relying on hidden behavior.
+
+### Required visible elements
+- queue-analysis summary with last wake reason
+- blocked-state badges and grouped blocked lists
+- safe-point state and restore status where applicable
+- remediation lineage navigation
+- disabled-action explanations tied to canonical reason codes
+- clear distinction between `attention_required`, `blocked`, `retrying`, and terminal failure
+
+### Event-driven update rule
+
+
+All scheduler, blocked, and remediation widgets MUST update from runtime events/projections rather than periodic timers.
+
+### UX safety rule
+If the GUI cannot perform a required action in the current mode, it must state why and point to the canonical recovery path. The GUI must not present controls that imply hidden fallback, hidden retry, or hidden re-auth behavior.
+## Compatibility/source-lineage - Runtime Blocked, Queue, and Recovery GUI Canonical Alignment (2026-03-09)
+
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves exact `wizard_blocked`, queue, and recovery tokens while the canonical GUI summary governs precedence.
+
+### `wizard_blocked` CtA card
+Add a first-class `wizard_blocked` card alongside `wizard_attention_required`.
+
+Required fields:
+- `card_type = wizard_blocked`
+- `wizard_id`
+- `wizard_step`
+- `blocked_reason_code`
+- `report_ref`
+- `resume_url`
+- `thread_id?`
+
+Required UI behavior:
+- more severe visual treatment than `wizard_attention_required`
+- primary action: `Resume Wizard`
+- secondary action: `View report`
+- auto-dismiss only when the wizard leaves `blocked`
+- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
+### Thread/status surfaces
+Thread and run status surfaces MUST include distinct presentations for:
+- `attention_required`
+- `blocked`
+- `retrying/backoff`
+- `remediation`
+## Compatibility/source-lineage - Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+
+> **Superseded — see Canonical Blocked/Recovery Behavior below. Compatibility/source-lineage only.** This section preserves GUI-specific recovery tokens that supplement the canonical summary only where they do not conflict with named owner docs.
+
+This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
+
+### FileSafe rendering
+A FileSafe block is a persistent blocked episode until the underlying runtime block resolves. It MUST NOT auto-dismiss while still active.
+
+### Degraded draft warning
+
+
+Decomposition degradation is a pre-lock planning state only. GUI copy MUST NOT imply silent degraded canonical execution after graph lock.
+
+### All-nodes-blocked gating
+
+
+Until owner runtime contracts define dedicated all-blocked events, GUI surfaces MAY derive all-blocked banners from current projections but MUST NOT treat undeclared runtime events as canonical.
+## Canonical Blocked/Recovery Behavior
+This section is the canonical GUI summary for blocked and recovery surfaces.
+
+### Dashboard Action Required
+Blocked and recovery UI binds to canonical blocked projections and HITL records.
+- `wizard_blocked` is a first-class card alongside `wizard_attention_required`
+- blocked cards use the fields `card_type`, `wizard_id`, `wizard_step`, `blocked_reason_code`, `report_ref`, `resume_url`, and optional `thread_id`
+- `wizard_blocked` uses more severe visual treatment than `wizard_attention_required`
+- primary action: `Resume Wizard`
+- secondary action: `View report`
+- auto-dismiss only when the wizard leaves `blocked`
+- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
+- blocked payloads use ordered `allowed_action_ids[]`
+- blocked episodes remain distinct when more than one is active
+- GUI labels may vary by surface, but command binding always resolves through the shared runtime command catalog
+- Blocked and attention-required remain distinct; `wizard-blocked` cards outrank `wizard-attention-required`, thread badges preserve highest severity and blocked counts, usage warnings preserve thresholds, quiet periods, and clear actions, and all-nodes-blocked can escalate by elapsed time.
+
+### Thread and run status taxonomy
+`waiting_approval` and other blocked reasons are runtime overlays, not replacement run-graph lifecycle states.
+- lifecycle remains the graph-progress contract
+- blocked, backoff, retry, remediation, and approval-pending are rendered from runtime projections
+- requested vs effective persona/platform/model remains visible where runtime substitution occurred
+
+### Scope rule
+The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces.
+
+The shared blocked/remediation taxonomy preserves actor-specific state machines and object identities: assistant, interview/builder, runtime, and Orchestrator actors consume common blocked fields without collapsing their lifecycle models.
+
+### Visual distinction
+- blocked episodes are visually distinct from ordinary paused/idle states
+- multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate
+- remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment
+
+
+<<< CONTEXT_AFTER 3291-3302 >>>
+### Runtime state presentation
+Scheduler surfaces MUST visually distinguish:
+- blocked waiting for prerequisite or approval
+- retrying/backoff
+- remediation in progress
+- terminal failure
+
+### Recovery UX rules
+- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
+- if no valid safe point exists, `Retry from safe point` is disabled with an explanation
+- Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.

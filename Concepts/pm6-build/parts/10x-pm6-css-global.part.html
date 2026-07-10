@@ -244,6 +244,224 @@
     }
 
     /* ==================================================================
+       LEGIBILITY + POLISH SWEEP (W3)
+       ================================================================== */
+
+    /* text selection rides the accent family (accent-soft was sub-AA faint;
+       the 25% glow mix of the same --accent-primary reads correctly) */
+    ::selection { background: var(--accent-glow); color: var(--text-primary); }
+
+    /* panel headers step up the type scale (design_system section 4) */
+    .s4-panel-title { font-size: var(--fs-xl); }
+    .chat-panel-header .title { font-size: var(--fs-lg); }
+
+    /* themed scrollbars: part 02 ships the thin macOS base + light variants;
+       these tint the thumb per theme family */
+    [data-theme^="retro"] *::-webkit-scrollbar-thumb { border-radius: 0; }
+    [data-theme^="retro"] *:hover::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--accent-primary) 50%, transparent);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    [data-theme^="retro"] *:hover { scrollbar-color: color-mix(in srgb, var(--accent-primary) 50%, transparent) transparent; }
+    [data-theme^="glass"] *:hover::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--text-primary) 26%, transparent);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    [data-theme^="glass"] *:hover { scrollbar-color: color-mix(in srgb, var(--text-primary) 26%, transparent) transparent; }
+
+    /* card padding floor: var(--xl), friendly 20px (density-scaled below) */
+    .bento-widget,
+    .project-card-bento,
+    .s4-card,
+    .questionnaire-ui { padding: calc(var(--xl) * var(--density, 1)); }
+    [data-theme^="friendly"] .bento-widget,
+    [data-theme^="friendly"] .project-card-bento,
+    [data-theme^="friendly"] .s4-card { padding: calc(20px * var(--density, 1)); }
+
+    /* ==================================================================
+       DENSITY (design_system section 6) — data-density maps onto
+       --density; high-traffic containers multiply padding/gaps by it.
+       Range C/D media queries below set .9/.85 automatically; an explicit
+       user choice on <html> overrides them (rules are later in source).
+       ================================================================== */
+    .primary-content { padding: calc(var(--md) * var(--density, 1)); }
+    .panel-content {
+      padding: calc(var(--md) * var(--density, 1));
+      gap: calc(var(--md) * var(--density, 1));
+    }
+    .chat-panel-header { padding: calc(var(--md) * var(--density, 1)); }
+    .files-panel-header { padding: calc(var(--xs) * var(--density, 1)) calc(var(--sm) * var(--density, 1)); }
+    .msg-body { padding: calc(var(--xs) * var(--density, 1)) calc(var(--md) * var(--density, 1)) calc(var(--md) * var(--density, 1)); }
+    .sticky-plan-tracker { padding: calc(var(--md) * var(--density, 1)); }
+
+    /* ==================================================================
+       RESPONSIVE RANGES (design_system section 6)
+       Range A (>=2200px): baseline :root values from part 02 — no query.
+       Width vars are consumed by parts 05/06/09 (.activity-bar,
+       .files-panel, .side-panel-slot, .chat-panel, .chat-thread-sidebar,
+       .floating-chat, .bento-widget.size-*).
+       ================================================================== */
+
+    /* range B: 1720-2199 */
+    @media (max-width: 2199px) {
+      :root {
+        --chat-panel-w: 480px;
+        --files-panel-w: 240px;
+        --tile-size: 200px;
+        --grid-gap: 20px;
+      }
+    }
+
+    /* range C: 1440-1719 — PRIMARY 16:9 target */
+    @media (max-width: 1719px) {
+      :root {
+        --chat-panel-w: clamp(380px, 26vw, 440px);
+        --files-panel-w: 220px;
+        --chat-sidebar-w: 0px;
+        --tile-size: 190px;
+        --floating-chat-w: 440px;
+        --density: .9;
+      }
+      /* thread sidebar auto-collapse (width var alone loses to its min-width) */
+      .chat-body .chat-thread-sidebar {
+        width: 0 !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border-right: none !important;
+        overflow: hidden !important;
+        resize: none;
+      }
+    }
+
+    /* short-viewport modifier: range-C compact values on any width */
+    @media (max-height: 800px) {
+      :root {
+        --chat-panel-w: clamp(380px, 26vw, 440px);
+        --files-panel-w: 220px;
+        --chat-sidebar-w: 0px;
+        --tile-size: 190px;
+        --floating-chat-w: 440px;
+        --density: .9;
+      }
+      .chat-body .chat-thread-sidebar {
+        width: 0 !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border-right: none !important;
+        overflow: hidden !important;
+        resize: none;
+      }
+    }
+
+    /* chat drawer scrim (visible only in range D/E drawer mode) */
+    .pm6-chat-scrim {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 899;
+      background: rgba(0, 0, 0, .45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--motion-med) var(--ease-smooth);
+    }
+
+    /* range D: 1180-1439 — chat becomes an overlay drawer; files panel
+       collapses to a 48px rail with hover flyout */
+    @media (max-width: 1439px) {
+      :root {
+        --density: .85;
+        --files-panel-w: 240px; /* flyout width, not rail width */
+      }
+      .chat-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(var(--chat-panel-w, 440px), 92vw) !important;
+        min-width: 0 !important;
+        z-index: 900;
+        transform: translateX(100%);
+        transition: transform var(--motion-med) var(--ease-default);
+        box-shadow: var(--elev-3);
+        border-left: 1px solid var(--border);
+      }
+      .chat-panel.pm6-chat-open { transform: none; }
+      .pm6-chat-scrim { display: block; }
+      .chat-panel.pm6-chat-open ~ .pm6-chat-scrim,
+      body.pm6-chat-open .pm6-chat-scrim,
+      .pm6-chat-scrim.pm6-chat-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .side-panel-slot {
+        width: 48px !important;
+        min-width: 48px !important;
+        position: relative;
+        overflow: visible;
+      }
+      .side-panel-slot::after {
+        content: "";
+        position: absolute;
+        top: var(--md);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 56px;
+        border-radius: var(--radius-pill);
+        background: color-mix(in srgb, var(--text-primary) 18%, transparent);
+        pointer-events: none;
+      }
+      .side-panel-slot .side-panel-view {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 48px;
+        width: var(--files-panel-w, 240px);
+        z-index: 850;
+        background: var(--surface-elevated);
+        border-right: 1px solid var(--border);
+        box-shadow: var(--elev-3);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-8px);
+        transition: opacity var(--motion-fast) var(--ease-smooth),
+                    transform var(--motion-med) var(--ease-default);
+      }
+      .side-panel-slot:hover .side-panel-view.active,
+      .side-panel-slot:focus-within .side-panel-view.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+      }
+      .pm6-dash-grid { grid-template-columns: minmax(0, 1fr) !important; }
+      .bottom-panel:not(.collapsed) { height: 120px !important; }
+    }
+
+    /* range E: <1180 — single-column stage, scrollable tabs
+       (range D drawer + rail rules still cascade in here) */
+    @media (max-width: 1179px) {
+      .side-panel-slot { display: none !important; }
+      .title-bar .page-tabs {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+      }
+      .title-bar .page-tabs::-webkit-scrollbar { display: none; }
+      .activity-bar {
+        width: 56px !important;
+        min-width: 56px !important;
+      }
+    }
+
+    /* explicit density choices (later in source: win over range defaults) */
+    [data-density="comfortable"] { --density: 1; }
+    [data-density="compact"] { --density: .85; }
+
+    /* ==================================================================
        REDUCED MOTION - keep LAST in this block
        ================================================================== */
     @media (prefers-reduced-motion: reduce) {

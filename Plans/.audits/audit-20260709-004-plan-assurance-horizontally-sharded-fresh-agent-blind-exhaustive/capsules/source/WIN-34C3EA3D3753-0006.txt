@@ -1,0 +1,385 @@
+<<< CONTEXT_BEFORE 1627-1638 >>>
+- no-silent-local-fallback
+- remote Git/non-Git search acceleration
+negative_constraints:
+- Remote search acceleration is not a fallback path.
+- no-silent-local-fallback remains mandatory.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1639-1994 >>>
+### GI-029 - Remote Tool Execution Context And Verification Anchors
+
+```yaml
+plan_unit_id: GI-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: Remote tool/provider execution uses GitHub remote context, remote SSH/reconnect budget, path guard, and storage verification anchors before mutating or reporting search/cache state.
+gui_related: false
+gui_classification_reason: This unit defines runtime, security, ownership, identity, or transport behavior, not GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: remote_tool_execution_context_verification_anchors
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0012
+preserved_exact_tokens:
+- remote tool/provider execution
+- remote SSH/reconnect budget
+- path guard
+- storage verification anchors
+- search/cache state
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Models_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### GI-030 - Effective GitHub Account Capability Check And Provider Selection
+
+```yaml
+plan_unit_id: GI-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: GitHub Integration consumes GitHub_AuthContext, includes effective_account_id in API calls, uses runtime identity resolution for cross-account capability checks, and follows scoped provider/model settings tied to Persona and execution_unit_type rather than repository or organization.
+gui_related: false
+gui_classification_reason: This unit defines runtime, security, ownership, identity, or transport behavior, not GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The behavior is addressable through this fine-grained PlanUnit instead of broad GI-001 coverage.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_integration_drift
+reasoning_tier: standard
+context_scope: github_integration_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: effective_github_account_capability_provider_selection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0012
+preserved_exact_tokens:
+- GitHub_AuthContext
+- effective_account_id
+- capability check
+- runtime identity resolution flow
+- GitHub Copilot
+- GPT-4
+- Plans/Models_System.md
+- Persona
+- execution_unit_type
+negative_constraints:
+- Cross-org access must trigger runtime identity capability checks, not silent re-auth.
+- Model selection is tied to active Persona and execution_unit_type, not repository or organization.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/GitHub_Integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Models_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### GI-001 - GitHub Integration Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: GI-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: The former GitHub_Integration doc-level source-preserving bridge is retired after Phase 2B atomized GitHub_Integration-S0002, S0004, S0006, and S0008 through S0012 into GI-002 through GI-030 and structurally dispositioned S0001, S0003, S0005, S0007, S0013, S0014, and S0016. GI-001 remains only as migration lineage for GitHub_Integration-S0015 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.
+gui_related: false
+gui_classification_reason: This retired bridge records migration lineage only; product GUI coverage is owned by fine-grained GitHub Integration PlanUnits GI-002 through GI-030.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- GI-001 no longer uses source_preserving_planunit compile mode.
+- GI-002 through GI-030 own product coverage for atomized GitHub Integration spans.
+- Structural spans are explicit coverage dispositions, not product coverage owned by GI-001.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0015
+preserved_exact_tokens:
+- GI-001
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- GitHub_Integration-S0001
+- GitHub_Integration-S0016
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- GI-001 must not re-own atomized GitHub_Integration product coverage.
+- GI-001 must not use node_compile_hint.mode=source_preserving_planunit.
+- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.
+compatibility_only_notes:
+- GI-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+stale_retired_dispositions:
+- The broad GitHub Integration source-preserving bridge was retired in Phase 2B batch 077.
+owner_boundary_notes:
+- GI-002 through GI-030 own atomized GitHub Integration product coverage.
+- GitHub_Integration-S0015 maps only to retired bridge lineage.
+owner_hints:
+- Plans/GitHub_Integration.md
+```
+
+## Migration Coverage
+
+Original hash: `3fd236bf9f6ce0c2780dc77e155b225db95206c07d8e83b7baa89d8fc939f8a3`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 077 atomized `GitHub_Integration-S0002`, `GitHub_Integration-S0004`, `GitHub_Integration-S0006`, and `GitHub_Integration-S0008` through `GitHub_Integration-S0012` into `GI-002` through `GI-030`, repeating dense source lineage where the original source span contains multiple safe atoms. `GitHub_Integration-S0001`, `GitHub_Integration-S0003`, `GitHub_Integration-S0005`, `GitHub_Integration-S0007`, `GitHub_Integration-S0013`, `GitHub_Integration-S0014`, and `GitHub_Integration-S0016` are structural or migration-history dispositions. `GitHub_Integration-S0015` maps to retired bridge lineage `GI-001`; `GI-001` no longer uses source-preserving compile mode, and `Plans/GitHub_Integration.md` has no remaining source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### GI-031 - Optional GitHub Promotion For Plans-To-Code Execution
+
+```yaml
+plan_unit_id: GI-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: >-
+  GitHub integration is an optional promotion/output layer for plans-to-code execution. When configured, it handles auth, remote state, push, pull request creation, PR status, and GitHub Actions checks after local Executor/source-control receipts establish local truth. Local source-control/worktree state remains execution truth and local-only project completion must not require GitHub. GitHub receipts consume repo_id, branch/head state, baseline/head commits, changed files, PR refs, Action/check refs, conflicts, merge/promotion result, and rollback context from Executor and WorktreeGitImprovement.
+  GitHub optional promotion records PR and GitHub Actions evidence only when configured.
+gui_related: true
+gui_classification_reason: PR, status, checks, and promotion results are user-visible GitHub/source-control surfaces.
+depends_on: [GI-030, W-072, EP-100]
+unblocks: [EP-103, RAP-029, POA-048]
+acceptance_criteria:
+  - Local source-control truth is established before GitHub promotion output.
+  - GitHub is not required for local-only completion.
+  - PR and GitHub Actions status are recorded only when configured and authenticated.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future GitHub promotion receipt validation
+risk_class: github_required_for_local_completion
+reasoning_tier: standard
+context_scope: plans_to_code_github_promotion
+implementation_surfaces: [Plans/GitHub_Integration.md, Plans/GitHub_API_Auth_and_Flows.md, Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md]
+node_compile_hint: {mode: github_optional_promotion, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0038
+  - pldg-20260617-001-plans-to-code-handoff:atom-0039
+  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+preserved_exact_tokens:
+  - "GitHub optional"
+  - "PR"
+  - "GitHub Actions"
+  - "local source-control truth"
+  - "merge_or_promotion_receipt"
+negative_constraints:
+  - Do not require GitHub for local-only project completion.
+owner_hints:
+  - Plans/GitHub_Integration.md
+  - Plans/GitHub_API_Auth_and_Flows.md
+  - Plans/Executor_Protocol.md
+```
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### GI-032 - Optional GitHub, Repository Attachment, And Contribution PR Context
+
+```yaml
+plan_unit_id: GI-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: 'Project context supports greenfield, existing local project, existing Git repository, remote SSH project, and fork or external upstream contexts, with explicit repository and host facts. Planning intake can attach an existing local directory, Git repository, optional GitHub repository, or remote SSH host and project root, recording host, path, repository identity, currentness, and permissions. GitHub is optional for repository creation, fork, push, and PR workflows; local or remote Git and FileSafe remain valid without GitHub credentials, and repository/worktree state is execution truth. Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. For greenfield work, Planning Wizard can create a directory, initialize Git, select
+  an initial branch, create an empty or baseline initialization commit, and optionally connect or create a GitHub repository when explicitly authorized. Contribution PR mode records upstream and fork identities, base and head branches, contribution policy, compatibility expectations, required checks, commit policy, and optional PR delivery without conflating those with implementation truth.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/GitHub_Integration.md
+- Plans/Planning_Wizard.md
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/GitHub_API_Auth_and_Flows.md
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0044
+- pldg-20260618-001-prd-planning-wizard:atom-0068
+- pldg-20260618-001-prd-planning-wizard:atom-0069
+- pldg-20260618-001-prd-planning-wizard:atom-0070
+- pldg-20260618-001-prd-planning-wizard:atom-0072
+- pldg-20260618-001-prd-planning-wizard:atom-0076
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+source_atom_ids:
+- atom-0044
+- atom-0068
+- atom-0069
+- atom-0070
+- atom-0072
+- atom-0076
+decision_refs:
+- dec-0015
+- dec-0014
+correction_refs: []
+preserved_exact_tokens:
+- greenfield
+- existing local project
+- existing Git repository
+- remote SSH
+- fork or external upstream
+- local path
+- Git repository
+- GitHub
+- SSH
+- GitHub optional
+- execution truth
+- authority
+- receipt
+- git init
+- push
+- PR creation
+- baseline initialization commit
+- upstream
+- fork
+- base branch
+- head branch
+- PR
+negative_constraints:
+- Do not block local-only planning or build completion solely because GitHub is unavailable.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FileSafe.md
+- Plans/GitHub_Integration.md
+- Plans/Permissions_System.md
+- Plans/GitHub_API_Auth_and_Flows.md
+- Plans/WorktreeGitImprovement.md
+```
+
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+### GI-033 - Remote Git Cache Discovery Transport And Disclosure
+
+```yaml
+plan_unit_id: GI-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: >-
+  GitHub Integration is a supporting consumer for remote Git/non-Git cache transport, disclosure, reconnect, staging/re-anchor, verification path, and no-silent-local-fallback alignment used by DiscoveryService. It consumes storage, worktree, FileSafe, and permission contracts for remote cache/admin disclosure and must not define an alternate discovery/search layout, alternate ranking policy, or product behavior owner for native discovery.
+gui_related: true
+gui_classification_reason: Remote/cache disclosure, reconnect, and admin states are user-visible integration surfaces.
+depends_on: [GI-027, GI-028, GI-029, GI-032, SP-218, W-074, F2-191, PS-118]
+unblocks: [ATS-011]
+acceptance_criteria:
+  - Remote Git/cache discovery disclosures align with storage/worktree/FileSafe/permission owner contracts.
+  - GitHub Integration does not become the discovery behavior, search, or ranking owner.
+  - No local substitution is presented as remote truth.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Future remote cache disclosure tests.
+  - Future no-local-substitution integration checks.
+risk_class: remote_cache_consumer_drift
+reasoning_tier: standard
+context_scope: github_remote_discovery_consumer
+implementation_surfaces: [Plans/GitHub_Integration.md, future remote Git cache adapter]
+node_compile_hint: {mode: supporting_remote_cache_consumer, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260622-001-fff:atom-0054
+  - pldg-20260622-001-fff:atom-0061
+  - pldg-20260622-001-fff:atom-0069
+  - pldg-20260622-001-fff:atom-0079
+  - pldg-20260622-001-fff:atom-0085
+  - pldg-20260622-001-fff:atom-0091
+  - pldg-20260622-001-fff:state/subagent_compile_proposals.json#Copernicus
+source_atom_ids: [atom-0054, atom-0061, atom-0069, atom-0079, atom-0085, atom-0091]
+preserved_exact_tokens: ["remote Git", "remote_cache", "SSH/reconnect", "verification paths", "staging/re-anchor", "no-silent-local-fallback", "alternate discovery/search layout"]
+negative_constraints:
+  - Do not define alternate discovery/search layout or ranking behavior in GitHub Integration.
+  - Do not block local-only planning or build completion solely because GitHub is unavailable.
+owner_hints: [Plans/GitHub_Integration.md, Plans/storage-plan.md, Plans/WorktreeGitImprovement.md, Plans/FileSafe.md, Plans/Permissions_System.md]
+```
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+
+<<< CONTEXT_AFTER 1995-2006 >>>
+### GI-034 - github_update_workflow
+
+```yaml
+plan_unit_id: GI-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/GitHub_Integration.md
+canonical_text: >-
+  github_update_workflow (P1) is compiled as canonical Puppet Master intent for github_update_workflow: Add GitHubUpdateCurrentness and ReleaseTagVerifier The preserved PM gap/delta is: Need rate-limit-safe updater and release/action tag currentness guard The observed external-repo signal remains source-lineage evidence: OpenCode upgrade GitHub API 403 and stale github@latest action issues
+gui_related: true
+gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+depends_on:

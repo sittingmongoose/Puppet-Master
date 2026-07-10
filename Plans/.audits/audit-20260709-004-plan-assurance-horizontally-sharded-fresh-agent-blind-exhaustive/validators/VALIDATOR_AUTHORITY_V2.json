@@ -1,0 +1,102 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "authority_version": 2,
+  "published_at": "2026-07-10T03:40:00Z",
+  "source_thread_id": "019f4956-c3a3-7403-b51f-9881e12d1753",
+  "supersedes": {
+    "authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY.json",
+    "authority_sha256": "ffa46c2662f4ee10720d80195d03f4020daf2d105dd903570d64bb478ab2bdb4",
+    "scope": "All postrun coverage authority. Original READY evidence and the non-retroactive supplemental prelaunch evidence remain unchanged.",
+    "reason": "Frozen postrun_validator_v1 granted false completion credit because it did not join positive result-manifest validation, failed-attempt vetoes, immutable result metadata, and exact evidence checks."
+  },
+  "original_ready_evidence": {
+    "ready_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/coordination/READY_FOR_RUNNERS.json",
+    "ready_sha256": "aa353b8f33dfda7c2695d7325e843deb169a67b0d4d96778214c2e6674681b4c",
+    "validator_result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validator_results.json",
+    "validator_result_sha256": "488f0b2de1928b5e385103d7f68acebb29e1109ed35d80430c4a8c099181f1cb",
+    "sealed_check_count": 10,
+    "executable_provenance": "incomplete_not_retroactively_repaired",
+    "sealed_inputs": {
+      "assignment_manifest_sha256": "2dc5d14db8a3f8d6486de66c94463ee99abd5483392f4cfaf36c0d94de29db28",
+      "window_manifest_sha256": "36a657ccc9672a3f9335efe48305372326dd80a2eb07d7527d6cdfc6262c5b3d",
+      "capsule_registry_sha256": "711a8f2697ee0c68b4af64d486b89e6ff831e4aa2b09d5cda63b3ed99ff388f9",
+      "runner_registry_sha256": "4d81e417ce0055ee26f7115b5c84d04e31713e8fc188140921bb359e7adcfbb2"
+    }
+  },
+  "supplemental_prelaunch_authority": {
+    "status": "authorized_non_retroactive_addendum",
+    "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/prelaunch_validator_supplement_v2.py",
+    "validator_sha256": "990183a63308f3653cb61032da756dae14500d61a3101ea4854dee10afedd13c",
+    "result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/prelaunch_validator_supplement_v2.result.json",
+    "result_sha256": "bc5bf21856abffd9d571f49a875c1e232f6ed8597155eb377766374cabaf260f",
+    "coverage_authority": false
+  },
+  "postrun_coverage_authority": {
+    "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2.py",
+    "validator_sha256": "6df3b229ca48e028b5a88010574131c18208a1f0cad89dd2c1b92223abedb7e2",
+    "crosscheck_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v2_crosscheck.py",
+    "crosscheck_sha256": "7483557c3ca2213643d464208c1f6e7cbee3ef55b490cfeca20eea217406af30",
+    "required_for": [
+      "every assignment coverage credit",
+      "runner completion credit",
+      "document-window phase completion",
+      "all later merge and certification phases"
+    ],
+    "credit_rule": "Credit is per assignment, not all-or-nothing. An unrelated quarantined attempt does not erase a separately validated assignment. Any failed READY-sealed input hash suppresses all assignment credit.",
+    "attempt_rule": "Receipts are grouped by assignment plus attempt and fresh identity. A failed-attempt or coordination-quarantine receipt vetoes only the matching attempt. A later retry may qualify only with a new attempt number and new agent instance, path, and thread identity.",
+    "immutability_rule": "A failed attempt, failed result hash, raw result path, or receipt may not be deleted, overwritten, reset, or recredited. Capture-only recovery requires explicit prospective governance; no such exception is granted here."
+  },
+  "initial_v2_evidence": {
+    "snapshot_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.initial.json",
+    "snapshot_sha256": "1d97812656a93be521944576cd14303f11024fb84baefc16f5813b3989f9e984",
+    "crosscheck_result_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/evidence/postrun_validator_v2.crosscheck.initial.json",
+    "crosscheck_result_sha256": "324ce6725d0e06c60da4bc9c8e80372066affc757b0b7dc346e735914660ba51",
+    "validator_status": "fail",
+    "crosscheck_status": "pass",
+    "global_structural_error_count": 0,
+    "localized_receipt_error_count": 43,
+    "expected_assignments": 2538,
+    "credited_assignments": 17,
+    "credited_assignment_ids_sha256": "5b34cf7ebf7b1eb8991900e90a4f4e2f422001dd630cb67cc0a6134bad216550",
+    "pending_assignments": 2521,
+    "runner_complete_receipts": 0,
+    "document_window_phase_complete": false,
+    "interpretation": "The overall snapshot fails because invalid positive-credit attempts exist, but the independent cross-check reproduced the exact 17-assignment credited set and confirmed that no revoked attempt is present."
+  },
+  "revoked_v1_authority": {
+    "validator_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/frozen/postrun_validator_v1.py",
+    "validator_sha256": "72ba0e669253fcdd070e5d9f2691208ed82292363d85a230f5fdae6217b4aeeb",
+    "authority": "revoked_lineage_only",
+    "all_v1_credit": 0,
+    "alert_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/coordination/PROTOCOL_ALERT_0002.json",
+    "alert_sha256": "1109e1e10eed0f2fa6336eb93f032331813f470afa84f94b945a8e14928fd9c6"
+  },
+  "known_revoked_attempts": [
+    {
+      "assignment_id": "A004-000018-ADVERSARIAL-WIN-510B3DE676A3-0003",
+      "attempt": 1,
+      "credit": 0
+    },
+    {
+      "assignment_id": "A004-000023-EXACT-WIN-F25915291C7A-0002",
+      "attempt": 1,
+      "credit": 0,
+      "reason": "failed capture was reopened with the same attempt and identity and the raw result path was overwritten"
+    },
+    {
+      "assignment_id": "A004-000028-ADVERSARIAL-WIN-C45446C7AC96-0003",
+      "attempt": 1,
+      "credit": 0
+    }
+  ],
+  "packet_state": {
+    "launch_packets_mutated": false,
+    "packet_invalidation_required": false,
+    "sealed_packet_hashes_unchanged": true
+  },
+  "deprecated_entrypoints": {
+    "sha256": "85a7813e430d7f09554e5d5bf4a3cd860578dce16962a0be93960522f9d00d3a",
+    "authority": "deprecated_lineage_only",
+    "reason": "The byte-identical wrappers do not inspect runner registries, result manifests, failed attempts, raw results, identities, exact evidence, or RUNNER_COMPLETE."
+  }
+}

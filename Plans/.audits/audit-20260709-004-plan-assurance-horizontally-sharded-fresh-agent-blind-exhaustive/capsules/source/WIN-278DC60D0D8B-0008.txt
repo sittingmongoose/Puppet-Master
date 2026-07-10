@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 2618-2629 >>>
+- "ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes:
+- "MCP availability follows the same parent-ceiling and compatibility-subset rule."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Permissions_System.md"
+- "Plans/Tools.md"
+- "Plans/Models_System.md"
+- "Plans/Skills_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2630-3014 >>>
+### PLUG-040 - Per-Persona Plugin Disable Overrides
+
+```yaml
+plan_unit_id: PLUG-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Persona plugin overrides use the disabled_plugins field in PERSONA.md frontmatter, and when a Persona is active, matching plugin ids are skipped during hook dispatch without unloading the plugin."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-038
+- PLUG-015
+unblocks: []
+acceptance_criteria:
+- "PLUG-040 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: persona_plugin_disable_override
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0047
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0048
+preserved_exact_tokens:
+- "7.3 Per-Persona plugin overrides"
+- "disabled_plugins"
+- "PERSONA.md frontmatter"
+- "disabled_plugins: [\"noisy-plugin\"]"
+- "skipped during hook dispatch"
+- "not unloaded"
+- "just silenced"
+negative_constraints:
+- "Persona-level plugin disabling must not unload plugins or widen permissions."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Personas.md"
+```
+
+### PLUG-041 - Plugin Event Log Record Shape
+
+```yaml
+plan_unit_id: PLUG-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "All plugin activity logs to the Puppet Master event ledger using the canonical EventRecord envelope owned by Contracts_V0; Plugins_System owns plugin.* event semantics and plugin-owned payload content such as plugin_id, hook names, durations, resolution details, and structured plugin payload, while legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-016
+unblocks: []
+acceptance_criteria:
+- "PLUG-041 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_event_log_shape
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0049
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0051
+preserved_exact_tokens:
+- "PLUGIN-LOGGING"
+- "Structured plugin logging"
+- "Puppet Master event ledger"
+- "Plans/Contracts_V0.md#EventRecord"
+- "plugin_id"
+- "event_type"
+- "payload"
+- "structured JSON"
+- "PluginContext.log(level, message)"
+- "source: \"plugin:<plugin_id>\""
+negative_constraints:
+- "Plugin activity must not bypass structured EventRecord logging."
+- "Plugins_System.md must not locally redefine the EventRecord envelope fields."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord"
+compatibility_only_notes:
+- "Legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only and not normative EventRecord field canon."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PLUG-042 - Plugin Log Event Taxonomy
+
+```yaml
+plan_unit_id: PLUG-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin log event taxonomy includes loaded, load_failed, hook invoked, hook error, hook blocked, permission override, tool registered, and tool collision event types with their required emission conditions."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-041
+unblocks: []
+acceptance_criteria:
+- "PLUG-042 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_event_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0050
+preserved_exact_tokens:
+- "8.1 Event types"
+- "plugin.loaded"
+- "plugin.load_failed"
+- "plugin.hook.invoked"
+- "plugin.hook.error"
+- "plugin.hook.blocked"
+- "plugin.permission.override"
+- "plugin.tool.registered"
+- "plugin.tool.collision"
+- "duration_ms"
+- "resolution"
+negative_constraints:
+- "Plugin events must not be emitted under plugin-private event names when canonical event types exist."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PLUG-043 - Plugins Settings Screen Placement
+
+```yaml
+plan_unit_id: PLUG-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "The Plugins settings screen is a tab in the unified Settings page and is governed by the GUI plugins anchor and FinalGUISpec/DRY references."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-003
+- PLUG-005
+unblocks: []
+acceptance_criteria:
+- "PLUG-043 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: settings_plugins_surface
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0052
+preserved_exact_tokens:
+- "GUI-PLUGINS"
+- "9. GUI requirements"
+- "Plugins settings screen"
+- "tab"
+- "unified Settings page"
+- "Plans/FinalGUISpec.md §7.4"
+negative_constraints:
+- "Plugins GUI requirements must not fork the unified Settings page ownership."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/DRY_Rules.md"
+```
+
+### PLUG-044 - Plugins Inventory Toggle And Detail Controls
+
+```yaml
+plan_unit_id: PLUG-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "The Plugins tab lists discovered plugins with Name, ID, Version, Source, Status, Hook count, and Tool count columns, shows internal plugins with locked badges, provides enable/disable toggles except for internal plugins, and expands rows for description, hooks, custom tools, entry path, and plugin data directory path."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-043
+- PLUG-038
+- PLUG-042
+unblocks: []
+acceptance_criteria:
+- "PLUG-044 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugins_inventory_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0053
+preserved_exact_tokens:
+- "9.1 Plugins tab"
+- "Plugin list"
+- "Name"
+- "ID"
+- "Version"
+- "Source"
+- "internal/project/global/config"
+- "Status"
+- "active/disabled/error"
+- "Hook count"
+- "Tool count"
+- "locked badge"
+- "Enable/disable toggle"
+- "Plugin detail"
+- "full description"
+- "entry path"
+- "plugin data directory path"
+negative_constraints:
+- "Internal plugins cannot be disabled from the Plugins tab."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PLUG-045 - Plugin Add And Remove Controls
+
+```yaml
+plan_unit_id: PLUG-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "The Plugins tab supports Add plugin flows for package specifiers and local directories containing plugin.json, updates config.plugins.packages, triggers reload, and distinguishes config-sourced removal from project/global delete-from-disk with confirmation."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-043
+- PLUG-008
+- PLUG-009
+- PLUG-037
+unblocks: []
+acceptance_criteria:
+- "PLUG-045 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_install_remove_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0053
+preserved_exact_tokens:
+- "Add plugin"
+- "Install from package"
+- "puppet-master-lint-hook@0.1.0"
+- "Add local"
+- "file picker"
+- "directory containing plugin.json"
+- "config.plugins.packages"
+- "triggers reload"
+- "Remove plugin"
+- "config-sourced plugin"
+- "Delete from disk"
+- "confirmation"
+negative_constraints:
+- "Remove plugin controls must distinguish config-sourced removal from project/global delete-from-disk."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PLUG-046 - Plugin Config Override Controls
+
+```yaml
+plan_unit_id: PLUG-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin config overrides expose hook_timeout_ms as a spinner with range 1000-30000 and default 5000, and allow_tool_override as a default-off toggle with warning label when enabled."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-043
+- PLUG-037
+- PLUG-029
+- PLUG-031
+unblocks: []
+acceptance_criteria:
+- "PLUG-046 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_config_override_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0053
+preserved_exact_tokens:
+- "Config overrides"
+- "Collapsible card"
+- "hook_timeout_ms"
+- "spinner"
+- "range 1000-30000"
+- "default 5000"
+- "allow_tool_override"
+- "toggle"
+- "default off"
+- "warning label"
+negative_constraints:
+- "allow_tool_override must remain default off and visibly warned when enabled."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 3015-3026 >>>
+### PLUG-047 - Plugin UI Interaction Mode Copy
+
+```yaml
+plan_unit_id: PLUG-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin UI elements follow the app-level Expert/ELI5 Interaction Mode toggle using tooltip.plugins.* keys, with ELI5 showing only the plugin list and enable/disable toggles while Expert exposes hook details, tool collision config, and timeout settings."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:

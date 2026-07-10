@@ -1,0 +1,252 @@
+<<< CONTEXT_BEFORE 10372-10383 >>>
+- formats_hash
+- 'cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"'
+- two-phase cache-check
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/storage-plan.md#8. Web content caching persistence'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 10384-10606 >>>
+### T-152 - Web Cache Actions Diff And Storage Guardrails
+
+```yaml
+plan_unit_id: T-152
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Action requests bypass read-time cache but may store final results; PM cache precedes Firecrawl cache, and
+  change tracking compares fresh content to prior entries.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-151
+unblocks: []
+acceptance_criteria:
+- Per-project 500 MB, TTL, LRU, stable ordering, and change detection persistence are preserved.
+- Question/questionnaire and TODO storage carry-through are not overwritten by web cache/activity payloads.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: web_cache_actions_diff_storage_guardrails
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0108
+preserved_exact_tokens:
+- actions
+- always fresh-execute
+- Cache STORE
+- PM cache takes precedence
+- Firecrawl cache serves as provider-side optimization only
+- 500 MB
+- TTL
+- LRU
+- per-project
+- 'change_tracking: true'
+- content_hash
+- 'change_status: "changed"'
+- diff_summary
+- 'change_status: "same"'
+- 'change_status: "removed"'
+- Question/questionnaire session state persistence
+- TODO schema persistence
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/storage-plan.md#8. Web content caching persistence'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-153 - Tools Web Owner Consumer Boundary
+
+```yaml
+plan_unit_id: T-153
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tools remains the SSOT for tool-level web behavior, provider capability, and cache-routing while storage,
+  provider bridge, newtools, and OpenCode surfaces remain narrower consumers or adjacent references.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Consumer docs reference Tools rather than restating tool definitions.
+- Firecrawl/web obligations remain traceable.
+- Stale permission/LSP/web-output markers are retired as owner text.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tools_web_owner_consumer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0109
+preserved_exact_tokens:
+- Tools are defined SSOT
+- UI, CLI, Help, Permissions
+- cache-routing / cache routing
+- OpenCode billing and /caching
+- HARDER
+- '### 3.5C'
+- '### 3.5D'
+- '## 10'
+- '### 10.3'
+- '### 10.7'
+- '### 11.1'
+- '## 14'
+- obl-013
+- obl-014
+- obl-041
+- obl-053
+- obl-054
+- obl-062
+- obl-066
+- obl-067
+- obl-029
+- obl-040
+- obl-043
+- obl-068
+- /LSP/web-output
+- /web-output/LSP/permission
+- legacy `web-output`
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Stale permission, LSP, and web-output carry-through markers such as `/LSP/web-output`, `/web-output/LSP/permission`, and
+  legacy `web-output` phrasing are retired as owner text.
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-154 - Blocked Notice Consumer Propagation
+
+```yaml
+plan_unit_id: T-154
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Blocked surfaces must carry richer `blocked_notice` semantics beyond `blocked_family` and `allowed_action_ids[]`.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- '`escalation_level`, `action_available` ownership, and usage observability are carried through blocked_notice handling.'
+- '`allowed_action_ids[]` remains subordinate to richer blocked_notice semantics if present.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: blocked_notice_consumer_propagation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0111
+preserved_exact_tokens:
+- blocked_notice
+- blocked_family
+- allowed_action_ids[]
+- escalation_level
+- action_available
+- usage observability
+- subordinate
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-155 - Tool Attribution Runtime Identity Shape
+
+```yaml
+plan_unit_id: T-155
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tool records share one attribution family across tool events, runtime artifacts, receipts, and usage records.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Run, attempt, thread, node, artifact, provider, and usage anchors plus runtime identity fields are carried.
+- Execution-role, account-switch, pressure, blocked-sequence, startup recovery, DAE, and usage switch-history ownership follow
+  through.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_attribution_runtime_identity_shape
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0113
+preserved_exact_tokens:
+- run/attempt/thread/node/artifact/provider/usage
+- execution_role
+- requested_account_id
+- operational_identity
+- account-switch
+- pressure
+- blocked_sequence
+- startup recovery handshake
+- DAE jail/approval policy
+- usage switch-history
+- usage execution-role follow-through
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 10607-10618 >>>
+### T-156 - Tools Migration Owner Map Boundary
+
+```yaml
+plan_unit_id: T-156
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Source-preserving standardization keeps Tools owner/consumer boundaries in the original body text while cross-doc
+  ownership follows ContractRefs and boundary notes.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

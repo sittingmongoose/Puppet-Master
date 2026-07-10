@@ -1,0 +1,689 @@
+{
+  "assignment_id": "A004-000043-EXACT-WIN-1BF0967E88A5-0004",
+  "runner_id": "runner-01",
+  "status": "valid_result",
+  "agent_instance_id": "a004_r01_exact_000043_dbaad7efde3d",
+  "agent_path": "/root/a004_r01_exact_000043_dbaad7efde3d",
+  "agent_thread_id": null,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "window_id": "WIN-1BF0967E88A5-0004",
+  "doc_id": "DOC-1BF0967E88A5",
+  "document_path": "Plans/orchestrator-subagent-integration.md",
+  "core_range": [
+    1051,
+    1380
+  ],
+  "observations": [
+    {
+      "observation_id": "O001",
+      "statement": "Delegation from ask or plan is limited to read-only research or analysis, with the parent mode defined as a hard authority ceiling.",
+      "evidence_ref_ids": [
+        "E001"
+      ]
+    },
+    {
+      "observation_id": "O002",
+      "statement": "Tier plan mode defaults to false; the global setting forces all tier values true while enabled, disables tier controls, and is intended to persist with GUI configuration.",
+      "evidence_ref_ids": [
+        "E003",
+        "E004"
+      ]
+    },
+    {
+      "observation_id": "O003",
+      "statement": "Every delegated launch is required to create a canonical child-run record, preserve requested-versus-effective routing data, apply capability narrowing, and project parent orchestration state from canonical child records and events.",
+      "evidence_ref_ids": [
+        "E005"
+      ]
+    },
+    {
+      "observation_id": "O004",
+      "statement": "The parent maintains batch and subgroup rollups, consolidates escalations, orders required outcomes before optional findings, and cannot treat unresolved required children as complete.",
+      "evidence_ref_ids": [
+        "E006"
+      ]
+    },
+    {
+      "observation_id": "O005",
+      "statement": "Provider-native Persona files are import or refresh sources only; mutable canonical Persona content belongs to Puppet Master Persona storage and is edited through Agent Config > Personas.",
+      "evidence_ref_ids": [
+        "E007",
+        "E010",
+        "E021"
+      ]
+    },
+    {
+      "observation_id": "O006",
+      "statement": "Doctor is expected to expose resolved provider, account, authentication, capability, and project-context readiness rather than generic Gemini-key guidance.",
+      "evidence_ref_ids": [
+        "E008",
+        "E025"
+      ]
+    },
+    {
+      "observation_id": "O007",
+      "statement": "Orchestrator delegation is assigned to the shared task-tool child-run contract, validates through the subagent registry and requested/effective runtime pipeline, and forbids silent fallback for explicit runtime-surface requests.",
+      "evidence_ref_ids": [
+        "E013",
+        "E014"
+      ]
+    },
+    {
+      "observation_id": "O008",
+      "statement": "Delegation is aggressive by default, but launch is conditioned on capability, permission, model, and provider checks; children inherit parent ceilings, restrictions, and remaining budget.",
+      "evidence_ref_ids": [
+        "E015"
+      ]
+    },
+    {
+      "observation_id": "O009",
+      "statement": "The parser contract names provider-specific formats, a generic fallback, one same-provider retry, user-visible recovery controls, and preservation of raw output.",
+      "evidence_ref_ids": [
+        "E018",
+        "E019",
+        "E020"
+      ]
+    },
+    {
+      "observation_id": "O010",
+      "statement": "Invalid subagent names are blocked in the GUI, rejected on save, and rejected again at execution with a validation event.",
+      "evidence_ref_ids": [
+        "E023"
+      ]
+    },
+    {
+      "observation_id": "O011",
+      "statement": "Simple-v1 overrides are one list per tier; required names win over disabled names, and missing or empty override lists invoke automatic selection.",
+      "evidence_ref_ids": [
+        "E016",
+        "E031",
+        "E032"
+      ]
+    },
+    {
+      "observation_id": "O012",
+      "statement": "Wizard tier configuration is the source of truth for a newly created run, while saving merges global plan-mode and subagent configuration back into the shared config.",
+      "evidence_ref_ids": [
+        "E027"
+      ]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "F001",
+      "severity": "high",
+      "gap_type": "authority_precedence",
+      "statement": "The capsule does not define how the hard read-only parent ceiling is combined with the instruction to set each child request's plan_mode directly from tier_config.plan_mode. In particular, it gives no effective-value rule for an ask or plan parent whose tier configuration is false.",
+      "why_consequential": "An implementation that copies the tier value without first enforcing the parent ceiling could grant a delegated child execution authority that the parent mode explicitly forbids; different builders can derive incompatible security behavior.",
+      "evidence_ref_ids": [
+        "E001",
+        "E003",
+        "E017"
+      ]
+    },
+    {
+      "finding_id": "F002",
+      "severity": "medium",
+      "gap_type": "state_transition_ambiguity",
+      "statement": "Turning the global plan-mode setting off is specified as either restoring remembered per-tier values or setting every tier to false, with the memory field itself optional.",
+      "why_consequential": "The same user action can either preserve or erase prior tier choices, so persistence tests, migration behavior, and GUI-visible state cannot have one exact expected result.",
+      "evidence_ref_ids": [
+        "E003",
+        "E004"
+      ]
+    },
+    {
+      "finding_id": "F003",
+      "severity": "high",
+      "gap_type": "persistence_authority_conflict",
+      "statement": "The resolved global plan-mode section says the field is persisted in redb, while the dirty-state mitigation says the entire GuiConfig including that field is serialized to YAML. No precedence, reconciliation, or atomicity contract between those stores is defined.",
+      "why_consequential": "Two writable persistence surfaces can diverge after save, migration, crash, or external edit, making the claimed GuiConfig single source of truth and subsequent load behavior nondeterministic.",
+      "evidence_ref_ids": [
+        "E009",
+        "E033"
+      ]
+    },
+    {
+      "finding_id": "F004",
+      "severity": "high",
+      "gap_type": "lifecycle_state_machine_missing",
+      "statement": "Retry, reroute, replacement, resume, and cancellation must remain distinct, but the capsule does not define their allowed source states, resulting states, idempotency, lineage between old and replacement runs, or which outcomes resolve a required child.",
+      "why_consequential": "Canonical events and parent rollups cannot be implemented or verified consistently, and a cancelled, replaced, or failed required child may be counted differently by different consumers.",
+      "evidence_ref_ids": [
+        "E005",
+        "E006"
+      ]
+    },
+    {
+      "finding_id": "F005",
+      "severity": "medium",
+      "gap_type": "classification_rule_missing",
+      "statement": "Planning children must be marked required or optional, but no classification criteria or authority for changing that classification are specified.",
+      "why_consequential": "The classification directly controls completion blocking and summary ordering, so identical delegated work can produce different parent completion truth depending on builder discretion.",
+      "evidence_ref_ids": [
+        "E002",
+        "E005",
+        "E006"
+      ]
+    },
+    {
+      "finding_id": "F006",
+      "severity": "high",
+      "gap_type": "canonical_content_mutation_underspecified",
+      "statement": "Provider-native Persona imports and refreshes, plus an AI or batch trimming pass, may write normalized content into canonical Persona storage, but collision handling, refresh-versus-user-edit precedence, approval, semantic-equivalence acceptance, rollback, and failure behavior are not defined.",
+      "why_consequential": "A refresh or trimming job can silently replace user-controlled runtime instructions or alter delegated capabilities while still claiming to preserve intent.",
+      "evidence_ref_ids": [
+        "E007"
+      ]
+    },
+    {
+      "finding_id": "F007",
+      "severity": "high",
+      "gap_type": "doctor_trigger_contract_conflict",
+      "statement": "Doctor triggering is variously framed as Gemini-key validation whenever any tier uses Gemini, resolved-provider validation whenever any tier selects a provider family, and a Gemini plan-mode check requiring both Gemini and plan_mode true.",
+      "why_consequential": "Implementations can run materially different readiness checks and may either block unrelated configurations or miss an unusable provider before execution.",
+      "evidence_ref_ids": [
+        "E003",
+        "E008",
+        "E011",
+        "E025"
+      ]
+    },
+    {
+      "finding_id": "F008",
+      "severity": "medium",
+      "gap_type": "failure_behavior_ambiguity",
+      "statement": "When Doctor cannot load tier configuration, both silent skip and a user-visible neutral warning remain allowed outcomes.",
+      "why_consequential": "The user-visible health result and acceptance evidence differ: one implementation hides that readiness was not checked, while another records degraded confidence.",
+      "evidence_ref_ids": [
+        "E011",
+        "E026"
+      ]
+    },
+    {
+      "finding_id": "F009",
+      "severity": "high",
+      "gap_type": "registry_authority_conflict",
+      "statement": "The canonical subagent-name authority is explicitly the subagent_registry entry set and DRY:DATA:subagent_registry, but the validation section later permits the canonical registry to be maintained in platform_specs or a dedicated subagent_registry module.",
+      "why_consequential": "GUI autocomplete, save validation, backend validation, and runtime routing can consume different name sets, defeating the stated single source of truth.",
+      "evidence_ref_ids": [
+        "E012",
+        "E022",
+        "E024"
+      ]
+    },
+    {
+      "finding_id": "F010",
+      "severity": "medium",
+      "gap_type": "explicit_request_failure_path_missing",
+      "statement": "When a user explicitly requests subagents, use is conditioned on four checks passing, but the capsule does not specify the result when any check fails: fail the parent, ask the user, continue without delegation, or retain a blocked state.",
+      "why_consequential": "The behavior governs whether explicit user intent is honored and whether execution may proceed through an undisclosed fallback path.",
+      "evidence_ref_ids": [
+        "E014",
+        "E015"
+      ]
+    },
+    {
+      "finding_id": "F011",
+      "severity": "medium",
+      "gap_type": "disabled_path_ambiguity",
+      "statement": "When enable_tier_subagents is false, the implementation may either skip subagent invocation or use a single non-subagent path, without defining whether those are observably equivalent or which path is canonical.",
+      "why_consequential": "These choices can create different run records, prompts, permissions, billing, lifecycle events, and completion evidence.",
+      "evidence_ref_ids": [
+        "E017"
+      ]
+    },
+    {
+      "finding_id": "F012",
+      "severity": "high",
+      "gap_type": "parser_wire_format_conflict",
+      "statement": "Cursor, Claude, and Gemini output is first specified as a serde_json parse of --output-format json into one SubagentOutput, then specified as stream-json NDJSON events.",
+      "why_consequential": "A single-object JSON decoder and an NDJSON event aggregator are different protocols; implementing the wrong one will reject valid provider output or aggregate fields incorrectly.",
+      "evidence_ref_ids": [
+        "E018",
+        "E019"
+      ]
+    },
+    {
+      "finding_id": "F013",
+      "severity": "high",
+      "gap_type": "parser_terminal_behavior_conflict",
+      "statement": "One parser rule says exhausted parsing produces a partial SubagentOutput and marks the tier complete with warnings, while the later resolved rule treats the same condition as a provider error and surfaces Retry, Skip, and View raw output controls.",
+      "why_consequential": "The conflict changes terminal tier state, parent completion, retry behavior, and whether malformed output is accepted as work evidence.",
+      "evidence_ref_ids": [
+        "E018",
+        "E020"
+      ]
+    },
+    {
+      "finding_id": "F014",
+      "severity": "high",
+      "gap_type": "required_child_skip_semantics",
+      "statement": "The parser-error UI offers Skip, but no rule states what Skip means for a required child or how it interacts with the prohibition on treating unresolved required children as complete.",
+      "why_consequential": "Skip could either deadlock the parent or bypass a required dependency and falsely present the parent as complete.",
+      "evidence_ref_ids": [
+        "E006",
+        "E020"
+      ]
+    },
+    {
+      "finding_id": "F015",
+      "severity": "high",
+      "gap_type": "sensitive_output_handling_missing",
+      "statement": "Parser errors record the first 500 raw characters and all raw output is preserved in seglog, but the capsule defines no redaction, access-control, retention, size-limit, or user-warning behavior.",
+      "why_consequential": "Provider output can contain source content, credentials, personal data, or large payloads; unconditional logging creates security, privacy, and storage risks.",
+      "evidence_ref_ids": [
+        "E020"
+      ]
+    },
+    {
+      "finding_id": "F016",
+      "severity": "high",
+      "gap_type": "runtime_contract_conflict",
+      "statement": "Delegation is defined as a PM task-tool child run with provider-native agent syntax non-normative, yet the platform mitigation prescribes a Cursor slash-prefixed subagent invocation.",
+      "why_consequential": "Builders can implement either canonical PM child-run delegation or provider-native prompt command behavior, producing different authority, lifecycle, and audit records.",
+      "evidence_ref_ids": [
+        "E013",
+        "E014",
+        "E029"
+      ]
+    },
+    {
+      "finding_id": "F017",
+      "severity": "high",
+      "gap_type": "persona_injection_conflict",
+      "statement": "The canonical Persona summary requires injecting the resolved Persona Markdown body into the Instruction Bundle, but the provider mitigation permits only an 'As <subagent_name>' prefix or omitting Persona semantics when a platform has no convention.",
+      "why_consequential": "A child may run without its canonical instructions while runtime state still claims that a Persona was resolved, creating false GUI and audit truth about role, scope, and behavior.",
+      "evidence_ref_ids": [
+        "E021",
+        "E029"
+      ]
+    },
+    {
+      "finding_id": "F018",
+      "severity": "medium",
+      "gap_type": "dry_contract_conflict",
+      "statement": "The DRY rules require platform_specs discovery instead of platform match statements, while the provider adapter guidance allows each new platform to be implemented as a new match arm.",
+      "why_consequential": "The architectural extension point is ambiguous and can reintroduce the exact platform-specific branching the DRY section prohibits.",
+      "evidence_ref_ids": [
+        "E022",
+        "E029"
+      ]
+    },
+    {
+      "finding_id": "F019",
+      "severity": "medium",
+      "gap_type": "budget_enforcement_underspecified",
+      "statement": "Children inherit the parent's remaining budget, but the capsule does not define whether this is a shared live ledger, a per-child cap, a reservation, or a launch-time snapshot.",
+      "why_consequential": "Concurrent or sequential child launches can oversubscribe, starve the parent, or report incompatible remaining-budget truth depending on implementation.",
+      "evidence_ref_ids": [
+        "E015"
+      ]
+    },
+    {
+      "finding_id": "F020",
+      "severity": "medium",
+      "gap_type": "cache_invalidation_underspecified",
+      "statement": "Project-context caching has definite invalidation only for config reload and workspace-path change; TTL versus run-duration caching remains optional even though repository edits can make detection stale.",
+      "why_consequential": "Stale language or framework detection can route later tiers to the wrong subagents, with no deterministic freshness test.",
+      "evidence_ref_ids": [
+        "E030"
+      ]
+    },
+    {
+      "finding_id": "F021",
+      "severity": "medium",
+      "gap_type": "dirty_state_transition_ambiguity",
+      "statement": "Unsaved Config changes may use explicit-save behavior and/or dirty prompting, leaving tab-switch and close semantics unresolved.",
+      "why_consequential": "Users can observe different data-loss and persistence behavior, and acceptance tests cannot assert one leave, close, and save state machine.",
+      "evidence_ref_ids": [
+        "E033"
+      ]
+    },
+    {
+      "finding_id": "F022",
+      "severity": "high",
+      "gap_type": "acceptance_evidence_missing",
+      "statement": "The quality mitigation requires a canonical checklist per tier but only gives examples and a future placement choice; the actual gate set, pass criteria, artifact, and authority are not defined in the capsule.",
+      "why_consequential": "End-of-tier completion and retry decisions cannot be verified deterministically, and different builders can claim quality using materially different checks.",
+      "evidence_ref_ids": [
+        "E034"
+      ]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "N001",
+      "statement": "Migration-safe plan-mode defaults are explicitly false for every tier.",
+      "evidence_ref_ids": [
+        "E003",
+        "E009"
+      ]
+    },
+    {
+      "non_gap_id": "N002",
+      "statement": "While the global plan-mode setting is on, all tier values are forced true and individual tier toggles are disabled and visibly true.",
+      "evidence_ref_ids": [
+        "E003",
+        "E004"
+      ]
+    },
+    {
+      "non_gap_id": "N003",
+      "statement": "Canonical child records and events, rather than a separate ad hoc parent store, are explicitly authoritative for projected orchestration state.",
+      "evidence_ref_ids": [
+        "E005"
+      ]
+    },
+    {
+      "non_gap_id": "N004",
+      "statement": "Explicit runtime-surface requests do not silently fallback, and Copilot-native routing is denied unless the parent is Copilot-rooted.",
+      "evidence_ref_ids": [
+        "E014"
+      ]
+    },
+    {
+      "non_gap_id": "N005",
+      "statement": "Invalid subagent names have explicit GUI, save-time, and backend rejection behavior.",
+      "evidence_ref_ids": [
+        "E023"
+      ]
+    },
+    {
+      "non_gap_id": "N006",
+      "statement": "Required names explicitly win over disabled names, and missing or empty tier overrides explicitly use automatic selection.",
+      "evidence_ref_ids": [
+        "E031",
+        "E032"
+      ]
+    },
+    {
+      "non_gap_id": "N007",
+      "statement": "Wizard tier configuration is explicitly authoritative for a newly created run, with a defined merge behavior when Wizard configuration is persisted.",
+      "evidence_ref_ids": [
+        "E027"
+      ]
+    },
+    {
+      "non_gap_id": "N008",
+      "statement": "Canonical Persona bodies are explicitly excluded from SubagentGuiConfig and provider-native directories; protected core built-ins are not mutable or deletable.",
+      "evidence_ref_ids": [
+        "E007",
+        "E010",
+        "E021"
+      ]
+    },
+    {
+      "non_gap_id": "N009",
+      "statement": "The parser contract explicitly forbids silently dropping raw output.",
+      "evidence_ref_ids": [
+        "E020"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "U001",
+      "statement": "The exact Persona schema, validation rules, storage precedence details, and injection rules beyond the capsule's summary are delegated to Plans/Personas.md and cannot be verified within this capsule-only evidence universe.",
+      "evidence_ref_ids": [
+        "E021"
+      ]
+    },
+    {
+      "unknown_id": "U002",
+      "statement": "The exact shared task, question, TODO, and permission-owner contracts are referenced but not reproduced, so only the inheritance and default-denial summary stated in this capsule can be asserted.",
+      "evidence_ref_ids": [
+        "E015"
+      ]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_id": "E001",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1053,
+      "line_end": 1057,
+      "quote": "- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.\n- required planning dependencies may still be child runs when they remain read-only.\n- parent mode is a hard ceiling.\n- the orchestrator must not silently widen a read-only planning run into execution authority.\n- Planning-flow behavior is PM-native: do not justify `todowrite`, `question`, or other planning tools solely by analogy to OpenCode defaults; Plan remains read-only until execution, clarifying questions are first-class, and the plan plus TODO stay visible artifacts during planning."
+    },
+    {
+      "evidence_id": "E002",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1059,
+      "line_end": 1059,
+      "quote": "The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically."
+    },
+    {
+      "evidence_id": "E003",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1069,
+      "line_end": 1071,
+      "quote": "- **Defaults:** In `default_config.rs`, set `plan_mode: false` for phase, task, subtask, iteration. In `config_override.rs` and YAML defaults, use `plan_mode: false` unless explicitly overridden. In `gui_config.rs`, keep tier defaults at `false` for migration-safe behavior.\n- **Global \"use plan mode for all tiers\":** Add `use_plan_mode_all_tiers: bool` to `GuiConfig` (canonical storage; no separate `settings.json` key). Optionally add `last_per_tier_plan_mode: Option<HashMap<String, bool>>` to restore per-tier values when turning the global toggle off. When `use_plan_mode_all_tiers == true`, load/sync forces all four tier `plan_mode` values to `true`. When toggled off, restore `last_per_tier_plan_mode` or set all to `false`. Use write-through so tier configs and saved YAML stay in sync.\n- **Subagent invocations:** When building `ExecutionRequest` for subagent runs (e.g. in `execute_tier_with_subagents` or the platform adapter), set `request.plan_mode = tier_config.plan_mode` (from `TierConfig` or `IterationContext`). Document in plan and code."
+    },
+    {
+      "evidence_id": "E004",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1077,
+      "line_end": 1080,
+      "quote": "- **Global toggle:** In Config, above the tier cards, add one toggle: \"Use plan mode for all tiers\". Message e.g. `Message::ConfigUsePlanModeAllTiersToggled(bool)`. Handler: if `true`, set all four tier configs' `plan_mode` to `true` and persist `use_plan_mode_all_tiers = true`; if `false`, set all to `false` (or restore from `last_per_tier_plan_mode`) and persist. When global is on, tier plan_mode toggles are disabled and show true; when global is off, tier toggles are editable.\n- **One-click button:** Next to or under the global toggle, add button \"Enable plan mode for all tiers\". Message e.g. `Message::ConfigEnablePlanModeAllTiers`. Handler: set phase, task, subtask, iteration `plan_mode` to `true` and set `use_plan_mode_all_tiers = true`; persist.\n- **Tooltip:** In `widgets/tooltips.rs`, update `tier.plan_mode` to: \"When enabled, the AI creates a detailed plan before writing code. Recommended: enable for all tiers for more reliable, step-by-step behavior. Optional for simple iterations.\"\n- **Persistence:** Ensure `use_plan_mode_all_tiers` (and optional `last_per_tier_plan_mode`) are saved/loaded with the rest of GUI config."
+    },
+    {
+      "evidence_id": "E005",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1094,
+      "line_end": 1099,
+      "quote": "- every delegated launch creates a canonical child-run record.\n- each child is marked `required` or `optional`.\n- child routing resolves requested versus effective Persona, runtime surface, model, and effort.\n- capability narrowing is applied before launch.\n- child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.\n- parent orchestration state is a projected child-orchestration facet over canonical child records/events, not a separate ad hoc child-state store."
+    },
+    {
+      "evidence_id": "E006",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1102,
+      "line_end": 1105,
+      "quote": "- maintain child rollups by batch and subgroup.\n- consolidate overlapping child escalations before asking the user.\n- summarize required child outcomes before optional findings.\n- keep unresolved required children from being treated as complete."
+    },
+    {
+      "evidence_id": "E007",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1112,
+      "line_end": 1112,
+      "quote": "- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info** through Agent Config > Personas. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage; protected core built-ins from `Plans/Personas.md` are read-only and not deletable. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: Agent Config > Personas list showing name, ID, description, scope, chat/subagent eligibility, and prompt preview; \"Edit\" changes canonical Persona content where the Persona is mutable, while protected built-ins may only be duplicated to a non-reserved ID."
+    },
+    {
+      "evidence_id": "E008",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1117,
+      "line_end": 1119,
+      "quote": "- **Check:** In `doctor/` (new check or inside existing config check): if any tier selects Gemini Direct, Antigravity, or another provider family, validate the resolved provider entry, account/profile, auth mode, and model capability rather than assuming a Gemini API key is the primary `/only` settings surface. Gemini Direct requires an API-key-backed account; Antigravity uses its own active CLI-runtime setup/probe contract. Gemini CLI auth modes are retired/source-lineage only.\n- **Project-context UX:** Gemini OAuth checks expose explicit `project-context` fields/UX: optional configured Google Cloud project id, effective resolved project id, and `validation-required` / `onboarding-needed` states before onboarding or plan-mode execution continues. These values are account readiness evidence, not Orchestrator-owned project artifacts.\n- **GUI/spec copy:** Config, Wizard, and Doctor GUI text must name the resolved provider setup path. It MUST NOT use \"Configure Gemini access\" as generic media/provider setup copy, and MUST NOT frame \"Gemini API key\" as the primary or `/only` settings path for non-Gemini provider entries."
+    },
+    {
+      "evidence_id": "E009",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1137,
+      "line_end": 1143,
+      "quote": "**Plan Mode Global State (Resolved — Option A: GuiConfig):**\n- Add `use_plan_mode_all_tiers: bool` to `GuiConfig`.\n- Default: `false` (migration-safe; users opt in).\n- Persisted in redb (`config:gui.use_plan_mode_all_tiers`).\n- SSOT: this field in GuiConfig. `settings.json` is NOT used for this setting.\n- GUI: toggle in Settings → Orchestration → \"Use plan mode for all tiers\" checkbox.\n- Per-tier overrides still available (stored separately in tier config)."
+    },
+    {
+      "evidence_id": "E010",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1148,
+      "line_end": 1148,
+      "quote": "- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona content storage:** For the \"Subagent personas / info setup\" feature, do **not** store canonical Persona body overrides inside `SubagentGuiConfig`. Persona description/instruction edits persist in Puppet Master Persona storage per `Plans/Personas.md`; config may store selection or visibility state only if needed. At runtime, resolve the subagent name against Puppet Master Persona storage first; provider-native agent directories are seed/import sources only. Orchestrator and interview both read the same canonical Persona content."
+    },
+    {
+      "evidence_id": "E011",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1152,
+      "line_end": 1153,
+      "quote": "- **Gap:** The check must know \"any tier has platform Gemini and plan_mode == true.\" Doctor checks currently have `async fn run(&self) -> CheckResult` with no parameters.\n- **Clarify:** The Gemini plan-mode check should **discover and load the project config** inside `run()`: use `config_discovery::discover_config_path(None)` then `gui_config::load_config(path)` (or the same loader the Config page uses). If the file is not GuiConfig-shaped, fall back to \"skip check\" or \"warn: could not read tier config.\" This keeps the DoctorCheck trait unchanged and uses the same config file as the app."
+    },
+    {
+      "evidence_id": "E012",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1157,
+      "line_end": 1157,
+      "quote": "The canonical list of subagent names is the `subagent_registry` entry set. The registry names runnable delegated-subagent roles; it does not store Persona prompt bodies. Each subagent entry resolves to a Persona through `persona_registry`, preserving requested and effective Persona ids in runtime state. Protected platform Personas are locked, tweakable built-ins may be customized through Persona storage with upgrade-safe defaults, and user-created Personas can be bound to user-created subagent entries when validation passes."
+    },
+    {
+      "evidence_id": "E013",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1163,
+      "line_end": 1163,
+      "quote": "Orchestrator delegation enters the same `task` tool child-run contract used elsewhere."
+    },
+    {
+      "evidence_id": "E014",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1168,
+      "line_end": 1172,
+      "quote": "- no provider-native `/subagent`, `/agent`, `/fleet`, or `/delegate` syntax is normative orchestrator runtime behavior.\n- launch validation goes through `subagent_registry` and the requested/effective runtime pipeline.\n- explicit runtime-surface requests do not silently fallback.\n- Copilot-native routing remains strict-denied unless the parent is already Copilot-rooted.\n- command subtasks and orchestrator child runs are not separate runtime classes."
+    },
+    {
+      "evidence_id": "E015",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1176,
+      "line_end": 1178,
+      "quote": "Delegation is aggressive by default. When the user explicitly asks for subagents, the orchestrator uses subagents if capability, permission, model, and provider checks pass. Without an explicit request, the orchestrator prefers subagents for larger multi-step work, delegated or crew work, and clear specialist-fit when the parent judges the extra child run beneficial. The selection rationale is specialist-fit / task-fit reasoning, not arbitrary fan-out. GUI settings may tune aggressiveness, but the default remains aggressive rather than conservative.\n\nSubagent and `task` defaults consume the reconciled `task`, `question`, `todowrite`, and `todoread` contracts from the tool and permission owners. Child runs inherit the parent permission ceiling, write scope, runtime/account restrictions, and remaining budget; child `question` access remains default-denied unless an owner policy opens it, children escalate user questions to the parent, and normalized TODO availability uses the shared TODO schema. `subagent_tool_overrides` may narrow or open `todowrite`/`todoread` for subagent runs only through explicit run config and must still respect the parent ceiling."
+    },
+    {
+      "evidence_id": "E016",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1185,
+      "line_end": 1186,
+      "quote": "- **Gap:** YAML shows `tierOverrides.phase.default`, `.phase.architecture`, `.phase.product`, `.task.rust`, `.task.python`, etc. The GUI section says \"for each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names.\"\n- **Clarify:** Resolved to **Simple v1** for the primary user flow: one list per tier (`phase`, `task`, `subtask`, `iteration`) so `tier_overrides` is a tier-keyed map such as `phase: [collaborator]` or `task: [rust-engineer]`. Full contextual keys remain an advanced raw-registry surface only and must not replace the Simple v1 UI unless a later PlanUnit promotes them."
+    },
+    {
+      "evidence_id": "E017",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1191,
+      "line_end": 1192,
+      "quote": "- **Gap:** The plan references `execute_tier_with_subagents`, `build_subagent_invocation`, `execute_with_subagent`, and `SubagentSelector`. These do not exist in the codebase yet; they are specified in the plan's \"Integration with Orchestrator\" and Phase 3.\n- **Clarify:** Phase 3 (and any subagent execution path) must: (1) Read `enable_tier_subagents` from config; if false, skip subagent invocation (or use a single non-subagent path). (2) When building the list of subagents for a tier, apply `tier_overrides` (replace or merge with selected list), then filter by `disabled_subagents` and ensure `required_subagents` are included. (3) When building `ExecutionRequest` for each subagent run, set `request.plan_mode = tier_config.plan_mode`. Ensure the checklist item \"Ensure subagent/invocation path receives tier plan_mode\" is done in that code path."
+    },
+    {
+      "evidence_id": "E018",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1211,
+      "line_end": 1212,
+      "quote": "- **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.\n- **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract \"Task Report:\", \"Downstream Context:\", \"Findings:\" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as \"complete with warnings\" rather than failing the run."
+    },
+    {
+      "evidence_id": "E019",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1216,
+      "line_end": 1219,
+      "quote": "Platform-specific parsers handle output from each Provider:\n- **Cursor/Claude/Gemini:** JSON parser (stream-json NDJSON events)\n- **Codex:** JSONL parser (newline-delimited JSON events)\n- **Copilot:** Text parser (plain text output, regex-based signal extraction)"
+    },
+    {
+      "evidence_id": "E020",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1221,
+      "line_end": 1226,
+      "quote": "When a platform-specific parser fails:\n1. **Log:** Record parse error in seglog (`parser.error` event) with the first 500 characters of raw output for diagnostics.\n2. **Generic fallback:** Attempt generic text extraction — scan for completion signals (including legacy naming variants), error patterns (stack traces, \"error:\", \"fatal:\"), and file modification markers.\n3. **If generic succeeds:** Use extracted data; flag the turn as `parser_fallback_used` in seglog metadata.\n4. **If generic also fails:** Treat as a Provider error. Retry once with the same Provider. If retry also fails, surface error to user: \"Could not parse output from [Provider]. [Retry] [Skip] [View raw output].\"\n5. **Never silently drop output.** All raw output is preserved in the seglog event regardless of parse success."
+    },
+    {
+      "evidence_id": "E021",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1231,
+      "line_end": 1232,
+      "quote": "- **Resolved:** Persona storage layout, schema, validation, GUI management, and context-injection rules are canonically defined in `Plans/Personas.md` (SSOT). This gap is closed; do not restate those definitions here.\n- **Summary:** (1) **Storage:** `Plans/Personas.md` §2 — PM-owned protected built-ins resolve before project-local (`.puppet-master/personas/<id>/PERSONA.md`) and global (`~/.config/puppet-master/personas/<id>/PERSONA.md`) user Personas. (2) **Overrides:** User edits Personas via Agent Config > Personas; edits persist to Puppet Master Persona storage only -- never to `.claude/`, `.github/`, or other provider-native dirs (`Plans/Personas.md` §4.4). Protected core built-ins cannot be modified, deleted, disabled, or shadowed; bundled specialties can be modified, disabled, and restored to default. (3) **Injection:** The context compiler resolves the Persona and injects its Markdown body into the Instruction Bundle (`Plans/Personas.md` §5.2). Orchestrator and interview use the same injection logic. (4) **Interview:** Interview selects Personas dynamically by phase/tech stack; Persona overrides supply custom content for selected mutable Personas but do not change *which* Personas are selected (`Plans/Personas.md` §5.2)."
+    },
+    {
+      "evidence_id": "E022",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1246,
+      "line_end": 1254,
+      "quote": "1. **Platform Data -- ALWAYS use platform_specs:**\n   - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities\n   - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::supports_effort()`)\n   - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements\n\n2. **Subagent Names -- ALWAYS use subagent_registry:**\n   - ❌ **NEVER** hardcode subagent names in match statements or mappings\n   - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)\n   - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` as the single source of truth"
+    },
+    {
+      "evidence_id": "E023",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1327,
+      "line_end": 1335,
+      "quote": "- Use **autocomplete/multi-select** populated from the canonical subagent name registry. Invalid names cannot be entered.\n- If a name is typed that doesn't match any registered subagent, show inline error: \"Unknown subagent: [name]. Check spelling or register the subagent first.\"\n\n**On save/apply:**\n- **Reject** invalid entries with a clear error message. Do not save config with invalid subagent names.\n\n**In backend (execution):**\n- **Fail fast** with a clear error: \"Unknown subagent '[name]' in tier config. Available: [list].\" Do not silently filter.\n- Emit `config.validation.failed` seglog event."
+    },
+    {
+      "evidence_id": "E024",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1337,
+      "line_end": 1337,
+      "quote": "**Canonical subagent name registry:** Maintained in `platform_specs` or a dedicated `subagent_registry` module. Names are stable strings (kebab-case, e.g., `architect-reviewer`, `security-auditor`)."
+    },
+    {
+      "evidence_id": "E025",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1341,
+      "line_end": 1342,
+      "quote": "- **Issue:** Gemini validation used to be framed as API-key-only, then as Gemini Direct versus Gemini CLI. The current provider model keeps Gemini Direct as the direct API route, uses Antigravity as the active Google-owned CLI-runtime route, and retires Gemini CLI. A tier that selects a Google-family provider must validate the resolved provider entry, auth mode, project context, and account readiness instead of assuming a single key setting.\n- **Mitigation:** (1) **Auth mode:** resolve `auto`, explicit OAuth, explicit API key, Antigravity CLI login/ADC, or Google/Vertex credential mode through the shared account resolver. (2) **Validation:** probe the selected account using the provider-appropriate lightweight validation path. (3) **Project context:** surface `project-context`, `validation-required`, and `onboarding-needed` states when the configured project id, effective resolved project id, billing/trust context, or provider-managed project path is incomplete for the selected provider route. (4) **Errors:** if the selected Google-family mode is not configured, Doctor names that missing mode rather than warning that a Gemini API key is the `/only` fix. Gemini CLI is preserved only as retired/source-lineage vocabulary."
+    },
+    {
+      "evidence_id": "E026",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1346,
+      "line_end": 1347,
+      "quote": "- **Issue:** Some projects may use a different config format (e.g. legacy or alternate YAML shape). `gui_config::load_config` might fail or return a partial struct.\n- **Mitigation:** In the Gemini plan-mode check, if load fails or tiers are missing, skip the check or emit a neutral warning (\"could not load tier config; ensure config file is valid\") so Doctor doesn't fail hard."
+    },
+    {
+      "evidence_id": "E027",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1351,
+      "line_end": 1352,
+      "quote": "- **Issue:** Wizard has its own `wizard_tier_configs`; even with default plan mode set to false, we must ensure that when the user finishes the wizard and a run is created, we don't overwrite or ignore the global `use_plan_mode_all_tiers` from Config (or vice versa).\n- **Mitigation:** **Decision:** When the user completes the Wizard and creates a run, use Wizard tier config as the source of truth for that run (platform, model, plan_mode per tier). When Wizard persists to the config file (e.g. on Save or Apply), merge with existing Config: apply \"global plan mode on ⇒ set all tier plan_mode true\" and write subagent config from Config if present, so the saved file stays consistent. Wizard UI does not need the global plan-mode toggle; per-tier plan mode toggles (and optional \"Enable plan mode for all tiers\" button) are enough."
+    },
+    {
+      "evidence_id": "E028",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1356,
+      "line_end": 1357,
+      "quote": "- **Issue:** Overrides are keyed by tier type (phase, task, subtask, iteration). All parallel subtasks share the same \"subtask\" override list, so we can't say \"Subtask A: rust-engineer, Subtask B: react-specialist\" via overrides.\n- **Mitigation:** Accept for v1 that overrides are per tier type. Document that per-node overrides (or context-aware overrides) are out of scope for the first version. Dynamic selection (language/framework) still differentiates parallel subtasks when overrides are not set."
+    },
+    {
+      "evidence_id": "E029",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1361,
+      "line_end": 1362,
+      "quote": "- **Issue:** Plan describes \"Cursor subagent personas.\" Codex, Claude, Gemini, Copilot may not recognize the same names or syntax (e.g. `/code-reviewer` vs prompt preamble).\n- **Mitigation:** In platform runners, when building the prompt or args for a subagent, use platform_specs or a small adapter (e.g. `subagent_prompt_prefix(platform, subagent_name) -> String`) so that: Cursor => `/subagent_name ` + user prompt; Codex/Claude/Gemini/Copilot => \"As <subagent_name>, \" + user prompt in system or first message, or omit if platform has no convention. Document in AGENTS.md which platforms support which subagent semantics. Implement the adapter so adding a new platform is a single match arm or config entry."
+    },
+    {
+      "evidence_id": "E030",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1367,
+      "line_end": 1368,
+      "quote": "- **Issue:** Subagent selection runs language/framework detection (e.g. filesystem reads). If run on every tier or every iteration, it could be slow or redundant.\n- **Mitigation:** Cache detection per workspace path (cache key: canonical workspace path). Invalidate when the config is reloaded or the workspace path for the run changes. Expose a single entry point (e.g. `get_project_context(workspace) -> Result<ProjectContext>`) that returns cached value if valid. Phase 1/2 implement this; the orchestrator calls that entry point instead of running detection on every tier. Consider a TTL or \"cache for the duration of the run\" so long sessions don't hold stale data if the user edits the repo."
+    },
+    {
+      "evidence_id": "E031",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1372,
+      "line_end": 1373,
+      "quote": "- **Issue:** User could add the same name to both \"required\" and \"disabled.\" Backend behavior could be ambiguous.\n- **Mitigation:** **Rule: required wins.** When building the final subagent list: (1) Start from selected list or override list. (2) Add all names in `required_subagents`. (3) Remove any name in `disabled_subagents` unless it is in `required_subagents`. Document this in code and in the Config UI tooltip. In the UI, optionally grey out or hide in the disabled list any name that appears in required."
+    },
+    {
+      "evidence_id": "E032",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1377,
+      "line_end": 1378,
+      "quote": "- **Issue:** If `tier_overrides.phase = []`, does that mean \"no subagents for phase\" or \"no override; use auto-selected list\"?\n- **Mitigation:** **Rule: missing or empty override = use auto-selection.** Only a non-empty override list for a tier replaces the selector output. To force no subagents for a tier, the user sets `enable_tier_subagents` false (global) or we add a per-tier \"use no subagents\" option in a later version. **Implement:** In the orchestrator, if `tier_overrides.get(tier)` is `None` or `Some([])`, use the list from `SubagentSelector::select_for_tier`; otherwise use the override list. Document in code and in the Config tooltip for tier overrides."
+    },
+    {
+      "evidence_id": "E033",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1382,
+      "line_end": 1383,
+      "quote": "- **Issue:** User toggles global plan mode or subagent settings and switches tab or closes before save. Changes could be lost or only partially written.\n- **Mitigation:** Follow existing Config save behavior: save on explicit Save action and/or mark dirty and prompt on leave. Ensure `use_plan_mode_all_tiers`, `last_per_tier_plan_mode` (if used), and the full `subagent` block (SubagentGuiConfig) are part of the same `GuiConfig` struct and are written in the same `gui_config::save_config()` call from the Config view so we never persist only tier config without plan-mode global or subagent settings. When the user clicks Save on any Config tab, the entire `gui_config` (including these fields) is serialized to the same YAML file."
+    },
+    {
+      "evidence_id": "E034",
+      "document_path": "Plans/orchestrator-subagent-integration.md",
+      "line_start": 1387,
+      "line_end": 1388,
+      "quote": "- **Issue:** Start and end verification at every Phase/Task/Subtask (wiring, readiness, acceptance, quality) adds latency and requires a clear definition of \"quality\" and who addresses unrelated failures.\n- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it."
+    }
+  ],
+  "scope_confirmation": {
+    "capsule_only": true,
+    "prior_audits_used": false,
+    "other_results_used": false,
+    "unrelated_windows_used": false
+  },
+  "terminal_after_result": true
+}

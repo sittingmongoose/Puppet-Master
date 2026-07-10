@@ -1,0 +1,128 @@
+<<< CONTEXT_BEFORE 6993-7004 >>>
+- OpenCode v2
+- Pi
+- Codex
+- Cline
+negative_constraints: []
+observed_signal: OpenCode v2 separates context/source/snapshot/session history and recent releases add event streams and paged durable history. Pi reports WS/SSE first-event stalls; Cline/Codex SDKs centralize session events/history.
+pm_current_coverage: Prior pass recommended StreamHistoryCoalescer; storage-plan has seglog replay/checkpoints and context ownership.
+pm_gap_or_delta: Make settled history admission mandatory for all providers, not just context/cache pass.
+proposal_or_recommendation: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases.
+compile_disposition: create_new_planunit
+```
+
+
+<<< AUTHORITATIVE_CORE 7005-7117 >>>
+### EP-114 - FABLE Wake Coalescing And Transport Receipt Closure
+
+```yaml
+plan_unit_id: EP-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor owns deterministic scheduler wake coalescing, ready-node score tuple
+  sorting, closed failure/blocked mapping, stream terminal timeout, backpressure
+  bounds, and transport decision receipts for the FABLE contract-runtime core
+  slice. Each {run_id, replan_generation} has at most one pending wake set; the
+  earliest wake becomes scheduler.pass.wake_reason, additional wakes become
+  coalesced_wake_reasons and wake_event_refs, and watchdog_recheck never outranks
+  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,
+  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and
+  node_id ASC. Stream terminal timeout is 5000 ms, backpressure is bounded at
+  1024 frames or 16777216 bytes, and each adapter selection records a
+  transport_decision_receipt.
+gui_related: false
+gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
+depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+unblocks: []
+acceptance_criteria:
+  - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."
+  - Wake coalescing records primary wake, coalesced wake reasons, and event refs without creating duplicate scheduler passes.
+  - Queue analysis persists the complete score tuple and non-selected reason for ready-but-unselected nodes.
+  - Failure and blocked classifications map auth_required separately from auth_expired and fail closed on unknown classifier values.
+  - Missing terminal stream events time out after 5000 ms as retryable provider_transient inactivity_timeout rather than durable assistant content.
+  - Backpressure is bounded at 1024 frames or 16777216 bytes and overflow returns structured overload evidence.
+  - Transport decision receipts include locality, auth, replay, backpressure, fallback, provider support, decision reason, selected timestamp, and event refs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_executor_wake_coalescing_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: executor_wake_coalescing_transport_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`wake_reason`"
+  - "`scheduler.pass`"
+  - "`coalesced_wake_reasons[]`"
+  - "`wake_event_refs[]`"
+  - "`scheduler_lane_rank`"
+  - "`failure_class`"
+  - "`blocked_reason_code`"
+  - "`auth_required`"
+  - "`auth_expired`"
+  - "`stream_terminal_event_timeout_ms = 5000`"
+  - "`max_pending_stream_frames = 1024`"
+  - "`max_pending_stream_bytes = 16777216`"
+  - "`transport_decision_receipt`"
+negative_constraints:
+  - Do not treat this runtime protocol closure as implementation-readiness proof or runtime certification harness completion.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum is canonical executor protocol spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+### execution_unit_context Example And Conditional Requirements
+
+Repairs row `sfk-1e2487142a1e52002f8eb946`.
+
+Example:
+
+```json
+{
+  "schema_id": "pm.execution_unit_context",
+  "schema_version": "1.0.0",
+  "execution_unit_type": "plan_unit",
+  "project_id": "project-001",
+  "run_id": "run-001",
+  "unit_id": "PDS-003",
+  "attempt_id": "attempt-001",
+  "permission_snapshot_id": "perm-001",
+  "input_artifact_refs": [],
+  "owner_doc_refs": ["Plans/Plan_Document_System.md"]
+}
+```
+
+Conditional requirements: `plan_unit` requires `unit_id` and `owner_doc_refs[]`; `tool_attempt` requires `tool_call_id`, `permission_snapshot_id`, and `attempt_id`; `verification` requires `validator_id`, `target_ref`, and `evidence_ref`; `repair_slice` requires `audit_id`, `finding_key`, and `owner_doc_refs[]`.
+
+### Attempt Counter Invariant Recovery
+
+Repairs row `sfk-d91a2513114704894b54b826`.
+
+If sub-counters disagree with `attempt_count`, the executor records `attempt_counter_mismatch` with `attempt_id`, `attempt_count`, `subcounter_name`, `subcounter_value`, `expected_value`, and `recovery_action`. `recovery_action` values are `recompute_from_events`, `block_for_manual_repair`, and `ignore_non_authoritative_projection`. Event history is authoritative; projections must be recomputed before any retry/skip/complete transition.
+
+### Event Dedup Key Sequence Fallback
+
+Repairs row `sfk-13a077c1b96ec11515ca81d4`.
+
+Dedup identity is `event_name + node_id + attempt_id + event_sequence`. Timestamp is metadata only. If `event_sequence` is missing in imported source, the migration reader derives `event_sequence` from stable event-stream order and records `dedup_sequence_derived = true`. New executor events must carry monotonic `event_sequence` per attempt.

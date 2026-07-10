@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE 2873-2884 >>>
+- Generated wiring rows must not treat tier_runtime_record, tier-keyed usage_record, or tier-keyed evidence_record as canonical producers or consumers until owner-level demotion or replacement is complete.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Wiring_Matrix.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/usage-feature.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2885-3249 >>>
+### WM-001 - Wiring Matrix Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: WM-001
+unit_type: generated_artifact_residual
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: 'WM-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 201 because Wiring_Matrix-S0044 through S0047 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated WM-001 bridge, and Migration Coverage. Wiring_Matrix-S0001 through S0043 are covered by WM-002 through WM-035 or explicit structural/reference dispositions. WM-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.'
+gui_related: false
+gui_classification_reason: The retired bridge is generated migration lineage rather than implementation-facing GUI behavior, even though the retired source lineage preserved earlier GUI-related Wiring Matrix product tokens.
+split_recommended: false
+depends_on:
+- WM-002
+- WM-003
+- WM-004
+- WM-005
+- WM-006
+- WM-007
+- WM-008
+- WM-009
+- WM-010
+- WM-011
+- WM-012
+- WM-013
+- WM-014
+- WM-015
+- WM-016
+- WM-017
+- WM-018
+- WM-019
+- WM-020
+- WM-021
+- WM-022
+- WM-023
+- WM-024
+- WM-025
+- WM-026
+- WM-027
+- WM-028
+- WM-029
+- WM-030
+- WM-031
+- WM-032
+- WM-033
+- WM-034
+- WM-035
+unblocks: []
+acceptance_criteria:
+- Wiring_Matrix-S0001 through S0043 remain mapped to fine-grained Wiring Matrix PlanUnits or structural dispositions rather than WM-001.
+- Wiring_Matrix-S0044 through S0047 are generated standardization tail material or retired bridge lineage, not product implementation coverage.
+- WM-001 no longer uses source_preserving_planunit mode and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: residual_bridge_overreach
+reasoning_tier: standard
+context_scope: wiring_matrix_generated_tail_batch_201
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0044
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0045
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0046
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0047
+preserved_exact_tokens:
+- source_preserving_planunit
+- Wiring Matrix (Canonical)
+- Wiring_Matrix-S0044
+- Wiring_Matrix-S0047
+- Migration Coverage
+- PlanUnits
+- Owner / Consumer Map
+negative_constraints:
+- WM-001 must not provide product implementation coverage for Wiring_Matrix-S0001 through S0047 after Phase 2B batch 201.
+- WM-001 must not override WM-002 through WM-035 or later fine-grained Wiring Matrix PlanUnits.
+- Do not rely on one coarse source_preserving_planunit as the final implementation standard for Wiring_Matrix.md.
+preserved_contractrefs:
+- ContractRef lineage remains preserved in span_map and coverage_map; malformed trailing apostrophes from the generated WM-001 bridge are lineage only and are not promoted as active ContractRefs.
+compatibility_only_notes:
+- The retired bridge is compatibility lineage for generated Owner / Consumer Map, generated PlanUnits, former WM-001 bridge, and Migration Coverage tail spans only.
+stale_retired_dispositions:
+- Former generated source-preserving bridge material is retired as migration lineage only.
+owner_hints:
+- Plans/Wiring_Matrix.md
+```
+
+## Migration Coverage
+
+Original hash: `b1b5c11a92299e43899c9697d2a6a58b37cdb1b3ba7360c956f7cddfee7cf4b6`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+Phase 2B batch 199 atomized `Wiring_Matrix-S0001` through `Wiring_Matrix-S0031` into fine-grained PlanUnits `WM-002` through `WM-023`, while structurally dispositioning references and container headings in `Wiring_Matrix-S0015`, `Wiring_Matrix-S0027`, and `Wiring_Matrix-S0029`. `WM-001` is narrowed to residual source-preserving coverage for `Wiring_Matrix-S0032` through `Wiring_Matrix-S0047` only and must not override the fine-grained units. Batch 199 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 200 atomized `Wiring_Matrix-S0032` through `Wiring_Matrix-S0043` into fine-grained PlanUnits `WM-024` through `WM-035`, while structurally dispositioning container headings in `Wiring_Matrix-S0033`, `Wiring_Matrix-S0036`, `Wiring_Matrix-S0037`, `Wiring_Matrix-S0039`, and `Wiring_Matrix-S0041`. `WM-001` is narrowed to residual source-preserving generated-tail coverage for `Wiring_Matrix-S0044` through `Wiring_Matrix-S0047` only and must not override `WM-002` through `WM-035`. Batch 200 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 201 structurally dispositioned generated tail spans `Wiring_Matrix-S0044` through `Wiring_Matrix-S0047`: Owner / Consumer Map, PlanUnits heading, the former generated `WM-001` bridge, and Migration Coverage. `WM-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode: source_preserving_bridge_retired`; `Plans/Wiring_Matrix.md` no longer has active `source_preserving_planunit` coverage. Batch 201 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260615-001
+
+### WM-036 - Runtime Wiring Addenda Consolidation Boundary
+
+```yaml
+plan_unit_id: WM-036
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Wiring_Matrix runtime recovery, blocked/unblocked, safe-point, remediation,
+  canonical event row, and recovery action-binding addenda are consolidated into
+  explicit producer/consumer/action wiring PlanUnits. Historical `Scheduler/Remediation/Event
+  Wiring Addendum (2026-03-08)`, `Canonical Runtime Event Wiring Canonical Alignment
+  (2026-03-09)`, and `Canonical Runtime Producer Consumer and Action Wiring Canonical
+  Alignment (2026-03-09)` headings remain source-lineage and compatibility search
+  targets; wiring implementers must follow the named PlanUnits and referenced
+  Contracts_V0 event identities instead of inferring precedence from adjacent
+  addendum order.
+gui_related: false
+gui_classification_reason: This unit defines runtime producer/consumer/action wiring and precedence; GUI consumers are referenced, but the unit does not define visual presentation.
+depends_on:
+  - WM-012
+  - WM-013
+  - WM-014
+  - WM-015
+  - WM-016
+  - WM-017
+unblocks: []
+acceptance_criteria:
+  - Runtime wiring precedence is explicit through PlanUnits for blocked/unblocked, safe-point, remediation, packet wiring, canonical event rows, and recovery action binding.
+  - Legacy aliases and addendum headings/dates remain auditable without becoming competing wiring canon.
+  - Wiring_Matrix remains a wiring-row owner and does not replace Contracts_V0 event identity or Executor scheduler ownership.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks are created; explicit governance/index/evidence refreshes are recorded in the repair/seal artifacts.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup
+risk_class: wiring_addenda_precedence_drift
+reasoning_tier: high
+context_scope: wiring_matrix_runtime_addenda_consolidation
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: runtime_wiring_addenda_consolidation
+  create_worknodes: false
+source_lineage:
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0013
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0014
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0015
+  - pldg-20260615-001-part-4-fable-cleanup:atom-0018
+  - local:Plans/Wiring_Matrix.md:207
+  - local:Plans/Wiring_Matrix.md:243
+  - local:Plans/Wiring_Matrix.md:255
+  - local:Plans/Wiring_Matrix.md:282
+preserved_exact_tokens:
+  - "Scheduler/Remediation/Event Wiring Addendum (2026-03-08)"
+  - "Runtime recovery wiring requirements (2026-03-09)"
+  - "Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)"
+  - "Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)"
+  - "node.blocked"
+  - "node.unblocked"
+  - "wizard.blocked"
+  - "wizard.unblocked"
+  - "attempt.started"
+  - "attempt.completed"
+  - "node.prerequisite_resolved"
+  - "run.graph_canonical_locked"
+  - "run.graph_integrity_failed"
+  - "safe_point.created"
+  - "safe_point.restored"
+  - "remediation.spawned"
+  - "remediation.resolved"
+  - "allowed_action_id"
+negative_constraints:
+  - Do not rely on adjacent addendum order as wiring precedence.
+  - Do not make Wiring_Matrix a general runtime schema owner.
+compatibility_only_notes:
+  - Plans/chain-wizard-flexibility.md remains the wizard_status / wizard blocked lifecycle consumer/existing-coverage surface for wizard.blocked / wizard.unblocked; WM-036 only wires canonical event/action identities.
+  - Cited wiring addenda sections are compatibility/source-lineage sections; named wiring PlanUnits and Contracts_V0 event identities carry precedence.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### WM-037 - Assistant Chat Goal Command Wiring
+
+```yaml
+plan_unit_id: WM-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Wiring_Matrix binds Assistant Chat Goal Mode command producers to stable command IDs and the Goal Runtime controller. Goal button/chip/icon activation and slash `/goal` dispatch `cmd.chat.goal.start`; Goal status update icon, `/goal again`, and natural-language update requests dispatch `cmd.chat.goal.update`. Wiring uses the Goal Runtime event envelope and does not define concrete Goal event payload schemas.
+gui_related: true
+gui_classification_reason: This unit wires user-visible Assistant Chat Goal button, chip, icon, slash command, and status update surfaces to command IDs.
+depends_on:
+  - UCC-096
+  - CS-051
+  - ACD-416
+unblocks: []
+acceptance_criteria:
+  - Goal activation producers route to `cmd.chat.goal.start`.
+  - Goal update producers route to `cmd.chat.goal.update`.
+  - Goal command wiring targets the Goal Runtime controller without re-owning Goal Runtime lifecycle semantics.
+  - Wiring rows avoid inventing concrete Goal event names or payload schemas.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future wiring coverage validation
+risk_class: goal_command_wiring_gap
+reasoning_tier: standard
+context_scope: assistant_chat_goal_commands
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: assistant_chat_goal_command_wiring
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0017
+  - pldg-20260616-001-goal-runtime-system:atom-0024
+  - pldg-20260616-001-goal-runtime-system:atom-0025
+  - pldg-20260616-001-goal-runtime-system:atom-0030
+  - pldg-20260616-001-goal-runtime-system:dec-0008
+  - source_ref:audit-20260616-006-goal-runtime-system:SR-018
+preserved_exact_tokens:
+  - "/goal"
+  - "/goal again"
+  - "cmd.chat.goal.start"
+  - "cmd.chat.goal.update"
+  - "Goal button/chip/icon"
+  - "Goal status update icon"
+negative_constraints:
+  - Do not make Wiring_Matrix the owner of concrete Goal Runtime event payload schemas.
+  - Do not route Goal command wiring through unregistered local command IDs.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Goal_Runtime_System.md
+```
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### WM-038 - Planning Product Command And Event Wiring
+
+```yaml
+plan_unit_id: WM-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: 'Approve And Build atomically writes the immutable pack, user approval receipt, and PlanApproved transactional-outbox event so approval cannot be committed without a recoverable downstream trigger. PlanApproved uses a deterministic idempotency key derived from project_id, pack_id, pack version, and pack hash; duplicate delivery returns the existing PlanCompileRun rather than creating another run. After provisioning acceptance, one activation transaction creates or binds the GoalRun in activating state, installs the certified WorkGraph revision, materializes all WorkNodes, queues runnable entrypoints, records the activation receipt, and writes GoalRunStarted or BuildStarted through a transactional outbox. Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request bounded recompile, and open resulting
+  build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: execution_boundary
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Wiring_Matrix.md
+- Plans/Contracts_V0.md
+- Plans/Goal_Runtime_System.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Orchestrator_Page.md
+- Plans/00-plans-index.md
+- Plans/Crosswalk.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0104
+- pldg-20260618-001-prd-planning-wizard:atom-0105
+- pldg-20260618-001-prd-planning-wizard:atom-0125
+- pldg-20260618-001-prd-planning-wizard:atom-0154
+- pldg-20260618-001-prd-planning-wizard:atom-0160
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md#SRC-IMPACT
+source_atom_ids:
+- atom-0104
+- atom-0105
+- atom-0125
+- atom-0154
+- atom-0160
+decision_refs:
+- dec-0021
+- dec-0025
+- dec-0029
+correction_refs: []
+preserved_exact_tokens:
+- PlanApproved
+- transactional outbox
+- idempotency_key
+- project_id
+- pack_hash
+- GoalRunStarted
+- BuildStarted
+- activation transaction
+- Approve And Build
+- pause
+- cancel
+- resume
+- inspect evidence
+- doc-impact pass
+negative_constraints: []
+owner_hints:
+- Plans/Contracts_V0.md
+- Plans/Goal_Runtime_System.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/UI_Command_Catalog.md
+- Plans/Commands_System.md
+- Plans/Orchestrator_Page.md
+- Plans/00-plans-index.md
+- Plans/Crosswalk.md
+- Plans/Wiring_Matrix.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Wiring Matrix owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< CONTEXT_AFTER 3250-3261 >>>
+### WM-039 - Notifications And Sounds Settings Wiring
+
+```yaml
+plan_unit_id: WM-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Notifications and Sounds wiring maps `cmd.settings.open_notifications` to Settings > General > Notifications & Sounds;
+  destination create/update/delete/toggle/test commands to notification destination storage, credential custody, live-send
+  authority, delivery service, and receipt projection; mapping/override commands to global/project override records; and
+  sound preview/upload/pack import/asset delete/asset restore/asset export/mapping set commands to sound asset validation,

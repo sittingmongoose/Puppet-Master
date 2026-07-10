@@ -1,0 +1,394 @@
+{
+  "assignment_id": "A004-000097-EXACT-WIN-9C773F6116D6-0001",
+  "observations": [
+    {
+      "id": "O01",
+      "observation": "The document is plan-only, requires one unphased implementation, limits the present task to Plans-folder documentation, and directs future UI semantics to Slint rather than legacy Iced wiring.",
+      "evidence_refs": ["E02", "E03"]
+    },
+    {
+      "id": "O02",
+      "observation": "Tool discovery, permissions, and validation are owned by the central tool registry and policy engine; execution results flow through the unified event model into seglog-backed projections and analytics.",
+      "evidence_refs": ["E03"]
+    },
+    {
+      "id": "O03",
+      "observation": "Route/open contracts retain target identity, view-state commands only select presentation state, and automation-first mode policy must not be defeated by local visual runs or manual confirmation behavior.",
+      "evidence_refs": ["E03"]
+    },
+    {
+      "id": "O04",
+      "observation": "DRY authority is explicit: platform facts come from platform_specs, subagent identities from subagent_registry, framework/tool facts from gui_tool_catalog, reusable items require tags, and UI must reuse the widget catalog or record an exception.",
+      "evidence_refs": ["E04"]
+    },
+    {
+      "id": "O05",
+      "observation": "The primary behavior is to detect GUI stacks, offer catalog-backed existing/custom choices, persist the choices, project them into plans and test strategy, verify conditional custom-tool availability through Doctor, support MCP across providers, and preserve existing web-test behavior when nothing new is selected.",
+      "evidence_refs": ["E05", "E07", "E08"]
+    },
+    {
+      "id": "O06",
+      "observation": "Interview choices are consumers of gui_config.interview and InterviewOrchestratorConfig; generated tool instructions are merged into node criteria, and worktree evidence remains under the run workspace without changing worktree or cleanup lifecycle.",
+      "evidence_refs": ["E06"]
+    },
+    {
+      "id": "O07",
+      "observation": "GuiToolCatalog has a required Rust location and consists of a shipped base plus a non-secret redb-backed, UI-editable, JSON import/export overlay; overlay records win by framework_id and tool_id, and research may write only to the overlay.",
+      "evidence_refs": ["E09"]
+    },
+    {
+      "id": "O08",
+      "observation": "Catalog records expose framework identity, display/detection metadata, existing-tool setup and capabilities, and a custom-headless suggestion; interviewer logic must remain extensible and consume lookup/list/default helper functions.",
+      "evidence_refs": ["E10"]
+    },
+    {
+      "id": "O09",
+      "observation": "Research is input only: it may populate validated overlay entries or inform a full custom-tool build plan, but it cannot terminate the interview with links or a research-only result.",
+      "evidence_refs": ["E11"]
+    },
+    {
+      "id": "O10",
+      "observation": "MCP-backed catalog tools must be configurable and callable for every enumerated provider through canonical PM configuration and derived provider adapters; catalog entries identify MCP requirements, and selection must enable/configure those requirements in the run path.",
+      "evidence_refs": ["E12"]
+    },
+    {
+      "id": "O11",
+      "observation": "GUI detection produces one or more framework IDs from architecture and optional UX inputs. Testing then presents the built-in browser, optional Playwright, per-framework tools, and a custom-headless option, persists selections, and writes or removes tools.custom_headless according to the custom-plan flag.",
+      "evidence_refs": ["E13"]
+    },
+    {
+      "id": "O12",
+      "observation": "The local MCP/settings section is consumer guidance, defers naming, availability, credential binding, schema, and flows to MCP_Integration, and mirrors health/auth vocabulary and web-provider disclosure rather than owning those contracts.",
+      "evidence_refs": ["E15", "E16", "E17"]
+    },
+    {
+      "id": "O13",
+      "observation": "A selected custom tool must run headlessly, expose a reusable action catalog, and emit timeline, summary, artifacts, and a canonical manifest under .puppet-master/evidence/gui-automation/<run_id>/; existing, custom, and combined planning branches are separately described.",
+      "evidence_refs": ["E18", "E19"]
+    },
+    {
+      "id": "O14",
+      "observation": "Test-strategy Markdown and JSON must carry selected tool IDs, usage instructions, custom-tool evidence instructions, and headless_gui/framework_tool types, generated from the same interview state without view/generator duplication.",
+      "evidence_refs": ["E20", "E21"]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "id": "F01",
+      "severity": "high",
+      "finding": "Framework detection is not deterministic inside the excerpt despite the declared deterministic-default policy. The source permits optional UX input and says to use feature_detector or technology_matrix only \"if available,\" but gives no precedence, confidence threshold, conflict resolution, manual-override rule, or unknown-framework normalization.",
+      "builder_discretion": "Different implementations can produce different framework IDs and therefore different offered tools for identical interview evidence.",
+      "evidence_refs": ["E01", "E08", "E13"]
+    },
+    {
+      "id": "F02",
+      "severity": "high",
+      "finding": "The mutable catalog lacks an exact schema contract in this excerpt. Stable IDs and descriptive fields are named, but identifier normalization, uniqueness, deletion/tombstone semantics, catalog-version migration, JSON validation, overlay/base conflict behavior below record level, and invalid-import handling are unspecified.",
+      "builder_discretion": "Persistence and merge implementations may silently diverge or lose compatibility across catalog versions.",
+      "evidence_refs": ["E02", "E09", "E10", "E12"]
+    },
+    {
+      "id": "F03",
+      "severity": "high",
+      "finding": "Research-trigger and persistence behavior is underspecified. \"No or sparse data\" and \"validated\" have no thresholds or validation criteria, and the excerpt does not define provenance, freshness, user approval, rollback, or failure handling before research mutates the persistent overlay.",
+      "builder_discretion": "Builders decide when network research runs and what unverified external data becomes durable catalog state.",
+      "evidence_refs": ["E09", "E11", "E13"]
+    },
+    {
+      "id": "F04",
+      "severity": "medium",
+      "finding": "The exact MCP provider capability matrix is ambiguous. Rewrite alignment distinguishes Gemini Direct and Antigravity CLI while retiring Gemini CLI wording, but the normative all-platform list names only generic Gemini and does not state whether Antigravity is included, separate, or excluded.",
+      "builder_discretion": "Provider adapters and acceptance coverage may enumerate different Google runtimes.",
+      "evidence_refs": ["E03", "E12"]
+    },
+    {
+      "id": "F05",
+      "severity": "high",
+      "finding": "MCP verification is not an exact enforceable contract. The document allows \"Doctor check or pre-run check\" and \"document or implement\" passing of configuration, without defining the required mechanism, callable probe, timeout, pass/fail evidence, retry/fallback, or whether a node is blocked when MCP is disabled, unauthenticated, or failed.",
+      "builder_discretion": "A documentation-only path, a nonblocking warning, and a hard preflight gate could all satisfy the literal wording.",
+      "evidence_refs": ["E05", "E12", "E16"]
+    },
+    {
+      "id": "F06",
+      "severity": "high",
+      "finding": "Selection-state invariants are incomplete. The plan describes existing-only, custom-only, or both and allows selecting one or more tools, but does not define zero-selection behavior, duplicate or incompatible choices, per-framework association, stale selections after redetection, or validation when a selected tool disappears from the overlay.",
+      "builder_discretion": "Interview completion and generated strategy content can differ for invalid or stale combinations.",
+      "evidence_refs": ["E07", "E08", "E13", "E14"]
+    },
+    {
+      "id": "F07",
+      "severity": "high",
+      "finding": "The Doctor-readable tools.custom_headless projection has only a write/remove trigger. Its value schema, ownership, migration, atomicity, provenance, and treatment of a pre-existing manually configured tool are not stated.",
+      "builder_discretion": "Removing the field when plan_custom_headless_tool is false could either be a safe derived-state refresh or destructive deletion of independently owned configuration.",
+      "evidence_refs": ["E13"]
+    },
+    {
+      "id": "F08",
+      "severity": "medium",
+      "finding": "GUI behavior for unavailable dependencies is missing locally. The UI must show MCP requirements and accessibility-compliant controls, while health/auth vocabularies exist, but the excerpt does not state whether tools are disabled, selectable with remediation, automatically configured, or rejected when MCP is unavailable.",
+      "builder_discretion": "Selection eligibility, remediation affordances, and completion blocking can vary across implementations.",
+      "evidence_refs": ["E12", "E14", "E16"]
+    },
+    {
+      "id": "F09",
+      "severity": "high",
+      "finding": "The custom-tool acceptance boundary is qualitative rather than machine-testable in this excerpt. \"Fully featured\" and \"same depth\" are required, but action coverage has no minimum, timeline and summary filenames are examples, artifact type is alternative, ephemeral cloning is optional, and exit-code, partial-run, redaction, and failed-evidence semantics are absent.",
+      "builder_discretion": "Substantially different tools can claim compliance while emitting different evidence or handling failures differently.",
+      "evidence_refs": ["E18", "E19"]
+    },
+    {
+      "id": "F10",
+      "severity": "high",
+      "finding": "Implementation success criteria are not mapped to mandatory acceptance receipts. The excerpt names expected outcomes and generated strategy fields but gives no fixture matrix, exact Doctor assertions, provider-by-provider test evidence, no-regression test, or catalog import/export acceptance test.",
+      "builder_discretion": "Completion may be declared from prose inspection, unit tests, or end-to-end receipts without a shared minimum.",
+      "evidence_refs": ["E05", "E09", "E12", "E20"]
+    },
+    {
+      "id": "F11",
+      "severity": "medium",
+      "finding": "Evidence identity and lifecycle are only partially specified. A standard workspace-relative path and cleanup allowlisting are given, but run_id generation, concurrent collision handling, clone-to-workspace transfer, retention, redaction, and behavior when evidence writing fails are not.",
+      "builder_discretion": "Runs may overwrite, strand, expose, or inconsistently retain evidence while still using the prescribed directory shape.",
+      "evidence_refs": ["E06", "E18"]
+    },
+    {
+      "id": "F12",
+      "severity": "medium",
+      "finding": "The framework-tool strategy contract records IDs and free-form usage descriptions but does not define executable command fields, environment/precondition fields, expected outcomes, failure evidence, or how test types bind to verification criteria.",
+      "builder_discretion": "Agents may receive narrative guidance that cannot be executed or evaluated consistently.",
+      "evidence_refs": ["E20"]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "id": "NG01",
+      "statement": "Web-path precedence is explicit: PM built-in browser is primary; Playwright is optional, fallback, or project-native and must not become the native default.",
+      "evidence_refs": ["E05", "E10", "E13"]
+    },
+    {
+      "id": "NG02",
+      "statement": "Base-versus-overlay ownership and top-level merge precedence are explicit: base is shipped, overlay is non-secret persisted user state, overlay wins by stable framework/tool IDs, and research never writes the base.",
+      "evidence_refs": ["E09"]
+    },
+    {
+      "id": "NG03",
+      "statement": "A research-only terminal outcome is explicitly prohibited; research must result in catalog-backed options or feed a concrete full-featured build plan.",
+      "evidence_refs": ["E11"]
+    },
+    {
+      "id": "NG04",
+      "statement": "MCP authority is explicitly externalized to MCP_Integration, while provider stack and web-routing authority are externalized to Tools; newtools is a consumer rather than a competing owner.",
+      "evidence_refs": ["E15", "E16", "E17"]
+    },
+    {
+      "id": "NG05",
+      "statement": "The minimum named custom-tool capability categories and evidence directory are explicit: headless execution, reusable actions, timeline, summary, artifacts, manifest, and a run-scoped gui-automation path.",
+      "evidence_refs": ["E18"]
+    },
+    {
+      "id": "NG06",
+      "statement": "The three planning branches are explicit: prepare an adequate existing tool, build a compliant custom tool, or combine existing tools with custom coverage.",
+      "evidence_refs": ["E19"]
+    },
+    {
+      "id": "NG07",
+      "statement": "Choice propagation is explicitly required from interview state/config into both plan/PRD content and test strategy, with strategy generation sharing the same source state.",
+      "evidence_refs": ["E06", "E08", "E13", "E20", "E21"]
+    },
+    {
+      "id": "NG08",
+      "statement": "GUI reuse and accessibility expectations are explicit even though the exact control composition remains discretionary.",
+      "evidence_refs": ["E04", "E14"]
+    },
+    {
+      "id": "NG09",
+      "statement": "The document explicitly keeps target identity out of shell view commands and requires shared route/open resolution for GUI focus.",
+      "evidence_refs": ["E03"]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "unknown": "The referenced §12.5 catalog-location details and §12.6.2 structured-handoff schema are outside the supplied window, so they may define identifier, version, import, or MCP metadata rules not visible here.",
+      "evidence_refs": ["E09", "E12"]
+    },
+    {
+      "id": "U02",
+      "unknown": "The §11 Doctor checklist is outside the supplied window, so exact Doctor commands, platform versions, status mapping, and MCP/custom-tool pass criteria cannot be determined.",
+      "evidence_refs": ["E02", "E05", "E12"]
+    },
+    {
+      "id": "U03",
+      "unknown": "The canonical manifest contract in §13 and evidence.schema.json is not present in the excerpt, so manifest fields and evidence validation rules cannot be assessed.",
+      "evidence_refs": ["E18"]
+    },
+    {
+      "id": "U04",
+      "unknown": "The owner MCP contract is not supplied, so the meanings and transitions of requested/effective availability, authentication, connection, client-registration, and failure states cannot be verified.",
+      "evidence_refs": ["E15", "E16"]
+    },
+    {
+      "id": "U05",
+      "unknown": "The supplied context ends after the first PRD task bullet, so the complete PRD/execution-plan output contract and any downstream acceptance requirements are unknown.",
+      "evidence_refs": ["E21"]
+    },
+    {
+      "id": "U06",
+      "unknown": "Current implementation status cannot be established from this excerpt because it expressly reports no code changes and the assignment excludes implementation files.",
+      "evidence_refs": ["E02"]
+    },
+    {
+      "id": "U07",
+      "unknown": "The catalog table is labeled as examples, so the final supported framework/tool inventory, legacy-tool treatment, and production support tiers cannot be inferred from it.",
+      "evidence_refs": ["E10"]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "id": "E01",
+      "file": "Plans/newtools.md",
+      "line_start": 4,
+      "line_end": 4,
+      "supports": "Compliance declares no open questions and deterministic defaults."
+    },
+    {
+      "id": "E02",
+      "file": "Plans/newtools.md",
+      "line_start": 8,
+      "line_end": 14,
+      "supports": "Plan-only status, described deliverables, DRY requirement, and single unphased rollout."
+    },
+    {
+      "id": "E03",
+      "file": "Plans/newtools.md",
+      "line_start": 16,
+      "line_end": 33,
+      "supports": "Rewrite ownership, event/storage flow, Slint/docs scope, provider-auth alignment, route authority, and automation-first behavior."
+    },
+    {
+      "id": "E04",
+      "file": "Plans/newtools.md",
+      "line_start": 36,
+      "line_end": 66,
+      "supports": "Mandatory DRY sources, reusable-item tags, widget reuse, and exception behavior."
+    },
+    {
+      "id": "E05",
+      "file": "Plans/newtools.md",
+      "line_start": 98,
+      "line_end": 111,
+      "supports": "Primary web path, discovery/choice/generation flow, and six success criteria."
+    },
+    {
+      "id": "E06",
+      "file": "Plans/newtools.md",
+      "line_start": 117,
+      "line_end": 124,
+      "supports": "Interview/orchestrator config wiring, node-context consumer, worktree evidence, cleanup, and output ownership."
+    },
+    {
+      "id": "E07",
+      "file": "Plans/newtools.md",
+      "line_start": 138,
+      "line_end": 147,
+      "supports": "Goals for catalog discovery, three-way user choice, custom capability, testing integration, and DRY."
+    },
+    {
+      "id": "E08",
+      "file": "Plans/newtools.md",
+      "line_start": 153,
+      "line_end": 163,
+      "supports": "Architecture/testing data flow from detection through persistence and generated tasks/instructions."
+    },
+    {
+      "id": "E09",
+      "file": "Plans/newtools.md",
+      "line_start": 171,
+      "line_end": 181,
+      "supports": "Required catalog location, base/overlay composition, redb persistence, JSON exchange, stable-ID precedence, and research write target."
+    },
+    {
+      "id": "E10",
+      "file": "Plans/newtools.md",
+      "line_start": 182,
+      "line_end": 200,
+      "supports": "Catalog record content, example framework/tool rows, extensibility, and required helper capabilities."
+    },
+    {
+      "id": "E11",
+      "file": "Plans/newtools.md",
+      "line_start": 205,
+      "line_end": 212,
+      "supports": "Research as catalog/build input and prohibition of research-only outcomes."
+    },
+    {
+      "id": "E12",
+      "file": "Plans/newtools.md",
+      "line_start": 216,
+      "line_end": 224,
+      "supports": "MCP provider enumeration, canonical/derived config authority, setup and verification alternatives, runner passing, and catalog metadata."
+    },
+    {
+      "id": "E13",
+      "file": "Plans/newtools.md",
+      "line_start": 232,
+      "line_end": 244,
+      "supports": "Detection inputs/output/storage, option building, choice persistence, config wiring, and custom-headless project projection."
+    },
+    {
+      "id": "E14",
+      "file": "Plans/newtools.md",
+      "line_start": 248,
+      "line_end": 253,
+      "supports": "GUI control alternatives, tool help, reusable-widget rules, and accessibility expectations."
+    },
+    {
+      "id": "E15",
+      "file": "Plans/newtools.md",
+      "line_start": 259,
+      "line_end": 267,
+      "supports": "Consumer-only MCP section and explicit deferral of naming, availability, credentials, schema, and supported flows."
+    },
+    {
+      "id": "E16",
+      "file": "Plans/newtools.md",
+      "line_start": 275,
+      "line_end": 305,
+      "supports": "Provider-stack rules, health/support disclosure, authentication/connection vocabulary, naming fields, and Firecrawl defaults."
+    },
+    {
+      "id": "E17",
+      "file": "Plans/newtools.md",
+      "line_start": 308,
+      "line_end": 328,
+      "supports": "Non-normative cited-search guidance, owner boundaries, user-facing activity labels, fallback behavior, and Site Reader capability."
+    },
+    {
+      "id": "E18",
+      "file": "Plans/newtools.md",
+      "line_start": 331,
+      "line_end": 343,
+      "supports": "Custom-tool trigger, fully featured requirement, headless execution, action catalog, evidence categories, manifest reference, path, and optional clone."
+    },
+    {
+      "id": "E19",
+      "file": "Plans/newtools.md",
+      "line_start": 347,
+      "line_end": 355,
+      "supports": "Existing-tool, custom-tool, combined-tool planning branches and reference-implementation equivalence."
+    },
+    {
+      "id": "E20",
+      "file": "Plans/newtools.md",
+      "line_start": 363,
+      "line_end": 368,
+      "supports": "Test-strategy output fields, selected-tool usage, custom evidence instruction, test types, and generator DRY behavior."
+    },
+    {
+      "id": "E21",
+      "file": "Plans/newtools.md",
+      "line_start": 370,
+      "line_end": 373,
+      "supports": "Beginning of PRD/execution-plan task contract and existing-tool setup task."
+    }
+  ]
+}

@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 6412-6423 >>>
+negative_constraints:
+- "A stale visible target must not be treated as authoritative for mutation after material target identity changes."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "Stale rows, cards, and /selections require refresh or reselection before mutation."
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 6424-6815 >>>
+### PS-096 - Indeterminate Remote Outcome Recovery
+
+```yaml
+plan_unit_id: PS-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Remote-side-effect transports may end as indeterminate_remote_outcome when server-side action might have succeeded but the client lost confirmation; the receipt preserves requested, transport_lost, and later reconciled states, and the UI exposes a Refresh remote state recovery CTA instead of labeling the action simply failed."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-089
+- PS-095
+unblocks: []
+acceptance_criteria:
+- "PS-096 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: indeterminate_remote_outcome_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "indeterminate_remote_outcome"
+- "requested"
+- "transport_lost"
+- "reconciled"
+- "Refresh remote state"
+- "recovery CTA"
+negative_constraints:
+- "Indeterminate remote outcomes must not be labeled simply failed when reconciliation is required."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/assistant-chat-design.md"
+- "Plans/storage-plan.md"
+```
+
+### PS-097 - Permission Snapshot Lifecycle
+
+```yaml
+plan_unit_id: PS-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "A permission snapshot captures resolved permission state before durable attempt or run start, remains immutable, and creates new snapshot and lineage entries after approval, policy, mode, project, account, target, or runtime-identity changes before retry or resume."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-006
+- PS-055
+- PS-076
+unblocks: []
+acceptance_criteria:
+- "PS-097 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_snapshot_lifecycle
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "permission snapshot"
+- "snapshot_id"
+- "attempt_id"
+- "node_id"
+- "captured_at"
+- "attempt.started"
+- "immutable after creation"
+- "retry"
+- "resume"
+negative_constraints:
+- "Prior permission snapshots never mutate in place after later approval, policy, mode, project, account, target, or runtime-identity changes."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/storage-plan.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PS-098 - Permission Snapshot Context Schema
+
+```yaml
+plan_unit_id: PS-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission snapshot schema preserves approval scope and target refs, requested and effective account bindings, permission_decision_context, actor_surface_context, runtime_identity_context, and resolved_permissions with requested and effective state, downgrade reason, source, and effective value."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-004
+- PS-006
+- PS-021
+- PS-097
+unblocks: []
+acceptance_criteria:
+- "PS-098 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_snapshot_context_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "approval_scope_key"
+- "approval_target_ref"
+- "requested_account_binding"
+- "effective_account_binding"
+- "account_switch_event_ref"
+- "permission_decision_context"
+- "actor_surface_context"
+- "runtime_identity_context"
+- "resolved_permissions"
+- "requested_permission_state"
+- "effective_permission_state"
+- "downgrade_reason"
+negative_constraints:
+- "Consumers may index decision-context refs but must not collapse them into the runtime identity block."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/storage-plan.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PS-099 - Snapshot Requested Effective Display Rules
+
+```yaml
+plan_unit_id: PS-099
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Historical run, attempt, chat, and audit views show the frozen permission snapshot that governed execution, including requested and effective permission states and downgrade reasons; current Settings state must not be presented as historical effective permission state."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-022
+- PS-098
+unblocks: []
+acceptance_criteria:
+- "PS-099 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: requested_effective_snapshot_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "Historical run"
+- "attempt"
+- "chat"
+- "audit views"
+- "frozen permission snapshot"
+- "current Settings state"
+- "historical effective permission state"
+negative_constraints:
+- "Current Settings state must not be presented as historical effective permission state."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/storage-plan.md"
+```
+
+### PS-100 - Blocked Episode Identity Carry Through
+
+```yaml
+plan_unit_id: PS-100
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission snapshots preserve blocked-episode identity and scoped approval dimensions together, including blocked_sequence, execution_entity_id, lane_id, package_id, account_id, and ordered allowed_action_ids[] carry-through."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-008
+- PS-021
+- PS-042
+- PS-097
+unblocks: []
+acceptance_criteria:
+- "PS-100 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: blocked_episode_identity_carrythrough
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "blocked_sequence"
+- "execution_entity_id"
+- "lane_id"
+- "package_id"
+- "account_id"
+- "allowed_action_ids"
+- "ordered allowed_action_ids[]"
+- "Permission carry-through"
+negative_constraints:
+- "Permission snapshots must not separate blocked-episode identity from scoped approval dimensions."
+preserved_contractrefs:
+- "ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PS-101 - External Side Effect Wakeup Chain
+
+```yaml
+plan_unit_id: PS-101
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "When HITL approval resolves external_side_effect_blocked, the approval handler emits prerequisite_resolved with wake_reason: approval_resolved and node or attempt identity; the scheduler performs an immediate event-driven wakeup pass rather than polling."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-089
+- PS-100
+unblocks: []
+acceptance_criteria:
+- "PS-101 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: external_side_effect_wakeup_chain
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0075
+preserved_exact_tokens:
+- "external_side_effect_blocked"
+- "prerequisite_resolved"
+- "wake_reason: approval_resolved"
+- "node_id"
+- "attempt_id"
+- "wakeup pass"
+- "immediate event-driven wakeup"
+- "not polling-based"
+negative_constraints:
+- "External-side-effect approval wakeup is immediate and event-driven, not polling-based."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Contracts_V0.md"
+```
+
+### PS-102 - Target Bound Domain Preflight Revalidation
+
+```yaml
+plan_unit_id: PS-102
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Domain approval and preflight decisions bind exact mutable targets for SCM, GitHub Actions, Docker, and Kubernetes, run static policy and cheap /precondition before approval, and run execution-time /revalidate before mutation; stale preflight evidence or changed target identity invalidates reuse."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-092
+- PS-093
+- PS-101
+unblocks: []
+acceptance_criteria:
+- "PS-102 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: target_bound_domain_preflight_revalidation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0076
+preserved_exact_tokens:
+- "project_id"
+- "repo_id"
+- "worktree_id"
+- "/worktree/context"
+- "branch"
+- "commit"
+- "repo_remote"
+- "workflow_id"
+- "run_id"
+- "/environment"
+- "runtime"
+- "registry_host"
+- "namespace"
+- "/repository"
+- "image_ref"
+- "kube_context"
+- "workload_ref"
+- "resource_ref"
+- "preflight_revision"
+- "/precondition"
+- "/revalidate"
+negative_constraints:
+- "Approval of an action name alone must not approve a changed or under-bound mutable target."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "Stale-preflight evidence or changed target identity invalidates approval reuse and returns the action to blocked state."
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/GitHub_API_Auth_and_Flows.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+```
+
+
+<<< CONTEXT_AFTER 6816-6827 >>>
+### PS-103 - Admin Side Effect Guard Mappings
+
+```yaml
+plan_unit_id: PS-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Source Control, GitHub Actions, Docker Manager, Docker Hub, and Kubernetes admin or hosted side effects use canonical permission and blocked-state guard rules when approval, capability, or auth prerequisites are missing."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

@@ -1,0 +1,37 @@
+{
+  "audit_id": "audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive",
+  "runner_id": "runner-05",
+  "runner_thread_id": "019f49e2-1022-71c1-b547-37d8b9e8bf28",
+  "goal_objective": "Complete every validated document-window assignment allocated to runner-05 for audit 004 using one fresh isolated gpt-5.6-sol/ultra subagent per single assignment, with exact evidence and zero agent reuse.",
+  "phase": "dispatching",
+  "created_at": "2026-07-10T03:09:14.072Z",
+  "updated_at": "2026-07-10T04:05:12.740Z",
+  "ready_sha256": "aa353b8f33dfda7c2695d7325e843deb169a67b0d4d96778214c2e6674681b4c",
+  "assignment_packet_sha256": "39a416f7e7af168d3060f15101b535d3157f14ad0bf88634fe4fc5f80786eceb",
+  "assignment_count": 212,
+  "valid_assignment_count": 0,
+  "failed_attempt_count": 9,
+  "unique_agents_spawned": 15,
+  "active_wave": 5,
+  "active_assignment_ids": [
+    "A004-000041-EXACT-WIN-ECB10B16CAAF-0001",
+    "A004-000051-EXACT-WIN-E9F0FF594512-0001",
+    "A004-000069-EXACT-WIN-BF7379C57A0F-0007"
+  ],
+  "last_completed_assignment_seq": 31,
+  "prelaunch_validation": {
+    "status": "pass",
+    "error_count": 0,
+    "sealed_artifact_count": 5,
+    "unique_assignment_ids": 212,
+    "unique_window_roles": 212,
+    "duplicate_assignment_count": 0,
+    "source_or_capsule_mismatch_count": 0,
+    "wrong_model_or_effort_count": 0
+  },
+  "authority_version": 2,
+  "authority_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/validators/VALIDATOR_AUTHORITY_V2.json",
+  "locally_valid_v2_attempt_count": 3,
+  "frozen_v2_credit_refresh_pending": true,
+  "frozen_v2_manifest_retry_incompatibility": true
+}

@@ -1,0 +1,757 @@
+{
+  "schema_version": "audit004.document_window_result.v2",
+  "assignment_id": "A004-000327-EXACT-WIN-BF7379C57A0F-0002",
+  "assignment_attempt_number": 1,
+  "attempt_id": "A004-R07-000327-ATTEMPT-1",
+  "runner_id": "runner-07",
+  "agent_name": "a004_r07_exact_0327_9c31507a",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "role": "contract_capability_exact_behavior",
+  "role_key": "exact",
+  "window_id": "WIN-BF7379C57A0F-0002",
+  "doc_id": "DOC-BF7379C57A0F",
+  "document_path": "Plans/assistant-chat-design.md",
+  "core_range": [390, 788],
+  "context_ranges": [[378, 389], [789, 800]],
+  "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67",
+  "core_sha256": "9a50cc641b7c0b734a64927282b8d29d774519cc9736af6c77e82f83621a2099",
+  "capsule_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/metadata/A004-000327-EXACT-WIN-BF7379C57A0F-0002.json",
+  "capsule_sha256": "0c80935c41b9cccea67f87d47f69469584292920c8819907df9c8460d55959ec",
+  "capsule_bytes": 1646,
+  "source_excerpt_ref": "Plans/.audits/audit-20260709-004-plan-assurance-horizontally-sharded-fresh-agent-blind-exhaustive/capsules/source/WIN-BF7379C57A0F-0002.txt",
+  "source_excerpt_sha256": "9ae3cce37349219444f3739e658da761f9d2b1fd462cebed11a1fe58ca1588e6",
+  "source_excerpt_bytes": 29168,
+  "prior_substantive_assignment_count": 0,
+  "terminal_after_result": true,
+  "no_followup_reuse": true,
+  "observations": [
+    {
+      "observation_id": "OBS-001",
+      "statement": "Local repository requests route to the Git/Source Control family, hosted repository administration routes to the GitHub family, and silent reinterpretation between those domains is prohibited.",
+      "evidence_ref_ids": ["ER-001", "ER-002", "ER-003"]
+    },
+    {
+      "observation_id": "OBS-002",
+      "statement": "Cross-domain requests must disclose the boundary and preserve handoff plus canonical repo/worktree/compare identity, while chat owns only dispatch, routing expectations, and inline crossing disclosure.",
+      "evidence_ref_ids": ["ER-004", "ER-005", "ER-006"]
+    },
+    {
+      "observation_id": "OBS-003",
+      "statement": "User Commands may complement built-ins but cannot replace the canonical Assistant Chat command set or displace PM-native Ask and Plan behavior.",
+      "evidence_ref_ids": ["ER-007"]
+    },
+    {
+      "observation_id": "OBS-004",
+      "statement": "Natural-language and slash web intents share one dispatcher; search, extract, URL/site reading, and research phrases resolve respectively to websearch, webextract, webfetch, and webresearch, with reading explicitly excluded from search or provider extract.",
+      "evidence_ref_ids": ["ER-008", "ER-009"]
+    },
+    {
+      "observation_id": "OBS-005",
+      "statement": "Teach can be triggered by command or natural-language intent, requires an explicit user-confirming action before persistence, and does not itself change the thread runtime or mode.",
+      "evidence_ref_ids": ["ER-011"]
+    },
+    {
+      "observation_id": "OBS-006",
+      "statement": "Teach has user-locked retention behavior, requires thread/project/user scope before commit, and persists source identity, capture time, normalized fact, and optional supersession or revocation metadata.",
+      "evidence_ref_ids": ["ER-010", "ER-012"]
+    },
+    {
+      "observation_id": "OBS-007",
+      "statement": "Taught facts enter prompt assembly as explicit memory/context, remain scope-limited, retain auditable supersession or revocation, and must never persist credentials.",
+      "evidence_ref_ids": ["ER-013", "ER-014"]
+    },
+    {
+      "observation_id": "OBS-008",
+      "statement": "Supported attachments include files, images, URLs, inline code, and two browser capture chip types, and attachments persist as structured message payloads.",
+      "evidence_ref_ids": ["ER-015", "ER-016"]
+    },
+    {
+      "observation_id": "OBS-009",
+      "statement": "Voice input becomes a visible editable draft or pending transcript and inherits typed composer edit, send, cancel, privacy, and provenance rules.",
+      "evidence_ref_ids": ["ER-016"]
+    },
+    {
+      "observation_id": "OBS-010",
+      "statement": "Browser capture is user-triggered, visible, pending, removable, and non-sending; the owned capture lifecycle also calls out share scope, revocation timing, multi-selection, persistence, and screenshots.",
+      "evidence_ref_ids": ["ER-016"]
+    },
+    {
+      "observation_id": "OBS-011",
+      "statement": "The locked selection taxonomy distinguishes browser element, browser text selection, and native document selection, with Prompt Pipeline identified as the browser normalization consumer.",
+      "evidence_ref_ids": ["ER-016"]
+    },
+    {
+      "observation_id": "OBS-012",
+      "statement": "Web use must be represented in-thread with activity and source/citation disclosure, preserve distinctions among snippets, extraction, and synthesis, disclose provider incapability, and retain distinct URL origins.",
+      "evidence_ref_ids": ["ER-018"]
+    },
+    {
+      "observation_id": "OBS-013",
+      "statement": "Question flows are PM-managed, use resumable drafts with visible options and a freeform path, and standardize a multi-question envelope, normalized statuses, object-array options, answer source metadata, and top-level orchestrator ownership.",
+      "evidence_ref_ids": ["ER-020"]
+    },
+    {
+      "observation_id": "OBS-014",
+      "statement": "Multi-select requires checkbox presentation, ordered selected option IDs, required validation, and additive freeform input; legacy single-question and alias shapes normalize into the canonical envelope before storage, validation, or submission.",
+      "evidence_ref_ids": ["ER-022", "ER-024"]
+    },
+    {
+      "observation_id": "OBS-015",
+      "statement": "Dismissed question flows must not fabricate answers, auto-submit, or auto-cancel the thread, while explicit submit is separate from dismissal and cannot be invoked by an inline visual through sendPrompt.",
+      "evidence_ref_ids": ["ER-025", "ER-026"]
+    },
+    {
+      "observation_id": "OBS-016",
+      "statement": "The canonical questionnaire envelope carries thread identity, flow state, timestamps, questions, answers, a 300 ms autosave debounce, and a seven-day paused expiry; named commands cover update, submit, dismiss, resume, expire, and unavailable transitions.",
+      "evidence_ref_ids": ["ER-028", "ER-031"]
+    },
+    {
+      "observation_id": "OBS-017",
+      "statement": "Plan and Deep Plan must expose a reviewable plan plus normalized TODO projection, emit chat.plan_todo_updated for durable mutations, and retain execution progress against the reviewed projection.",
+      "evidence_ref_ids": ["ER-033", "ER-034"]
+    },
+    {
+      "observation_id": "OBS-018",
+      "statement": "Pre-approval structural edits are exposed, post-approval structural edits require a revision, Deep Plan diffs must reconcile into the thread TODO projection, and replans create new draft or revision records across explicit plan states.",
+      "evidence_ref_ids": ["ER-034"]
+    },
+    {
+      "observation_id": "OBS-019",
+      "statement": "Plan Thoroughness is visible for Plan and Deep Plan, has Light, Balanced, and Comprehensive values, defaults both modes to Balanced, and controls question, repository, web, risk, validation, TODO-detail, and research-continuation posture.",
+      "evidence_ref_ids": ["ER-036"]
+    },
+    {
+      "observation_id": "OBS-020",
+      "statement": "The PT matrix provides per-mode question ceilings/defaults, research posture, and output detail, with web research required to follow citation rules and Deep Plan directed toward primary or official sources.",
+      "evidence_ref_ids": ["ER-037", "ER-038"]
+    },
+    {
+      "observation_id": "OBS-021",
+      "statement": "Standard Plan is a read-only planning run with a visible lightweight artifact, normalized TODO list, validation notes, and unresolved questions when present.",
+      "evidence_ref_ids": ["ER-039"]
+    },
+    {
+      "observation_id": "OBS-022",
+      "statement": "Deep Plan requires greater intensity, a richer markdown artifact that auto-opens, transient planning_draft storage unless explicitly saved, generated URI opening for non-persisted artifacts, canonical source markdown or Mermaid, and named minimum sections.",
+      "evidence_ref_ids": ["ER-040", "ER-041"]
+    }
+  ],
+  "candidate_findings": [
+    {
+      "finding_id": "FIND-001",
+      "severity": "high",
+      "title": "Git/GitHub handoff identity lacks an operational contract",
+      "statement": "The core requires preservation of a handoff identity and canonical repo/worktree/compare identity but defines neither an identity schema nor creation, validation, stale-target, missing-target, or failure behavior.",
+      "impact": "Different dispatchers can bind a hosted action to the wrong repository, worktree, branch, or comparison after local state changes.",
+      "evidence_ref_ids": ["ER-004", "ER-005", "ER-006"]
+    },
+    {
+      "finding_id": "FIND-002",
+      "severity": "high",
+      "title": "Teach confirmation and mutation lifecycle are not operationally specified",
+      "statement": "Persistence requires explicit confirmation and a declared scope before commit, while users can later narrow, supersede, or revoke records, but the core supplies no confirmation event, commit result, atomicity, idempotency, concurrency, retry, or mutation failure contract.",
+      "impact": "Implementations can persist unconfirmed guidance, lose confirmed guidance, or apply concurrent scope and revocation changes inconsistently.",
+      "evidence_ref_ids": ["ER-011", "ER-012", "ER-014"]
+    },
+    {
+      "finding_id": "FIND-003",
+      "severity": "high",
+      "title": "Teach confidentiality and credential rejection have no decision contract",
+      "statement": "User-scope persistence is conditional on content not being project-confidential and credentials must not be persisted, but the core does not define the classifier, decision authority, rejection UX, override policy, or audit evidence for either determination.",
+      "impact": "Sensitive project information or credentials may leak into broader memory, while safe content may be rejected without an auditable reason.",
+      "evidence_ref_ids": ["ER-012", "ER-014"]
+    },
+    {
+      "finding_id": "FIND-004",
+      "severity": "medium",
+      "title": "Teach conflict winner is undefined without explicit supersession",
+      "statement": "Conflicting teachings must not silently overwrite and records may carry optional supersession metadata, but no precedence rule is given for unresolved conflicts across time or scope.",
+      "impact": "Prompt assembly can choose different active facts for the same user and project state, producing nondeterministic behavior.",
+      "evidence_ref_ids": ["ER-012", "ER-013"]
+    },
+    {
+      "finding_id": "FIND-005",
+      "severity": "high",
+      "title": "Attachment taxonomy is internally incomplete",
+      "statement": "The supported-family list names only two browser selection attachment types, while the locked taxonomy adds native document selection; the minimum attachment fields provide attachment_type but no canonical enum tying all three paths together.",
+      "impact": "Native document selections can be rejected, flattened, or misclassified, breaking provenance and downstream normalization.",
+      "evidence_ref_ids": ["ER-015", "ER-016", "ER-017"]
+    },
+    {
+      "finding_id": "FIND-006",
+      "severity": "medium",
+      "title": "Attachment lifecycle and validation remain builder-defined",
+      "statement": "The core names lifecycle concerns and minimum fields but supplies no preview_state values, attachment_type enum, size or MIME constraints, source_ref validation, capture state machine, persistence duration, cancellation semantics, or failure outcomes.",
+      "impact": "Composer, storage, and prompt consumers can disagree on valid payloads and lifecycle state, with user-visible and security consequences.",
+      "evidence_ref_ids": ["ER-016", "ER-017"]
+    },
+    {
+      "finding_id": "FIND-007",
+      "severity": "medium",
+      "title": "Extensibility surface has no contract",
+      "statement": "The Extensibility surface heading is immediately followed by the Question card section without fields, behavior, ownership, state, validation, or acceptance obligations.",
+      "impact": "Builders have unconstrained discretion over a named capability surface, so integrations cannot target a stable contract.",
+      "evidence_ref_ids": ["ER-019"]
+    },
+    {
+      "finding_id": "FIND-008",
+      "severity": "high",
+      "title": "Question lifecycle conflates submitted, paused, and dismissed",
+      "statement": "The declared sequence ends submitted → paused while its prose says paused occurs when dismissal happens without submission; later text distinguishes dismissed output from UI-only paused state and also includes dismissed, timed_out, and unavailable in flow_state.",
+      "impact": "Hosts can emit incompatible transitions and tool outputs, fabricate a submission boundary, or make resume and expiry behavior unreachable.",
+      "evidence_ref_ids": ["ER-021", "ER-025", "ER-028"]
+    },
+    {
+      "finding_id": "FIND-009",
+      "severity": "high",
+      "title": "Subagent questioning authority contradicts itself",
+      "statement": "The same rule says direct subagent questioning can be explicitly re-enabled by run config and also says it is prohibited product behavior rather than a configurable local default.",
+      "impact": "Run configuration and orchestrator enforcement cannot determine whether direct subagent user contact is legal.",
+      "evidence_ref_ids": ["ER-023"]
+    },
+    {
+      "finding_id": "FIND-010",
+      "severity": "high",
+      "title": "response_kind is both optional and required",
+      "statement": "The single-question rule says response_kind may be omitted when not needed, while the canonical QuestionItem type declares response_kind as a required field.",
+      "impact": "Producers and validators can reject each other's otherwise canonical QuestionItem payloads.",
+      "evidence_ref_ids": ["ER-024", "ER-029"]
+    },
+    {
+      "finding_id": "FIND-011",
+      "severity": "high",
+      "title": "Question answer shapes cannot represent mixed provenance consistently",
+      "statement": "The minimum compatibility output uses one value plus one source, canonical storage may use values[], and QuestionAnswer stores multiple values with one source, even though multi-select permits ordered options plus additive freeform input.",
+      "impact": "A mixed option and freeform answer can lose values or mislabel provenance, and compatibility normalization cannot be lossless.",
+      "evidence_ref_ids": ["ER-022", "ER-025", "ER-030"]
+    },
+    {
+      "finding_id": "FIND-012",
+      "severity": "medium",
+      "title": "Legacy question normalization is nondeterministic",
+      "statement": "Simplified question aliases and string-array options must be promoted to canonical QuestionItem and object-array options, but mapping precedence and deterministic generation of question and option IDs are not defined.",
+      "impact": "Retries or different hosts can create different identities for the same draft, breaking autosave, validation, and answer reconciliation.",
+      "evidence_ref_ids": ["ER-024", "ER-029"]
+    },
+    {
+      "finding_id": "FIND-013",
+      "severity": "high",
+      "title": "Question autosave races and expiry output are unspecified",
+      "statement": "Draft updates are debounced, submit and dismiss are separate commands, and paused flows expire after a fixed interval, but there is no ordering or flush rule for a pending update racing submit, dismiss, resume, or expire and no defined expiry output transition.",
+      "impact": "Recent answers can be lost or stale answers submitted, and clients can disagree whether expiry yields timed_out, dismissed, unavailable, or only UI state.",
+      "evidence_ref_ids": ["ER-025", "ER-026", "ER-031"]
+    },
+    {
+      "finding_id": "FIND-014",
+      "severity": "medium",
+      "title": "Question validation and cross-field invariants are incomplete",
+      "statement": "Required validation is mandated and status, flow_state, submitted, validation_state, answers, and submitted_at coexist, but the core gives no validity rules or consistency invariants among those fields.",
+      "impact": "Whitespace freeform values, invalid defaults, partial multi-select answers, and contradictory submitted/status combinations can pass in one host and fail in another.",
+      "evidence_ref_ids": ["ER-022", "ER-025", "ER-028", "ER-029"]
+    },
+    {
+      "finding_id": "FIND-015",
+      "severity": "medium",
+      "title": "Web provenance UI lacks a canonical payload and lifecycle",
+      "statement": "The core requires activity cards, source blocks or citations, provenance distinctions, and limitation disclosure but gives no card/source schema, ordering, loading, cancellation, partial-result, provider-error, or citation-completeness rules.",
+      "impact": "Providers can expose inconsistent or misleading web activity and consumers cannot validate provenance uniformly.",
+      "evidence_ref_ids": ["ER-018"]
+    },
+    {
+      "finding_id": "FIND-016",
+      "severity": "high",
+      "title": "Normalized TODO and mutation event contracts are missing from the core",
+      "statement": "The planning model calls the TODO schema and statuses locked and requires an explicit owner contract for chat.plan_todo_updated, but the core only lists untyped fields and does not define event payload, owner, consumers, versioning, identity, dependency validation, or mutation failure semantics.",
+      "impact": "Plan panels, TODO tools, persistence, and execution can disagree on durable state and cannot prove that execution observed the reviewed revision.",
+      "evidence_ref_ids": ["ER-033", "ER-035"]
+    },
+    {
+      "finding_id": "FIND-017",
+      "severity": "high",
+      "title": "Plan revision state machine and bounded history are incomplete",
+      "statement": "Explicit revision states, post-approval structural gating, bounded history, and new replan records are required, but no history bound, transition table, command authority, approval identity, invalid transition, rollback, concurrency, or retention behavior is defined.",
+      "impact": "Structural edits can mutate approved work invisibly or race execution, and implementations can prune audit history differently.",
+      "evidence_ref_ids": ["ER-033", "ER-034"]
+    },
+    {
+      "finding_id": "FIND-018",
+      "severity": "high",
+      "title": "Deep Plan diff reconciliation lacks version and conflict semantics",
+      "statement": "User artifact edits must reconcile through extracted diffs before execution continues, but no base revision, ordering, conflict detection, merge, rejection, cancellation, or partial-apply rule is specified.",
+      "impact": "Execution may continue from stale or partially reconciled TODO state despite the stated canonical projection requirement.",
+      "evidence_ref_ids": ["ER-034", "ER-040"]
+    },
+    {
+      "finding_id": "FIND-019",
+      "severity": "medium",
+      "title": "Relative Deep Plan requirements are not testable against ceiling/default budgets",
+      "statement": "Budgets are ceilings/defaults that need not be fully used, yet Deep Plan must ask more questions and perform broader web research than Standard Plan at the same PT; rows also describe web research as allowed by default or used when helpful.",
+      "impact": "A fully specified request has no deterministic compliant question count or web-research decision, and acceptance tests cannot compare a run to an unexecuted Standard Plan counterfactual.",
+      "evidence_ref_ids": ["ER-037", "ER-040"]
+    },
+    {
+      "finding_id": "FIND-020",
+      "severity": "medium",
+      "title": "The deterministic PT baseline relies on qualitative research levels",
+      "statement": "The matrix is labeled deterministic but research breadth and web posture use terms such as focused, moderate, broad, deep, targeted, limited, and strongest without measurable boundaries; relevance narrowing is also left undefined.",
+      "impact": "The same PT selection can yield materially different cost, latency, evidence coverage, and plan depth across implementations.",
+      "evidence_ref_ids": ["ER-036", "ER-037"]
+    }
+  ],
+  "explicit_non_gaps": [
+    {
+      "non_gap_id": "NON-GAP-001",
+      "statement": "Silent reinterpretation between local Git and hosted GitHub is explicitly forbidden.",
+      "evidence_ref_ids": ["ER-003"]
+    },
+    {
+      "non_gap_id": "NON-GAP-002",
+      "statement": "Site and page reading are explicitly mapped to webfetch rather than websearch or extract, and slash and natural-language paths share the mapping.",
+      "evidence_ref_ids": ["ER-008", "ER-009"]
+    },
+    {
+      "non_gap_id": "NON-GAP-003",
+      "statement": "Automated cleanup, summarization, or migration cannot weaken user-locked memory without explicit unlock, supersession, or revocation.",
+      "evidence_ref_ids": ["ER-010"]
+    },
+    {
+      "non_gap_id": "NON-GAP-004",
+      "statement": "Teach persistence requires explicit user confirmation, and credentials are explicitly prohibited from persistence.",
+      "evidence_ref_ids": ["ER-011", "ER-014"]
+    },
+    {
+      "non_gap_id": "NON-GAP-005",
+      "statement": "Browser capture cannot arrive as hidden automatic context and capture commands create visible removable chips without auto-sending.",
+      "evidence_ref_ids": ["ER-016"]
+    },
+    {
+      "non_gap_id": "NON-GAP-006",
+      "statement": "Attachments are explicitly retained as structured payloads rather than flattened to text.",
+      "evidence_ref_ids": ["ER-016"]
+    },
+    {
+      "non_gap_id": "NON-GAP-007",
+      "statement": "Web-derived content has explicit in-thread provenance and a provider or policy limitation must be disclosed.",
+      "evidence_ref_ids": ["ER-018"]
+    },
+    {
+      "non_gap_id": "NON-GAP-008",
+      "statement": "Dismissal explicitly cannot fabricate submitted answers, auto-submit, auto-cancel the broader thread, or invoke submit through sendPrompt.",
+      "evidence_ref_ids": ["ER-025", "ER-026"]
+    },
+    {
+      "non_gap_id": "NON-GAP-009",
+      "statement": "allow_freeform, multi_select, default_values, object-array options, and envelope promotion are explicitly canonicalized across legacy aliases.",
+      "evidence_ref_ids": ["ER-024"]
+    },
+    {
+      "non_gap_id": "NON-GAP-010",
+      "statement": "Autosave debounce and paused expiry durations are numerically locked, and lifecycle command IDs are named.",
+      "evidence_ref_ids": ["ER-031"]
+    },
+    {
+      "non_gap_id": "NON-GAP-011",
+      "statement": "PT values, both mode defaults, per-mode question ceilings, and expected artifact detail are explicit.",
+      "evidence_ref_ids": ["ER-036", "ER-037"]
+    },
+    {
+      "non_gap_id": "NON-GAP-012",
+      "statement": "Post-approval structural edits require a new revision, while replans create explicit draft or revision records rather than silently mutating history.",
+      "evidence_ref_ids": ["ER-034"]
+    },
+    {
+      "non_gap_id": "NON-GAP-013",
+      "statement": "A non-persisted Deep Plan has an explicit planning_draft class, generated URI opening behavior, and source markdown or Mermaid remains canonical.",
+      "evidence_ref_ids": ["ER-040"]
+    }
+  ],
+  "unknowns": [
+    {
+      "unknown_id": "UNKNOWN-001",
+      "statement": "The contents of linked owner contracts and whether they close any local underspecification are unknown within this blind window.",
+      "evidence_ref_ids": ["ER-006"]
+    },
+    {
+      "unknown_id": "UNKNOWN-002",
+      "statement": "Dispatcher precedence for phrases that combine search, extract, read, and research intents, plus parse and unavailable-tool failure behavior, is not stated in the core.",
+      "evidence_ref_ids": ["ER-008", "ER-009"]
+    },
+    {
+      "unknown_id": "UNKNOWN-003",
+      "statement": "Teach storage backend, lineage carriage representation, record versioning, deletion tombstones, and retrieval failure behavior are unknown.",
+      "evidence_ref_ids": ["ER-012", "ER-013"]
+    },
+    {
+      "unknown_id": "UNKNOWN-004",
+      "statement": "Canonical preview_state values, attachment size and MIME limits, source_ref trust rules, and rejected-attachment UX are unknown.",
+      "evidence_ref_ids": ["ER-017"]
+    },
+    {
+      "unknown_id": "UNKNOWN-005",
+      "statement": "The exact web activity card, source block, citation payload, and association-key schema are unknown.",
+      "evidence_ref_ids": ["ER-018"]
+    },
+    {
+      "unknown_id": "UNKNOWN-006",
+      "statement": "The shape, accessibility requirements, provenance, and interaction contract for an optional question-card visual are unknown.",
+      "evidence_ref_ids": ["ER-032"]
+    },
+    {
+      "unknown_id": "UNKNOWN-007",
+      "statement": "Headless unavailability input, paused resume restoration, expiry output, and timed_out recovery behavior are unknown.",
+      "evidence_ref_ids": ["ER-028", "ER-031"]
+    },
+    {
+      "unknown_id": "UNKNOWN-008",
+      "statement": "The owner, payload schema, durable store, consumer acknowledgements, and delivery guarantees for chat.plan_todo_updated are unknown.",
+      "evidence_ref_ids": ["ER-033"]
+    },
+    {
+      "unknown_id": "UNKNOWN-009",
+      "statement": "The identity and schema of the active work-item ledger and the algorithm for selecting the most relevant planning documents are unknown.",
+      "evidence_ref_ids": ["ER-036"]
+    },
+    {
+      "unknown_id": "UNKNOWN-010",
+      "statement": "Workspace save commands, path validation, overwrite policy, revision linkage, and later reopening behavior for a saved Deep Plan artifact are unknown.",
+      "evidence_ref_ids": ["ER-040"]
+    },
+    {
+      "unknown_id": "UNKNOWN-011",
+      "statement": "The core requires a Validation / Acceptance section in Deep Plan documents but does not provide executable acceptance oracles for the behaviors in this window.",
+      "evidence_ref_ids": ["ER-041"]
+    }
+  ],
+  "exact_evidence_refs": [
+    {
+      "evidence_ref_id": "ER-001",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 392,
+      "line_end": 392,
+      "range_class": "core",
+      "exact_quote": "- `/git ...` and natural-language requests for local repository work route to the Git/Source Control command family: status, diff, branch/worktree, commit, merge, revert, stash, and other local repository operations."
+    },
+    {
+      "evidence_ref_id": "ER-002",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 393,
+      "line_end": 393,
+      "range_class": "core",
+      "exact_quote": "- `/github ...` and natural-language requests for PR, issue, Actions, workflow, review, comment, release, or hosted-repo administration route to the GitHub command family."
+    },
+    {
+      "evidence_ref_id": "ER-003",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 394,
+      "line_end": 394,
+      "range_class": "core",
+      "exact_quote": "- The assistant MUST NOT silently reinterpret a Git request as a GitHub request, or vice versa, just because one path appears easier."
+    },
+    {
+      "evidence_ref_id": "ER-004",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 395,
+      "line_end": 395,
+      "range_class": "core",
+      "exact_quote": "- When a user request spans both domains, the assistant must expose the boundary explicitly (for example: local compare first, then hosted PR creation) and preserve the handoff identity between the two stages."
+    },
+    {
+      "evidence_ref_id": "ER-005",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 396,
+      "line_end": 396,
+      "range_class": "core",
+      "exact_quote": "- Requests that pivot into compare/review/open flows MUST preserve the canonical repo/worktree/compare identity fields rather than reconstructing targets from whatever branch happens to be active later."
+    },
+    {
+      "evidence_ref_id": "ER-006",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 398,
+      "line_end": 398,
+      "range_class": "core",
+      "exact_quote": "GitHub-local detail ownership remains in `Plans/GitHub_Integration.md`; chat owns only the dispatch boundary, routing expectations, and inline disclosure that a request is crossing from local Git to hosted GitHub behavior."
+    },
+    {
+      "evidence_ref_id": "ER-007",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 403,
+      "line_end": 403,
+      "range_class": "core",
+      "exact_quote": "User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently."
+    },
+    {
+      "evidence_ref_id": "ER-008",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 411,
+      "line_end": 412,
+      "range_class": "core",
+      "exact_quote": "- Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.\n- Reading phrases such as \"read this site\", \"read this URL\", and \"fetch this page\" resolve to `webfetch`; they do not route to `websearch` or provider `extract`."
+    },
+    {
+      "evidence_ref_id": "ER-009",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 419,
+      "line_end": 425,
+      "range_class": "core",
+      "exact_quote": "- NL intents and slash commands hit the same dispatcher\n- \"search the web for X\" → `websearch`\n- \"extract this page\" → `webextract`\n- \"read this URL\" → `webfetch`\n- \"read this site\" / \"fetch this page\" → `webfetch`\n- \"research topic\" → `webresearch`\n- Reading intents MUST resolve to `webfetch`, not `websearch`"
+    },
+    {
+      "evidence_ref_id": "ER-010",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 432,
+      "line_end": 432,
+      "range_class": "core",
+      "exact_quote": "Teach-owned durable behavior includes `user-locked` records: explicit user unlock, supersession, or revocation is required before automated memory cleanup, summarization, or profile migration can weaken or remove the stored behavior."
+    },
+    {
+      "evidence_ref_id": "ER-011",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 440,
+      "line_end": 442,
+      "range_class": "core",
+      "exact_quote": "- Teach may be invoked explicitly via `/teach` or equivalent natural-language intent such as \"remember that...\", \"for this repo always...\", or \"please prefer...\"\n- the assistant may recommend Teach when it detects reusable guidance, but persistence requires an explicit user-confirming action before the knowledge is stored\n- Teach is a capture workflow, not a separate closed `mode_overlay`; execution posture remains controlled by the thread's current runtime/mode selection unless the user also changes modes"
+    },
+    {
+      "evidence_ref_id": "ER-012",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 451,
+      "line_end": 455,
+      "range_class": "core",
+      "exact_quote": "- each taught item MUST declare a scope before commit: `thread`, `project`, or `user`\n- `thread` scope persists only with the current thread and its descendants where lineage explicitly carries that memory\n- `project` scope persists across future threads in the same project/workspace\n- `user` scope persists as a user-level preference only when the content is not project-confidential\n- persisted Teach records store at minimum `memory_id`, `scope`, `source_thread_id`, `author_message_id`, `captured_at`, and `normalized_fact`, plus optional `supersedes_memory_id` / `revoked_at`"
+    },
+    {
+      "evidence_ref_id": "ER-013",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 458,
+      "line_end": 461,
+      "range_class": "core",
+      "exact_quote": "- taught knowledge is retrieved into future prompt assembly as explicit memory/context rather than as undocumented hidden prompt mutation\n- when a taught fact materially changes an answer, plan, or execution choice, the assistant should be able to disclose that the response was influenced by taught memory\n- conflicting teachings do not silently overwrite prior knowledge; PM records supersession or revocation so the user can audit why a newer fact won\n- taught knowledge may influence future responses, planning posture, tool-selection defaults, and code-generation choices only within its approved persistence scope"
+    },
+    {
+      "evidence_ref_id": "ER-014",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 464,
+      "line_end": 466,
+      "range_class": "core",
+      "exact_quote": "- users can inspect, narrow, supersede, or revoke taught knowledge later\n- Teach MUST NOT persist secrets, tokens, passwords, or other credentials\n- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence"
+    },
+    {
+      "evidence_ref_id": "ER-015",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 478,
+      "line_end": 483,
+      "range_class": "core",
+      "exact_quote": "Supported attachment families are:\n- files\n- images\n- URLs\n- inline code snippets\n- browser capture chips (`browser_selection_context` and `browser_element_context`)"
+    },
+    {
+      "evidence_ref_id": "ER-016",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 490,
+      "line_end": 495,
+      "range_class": "core",
+      "exact_quote": "- voice input is a composer input mode for Assistant chat: captured speech becomes a visible draft message or pending input transcript before send, never hidden context, and it follows the same edit/send/cancel, privacy, and provenance rules as typed composer text.\n- browser click/highlight/share flows produce explicit visible chips from user-triggered selection or element-pick actions; ordinary browser capture never arrives as hidden automatic context injection\n- browser capture chips stay pending, visible, and removable until the user sends; `cmd.browser.add_selection_to_chat` creates a `browser_selection_context` chip, `cmd.browser.pick_element_for_chat` creates a `browser_element_context` chip, and neither command auto-sends a chat message\n- Assistant chat owns the visible `/primary` browser-to-agent capture lifecycle: click `/highlight` and share actions create pending chips, chip target resolution may use explicit `/new-thread` creation when no writable thread/composer exists, and the flow remains user-visible through selection/highlight mode, share scope, revoke timing, multi-selection, persistence, and screenshots with capture.\n- The locked attachment taxonomy replaces any older two-type rendered-selection wording with three explicit paths: browser-element (`browser_element_context`), browser-text-selection (`browser_selection_context`), and native-document-selection (`document_selection_context`). Browser text capture must not stay half-modeled as native `document_selection_context`, because browser selections are browser-specific and not document-source selections; `Plans/Prompt_Pipeline.md` is the `/primary` normalization consumer, while stale `Plans/newfeatures.md` and `/newfeatures.md` browser references are cleanup lineage only.\n- attachments persist as structured message payloads rather than being flattened into plain text only"
+    },
+    {
+      "evidence_ref_id": "ER-017",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 497,
+      "line_end": 504,
+      "range_class": "core",
+      "exact_quote": "Minimum attachment fields:\n- `attachment_id`\n- `attachment_type`\n- `display_name`\n- `source_ref`\n- `mime_type?`\n- `size_bytes?`\n- `preview_state`"
+    },
+    {
+      "evidence_ref_id": "ER-018",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 511,
+      "line_end": 515,
+      "range_class": "core",
+      "exact_quote": "- when the assistant uses web search, the thread shows explicit web activity cards and later source/citation disclosure in the related assistant turn\n- web-derived results appear inline in chat as operation cards, source blocks, or citations tied to the turn that used them\n- fetched/extracted content preserves provenance so users can distinguish search snippets, extracted page text, and synthesized conclusions\n- if the active provider or policy cannot use web search, the assistant discloses that limitation rather than implying that the web was consulted\n- user-supplied URLs and assistant-triggered web results share the same attachment/provenance system while preserving distinct origin labels"
+    },
+    {
+      "evidence_ref_id": "ER-019",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 517,
+      "line_end": 519,
+      "range_class": "core",
+      "exact_quote": "### 7.3 Extensibility surface\n\n### 7.4 Question card and questionnaire system"
+    },
+    {
+      "evidence_ref_id": "ER-020",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 524,
+      "line_end": 526,
+      "range_class": "core",
+      "exact_quote": "- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.\n- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.\n- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning."
+    },
+    {
+      "evidence_ref_id": "ER-021",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 527,
+      "line_end": 527,
+      "range_class": "core",
+      "exact_quote": "- The multi-question lifecycle is `draft → incomplete → ready_to_submit → submitted → paused`: `draft → incomplete` when the user begins answering, `incomplete → ready_to_submit` when all `required` questions are answered, `ready_to_submit → submitted` when the user confirms submit, and `paused` when the user dismisses without submitting."
+    },
+    {
+      "evidence_ref_id": "ER-022",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 528,
+      "line_end": 528,
+      "range_class": "core",
+      "exact_quote": "- Multi-select support is an MVP UX requirement where the schema sets `multi_select`: render options as a checkbox group, preserve selected option IDs in order, show required validation before submit, and keep freeform input additive when `allow_freeform` is true."
+    },
+    {
+      "evidence_ref_id": "ER-023",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 529,
+      "line_end": 529,
+      "range_class": "core",
+      "exact_quote": "- Subagent question tool access follows default-denial and cannot address users directly unless explicitly re-enabled by run config; subagents escalate to the parent orchestrator, and the parent owns the `assistant-chat-design.md §15.2` user-question surface decision. Subagent-direct question flows are prohibited product behavior, not a configurable local default."
+    },
+    {
+      "evidence_ref_id": "ER-024",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 530,
+      "line_end": 535,
+      "range_class": "core",
+      "exact_quote": "- `allow_freeform` is canonical. `allow_other` is a retired alias, and the historical `allow_freeform? / allow_other?` slash-ambiguity resolves to `allow_freeform`.\n- `default_values` and `draft_value` are different concepts: `default_values` seeds option IDs, while `draft_value` stores the current freeform or draft answer text.\n- `single_question` is legacy syntactic sugar over the questionnaire envelope with exactly one QuestionItem; it uses the same answer source, draft, dismissal, and submit lifecycle as `questionnaire`. Decision #9 resolves the earlier Future Fields / TBD annotation: `response_kind` is LOCKED to `\"selection\" | \"freeform\" | \"mixed\"` and `validation_state` is LOCKED to `\"valid\" | \"invalid\" | \"pending\"`; both fields are optional and omitted when not needed by the question type.\n- Single-question callers emit `{ mode: 'single_question', questions: [item] }` and receive the same response envelope; the host may accept a simplified `{ question, options?, ... }` alias only by internally promoting it to the full envelope before processing.\n- Legacy tool-shape aliases `header?: string`, `text: string`, and `options?: string[]` are accepted only at the compatibility boundary and normalize into the questionnaire envelope; legacy `answer: string` output normalizes into the canonical answer array with source metadata.\n- Multi-question `questionnaire` and `/questionnaire` cards render selectable options from `options?: Array<{id, label, description?}>`; `string[]` remains backwards-compatible only for legacy `single_question` callers and must be normalized to object-array options before draft storage, validation, or final answer submission."
+    },
+    {
+      "evidence_ref_id": "ER-025",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 536,
+      "line_end": 540,
+      "range_class": "core",
+      "exact_quote": "- The shared question-card applies across Assistant, Interviewer, `/Interviewer/requirements`, and `/document-builder` flows; it is not Interview-only and does not force strict one-question-at-a-time sequencing.\n- Question-card inputs support `allow_other`, `allow_multi_select?: boolean`, `required?: boolean`, `placeholder?: string`, and legacy `default_value?: string | string[]` as compatibility aliases that normalize into canonical `allow_freeform`, `multi_select`, `required`, `placeholder`, and `default_values`.\n- Shared question styling uses one consistent question-card `/flow` across Assistant, Interviewer, requirements, and `/document-builder` questions, so question visuals are not restyled ad hoc per surface and PM-owned draft state remains the answer owner.\n- The minimum output compatibility shape is `status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"`, `answers: Array<{ question_id, value, source: \"option\" | \"other\" | \"freeform\" }>`, `submitted: boolean`, and `submitted_at?`; canonical storage may also expose `answers: Array<{question_id, values: string[]}>`.\n- Dismissed and paused flows preserve submitted-vs-dismissed distinction: `status = \"dismissed\"` / dismissed state pauses the flow and must not fabricate partial submitted answers, auto-submit, or auto-cancel the broader thread. Paused is UI-only for a backgrounded/navigated-away widget and does not produce a tool output until resumed or dismissed."
+    },
+    {
+      "evidence_ref_id": "ER-026",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 541,
+      "line_end": 544,
+      "range_class": "core",
+      "exact_quote": "- `/dismiss` is a retired shorthand for the same question-card exit path; canonical behavior is the dismissed/paused state transition above.\n- The question-flow supports single-choice and multi-choice question-card layouts; `allow_other = true` keeps the `Other` freeform route visible for legacy /callers as well as new questionnaire callers.\n- Question flows never perform auto-submitting or auto-cancelling when dismissed.\n- `/submit` is the explicit user action that moves a ready question flow to submitted; it is separate from dismissal and is never invoked by an inline visual through `sendPrompt`."
+    },
+    {
+      "evidence_ref_id": "ER-028",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 578,
+      "line_end": 591,
+      "range_class": "core",
+      "exact_quote": "type QuestionnaireEnvelope = {\n  schema_version: \"1.0.0\";\n  questionnaire_id: string;\n  mode: \"single_question\" | \"questionnaire\";\n  thread_id: string;\n  source_ref?: string;\n  flow_state: \"draft\" | \"incomplete\" | \"ready_to_submit\" | \"submitted\" | \"paused\" | \"dismissed\" | \"timed_out\" | \"unavailable\";\n  autosave_debounce_ms: 300;\n  paused_expires_after_ms: 604800000;\n  questions: QuestionItem[];\n  answers: QuestionAnswer[];\n  created_at: string;\n  updated_at: string;\n  submitted_at?: string;"
+    },
+    {
+      "evidence_ref_id": "ER-029",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 594,
+      "line_end": 608,
+      "range_class": "core",
+      "exact_quote": "type QuestionItem = {\n  question_id: string;\n  label: string;\n  prompt: string;\n  description?: string;\n  response_kind: \"selection\" | \"freeform\" | \"mixed\";\n  required: boolean;\n  multi_select?: boolean;\n  allow_freeform?: boolean;\n  placeholder?: string;\n  options?: Array<{id: string; label: string; description?: string}>;\n  default_values?: string[];\n  draft_value?: string | string[];\n  validation_state?: \"valid\" | \"invalid\" | \"pending\";\n};"
+    },
+    {
+      "evidence_ref_id": "ER-030",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 610,
+      "line_end": 615,
+      "range_class": "core",
+      "exact_quote": "type QuestionAnswer = {\n  question_id: string;\n  values: string[];\n  source: \"option\" | \"other\" | \"freeform\";\n  answered_at: string;\n};"
+    },
+    {
+      "evidence_ref_id": "ER-031",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 618,
+      "line_end": 618,
+      "range_class": "core",
+      "exact_quote": "Question lifecycle command ids are `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.dismiss`, `cmd.questionnaire.resume`, `cmd.questionnaire.expire`, and `cmd.questionnaire.mark_unavailable`. `cmd.questionnaire.draft_update` is debounced by `autosave_debounce_ms = 300`; paused question flows expire after `paused_expires_after_ms = 604800000` unless the owning thread resumes first."
+    },
+    {
+      "evidence_ref_id": "ER-032",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 647,
+      "line_end": 652,
+      "range_class": "core",
+      "exact_quote": "- drafts auto-save continuously\n- required questions block final submit\n- question cards may include a visual\n- users can answer out of order and revise before submit\n- dismissing pauses conversation until resume\n- source-text-first visual context may be attached to the question-card, but PM still owns the draft and submit lifecycle."
+    },
+    {
+      "evidence_ref_id": "ER-033",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 663,
+      "line_end": 665,
+      "range_class": "core",
+      "exact_quote": "- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.\n- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.\n- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source."
+    },
+    {
+      "evidence_ref_id": "ER-034",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 666,
+      "line_end": 669,
+      "range_class": "core",
+      "exact_quote": "- Visible plan/checklist review is checklist-forward execution-tracker behavior: Plan and Deep Plan show a reviewable plan artifact plus the normalized TODO/checklist projection before execution, keep live execution progress connected to that projection, and do not hide planning inside an opaque unified planning/execution loop.\n- Plan/TODO review exposes `/add/remove/reorder` structural controls before approval; after approval, structural edits require a new revision while status-only execution progress remains thread-visible through the sticky panel and `chat.plan_todo_updated` history.\n- User edits to a Deep Plan artifact reconcile through PM-extracted `/diffs`: TODO changes are normalized into the thread TODO list, emitted through `chat.plan_todo_updated`, and execution continues from the updated TODO projection rather than from a stale artifact copy.\n- Thread `/run-level` plan state distinguishes draft, approved, executing, completed, blocked, and superseded states; `/replans` create explicit new draft/revision records instead of mutating prior plan history invisibly."
+    },
+    {
+      "evidence_ref_id": "ER-035",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 672,
+      "line_end": 689,
+      "range_class": "core",
+      "exact_quote": "Fields:\n- Q&A loop\n- todo_id\n- title\n- summary\n- status\n- dependencies[]\n- owner_hint\n- verification_hint\n- pending | in_progress | completed | blocked | skipped\n- superseded\n- draft\n- approved\n- executing\n- completed\n- blocked\n- Structural edits = adding / removing / reordering TODO items\n- chat.plan_todo_updated"
+    },
+    {
+      "evidence_ref_id": "ER-036",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 696,
+      "line_end": 717,
+      "range_class": "core",
+      "exact_quote": "**Plan Thoroughness (PT)** replaces the old planning-depth control.\n\nPT is visible in the Assistant Chat GUI whenever **Plan** or **Deep Plan** is active.\n\nCanonical PT enum:\n- `Light`\n- `Balanced`\n- `Comprehensive`\n\nDefaults:\n- Plan default PT: `Balanced`\n- Deep Plan default PT: `Balanced`\n\nPT controls:\n- clarifying-question budget\n- repo-research breadth\n- whether cited web research is used by default vs only when clearly needed\n- how explicitly the plan captures risks, alternatives, dependencies, and validation steps\n- how detailed the normalized TODO list and execution ordering become\n- Research continuation in the Assistant Chat GUI starts from the current work-item ledger for the active planning run, then narrows repo research to the most relevant GUI/planning docs for the feature areas under review instead of sweeping unrelated docs by default.\n\n**Interpretation rule:** PT is relative to the active planning mode. Deep Plan at a given PT is always more intensive than Plan at the same PT."
+    },
+    {
+      "evidence_ref_id": "ER-037",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 719,
+      "line_end": 730,
+      "range_class": "core",
+      "exact_quote": "### 8.3 PT budget matrix (deterministic baseline)\n\nThese are deterministic first-implementation budgets. They are ceilings/defaults, not promises that every planning run must use the full budget.\n\n| Mode | PT | Clarifying-turn budget | Repo/codebase research | Web research default | Expected output detail |\n|---|---|---:|---|---|---|\n| Plan | Light | 2 | focused, nearby files only | off by default; only if user explicitly asks or current/external facts are required | concise plan + TODO list |\n| Plan | Balanced | 4 | moderate, cross-file where needed | targeted cited web research when materially helpful | detailed plan + TODO list + affected areas |\n| Plan | Comprehensive | 6 | broad local research over affected subsystems | limited cited web research across key external dependencies/capabilities | detailed plan + TODO list + risks + alternatives |\n| Deep Plan | Light | 4 | broad local research with architectural context | targeted cited web research allowed by default | full markdown plan doc + TODO list |\n| Deep Plan | Balanced | 6 | deep local research across relevant subsystems, constraints, and prior docs | multi-source cited web research when helpful | full markdown plan doc + TODO list + risks + alternatives + validation notes |\n| Deep Plan | Comprehensive | 8 | deepest local research, including architecture seams and likely downstream impacts | strongest cited web research posture of any planning path | full markdown plan doc + TODO list + alternatives + rollout/validation + wizard-escalation check |"
+    },
+    {
+      "evidence_ref_id": "ER-038",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 732,
+      "line_end": 735,
+      "range_class": "core",
+      "exact_quote": "Web-research rules:\n- When web research is used, it must follow the cited web-search contract.\n- Plan uses shorter web research than Deep Plan.\n- Deep Plan should favor primary/official sources when researching platform capabilities, provider behavior, or current best practices."
+    },
+    {
+      "evidence_ref_id": "ER-039",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 739,
+      "line_end": 755,
+      "range_class": "core",
+      "exact_quote": "**Intended use:** medium-complexity work that benefits from explicit planning but does not obviously require a spec-style document or assistant-to-wizard escalation.\n\nRequired behavior:\n- Clarifying questions are allowed and expected; they are not optional.\n- The planning artifact is lightweight and execution-oriented.\n- The plan panel remains visible in chat and shows the written plan plus the normalized TODO list.\n- The user may open the plan artifact in the editor on demand, but automatic editor opening is not required for standard Plan.\n- Plan may use parallel safe research/subagent work where allowed, but it remains a read-only planning run.\n- Plan should prefer repo/codebase research first and use shorter web research than Deep Plan.\n\nStandard Plan artifact minimums:\n- concise problem statement\n- current-state summary when relevant\n- proposed approach summary\n- normalized TODO list for execution\n- verification / validation notes\n- unresolved questions when they remain"
+    },
+    {
+      "evidence_ref_id": "ER-040",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 759,
+      "line_end": 769,
+      "range_class": "core",
+      "exact_quote": "**Intended use:** larger features, substantial enhancements, major refactors, complex changes spanning several domains, or asks with high uncertainty.\n\nRequired behavior:\n- Deep Plan asks more questions than standard Plan at the same PT.\n- Deep Plan performs materially broader repo research and web research than standard Plan at the same PT.\n- LOCKED behavior: Deep Plan does materially more thinking, research, and clarifying-question work than standard Plan; the Plan vs Deep Plan difference is degree/intensity, not categorical.\n- Deep Plan produces a richer markdown planning document and automatically opens it in a preview-capable editing surface.\n- The default Deep Plan artifact class is `planning_draft` unless the user explicitly saves it to a workspace path.\n- `open_source` for a non-persisted Deep Plan document opens a transient `generated://<artifact_id>` buffer.\n- Deep Plan documents may include headings, tables, checklists, file paths, fenced code blocks, Mermaid diagrams, and explicit tradeoff sections.\n- The planning document remains canonical as source markdown / Mermaid text even when richly rendered."
+    },
+    {
+      "evidence_ref_id": "ER-041",
+      "document_path": "Plans/assistant-chat-design.md",
+      "line_start": 771,
+      "line_end": 786,
+      "range_class": "core",
+      "exact_quote": "Deep Plan document minimum sections:\n- `Objective`\n- `Scope`\n- `Current State / Relevant Context`\n- `Proposed Approach`\n- `Open Questions / Assumptions`\n- `Execution Plan / TODOs`\n- `Validation / Acceptance`\n\nOptional but allowed sections:\n- `Risks`\n- `Alternatives Considered`\n- `Mermaid Diagrams`\n- `Code Snippets`\n- `Affected Files / Areas`\n- `Rollout / Migration Notes`"
+    }
+  ],
+  "scope_attestation": {
+    "read_only_named_capsule_and_excerpt": true,
+    "no_prior_audits": true,
+    "no_other_results": true,
+    "no_unrelated_windows": true,
+    "no_external_research": true,
+    "context_not_promoted_to_core_finding": true
+  },
+  "result_status": "complete"
+}

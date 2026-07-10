@@ -1,53 +1,15 @@
 (function () {
   'use strict';
 
-  // PM_ICONS — shared inline-SVG icon library (no emoji anywhere in deliverables).
-  // 24x24 viewBox, stroke currentColor: icons inherit text color; size via .s4-ico.
-  const PM_ICONS = (() => {
-    const w = (body) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
-    return {
-      // ---- category icons (keys match PM_SETTINGS_DATA categories[].icon) ----
-      palette: w('<path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3c-.9-1-.2-2.7 1.2-2.7H18a3 3 0 0 0 3-3c0-5-4-9-9-9z"/><circle cx="7.5" cy="11" r="0.6" fill="currentColor"/><circle cx="10.5" cy="7" r="0.6" fill="currentColor"/><circle cx="15" cy="7.5" r="0.6" fill="currentColor"/>'),
-      brain: w('<path d="M11 5.5A2.5 2.5 0 0 0 8.5 3 2.5 2.5 0 0 0 6 5.5v.6A3.4 3.4 0 0 0 3.6 9.4c0 .7.2 1.3.6 1.9A3.6 3.6 0 0 0 3 14c0 1.7 1.2 3.2 2.9 3.5A2.9 2.9 0 0 0 8.8 21c1.2 0 2.2-.7 2.2-1.8V5.5z"/><path d="M13 5.5A2.5 2.5 0 0 1 15.5 3 2.5 2.5 0 0 1 18 5.5v.6a3.4 3.4 0 0 1 2.4 3.3c0 .7-.2 1.3-.6 1.9A3.6 3.6 0 0 1 21 14c0 1.7-1.2 3.2-2.9 3.5A2.9 2.9 0 0 1 15.2 21c-1.2 0-2.2-.7-2.2-1.8V5.5z"/>'),
-      shield: w('<path d="M12 3l7 3v5.2c0 4.4-2.9 7.8-7 9.8-4.1-2-7-5.4-7-9.8V6l7-3z"/>'),
-      terminal: w('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3"/><path d="M13 15h4"/>'),
-      puzzle: w('<path d="M4 7h4V5.6A1.6 1.6 0 0 1 9.6 4c.9 0 1.6.7 1.6 1.6V7H15v4h1.4a1.6 1.6 0 0 1 0 3.2H15V18h-3.8v-1.4a1.6 1.6 0 0 0-3.2 0V18H4v-3.8h1.4a1.6 1.6 0 0 0 0-3.2H4V7z"/>'),
-      clipboard: w('<rect x="6" y="5" width="12" height="16" rx="2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 11h6M9 15h4"/>'),
-      branch: w('<circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="8" r="2.2"/><path d="M6 8.2v7.6"/><path d="M18 10.2c0 3-2.5 4.3-5.5 4.6-2 .2-3.5.7-4.3 1.9"/>'),
-      film: w('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 9.5h5M3 14.5h5M16 9.5h5M16 14.5h5"/>'),
-      globe: w('<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3.6 9h16.8M3.6 15h16.8"/>'),
-      masks: w('<path d="M4 4.5c2.3.8 4.7.8 7 0v5.3c0 2.6-1.6 4.7-3.5 4.7S4 12.4 4 9.8V4.5z"/><path d="M6 7.5h.01M9 7.5h.01" stroke-width="2.2"/><path d="M6 11c.9.8 2.1.8 3 0"/><path d="M13 9.7c2.3.8 4.7.8 7 0V15c0 2.6-1.6 4.7-3.5 4.7S13 17.6 13 15V9.7z"/><path d="M15 12.5h.01M18 12.5h.01" stroke-width="2.2"/><path d="M18 16.5c-.9-.8-2.1-.8-3 0"/>'),
-      toolbox: w('<rect x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h7m4 0h7"/><path d="M10 11.5h4v3h-4z"/>'),
-      gear: w('<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8l1.2 2.4 2.6-.5 .6 2.6 2.6.6-.5 2.6 2.4 1.2-1.6 2.1 1.6 2.1-2.4 1.2.5 2.6-2.6.6-.6 2.6-2.6-.5L12 21.2l-1.2-2.4-2.6.5-.6-2.6-2.6-.6.5-2.6L3.1 12l1.6-2.1L3.1 7.8l2.4-1.2-.5-2.6 2.6-.6.6-2.6 2.6.5L12 2.8z"/>'),
-      // ---- utility icons ----
-      wave: w('<path d="M7.5 11.5V5.8a1.3 1.3 0 0 1 2.6 0v4.4V4.3a1.3 1.3 0 0 1 2.6 0v5.9V5.3a1.3 1.3 0 0 1 2.6 0v5.9-3.9a1.3 1.3 0 0 1 2.6 0v7.2c0 3.6-2.4 6.5-6 6.5-2.8 0-4.4-1.2-5.8-3.6L4 13.6a1.4 1.4 0 0 1 2.4-1.4l1.1 1.8"/>'),
-      search: w('<circle cx="11" cy="11" r="7"/><path d="M20.2 20.2L16 16"/>'),
-      star: w('<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.9L12 3.5z"/>'),
-      scales: w('<path d="M12 4v16"/><path d="M5.5 6.5h13"/><path d="M5.5 6.5L3 12.5a2.8 2.8 0 0 0 5 0L5.5 6.5z"/><path d="M18.5 6.5L16 12.5a2.8 2.8 0 0 0 5 0l-2.5-6z"/><path d="M8.5 20h7"/>'),
-      sparkle: w('<path d="M11 4l1.5 4.2L16.7 9.7l-4.2 1.5L11 15.4 9.5 11.2 5.3 9.7l4.2-1.5L11 4z"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8L18 14z"/>'),
-      restart: w('<path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 3.5V8h-4.5"/>'),
-      check: w('<path d="M4.5 12.5l5 5 10-11"/>'),
-      checkCircle: w('<circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/>'),
-      close: w('<path d="M6 6l12 12M18 6L6 18"/>'),
-      soundOn: w('<path d="M4 10v4h3.5L12 17.5v-11L7.5 10H4z"/><path d="M15 9.5a3.6 3.6 0 0 1 0 5"/><path d="M17.5 7a7 7 0 0 1 0 10"/>'),
-      soundOff: w('<path d="M4 10v4h3.5L12 17.5v-11L7.5 10H4z"/><path d="M16 10l4 4M20 10l-4 4"/>'),
-      folder: w('<path d="M3 7a2 2 0 0 1 2-2h4l2 2.2h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>'),
-      home: w('<path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.8V20h12V9.8"/>'),
-      robot: w('<rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9 12.5h.01M15 12.5h.01" stroke-width="2.4"/><path d="M9.5 16h5"/><path d="M3 12v4M21 12v4"/>'),
-      wand: w('<path d="M5 19L15.5 8.5"/><path d="M17.5 4v2.6M16.2 5.3h2.6"/><path d="M20 9.5v1.8M19.1 10.4h1.8"/><path d="M14 3.5v1.4M13.3 4.2h1.4"/>'),
-      plant: w('<path d="M12 21v-8"/><path d="M12 13C12 8.6 8.8 6 4.5 6c0 4.4 3.2 7 7.5 7z"/><path d="M12 10.5c0-3.3 2.4-5.3 5.6-5.3 0 3.3-2.4 5.3-5.6 5.3z"/>'),
-      party: w('<path d="M6.5 11.5L3 21l9.5-3.5-6-6z"/><path d="M9 9.5c1.5-3 5-4 8-2.5"/><path d="M13 13c3-1.5 6.5-.5 7.5 2.5" /><circle cx="15" cy="4.5" r="0.7" fill="currentColor"/><circle cx="20" cy="9" r="0.7" fill="currentColor"/><circle cx="11" cy="5.5" r="0.7" fill="currentColor"/>'),
-      plug: w('<path d="M9 7V3M15 7V3"/><path d="M7 7h10v3.5a5 5 0 0 1-10 0V7z"/><path d="M12 15.5V21"/>'),
-      bolt: w('<path d="M13 2.5L5 13.5h5.5L10 21.5l8-11h-5.5L13 2.5z"/>'),
-      telescope: w('<path d="M3.5 12.2L17 5.5l2.5 5L6 17.2l-2.5-5z"/><path d="M17 5.5l2.5 5"/><circle cx="11.5" cy="14.8" r="1.2"/><path d="M10.5 16.5L7.5 21.5M12.5 16.5l3 5"/>'),
-      dial: w('<circle cx="12" cy="12" r="8.5"/><path d="M12 12l4.2-4.2"/><path d="M12 4.5v1.5M19.5 12H18M12 19.5V18M4.5 12H6"/>'),
-      swirl: w('<path d="M12 3a9 9 0 1 1-9 9"/><path d="M12 7a5 5 0 1 1-5 5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>'),
-      warning: w('<path d="M12 4L2.8 19.5h18.4L12 4z"/><path d="M12 10v4.5"/><path d="M12 17.2h.01" stroke-width="2.4"/>'),
-      rocket: w('<path d="M12 3c3.5 2.8 5 6.5 5 10.5l-2.6 2.6H9.6L7 13.5C7 9.5 8.5 5.8 12 3z"/><circle cx="12" cy="9.5" r="1.6"/><path d="M9.6 16l-1 4 3.4-2 3.4 2-1-4"/><path d="M7 13.5l-3 2 2.5 1"/><path d="M17 13.5l3 2-2.5 1"/>'),
-      info: w('<circle cx="12" cy="12" r="9"/><path d="M12 10.8V16"/><path d="M12 7.8h.01" stroke-width="2.4"/>'),
-      layers: w('<path d="M12 3l9 4.5-9 4.5-9-4.5L12 3z"/><path d="M3.5 12.5L12 16.7l8.5-4.2"/><path d="M3.5 16.5L12 20.7l8.5-4.2"/>'),
-    };
-  })();
+  /* Boot is deferred to DOMContentLoaded: window.PM_ICONS and window.PM_DEMO
+     are hoisted in the pm6-js-globals / pm6-js-demo-engine blocks, which are
+     assembled AFTER this script (PARTS.md stub-part ordering). By DCL both
+     exist; nothing downstream reads the s4 DOM synchronously. */
+  function pm6SettingsBoot() {
+
+  // PM_ICONS — shared inline-SVG icon library, hoisted to window.PM_ICONS in
+  // pm6-js-globals (see contracts/ICONS.md). Aliased here; size via .s4-ico.
+  const PM_ICONS = window.PM_ICONS || {};
   var DATA = window.PM_SETTINGS_DATA || { categories: [], settings: [] };
   var CATS = DATA.categories;
   var ALL = DATA.settings;
@@ -81,6 +43,117 @@
     if (s.curated && recents.indexOf(s.id) < 0) { recents.push(s.id); }
     return recents.length >= 3;
   });
+
+  /* ---------- live-apply: visual settings that change the running app ---------- */
+  var GLASS_ALPHA_ID = 'general.visual.glass-transparency';
+  var docEl = document.documentElement;
+  function lsSet(k, v) { try { localStorage.setItem(k, String(v)); } catch (e) {} }
+  function slug(v) { return String(v == null ? '' : v).trim().toLowerCase().replace(/\s+/g, '-'); }
+  function titleCase(tok) {
+    return String(tok || '').split('-').map(function (p) {
+      return p ? p.charAt(0).toUpperCase() + p.slice(1) : p;
+    }).join(' ');
+  }
+  function isGlassTheme() {
+    return (docEl.getAttribute('data-theme') || '').indexOf('glass') === 0;
+  }
+  function alphaBounds() {
+    var light = /-light$/.test(docEl.getAttribute('data-theme') || '');
+    return light ? { lo: 0.45, hi: 0.88 } : { lo: 0.35, hi: 0.85 };
+  }
+  var LIVE_APPLY = {
+    'general.visual.theme': function (v) {
+      var t = slug(v);
+      docEl.setAttribute('data-theme', t);
+      lsSet('pm.theme', t);
+      var sel = document.getElementById('themeSelect');
+      if (sel) { try { sel.value = t; } catch (e) {} }
+      refreshGlassLocks();
+    },
+    'general.visual.glass-background-mode': function (v) {
+      var m = slug(v);
+      if (['mesh', 'depth', 'minimal'].indexOf(m) < 0) { m = 'mesh'; }
+      docEl.setAttribute('data-glass-bg', m);
+      lsSet('pm.glassBg', m);
+    },
+    'general.visual.glass-transparency': function (v) {
+      var b = alphaBounds();
+      var a = parseFloat(v);
+      if (isNaN(a)) { a = 0.55; }
+      a = Math.min(b.hi, Math.max(b.lo, a));
+      docEl.style.setProperty('--glass-alpha', String(a));
+      lsSet('pm.glassAlpha', a);
+    },
+    'general.visual.reduce-animations': function (v) {
+      if (v) { docEl.setAttribute('data-motion', 'reduced'); }
+      else { docEl.removeAttribute('data-motion'); }
+    },
+    'general.visual.chat-layout-mode': function (v) {
+      if (window.PM_DEMO && typeof window.PM_DEMO.emit === 'function') {
+        window.PM_DEMO.emit('chat.layout', { mode: slug(v) });
+      }
+    },
+    'general.visual.interface-density': function (v) {
+      docEl.setAttribute('data-density', slug(v));
+    }
+  };
+  function applyLive(id) {
+    var fn = LIVE_APPLY[id];
+    if (!fn) { return; }
+    try { fn(state.get(id)); } catch (e) { /* live-apply must never break editing */ }
+  }
+  /* Glass transparency only applies inside Glass themes — locked rows show the
+     closed-vocab reason (unsupported) plus a recovery hint. */
+  var GLASS_LOCK_HINT = 'unsupported — Glass Transparency only applies while a Glass theme is active. To adjust it, pick Glass Dark or Glass Light under Appearance > Theme.';
+  function updateGlassLock(row) {
+    if (!row) { return; }
+    var locked = !isGlassTheme();
+    row.classList.toggle('s4-locked', locked);
+    var slider = row.querySelector('.s4-slider');
+    if (slider) { slider.disabled = locked; }
+    var ctl = row.querySelector('.s4-row-ctl');
+    if (ctl) { ctl.title = locked ? GLASS_LOCK_HINT : ''; }
+    var line = row.querySelector('.s4-row-labelline');
+    if (!line) { return; }
+    var chip = line.querySelector('.pm6-settings-reason');
+    if (locked && !chip) {
+      chip = document.createElement('span');
+      chip.className = 'pm6-settings-reason';
+      chip.textContent = 'unsupported';
+      chip.title = GLASS_LOCK_HINT;
+      line.appendChild(chip);
+    } else if (!locked && chip) {
+      line.removeChild(chip);
+    }
+  }
+  function refreshGlassLocks() {
+    var scan = function (rootEl) {
+      if (!rootEl || !rootEl.querySelectorAll) { return; }
+      rootEl.querySelectorAll('.s4-row[data-sid="' + GLASS_ALPHA_ID + '"]').forEach(updateGlassLock);
+    };
+    scan(document);
+    try {
+      Object.keys(panelCache).forEach(function (k) { scan(panelCache[k]); });
+    } catch (e) {}
+  }
+  /* Boot sync: rows reflect what the head boot snippet already applied. */
+  (function syncVisualStateFromDom() {
+    var setIf = function (id, v) { if (byId.has(id)) { state.set(id, v); } };
+    setIf('general.visual.theme', titleCase(docEl.getAttribute('data-theme') || 'friendly-dark'));
+    setIf('general.visual.glass-background-mode', titleCase(docEl.getAttribute('data-glass-bg') || 'mesh'));
+    setIf('general.visual.reduce-animations', docEl.getAttribute('data-motion') === 'reduced');
+    var dens = docEl.getAttribute('data-density');
+    if (dens) { setIf('general.visual.interface-density', titleCase(dens)); }
+    else if (byId.has('general.visual.interface-density')) {
+      /* boot default: stamp the sidecar value once so the CSS density mapping
+         has an attribute to key off from first paint. The settings engine is
+         the ONLY writer of data-density (here + live-apply) — no double-set. */
+      docEl.setAttribute('data-density', slug(state.get('general.visual.interface-density') || 'Auto'));
+    }
+    var a = NaN;
+    try { a = parseFloat(localStorage.getItem('pm.glassAlpha')); } catch (e) {}
+    if (!isNaN(a)) { setIf(GLASS_ALPHA_ID, a); }
+  })();
 
   /* ---------- dom refs ---------- */
   function $(id) { return document.getElementById(id); }
@@ -180,6 +253,7 @@
 
   /* ---------- controls ---------- */
   function markEdited(s, rowEl, quiet) {
+    applyLive(s.id);
     if (rowEl) {
       rowEl.classList.remove('s4-glow');
       void rowEl.offsetWidth;
@@ -269,6 +343,10 @@
     else if (p.num <= 1) { min = 0; max = 1; step = 0.05; }
     else if (p.num <= 10) { min = 0; max = 10; step = 0.5; }
     else { min = 0; max = Math.max(Math.ceil(p.num * 2), 100); step = Math.max(1, Math.round(max / 100)); }
+    if (s.id === GLASS_ALPHA_ID) {
+      var gb = alphaBounds();
+      min = gb.lo; max = gb.hi; step = 0.01;
+    }
     var r = document.createElement('input');
     r.type = 'range'; r.className = 's4-slider';
     r.min = min; r.max = max; r.step = step; r.value = p.num;
@@ -416,7 +494,7 @@
         Object.keys(obj).forEach(function (k) {
           ed.appendChild(kvRow(k, obj[k]));
         });
-        ed.appendChild(addBtn('＋ Add pair', function () {
+        ed.appendChild(addBtn('+ Add pair', function () {
           var o = state.get(s.id);
           o = (o && typeof o === 'object' && !Array.isArray(o)) ? clone(o) : {};
           var name = 'new-key', n = 1;
@@ -430,7 +508,7 @@
       arr.forEach(function (item, i) {
         ed.appendChild(listRow(item, i));
       });
-      ed.appendChild(addBtn('＋ Add item', function () {
+      ed.appendChild(addBtn('+ Add item', function () {
         var a = state.get(s.id);
         a = Array.isArray(a) ? a.slice() : [];
         a.push('New item');
@@ -569,6 +647,7 @@
       default: ctl = mkText(s, rowRef, 'text');
     }
     ctlHost.appendChild(ctl);
+    if (s.id === GLASS_ALPHA_ID) { updateGlassLock(row); }
 
     if (s.status && s.status.state === 'needs-setup' && s.type !== 'action') {
       row.classList.add('s4-locked');
@@ -627,9 +706,9 @@
   function cardFor(s, extraNote) {
     var c = catInfo[s.id.split('.')[0]] || {};
     var card = document.createElement('button');
-    card.className = 's4-card';
+    card.className = 's4-card pm-sheen';
     card.innerHTML =
-      '<div class="s4-card-top"><span class="s4-ico">' + (PM_ICONS[c.icon] || PM_ICONS.gear) + '</span><span>' + esc(c.title || '') + '</span></div>' +
+      '<div class="s4-card-top"><span class="s4-ico pm-hover-icon">' + (PM_ICONS[c.icon] || PM_ICONS.gear) + '</span><span>' + esc(c.title || '') + '</span></div>' +
       '<div class="s4-card-label">' + esc(s.label) + '</div>' +
       '<div class="s4-card-note">' + (extraNote || esc(s.desc || '')) + '</div>';
     card.addEventListener('click', function () { openBloom(s.id.split('.')[0], s.id); });
@@ -1136,6 +1215,13 @@
       say('Project settings saved');
       document.getElementById('projectSettingsModal').classList.remove('visible');
     });
+  }
+
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', pm6SettingsBoot);
+  } else {
+    pm6SettingsBoot();
   }
 })();
 

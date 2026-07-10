@@ -1,0 +1,448 @@
+<script id="pm6-js-bottom">
+/* PMConcept6 — bottom panel + status bar wiring (owner: bottom-panel agent).
+   Wraps, never rewrites, PM_TERMINAL_DEMO. Consumes PM_DEMO feeds; registers
+   pm6.bottom.* actions; upgrades switchBrowserSubtab to the six-pane Browser
+   Evidence surface while keeping the legacy contract callable. */
+(function () {
+  'use strict';
+
+  function $(id) { return document.getElementById(id); }
+  function safe(fn) {
+    return function () {
+      try { return fn.apply(null, arguments); }
+      catch (e) { try { console.error('[pm6-bottom]', e); } catch (e0) {} }
+    };
+  }
+  function reducedMotion() {
+    try {
+      if (document.documentElement.getAttribute('data-motion') === 'reduced') return true;
+      return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) { return false; }
+  }
+  function say(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+  function nowClock() {
+    var d = new Date();
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+  }
+
+  /* ---------- icon hydration (scoped to owned roots) ---------- */
+  function hydrateIcons() {
+    var roots = [$('bottomPanel'), document.querySelector('.pm6-status-bar')];
+    roots.forEach(function (root) {
+      if (!root || !window.PM_ICONS) return;
+      root.querySelectorAll('.pm6-ico[data-pm6-icon]').forEach(function (el) {
+        if (el.childNodes.length) return;
+        el.innerHTML = window.PM_ICONS[el.getAttribute('data-pm6-icon')] || window.PM_ICONS.gear || '';
+      });
+    });
+  }
+
+  /* ---------- toast: same contract, polished exit ---------- */
+  function upgradeToast() {
+    window.toast = function (msg) {
+      try {
+        var stack = $('pmToastStack');
+        if (!stack) { try { console.log('[toast]', msg); } catch (e0) {} return; }
+        var el = document.createElement('div');
+        el.className = 'pm-toast';
+        el.textContent = msg;
+        stack.appendChild(el);
+        while (stack.children.length > 5) stack.removeChild(stack.firstChild);
+        var ttl = 3400;
+        if (reducedMotion()) {
+          setTimeout(function () { el.remove(); }, ttl);
+        } else {
+          setTimeout(function () { el.classList.add('pm6-toast-out'); }, ttl - 260);
+          setTimeout(function () { el.remove(); }, ttl);
+        }
+      } catch (e) { try { console.log('[toast]', msg); } catch (e1) {} }
+    };
+  }
+
+  /* ---------- Browser Evidence: six-pane subtab routing ---------- */
+  var PANES = {
+    page: 'pm6BrowserPagePane',
+    actions: 'pm6BrowserActionsPane',
+    console: 'browserConsolePane',
+    network: 'browserNetworkPane',
+    screenshots: 'browserEvidencePane',
+    sources: 'pm6BrowserSourcesPane'
+  };
+  function pm6SwitchBrowserSubtab(subtab) {
+    var key = subtab === 'evidence' ? 'screenshots' : String(subtab || 'page');
+    if (!PANES[key]) key = 'page';
+    document.querySelectorAll('.browser-bottom-subtabs .subtab').forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-browser-subtab') === key);
+    });
+    Object.keys(PANES).forEach(function (k) {
+      var el = $(PANES[k]);
+      if (el) el.style.display = k === key ? '' : 'none';
+    });
+  }
+
+  /* ---------- browser action log + session chip ---------- */
+  function logBrowserAction(verb, text) {
+    var pane = $('pm6BrowserActionsPane');
+    if (!pane) return;
+    var row = document.createElement('div');
+    row.className = 'pm6-browser-action-row';
+    var t = document.createElement('span');
+    t.className = 'pm6-browser-action-time';
+    t.textContent = nowClock();
+    var v = document.createElement('span');
+    v.className = 'pm6-browser-action-verb';
+    v.textContent = verb;
+    var s = document.createElement('span');
+    s.textContent = text;
+    row.appendChild(t); row.appendChild(v); row.appendChild(s);
+    pane.appendChild(row);
+    while (pane.children.length > 40) pane.removeChild(pane.firstChild);
+    pane.scrollTop = pane.scrollHeight;
+  }
+  function setSessionState(label, cls) {
+    var el = $('pm6BrowserSessionState');
+    if (!el) return;
+    el.textContent = label;
+    el.className = 'pm6-session-state' + (cls ? ' ' + cls : '');
+  }
+  function wrapTakeover() {
+    var orig = window.handleTakeover;
+    if (typeof orig !== 'function' || orig.__pm6Wrapped) return typeof orig === 'function';
+    var wrapped = function (action) {
+      try { orig(action); } catch (e) {}
+      if (action === 'pause') {
+        setSessionState('user takeover', 'pm6-session-user');
+        logBrowserAction('state', 'takeover_state_changed: agent → user (you have the page)');
+      } else if (action === 'continue') {
+        setSessionState('live', '');
+        logBrowserAction('state', 'takeover_state_changed: user → agent (control handed back)');
+      } else if (action === 'stop') {
+        setSessionState('ended', 'pm6-session-ended');
+        logBrowserAction('session', 'browser.session.state_changed → ended (evidence retained)');
+      }
+    };
+    wrapped.__pm6Wrapped = true;
+    window.handleTakeover = wrapped;
+    return true;
+  }
+
+  /* ---------- live counts + feeds ---------- */
+  function setBadge(id, n, errorish) {
+    var el = $(id);
+    if (!el) return;
+    var count = Number(n) || 0;
+    el.textContent = String(count);
+    el.hidden = count === 0;
+    el.classList.toggle('pm6-count-error', !!errorish && count > 0);
+  }
+  function onTermFeed(p) {
+    if (!p) return;
+    if (Object.prototype.hasOwnProperty.call(p, 'problems')) {
+      var rows = p.problems || [];
+      var hasErr = rows.some(function (r) { return r && String(r.sev || '').toUpperCase() === 'E'; });
+      setBadge('pm6BottomProblemsCount', rows.length, hasErr);
+    }
+    if (Object.prototype.hasOwnProperty.call(p, 'ports')) {
+      var ports = p.ports || [];
+      setBadge('pm6BottomPortsCount', ports.length, false);
+      var sc = $('pm6StatusPortsCount');
+      if (sc) sc.textContent = String(ports.length);
+    }
+    if (p.sessionId === 'ts-sess-alpha' && p.html != null) {
+      var pre = $('pmOutputPre');
+      if (pre) {
+        var line = String(p.html).replace(/<[^>]*>/g, '');
+        pre.textContent += '\n' + line;
+        var lines = pre.textContent.split('\n');
+        if (lines.length > 260) pre.textContent = lines.slice(lines.length - 260).join('\n');
+        pre.scrollTop = pre.scrollHeight;
+      }
+    }
+  }
+
+  /* ---------- Sources pane: research run receipts ---------- */
+  var citationsRendered = false;
+  function onWebOp(p) {
+    var op = p && p.op;
+    if (!op) return;
+    var badge = $('pm6BottomBrowserCount');
+    var line = $('pm6BrowserResearchLine');
+    if (op.kind === 'webresearch') {
+      if (line) {
+        if (op.state === 'running') {
+          var read = op.sources_read || 0;
+          var total = op.source_total || 0;
+          line.textContent = op.label + ' — running · reading source ' + read + '/' + total + ' · ' + (op.effective_adapter || 'Site Reader');
+        } else if (op.state === 'completed') {
+          line.textContent = op.label + ' — completed · ' + (op.source_total || (op.citations || []).length) + ' sources read · citations from actually-read sources below.';
+        } else {
+          line.textContent = op.label + ' — ' + (op.state || 'queued') + ' · ' + (op.effective_adapter || 'Site Reader');
+        }
+      }
+      if (badge) {
+        if (op.state === 'running') {
+          badge.hidden = false;
+          badge.textContent = (op.sources_read || 0) + '/' + (op.source_total || 0);
+        } else if (op.state === 'completed') {
+          badge.hidden = false;
+          badge.textContent = String((op.citations || []).length || op.source_total || 0);
+        }
+      }
+      if (op.state === 'completed' && !citationsRendered && line && line.parentNode) {
+        citationsRendered = true;
+        (op.citations || []).forEach(function (c) {
+          var row = document.createElement('div');
+          row.className = 'pm6-browser-source-row';
+          var conf = (c.source_confidence === 'high' || c.source_confidence === 'medium' || c.source_confidence === 'low') ? c.source_confidence : 'unknown';
+          var chip = document.createElement('span');
+          chip.className = 'pm6-conf-chip pm6-conf-' + conf;
+          chip.textContent = conf;
+          var title = document.createElement('span');
+          title.className = 'pm6-browser-source-title';
+          title.textContent = '[' + c.n + '] ' + c.title;
+          var url = document.createElement('span');
+          url.className = 'pm6-bottom-fineprint';
+          url.textContent = String(c.url || '').split('/')[0];
+          var rr = document.createElement('span');
+          rr.className = 'pm6-read-receipt';
+          rr.textContent = 'read ✓';
+          row.appendChild(chip); row.appendChild(title); row.appendChild(url); row.appendChild(rr);
+          line.parentNode.insertBefore(row, line);
+        });
+      }
+      if ($('pm6BrowserWatchBtn') && $('pm6BrowserWatchBtn').getAttribute('aria-pressed') === 'true' && op.state === 'running') {
+        logBrowserAction('read', 'Reading Site: source ' + (op.sources_read || 0) + '/' + (op.source_total || 0) + ' for research run ' + op.id);
+      }
+    }
+  }
+
+  /* ---------- status bar: context / orchestrator / index ---------- */
+  function renderCtx(ctx) {
+    if (!ctx || !ctx.max) return;
+    var label = $('pm6StatusCtxLabel');
+    var fill = $('pm6StatusCtxFill');
+    var wrap = $('pm6StatusCtx');
+    var used = Math.round((ctx.used || 0) / 1000);
+    var max = Math.round(ctx.max / 1000);
+    var pct = Math.max(2, Math.min(100, Math.round((ctx.used || 0) / ctx.max * 100)));
+    if (label) label.textContent = used + 'k/' + max + 'k';
+    if (fill) {
+      fill.style.width = pct + '%';
+      fill.classList.toggle('pm6-ctx-warn', pct >= 75);
+    }
+    if (wrap) wrap.title = 'Focused thread context: ' + used + 'k of ' + max + 'k tokens (' + pct + '%) - click the context circle in Chat for the breakdown';
+  }
+  var lastRun = null;
+  var gateOpen = false;
+  function renderOrch() {
+    var btn = $('pm6StatusOrch');
+    var txt = $('pm6StatusOrchText');
+    if (!btn || !txt) return;
+    var stage = (lastRun && (lastRun.stage || lastRun.state)) || 'idle';
+    var id = (lastRun && lastRun.id) ? String(lastRun.id).replace(/^pcr-/, '#') : '';
+    var state = 'idle', label = 'Orchestrator: Ready';
+    if (gateOpen) { state = 'attention'; label = 'Run ' + (id || '#47') + ': Needs Attention — approval gate open'; }
+    else if (stage === 'pending-launch') { state = 'running'; label = 'Run ' + (id || '') + ': pending launch'; }
+    else if (stage === 'compiling') { state = 'running'; label = 'Run ' + (id || '') + ': Running · compiling plan'; }
+    else if (stage === 'executing') { state = 'running'; label = 'Run ' + (id || '') + ': Running'; }
+    else if (stage === 'blocked') { state = 'blocked'; label = 'Run ' + (id || '') + ': Blocked'; }
+    else if (stage === 'complete') { state = 'complete'; label = 'Run ' + (id || '') + ': complete'; }
+    btn.setAttribute('data-state', state);
+    txt.textContent = label.replace(/\s+/g, ' ');
+  }
+  function startIndexTicker() {
+    var el = $('pm6StatusIndex');
+    if (!el) return;
+    var doneText = 'Index ✓ 1,284 files';
+    if (reducedMotion()) { el.textContent = doneText; el.classList.add('pm6-index-done'); return; }
+    var pct = 62;
+    el.textContent = 'Indexing… ' + pct + '%';
+    var iv = setInterval(function () {
+      pct += 5 + Math.floor(Math.random() * 6);
+      if (pct >= 100) {
+        clearInterval(iv);
+        el.textContent = doneText;
+        el.classList.add('pm6-index-done');
+        el.title = 'Workspace semantic index: 1,284 files, refreshed just now';
+      } else {
+        el.textContent = 'Indexing… ' + pct + '%';
+      }
+    }, 420);
+  }
+
+  /* ---------- notifications ---------- */
+  var notes = [];
+  function renderNotes() {
+    var list = $('pm6StatusBellList');
+    var badge = $('pm6StatusBellBadge');
+    if (!list) return;
+    list.innerHTML = '';
+    if (!notes.length) {
+      var empty = document.createElement('div');
+      empty.className = 'pm6-status-note-empty';
+      empty.textContent = 'Nothing yet — approval gates, run milestones and usage alerts land here.';
+      list.appendChild(empty);
+    }
+    notes.slice(-6).reverse().forEach(function (n) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pm6-status-note' + (n.warn ? ' pm6-note-warn' : '') + (n.read ? ' pm6-note-read' : '');
+      var meta = document.createElement('span');
+      meta.className = 'pm6-status-note-meta';
+      meta.textContent = n.meta;
+      b.appendChild(document.createTextNode(n.text));
+      b.appendChild(meta);
+      b.addEventListener('click', function () {
+        n.read = true;
+        closePops();
+        renderNotes();
+        try { if (window.PM_PAGES && n.page) window.PM_PAGES.go(n.page, n.subTab); } catch (e) {}
+      });
+      list.appendChild(b);
+    });
+    if (badge) {
+      var unread = notes.filter(function (n) { return !n.read; }).length;
+      badge.textContent = String(unread);
+      badge.hidden = unread === 0;
+    }
+  }
+  function addNote(text, meta, page, subTab, warn) {
+    if (notes.some(function (n) { return n.text === text; })) return;
+    notes.push({ text: text, meta: meta, page: page, subTab: subTab, warn: !!warn, read: false });
+    renderNotes();
+  }
+
+  /* ---------- status popovers ---------- */
+  function closePops() {
+    document.querySelectorAll('.pm6-status-pop.visible').forEach(function (p) { p.classList.remove('visible'); });
+  }
+  function bindStatusBar() {
+    var bar = document.querySelector('.pm6-status-bar');
+    if (!bar) return;
+    bar.addEventListener('click', function (e) {
+      var trigger = e.target.closest ? e.target.closest('[data-pm6-pop]') : null;
+      if (trigger) {
+        e.stopPropagation();
+        var pop = $(trigger.getAttribute('data-pm6-pop'));
+        var open = pop && pop.classList.contains('visible');
+        closePops();
+        if (pop && !open) pop.classList.add('visible');
+        return;
+      }
+      var pick = e.target.closest ? e.target.closest('[data-pm6-pick]') : null;
+      if (pick) {
+        e.stopPropagation();
+        var kind = pick.getAttribute('data-pm6-pick');
+        var value = pick.getAttribute('data-pm6-value') || '';
+        var labelEl = kind === 'platform' ? $('pm6StatusPlatformLabel') : $('pm6StatusModelLabel');
+        if (labelEl) labelEl.textContent = value;
+        var pop2 = pick.closest('.pm6-status-pop');
+        if (pop2) pop2.querySelectorAll('.pm6-status-pop-item').forEach(function (it) { it.classList.toggle('active', it === pick); });
+        closePops();
+        say((kind === 'platform' ? 'Platform' : 'Model') + ' set to ' + value + ' — requested value applies from the next turn; effective values are shown per node.');
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.pm6-status-pop-wrap')) closePops();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePops();
+    });
+  }
+
+  /* ---------- pm6.bottom.* demo actions ---------- */
+  var watching = false;
+  function registerActions() {
+    if (!window.PM_DEMO || !window.PM_DEMO.actions || !window.PM_DEMO.actions.register) return;
+    var reg = function (id, fn) { window.PM_DEMO.actions.register(id, fn); };
+    reg('pm6.bottom.show_ports', function () {
+      var panel = $('bottomPanel');
+      if (panel) panel.classList.remove('collapsed');
+      var cb = $('collapseBottom');
+      if (cb) cb.setAttribute('aria-expanded', 'true');
+      if (window.switchBottomTab) window.switchBottomTab('ports');
+      return { ok: true };
+    });
+    reg('pm6.bottom.browser_open', function () {
+      try { if (window.PM_PAGES) window.PM_PAGES.go('dashboard'); } catch (e) {}
+      var tab = $('browserPreviewTab');
+      if (tab && tab.click) { tab.click(); return { toast: 'Opened session br-sess-0472 in the workspace preview.' }; }
+      return { toast: 'Workspace preview holds this session — open the Dashboard editor to browse it full-size.' };
+    });
+    reg('pm6.bottom.browser_watch', function () {
+      watching = !watching;
+      var btn = $('pm6BrowserWatchBtn');
+      if (btn) btn.setAttribute('aria-pressed', watching ? 'true' : 'false');
+      logBrowserAction('state', watching ? 'watch enabled — live session events stream into this panel' : 'watch disabled — events keep recording as evidence');
+      return { toast: watching ? 'Watching session br-sess-0472 — live browser events will stream here.' : 'Stopped watching — evidence capture continues in the background.' };
+    });
+    reg('pm6.bottom.capture_context', function () {
+      logBrowserAction('capture', 'browser.context_captured → shared to the focused chat thread');
+      try { if (window.addBrowserChipToChat) window.addBrowserChipToChat('browser-selection', 'page: /import'); } catch (e) {}
+      return { toast: 'Page context captured — shared to the focused chat thread as a composer chip.' };
+    });
+  }
+
+  /* ---------- fallback [data-demo-action] router (engine-down safety) ---------- */
+  function bindFallbackRouter() {
+    document.addEventListener('click', function (e) {
+      if (window.__pm6DemoRouterAttached) return;
+      var el = e.target.closest ? e.target.closest('[data-demo-action]') : null;
+      if (!el) return;
+      if (!el.closest('#bottomPanel') && !el.closest('.pm6-status-bar')) return;
+      try {
+        var res = window.PM_DEMO && window.PM_DEMO.guard && window.PM_DEMO.guard.attempt(el.getAttribute('data-demo-action'), { el: el, arg: el.getAttribute('data-demo-arg') });
+        if (res && res.toast) say(res.toast);
+        else if (res && res.disabled && window.PM_DEMO.guard.reason) say(window.PM_DEMO.guard.reason(res.reason));
+      } catch (e2) {}
+    });
+  }
+
+  /* ---------- boot ---------- */
+  function subscribe() {
+    if (!window.PM_DEMO || !window.PM_DEMO.on) return;
+    window.PM_DEMO.on('term.feed', safe(onTermFeed));
+    window.PM_DEMO.on('web.op', safe(onWebOp));
+    window.PM_DEMO.on('chat.state', safe(function (p) { if (p && p.context) renderCtx(p.context); }));
+    window.PM_DEMO.on('run.state', safe(function (p) {
+      lastRun = p || lastRun;
+      var gates = (p && p.gates) || {};
+      gateOpen = Object.keys(gates).some(function (k) { return gates[k] && gates[k].state === 'attention_required'; });
+      renderOrch();
+      if (p && (p.stage === 'complete' || p.state === 'complete')) {
+        addNote('Run ' + String(p.id || '#47').replace(/^pcr-/, '#') + ' complete — all seams closed.', 'Orchestrator · just now', 'orchestrator', null, false);
+      }
+    }));
+    window.PM_DEMO.on('run.gate', safe(function (g) {
+      gateOpen = !!(g && g.state === 'attention_required');
+      renderOrch();
+      if (gateOpen) addNote('Approval gate: ' + ((g && g.label) || 'publish package: image-processing'), 'Needs Attention · resolve in Orchestrator, Dashboard or Chat', 'orchestrator', null, true);
+    }));
+    window.PM_DEMO.on('usage.alert', safe(function (a) {
+      if (!a) return;
+      if (a.kind === 'threshold') addNote('Usage threshold crossed — ' + (a.quota || 'quota') + ' at ' + (a.pct || 80) + '%.', 'Usage · suggested: switch effective account', 'usage', null, true);
+      else if (a.kind === 'account_switch') addNote('Effective account switched — reason: rate_limit_pressure.', 'Usage · requested account unchanged', 'usage', null, true);
+    }));
+  }
+
+  function init() {
+    hydrateIcons();
+    upgradeToast();
+    window.switchBrowserSubtab = pm6SwitchBrowserSubtab;
+    pm6SwitchBrowserSubtab('page');
+    if (!wrapTakeover()) setTimeout(safe(wrapTakeover), 1200);
+    try { renderCtx(window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.chat && window.PM_DEMO.state.chat.context); } catch (e) {}
+    renderOrch();
+    renderNotes();
+    bindStatusBar();
+    registerActions();
+    bindFallbackRouter();
+    subscribe();
+    startIndexTicker();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', safe(init));
+  else safe(init)();
+})();
+</script>
